@@ -1,0 +1,50 @@
+TYPEMAP
+Ihandle **		T_PTR
+Ihandle *		T_PTR
+const unsigned char *	T_PTR
+Icallback		T_PTR
+Iparamcb		T_PTR
+
+# xxx TODO xxx
+# NULL vs. undef
+# http://www.perlmonks.org/?node_id=554277
+
+INPUT
+T_PTR_OR_NULL
+	/* treat undef as null pointer (output does the inverse) */
+	$var = (SvOK($arg)) ? ($type)SvPV_nolen($arg) : NULL;
+
+OUTPUT
+T_PTR_OR_NULL
+	if ($var) {
+		$var = ($type)SvUV($arg);
+	} else {
+		XSRETURN_UNDEF;
+	}
+
+
+# The Perl object is blessed into 'CLASS', which should be a
+# char* having the name of the package for the blessing.
+OUTPUT
+O_OBJECT
+        if ($var) {
+          void** pointers = malloc(2 * sizeof(void*));
+          pointers[0] = (void*)$var;
+          pointers[1] = (void*)PERL_GET_CONTEXT;
+  	  sv_setref_pv( $arg, CLASS, (void*)pointers );
+        } else {
+          XSRETURN_UNDEF;
+        }
+
+INPUT
+O_OBJECT
+	if( sv_isobject($arg) && (SvTYPE(SvRV($arg)) == SVt_PVMG) ) {
+           void** pointers = (void**)(SvIV((SV*)SvRV( $arg ))); 
+           $var = ($type)(pointers[0]);
+        } else if ($arg == 0) {
+           XSRETURN(0);
+        } else {
+           XSRETURN_UNDEF;
+        }
+
+

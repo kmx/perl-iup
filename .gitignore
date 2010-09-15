@@ -1,0 +1,15 @@
+blib*
+Build
+Build.bat
+_build*
+pm_to_blib*
+tmp*
+*.tar.gz
+*.old
+*.bak
+*.o
+*.c
+_internal
+META.yml
+MYMETA.yml
+MANIFEST

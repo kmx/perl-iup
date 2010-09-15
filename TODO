@@ -1,0 +1,88 @@
+GLOBAL
+- _generators 
+  + attributes
+  + check against GetAttrNames
+- rewrite all examples from lua to perl
+- consider redesign
+  IUP::Internal::LibraryIUP
+  IUP::Internal::LibraryCD
+  IUP::Internal::LibraryIM
+  IUP::Internal::LibraryIMLIB
+  ...
+- move global ihandle table from IUP::Internal::Callback to IUP::Internal::LibraryIUP
+- put somewhere key related functions (see iupkey.h + iup.h) - ?IUP::Keys?
+  sub isAltXkey
+  sub isCtrlXkey
+  sub isShiftXkey
+  sub isSysXkey
+  sub isXkey
+  sub isalt
+  sub iscontrol
+  sub isdouble
+  sub isprint
+  sub isshift
+  sub issys
+  sub isxkey
+  sub isbutton1
+  sub isbutton2
+  sub isbutton3
+  sub isbutton4
+  sub isbutton5
+- update README + Changes
+
+IUP
+- maybe missing (comparing to LUA)
+  sub SetHandle ... IUP->SetHandle('xx', $d->ihandle);  
+- maybe not needed (comparing to LUA)
+  sub Close
+  sub GetFocus  (we have in Element)
+  sub GetHandle (we have in Element)
+- consider:
+  sub Open (probably not)
+- tests for all global functions
+
+IUP::Constants
+- K_* (see iupkey.h)
+
+IUP::Internal::Element
+- maybe missing (comparing to LUA)
+  sub GetAttributeData (see LUA implementation)
+  sub SetAttributes vs. sub StoreAttribute
+  sub GetName (we have $self->name)
+- maybe not needed (comparing to LUA)
+  sub GetCallback
+- GetAttributes 
+  in scalar context = string, in list? context = hash?
+  or: GetAttributesStr vs. GetAttributesHRef
+- tests for all common functions
+
+IUP::Image*
+- move relevant methods from IUP::Internal::Element > IUP::Image
+- add missing methods 
+  iup.LoadImage(file_name: string) -> (elem: ihandle) [in Lua]
+  iup.SaveImage(ih: ihandle, file_name, format: string) -> (ret: boolean) [in Lua]
+  iup.GetNativeHandleImage(handle: userdata) -> (image: imImage) [in Lua]
+  iup.GetImageNativeHandle(image: imImage) -> (handle: userdata) [in Lua]
+- base IUP::Image::* on IUP::Image
+- new( ... colors=>[ ] )
+- new( ... pixels=>pack('C*', @array) );
+- 1=>.. 2=>.. 3=>..
+
+IUP::(dialogs)
+- move relevant methods from IUP::Internal::Element > IUP::Dialog
+  IUP::Dialog->popup([x, y: number]) -> (ret: number) [in Lua]
+  IUP::Dialog->show() -> (ret: number) [in IupLua]
+  IUP::Dialog->showxy([x, y: number]) -> (ret: number) [in Lua]
+  IUP::Dialog->hide() -> (ret: number) [in Lua]
+- base IUP::(File|Message|Color|Font)Dlg on IUP::Dialog
+
+IUP::Canvas
+- implement missing methods
+
+IUP::OleControl
+- missing
+- maybe not neccesarry in the first release
+
+IUP::ImageLib
+- missing
+- check memory consumption

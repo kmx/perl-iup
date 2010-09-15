@@ -1,0 +1,252 @@
+#module;#action;#type;#c_retval;#c_params
+IUP::Button;ACTION;;int;Ihandle* ih
+IUP::Button;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
+IUP::Button;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::Button;GETFOCUS_CB;;int;Ihandle* ih
+IUP::Button;HELP_CB;;int;Ihandle* ih
+IUP::Button;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::Button;K_ANY;i;int;Ihandle* ih,int c
+IUP::Button;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::Button;MAP_CB;;int;Ihandle* ih
+IUP::Button;UNMAP_CB;;int;Ihandle* ih
+IUP::Canvas;ACTION;ff;int;Ihandle* ih,float posx,float posy
+IUP::Canvas;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
+IUP::Canvas;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y
+IUP::Canvas;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::Canvas;FOCUS_CB;i;int;Ihandle* ih,int focus
+IUP::Canvas;GETFOCUS_CB;;int;Ihandle* ih
+IUP::Canvas;HELP_CB;;int;Ihandle* ih
+IUP::Canvas;KEYPRESS_CB;ii;int;Ihandle* ih,int c,int press
+IUP::Canvas;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::Canvas;K_ANY;i;int;Ihandle* ih,int c
+IUP::Canvas;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::Canvas;MAP_CB;;int;Ihandle* ih
+IUP::Canvas;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
+IUP::Canvas;RESIZE_CB;ii;int;Ihandle* ih,int width,int height
+IUP::Canvas;SCROLL_CB;iff;int;Ihandle* ih,int op,float posx,float posy
+IUP::Canvas;UNMAP_CB;;int;Ihandle* ih
+IUP::Canvas;WHEEL_CB;fiis;int;Ihandle* ih,float delta,int x,int y,char* status
+IUP::Canvas;WOM_CB;i;int;Ihandle* ih,int state
+IUP::Cells;DRAW_CB;iiiiiiv;int;Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas
+IUP::Cells;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::Cells;GETFOCUS_CB;;int;Ihandle* ih
+IUP::Cells;HEIGHT_CB;i;int;Ihandle* ih,int line
+IUP::Cells;HELP_CB;;int;Ihandle* ih
+IUP::Cells;HSPAN_CB;ii;int;Ihandle* ih,int line,int column
+IUP::Cells;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::Cells;K_ANY;i;int;Ihandle* ih,int c
+IUP::Cells;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::Cells;MAP_CB;;int;Ihandle* ih
+IUP::Cells;MOUSECLICK_CB;iiiiiis;int;Ihandle* ih,int button,int pressed,int line,int column,int x,int y,char* status
+IUP::Cells;MOUSEMOTION_CB;iiiis;int;Ihandle* ih,int line,int column,int x,int y,char* r
+IUP::Cells;NCOLS_CB;;int;Ihandle* ih
+IUP::Cells;NLINES_CB;;int;Ihandle* ih
+IUP::Cells;SCROLLING_CB;ii;int;Ihandle* ih,int line,int column
+IUP::Cells;UNMAP_CB;;int;Ihandle* ih
+IUP::Cells;VSPAN_CB;ii;int;Ihandle* ih,int line,int column
+IUP::Cells;WIDTH_CB;i;int;Ihandle* ih,int column
+IUP::ColorBrowser;CHANGE_CB;ccc;int;Ihandle* ih,unsigned char r,unsigned char g,unsigned char b
+IUP::ColorBrowser;DRAG_CB;ccc;int;Ihandle* ih,unsigned char r,unsigned char g,unsigned char b
+IUP::ColorBrowser;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::ColorBrowser;GETFOCUS_CB;;int;Ihandle* ih
+IUP::ColorBrowser;HELP_CB;;int;Ihandle* ih
+IUP::ColorBrowser;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::ColorBrowser;K_ANY;i;int;Ihandle* ih,int c
+IUP::ColorBrowser;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::ColorBrowser;MAP_CB;;int;Ihandle* ih
+IUP::ColorBrowser;UNMAP_CB;;int;Ihandle* ih
+IUP::ColorBrowser;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::ColorDlg;HELP_CB;;int;Ihandle* ih
+IUP::Colorbar;CELL_CB;i;char*;Ihandle* ih,int cell
+IUP::Colorbar;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::Colorbar;EXTENDED_CB;i;int;Ihandle* ih,int cell
+IUP::Colorbar;GETFOCUS_CB;;int;Ihandle* ih
+IUP::Colorbar;HELP_CB;;int;Ihandle* ih
+IUP::Colorbar;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::Colorbar;K_ANY;i;int;Ihandle* ih,int c
+IUP::Colorbar;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::Colorbar;MAP_CB;;int;Ihandle* ih
+IUP::Colorbar;SELECT_CB;ii;int;Ihandle* ih,int cell,int type
+IUP::Colorbar;SWITCH_CB;ii;int;Ihandle* ih,int prim_cell,int sec_cell
+IUP::Colorbar;UNMAP_CB;;int;Ihandle* ih
+IUP::Dial;BUTTON_PRESS_CB;d;int;Ihandle* ih,double angle
+IUP::Dial;BUTTON_RELEASE_CB;d;int;Ihandle* ih,double angle
+IUP::Dial;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::Dial;GETFOCUS_CB;;int;Ihandle* ih
+IUP::Dial;HELP_CB;;int;Ihandle* ih
+IUP::Dial;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::Dial;K_ANY;i;int;Ihandle* ih,int c
+IUP::Dial;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::Dial;MAP_CB;;int;Ihandle* ih
+IUP::Dial;MOUSEMOVE_CB;d;int;Ihandle* ih,double angle
+IUP::Dial;UNMAP_CB;;int;Ihandle* ih
+IUP::Dial;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::Dialog;CLOSE_CB;;int;Ihandle* ih
+IUP::Dialog;COPYDATA_CB;si;int;Ihandle* ih,char* cmdLine,int size
+IUP::Dialog;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y
+IUP::Dialog;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::Dialog;GETFOCUS_CB;;int;Ihandle* ih
+IUP::Dialog;HELP_CB;;int;Ihandle* ih
+IUP::Dialog;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::Dialog;K_ANY;i;int;Ihandle* ih,int c
+IUP::Dialog;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::Dialog;MAP_CB;;int;Ihandle* ih
+IUP::Dialog;MDIACTIVATE_CB;;int;Ihandle* ih
+IUP::Dialog;MOVE_CB;ii;int;Ihandle* ih,int x,int y
+IUP::Dialog;RESIZE_CB;ii;int;Ihandle* ih,int width,int height
+IUP::Dialog;SHOW_CB;i;int;Ihandle* ih,int state
+IUP::Dialog;TRAYCLICK_CB;iii;int;Ihandle* ih,int but,int pressed,int dclick
+IUP::Dialog;UNMAP_CB;;int;Ihandle* ih
+IUP::FileDlg;FILE_CB;ss;int;Ihandle* ih,const char* file_name,const char* status
+IUP::FileDlg;HELP_CB;;int;Ihandle* ih
+IUP::FontDlg;HELP_CB;;int;Ihandle* ih
+IUP::Frame;MAP_CB;;int;Ihandle* ih
+IUP::Frame;UNMAP_CB;;int;Ihandle* ih
+IUP::GLCanvas;RESIZE_CB;ii;int;Ihandle* ih,int width,int height
+IUP::Item;ACTION;;int;Ihandle* ih
+IUP::Item;HELP_CB;;int;Ihandle* ih
+IUP::Item;HIGHLIGHT_CB;;int;Ihandle* ih
+IUP::Item;MAP_CB;;int;Ihandle* ih
+IUP::Item;UNMAP_CB;;int;Ihandle* ih
+IUP::Label;MAP_CB;;int;Ihandle* ih
+IUP::Label;UNMAP_CB;;int;Ihandle* ih
+IUP::List;ACTION;sii;int;Ihandle* ih,char* text,int pos,int state
+IUP::List;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
+IUP::List;CARET_CB;iii;int;Ihandle* ih,int lin,int col,int pos
+IUP::List;DBLCLICK_CB;is;int;Ihandle* ih,int pos,char* text
+IUP::List;DROPDOWN_CB;i;int;Ihandle* ih,int state
+IUP::List;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y
+IUP::List;EDIT_CB;is;int;Ihandle* ih,int c,char* new_value
+IUP::List;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::List;GETFOCUS_CB;;int;Ihandle* ih
+IUP::List;HELP_CB;;int;Ihandle* ih
+IUP::List;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::List;K_ANY;i;int;Ihandle* ih,int c
+IUP::List;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::List;MAP_CB;;int;Ihandle* ih
+IUP::List;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
+IUP::List;MULTISELECT_CB;s;int;Ihandle* ih,char* value
+IUP::List;UNMAP_CB;;int;Ihandle* ih
+IUP::List;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::Matrix;ACTION_CB;iiiis;int;Ihandle* ih,int c,int lin,int col,int edition,char* after
+IUP::Matrix;BGCOLOR_CB;iiIII;int;Ihandle* ih,int lin,int col,unsigned int* red,unsigned int* green,unsigned int* blue
+IUP::Matrix;CLICK_CB;iis;int;Ihandle* ih,int lin,int col,char* status
+IUP::Matrix;DRAW_CB;iiiiiiv;int;Ihandle* ih,int lin,int col,int x1,int x2,int y1,int y2,cdCanvas* cnv
+IUP::Matrix;DROPCHECK_CB;ii;int;Ihandle* ih,int lin,int col
+IUP::Matrix;DROPSELECT_CB;iinsii;int;Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v
+IUP::Matrix;DROP_CB;nii;int;Ihandle* ih,Ihandle* drop,int lin,int col
+IUP::Matrix;EDITION_CB;iiii;int;Ihandle* ih,int lin,int col,int mode,int update
+IUP::Matrix;ENTERITEM_CB;ii;int;Ihandle* ih,int lin,int col
+IUP::Matrix;FGCOLOR_CB;iiIII;int;Ihandle* ih,int lin,int col,unsigned int* red,unsigned int* green,unsigned int* blue
+IUP::Matrix;FONT_CB;ii;char*;Ihandle* ih,int lin,int col
+IUP::Matrix;LEAVEITEM_CB;ii;int;Ihandle* ih,int lin,int col
+IUP::Matrix;MARKEDIT_CB;iii;int;Ihandle* ih,int lin,int col,int marked
+IUP::Matrix;MARK_CB;ii;int;Ihandle* ih,int lin,int col
+IUP::Matrix;MOUSEMOVE_CB;ii;int;Ihandle* ih,int lin,int col
+IUP::Matrix;RELEASE_CB;iis;int;Ihandle* ih,int lin,int col,char* status
+IUP::Matrix;SCROLLTOP_CB;ii;int;Ihandle* ih,int lin,int col
+IUP::Matrix;VALUE_CB;ii;char*;Ihandle* ih,int lin,int col
+IUP::Matrix;VALUE_EDIT_CB;iis;int;Ihandle* ih,int lin,int col,char* newval
+IUP::Menu;MAP_CB;;int;Ihandle* ih
+IUP::Menu;MENUCLOSE_CB;;int;Ihandle* ih
+IUP::Menu;OPEN_CB;;int;Ihandle* ih
+IUP::Menu;UNMAP_CB;;int;Ihandle* ih
+IUP::MessageDlg;HELP_CB;;int;Ihandle* ih
+IUP::OleControl;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::OleControl;GETFOCUS_CB;;int;Ihandle* ih
+IUP::OleControl;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::OleControl;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::OleControl;MAP_CB;;int;Ihandle* ih
+IUP::OleControl;UNMAP_CB;;int;Ihandle* ih
+IUP::PPlot;DELETEBEGIN_CB;;int;Ihandle* ih
+IUP::PPlot;DELETEEND_CB;;int;Ihandle* ih
+IUP::PPlot;DELETE_CB;iiff;int;Ihandle* ih,int index,int sample_index,float x,float y
+IUP::PPlot;EDITBEGIN_CB;;int;Ihandle* ih
+IUP::PPlot;EDITEND_CB;;int;Ihandle* ih
+IUP::PPlot;EDIT_CB;iiffFF;int;Ihandle* ih,int index,int sample_index,float x,float y,float* new_x,float* new_y
+IUP::PPlot;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::PPlot;GETFOCUS_CB;;int;Ihandle* ih
+IUP::PPlot;HELP_CB;;int;Ihandle* ih
+IUP::PPlot;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::PPlot;K_ANY;i;int;Ihandle* ih,int c
+IUP::PPlot;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::PPlot;MAP_CB;;int;Ihandle* ih
+IUP::PPlot;POSTDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
+IUP::PPlot;PREDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
+IUP::PPlot;SELECTBEGIN_CB;;int;Ihandle* ih
+IUP::PPlot;SELECTEND_CB;;int;Ihandle* ih
+IUP::PPlot;SELECT_CB;iiffi;int;Ihandle* ih,int index,int sample_index,float x,float y,int select
+IUP::PPlot;UNMAP_CB;;int;Ihandle* ih
+IUP::ProgressBar;MAP_CB;;int;Ihandle* ih
+IUP::ProgressBar;UNMAP_CB;;int;Ihandle* ih
+IUP::Spin;SPIN_CB;i;int;Ihandle* ih,int inc
+IUP::Spinbox;SPIN_CB;i;int;Ihandle* ih,int inc
+IUP::Submenu;HIGHLIGHT_CB;;int;Ihandle* ih
+IUP::Submenu;MAP_CB;;int;Ihandle* ih
+IUP::Submenu;UNMAP_CB;;int;Ihandle* ih
+IUP::Tabs;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::Tabs;GETFOCUS_CB;;int;Ihandle* ih
+IUP::Tabs;HELP_CB;;int;Ihandle* ih
+IUP::Tabs;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::Tabs;K_ANY;i;int;Ihandle* ih,int c
+IUP::Tabs;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::Tabs;MAP_CB;;int;Ihandle* ih
+IUP::Tabs;TABCHANGE_CB;nn;int;Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
+IUP::Tabs;UNMAP_CB;;int;Ihandle* ih
+IUP::Text;ACTION;is;int;Ihandle* ih,int c,char* new_value
+IUP::Text;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
+IUP::Text;CARET_CB;iii;int;Ihandle* ih,int lin,int col,int pos
+IUP::Text;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y
+IUP::Text;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::Text;GETFOCUS_CB;;int;Ihandle* ih
+IUP::Text;HELP_CB;;int;Ihandle* ih
+IUP::Text;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::Text;K_ANY;i;int;Ihandle* ih,int c
+IUP::Text;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::Text;MAP_CB;;int;Ihandle* ih
+IUP::Text;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
+IUP::Text;SPIN_CB;i;int;Ihandle* ih,int pos
+IUP::Text;UNMAP_CB;;int;Ihandle* ih
+IUP::Text;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::Timer;ACTION_CB;;int;Ihandle* ih
+IUP::Toggle;ACTION;i;int;Ihandle* ih,int state
+IUP::Toggle;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::Toggle;GETFOCUS_CB;;int;Ihandle* ih
+IUP::Toggle;HELP_CB;;int;Ihandle* ih
+IUP::Toggle;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::Toggle;K_ANY;i;int;Ihandle* ih,int c
+IUP::Toggle;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::Toggle;MAP_CB;;int;Ihandle* ih
+IUP::Toggle;UNMAP_CB;;int;Ihandle* ih
+IUP::Toggle;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::Tree;BRANCHCLOSE_CB;i;int;Ihandle* ih,int id
+IUP::Tree;BRANCHOPEN_CB;i;int;Ihandle* ih,int id
+IUP::Tree;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
+IUP::Tree;DRAGDROP_CB;iiii;int;Ihandle* ih,int drag_id,int drop_id,int isshift,int iscontrol
+IUP::Tree;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y
+IUP::Tree;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::Tree;EXECUTELEAF_CB;i;int;Ihandle* ih,int id
+IUP::Tree;GETFOCUS_CB;;int;Ihandle* ih
+IUP::Tree;HELP_CB;;int;Ihandle* ih
+IUP::Tree;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::Tree;K_ANY;i;int;Ihandle* ih,int c
+IUP::Tree;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::Tree;MAP_CB;;int;Ihandle* ih
+IUP::Tree;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
+IUP::Tree;MULTISELECTION_CB;Ai;int;Ihandle* ih,int* ids,int n
+IUP::Tree;MULTIUNSELECTION_CB;Ai;int;Ihandle* ih,int* ids,int n
+IUP::Tree;NODEREMOVED_CB;s;int;Ihandle* ih,void* userdata
+IUP::Tree;RENAME_CB;is;int;Ihandle* ih,int id,char* title
+IUP::Tree;RIGHTCLICK_CB;i;int;Ihandle* ih,int id
+IUP::Tree;SELECTION_CB;ii;int;Ihandle* ih,int id,int status
+IUP::Tree;SHOWRENAME_CB;i;int;Ihandle* ih,int id
+IUP::Tree;UNMAP_CB;;int;Ihandle* ih
+IUP::Val;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::Val;GETFOCUS_CB;;int;Ihandle* ih
+IUP::Val;HELP_CB;;int;Ihandle* ih
+IUP::Val;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::Val;K_ANY;i;int;Ihandle* ih,int c
+IUP::Val;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::Val;MAP_CB;;int;Ihandle* ih
+IUP::Val;UNMAP_CB;;int;Ihandle* ih
+IUP::Val;VALUECHANGED_CB;;int;Ihandle* ih
