@@ -1,6 +1,7 @@
 XS
 - LibraryIUP / Linux: warning: ISO C90 forbids mixed declarations and code (when using myST2xxx)
 - LibraryIUP / Linux: warning: unused variable targ | RETVAL (when using PPCODE)
+- LibraryIUP+Callback+other *.xs - fix BOOT sections
 - LibraryIUP - remove unnecessary use of MyST2xxx() macros
 - Alien for Unix needs: -lstdc++
 
