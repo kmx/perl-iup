@@ -3,7 +3,6 @@ XS
 - LibraryIUP / Linux: warning: unused variable targ | RETVAL (when using PPCODE)
 - LibraryIUP+Callback+other *.xs - fix BOOT sections
 - LibraryIUP - remove unnecessary use of MyST2xxx() macros
-- Alien for Unix needs: -lstdc++
 
 Linux:
 - (<unknown>:4352): Pango-WARNING **: Error loading GSUB table 85
