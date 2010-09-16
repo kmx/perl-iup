@@ -3200,6 +3200,9 @@ internal_cb_SHOWRENAME_CB_i (Ihandle* ih,int id)
 
 MODULE = IUP::Internal::Callback	PACKAGE = IUP::Internal::Callback
 
+BOOT:
+/* empty boot */
+
 
 void
 _init_cb_ACTION_(ih,action)
