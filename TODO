@@ -1,4 +1,9 @@
+XS
+- LibraryIUP - remove unnecessary use of MyST2xxx() macros
+- pointer failures - http://ods.com.ua/win/eng/program/Perl5Unleashed/ch25.phtml
+
 GLOBAL
+- linux link failure (undefined symbol)
 - _generators 
   + attributes
   + check against GetAttrNames

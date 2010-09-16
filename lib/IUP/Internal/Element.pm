@@ -11,10 +11,25 @@ use IUP::Internal::Attribute;
 use Carp;
 
 sub new {
-  my($class, %args) = @_;
+  my $class = shift;
+  my $argc = scalar @_;
+  my %args = ();
+  my $firstonly;
+  
   my $self = { class => $class };
   bless($self, $class);
-  $self->ihandle($self->_create_element(\%args));
+
+  if ($argc == 1) {
+    $firstonly = $_[0];
+  }
+  elsif ($argc > 1 && $argc % 2 == 0) {
+    %args = @_ ;
+  }
+  elsif ($argc > 0) {
+    carp "Warning: $class->new() invalid arguments (argc=$argc), ignoring all parameters";
+  }
+  
+  $self->ihandle($self->_create_element(\%args, $firstonly));
   unless ($self->ihandle) {
     carp "Error: $class->new() failed";
     return;

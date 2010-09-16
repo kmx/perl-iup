@@ -8,6 +8,16 @@
 #include <iup_pplot.h>
 #include <iupgl.h>
 
+/* macros for processing args in fuctions with variable arg list, e.g. 'func(...)' */
+#define myST2IHN(a) (items>(a)) && (SvIOK(ST(a))) ? INT2PTR(Ihandle*, SvIVX(ST(a))) : NULL;
+#define myST2STR(a) (items>(a)) && (SvPOK(ST(a))) ? SvPVX(ST(a)) : NULL;
+#define myST2INT(a) (items>(a)) && (SvIOK(ST(a))) ? SvIVX(ST(a)) : 0;
+
+/* convert 'SV' to 'Ihandle*' + do undef->NULL conversion */
+#define mySV2IHN(a) (SvIOK(a) ? INT2PTR(Ihandle *, SvIVX(a)) : NULL)
+
+/* GetParam callback stuff */
+
 typedef struct _getparam_data {
   int has_func;
   int obj_initialized;
@@ -143,7 +153,7 @@ _IupExitLoop()
 # void IupUpdate (Ihandle* ih);
 void
 _IupUpdate(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		IupUpdate(ih);
 
@@ -151,7 +161,7 @@ _IupUpdate(ih)
 # void IupUpdateChildren(Ihandle* ih);
 void
 _IupUpdateChildren(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		IupUpdateChildren(ih);
 
@@ -159,7 +169,7 @@ _IupUpdateChildren(ih)
 # void IupRedraw (Ihandle* ih, int children);
 void
 _IupRedraw(ih,children)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		int children;
 	CODE:
 		IupRedraw(ih,children);
@@ -168,7 +178,7 @@ _IupRedraw(ih,children)
 # void IupRefresh (Ihandle* ih);
 void
 _IupRefresh(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		IupRefresh(ih);
 
@@ -176,10 +186,9 @@ _IupRefresh(ih)
 # char* IupMapFont (const char *iupfont);
 char*
 _IupMapFont(iupfont)
-		char* iupfont = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		char* iupfont = myST2STR(0);
 	CODE:
 		RETVAL = IupMapFont(iupfont);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -187,10 +196,9 @@ _IupMapFont(iupfont)
 # char* IupUnMapFont (const char *driverfont);
 char*
 _IupUnMapFont(driverfont)
-		const char* driverfont = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		const char* driverfont = myST2STR(0);
 	CODE:
 		RETVAL = IupUnMapFont(driverfont);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -198,7 +206,7 @@ _IupUnMapFont(driverfont)
 # int IupHelp (const char* url);
 int
 _IupHelp(url)
-		char* url = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		char* url = myST2STR(0);
 	CODE:
 		RETVAL = IupHelp(url);
 	OUTPUT:
@@ -211,7 +219,6 @@ _IupLoad(filename)
 		const char* filename;
 	CODE:
 		RETVAL = IupLoad(filename);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -219,10 +226,9 @@ _IupLoad(filename)
 # char* IupLoadBuffer (const char *buffer);
 char*
 _IupLoadBuffer(buffer)
-		char* buffer = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		char* buffer = myST2STR(0);
 	CODE:
 		RETVAL = IupLoadBuffer(buffer);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -232,7 +238,6 @@ char*
 _IupVersion()
 	CODE:
 		RETVAL = IupVersion();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -242,7 +247,6 @@ char*
 _IupVersionDate()
 	CODE:
 		RETVAL = IupVersionDate();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -259,7 +263,7 @@ _IupVersionNumber()
 # void IupSetLanguage (const char *lng);
 void
 _IupSetLanguage(lng)
-		char* lng = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		char* lng = myST2STR(0);
 	CODE:
 		IupSetLanguage(lng);
 
@@ -269,7 +273,6 @@ char*
 _IupGetLanguage()
 	CODE:
 		RETVAL = IupGetLanguage();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -277,7 +280,7 @@ _IupGetLanguage()
 # void IupDestroy (Ihandle* ih);
 void
 _IupDestroy(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		IupDestroy(ih);
 
@@ -285,7 +288,7 @@ _IupDestroy(ih)
 # void IupDetach (Ihandle* child);
 void
 _IupDetach(child)
-		Ihandle* child = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* child = myST2IHN(0);
 	CODE:
 		IupDetach(child);
 
@@ -293,11 +296,10 @@ _IupDetach(child)
 # Ihandle* IupAppend (Ihandle* ih, Ihandle* child);
 Ihandle*
 _IupAppend(ih,child)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
-		Ihandle* child = SvOK(ST(1)) ? (Ihandle*)SvUV(ST(1)) : NULL;
+		Ihandle* ih = myST2IHN(0);
+		Ihandle* child = myST2IHN(1);
 	CODE:
 		RETVAL = IupAppend(ih,child);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -305,12 +307,11 @@ _IupAppend(ih,child)
 # Ihandle* IupInsert (Ihandle* ih, Ihandle* ref_child, Ihandle* child);
 Ihandle*
 _IupInsert(ih,ref_child,child)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
-		Ihandle* ref_child = SvOK(ST(1)) ? (Ihandle*)SvUV(ST(1)) : NULL;
-		Ihandle* child = SvOK(ST(2)) ? (Ihandle*)SvUV(ST(2)) : NULL;
+		Ihandle* ih = myST2IHN(0);
+		Ihandle* ref_child = myST2IHN(1);
+		Ihandle* child = myST2IHN(2);
 	CODE:
 		RETVAL = IupInsert(ih,ref_child,child);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -318,11 +319,10 @@ _IupInsert(ih,ref_child,child)
 # Ihandle* IupGetChild (Ihandle* ih, int pos);
 Ihandle*
 _IupGetChild(ih,pos)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		int pos;
 	CODE:
 		RETVAL = IupGetChild(ih,pos);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -330,8 +330,8 @@ _IupGetChild(ih,pos)
 # int IupGetChildPos (Ihandle* ih, Ihandle* child);
 int
 _IupGetChildPos(ih,child)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
-		Ihandle* child = SvOK(ST(1)) ? (Ihandle*)SvUV(ST(1)) : NULL;
+		Ihandle* ih = myST2IHN(0);
+		Ihandle* child = myST2IHN(1);
 	CODE:
 		RETVAL = IupGetChildPos(ih,child);
 	OUTPUT:
@@ -341,7 +341,7 @@ _IupGetChildPos(ih,child)
 # int IupGetChildCount(Ihandle* ih);
 int
 _IupGetChildCount(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupGetChildCount(ih);
 	OUTPUT:
@@ -351,11 +351,10 @@ _IupGetChildCount(ih)
 # Ihandle* IupGetNextChild (Ihandle* ih, Ihandle* child);
 Ihandle*
 _IupGetNextChild(ih,child)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
-		Ihandle* child = SvOK(ST(1)) ? (Ihandle*)SvUV(ST(1)) : NULL;
+		Ihandle* ih = myST2IHN(0);
+		Ihandle* child = myST2IHN(1);
 	CODE:
 		RETVAL = IupGetNextChild(ih,child);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -363,10 +362,9 @@ _IupGetNextChild(ih,child)
 # Ihandle* IupGetBrother (Ihandle* ih);
 Ihandle*
 _IupGetBrother(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupGetBrother(ih);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -374,10 +372,9 @@ _IupGetBrother(ih)
 # Ihandle* IupGetParent (Ihandle* ih);
 Ihandle*
 _IupGetParent(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupGetParent(ih);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -385,10 +382,9 @@ _IupGetParent(ih)
 # Ihandle* IupGetDialog (Ihandle* ih);
 Ihandle*
 _IupGetDialog(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupGetDialog(ih);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -396,11 +392,10 @@ _IupGetDialog(ih)
 # Ihandle* IupGetDialogChild(Ihandle* ih, const char* name);
 Ihandle*
 _IupGetDialogChild(ih,name)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 	CODE:
 		RETVAL = IupGetDialogChild(ih,name);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -408,8 +403,8 @@ _IupGetDialogChild(ih,name)
 # int IupReparent (Ihandle* ih, Ihandle* new_parent);
 int
 _IupReparent(ih,new_parent)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
-		Ihandle* new_parent = SvOK(ST(1)) ? (Ihandle*)SvUV(ST(1)) : NULL;
+		Ihandle* ih = myST2IHN(0);
+		Ihandle* new_parent = myST2IHN(1);
 	CODE:
 		RETVAL = IupReparent(ih,new_parent);
 	OUTPUT:
@@ -419,7 +414,7 @@ _IupReparent(ih,new_parent)
 # int IupPopup (Ihandle* ih, int x, int y);
 int
 _IupPopup(ih,x,y)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		int x;
 		int y;
 	CODE:
@@ -431,7 +426,7 @@ _IupPopup(ih,x,y)
 # int IupShow (Ihandle* ih);
 int
 _IupShow(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupShow(ih);
 	OUTPUT:
@@ -441,7 +436,7 @@ _IupShow(ih)
 # int IupShowXY (Ihandle* ih, int x, int y);
 int
 _IupShowXY(ih,x,y)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		int x;
 		int y;
 	CODE:
@@ -453,7 +448,7 @@ _IupShowXY(ih,x,y)
 # int IupHide (Ihandle* ih);
 int
 _IupHide(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupHide(ih);
 	OUTPUT:
@@ -463,7 +458,7 @@ _IupHide(ih)
 # int IupMap (Ihandle* ih);
 int
 _IupMap(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupMap(ih);
 	OUTPUT:
@@ -473,7 +468,7 @@ _IupMap(ih)
 # void IupUnmap (Ihandle *ih);
 void
 _IupUnmap(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		IupUnmap(ih);
 
@@ -481,9 +476,9 @@ _IupUnmap(ih)
 # void IupSetAttribute (Ihandle* ih, const char* name, const char* value);
 void
 _IupSetAttribute(ih,name,value)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
-		char* name = SvOK(ST(1)) ? SvPV_nolen(ST(1)) : NULL;
-		char* value = SvOK(ST(2)) ? SvPV_nolen(ST(2)) : NULL;
+		Ihandle* ih = myST2IHN(0);
+		char* name = myST2STR(1);
+		char* value = myST2STR(2);
 	CODE:
 		//xxx warn("#XS# ih='%p' name='%s' value='%s'", ih, name, value);
 		IupSetAttribute(ih,name,value);
@@ -492,7 +487,7 @@ _IupSetAttribute(ih,name,value)
 # void IupStoreAttribute(Ihandle* ih, const char* name, const char* value);
 void
 _IupStoreAttribute(ih,name,value)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		const char* value;
 	CODE:
@@ -502,11 +497,10 @@ _IupStoreAttribute(ih,name,value)
 # Ihandle* IupSetAttributes (Ihandle* ih, const char *str);
 Ihandle*
 _IupSetAttributes(ih,str)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* str;
 	CODE:
 		RETVAL = IupSetAttributes(ih,str);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -514,11 +508,10 @@ _IupSetAttributes(ih,str)
 # char* IupGetAttribute (Ihandle* ih, const char* name);
 char*
 _IupGetAttribute(ih,name)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 	CODE:
 		RETVAL = IupGetAttribute(ih,name);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -526,10 +519,9 @@ _IupGetAttribute(ih,name)
 # char* IupGetAttributes (Ihandle* ih);
 char*
 _IupGetAttributes(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupGetAttributes(ih);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -537,7 +529,7 @@ _IupGetAttributes(ih)
 # int IupGetInt (Ihandle* ih, const char* name);
 int
 _IupGetInt(ih,name)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 	CODE:
 		RETVAL = IupGetInt(ih,name);
@@ -548,7 +540,7 @@ _IupGetInt(ih,name)
 # int IupGetInt2 (Ihandle* ih, const char* name);
 int
 _IupGetInt2(ih,name)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 	CODE:
 		RETVAL = IupGetInt2(ih,name);
@@ -559,7 +551,7 @@ _IupGetInt2(ih,name)
 # int IupGetIntInt (Ihandle *ih, const char* name, int *i1, int *i2);
 int
 _IupGetIntInt(ih,name,i1,i2)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		int &i1;
 		int &i2;
@@ -572,7 +564,7 @@ _IupGetIntInt(ih,name,i1,i2)
 # float IupGetFloat (Ihandle* ih, const char* name);
 float
 _IupGetFloat(ih,name)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 	CODE:
 		RETVAL = IupGetFloat(ih,name);
@@ -583,7 +575,7 @@ _IupGetFloat(ih,name)
 # void IupSetfAttribute (Ihandle* ih, const char* name, const char* format, ...);
 void
 _IupSetfAttribute(ih,name,format,...)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		const char* format;
 	CODE:
@@ -593,7 +585,7 @@ _IupSetfAttribute(ih,name,format,...)
 # void IupResetAttribute(Ihandle *ih, const char* name);
 void
 _IupResetAttribute(ih,name)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 	CODE:
 		IupResetAttribute(ih,name);
@@ -603,11 +595,10 @@ _IupResetAttribute(ih,name)
 Ihandle*
 _IupSetAtt(handle_name,ih,name,...)
 		const char* handle_name;
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 	CODE:
 		RETVAL = IupSetAtt(handle_name,ih,name);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -615,8 +606,8 @@ _IupSetAtt(handle_name,ih,name,...)
 # void IupSetGlobal (const char* name, const char* value);
 void
 _IupSetGlobal(name,value)
-		char* name = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
-		char* value = SvOK(ST(1)) ? SvPV_nolen(ST(1)) : NULL;
+		char* name = myST2STR(0);
+		char* value = myST2STR(1);
 	CODE:
 		IupSetGlobal(name,value);
 
@@ -624,8 +615,8 @@ _IupSetGlobal(name,value)
 # void IupStoreGlobal (const char* name, const char* value);
 void
 _IupStoreGlobal(name,value)
-		char* name = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
-		char* value = SvOK(ST(1)) ? SvPV_nolen(ST(1)) : NULL;
+		char* name = myST2STR(0);
+		char* value = myST2STR(1);
 	CODE:
 		IupStoreGlobal(name,value);
 
@@ -633,10 +624,9 @@ _IupStoreGlobal(name,value)
 # char* IupGetGlobal (const char* name);
 char*
 _IupGetGlobal(name)
-		char* name = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		char* name = myST2STR(0);
 	CODE:
 		RETVAL = IupGetGlobal(name);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -644,10 +634,9 @@ _IupGetGlobal(name)
 # Ihandle* IupSetFocus (Ihandle* ih);
 Ihandle*
 _IupSetFocus(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupSetFocus(ih);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -657,7 +646,6 @@ Ihandle*
 _IupGetFocus()
 	CODE:
 		RETVAL = IupGetFocus();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -665,10 +653,9 @@ _IupGetFocus()
 # Ihandle* IupPreviousField (Ihandle* ih); 
 Ihandle*
 _IupPreviousField(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupPreviousField(ih);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -676,10 +663,9 @@ _IupPreviousField(ih)
 # Ihandle* IupNextField (Ihandle* ih);
 Ihandle*
 _IupNextField(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupNextField(ih);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -687,7 +673,7 @@ _IupNextField(ih)
 # Icallback IupGetCallback(Ihandle* ih, const char *name);
 Icallback
 _IupGetCallback(ih,name)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 	CODE:
 		RETVAL = IupGetCallback(ih,name);
@@ -698,7 +684,7 @@ _IupGetCallback(ih,name)
 # Icallback IupSetCallback(Ihandle* ih, const char *name, Icallback func);
 Icallback
 _IupSetCallback(ih,name,func)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		Icallback func;
 	CODE:
@@ -710,12 +696,11 @@ _IupSetCallback(ih,name,func)
 # Ihandle* IupSetCallbacks(Ihandle* ih, const char *name, Icallback func, ...);
 Ihandle*
 _IupSetCallbacks(ih,name,func,...)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		Icallback func;
 	CODE:
 		RETVAL = IupSetCallbacks(ih,name,func);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -744,10 +729,9 @@ _IupSetFunction(name,func)
 # Ihandle* IupGetHandle (const char *name);
 Ihandle*
 _IupGetHandle(name)
-		char* name = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		char* name = myST2STR(0);
 	CODE:
 		RETVAL = IupGetHandle(name);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -756,10 +740,9 @@ _IupGetHandle(name)
 Ihandle*
 _IupSetHandle(name,ih)
 		const char* name;
-		Ihandle* ih = SvOK(ST(1)) ? (Ihandle*)SvUV(ST(1)) : NULL;
+		Ihandle* ih = myST2IHN(1);
 	CODE:
 		RETVAL = IupSetHandle(name,ih);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -767,10 +750,9 @@ _IupSetHandle(name,ih)
 # char* IupGetName (Ihandle* ih);
 char*
 _IupGetName(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupGetName(ih);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -778,9 +760,9 @@ _IupGetName(ih)
 # void IupSetAttributeHandle(Ihandle* ih, const char* name, Ihandle* ih_named);
 void
 _IupSetAttributeHandle(ih,name,ih_named)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
-		Ihandle* ih_named = SvOK(ST(2)) ? (Ihandle*)SvUV(ST(2)) : NULL;
+		Ihandle* ih_named = myST2IHN(2);
 	CODE:
 		//xxx warn("#XS# ih='%p' name='%s' ih_named='%p'", ih, name, ih_named);
 		IupSetAttributeHandle(ih,name,ih_named);
@@ -789,11 +771,10 @@ _IupSetAttributeHandle(ih,name,ih_named)
 # Ihandle* IupGetAttributeHandle(Ihandle* ih, const char* name);
 Ihandle*
 _IupGetAttributeHandle(ih,name)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 	CODE:
 		RETVAL = IupGetAttributeHandle(ih,name);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -801,10 +782,9 @@ _IupGetAttributeHandle(ih,name)
 # char* IupGetClassName(Ihandle* ih);
 char*
 _IupGetClassName(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupGetClassName(ih);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -812,10 +792,9 @@ _IupGetClassName(ih)
 # char* IupGetClassType(Ihandle* ih);
 char*
 _IupGetClassType(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		RETVAL = IupGetClassType(ih);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -823,7 +802,7 @@ _IupGetClassType(ih)
 # void IupSaveClassAttributes(Ihandle* ih);
 void
 _IupSaveClassAttributes(ih)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 	CODE:
 		IupSaveClassAttributes(ih);
 
@@ -831,9 +810,9 @@ _IupSaveClassAttributes(ih)
 # void IupSetClassDefaultAttribute(const char* classname, const char *name, const char* value);
 void
 _IupSetClassDefaultAttribute(classname,name,value)
-		char* classname = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
-		char* name = SvOK(ST(1)) ? SvPV_nolen(ST(1)) : NULL;
-		char* value = SvOK(ST(2)) ? SvPV_nolen(ST(2)) : NULL;
+		char* classname = myST2STR(0);
+		char* name = myST2STR(1);
+		char* value = myST2STR(2);
 	CODE:
 		IupSetClassDefaultAttribute(classname,name,value);
 
@@ -844,7 +823,6 @@ _IupCreate(classname)
 		const char* classname;
 	CODE:
 		RETVAL = IupCreate(classname);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -856,7 +834,6 @@ _IupCreatep(classname,first,...)
 		void* first;
 	CODE:
 		RETVAL = IupCreatep(classname,first);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -866,7 +843,6 @@ Ihandle*
 _IupFill()
 	CODE:
 		RETVAL = IupFill();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -874,10 +850,9 @@ _IupFill()
 # Ihandle* IupRadio (Ihandle* child);
 Ihandle*
 _IupRadio(child)
-		Ihandle* child = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* child = myST2IHN(0);
 	CODE:
 		RETVAL = IupRadio(child);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -890,14 +865,13 @@ _IupNormalizer(...)
 	CODE:
 		if (items>1) {
 		  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );		  
-		  for(i=0; i<items; i++) pointers[i] = SvOK(ST(i)) ? (Ihandle *)SvUV(ST(i)) : NULL;
+		  for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
 		  RETVAL = IupNormalizerv(pointers);
 		  free(pointers);		  
 		}
-		else if (items==1) RETVAL = SvOK(ST(0)) ? IupNormalizer((Ihandle *)SvUV(ST(0)), NULL) : NULL;
+		else if (items==1) RETVAL = SvOK(ST(0)) ? IupNormalizer(mySV2IHN(ST(0)), NULL) : NULL;
 		else RETVAL = IupNormalizer(NULL);
-		if (RETVAL==NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -910,14 +884,13 @@ _IupVbox(...)
 	CODE:
 		if (items>1) {
 		  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );		  
-		  for(i=0; i<items; i++) pointers[i] = SvOK(ST(i)) ? (Ihandle *)SvUV(ST(i)) : NULL;
+		  for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
 		  RETVAL = IupVboxv(pointers);
 		  free(pointers);		  
 		}
-		else if (items==1) RETVAL = SvOK(ST(0)) ? IupVbox((Ihandle *)SvUV(ST(0)), NULL) : NULL;
+		else if (items==1) RETVAL = SvOK(ST(0)) ? IupVbox(mySV2IHN(ST(0)), NULL) : NULL;
 		else RETVAL = IupVbox(NULL);
-		if (RETVAL==NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -930,14 +903,13 @@ _IupZbox(...)
 	CODE:
 		if (items>1) {
 		  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );		  
-		  for(i=0; i<items; i++) pointers[i] = SvOK(ST(i)) ? (Ihandle *)SvUV(ST(i)) : NULL;
+		  for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
 		  RETVAL = IupZboxv(pointers);
 		  free(pointers);		  
 		}
-		else if (items==1) RETVAL = SvOK(ST(0)) ? IupZbox((Ihandle *)SvUV(ST(0)), NULL) : NULL;
+		else if (items==1) RETVAL = SvOK(ST(0)) ? IupZbox(mySV2IHN(ST(0)), NULL) : NULL;
 		else RETVAL = IupZbox(NULL);
-		if (RETVAL==NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -950,14 +922,13 @@ _IupHbox(...)
 	CODE:
 		if (items>1) {
 		  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );		  
-		  for(i=0; i<items; i++) pointers[i] = SvOK(ST(i)) ? (Ihandle *)SvUV(ST(i)) : NULL;
+		  for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
 		  RETVAL = IupHboxv(pointers);
 		  free(pointers);		  
 		}
-		else if (items==1) RETVAL = SvOK(ST(0)) ? IupHbox((Ihandle *)SvUV(ST(0)), NULL) : NULL;
+		else if (items==1) RETVAL = SvOK(ST(0)) ? IupHbox(mySV2IHN(ST(0)), NULL) : NULL;
 		else RETVAL = IupHbox(NULL);
-		if (RETVAL==NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -970,14 +941,13 @@ _IupCbox(...)
 	CODE:
 		if (items>1) {
 		  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );		  
-		  for(i=0; i<items; i++) pointers[i] = SvOK(ST(i)) ? (Ihandle *)SvUV(ST(i)) : NULL;
+		  for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
 		  RETVAL = IupCboxv(pointers);
 		  free(pointers);		  
 		}
-		else if (items==1) RETVAL = SvOK(ST(0)) ? IupCbox((Ihandle *)SvUV(ST(0)), NULL) : NULL;
+		else if (items==1) RETVAL = SvOK(ST(0)) ? IupCbox(mySV2IHN(ST(0)), NULL) : NULL;
 		else RETVAL = IupCbox(NULL);
-		if (RETVAL==NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -985,10 +955,9 @@ _IupCbox(...)
 # Ihandle* IupSbox (Ihandle *child);
 Ihandle*
 _IupSbox(child)
-		Ihandle* child = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* child = myST2IHN(0);
 	CODE:
 		RETVAL = IupSbox(child);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -996,11 +965,10 @@ _IupSbox(child)
 # Ihandle* IupSplit (Ihandle* child1, Ihandle* child2);
 Ihandle*
 _IupSplit(child1,child2)
-		Ihandle* child1 = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
-		Ihandle* child2 = SvOK(ST(1)) ? (Ihandle*)SvUV(ST(1)) : NULL;
+		Ihandle* child1 = myST2IHN(0);
+		Ihandle* child2 = myST2IHN(1);
 	CODE:
 		RETVAL = IupSplit(child1,child2);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1008,10 +976,9 @@ _IupSplit(child1,child2)
 # Ihandle* IupFrame (Ihandle* child);
 Ihandle*
 _IupFrame(child)
-		Ihandle* child = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* child = myST2IHN(0);
 	CODE:
 		RETVAL = IupFrame(child);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1024,7 +991,6 @@ _IupImage(width,height,pixmap)
 		SV * pixmap;
 	CODE:
 		RETVAL = IupImage(width,height,(unsigned char *)SvPVbyte_nolen(pixmap));
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1037,7 +1003,6 @@ _IupImageRGB(width,height,pixmap)
 		SV * pixmap;
 	CODE:
 		RETVAL = IupImageRGB(width,height,(unsigned char *)SvPVbyte_nolen(pixmap));
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1050,7 +1015,6 @@ _IupImageRGBA(width,height,pixmap)
 		SV * pixmap;
 	CODE:
 		RETVAL = IupImageRGBA(width,height,(unsigned char *)SvPVbyte_nolen(pixmap));
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1058,11 +1022,10 @@ _IupImageRGBA(width,height,pixmap)
 # Ihandle* IupItem (const char* title, const char* action);
 Ihandle*
 _IupItem(title,action)
-		const char* title = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
-		const char* action = SvOK(ST(1)) ? SvPV_nolen(ST(1)) : NULL;
+		const char* title = myST2STR(0);
+		const char* action = myST2STR(1);
 	CODE:
 		RETVAL = IupItem(title,action);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1070,11 +1033,10 @@ _IupItem(title,action)
 # Ihandle* IupSubmenu (const char* title, Ihandle* child);
 Ihandle*
 _IupSubmenu(title,child)
-		const char* title = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
-		Ihandle* child = SvOK(ST(1)) ? (Ihandle*)SvUV(ST(1)) : NULL;
+		const char* title = myST2STR(0);
+		Ihandle* child = myST2IHN(1);
 	CODE:
 		RETVAL = IupSubmenu(title,child);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1084,7 +1046,6 @@ Ihandle*
 _IupSeparator()
 	CODE:
 		RETVAL = IupSeparator();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1097,14 +1058,13 @@ _IupMenu(...)
 	CODE:
 		if (items>1) {
 		  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );		  
-		  for(i=0; i<items; i++) pointers[i] = SvOK(ST(i)) ? (Ihandle *)SvUV(ST(i)) : NULL;
+		  for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
 		  RETVAL = IupMenuv(pointers);
 		  free(pointers);		  
 		}
-		else if (items==1) RETVAL = SvOK(ST(0)) ? IupMenu((Ihandle *)SvUV(ST(0)), NULL) : NULL;
+		else if (items==1) RETVAL = SvOK(ST(0)) ? IupMenu(mySV2IHN(ST(0)), NULL) : NULL;
 		else RETVAL = IupMenu(NULL);
-		if (RETVAL==NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1112,11 +1072,10 @@ _IupMenu(...)
 # Ihandle* IupButton (const char* title, const char* action);
 Ihandle*
 _IupButton(title,action)
-		const char* title = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
-		const char* action = SvOK(ST(1)) ? SvPV_nolen(ST(1)) : NULL;
+		const char* title = myST2STR(0);
+		const char* action = myST2STR(1);
 	CODE:
 		RETVAL = IupButton(title,action);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1124,10 +1083,9 @@ _IupButton(title,action)
 # Ihandle* IupCanvas (const char* action);
 Ihandle*
 _IupCanvas(action)
-		const char* action = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		const char* action = myST2STR(0);
 	CODE:
 		RETVAL = IupCanvas(action);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1135,10 +1093,9 @@ _IupCanvas(action)
 # Ihandle* IupDialog (Ihandle* child);
 Ihandle*
 _IupDialog(child)
-		Ihandle* child = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* child = myST2IHN(0);
 	CODE:
 		RETVAL = IupDialog(child);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1148,7 +1105,6 @@ Ihandle*
 _IupUser()
 	CODE:
 		RETVAL = IupUser();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1156,10 +1112,9 @@ _IupUser()
 # Ihandle* IupLabel (const char* title);
 Ihandle*
 _IupLabel(title)
-		const char* title = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		const char* title = myST2STR(0);
 	CODE:
 		RETVAL = IupLabel(title);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1170,7 +1125,6 @@ _IupList(action)
 		const char* action;
 	CODE:
 		RETVAL = IupList(action);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1181,7 +1135,6 @@ _IupText(action)
 		const char* action;
 	CODE:
 		RETVAL = IupText(action);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1192,7 +1145,6 @@ _IupMultiLine(action)
 		const char* action;
 	CODE:
 		RETVAL = IupMultiLine(action);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1200,11 +1152,10 @@ _IupMultiLine(action)
 # Ihandle* IupToggle (const char* title, const char* action);
 Ihandle*
 _IupToggle(title,action)
-		const char* title = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
-		const char* action = SvOK(ST(1)) ? SvPV_nolen(ST(1)) : NULL;
+		const char* title = myST2STR(0);
+		const char* action = myST2STR(1);
 	CODE:
 		RETVAL = IupToggle(title,action);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1214,7 +1165,6 @@ Ihandle*
 _IupTimer()
 	CODE:
 		RETVAL = IupTimer();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1224,7 +1174,6 @@ Ihandle*
 _IupClipboard()
 	CODE:
 		RETVAL = IupClipboard();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1234,7 +1183,6 @@ Ihandle*
 _IupProgressBar()
 	CODE:
 		RETVAL = IupProgressBar();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1242,10 +1190,9 @@ _IupProgressBar()
 # Ihandle* IupVal (const char *type);
 Ihandle*
 _IupVal(type)
-		char* type = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		char* type = myST2STR(0);
 	CODE:
 		RETVAL = IupVal(type);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1258,14 +1205,13 @@ _IupTabs(...)
 	CODE:
 		if (items>1) {
 		  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );		  
-		  for(i=0; i<items; i++) pointers[i] = SvOK(ST(i)) ? (Ihandle *)SvUV(ST(i)) : NULL;
+		  for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
 		  RETVAL = IupTabsv(pointers);
 		  free(pointers);		  
 		}
-		else if (items==1) RETVAL = SvOK(ST(0)) ? IupTabs((Ihandle *)SvUV(ST(0)), NULL) : NULL;
+		else if (items==1) RETVAL = SvOK(ST(0)) ? IupTabs(mySV2IHN(ST(0)), NULL) : NULL;
 		else RETVAL = IupTabs(NULL);
-		if (RETVAL==NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1275,7 +1221,6 @@ Ihandle*
 _IupTree()
 	CODE:
 		RETVAL = IupTree();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1285,7 +1230,6 @@ Ihandle*
 _IupSpin()
 	CODE:
 		RETVAL = IupSpin();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1293,10 +1237,9 @@ _IupSpin()
 # Ihandle* IupSpinbox (Ihandle* child);
 Ihandle*
 _IupSpinbox(child)
-		Ihandle* child = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* child = myST2IHN(0);
 	CODE:
 		RETVAL = IupSpinbox(child);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1304,7 +1247,7 @@ _IupSpinbox(child)
 # int IupSaveImageAsText(Ihandle* ih, const char* file_name, const char* format, const char* name);
 int
 _IupSaveImageAsText(ih,file_name,format,name)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* file_name;
 		const char* format;
 		const char* name;
@@ -1317,7 +1260,7 @@ _IupSaveImageAsText(ih,file_name,format,name)
 # void IupTextConvertLinColToPos(Ihandle* ih, int lin, int col, int *pos);
 void
 _IupTextConvertLinColToPos(ih,lin,col,pos)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		int lin;
 		int col;
 		int &pos;
@@ -1328,7 +1271,7 @@ _IupTextConvertLinColToPos(ih,lin,col,pos)
 # void IupTextConvertPosToLinCol(Ihandle* ih, int pos, int *lin, int *col);
 void
 _IupTextConvertPosToLinCol(ih,pos,lin,col)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		int pos;
 		int &lin;
 		int &col;
@@ -1339,7 +1282,7 @@ _IupTextConvertPosToLinCol(ih,pos,lin,col)
 # int IupConvertXYToPos(Ihandle* ih, int x, int y);
 int
 _IupConvertXYToPos(ih,x,y)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		int x;
 		int y;
 	CODE:
@@ -1351,7 +1294,7 @@ _IupConvertXYToPos(ih,x,y)
 # int IupTreeSetUserId(Ihandle* ih, int id, void* userid);
 int
 _IupTreeSetUserId(ih,id,userid)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		int id;
 		void* userid;
 	CODE:
@@ -1363,11 +1306,10 @@ _IupTreeSetUserId(ih,id,userid)
 # void* IupTreeGetUserId(Ihandle* ih, int id);
 void*
 _IupTreeGetUserId(ih,id)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		int id;
 	CODE:
 		RETVAL = IupTreeGetUserId(ih,id);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1375,7 +1317,7 @@ _IupTreeGetUserId(ih,id)
 # int IupTreeGetId(Ihandle* ih, void *userid);
 int
 _IupTreeGetId(ih,userid)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		void* userid;
 	CODE:
 		RETVAL = IupTreeGetId(ih,userid);
@@ -1386,7 +1328,7 @@ _IupTreeGetId(ih,userid)
 # void IupTreeSetAttribute (Ihandle* ih, const char* name, int id, const char* value);
 void
 _IupTreeSetAttribute(ih,name,id,value)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		int id;
 		const char* value;
@@ -1397,7 +1339,7 @@ _IupTreeSetAttribute(ih,name,id,value)
 # void IupTreeStoreAttribute(Ihandle* ih, const char* name, int id, const char* value);
 void
 _IupTreeStoreAttribute(ih,name,id,value)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		int id;
 		const char* value;
@@ -1408,12 +1350,11 @@ _IupTreeStoreAttribute(ih,name,id,value)
 # char* IupTreeGetAttribute (Ihandle* ih, const char* name, int id);
 char*
 _IupTreeGetAttribute(ih,name,id)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		int id;
 	CODE:
 		RETVAL = IupTreeGetAttribute(ih,name,id);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1421,7 +1362,7 @@ _IupTreeGetAttribute(ih,name,id)
 # int IupTreeGetInt (Ihandle* ih, const char* name, int id);
 int
 _IupTreeGetInt(ih,name,id)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		int id;
 	CODE:
@@ -1433,7 +1374,7 @@ _IupTreeGetInt(ih,name,id)
 # float IupTreeGetFloat (Ihandle* ih, const char* name, int id);
 float
 _IupTreeGetFloat(ih,name,id)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		int id;
 	CODE:
@@ -1445,7 +1386,7 @@ _IupTreeGetFloat(ih,name,id)
 # void IupTreeSetfAttribute (Ihandle* ih, const char* name, int id, const char* format, ...);
 void
 _IupTreeSetfAttribute(ih,name,id,format,...)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		int id;
 		const char* format;
@@ -1456,10 +1397,10 @@ _IupTreeSetfAttribute(ih,name,id,format,...)
 # void IupTreeSetAttributeHandle(Ihandle* ih, const char* a, int id, Ihandle* ih_named);
 void
 _IupTreeSetAttributeHandle(ih,a,id,ih_named)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* a;
 		int id;
-		Ihandle* ih_named = SvOK(ST(3)) ? (Ihandle*)SvUV(ST(3)) : NULL;
+		Ihandle* ih_named = myST2IHN(3);
 	CODE:
 		IupTreeSetAttributeHandle(ih,a,id,ih_named);
 
@@ -1469,7 +1410,6 @@ Ihandle*
 _IupFileDlg()
 	CODE:
 		RETVAL = IupFileDlg();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1479,7 +1419,6 @@ Ihandle*
 _IupMessageDlg()
 	CODE:
 		RETVAL = IupMessageDlg();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1489,7 +1428,6 @@ Ihandle*
 _IupColorDlg()
 	CODE:
 		RETVAL = IupColorDlg();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1499,7 +1437,6 @@ Ihandle*
 _IupFontDlg()
 	CODE:
 		RETVAL = IupFontDlg();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1528,8 +1465,8 @@ _IupGetFile(arq)
 # void IupMessage(const char *title, const char *msg);
 void
 _IupMessage(title,msg)
-		const char* title = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
-		const char* msg = SvOK(ST(1)) ? SvPV_nolen(ST(1)) : NULL;
+		const char* title = myST2STR(0);
+		const char* msg = myST2STR(1);
 	CODE:
 		IupMessage(title,msg);
 
@@ -1537,8 +1474,8 @@ _IupMessage(title,msg)
 # void IupMessagef(const char *title, const char *format, ...);
 void
 _IupMessagef(title,format,...)
-		const char* title = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
-		const char* format = SvOK(ST(1)) ? SvPV_nolen(ST(1)) : NULL;
+		const char* title = myST2STR(0);
+		const char* format = myST2STR(1);
 	CODE:
 		IupMessagef(title,format);
 
@@ -1546,11 +1483,11 @@ _IupMessagef(title,format,...)
 # int IupAlarm(const char *title, const char *msg, const char *b1, const char *b2, const char *b3);
 int
 _IupAlarm(title,msg,b1,b2,b3)
-		const char* title = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
-		const char* msg = SvOK(ST(1)) ? SvPV_nolen(ST(1)) : NULL;
-		const char* b1 = SvOK(ST(2)) ? SvPV_nolen(ST(2)) : NULL;
-		const char* b2 = SvOK(ST(3)) ? SvPV_nolen(ST(3)) : NULL;
-		const char* b3 = SvOK(ST(4)) ? SvPV_nolen(ST(4)) : NULL;
+		const char* title = myST2STR(0);
+		const char* msg = myST2STR(1);
+		const char* b1 = myST2STR(2);
+		const char* b2 = myST2STR(3);
+		const char* b3 = myST2STR(4);
 	CODE:
 		RETVAL = IupAlarm(title,msg,b1,b2,b3);
 	OUTPUT:
@@ -1570,8 +1507,8 @@ _IupScanf(format,...)
 # int IupGetText(const char* title, char* text);
 int
 _IupGetText(title,text)
-		char* title = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
-		char* text = SvOK(ST(1)) ? SvPV_nolen(ST(1)) : NULL; /* xxx asi reference */
+		char* title = myST2STR(0);
+		char* text = myST2STR(1); /* xxx asi reference */
 	CODE:
 		RETVAL = IupGetText(title,text);
 	OUTPUT:
@@ -1603,10 +1540,10 @@ _IupGetColor(x,y,r,g,b)
 # int IupGetParam(const char* title, Iparamcb action, void* user_data, const char* format,...);
 int
 _IupGetParam(title,action,action_data,format,...)
-		char* title = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		char* title = myST2STR(0);
 		SV* action;
 		SV* action_data;
-		char* format = SvOK(ST(3)) ? SvPV_nolen(ST(3)) : NULL;
+		char* format = myST2STR(3);
 	INIT:
 		getparam_data gp;
 		void* gp_user_data = (void*)&gp;
@@ -1717,7 +1654,7 @@ _IupGetParam(title,action,action_data,format,...)
 int
 _IupListDialog(type,title,list,op,max_col,max_lin,marks)
 		int type;
-		char *title = SvOK(ST(1)) ? SvPV_nolen(ST(1)) : NULL;
+		char *title = myST2STR(1);
 		SV* list;
 		int op;
 		int max_col;
@@ -1774,7 +1711,7 @@ _IupListDialog(type,title,list,op,max_col,max_lin,marks)
 # int IupGetAllNames(char** names, int max_n);
 int
 _IupGetAllNames(max_n)
-		int max_n = SvOK(ST(0)) ? SvIV(ST(0)) : 0;
+		int max_n = myST2INT(0);
 	INIT:
 		int i, rv, count;
 		int items = -1;
@@ -1796,7 +1733,7 @@ _IupGetAllNames(max_n)
 # int IupGetAllDialogs(char** names, int max_n);
 int
 _IupGetAllDialogs(max_n)
-		int max_n = SvOK(ST(0)) ? SvIV(ST(0)) : 0;
+		int max_n = myST2INT(0);
 	INIT:
 		int i, rv, count;
 		char** list = NULL;		  
@@ -1817,8 +1754,8 @@ _IupGetAllDialogs(max_n)
 # int IupGetClassAttributes(const char* classname, char** names, int max_n);
 int
 _IupGetClassAttributes(classname,max_n)
-		const char* classname = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
-		int max_n = SvOK(ST(1)) ? SvIV(ST(1)) : 0;
+		const char* classname = myST2STR(0);
+		int max_n = myST2INT(1);
 	INIT:
 		int i, rv, count;
 		char** list = NULL;		  
@@ -1839,8 +1776,8 @@ _IupGetClassAttributes(classname,max_n)
 # int IupGetAllAttributes(Ihandle* ih, char** names, int max_n);
 int
 _IupGetAllAttributes(ih,max_n)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
-		int max_n = SvOK(ST(1)) ? SvIV(ST(1)) : 0;
+		Ihandle* ih = myST2IHN(0);
+		int max_n = myST2INT(1);
 	INIT:
 		int i, rv, count;
 		char** list = NULL;		  
@@ -1865,7 +1802,6 @@ Ihandle*
 _IupColorBrowser()
 	CODE:
 		RETVAL = IupColorBrowser();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1873,10 +1809,9 @@ _IupColorBrowser()
 # Ihandle* IupDial(const char* type);
 Ihandle*
 _IupDial(type)
-		char* type = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		char* type = myST2STR(0);
 	CODE:
 		RETVAL = IupDial(type);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1902,7 +1837,6 @@ Ihandle*
 _IupColorbar()
 	CODE:
 		RETVAL = IupColorbar();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1912,7 +1846,6 @@ Ihandle*
 _IupCells()
 	CODE:
 		RETVAL = IupCells();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1920,10 +1853,9 @@ _IupCells()
 # Ihandle* IupMatrix(const char *action);
 Ihandle*
 _IupMatrix(action)
-		char* action = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		char* action = myST2STR(0);
 	CODE:
 		RETVAL = IupMatrix(action);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1931,7 +1863,7 @@ _IupMatrix(action)
 # void IupMatSetAttribute (Ihandle* ih, const char* name, int lin, int col, char* value);
 void
 _IupMatSetAttribute(ih,name,lin,col,value)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		int lin;
 		int col;
@@ -1943,7 +1875,7 @@ _IupMatSetAttribute(ih,name,lin,col,value)
 # void IupMatStoreAttribute(Ihandle* ih, const char* name, int lin, int col, char* value);
 void
 _IupMatStoreAttribute(ih,name,lin,col,value)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		int lin;
 		int col;
@@ -1955,13 +1887,12 @@ _IupMatStoreAttribute(ih,name,lin,col,value)
 # char* IupMatGetAttribute (Ihandle* ih, const char* name, int lin, int col);
 char*
 _IupMatGetAttribute(ih,name,lin,col)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		int lin;
 		int col;
 	CODE:
 		RETVAL = (char*)IupMatGetAttribute(ih,name,lin,col);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -1969,7 +1900,7 @@ _IupMatGetAttribute(ih,name,lin,col)
 # int IupMatGetInt (Ihandle* ih, const char* name, int lin, int col);
 int
 _IupMatGetInt(ih,name,lin,col)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		int lin;
 		int col;
@@ -1982,7 +1913,7 @@ _IupMatGetInt(ih,name,lin,col)
 # float IupMatGetFloat (Ihandle* ih, const char* name, int lin, int col);
 float
 _IupMatGetFloat(ih,name,lin,col)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		int lin;
 		int col;
@@ -1995,7 +1926,7 @@ _IupMatGetFloat(ih,name,lin,col)
 # void IupMatSetfAttribute (Ihandle* ih, const char* name, int lin, int col, char* format, ...);
 void
 _IupMatSetfAttribute(ih,name,lin,col,format,...)
-		Ihandle* ih = SvOK(ST(0)) ? (Ihandle*)SvUV(ST(0)) : NULL;
+		Ihandle* ih = myST2IHN(0);
 		const char* name;
 		int lin;
 		int col;
@@ -2018,7 +1949,6 @@ Ihandle*
 _IupPPlot()
 	CODE:
 		RETVAL = IupPPlot();
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 
@@ -2052,10 +1982,9 @@ _IupPPlot()
 # Ihandle *IupGLCanvas(const char *action);
 Ihandle*
 _IupGLCanvas(type)
-		char* type = SvOK(ST(0)) ? SvPV_nolen(ST(0)) : NULL;
+		char* type = myST2STR(0);
 	CODE:
 		RETVAL = IupGLCanvas(type);
-		if (RETVAL == NULL) XSRETURN_UNDEF;
 	OUTPUT:
 		RETVAL
 

@@ -1,27 +1,31 @@
 TYPEMAP
-Ihandle **		T_PTR
-Ihandle *		T_PTR
-const unsigned char *	T_PTR
-Icallback		T_PTR
-Iparamcb		T_PTR
+char *			T_STR_OR_NULL
+Ihandle *		T_PTR_OR_NULL
+unsigned char *		T_PTR_OR_NULL
+Icallback		T_PTR_OR_NULL
+Iparamcb		T_PTR_OR_NULL
 
-# xxx TODO xxx
-# NULL vs. undef
-# http://www.perlmonks.org/?node_id=554277
-
+### pointer with automatic NULL<->undef conversion on input/output
 INPUT
 T_PTR_OR_NULL
-	/* treat undef as null pointer (output does the inverse) */
-	$var = (SvOK($arg)) ? ($type)SvPV_nolen($arg) : NULL;
+	$var = (SvIOK($arg)) ? INT2PTR($type,SvIVX($arg)) : NULL;
 
 OUTPUT
 T_PTR_OR_NULL
-	if ($var) {
-		$var = ($type)SvUV($arg);
-	} else {
-		XSRETURN_UNDEF;
-	}
+	if ($var==NULL) XSRETURN_UNDEF;
+	else sv_setiv($arg, PTR2IV($var));
 
+### string (char*) with automatic NULL<->undef conversion on input/output
+INPUT
+T_STR_OR_NULL
+	$var = (SvPOK($arg)) ? SvPVX($arg) : NULL;
+
+OUTPUT
+T_STR_OR_NULL
+	if ($var==NULL) XSRETURN_UNDEF;
+	else sv_setpv($arg, $var);
+
+### common stuff
 
 # The Perl object is blessed into 'CLASS', which should be a
 # char* having the name of the package for the blessing.
@@ -46,5 +50,3 @@ O_OBJECT
         } else {
            XSRETURN_UNDEF;
         }
-
-
