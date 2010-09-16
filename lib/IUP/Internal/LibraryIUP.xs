@@ -72,16 +72,13 @@ static int cb_param_action(Ihandle* dialog, int param_index, void* user_data) {
 
 MODULE = IUP::Internal::LibraryIUP	PACKAGE = IUP::Internal::LibraryIUP
 
-# http://perldoc.perl.org/perlxs.html
-# http://perldoc.perl.org/perlxstut.html
-
 BOOT:
-//xxx warn("Helo from bootstrap!");
+/* xxx warn("Helo from bootstrap!"); */
 IupOpen(NULL, NULL);
 IupControlsOpen();
 IupPPlotOpen();
 IupGLCanvasOpen();
-//xxx ??? IupImageLibOpen();
+/* xxx IupImageLibOpen(); */
 
 ################################################################################ iup.h
 
