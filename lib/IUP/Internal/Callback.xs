@@ -2991,7 +2991,7 @@ internal_cb_MULTISELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
 	XPUSHs(sv_2mortal(newSVpvn("MULTISELECTION_CB", 17)));
-	for(loc_i=0; loc_i++; loc_i<n) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));
+	for(loc_i=0; loc_i<n; loc_i++) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));
 	PUTBACK;
 
 	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
@@ -3023,7 +3023,7 @@ internal_cb_MULTIUNSELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
 	XPUSHs(sv_2mortal(newSVpvn("MULTIUNSELECTION_CB", 19)));
-	for(loc_i=0; loc_i++; loc_i<n) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));
+	for(loc_i=0; loc_i<n; loc_i++) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));
 	PUTBACK;
 
 	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);

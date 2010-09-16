@@ -97,7 +97,7 @@ sub generate1 {
 	elsif ($tp[$i-1] =~ /^(A)$/) {  # xxx TODO needs testing + pod update
 	  push @l_name, "\@$n\_list";
 	  # xxx hack for MULTISELECTION_CB MULTIUNSELECTION_CB - do not use 'A' for anything else
-	  push @l_xspush, "for(loc_i=0; loc_i++; loc_i<n) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));";
+	  push @l_xspush, "for(loc_i=0; loc_i<n; loc_i++) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));";
 	  push @l_xslocvar, "int loc_i;";
 	  last;
 	}
