@@ -49,6 +49,9 @@
 
 MODULE = IUP::Internal::Callback	PACKAGE = IUP::Internal::Callback
 
+BOOT:
+/* empty boot */
+
 [% FOREACH i IN xsitems %]
 void
 [% i.xs_init_cb %](ih,action)

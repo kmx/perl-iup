@@ -1,11 +1,8 @@
 XS
-- LibraryIUP / Linux: warning: ISO C90 forbids mixed declarations and code
+- LibraryIUP / Linux: warning: ISO C90 forbids mixed declarations and code (when using myST2xxx)
 - LibraryIUP / Linux: warning: unused variable targ | RETVAL (when using PPCODE)
-- LibraryIUP: implicit declaration of function IupControlsOpen IupPPlotOpen IupGLCanvasOpen
-  lib/IUP/Internal/LibraryIUP.xs: In function 'boot_IUP__Internal__Callback': (strange)
 - LibraryIUP - remove unnecessary use of MyST2xxx() macros
 - Alien for Unix needs: -lstdc++
-- pointer failures - http://ods.com.ua/win/eng/program/Perl5Unleashed/ch25.phtml
 
 Linux:
 - (<unknown>:4352): Pango-WARNING **: Error loading GSUB table 85
@@ -13,6 +10,7 @@ Linux:
 - 'Quit' in main menu requires double click
 
 GLOBAL
+- detection when running without initialized GUI
 - _generators 
   + attributes
   + check against GetAttrNames
