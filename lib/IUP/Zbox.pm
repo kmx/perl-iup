@@ -11,7 +11,7 @@ sub _create_element {
   my $ih;
   if (defined $firstonly) {
     if (ref($firstonly) eq 'ARRAY') {
-      $ih = IUP::Internal::LibraryIUP::_IupZbox(@$firstonly);
+      $ih = IUP::Internal::LibraryIUP::_IupZbox( map($_->ihandle, @$firstonly) );
     }
     else {
       $ih = IUP::Internal::LibraryIUP::_IupZbox($firstonly);

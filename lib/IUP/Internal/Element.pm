@@ -136,9 +136,12 @@ sub SetAttribute {
   my ($self, %args) = @_;  
   for (keys %args) {    
     my ($k, $v) = ($_, $args{$_});
-    if (!$self->IsValidAttributeName($k)) {
-      carp "Warning: ignoring illegal attribute '$k' (".ref($self).")";
-      next;
+    if (!$self->IsValidAttributeName($k)) {      
+      #xxx carp "Warning: ignoring illegal attribute '$k' (".ref($self).")";
+      #xxx next;      
+      #xxx TODO perhaps just warn      
+      carp "Warning: illegal attribute '$k' val='$v' (".ref($self).")";
+      IUP::Internal::LibraryIUP::_IupStoreAttribute($self->ihandle, $k, $v);
     }
     if (ref($v)) {
       IUP::Internal::LibraryIUP::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);

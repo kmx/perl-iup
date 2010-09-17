@@ -8,10 +8,10 @@ use IUP::Internal::LibraryIUP;
 
 sub _create_element {
   my ($self, $args, $firstonly) = @_;
-  my $ih;
+  my $ih;  
   if (defined $firstonly) {
     if (ref($firstonly) eq 'ARRAY') {
-      $ih = IUP::Internal::LibraryIUP::_IupVbox(@$firstonly);
+      $ih = IUP::Internal::LibraryIUP::_IupVbox( map($_->ihandle, @$firstonly) );
     }
     else {
       $ih = IUP::Internal::LibraryIUP::_IupVbox($firstonly);

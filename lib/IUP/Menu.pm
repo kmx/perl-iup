@@ -12,7 +12,7 @@ sub _create_element {
   my $ih;
   if (defined $firstonly) {
     if (ref($firstonly) eq 'ARRAY') {
-      $ih = IUP::Internal::LibraryIUP::_IupMenu(@$firstonly);
+      $ih = IUP::Internal::LibraryIUP::_IupMenu( map($_->ihandle, @$firstonly) );
     }
     else {
       $ih = IUP::Internal::LibraryIUP::_IupMenu($firstonly);

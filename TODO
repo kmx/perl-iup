@@ -98,3 +98,6 @@ IUP::OleControl
 IUP::ImageLib
 - missing
 - check memory consumption
+
+IUP::Element
+- _create_element should set ihandle
