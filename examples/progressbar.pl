@@ -19,7 +19,7 @@ my $dlg = IUP::Dialog->new( child=>$progressbar, TITLE=>"IupProgressBar");
 
 # xxx TODO SetIdle not implemented yet
 # Registers idle callback;
-#IUP->SetIdle(\&idle_cb);
+IUP->SetIdle(\&idle_cb);
 
 $dlg->ShowXY(IUP_CENTER, IUP_CENTER);
 

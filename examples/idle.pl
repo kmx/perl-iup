@@ -4,10 +4,10 @@ my $l = IUP::Label->new( TITLE=>"1", SIZE=>"200x" );
 
 sub idle_cb {
   my $v = int($l->TITLE) + 1;
-  $l->TITLE = $v;
-  if ( $v == 10000 ) {
+  $l->TITLE($v);
+  if ( $v >= 10000 ) {
     # xxx TODO xxx missing function
-    # xxx IUP->SetIdle();
+    IUP->SetIdle();
   }
   return IUP_DEFAULT;
 }

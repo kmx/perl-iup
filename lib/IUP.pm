@@ -423,6 +423,11 @@ sub Message {
   return;
 }
 
+sub SetIdle {
+  my ($pkg, $func) = @_;
+  return IUP::Internal::LibraryIUP::_SetIdle($func);
+}
+
 ###
 
 =head1 NAME

@@ -70,6 +70,32 @@ static int cb_param_action(Ihandle* dialog, int param_index, void* user_data) {
   return ret;
 }
 
+/* xxx TODO xxx is not thread safe */
+static SV* idle_action = (SV*)NULL;;
+
+static int cb_idle_action() {  
+  dSP;
+  int count, ret;
+  
+  ENTER;
+  SAVETMPS;
+    
+  PUSHMARK(SP);  
+  count = call_sv(idle_action,G_SCALAR|G_NOARGS);
+
+  SPAGAIN;
+
+  if (count != 1) croak("Error: Idle's action has not returned single scalar value!\n");
+  ret = POPi;
+
+  PUTBACK;
+
+  FREETMPS;
+  LEAVE;
+
+  return ret;
+}
+
 MODULE = IUP::Internal::LibraryIUP	PACKAGE = IUP::Internal::LibraryIUP
 
 BOOT:
@@ -79,6 +105,25 @@ IupControlsOpen();
 IupPPlotOpen();
 IupGLCanvasOpen();
 /* xxx IupImageLibOpen(); */
+
+################################################################################
+SV*
+_SetIdle(func)
+		SV* func;
+	CODE:		
+		RETVAL=newSVsv(idle_action); /* xxx TODO not sure if this is OK xxx */
+		if (idle_action==(SV*)NULL)
+		  idle_action = newSVsv(func);
+		else
+		  SvSetSV(idle_action, func);
+		if (SvOK(func)) {
+		  IupSetFunction("IDLE_ACTION", (Icallback)cb_idle_action);
+		}
+		else {
+                  IupSetFunction("IDLE_ACTION", (Icallback)NULL);
+		}
+	OUTPUT:
+		RETVAL
 
 ################################################################################ iup.h
 
