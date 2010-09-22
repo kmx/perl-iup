@@ -26,7 +26,7 @@ sub new {
     %args = @_ ;
   }
   elsif ($argc > 0) {
-    carp "Warning: $class->new() invalid arguments (argc=$argc), ignoring all parameters";
+    carp "Warning: $class->new() odd number of arguments ($argc), ignoring all parameters";
   }
   
   $self->ihandle($self->_create_element(\%args, $firstonly));
@@ -46,8 +46,12 @@ sub new {
     elsif ($_ eq 'name') {
       $self->name($args{$_});
     }
+    elsif ($_ eq uc($_)) {
+      push(@at, $_, $args{$_});
+      carp "Warning: $class->new() unknown parameter '$_', assuming an attribute";
+    }
     else {
-      carp "Warning: $class->new() ignoring illegal parameter '$_' ($class)";
+      carp "Warning: $class->new() ignoring unknown parameter '$_'";
     }
   }
   $self->SetAttribute(@at) if scalar(@at);
@@ -140,7 +144,7 @@ sub SetAttribute {
       #xxx carp "Warning: ignoring illegal attribute '$k' (".ref($self).")";
       #xxx next;      
       #xxx TODO perhaps just warn      
-      carp "Warning: illegal attribute '$k' val='$v' (".ref($self).")";
+      carp "Warning: unknown attribute '$k' val='$v' (".ref($self).")";
       IUP::Internal::LibraryIUP::_IupStoreAttribute($self->ihandle, $k, $v);
     }
     if (ref($v)) {
@@ -174,7 +178,7 @@ sub SetCallback {
       &$cb_init_func($self->ihandle,$action);
     }
     else {
-      carp "Warning: ignoring illegal callback '$action' (".ref($self).")";
+      carp "Warning: ignoring unknown callback '$action' (".ref($self).")";
     }
   }
 }
@@ -308,6 +312,8 @@ sub Popup {
   #iup.Popup(ih: ihandle[, x, y: number]) -> (ret: number) [in Lua]
   #or ih:popup([x, y: number]) -> (ret: number) [in Lua]
   my ($self, $x, $y) = @_;
+  #$x ||= 0; # xxx TOTO some reasonable defaults
+  #$y ||= 0; # xxx TOTO some reasonable defaults
   return IUP::Internal::LibraryIUP::_IupPopup($self->ihandle, $x, $y);  
 }
 
@@ -442,6 +448,33 @@ sub GetDialogChild {
   my $ih = IUP::Internal::LibraryIUP::_IupGetDialogChild($self->ihandle, $name);
   return IUP->GetOrCreateByIhandle($ih);
 }
+
+sub GetParamParam {
+  # xxx TODO maybe Dialog only
+  #iup.GetParamParam(dialog: ihandle, param_index: number)-> (param: ihandle) [in Lua]
+  my ($self, $param_index) = @_;
+  my $param_str = sprintf("PARAM%d", $param_index);
+  my $ih = IUP::Internal::LibraryIUP::_IupGetAttributeIH($self->ihandle, $param_str);  
+  my $ct = IUP::Internal::LibraryIUP::_IupGetAttributeIH($ih, "CONTROL");
+  # xxx TODO xxx decide how to handle GetParamParam
+  return IUP->GetOrCreateByIhandle($ih);
+  #return IUP->GetOrCreateByIhandle($ct);
+}
+
+sub GetParamVal {
+  my ($self, $param_index, $newval) = @_;
+  my $param_str = sprintf("PARAM%d", $param_index);
+  my $ih = IUP::Internal::LibraryIUP::_IupGetAttributeIH($self->ihandle, $param_str);  
+  if (defined $newval) {
+    my $ct = IUP::Internal::LibraryIUP::_IupGetAttributeIH($ih, "CONTROL");
+    IUP::Internal::LibraryIUP::_IupStoreAttribute($ih, "VALUE", $newval);
+    IUP::Internal::LibraryIUP::_IupStoreAttribute($ct, "VALUE", $newval);    
+  }
+  else {
+    return IUP::Internal::LibraryIUP::_IupGetAttribute($ih, "VALUE");
+  }  
+}
+
 
 sub GetChild {
   #Ihandle *IupGetChild(Ihandle* ih, int pos); [in C]

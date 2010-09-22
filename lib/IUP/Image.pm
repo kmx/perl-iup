@@ -11,8 +11,8 @@ sub _create_element {
   my($self, $args) = @_;
 
   my $p = $args->{pixels};
-  my $w = $args->{width} || 0;
-  my $h = $args->{height} || 0;    
+  my $w = $args->{WIDTH} || 0;
+  my $h = $args->{HEIGHT} || 0;    
   my $data = '';
   my $ih;
   
@@ -56,8 +56,8 @@ sub _create_element {
   $self->SetAttribute($i++, $_) for (@$c);
   
   delete $args->{pixels};
-  delete $args->{width};
-  delete $args->{height};
+  delete $args->{WIDTH};
+  delete $args->{HEIGHT};
   delete $args->{colors};
 
   return $ih;

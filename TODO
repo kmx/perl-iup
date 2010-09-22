@@ -9,7 +9,22 @@ Linux:
   before MainLoop
 - 'Quit' in main menu requires double click
 
+Packaging
+- RHEL 5
+- FC 13,12,11
+- Db 4,5 (Ubuntu?)
+http://distrowatch.com/table.php?distribution=ubuntu (10.04/LTS,9.10,8.04/LTS)
+http://distrowatch.com/table.php?distribution=debian (5,4)
+http://distrowatch.com/table.php?distribution=fedora (13,12,11)
+http://distrowatch.com/table.php?distribution=redhat (5,4)
+- vmware images: 
+http://chrysaor.info/?page=images&filter=Ubuntu
+http://www.thoughtpolice.co.uk/vmware/
+
+- http://www.debian-administration.org/articles/78
+
 GLOBAL
+- memory leaks - http://use.perl.org/~jozef/journal/40411
 - detection when running without initialized GUI
 - _generators 
   + attributes

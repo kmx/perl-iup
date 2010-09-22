@@ -505,10 +505,19 @@ _IupSetAttributes(ih,str)
 # char* IupGetAttribute (Ihandle* ih, const char* name);
 char*
 _IupGetAttribute(ih,name)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 	CODE:
 		RETVAL = IupGetAttribute(ih,name);
+	OUTPUT:
+		RETVAL
+
+Ihandle*
+_IupGetAttributeIH(ih,name)
+		Ihandle* ih;
+		const char* name;
+	CODE:
+		RETVAL = (Ihandle*)IupGetAttribute(ih,name);
 	OUTPUT:
 		RETVAL
 
@@ -771,7 +780,7 @@ _IupGetAttributeHandle(ih,name)
 		Ihandle* ih = myST2IHN(0);
 		const char* name;
 	CODE:
-		RETVAL = IupGetAttributeHandle(ih,name);
+		RETVAL = IupGetAttributeHandle(ih,name);		
 	OUTPUT:
 		RETVAL
 

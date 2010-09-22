@@ -9,6 +9,7 @@ use IUP::Internal::LibraryIUP;
 sub _create_element {
   my($self, $args) = @_;
   return IUP::Internal::LibraryIUP::_IupProgressBar();
+  #xxx TODO xxx FGCOLOR seems to be ignored
 }
 
 1;
