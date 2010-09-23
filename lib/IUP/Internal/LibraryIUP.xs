@@ -1493,7 +1493,7 @@ _IupFontDlg()
 
 #### Original C function from <iup.h>
 # int IupGetFile(char *arq);
-int
+void
 _IupGetFile(arq)
 		char* arq;
 	INIT:
@@ -1567,7 +1567,7 @@ _IupGetText(title,text)
 
 #### Original C function from <iup.h>
 # int IupGetColor(int x, int y, unsigned char* r, unsigned char* g, unsigned char* b);
-int
+void
 _IupGetColor(x,y,r,g,b)
 		int x;
 		int y;
@@ -1589,7 +1589,7 @@ _IupGetColor(x,y,r,g,b)
 
 #### Original C function from <iup.h>
 # int IupGetParam(const char* title, Iparamcb action, void* user_data, const char* format,...);
-int
+void
 _IupGetParam(title,action,action_data,format,...)
 		char* title = myST2STR(0);
 		SV* action;
@@ -1702,7 +1702,7 @@ _IupGetParam(title,action,action_data,format,...)
 
 #### Original C function from <iup.h>
 # int IupListDialog(int type, const char *title, int size, const char** list, int op, int max_col, int max_lin, int* marks);
-int
+void
 _IupListDialog(type,title,list,op,max_col,max_lin,marks)
 		int type;
 		char *title = myST2STR(1);
@@ -1760,7 +1760,7 @@ _IupListDialog(type,title,list,op,max_col,max_lin,marks)
 
 #### Original C function from <iup.h>
 # int IupGetAllNames(char** names, int max_n);
-int
+void
 _IupGetAllNames(max_n)
 		int max_n = myST2INT(0);
 	INIT:
@@ -1782,7 +1782,7 @@ _IupGetAllNames(max_n)
 
 #### Original C function from <iup.h>
 # int IupGetAllDialogs(char** names, int max_n);
-int
+void
 _IupGetAllDialogs(max_n)
 		int max_n = myST2INT(0);
 	INIT:
@@ -1803,7 +1803,7 @@ _IupGetAllDialogs(max_n)
 
 #### Original C function from <iup.h>
 # int IupGetClassAttributes(const char* classname, char** names, int max_n);
-int
+void
 _IupGetClassAttributes(classname,max_n)
 		const char* classname = myST2STR(0);
 		int max_n = myST2INT(1);
@@ -1825,7 +1825,7 @@ _IupGetClassAttributes(classname,max_n)
 
 #### Original C function from <iup.h>
 # int IupGetAllAttributes(Ihandle* ih, char** names, int max_n);
-int
+void
 _IupGetAllAttributes(ih,max_n)
 		Ihandle* ih = myST2IHN(0);
 		int max_n = myST2INT(1);
@@ -2005,27 +2005,90 @@ _IupPPlot()
 
 #### Original C function from <iup_pplot.h>
 # void IupPPlotBegin(Ihandle *ih, int strXdata);
+void
+_IupPPlotBegin(ih,strXdata)
+		Ihandle* ih;
+		int strXdata;
+	CODE:
+		IupPPlotBegin(ih,strXdata);
 
 #### Original C function from <iup_pplot.h>
 # void IupPPlotAdd(Ihandle *ih, float x, float y);
+void
+_IupPPlotAdd(ih,x,y)
+		Ihandle* ih;
+		float x;
+		float y;
+	CODE:
+		IupPPlotAdd(ih,x,y);
 
 #### Original C function from <iup_pplot.h>
 # void IupPPlotAddStr(Ihandle *ih, const char* x, float y);
+void
+_IupPPlotAddStr(ih,x,y)
+		Ihandle* ih;
+		const char* x;
+		float y;
+	CODE:
+		IupPPlotAddStr(ih,x,y);
 
 #### Original C function from <iup_pplot.h>
 # int IupPPlotEnd(Ihandle *ih);
+int
+_IupPPlotEnd(ih)
+		Ihandle* ih;
+	CODE:
+		RETVAL=IupPPlotEnd(ih);
+	OUTPUT:
+		RETVAL
 
 #### Original C function from <iup_pplot.h>
 # void IupPPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
+void
+_IupPPlotInsertStr(ih,index,sample_index,x,y)
+		Ihandle* ih	
+		int index;
+		int sample_index;
+		const char* x;
+		float y;
+	CODE:
+		IupPPlotInsertStr(ih,index,sample_index,x,y);
 
 #### Original C function from <iup_pplot.h>
 # void IupPPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y);
+void
+_IupPPlotInsert(ih,index,sample_index,x,y)
+		Ihandle* ih;
+		int index;
+		int sample_index;
+		float x;
+		float y;
+	CODE:
+		IupPPlotInsert(ih,index,sample_index,x,y);
 
 #### Original C function from <iup_pplot.h>
 # void IupPPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy);
+void
+_IupPPlotTransform(ih,x,y);
+		Ihandle* ih;
+		float x;
+		float y
+	INIT:
+		int ix;
+		int iy;
+	PPCODE:
+		IupPPlotTransform(ih,x,y,&ix,&iy);
+		XPUSHs(sv_2mortal(newSViv(ix)));
+		XPUSHs(sv_2mortal(newSViv(iy)));
 
 #### Original C function from <iup_pplot.h>
-#void IupPPlotPaintTo(Ihandle *ih, void *cnv);
+# void IupPPlotPaintTo(Ihandle *ih, void *cnv);
+void
+_IupPPlotPaintTo(ih,cnv)
+		Ihandle *ih;
+		void *cnv;
+	CODE:
+		IupPPlotPaintTo(ih,cnv);
 
 ################################################################################ iupgl.h
 
