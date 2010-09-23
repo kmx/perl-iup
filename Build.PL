@@ -29,7 +29,7 @@ my $builder = Module::Build->new(
   },
   add_to_cleanup       => [ 'IUP-*' ],
   c_source             => 'src', # ppport.h
-  extra_compiler_flags => Alien::IUP->config('INC'),
+  extra_compiler_flags => Alien::IUP->config('INC'),# . ' -Wall',
   extra_linker_flags   => Alien::IUP->config('LIBS'),
   meta_merge => {
     resources => {
