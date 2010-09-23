@@ -630,7 +630,7 @@ _IupSetfAttribute(ih,name,format,...)
 		const char* name;
 		const char* format;
 	CODE:
-		IupSetfAttribute(ih,name,format);
+		IupSetfAttribute(ih,name,format); /* xxx TODO xxx not working */
 
 #### Original C function from <iup.h>
 # void IupResetAttribute(Ihandle *ih, const char* name);

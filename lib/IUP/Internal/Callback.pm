@@ -325,6 +325,21 @@ my $cb_table = {
   },
 };
 
+sub _execute_cb_cnv1 {
+  my ($ih, $action, $cnv) = @_;
+  my $ref = _translate_ih($ih);
+  return -1 unless ref($ref);
+  my $func = $ref->{$action};
+  return -1 unless (ref($func) eq 'CODE');
+  
+  #xxx TODO xxx translate $cnv via global register (not available yet)
+  $cnv = undef;
+  
+  my $rv = &$func($ref, $cnv);
+  return -1 unless defined $rv;
+  return $rv;
+}
+
 sub _execute_cb { #TODO: maybe return something else then -1 in case of error
   my ($ih, $action, @args) = @_;
   my $ref = _translate_ih($ih);

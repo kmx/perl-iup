@@ -153,11 +153,18 @@ sub SetAttribute {
     else {
       # xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
       #IUP::Internal::LibraryIUP::_IupSetAttribute($self->ihandle, $k, $v);
+      # xxx TODO allow using undef value without warnings
       IUP::Internal::LibraryIUP::_IupStoreAttribute($self->ihandle, $k, $v);
     }
   }
 }
 
+sub SetfAttribute {
+  # xxx workaround
+  my ($self, $name, $format, @v) = @_;
+  $self->SetAttribute($name, sprintf($format, @v));
+}
+  
 sub GetAttribute {
   #Ihandle* IupGetAttributeHandle(Ihandle *ih, const char *name); [in C]
   #char *IupGetAttribute(Ihandle *ih, const char *name); [in C]
@@ -165,6 +172,20 @@ sub GetAttribute {
   my ($self, @names) = @_;
   my @rv = ();  
   push(@rv, IUP::Internal::LibraryIUP::_IupGetAttribute($self->ihandle, $_)) for (@names);    
+  return (scalar(@names) == 1) ? $rv[0] : @rv; #TODO: not sure if this is a good idea
+}
+
+sub GetInt {
+  my ($self, @names) = @_;
+  my @rv = ();
+  push(@rv, IUP::Internal::LibraryIUP::_IupGetInt($self->ihandle, $_)) for (@names);    
+  return (scalar(@names) == 1) ? $rv[0] : @rv; #TODO: not sure if this is a good idea
+}
+
+sub GetFloat {
+  my ($self, @names) = @_;
+  my @rv = ();
+  push(@rv, IUP::Internal::LibraryIUP::_IupGetFloat($self->ihandle, $_)) for (@names);    
   return (scalar(@names) == 1) ? $rv[0] : @rv; #TODO: not sure if this is a good idea
 }
 
