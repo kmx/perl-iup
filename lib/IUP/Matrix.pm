@@ -41,7 +41,16 @@ sub MatGetFloat {
 }
 
 # xxx maybe
-sub Cell { } # see lua: mat:setcell(3,0,"Energy")
+sub Cell {
+  my ($self, $lin, $col, $val) = @_;
+  if (defined $val) {
+    return $self->SetAttribute("$lin:$col",$val);  
+  }
+  else {
+    return $self->GetAttribute("$lin:$col");  
+  }
+}
+
 sub CellBGCOLOR { }
 sub CellFGCOLOR { }
 sub CellFONT { }
