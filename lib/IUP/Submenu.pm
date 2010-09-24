@@ -5,15 +5,26 @@ use strict;
 use warnings;
 use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIUP;
+use Carp;
 
 sub _create_element {
-  my($self, $args) = @_;
+  my($self, $args, $firstonly) = @_;
   my ($t, $m);
   if (defined $args) {
+
     $t = $args->{TITLE};
-    $m = $args->{menu}->ihandle if defined $args->{menu};
     delete $args->{TITLE};
-    delete $args->{menu};
+
+    if (defined $args->{child}) { # xxx TODO xxx maybe handle $firstonly at this point (in fact it does not make much sense)
+      $m = $args->{child}->ihandle;
+      delete $args->{child};
+    }
+
+    if (defined $args->{menu}) {
+      $m = $args->{menu}->ihandle; # xxx TODO xxx remove this line in the end
+      delete $args->{menu};
+      carp "Warning: parameter 'menu' of IUP::Submenu->new() is not supported, use 'child' instead";
+    }
   }
   my $ih = IUP::Internal::LibraryIUP::_IupSubmenu($t, $m);
   return $ih;
