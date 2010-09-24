@@ -40,7 +40,6 @@ sub MatGetFloat {
   #float IupMatGetFloat(Ihandle* ih, const char* name, int lin, int col);
 }
 
-# xxx maybe
 sub Cell {
   my ($self, $lin, $col, $val) = @_;
   if (defined $val) {
@@ -51,6 +50,7 @@ sub Cell {
   }
 }
 
+# xxx maybe CellAttr(42, 25, "BGCOLOR", "0 0 111")
 sub CellBGCOLOR { }
 sub CellFGCOLOR { }
 sub CellFONT { }
