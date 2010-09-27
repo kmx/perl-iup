@@ -140,20 +140,19 @@ sub SetAttribute {
   my ($self, %args) = @_;  
   for (keys %args) {    
     my ($k, $v) = ($_, $args{$_});
-    if (!$self->IsValidAttributeName($k)) {      
-      #xxx carp "Warning: ignoring illegal attribute '$k' (".ref($self).")";
-      #xxx next;      
-      #xxx TODO perhaps just warn      
-      carp "Warning: unknown attribute '$k' val='$v' (".ref($self).")";
-      IUP::Internal::LibraryIUP::_IupStoreAttribute($self->ihandle, $k, $v);
-    }
+
+    # xxx TODO xxx remove this warning in the future
+    # xxx carp "Warning: unknown attribute '$k' val='$v' (".ref($self).")" if (!$self->IsValidAttributeName($k));
+    
     if (ref($v)) {
+      #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
       IUP::Internal::LibraryIUP::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
     }
     else {
       # xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
       #IUP::Internal::LibraryIUP::_IupSetAttribute($self->ihandle, $k, $v);
       # xxx TODO allow using undef value without warnings
+      #carp "Debug: setting $k='$v'";
       IUP::Internal::LibraryIUP::_IupStoreAttribute($self->ihandle, $k, $v);
     }
   }

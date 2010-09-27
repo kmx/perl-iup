@@ -1,3 +1,13 @@
+Callbacks
+IUP::Matrix;DROPSELECT_CB;iinsii;int;Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v
+IUP::Matrix;DROP_CB      ;nii   ;int;Ihandle* ih,Ihandle* drop,int lin,int col
+IUP::Tabs  ;TABCHANGE_CB ;nn    ;int;Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
+IUP::Cells;DRAW_CB;iiiiiiv;int;Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas
+IUP::Matrix;DRAW_CB;iiiiiiv;int;Ihandle* ih,int lin,int col,int x1,int x2,int y1,int y2,cdCanvas* cnv
+IUP::PPlot;POSTDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
+IUP::PPlot;PREDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
+
+
 XS
 - LibraryIUP / Linux: warning: ISO C90 forbids mixed declarations and code (when using myST2xxx)
 - LibraryIUP / Linux: warning: unused variable targ | RETVAL (when using PPCODE)

@@ -45,6 +45,7 @@ sub TreeSetNodeAttrib {
 sub TreeAddNodes {
   #iup.TreeAddNodes(ih: ihandle, tree: table, [id: number]) [in Lua]
   my ($self, $t, $id) = @_;
+  warn "xxx TODO xxx: TreeAddNodes not tested $t->{branchname} $id";
   return unless defined $t;
   if (! defined $id) {
     $id = 0; # default is the root
@@ -62,6 +63,7 @@ sub TreeAddNodesRec {
   foreach my $tt (@{$t->{child}}) {
     if (ref $tt) {
       if ($tt->{branchname}) {
+warn "xxxxxxxxxxxxxxxxxxxxxxxxxxx ADDBRANCH$id, $tt->{branchname} ";
         $self->SetAttribute("ADDBRANCH$id", $tt->{branchname});
         $self->TreeSetNodeAttrib($tt, $id+1);
         $self->TreeAddNodesRec($tt, $id+1);
@@ -73,7 +75,7 @@ sub TreeAddNodesRec {
       }
     }
     else {
-      $self->SetAttribute("ADDLEAF$id", $tt);
+      $self->SetAttribute("ADDLEAF".$id, $tt);
     }
   }
 }

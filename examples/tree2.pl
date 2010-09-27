@@ -9,9 +9,7 @@ my $tree = IUP::Tree->new();
 my $dlg = IUP::Dialog->new( child=>$tree, TITLE=>"TableTree result", SIZE=>"200x200" );
 $dlg->ShowXY(IUP_CENTER,IUP_CENTER);
 
-#xxx TODO xxx still does not work properly - duplicate items
-
-#xxx TODO xxx decide about AddNodes syntax
+#xxx TODO xxx decide about TreeAddNodes syntax
 
 my $t = {
   branchname=>"Animals", child=>[
