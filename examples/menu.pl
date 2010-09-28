@@ -9,8 +9,8 @@ use IUP;
 my $text = IUP::Text->new( READONLY=>"YES", VALUE=>"Selecting show or hide will affect this text", SIZE=>300 );
 
 # Creates items, sets its shortcut keys and deactivates edit item;
-my $item_show = IUP::Item->new( TITLE=>"Show", KEY=>"K_S" );
-my $item_hide = IUP::Item->new( TITLE=>"Hide\tCtrl+H", KEY=>"K_H" );
+my $item_show = IUP::Item->new( TITLE=>"Show", KEY=>IUP_K_S );
+my $item_hide = IUP::Item->new( TITLE=>"Hide\tCtrl+H" );
 my $item_edit = IUP::Item->new( TITLE=>"Edit", KEY=>"K_E", ACTIVE=>"NO" );
 my $item_exit = IUP::Item->new( TITLE=>"Exit", KEY=>"K_x" );
 

@@ -325,21 +325,6 @@ my $cb_table = {
   },
 };
 
-sub _execute_cb_cnv1 {
-  my ($ih, $action, $cnv) = @_;
-  my $ref = _translate_ih($ih);
-  return -1 unless ref($ref);
-  my $func = $ref->{$action};
-  return -1 unless (ref($func) eq 'CODE');
-  
-  #xxx TODO xxx translate $cnv via global register (not available yet)
-  $cnv = undef;
-  
-  my $rv = &$func($ref, $cnv);
-  return -1 unless defined $rv;
-  return $rv;
-}
-
 sub _execute_cb { #TODO: maybe return something else then -1 in case of error
   my ($ih, $action, @args) = @_;
   my $ref = _translate_ih($ih);
@@ -354,7 +339,13 @@ sub _execute_cb { #TODO: maybe return something else then -1 in case of error
 sub _get_cb_init_function {
   my ($pkg, $action) = @_;
   my $rv = $cb_table->{$pkg};
-  return $rv ? $rv->{$action} : undef;
+  return unless defined $rv;
+  my $f = $rv->{$action};
+  # xxx TODO xxx add support for K_* callbacks
+  #if (!$f && $action =~ /^K_/) {
+  #  $f = $rv->{K_ANY};
+  #}
+  return $f;
 }
 
 sub _is_cb_valid {
@@ -372,9 +363,9 @@ sub _get_cb_list {
 
 #TODO: maybe something more thread safe
 my %ih_register; #global table mapping IUP Ihandles to perl objrefs
-sub _translate_ih  { $ih_register{$_[0]} }         #params: ih
-sub _unregister_ih { delete $ih_register{$_[0]} }  #params: ih
-sub _register_ih   { $ih_register{$_[0]} = $_[1] } #params: ih, objref
+sub _translate_ih  { $ih_register{$_[0]} if $_[0] }         #params: ih
+sub _unregister_ih { delete $ih_register{$_[0]} if $_[0] }  #params: ih
+sub _register_ih   { $ih_register{$_[0]} = $_[1] if $_[0] } #params: ih, objref
 
 1;
 

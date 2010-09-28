@@ -1,6 +1,6 @@
 #!perl -T
 
-use Test::More tests => 47;
+use Test::More tests => 46;
 
 use IUP;
 
@@ -20,16 +20,15 @@ isnt(IUP::FontDlg->new(),undef,'Testing IUP::FontDlg->new()');
 isnt(IUP::Frame->new(),undef,'Testing IUP::Frame->new()');
 isnt(IUP::GLCanvas->new(),undef,'Testing IUP::GLCanvas->new()');
 isnt(IUP::Hbox->new(),undef,'Testing IUP::Hbox->new()');
-isnt(IUP::Image->new(width=>1, height=>1, pixels=>[0]),undef,'Testing IUP::Image->new()');
-isnt(IUP::ImageRGB->new(width=>1, height=>1, pixels=>[0,1,2]),undef,'Testing IUP::ImageRGB->new()');
-isnt(IUP::ImageRGBA->new(width=>1, height=>1, pixels=>[0,1,2,3]),undef,'Testing IUP::ImageRGBA->new()');
+isnt(IUP::Image->new(WIDTH=>1, HEIGHT=>1, pixels=>[0]),undef,'Testing IUP::Image->new()');
+isnt(IUP::ImageRGB->new(WIDTH=>1, HEIGHT=>1, pixels=>[0,1,2]),undef,'Testing IUP::ImageRGB->new()');
+isnt(IUP::ImageRGBA->new(WIDTH=>1, HEIGHT=>1, pixels=>[0,1,2,3]),undef,'Testing IUP::ImageRGBA->new()');
 isnt(IUP::Item->new(),undef,'Testing IUP::Item->new()');
 isnt(IUP::Label->new(),undef,'Testing IUP::Label->new()');
 isnt(IUP::List->new(),undef,'Testing IUP::List->new()');
 isnt(IUP::Matrix->new(),undef,'Testing IUP::Matrix->new()');
 isnt(IUP::Menu->new(),undef,'Testing IUP::Menu->new()');
 isnt(IUP::MessageDlg->new(),undef,'Testing IUP::MessageDlg->new()');
-isnt(IUP::MultiLine->new(),undef,'Testing IUP::MultiLine->new()');
 isnt(IUP::Normalizer->new(),undef,'Testing IUP::Normalizer->new()');
 is  (IUP::OleControl->new(),undef,'Testing IUP::OleControl->new()');
 isnt(IUP::PPlot->new(),undef,'Testing IUP::PPlot->new()');

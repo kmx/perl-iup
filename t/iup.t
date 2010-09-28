@@ -132,10 +132,10 @@ sub button_cb {
 my $b = IUP::Button->new();
 my $code = \&item_close_cb;
 
-my $im1 = IUP::Image->new(width=>20, height=>20, pixels=>$img20x20_data1, 0=>"100 0 0");
-#my $im2 = IUP::Image->new(width=>20, height=>20, pixels=>$img20x20_data2);
-my $im_rgb = IUP::ImageRGB->new(width=>20, height=>20, pixels=>$imgRGB);
-my $im_rgba = IUP::ImageRGBA->new(width=>20, height=>20, pixels=>$imgRGBA);
+my $im1 = IUP::Image->new(WIDTH=>20, HEIGHT=>20, pixels=>$img20x20_data1, 0=>"100 0 0");
+#my $im2 = IUP::Image->new(WIDTH=>20, HEIGHT=>20, pixels=>$img20x20_data2);
+my $im_rgb = IUP::ImageRGB->new(WIDTH=>20, HEIGHT=>20, pixels=>$imgRGB);
+my $im_rgba = IUP::ImageRGBA->new(WIDTH=>20, HEIGHT=>20, pixels=>$imgRGBA);
 
 my $i1 = IUP::Item->new(TITLE => "Append");
 my $i2 = IUP::Item->new(TITLE => "Insert", ACTION=>sub{IUP->Message('Hi!')} );

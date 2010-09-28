@@ -6,7 +6,8 @@ IUP::Cells;DRAW_CB;iiiiiiv;int;Ihandle* ih,int line,int column,int xmin,int xmax
 IUP::Matrix;DRAW_CB;iiiiiiv;int;Ihandle* ih,int lin,int col,int x1,int x2,int y1,int y2,cdCanvas* cnv
 IUP::PPlot;POSTDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
 IUP::PPlot;PREDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
-
+!!!
+missing support for K_* callbacks
 
 XS
 - LibraryIUP / Linux: warning: ISO C90 forbids mixed declarations and code (when using myST2xxx)
@@ -47,24 +48,24 @@ GLOBAL
   IUP::Internal::LibraryIMLIB
   ...
 - move global ihandle table from IUP::Internal::Callback to IUP::Internal::LibraryIUP
-- put somewhere key related functions (see iupkey.h + iup.h) - ?IUP::Keys?
-  sub isAltXkey
-  sub isCtrlXkey
-  sub isShiftXkey
-  sub isSysXkey
-  sub isXkey
-  sub isalt
-  sub iscontrol
-  sub isdouble
-  sub isprint
-  sub isshift
-  sub issys
-  sub isxkey
-  sub isbutton1
-  sub isbutton2
-  sub isbutton3
-  sub isbutton4
-  sub isbutton5
+- put somewhere key related functions (see iupkey.h + iup.h) - ?IUP::Constants?
+  sub IUP_isAltXkey
+  sub IUP_isCtrlXkey
+  sub IUP_isShiftXkey
+  sub IUP_isSysXkey
+  sub IUP_isXkey
+  sub IUP_isalt
+  sub IUP_iscontrol
+  sub IUP_isdouble
+  sub IUP_isprint
+  sub IUP_isshift
+  sub IUP_issys
+  sub IUP_isxkey
+  sub IUP_isbutton1
+  sub IUP_isbutton2
+  sub IUP_isbutton3
+  sub IUP_isbutton4
+  sub IUP_isbutton5
 - update README + Changes
 
 IUP

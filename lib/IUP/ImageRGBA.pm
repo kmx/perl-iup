@@ -11,31 +11,54 @@ sub _create_element {
   my($self, $args) = @_;
 
   my $p = $args->{pixels};
-  my $w = $args->{width} || 0;
-  my $h = $args->{height} || 0;  
-  my $size = $w * $h * 4; # 4 bytes per pixel
+  my $w = $args->{WIDTH} || 0;
+  my $h = $args->{HEIGHT} || 0;    
+  my $data = '';
   my $ih;
-
-  if ($size == 0) {
-    carp "Warning: zero or undefined image size (check 'width' and 'height')";
-  }
-  elsif (defined $p) {
-    $p = pack('C*', @$p) if ref($p) eq 'ARRAY';
-    my $l = length($p);
-    if ($l == $size) {
-      $ih = IUP::Internal::LibraryIUP::_IupImageRGBA($w, $h, $p);
+  
+  if (defined $p && ref($p) eq 'ARRAY') {
+    if (ref($p->[0]) eq 'ARRAY') {
+      $h = scalar(@$p);  
+      $w = scalar(@{$p->[0]});        
+      for (@$p) {
+        $data .= pack('C*', @$_) if ref($_) eq 'ARRAY';
+      }
     }
     else {
-      carp "Warning: invalid image data size: $l, expected: $size";
-    }    
+      $data = pack('C*', @$p) if ref($p) eq 'ARRAY';
+    }
+    
+    my $size = $w * $h * 4; # 4 byte per pixel
+    
+    if ($size == 0) {
+      carp "Warning: zero or undefined image size (check 'width' and 'height')";
+    }
+    else {
+      my $l = length($data);
+      if ($l == $size) {
+        $ih = IUP::Internal::LibraryIUP::_IupImageRGBA($w, $h, $data);
+      }
+      else {
+        carp "Warning: invalid image data size: $l, expected: $size";
+      }
+    } 
   }
   else {
-    carp "Warning: no image data (check 'pixels')";
+    carp "Warning: no image data";
   }
   
+  
+  $self->ihandle($ih); # xxx TODO do by all elements
+  
+  # xxx TODO some more ifs
+  my $c = $args->{colors};
+  my $i = 0;
+  $self->SetAttribute($i++, $_) for (@$c);
+  
   delete $args->{pixels};
-  delete $args->{width};
-  delete $args->{height};
+  delete $args->{WIDTH};
+  delete $args->{HEIGHT};
+  delete $args->{colors};
 
   return $ih;
 }
