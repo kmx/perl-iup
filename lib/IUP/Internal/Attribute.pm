@@ -4,8 +4,62 @@ package IUP::Internal::Attribute;
 
 use strict;
 use warnings;
+use Carp;
+
+# xxx TODO xxx optimize accessor generation
+sub _get_attr_list { return (qw/
+  3STATE             ACCUM_BLUE_SIZE    ACCUM_GREEN_SIZE   ACCUM_RED_SIZE     ACENTER            ACTIVE             ADDCONTROL
+  ADDEXPANDED        ADDLEAF            ALIGNMENT          ALLOWNEW           ALPHA              APPEND             APPENDITEM
+  AUTOHIDE           AUTOTOGGLE         AXS_XAUTOMAX       AXS_XAUTOMIN       AXS_XAUTOTICK      AXS_XAUTOTICKSIZE  AXS_XCOLOR
+  AXS_XCROSSORIGIN   AXS_XFONTSIZE      AXS_XFONTSTYLE     AXS_XLABEL         AXS_XLABELCENTERED AXS_XMAX           AXS_XMIN
+  AXS_XREVERSE       AXS_XSCALE         AXS_XTICK          AXS_XTICKDIVISION  AXS_XTICKFONTSIZE  AXS_XTICKFONTSTYLE AXS_XTICKFORMAT
+  AXS_XTICKMAJORSIZE AXS_XTICKMAJORSPAN AXS_XTICKSIZE      AXS_YAUTOMAX       AXS_YAUTOMIN       AXS_YAUTOTICK      AXS_YAUTOTICKSIZE
+  AXS_YCOLOR         AXS_YCROSSORIGIN   AXS_YFONTSIZE      AXS_YFONTSTYLE     AXS_YLABEL         AXS_YLABELCENTERED AXS_YMAX
+  AXS_YMIN           AXS_YREVERSE       AXS_YSCALE         AXS_YTICK          AXS_YTICKDIVISION  AXS_YTICKFONTSIZE  AXS_YTICKFONTSTYLE
+  AXS_YTICKFORMAT    AXS_YTICKMAJORSIZE AXS_YTICKMAJORSPAN AXS_YTICKSIZE      BACKGROUND         BACKINGSTORE       BARSIZE
+  BGCOLOR            BORDER             BOXED              BPP                BRINGFRONT         BUFFER             BUFFERIZE
+  BUTTONDEFAULT      BUTTONRESPONSE     BUTTONS            CANFOCUS           CANVAS             CARET              CARETPOS
+  CEL                CGAP               CHANNELS           CHILDCOUNT         CLEAR              CLEARATTRIBUTES    CLIENTSIZE
+  CLIENTSIZE1        CLIENTSIZE2        CLIPBOARD          CLIPPED            CLIPRECT           CMARGIN            COLOR
+  COLORMAP           COLORTABLE         COMPOSITED         CONTEXT            CONTROL            COUNT              CUEBANNER
+  CURRENT            CURSOR             CX                 CY                 DASHED             DEFAULTENTER       DEFAULTESC
+  DENSITY            DEPTH              DESIGNMODE         DIALOGFRAME        DIALOGHINT         DIALOGTYPE         DIRECTION
+  DIRECTORY          DRAGDROP           DRAWSIZE           DROPDOWN           DROPEXPAND         DS                 DX
+  EAST               EDITBOX            ELLIPSIS           EMFAVAILABLE       ERROR              EXPAND             EXPANDCHILDREN
+  EXPANDWEIGHT       EXTFILTER          FGCOLOR            FILE               FILEEXIST          FILTER             FILTERINFO
+  FILTERUSED         FIRST              FLAT               FLOATING           FOCUSONCLICK       FONT               FORMATTING
+  FULL               FULLSCREEN         GAP                GREEN_SIZE         GRID               GRIDCOLOR          GRIDLINESTYLE
+  HDC                HEIGHT             HELPBUTTON         HIDEMARK           HIDETASKBAR        HOMOGENEOUS        HOTSPOT
+  HSI                HWND               ICON               IMAGE              IMAGEAVAILABLE     IMAGELEAF          IMAGEPOSITION
+  IMINACTIVE         IMPORTANT          IMPRESS            IMPRESSBORDER      INSERT             INSERTITE          INVERTED
+  IUNKNOWN           KEY                LAYOUTDRAG         LEGENDFONTSIZE     LEGENDFONTSTYLE    LEGENDPOS          LEGENDSHOW
+  LIMITSL            MARGIN             MARGINBOTTOM       MARGINLEFT         MARGINRIGHT        MARGINTOP          MARK
+  MARKUP             MARQUEE            MASK               MAX                MAXBOX             MAXSIZE            MDIACTIVATE
+  MDIACTIVE          MDIARRANGE         MDICHILD           MDICLIENT          MDICLOSEALL        MDIFRAME           MDIMENU
+  MDINEXT            MENU               MENUBOX            MIN                MINBOX             MINMAX             MINSIZE
+  MODAL              MULTILINE          MULTIPLE           MULTIPLEFILES      NATIVEIMAGE        NATIVEPARENT       NC
+  NCGAP              NCMARGIN           NE                 NGAP               NMARGIN            NOCHANGEDIR        NON
+  NOOVERWRITEPROMPT  NORMALIZE          NORMALIZERGROUP    NORMALIZESIZE      NORTH              NUM                NW
+  OPACITY            ORIENTATION        ORIGIN             OVERWRITE          PADDING            PAGESTEP           PARENTDIALOG
+  PASSWORD           PLACEMENT          POSITION           PREVIEW            PREVIEWTEXT        PRIMARY            RADIO
+  RASTERSIZE         READONLY           REDRAW             RED_SIZE           REFRESHCONTEXT     REMOVE             REMOVEITEM
+  RENAMENODE         REPAINT            RESIZE             RGB                RIGHTBUTTON        RUN                SAVEEMF
+  SAVEUNDER          SAVEWMF            SCROLLBAR          SCROLLTO           SCROLLTOPOS        SE                 SECONDARY
+  SELECTEDTEXT       SELECTION          SELECTIONPOS       SEPARATOR          SHADOWED           SHAREDCONTEXT      SHOW
+  SHOWALPHA          SHOWCOLORTABLE     SHOWDROPDOWN       SHOWGRIP           SHOWHELP           SHOWHEX            SHOWHIDDEN
+  SHOWPREVIEW        SHOWTICKS          SHRINK             SIZE               SORT               SOUTH              SPACING
+  SPIN               SPINVALUE          SQUARED            STARTFOCUS         STATUS             STENCIL            STEP
+  STEREO             SUNKEN             SW                 TABIMAG            TABORIENTATION     TABSIZE            TABTITL
+  TABTITLE           TABTYPE            TEXT               TEXTAVAILABLE      TICKSPOS           TIME               TIP
+  TITLE              TITLEFONTSIZE      TITLEFONTSTYLE     TITLEIMAGE         TOOLBOX            TOPITEM            TOPMOST
+  TRANSPARENCY       TRAY               TRAYIMAGE          TRAYTIP            TYPE               UNIT               VALU
+  VALUE              VALUEHEX           VALUEHSI           VALUEPOS           VISIBLE            VISIBLECOLUMNS     VISIBLELINES
+  VISUAL             WEST               WID                WIDTH              WMFAVAILABLE       WORDWRAP           X
+  XDISPLAY           XWINDOW            Y                  ZORDER
+/) };
 
 # global table of available attributes per element (used for generating accessors)
+# xxx TODO xxx perhaps delete this hash
 my $attrib_table = {
     'IUP::Zbox' => {
          'SIZE' => 1,
@@ -919,7 +973,7 @@ my $attrib_table = {
         }
 };
 
-sub _get_attr_list {
+sub _get_attr_listXXX {
   my $pkg = shift;
   my $h = $attrib_table->{$pkg};
   return () unless defined($h);
@@ -928,9 +982,11 @@ sub _get_attr_list {
 
 sub _is_attr_valid {
   my ($pkg, $name) = @_;
-  my $h = $attrib_table->{$pkg};
-  return 0 unless defined($h);
-  return defined($h->{$name}) ? 1 : 0;
+  #my $h = $attrib_table->{$pkg};
+  #return 0 unless defined($h);
+  #return defined($h->{$name}) ? 1 : 0;
+  carp "Warning: DO NOT USE _is_attr_valid!";
+  return 1;
 }
 
 1;

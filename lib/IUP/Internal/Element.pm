@@ -37,18 +37,20 @@ sub new {
   my @cb;
   my @at;
   for (keys %args) {
-    if ($self->IsValidAttributeName($_)) {
-      push(@at, $_, $args{$_});
-    }
-    elsif ($self->IsValidCallbackName($_)) {
+    if ($self->IsValidCallbackName($_)) {
       push(@cb, $_, $args{$_});
-    }    
+    }
+    # xxx TODO xxx remove
+    #elsif ($self->IsValidAttributeName($_)) {
+    #  push(@at, $_, $args{$_});
+    #}
     elsif ($_ eq 'name') {
       $self->name($args{$_});
     }
     elsif ($_ eq uc($_)) {
       push(@at, $_, $args{$_});
-      carp "Warning: $class->new() unknown parameter '$_', assuming an attribute";
+      # xxx TODO xxx comment
+      #carp "Warning: $class->new() unknown parameter '$_', assuming an attribute";
     }
     else {
       carp "Warning: $class->new() ignoring unknown parameter '$_'";
@@ -109,27 +111,34 @@ sub name {
 
 sub import {
   my $p = shift;
+  #my $time_start = localtime;
   my @cb_list = IUP::Internal::Callback::_get_cb_list($p);
   my @attrib_list = IUP::Internal::Attribute::_get_attr_list($p);
-  my @param_list = qw/ihandle cnvhandle/;
+  my @param_list = qw/ihandle cnvhandle/; # xxx TODO xxx do not do this in compile time
 
+  my $c = '';
   for (@cb_list) {
     next if defined *{"$p\::$_"};
-    #warn "creating.c: $p\::$_";
-    eval "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetCallback('$_', \$_[1]) : \$_[0]->{$_} }"; #TODO: rw does not make much sense
+    $c .= "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetCallback('$_', \$_[1]) : \$_[0]->{$_} };\n"; #TODO: rw does not make much sense
   }
+  eval $c;
   
+  # xxx TODO xxx needs to be optimized
+  my $a = '';
   for (@attrib_list) {
     next if defined *{"$p\::$_"};
-    #warn "creating.a: $p\::$_";
-    eval "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetAttribute('$_', \$_[1]) : \$_[0]->GetAttribute('$_') }";
+    $a .= "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetAttribute('$_', \$_[1]) : \$_[0]->GetAttribute('$_') };\n";
   }
+  eval $a;
   
   #for (@param_list) {
   #  next if defined *{"$p\::$_"};
   #  #warn "creating.p: $p\::$_";
   #  eval "*$p\::$_ = sub { return \$_[1] ? \$_[0]->{___$_} = \$_[1] : \$_[0]->{___$_} }";
   #}
+  
+  #my $time_end = localtime;
+  #warn "$time_start $time_end";
 }
 
 sub SetAttribute {

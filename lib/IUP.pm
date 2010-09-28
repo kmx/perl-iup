@@ -34,7 +34,6 @@ use IUP::List;
 use IUP::Matrix;
 use IUP::Menu;
 use IUP::MessageDlg;
-use IUP::MultiLine;
 use IUP::Normalizer;
 use IUP::OleControl;
 use IUP::PPlot;
@@ -84,7 +83,6 @@ sub import {
   IUP::Matrix->import();
   IUP::Menu->import();
   IUP::MessageDlg->import();
-  IUP::Multiline->import();
   IUP::Normalizer->import();
   IUP::OleControl->import();
   IUP::PPlot->import();
@@ -232,7 +230,7 @@ sub GetOrCreateByIhandle {
     matrix => "IUP::Matrix",
     menu => "IUP::Menu",
     messagedlg => "IUP::MessageDlg",
-    multiline => "IUP::MultiLine",
+#    multiline => "IUP::MultiLine", # xxx TODO xxx deprecated
     normalizer => "IUP::Normalizer",
     olecontrol => "IUP::OleControl",
     pplot => "IUP::PPlot",
