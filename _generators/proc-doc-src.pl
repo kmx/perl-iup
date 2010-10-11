@@ -6,9 +6,14 @@ use warnings;
 use Data::Dumper;
 use Template;
 use HTML::TreeBuilder;
+use FindBin;
+use File::Spec;
 
-my $srcroot = 'y:\IUP\iup';
-my $docroot = 'y:\@repos\perl-iup\_internal\doc\iup';
+my $curdir   = $FindBin::Bin;
+my $distroot = File::Spec->catfile($curdir, '..');
+my $srcroot  = 'y:\IUP\iup';
+my $docroot  = 'y:\@repos\perl-iup\_internal\doc\iup';
+die "Invalid dir '$distroot'" unless -d "$distroot/lib" && -f "$distroot/Build.PL";
 
 my @iup = glob("$srcroot/src/*.c");
 my @all_src = (
@@ -56,10 +61,10 @@ $common_src{'IUP::Cells'}->{WIDTH_CB} = 'i';
 $common_src{'IUP::Classbase'}->{VALUECHANGED_CB} = '';
 $common_src{'IUP::ColorBrowser'}->{CHANGE_CB} = 'ccc';
 $common_src{'IUP::ColorBrowser'}->{DRAG_CB} = 'ccc';
-$common_src{'IUP::Colorbar'}->{CELL_CB} = 'i';
-$common_src{'IUP::Colorbar'}->{EXTENDED_CB} = 'i';
-$common_src{'IUP::Colorbar'}->{SELECT_CB} = 'ii';
-$common_src{'IUP::Colorbar'}->{SWITCH_CB} = 'ii';
+$common_src{'IUP::ColorBar'}->{CELL_CB} = 'i';
+$common_src{'IUP::ColorBar'}->{EXTENDED_CB} = 'i';
+$common_src{'IUP::ColorBar'}->{SELECT_CB} = 'ii';
+$common_src{'IUP::ColorBar'}->{SWITCH_CB} = 'ii';
 $common_src{'IUP::Common'}->{BUTTON_CB} = 'iiiis';
 $common_src{'IUP::Common'}->{DROPFILES_CB} = 'siii';
 $common_src{'IUP::Common'}->{MOTION_CB} = 'iis';
@@ -115,8 +120,8 @@ $common_src{'IUP::Tree'}->{BRANCHCLOSE_CB} = 'i';
 $common_src{'IUP::Tree'}->{BRANCHOPEN_CB} = 'i';
 $common_src{'IUP::Tree'}->{DRAGDROP_CB} = 'iiii';
 $common_src{'IUP::Tree'}->{EXECUTELEAF_CB} = 'i';
-$common_src{'IUP::Tree'}->{MULTISELECTION_CB} = 'Ii';
-$common_src{'IUP::Tree'}->{MULTIUNSELECTION_CB} = 'Ii';
+$common_src{'IUP::Tree'}->{MULTISELECTION_CB} = 'Ai';   # patched
+$common_src{'IUP::Tree'}->{MULTIUNSELECTION_CB} = 'Ai'; # patched
 $common_src{'IUP::Tree'}->{NODEREMOVED_CB} = 's';
 $common_src{'IUP::Tree'}->{RENAME_CB} = 'is';
 $common_src{'IUP::Tree'}->{RIGHTCLICK_CB} = 'i';
@@ -129,6 +134,12 @@ $common_src{'IUP::Val'}->{VALUECHANGED_CB} = '';
 sub myprint {
 #  print @_;
 };
+
+my %type_patch = (
+  'IUP::Tree' => { MULTISELECTION_CB => 'Ai', MULTIUNSELECTION_CB => 'Ai'},	
+  'IUP::Matrix' => { DRAW_CB => 'iiiiiiv' },
+  'IUP::PPlot' => { EDIT_CB => 'iiffFF' },
+);
 
 sub raw2pname {
   my $n = shift;
@@ -172,7 +183,8 @@ foreach my $f (@all_src) {
       my $a = $1;
       my $t = $2;
       $t =~ s/=s//;
-      $c_list{$n}->{$a} = { type => $t, comment1 => 'src=yes' };
+      $c_list{$n}->{$a}->{comment1} = 'src=yes';      
+      $c_list{$n}->{$a}->{type} = $type_patch{$n}->{$a} || $t; # type patching
     }
     else {
       warn ">>> MISSED.CB[$f]:$_" if ( /iupClassRegisterCallback/ );
@@ -195,20 +207,21 @@ foreach my $f (@all_src) {
     }
     
     if ( /iupBaseRegisterCommonCallbacks/ ) {
-      $c_list{$n}->{MAP_CB} = { type => '', comment1 => 'src.common' };
-      $c_list{$n}->{UNMAP_CB} = { type => '', comment1 => 'src.common' };
-      $c_list{$n}->{GETFOCUS_CB} = { type => '', comment1 => 'src.common' };
-      $c_list{$n}->{KILLFOCUS_CB} = { type => '', comment1 => 'src.common' };
-      $c_list{$n}->{ENTERWINDOW_CB} = { type => '', comment1 => 'src.common' };
-      $c_list{$n}->{LEAVEWINDOW_CB} = { type => '', comment1 => 'src.common' };
-      $c_list{$n}->{HELP_CB} = { type => '', comment1 => 'src.common' };
-      $c_list{$n}->{K_ANY} = { type => 'i', comment1 => 'src.common' };
+      warn "[$n] iupBaseRegisterCommonCallbacks !!!";
+      $c_list{$n}->{MAP_CB} = { type => '', comment1 => 'src=common' };
+      $c_list{$n}->{UNMAP_CB} = { type => '', comment1 => 'src=common' };
+      $c_list{$n}->{GETFOCUS_CB} = { type => '', comment1 => 'src=common' };
+      $c_list{$n}->{KILLFOCUS_CB} = { type => '', comment1 => 'src=common' };
+      $c_list{$n}->{ENTERWINDOW_CB} = { type => '', comment1 => 'src=common' };
+      $c_list{$n}->{LEAVEWINDOW_CB} = { type => '', comment1 => 'src=common' };
+      $c_list{$n}->{HELP_CB} = { type => '', comment1 => 'src=common' };
+      $c_list{$n}->{K_ANY} = { type => 'i', comment1 => 'src=common' };
     }
   }
   close(DAT);
   if ($n eq 'IUP::Dialog') {
-    $c_list{$n}->{MDIACTIVATE_CB} = { type => '', comment1 => 'src.win+gtk only' };
-    $c_list{$n}->{TRAYCLICK_CB} = { type => 'iii', comment1 => 'src.win+gtk only' };
+    $c_list{$n}->{MDIACTIVATE_CB} = { type => '', comment1 => 'src=win+gtk only' };
+    $c_list{$n}->{TRAYCLICK_CB} = { type => 'iii', comment1 => 'src=win+gtk only' };
    }
 }
 
@@ -239,7 +252,6 @@ foreach my $f (glob("$docroot/html/en/call/*.html")) {
 #ad hoc patching
 $common_actions{HELP_CB}->{rv}='int';
 
-
 #load specific: 
 # - iuptree_attrib.html iuptree_cb.html 
 my @spec_cb = ( qw(html/en/elem/iuptree_cb.html html/en/ctrl/iupmatrix_cb.html) );
@@ -251,7 +263,8 @@ foreach (@spec_cb) {
   my $t = $tree->find('title');
   my $class = $t->as_text;
   $class =~ s/^Iup/IUP::/;
-  $class = raw2pname($class);
+  $class =~ s/ .*$//;
+  $class = raw2pname($class);  
   my ($cpar, $cnam, $crv);
   $cnam = 'IUP::None';
   my $b = $tree->find('body');
@@ -282,14 +295,14 @@ foreach (@spec_cb) {
         my $t = $1;	
 	$t =~ s/ //g;
 	foreach (split(',',$t)) {
-	  $c_list{$class}->{$_}->{comment2} = "html.spec.common";
+	  $c_list{$class}->{$_}->{comment2} = "doc=spec.common";
 	  $c_list{$class}->{$_}->{par} ||= $common_actions{$_}->{par};
 	  $c_list{$class}->{$_}->{rv} ||= $common_actions{$_}->{rv};
 	}
       }
       elsif ($tx =~ /^[ "]*([A-Z0-9_]+)[^a-z]/) {
         $cnam = $1;
-	$c_list{$class}->{$1}->{comment2} = "html.spec.ok";
+	$c_list{$class}->{$1}->{comment2} = "doc=spec.ok";
 	$c_list{$class}->{$1}->{par} ||= $common_actions{$1}->{par};
 	$c_list{$class}->{$1}->{rv} ||= $common_actions{$1}->{rv};
       }
@@ -370,7 +383,7 @@ foreach my $f (@all_doc) {
 	$t =~ s/ //g;
 	foreach (split(',',$t)) {
           myprint "$fn\t$class\tCLBK\t$_\tMULTI\n";
-	  $c_list{$class}->{$_}->{comment2} = "html.split";
+	  $c_list{$class}->{$_}->{comment2} = "doc=multi";
 	  $c_list{$class}->{$_}->{par} ||= $common_actions{$_}->{par};
 	  $c_list{$class}->{$_}->{rv} ||= $common_actions{$_}->{rv};
 	}
@@ -378,7 +391,7 @@ foreach my $f (@all_doc) {
       elsif ($tx =~ /^[ "]*([A-Z0-9_]+)[^a-z]/) {
         $cnam = $1;
         myprint "$fn\t$class\tCLBK\t$1\n";
-	$c_list{$class}->{$1}->{comment2} = "html.ok";
+	$c_list{$class}->{$1}->{comment2} = "doc=single";
 	$c_list{$class}->{$1}->{par} ||= $common_actions{$1}->{par};
 	$c_list{$class}->{$1}->{rv} ||= $common_actions{$1}->{rv};
       }
@@ -427,63 +440,66 @@ $c_list{'IUP::Spinbox'}->{SPIN_CB}->{rv} = 'int';
 
 my %uniq;
 
-sub print_c {
- for my $class (sort keys %c_list) {
-  next unless $class;
-  next if $class =~ /^(IUP::Classbase|IUP::GetParam|IUP::Iupwin_dialog|IUP::Gauge)/;  
-  my %t = %{$c_list{$class}};
-  for my $cb (sort keys %t) {
-    next if $class eq 'IUP::Matrix' && $cb eq 'IMPORTANT';
-    next if $class eq 'IUP::Val' && $cb eq 'BUTTON_PRESS_CB'; #legacy
-    next if $class eq 'IUP::Val' && $cb eq 'BUTTON_RELEASE_CB'; #legacy
-    next if $class eq 'IUP::Val' && $cb eq 'MOUSEMOVE_CB'; #legacy
+sub print_c1 {
+  my $file = shift;
+  open (F, ">", $file) || die "cannot open file $file";
+  print F '#module;#action;#type;#c_retval;#c_params;#c1;#c2;#c3;#c4;#c5', "\n";
+  for my $class (sort keys %c_list) {
+    next unless $class;
+    next if $class =~ /^(IUP::Classbase|IUP::GetParam|IUP::Iupwin_dialog|IUP::Gauge)/;  
+    my %t = %{$c_list{$class}};
+    for my $cb (sort keys %t) {
+      next if $class eq 'IUP::Matrix' && $cb eq 'IMPORTANT';
+      next if $class eq 'IUP::Val' && $cb eq 'BUTTON_PRESS_CB'; #legacy
+      next if $class eq 'IUP::Val' && $cb eq 'BUTTON_RELEASE_CB'; #legacy
+      next if $class eq 'IUP::Val' && $cb eq 'MOUSEMOVE_CB'; #legacy
 
-    unless (defined $t{$cb}->{par}) {
-      warn "NONEXISTING.par '$class\::$cb'";
-      if (defined($common_actions{$cb}->{par})) {
-        $t{$cb}->{par} = $common_actions{$cb}->{par};
-	$t{$cb}->{rv} = $common_actions{$cb}->{rv};
-	$t{$cb}->{comment3} = "default.common.cb";
+      unless (defined $t{$cb}->{par}) {
+        warn "NONEXISTING.par '$class\::$cb'";
+        if (defined($common_actions{$cb}->{par})) {
+          $t{$cb}->{par} = $common_actions{$cb}->{par};
+	  $t{$cb}->{rv} = $common_actions{$cb}->{rv};
+	  $t{$cb}->{comment3} = "default.common.cb";
+        }
+        else {
+          warn "NONEXISTING.common '$class\::$cb'";        
+        }
       }
-      else {
-        warn "NONEXISTING.common '$class\::$cb'";        
-      }
-    }
-    my $classbase = $c_list{'IUP::Classbase'}->{$cb};
+      my $classbase = $c_list{'IUP::Classbase'}->{$cb};
 
-    if(!defined $t{$cb}->{type}) {
-      if(defined($c_list{'IUP::Classbase'}->{$cb})) {
-        $t{$cb}->{type} = $c_list{'IUP::Classbase'}->{$cb}->{type};
-	$t{$cb}->{comment3} = "default.classbase";
+      if(!defined $t{$cb}->{type}) {
+        if(defined($c_list{'IUP::Classbase'}->{$cb})) {
+          $t{$cb}->{type} = $c_list{'IUP::Classbase'}->{$cb}->{type};
+          $t{$cb}->{comment3} = "default.classbase";
+        }
+        elsif (defined($common_src{$class}->{$cb})) {
+          $t{$cb}->{type} = $common_src{$class}->{$cb};
+	  $t{$cb}->{comment3} = "default.src_common1";
+        }
+        elsif (defined($common_src{'IUP::Common'}->{$cb})) {
+	  $t{$cb}->{type} = $common_src{'IUP::Common'}->{$cb};
+	  $t{$cb}->{comment3} = "default.src_common2";
+        }
+        else {
+	  $t{$cb}->{type} = '#undef#';
+        }
       }
-      elsif (defined($common_src{$class}->{$cb})) {
-	$t{$cb}->{type} = $common_src{$class}->{$cb};
-	$t{$cb}->{comment3} = "default.src_common1";
-      }
-      elsif (defined($common_src{'IUP::Common'}->{$cb})) {
-	$t{$cb}->{type} = $common_src{'IUP::Common'}->{$cb};
-	$t{$cb}->{comment3} = "default.src_common2";
-      }
-      else {
-	$t{$cb}->{type} = '#undef#';
-      }
+      $t{$cb}->{par} =~ s/ \*/* /g if defined $t{$cb}->{par};
+      $common_src{$class}->{$cb} ||= '';
+      print F $class, ";";
+      print F $cb, ";";
+      print F $t{$cb}->{type}, ";";
+      print F (($t{$cb}->{rv} || '#'), ";");
+      print F (($t{$cb}->{par} || '#'), ";");
+      print F (($t{$cb}->{comment1} || '#'), ";");
+      print F (($t{$cb}->{comment2} || '#'), ";");
+      print F (($t{$cb}->{comment3} || '#'), ";");
+      print F $common_src{$class}->{$cb}, ";";
+      print F ((($common_src{$class}->{$cb} eq '') || ($t{$cb}->{type} eq $common_src{$class}->{$cb})) ? '' : 'BEWARE');
+      print F "\n";
+      $uniq{"cb_$cb\_$t{$cb}->{type}"} = 1;    
     }
-    $t{$cb}->{par} =~ s/ \*/* /g;
-    $common_src{$class}->{$cb} ||= '';
-    print $class, ";";
-    print $cb, ";";
-    print $t{$cb}->{type}, ";";
-    print (($t{$cb}->{rv} || '#'), ";");
-    print (($t{$cb}->{par} || '#'), ";");    
-    print (($t{$cb}->{comment1} || '#'), ";");
-    print (($t{$cb}->{comment2} || '#'), ";");
-    print (($t{$cb}->{comment3} || '#'), ";");
-    print $common_src{$class}->{$cb}, ";";
-    print ((($common_src{$class}->{$cb} eq '') || ($t{$cb}->{type} eq $common_src{$class}->{$cb})) ? '' : 'BEWARE');
-    print "\n";
-    $uniq{"cb_$cb\_$t{$cb}->{type}"} = 1;    
   }
- }
 }
 
 sub print_a1 {
@@ -539,7 +555,7 @@ sub print_a2 {
   my %menu = %{$a_list{'IUP::Menu'}};
   my %dialog = %{$a_list{'IUP::Dialog'}};
   open (F, ">", $file) || die "cannot open file $file";
-  print F join(';', qw[#module #attribute #flags #c1 #c2 #valid]), "\n";
+  print F '#module;#attribute;#flags;#c1;#c2;#valid', "\n";
   for my $class (sort keys %a_list) {
     next unless $class;
     my %t = %{$a_list{$class}};    
@@ -565,6 +581,7 @@ sub print_a2 {
   close(F);  
 }
 
+print_c1('Callback_.csv');
 print_a2('Attribute_.csv');
 #print Dumper(\%a_list);
 #print "$_\n" for (keys %uniq);

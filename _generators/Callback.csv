@@ -45,6 +45,18 @@ IUP::Cells;SCROLLING_CB;ii;int;Ihandle* ih,int line,int column
 IUP::Cells;UNMAP_CB;;int;Ihandle* ih
 IUP::Cells;VSPAN_CB;ii;int;Ihandle* ih,int line,int column
 IUP::Cells;WIDTH_CB;i;int;Ihandle* ih,int column
+IUP::ColorBar;CELL_CB;i;char*;Ihandle* ih,int cell
+IUP::ColorBar;ENTERWINDOW_CB;;int;Ihandle* ih
+IUP::ColorBar;EXTENDED_CB;i;int;Ihandle* ih,int cell
+IUP::ColorBar;GETFOCUS_CB;;int;Ihandle* ih
+IUP::ColorBar;HELP_CB;;int;Ihandle* ih
+IUP::ColorBar;KILLFOCUS_CB;;int;Ihandle* ih
+IUP::ColorBar;K_ANY;i;int;Ihandle* ih,int c
+IUP::ColorBar;LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::ColorBar;MAP_CB;;int;Ihandle* ih
+IUP::ColorBar;SELECT_CB;ii;int;Ihandle* ih,int cell,int type
+IUP::ColorBar;SWITCH_CB;ii;int;Ihandle* ih,int prim_cell,int sec_cell
+IUP::ColorBar;UNMAP_CB;;int;Ihandle* ih
 IUP::ColorBrowser;CHANGE_CB;ccc;int;Ihandle* ih,unsigned char r,unsigned char g,unsigned char b
 IUP::ColorBrowser;DRAG_CB;ccc;int;Ihandle* ih,unsigned char r,unsigned char g,unsigned char b
 IUP::ColorBrowser;ENTERWINDOW_CB;;int;Ihandle* ih
@@ -57,18 +69,6 @@ IUP::ColorBrowser;MAP_CB;;int;Ihandle* ih
 IUP::ColorBrowser;UNMAP_CB;;int;Ihandle* ih
 IUP::ColorBrowser;VALUECHANGED_CB;;int;Ihandle* ih
 IUP::ColorDlg;HELP_CB;;int;Ihandle* ih
-IUP::Colorbar;CELL_CB;i;char*;Ihandle* ih,int cell
-IUP::Colorbar;ENTERWINDOW_CB;;int;Ihandle* ih
-IUP::Colorbar;EXTENDED_CB;i;int;Ihandle* ih,int cell
-IUP::Colorbar;GETFOCUS_CB;;int;Ihandle* ih
-IUP::Colorbar;HELP_CB;;int;Ihandle* ih
-IUP::Colorbar;KILLFOCUS_CB;;int;Ihandle* ih
-IUP::Colorbar;K_ANY;i;int;Ihandle* ih,int c
-IUP::Colorbar;LEAVEWINDOW_CB;;int;Ihandle* ih
-IUP::Colorbar;MAP_CB;;int;Ihandle* ih
-IUP::Colorbar;SELECT_CB;ii;int;Ihandle* ih,int cell,int type
-IUP::Colorbar;SWITCH_CB;ii;int;Ihandle* ih,int prim_cell,int sec_cell
-IUP::Colorbar;UNMAP_CB;;int;Ihandle* ih
 IUP::Dial;BUTTON_PRESS_CB;d;int;Ihandle* ih,double angle
 IUP::Dial;BUTTON_RELEASE_CB;d;int;Ihandle* ih,double angle
 IUP::Dial;ENTERWINDOW_CB;;int;Ihandle* ih
