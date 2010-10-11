@@ -441,15 +441,20 @@ $c_list{'IUP::Spinbox'}->{SPIN_CB}->{rv} = 'int';
 my %uniq;
 
 sub print_c1 {
+  my %base = %{$c_list{'IUP::Classbase'}};
+  my %box = %{$c_list{'IUP::Box'}} if $c_list{'IUP::Box'}; # maybe leave out completely xxx TODO xxx
+  my %menu = %{$c_list{'IUP::Menu'}};
+  my %dialog = %{$c_list{'IUP::Dialog'}};
   my $file = shift;
   open (F, ">", $file) || die "cannot open file $file";
   print F '#module;#action;#type;#c_retval;#c_params;#c1;#c2;#c3;#c4;#c5', "\n";
   for my $class (sort keys %c_list) {
     next unless $class;
-    next if $class =~ /^(IUP::Classbase|IUP::GetParam|IUP::Iupwin_dialog|IUP::Gauge)/;  
+    next if $class =~ /^(IUP::GetParam|IUP::MultiLine|IUP::Gauge)/;  
+    
     my %t = %{$c_list{$class}};
     for my $cb (sort keys %t) {
-      next if $class eq 'IUP::Matrix' && $cb eq 'IMPORTANT';
+      next if $class eq 'IUP::Matrix' && $cb eq 'IMPORTANT'; #not a CB
       next if $class eq 'IUP::Val' && $cb eq 'BUTTON_PRESS_CB'; #legacy
       next if $class eq 'IUP::Val' && $cb eq 'BUTTON_RELEASE_CB'; #legacy
       next if $class eq 'IUP::Val' && $cb eq 'MOUSEMOVE_CB'; #legacy
@@ -486,6 +491,17 @@ sub print_c1 {
       }
       $t{$cb}->{par} =~ s/ \*/* /g if defined $t{$cb}->{par};
       $common_src{$class}->{$cb} ||= '';
+      
+      #xxx TODO xxx not tested yet
+      $class = '_base' if $class eq 'IUP::Classbase';
+      $class = '_box' if $class eq 'IUP::Box';
+      $class = '_dialog' if $class eq 'IUP::Dialog';
+      #$class = '_menu' if $class eq 'IUP::Menu';
+      next if $class !~ /^_base/ && $base{$cb};
+      next if $class !~ /^_box/ && $box{$cb} && $class =~ /^IUP::[CHVZ]box$/;
+      next if $class !~ /^_dialog/ && $dialog{$cb} && $class =~ /^IUP::(Color|File|Font|Message)Dlg$/;
+      #next if $class !~ /^_menu/ && $menu{$cb} && $class =~ /^IUP::(Submenu|Item)$/;
+
       print F $class, ";";
       print F $cb, ";";
       print F $t{$cb}->{type}, ";";
@@ -494,8 +510,8 @@ sub print_c1 {
       print F (($t{$cb}->{comment1} || '#'), ";");
       print F (($t{$cb}->{comment2} || '#'), ";");
       print F (($t{$cb}->{comment3} || '#'), ";");
-      print F $common_src{$class}->{$cb}, ";";
-      print F ((($common_src{$class}->{$cb} eq '') || ($t{$cb}->{type} eq $common_src{$class}->{$cb})) ? '' : 'BEWARE');
+      print F ($common_src{$class}->{$cb} || '?'), ";";
+      print F (((!defined $common_src{$class}->{$cb}) || ($common_src{$class}->{$cb} eq '') || ($t{$cb}->{type} eq $common_src{$class}->{$cb})) ? '' : 'BEWARE');
       print F "\n";
       $uniq{"cb_$cb\_$t{$cb}->{type}"} = 1;    
     }
@@ -564,11 +580,11 @@ sub print_a2 {
       $class = '_base' if $class eq 'IUP::Classbase';
       $class = '_box' if $class eq 'IUP::Box';
       $class = '_dialog' if $class eq 'IUP::Dialog';
-      $class = '_menu' if $class eq 'IUP::Menu';
+      #$class = '_menu' if $class eq 'IUP::Menu';
       next if $class !~ /^_base/ && $base{$at};
       next if $class !~ /^_box/ && $box{$at} && $class =~ /^IUP::[CHVZ]box$/;
       next if $class !~ /^_dialog/ && $dialog{$at} && $class =~ /^IUP::(Color|File|Font|Message)Dlg$/;
-      next if $class !~ /^_menu/ && $menu{$at} && $class =~ /^IUP::(Submenu|Item)$/;
+      #next if $class !~ /^_menu/ && $menu{$at} && $class =~ /^IUP::(Submenu|Item)$/;
       print F $class, ";";
       print F $at, ";";
       print F (($t{$at}->{type}     || 'unknown'), ";");
