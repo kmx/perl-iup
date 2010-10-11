@@ -1,3 +1,9 @@
+Callback
+- remove ihandle stuff from *.tt
+
+XS.Boot
+- put init calls somewhere else
+
 Constants:
 - iup\srclua5\constants.lua
 - iup\srclua3\constants.lua
