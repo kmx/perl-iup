@@ -4,11 +4,11 @@ package IUP::List;
 use strict;
 use warnings;
 use base 'IUP::Internal::Element';
-use IUP::Internal::LibraryIUP;
+use IUP::Internal::LibraryIup;
 
 sub _create_element {
   my($self, $args) = @_;
-  my $ih = IUP::Internal::LibraryIUP::_IupList(0); # xxx TODO fix '0'
+  my $ih = IUP::Internal::LibraryIup::_IupList(0); # xxx TODO fix '0'
   
   # xxx TODO load items form new params, maybe items=>[x,y,z] 
   

@@ -4,11 +4,11 @@ package IUP::Label;
 use strict;
 use warnings;
 use base 'IUP::Internal::Element';
-use IUP::Internal::LibraryIUP;
+use IUP::Internal::LibraryIup;
 
 sub _create_element {
   my($self, $args) = @_;
-  my $ih = IUP::Internal::LibraryIUP::_IupLabel($args->{TITLE});
+  my $ih = IUP::Internal::LibraryIup::_IupLabel($args->{TITLE});
   delete $args->{TITLE};
   return $ih;
 }

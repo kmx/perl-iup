@@ -1,11 +1,11 @@
 #!/usr/bin/env perl
 
-package IUP::Internal::LibraryIUP;
+package IUP::Internal::LibraryIup;
 
 @ISA = qw/ DynaLoader /;
 require DynaLoader;
 
-bootstrap IUP::Internal::LibraryIUP;
+bootstrap IUP::Internal::LibraryIup;
 
 1;
 
@@ -13,6 +13,6 @@ __END__
 
 =head1 NAME
 
-IUP::Internal::LibraryIUP - INTERNAL FUNCTIONS, do not use them from outside!
+IUP::Internal::LibraryIup - INTERNAL FUNCTIONS, do not use them from outside!
 
 =cut

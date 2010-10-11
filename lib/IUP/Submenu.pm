@@ -4,7 +4,7 @@ package IUP::Submenu;
 use strict;
 use warnings;
 use base 'IUP::Internal::Element';
-use IUP::Internal::LibraryIUP;
+use IUP::Internal::LibraryIup;
 use Carp;
 
 sub _create_element {
@@ -26,7 +26,7 @@ sub _create_element {
       carp "Warning: parameter 'menu' of IUP::Submenu->new() is not supported, use 'child' instead";
     }
   }
-  my $ih = IUP::Internal::LibraryIUP::_IupSubmenu($t, $m);
+  my $ih = IUP::Internal::LibraryIup::_IupSubmenu($t, $m);
   return $ih;
 }
 

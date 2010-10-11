@@ -96,7 +96,7 @@ static int cb_idle_action() {
   return ret;
 }
 
-MODULE = IUP::Internal::LibraryIUP	PACKAGE = IUP::Internal::LibraryIUP
+MODULE = IUP::Internal::LibraryIup	PACKAGE = IUP::Internal::LibraryIup
 
 BOOT:
 /* xxx warn("Helo from bootstrap!"); */

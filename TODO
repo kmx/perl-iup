@@ -62,12 +62,12 @@ GLOBAL
   + keys
 - rewrite all examples from lua to perl
 - consider redesign
-  IUP::Internal::LibraryIUP
+  IUP::Internal::LibraryIup
   IUP::Internal::LibraryCD
   IUP::Internal::LibraryIM
   IUP::Internal::LibraryIMLIB
   ...
-- move global ihandle table from IUP::Internal::Callback to IUP::Internal::LibraryIUP
+- move global ihandle table from IUP::Internal::Callback to IUP::Internal::LibraryIup
 - put somewhere key related functions (see iupkey.h + iup.h) - ?IUP::Constants?
   sub IUP_isAltXkey
   sub IUP_isCtrlXkey

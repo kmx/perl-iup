@@ -4,13 +4,13 @@ package IUP::Canvas;
 use strict;
 use warnings;
 use base 'IUP::Internal::Element';
-use IUP::Internal::LibraryIUP;
+use IUP::Internal::LibraryIup;
 #use IUP::Internal::LibraryCD;
 
 sub _create_element {
   my($self, $args) = @_;
-  my $ih = IUP::Internal::LibraryIUP::_IupCanvas(0); #xxx TODO fix '0'
-  #my $cnvh = IUP::Internal::LibraryIUP::_cdCreateCanvas(CD_IUP, $ih);
+  my $ih = IUP::Internal::LibraryIup::_IupCanvas(0); #xxx TODO fix '0'
+  #my $cnvh = IUP::Internal::LibraryIup::_cdCreateCanvas(CD_IUP, $ih);
   return $ih;
 }
 

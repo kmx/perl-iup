@@ -4,7 +4,7 @@ package IUP::ImageRGBA;
 use strict;
 use warnings;
 use base 'IUP::Internal::Element';
-use IUP::Internal::LibraryIUP;
+use IUP::Internal::LibraryIup;
 use Carp;
 
 sub _create_element {
@@ -36,7 +36,7 @@ sub _create_element {
     else {
       my $l = length($data);
       if ($l == $size) {
-        $ih = IUP::Internal::LibraryIUP::_IupImageRGBA($w, $h, $data);
+        $ih = IUP::Internal::LibraryIup::_IupImageRGBA($w, $h, $data);
       }
       else {
         carp "Warning: invalid image data size: $l, expected: $size";

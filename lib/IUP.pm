@@ -4,60 +4,60 @@ use strict;
 use warnings;
 
 use Carp;
-use IUP::Internal::LibraryIUP;
+use IUP::Internal::LibraryIup;
 use IUP::Internal::Callback;
 
 # the following modules will be autoimported by calling 'use IUP;'
-use IUP::Button;
-use IUP::Canvas;
-use IUP::Cbox;
-use IUP::Cells;
-use IUP::Clipboard;
-use IUP::ColorBar;
-use IUP::ColorBrowser;
-use IUP::ColorDlg;
-use IUP::Constants;
-use IUP::Dial;
-use IUP::Dialog;	# required by IUP.pm (GetParam)
-use IUP::FileDlg;
-use IUP::Fill;
-use IUP::FontDlg;
-use IUP::Frame;
-use IUP::GLCanvas;
-use IUP::Hbox;
-use IUP::Image;
-use IUP::ImageRGB;
-use IUP::ImageRGBA;
-use IUP::Item;
-use IUP::Label;
-use IUP::List;
-use IUP::Matrix;
-use IUP::Menu;
-use IUP::MessageDlg;
-use IUP::Normalizer;
-use IUP::OleControl;
-use IUP::PPlot;
-use IUP::ProgressBar;
-use IUP::Radio;
-use IUP::Sbox;
-use IUP::Separator;
-use IUP::Spin;
-use IUP::Spinbox;
-use IUP::Split;
-use IUP::Submenu;
-use IUP::Tabs;
-use IUP::Text;
-use IUP::Timer;
-use IUP::Toggle;
-use IUP::Tree;
-use IUP::User;
-use IUP::Val;
-use IUP::Vbox;
-use IUP::Zbox;
+# using 'require ...' instead of 'use ...' to avoid double calling <mod>->import() twice - works but maybe done somehow better
+require IUP::Button;
+require IUP::Canvas;
+require IUP::Cbox;
+require IUP::Cells;
+require IUP::Clipboard;
+require IUP::ColorBar;
+require IUP::ColorBrowser;
+require IUP::ColorDlg;
+require IUP::Constants;
+require IUP::Dial;
+require IUP::Dialog;	# required by IUP.pm (GetParam)
+require IUP::FileDlg;
+require IUP::Fill;
+require IUP::FontDlg;
+require IUP::Frame;
+require IUP::GLCanvas;
+require IUP::Hbox;
+require IUP::Image;
+require IUP::ImageRGB;
+require IUP::ImageRGBA;
+require IUP::Item;
+require IUP::Label;
+require IUP::List;
+require IUP::Matrix;
+require IUP::Menu;
+require IUP::MessageDlg;
+require IUP::Normalizer;
+require IUP::OleControl;
+require IUP::PPlot;
+require IUP::ProgressBar;
+require IUP::Radio;
+require IUP::Sbox;
+require IUP::Separator;
+require IUP::Spin;
+require IUP::Spinbox;
+require IUP::Split;
+require IUP::Submenu;
+require IUP::Tabs;
+require IUP::Text;
+require IUP::Timer;
+require IUP::Toggle;
+require IUP::Tree;
+require IUP::User;
+require IUP::Val;
+require IUP::Vbox;
+require IUP::Zbox;
 
 sub import {
   IUP::Constants->import(caller); #kind of a hack - see IUP/Constants.pm  
-
   IUP::Button->import();
   IUP::Canvas->import();
   IUP::Cbox->import();
@@ -114,37 +114,37 @@ use Data::Dumper;
 sub MainLoop {
   #int IupMainLoop(void); [in C]
   #iup.MainLoop() -> ret: number [in Lua]
-  return IUP::Internal::LibraryIUP::_IupMainLoop();
+  return IUP::Internal::LibraryIup::_IupMainLoop();
 }
 
 sub MainLoopLevel {
   #int IupMainLoopLevel(void); [in C]
   #iup.MainLoopLevel() -> ret: number [in Lua]
-  return IUP::Internal::LibraryIUP::_IupMainLoopLevel();
+  return IUP::Internal::LibraryIup::_IupMainLoopLevel();
 }
 
 sub LoopStep {
   #int IupLoopStep(void); [in C]
   #iup.LoopStep() -> ret: number [in Lua]
-  return IUP::Internal::LibraryIUP::_IupLoopStep();
+  return IUP::Internal::LibraryIup::_IupLoopStep();
 }
 
 sub LoopStepWait {
   #int IupLoopStepWait(void); [in C]
   #iup.LoopStepWait() -> ret: number [in Lua]
-  return IUP::Internal::LibraryIUP::_IupLoopStepWait();
+  return IUP::Internal::LibraryIup::_IupLoopStepWait();
 }
 
 sub ExitLoop {
   #void IupExitLoop(void); [in C]
   #iup.ExitLoop() [in Lua]
-  IUP::Internal::LibraryIUP::_IupExitLoop();
+  IUP::Internal::LibraryIup::_IupExitLoop();
 }
 
 sub Flush {
   #void IupFlush(void); [in C]
   #iup.Flush() [in Lua]
-  IUP::Internal::LibraryIUP::_IupFlush();
+  IUP::Internal::LibraryIup::_IupFlush();
 }
 
 ### helper functions
@@ -152,27 +152,27 @@ sub Flush {
 sub Close {
   #void IupClose(void); [in C]
   #iup.Close() [in Lua]
-  IUP::Internal::LibraryIUP::_IupClose();
+  IUP::Internal::LibraryIup::_IupClose();
 }
 
 sub GetAllDialogs {
   #int IupGetAllDialogs(char** names, int max_n); [in C]
   #iup.GetAllDialogs(max_n: number) -> (names: table, n: number) [in Lua]
   my ($pkg, $max_n) = @_;
-  IUP::Internal::LibraryIUP::_IupGetAllDialogs($max_n);
+  IUP::Internal::LibraryIup::_IupGetAllDialogs($max_n);
 }
 
 sub GetAllNames {
   #int IupGetAllNames(char** names, int max_n); [in C]
   #iup.GetAllNames(max_n: number) -> (names: table, n: number) [in Lua]
   my ($pkg, $max_n) = @_;
-  IUP::Internal::LibraryIUP::_IupGetAllNames($max_n);
+  IUP::Internal::LibraryIup::_IupGetAllNames($max_n);
 }
 
 sub GetFocus {
   #Ihandle* IupGetFocus(void); [in C]
   #iup.GetFocus() -> elem: ihandle [in Lua]
-  my $ih = IUP::Internal::LibraryIUP::_IupGetFocus();
+  my $ih = IUP::Internal::LibraryIup::_IupGetFocus();
   return IUP->GetOrCreateByIhandle($ih);
 }
 
@@ -180,7 +180,7 @@ sub GetClassName {
   #char* IupGetClassName(Ihandle* ih); [in C]
   #iup.GetClassName(ih: ihandle) -> (name: string) [in Lua]
   my ($pkg, $ih) = @_;
-  return IUP::Internal::LibraryIUP::_IupGetClassName($ih);
+  return IUP::Internal::LibraryIup::_IupGetClassName($ih);
 }
 
 sub GetByName {
@@ -191,7 +191,7 @@ sub GetHandle {
   #Ihandle *IupGetHandle(const char *name); [in C]
   #iup.GetHandle(name: string) -> ih: ihandle [in Lua]
   my ($pkg, $name) = @_;
-  my $ih = IUP::Internal::LibraryIUP::_IupGetHandle($name);
+  my $ih = IUP::Internal::LibraryIup::_IupGetHandle($name);
   return IUP->GetOrCreateByIhandle($ih);
 }
 
@@ -266,14 +266,14 @@ sub Help {
   #int IupHelp(const char* url); [in C]
   #iup.Help(url: string) [in Lua]
   my ($pkg, $url) = @_;
-  return IUP::Internal::LibraryIUP::_IupHelp($url);
+  return IUP::Internal::LibraryIup::_IupHelp($url);
 }
 
 sub Load {
   #char *IupLoad(const char *filename); [in C]
   #iup.Load(filename: string) -> error: string [in Lua]
   my ($pkg, $filename) = @_;
-  return IUP::Internal::LibraryIUP::_IupLoad($filename);
+  return IUP::Internal::LibraryIup::_IupLoad($filename);
 }
 
 sub LoadBuffer {
@@ -281,82 +281,82 @@ sub LoadBuffer {
   #char *IupLoadBuffer(const char *buffer); [in C] (since 3.0)
   #iup.LoadBuffer(buffer: string) -> error: string [in Lua]
   my ($pkg, $buffer) = @_;
-  return IUP::Internal::LibraryIUP::_IupLoadBuffer($buffer);
+  return IUP::Internal::LibraryIup::_IupLoadBuffer($buffer);
 }
 
 sub GetClassAttributes {
   #int IupGetClassAttributes(const char* classname, char** names, int max_n); [in C]
   #iup.GetClassAttributes(classname: string, max_n: number) -> (names: table, n: number) [in Lua]
   my ($pkg, $classname, $max_n) = @_;
-  return IUP::Internal::LibraryIUP::_IupGetClassAttributes($classname, $max_n);	
+  return IUP::Internal::LibraryIup::_IupGetClassAttributes($classname, $max_n);	
 }
 
 sub SetClassDefaultAttribute {
   #void IupSetClassDefaultAttribute(const char* classname, const char *name, const char *value); [in C]
   #iup.SetClassDefaultAttribute(classname, name, value: string) [in Lua]
   my ($pkg, $classname, $name, $value) = @_;
-  IUP::Internal::LibraryIUP::_IupSetClassDefaultAttribute($classname, $name, $value);
+  IUP::Internal::LibraryIup::_IupSetClassDefaultAttribute($classname, $name, $value);
 }
 
 sub GetGlobal {
   #char *IupGetGlobal(const char *name); [in C]
   #iup.GetGlobal(name: string) -> value: string [in Lua]
   my ($pkg, $name) = @_;
-  return IUP::Internal::LibraryIUP::_IupGetGlobal($name);
+  return IUP::Internal::LibraryIup::_IupGetGlobal($name);
 }
 
 sub SetGlobal {
   #void IupSetGlobal(const char *name, const char *value); [in C]
   #iup.SetGlobal(name: string, value: string) [in Lua] 
   my ($pkg, $name, $value) = @_;
-  #IUP::Internal::LibraryIUP::_IupSetGlobal($name, $value); # xxx TODO SetGlobal vs. StoreGlobal xxx
-  IUP::Internal::LibraryIUP::_IupStoreGlobal($name, $value);
+  #IUP::Internal::LibraryIup::_IupSetGlobal($name, $value); # xxx TODO SetGlobal vs. StoreGlobal xxx
+  IUP::Internal::LibraryIup::_IupStoreGlobal($name, $value);
 }
 
 sub StoreGlobal {
   #void IupStoreGlobal(const char *name, const char *value); [in C]
   #iup.StoreGlobal(name: string, value: string) [in Lua] 
   my ($pkg, $name, $value) = @_;
-  IUP::Internal::LibraryIUP::_IupStoreGlobal($name, $value);
+  IUP::Internal::LibraryIup::_IupStoreGlobal($name, $value);
 }
 
 sub GetLanguage {
   #char* IupGetLanguage(void); [in C] 
   #iup.GetLanguage() -> (language: string) [in Lua] 
-  return IUP::Internal::LibraryIUP::_IupGetLanguage();
+  return IUP::Internal::LibraryIup::_IupGetLanguage();
 }
 
 sub SetLanguage {
   #void IupSetLanguage(const char *lng); [in C] 
   #iup.SetLanguage(lng: string) [in Lua]
   my ($pkg, $lng) = @_;
-  IUP::Internal::LibraryIUP::_IupSetLanguage($lng);
+  IUP::Internal::LibraryIup::_IupSetLanguage($lng);
 }
 
 sub MapFont {
   #char* IupMapFont(const char *iupfont); [in C]
   #iup.MapFont(iupfont : string) -> (driverfont : string) [in Lua]
   my ($pkg, $iupfont) = @_;
-  return IUP::Internal::LibraryIUP::_IupMapFont($iupfont);
+  return IUP::Internal::LibraryIup::_IupMapFont($iupfont);
 }
 
 sub UnMapFont {
   #char* IupUnMapFont(const char *driverfont); [in C]
   #iup.UnMapFont(driverfont :string) -> (iupfont : string) [in Lua]
   my ($pkg, $driverfont) = @_;
-  IUP::Internal::LibraryIUP::_IupUnMapFont($driverfont);
+  IUP::Internal::LibraryIup::_IupUnMapFont($driverfont);
 }
 
 sub Version {
   #char* IupVersion(void); [in C]
   #iup.Version() -> (version: string) [in Lua]
-  return IUP::Internal::LibraryIUP::_IupVersion();
+  return IUP::Internal::LibraryIup::_IupVersion();
 }
 
 sub VersionNumber {
   #int IupVersionNumber(void); [in C]
   #iup.VersionNumber() -> (version: number) [in Lua]
-  return IUP::Internal::LibraryIUP::_IupVersionNumber();
+  return IUP::Internal::LibraryIup::_IupVersionNumber();
 }
 
 ### simple dialogues
@@ -364,13 +364,13 @@ sub VersionNumber {
 sub GetColor {
   my ($pkg, $x, $y, $r, $g, $b) = @_;
   # returns array: ($retval, $new_r, $new_g, $new_b)
-  return IUP::Internal::LibraryIUP::_IupGetColor($x, $y, $r, $g, $b);
+  return IUP::Internal::LibraryIup::_IupGetColor($x, $y, $r, $g, $b);
 }
 
 sub GetFile {
   my ($pkg, $filename_filter) = @_;
   # returns array: ($retval, $filename)
-  return IUP::Internal::LibraryIUP::_IupGetFile($filename_filter);
+  return IUP::Internal::LibraryIup::_IupGetFile($filename_filter);
 }
 
 sub GetParam {
@@ -380,7 +380,7 @@ sub GetParam {
   my $dlg = IUP::Dialog->new_no_ihandle();
   # we do not have ihandle of the new dialog at this point
   # we are gonna set ihandle doring the first callback invocation (see XS code)
-  my ($status, @output_values) = IUP::Internal::LibraryIUP::_IupGetParam($title, $action, $dlg, $format, @initial_values);
+  my ($status, @output_values) = IUP::Internal::LibraryIup::_IupGetParam($title, $action, $dlg, $format, @initial_values);
   return ($status, @output_values);
 }
 
@@ -389,16 +389,16 @@ sub ListDialog {
   #iup.ListDialog(type: number, title: string, size: number, list: table of strings, op: number, max_col: number, max_lin: number, marks: table of numbers) -> status: number [in Lua]
   my ($pkg, $type, $title, $list, $op, $max_col, $max_lin, $marks) = @_;
   # perl function does not require 'size' param which is calculater from the size of 'list' array
-  return IUP::Internal::LibraryIUP::_IupListDialog($type, $title, $list, $op, $max_col, $max_lin, $marks);
+  return IUP::Internal::LibraryIup::_IupListDialog($type, $title, $list, $op, $max_col, $max_lin, $marks);
 }
 
 sub GetText {
   my $pkg = shift;
   if (scalar @_ == 1) {
-    return IUP::Internal::LibraryIUP::_IupGetText('', $_[0]);
+    return IUP::Internal::LibraryIup::_IupGetText('', $_[0]);
   }
   elsif (scalar @_ == 2) {
-    return IUP::Internal::LibraryIUP::_IupGetText($_[0], $_[1]);
+    return IUP::Internal::LibraryIup::_IupGetText($_[0], $_[1]);
   }
   carp('Warning: wrong params - IUP->GetText($title, $msg)');
   return;
@@ -406,16 +406,16 @@ sub GetText {
 
 sub Alarm {
   my ($pkg, $t, $m, $b1, $b2, $b3) = @_;
-  return IUP::Internal::LibraryIUP::_IupAlarm($t, $m, $b1, $b2, $b3);
+  return IUP::Internal::LibraryIup::_IupAlarm($t, $m, $b1, $b2, $b3);
 }
 
 sub Message {
   my $pkg = shift;
   if (scalar @_ == 1) {
-    return IUP::Internal::LibraryIUP::_IupMessage('', $_[0]);
+    return IUP::Internal::LibraryIup::_IupMessage('', $_[0]);
   }
   elsif (scalar @_ == 2) {
-    return IUP::Internal::LibraryIUP::_IupMessage($_[0], $_[1]);
+    return IUP::Internal::LibraryIup::_IupMessage($_[0], $_[1]);
   }
   carp('Warning: wrong params - IUP->Message($title, $msg)');
   return;
@@ -423,7 +423,7 @@ sub Message {
 
 sub SetIdle {
   my ($pkg, $func) = @_;
-  return IUP::Internal::LibraryIUP::_SetIdle($func);
+  return IUP::Internal::LibraryIup::_SetIdle($func);
 }
 
 ###

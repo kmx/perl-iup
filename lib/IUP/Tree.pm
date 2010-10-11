@@ -4,11 +4,11 @@ package IUP::Tree;
 use strict;
 use warnings;
 use base 'IUP::Internal::Element';
-use IUP::Internal::LibraryIUP;
+use IUP::Internal::LibraryIup;
 
 sub _create_element {
   my($self, $args) = @_;
-  return IUP::Internal::LibraryIUP::_IupTree();
+  return IUP::Internal::LibraryIup::_IupTree();
 }
 
 # xxx TODO xxx many unimplemented IUP::Tree methods

@@ -4,7 +4,7 @@ package IUP::Split;
 use strict;
 use warnings;
 use base 'IUP::Internal::Element';
-use IUP::Internal::LibraryIUP;
+use IUP::Internal::LibraryIup;
 
 sub _create_element {
   my ($self, $args) = @_;  # xxx TODO two ref args (maybe)
@@ -15,7 +15,7 @@ sub _create_element {
     delete $args->{child1};
     delete $args->{child2};
   }
-  my $ih = IUP::Internal::LibraryIUP::_IupSplit($c1, $c2);
+  my $ih = IUP::Internal::LibraryIup::_IupSplit($c1, $c2);
   return $ih;
 }
 

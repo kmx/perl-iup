@@ -5,7 +5,7 @@ package IUP::Internal::Element;
 use strict;
 use warnings;
 
-use IUP::Internal::LibraryIUP;
+use IUP::Internal::LibraryIup;
 use IUP::Internal::Callback;
 use IUP::Internal::Attribute;
 use Carp;
@@ -100,22 +100,28 @@ sub name {
   if ($_[1]) {
     #Ihandle *IupSetHandle(const char *name, Ihandle *ih); [in C]
     #iup.SetHandle(name: string, ih: ihandle) -> old_ih: ihandle [in Lua]
-    return IUP::Internal::LibraryIUP::_IupSetHandle($_[1], $_[0]->ihandle);    
+    return IUP::Internal::LibraryIup::_IupSetHandle($_[1], $_[0]->ihandle);    
   }
   else {
     #char* IupGetName(Ihandle* ih); [in C]
     #iup.GetName(ih: ihandle) -> (name: string) [in Lua]
-    return IUP::Internal::LibraryIUP::_IupGetName($_[0]->ihandle);    
+    return IUP::Internal::LibraryIup::_IupGetName($_[0]->ihandle);    
   }
 }
 
 sub import {
   my $p = shift;
-  #my $time_start = localtime;
+  #warn "### IUP::Internal::Element->import($p) called";
+
+  #xxx TODO xxx
+  #my $at2eval = IUP::Internal::Attribute::_get_attr_eval_code('_base');
+  #eval $at2eval;  
+  #my $cb2eval = IUP::Internal::Callback::_get_cb_eval_code('_base');
+  #eval $cb2eval;
+  
+  # xxx to-be-deleted start
   my @cb_list = IUP::Internal::Callback::_get_cb_list($p);
   my @attrib_list = IUP::Internal::Attribute::_get_attr_list($p);
-  my @param_list = qw/ihandle cnvhandle/; # xxx TODO xxx do not do this in compile time
-
   my $c = '';
   for (@cb_list) {
     next if defined *{"$p\::$_"};
@@ -123,13 +129,13 @@ sub import {
   }
   eval $c;
   
-  # xxx TODO xxx needs to be optimized
   my $a = '';
   for (@attrib_list) {
     next if defined *{"$p\::$_"};
     $a .= "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetAttribute('$_', \$_[1]) : \$_[0]->GetAttribute('$_') };\n";
   }
   eval $a;
+  # xxx to-be-deleted end
   
   #for (@param_list) {
   #  next if defined *{"$p\::$_"};
@@ -137,8 +143,6 @@ sub import {
   #  eval "*$p\::$_ = sub { return \$_[1] ? \$_[0]->{___$_} = \$_[1] : \$_[0]->{___$_} }";
   #}
   
-  #my $time_end = localtime;
-  #warn "$time_start $time_end";
 }
 
 sub SetAttribute {
@@ -155,14 +159,14 @@ sub SetAttribute {
     
     if (ref($v)) {
       #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
-      IUP::Internal::LibraryIUP::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
+      IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
     }
     else {
       # xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
-      #IUP::Internal::LibraryIUP::_IupSetAttribute($self->ihandle, $k, $v);
+      #IUP::Internal::LibraryIup::_IupSetAttribute($self->ihandle, $k, $v);
       # xxx TODO allow using undef value without warnings
       #carp "Debug: setting $k='$v'";
-      IUP::Internal::LibraryIUP::_IupStoreAttribute($self->ihandle, $k, $v);
+      IUP::Internal::LibraryIup::_IupStoreAttribute($self->ihandle, $k, $v);
     }
   }
 }
@@ -179,21 +183,21 @@ sub GetAttribute {
   #iup.GetAttribute(ih: ihandle, name: string) -> value: string [in Lua]
   my ($self, @names) = @_;
   my @rv = ();  
-  push(@rv, IUP::Internal::LibraryIUP::_IupGetAttribute($self->ihandle, $_)) for (@names);    
+  push(@rv, IUP::Internal::LibraryIup::_IupGetAttribute($self->ihandle, $_)) for (@names);    
   return (scalar(@names) == 1) ? $rv[0] : @rv; #TODO: not sure if this is a good idea
 }
 
 sub GetInt {
   my ($self, @names) = @_;
   my @rv = ();
-  push(@rv, IUP::Internal::LibraryIUP::_IupGetInt($self->ihandle, $_)) for (@names);    
+  push(@rv, IUP::Internal::LibraryIup::_IupGetInt($self->ihandle, $_)) for (@names);    
   return (scalar(@names) == 1) ? $rv[0] : @rv; #TODO: not sure if this is a good idea
 }
 
 sub GetFloat {
   my ($self, @names) = @_;
   my @rv = ();
-  push(@rv, IUP::Internal::LibraryIUP::_IupGetFloat($self->ihandle, $_)) for (@names);    
+  push(@rv, IUP::Internal::LibraryIup::_IupGetFloat($self->ihandle, $_)) for (@names);    
   return (scalar(@names) == 1) ? $rv[0] : @rv; #TODO: not sure if this is a good idea
 }
 
@@ -241,7 +245,7 @@ sub Append {
   #Ihandle* IupAppend(Ihandle* ih, Ihandle* new_child); [in C]
   #iup.Append(ih, new_child: ihandle) -> (parent: ihandle) [in Lua]
   my ($self, $new_child) = @_;
-  my $ih = IUP::Internal::LibraryIUP::_IupAppend($self->ihandle, $new_child);
+  my $ih = IUP::Internal::LibraryIup::_IupAppend($self->ihandle, $new_child);
   return IUP->GetOrCreateByIhandle($ih);
 }
 
@@ -250,28 +254,28 @@ sub ConvertXYToPos {
   #iup.ConvertXYToPos(ih: ihandle, x, y: number) -> (ret: number) [in Lua]
   #It can be used for IupText (returns a position in the string), IupList (returns an item) or IupTree (returns a node identifier).
   my ($self, $x, $y) = @_;
-  return IUP::Internal::LibraryIUP::_IupConvertXYToPos($self->ihandle, $x, $y);
+  return IUP::Internal::LibraryIup::_IupConvertXYToPos($self->ihandle, $x, $y);
 }
 
 sub Destroy {
   #void IupDestroy(Ihandle *ih); [in C]
   #iup.Destroy(ih: ihandle) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupDestroy($self->ihandle);
+  return IUP::Internal::LibraryIup::_IupDestroy($self->ihandle);
 }
 
 sub Detach {
   #void IupDetach(Ihandle *child); [in C]
   #iup.Detach(child: ihandle) or child:detach() [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupDetach($self->ihandle);
+  return IUP::Internal::LibraryIup::_IupDetach($self->ihandle);
 }
 
 sub GetAllAttributes {
   #int IupGetAllAttributes(Ihandle* ih, char** names, int max_n); [in C]
   #iup.GetAllAttributes(ih: ihandle, max_n: number) -> (names: table, n: number) [in Lua]
   my ($self, $max_n) = @_;
-  return IUP::Internal::LibraryIUP::_IupGetAllAttributes($self->ihandle, $max_n);
+  return IUP::Internal::LibraryIup::_IupGetAllAttributes($self->ihandle, $max_n);
 }
 
 sub GetAttributes {
@@ -281,7 +285,7 @@ sub GetAttributes {
   my $result = { };
     
   # xxx Beware xxx - this fails if value contains , (comma)    
-  #my $rv = IUP::Internal::LibraryIUP::_IupGetAttributes($self->ihandle);
+  #my $rv = IUP::Internal::LibraryIup::_IupGetAttributes($self->ihandle);
   #for (split(',', $rv)) {  
   #  $result->{$1} = $2 if (/^([^=]*)="?(.*?)"?$/)    
   #};  
@@ -296,7 +300,7 @@ sub GetBrother {
   #Ihandle* IupGetBrother(Ihandle* ih); [in C]
   #iup.GetBrother(ih: ihandle) -> brother: ihandle [in Lua]
   my $self = shift;
-  my $ih = IUP::Internal::LibraryIUP::_IupGetBrother($self->ihandle);
+  my $ih = IUP::Internal::LibraryIup::_IupGetBrother($self->ihandle);
   return IUP->GetOrCreateByIhandle($ih);
 }
 
@@ -304,35 +308,35 @@ sub GetClassName {
   #char* IupGetClassName(Ihandle* ih); [in C]
   #iup.GetClassName(ih: ihandle) -> (name: string) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupGetClassName($self->ihandle);
+  return IUP::Internal::LibraryIup::_IupGetClassName($self->ihandle);
 }
 
 sub GetClassType {
   #char* IupGetClassType(Ihandle* ih); [in C]
   #iup.GetClassType(ih: ihandle) -> (name: string) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupGetClassType($self->ihandle);
+  return IUP::Internal::LibraryIup::_IupGetClassType($self->ihandle);
 }
 
 sub GetChildCount {
   #int IupGetChildCount(Ihandle* ih); [in C]
   #iup.GetChildCount(ih: ihandle) ->  pos: number [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupGetChildCount($self->ihandle);
+  return IUP::Internal::LibraryIup::_IupGetChildCount($self->ihandle);
 }
 
 sub Hide {
   #int IupHide(Ihandle *ih); [in C]
   #iup.Hide(ih: ihandle) -> (ret: number) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupHide($self->ihandle);  
+  return IUP::Internal::LibraryIup::_IupHide($self->ihandle);  
 }
 
 sub Map {
   #int IupMap(Ihandle* ih); [in C]
   #iup.Map(ih: iuplua-tag) -> ret: number [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupMap($self->ihandle);  
+  return IUP::Internal::LibraryIup::_IupMap($self->ihandle);  
 }
 
 sub Popup {
@@ -343,7 +347,7 @@ sub Popup {
   my ($self, $x, $y) = @_;
   #$x ||= 0; # xxx TOTO some reasonable defaults
   #$y ||= 0; # xxx TOTO some reasonable defaults
-  return IUP::Internal::LibraryIUP::_IupPopup($self->ihandle, $x, $y);  
+  return IUP::Internal::LibraryIup::_IupPopup($self->ihandle, $x, $y);  
 }
 
 sub Show {
@@ -352,7 +356,7 @@ sub Show {
   #iup.Show(ih: ihandle) -> (ret: number) [in Lua]
   #or ih:show() -> (ret: number) [in IupLua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupShow($self->ihandle);
+  return IUP::Internal::LibraryIup::_IupShow($self->ihandle);
 }
 
 sub ShowXY {
@@ -361,42 +365,42 @@ sub ShowXY {
   #iup.ShowXY(ih: ihandle[, x, y: number]) -> (ret: number) [in Lua]
   #or ih:showxy([x, y: number]) -> (ret: number) [in Lua]
   my ($self, $x, $y) = @_;
-  return IUP::Internal::LibraryIUP::_IupShowXY($self->ihandle, $x, $y);  
+  return IUP::Internal::LibraryIup::_IupShowXY($self->ihandle, $x, $y);  
 }
 
 sub Redraw {
   #void IupRedraw(Ihandle* ih, int children); [in C]
   #iup.Redraw(ih: ihandle, children: boolen) [in Lua]
   my ($self, $children) = @_;
-  return IUP::Internal::LibraryIUP::_IupPopup($self->ihandle, $children);  
+  return IUP::Internal::LibraryIup::_IupPopup($self->ihandle, $children);  
 }
 
 sub Refresh {
   #void IupRefresh(Ihandle *ih); [in C]
   #iup.Refresh(ih: ihandle) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupRefresh($self->ihandle);  
+  return IUP::Internal::LibraryIup::_IupRefresh($self->ihandle);  
 }
 
 sub Reparent {
   #void IupReparent(Ihandle* child, Ihandle* parent); [in C]
   #iup.Reparent(child, parent: ihandle) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupReparent($self->ihandle);  
+  return IUP::Internal::LibraryIup::_IupReparent($self->ihandle);  
 }
 
 sub ResetAttribute {
   #void IupResetAttribute(Ihandle *ih, const char *name); [in C]
   #iup.ResetAttribute(ih: iulua_tag, name: string) [in Lua] 
   my ($self, $name) = @_;
-  return IUP::Internal::LibraryIUP::_IupResetAttribute($self->ihandle, $name);  
+  return IUP::Internal::LibraryIup::_IupResetAttribute($self->ihandle, $name);  
 }
 
 sub SaveClassAttributes {
   #void IupSaveClassAttributes(Ihandle* ih); [in C]
   #iup.SaveClassAttributes(ih: ihandle) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupSaveClassAttributes($self->ihandle);  
+  return IUP::Internal::LibraryIup::_IupSaveClassAttributes($self->ihandle);  
 }
 
 sub SaveImageAsText {
@@ -404,35 +408,35 @@ sub SaveImageAsText {
   #int IupSaveImageAsText(Ihandle* ih, const char* file_name, const char* format, const char* name); [in C]
   #iup.SaveImageAsText(ih: ihandle, file_name, format[, name]: string) -> (ret: boolean) [in Lua]
   my ($self, $file_name, $format, $name) = @_;
-  return IUP::Internal::LibraryIUP::_IupSaveImageAsText($self->ihandle, $file_name, $format, $name);
+  return IUP::Internal::LibraryIup::_IupSaveImageAsText($self->ihandle, $file_name, $format, $name);
 }
 
 sub SetFocus {
   #Ihandle *IupSetFocus(Ihandle *ih); [in C]
   #iup.SetFocus(ih: ihandle) -> ih: ihandle [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupSetFocus($self->ihandle);  
+  return IUP::Internal::LibraryIup::_IupSetFocus($self->ihandle);  
 }
 
 sub Unmap {
   #void IupUnmap(Ihandle* ih); [in C]
   #iup.Unmap(ih: iuplua-tag) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupUnmap($self->ihandle);  
+  return IUP::Internal::LibraryIup::_IupUnmap($self->ihandle);  
 }
 
 sub Update {
   #void IupUpdate(Ihandle* ih); [in C]
   #iup.Update(ih: ihandle) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupUpdate($self->ihandle);  
+  return IUP::Internal::LibraryIup::_IupUpdate($self->ihandle);  
 }
 
 sub UpdateChildren {
   #void IupUpdateChildren(Ihandle* ih); [in C]
   #iup.UpdateChildren(ih: ihandle) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIUP::_IupUpdateChildren($self->ihandle);  
+  return IUP::Internal::LibraryIup::_IupUpdateChildren($self->ihandle);  
 }
 
 # xxx TODO xxx need to somehow manage ihandle > perlobjref conversion
@@ -441,7 +445,7 @@ sub GetNextChild {
   #Ihandle *IupGetNextChild(Ihandle* ih, Ihandle* child); [in C]
   #iup.GetNextChild(ih, child: ihandle) -> next_child: ihandle [in Lua]
   my ($self, $child) = @_;
-  my $ih = IUP::Internal::LibraryIUP::_IupGetNextChild($self->ihandle, $child);
+  my $ih = IUP::Internal::LibraryIup::_IupGetNextChild($self->ihandle, $child);
   return IUP->GetOrCreateByIhandle($ih);
 }
 
@@ -449,7 +453,7 @@ sub PreviousField {
   #Ihandle* IupPreviousField(Ihandle* ih); [in C]
   #iup.PreviousField(ih: ihandle) -> (previous: ihandle) [in Lua]
   my $self = shift;
-  my $ih = IUP::Internal::LibraryIUP::_IupPreviousField($self->ihandle);
+  my $ih = IUP::Internal::LibraryIup::_IupPreviousField($self->ihandle);
   return IUP->GetOrCreateByIhandle($ih);
 }
 
@@ -457,7 +461,7 @@ sub GetChildPos {
   #int IupGetChildPos(Ihandle* ih, Ihandle* child); [in C]
   #iup.GetChildPos(ih, child: ihandle) ->  pos: number [in Lua]
   my ($self, $child) = @_;
-  my $ih = IUP::Internal::LibraryIUP::_IupGetChildPos($self->ihandle, $child->ihandle);
+  my $ih = IUP::Internal::LibraryIup::_IupGetChildPos($self->ihandle, $child->ihandle);
   return IUP->GetOrCreateByIhandle($ih);
 }
 
@@ -465,7 +469,7 @@ sub GetDialog {
   #Ihandle* IupGetDialog(Ihandle *ih); [in C]
   #iup.GetDialog(ih: ihandle) -> (ih: ihandle) [in Lua]
   my $self = shift;
-  my $ih = IUP::Internal::LibraryIUP::_IupGetDialog($self->ihandle);
+  my $ih = IUP::Internal::LibraryIup::_IupGetDialog($self->ihandle);
   return IUP->GetOrCreateByIhandle($ih);
 }
 
@@ -474,7 +478,7 @@ sub GetDialogChild {
   #Ihandle* IupGetDialogChild(Ihandle *ih, const char* name); [in C]
   #iup.GetDialogChild(ih: ihandle, name: string) -> (ih: ihandle) [in Lua]
   my ($self, $name) = @_;
-  my $ih = IUP::Internal::LibraryIUP::_IupGetDialogChild($self->ihandle, $name);
+  my $ih = IUP::Internal::LibraryIup::_IupGetDialogChild($self->ihandle, $name);
   return IUP->GetOrCreateByIhandle($ih);
 }
 
@@ -483,8 +487,8 @@ sub GetParamParam {
   #iup.GetParamParam(dialog: ihandle, param_index: number)-> (param: ihandle) [in Lua]
   my ($self, $param_index) = @_;
   my $param_str = sprintf("PARAM%d", $param_index);
-  my $ih = IUP::Internal::LibraryIUP::_IupGetAttributeIH($self->ihandle, $param_str);  
-  my $ct = IUP::Internal::LibraryIUP::_IupGetAttributeIH($ih, "CONTROL");
+  my $ih = IUP::Internal::LibraryIup::_IupGetAttributeIH($self->ihandle, $param_str);  
+  my $ct = IUP::Internal::LibraryIup::_IupGetAttributeIH($ih, "CONTROL");
   # xxx TODO xxx decide how to handle GetParamParam
   return IUP->GetOrCreateByIhandle($ih);
   #return IUP->GetOrCreateByIhandle($ct);
@@ -493,14 +497,14 @@ sub GetParamParam {
 sub GetParamVal {
   my ($self, $param_index, $newval) = @_;
   my $param_str = sprintf("PARAM%d", $param_index);
-  my $ih = IUP::Internal::LibraryIUP::_IupGetAttributeIH($self->ihandle, $param_str);  
+  my $ih = IUP::Internal::LibraryIup::_IupGetAttributeIH($self->ihandle, $param_str);  
   if (defined $newval) {
-    my $ct = IUP::Internal::LibraryIUP::_IupGetAttributeIH($ih, "CONTROL");
-    IUP::Internal::LibraryIUP::_IupStoreAttribute($ih, "VALUE", $newval);
-    IUP::Internal::LibraryIUP::_IupStoreAttribute($ct, "VALUE", $newval);    
+    my $ct = IUP::Internal::LibraryIup::_IupGetAttributeIH($ih, "CONTROL");
+    IUP::Internal::LibraryIup::_IupStoreAttribute($ih, "VALUE", $newval);
+    IUP::Internal::LibraryIup::_IupStoreAttribute($ct, "VALUE", $newval);    
   }
   else {
-    return IUP::Internal::LibraryIUP::_IupGetAttribute($ih, "VALUE");
+    return IUP::Internal::LibraryIup::_IupGetAttribute($ih, "VALUE");
   }  
 }
 
@@ -509,7 +513,7 @@ sub GetChild {
   #Ihandle *IupGetChild(Ihandle* ih, int pos); [in C]
   #iup.GetChild(ih: ihandle, pos: number) -> child: ihandle [in Lua]
   my ($self, $pos) = @_;
-  my $ih = IUP::Internal::LibraryIUP::_IupGetChild($self->ihandle, $pos);
+  my $ih = IUP::Internal::LibraryIup::_IupGetChild($self->ihandle, $pos);
   return IUP->GetOrCreateByIhandle($ih);
 }
 
@@ -517,7 +521,7 @@ sub GetParent {
   #Ihandle* IupGetParent(Ihandle *ih); [in C]
   #iup.GetParent(ih: ihandle) -> parent: ihandle [in Lua]
   my $self = shift;
-  my $ih = IUP::Internal::LibraryIUP::_IupGetParent($self->ihandle);
+  my $ih = IUP::Internal::LibraryIup::_IupGetParent($self->ihandle);
   return IUP->GetOrCreateByIhandle($ih);
 }
 
@@ -525,7 +529,7 @@ sub Insert {
   #Ihandle* IupInsert(Ihandle* ih, Ihandle* ref_child, Ihandle* new_child); [in C]
   #iup.Append(ih, ref_child, new_child: ihandle) -> (parent: ihandle) [in Lua]
   my ($self, $ref_child, $new_child) = @_;
-  my $ih = IUP::Internal::LibraryIUP::_IupInsert($self->ihandle, $ref_child, $new_child);
+  my $ih = IUP::Internal::LibraryIup::_IupInsert($self->ihandle, $ref_child, $new_child);
   return IUP->GetOrCreateByIhandle($ih);
 }
 
@@ -533,7 +537,7 @@ sub NextField {
   #Ihandle* IupNextField(Ihandle* ih); [in C]
   #iup.NextField(ih: ihandle) -> (next: ihandle) [in Lua]
   my $self = shift;
-  my $ih = IUP::Internal::LibraryIUP::_IupNextField($self->ihandle);
+  my $ih = IUP::Internal::LibraryIup::_IupNextField($self->ihandle);
   return IUP->GetOrCreateByIhandle($ih);
 }
 

@@ -3,12 +3,12 @@
 package IUP::FileDlg;
 use strict;
 use warnings;
-use base 'IUP::Internal::Element';
-use IUP::Internal::LibraryIUP;
+use base 'IUP::Internal::Element::Dialog';
+use IUP::Internal::LibraryIup;
 
 sub _create_element {
   my($self, $args) = @_;
-  return IUP::Internal::LibraryIUP::_IupFileDlg();
+  return IUP::Internal::LibraryIup::_IupFileDlg();
 }
 
 1;
