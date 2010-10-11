@@ -9,6 +9,8 @@ use warnings;
 require DynaLoader;
 our @ISA = qw/ DynaLoader /;
 
+use IUP::Internal::LibraryIup;
+
 bootstrap IUP::Internal::Callback;
 
 my $cb_table = {
@@ -327,7 +329,7 @@ my $cb_table = {
 
 sub _execute_cb { #TODO: maybe return something else then -1 in case of error
   my ($ih, $action, @args) = @_;
-  my $ref = _translate_ih($ih);
+  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);
   return -1 unless ref($ref);
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
@@ -360,12 +362,6 @@ sub _get_cb_list {
   my $h = $cb_table->{$element} or return;
   return keys %$h;
 }
-
-#TODO: maybe something more thread safe
-my %ih_register; #global table mapping IUP Ihandles to perl objrefs
-sub _translate_ih  { $ih_register{$_[0]} if $_[0] }         #params: ih
-sub _unregister_ih { delete $ih_register{$_[0]} if $_[0] }  #params: ih
-sub _register_ih   { $ih_register{$_[0]} = $_[1] if $_[0] } #params: ih, objref
 
 1;
 

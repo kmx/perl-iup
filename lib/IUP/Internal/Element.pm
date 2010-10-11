@@ -87,7 +87,7 @@ sub new_from_ihandle {
 # accessor
 sub ihandle {
   if ($_[1]) {
-    IUP::Internal::Callback::_register_ih($_[1], $_[0]);    
+    IUP::Internal::LibraryIup::_register_ih($_[1], $_[0]);    
     return $_[0]->{___ihandle} = $_[1]
   }
   else {
@@ -544,7 +544,7 @@ sub NextField {
 sub DESTROY {
   # xxx TODO see http://perldoc.perl.org/perlobj.html
   #warn "XXX Destroying " . ref($_[0]) . " [" . $_[0]->ihandle . "]";
-  IUP::Internal::Callback::_unregister_ih($_[0]->ihandle);
+  IUP::Internal::LibraryIup::_unregister_ih($_[0]->ihandle);
   $_[0]->Destroy;
 }
 

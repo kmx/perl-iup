@@ -197,7 +197,7 @@ sub GetHandle {
 
 sub GetByIhandle {
   my ($pkg, $ih) = @_;
-  return IUP::Internal::Callback::_translate_ih($ih) if defined $ih;
+  return IUP::Internal::LibraryIup::_translate_ih($ih) if defined $ih;
   return; #undef
 }
 
@@ -253,7 +253,7 @@ sub GetOrCreateByIhandle {
     zbox => "IUP::Zbox",  
   };
   return unless $ih;
-  my $e = IUP::Internal::Callback::_translate_ih($ih);
+  my $e = IUP::Internal::LibraryIup::_translate_ih($ih);
   return $e if defined $e;
   my $c = IUP->GetClassName($ih);
   return unless $c;
