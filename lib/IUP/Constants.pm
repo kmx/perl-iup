@@ -13,11 +13,6 @@ our @EXPORT = qw(
   IUP_OPENED
   IUP_INVALID
 
-  IUP_IGNORE
-  IUP_DEFAULT
-  IUP_CLOSE
-  IUP_CONTINUE
-
   IUP_CENTER
   IUP_LEFT
   IUP_RIGHT
@@ -32,6 +27,43 @@ our @EXPORT = qw(
   IUP_BUTTON3
   IUP_BUTTON4
   IUP_BUTTON5
+
+  IUP_IGNORE
+  IUP_DEFAULT
+  IUP_CLOSE
+  IUP_CONTINUE
+
+  IUP_SBUP
+  IUP_SBDN
+  IUP_SBPGUP
+  IUP_SBPGDN
+  IUP_SBPOSV
+  IUP_SBDRAGV
+  IUP_SBLEFT
+  IUP_SBRIGHT
+  IUP_SBPGLEFT
+  IUP_SBPGRIGHT
+  IUP_SBPOSH
+  IUP_SBDRAGH
+
+  IUP_SHOW
+  IUP_RESTORE
+  IUP_MINIMIZE
+  IUP_MAXIMIZE
+  IUP_HIDE
+
+  IUP_MASK_FLOAT
+  IUP_MASK_UFLOAT
+  IUP_MASK_EFLOAT
+  IUP_MASK_INT
+  IUP_MASK_UINT
+
+  IUP_RED
+  IUP_GREEN
+  IUP_BLUE
+  IUP_BLACK
+  IUP_WHITE
+  IUP_YELLOW
   
   IUP_K_SP
   IUP_K_exclam
@@ -457,16 +489,13 @@ our @EXPORT = qw(
 
 );
 
+# Common return values
 use constant IUP_ERROR         => 1;
 use constant IUP_NOERROR       => 0;
 use constant IUP_OPENED        => -1;
 use constant IUP_INVALID       => -1;
 
-use constant IUP_IGNORE        => -1;
-use constant IUP_DEFAULT       => -2;
-use constant IUP_CLOSE         => -3;
-use constant IUP_CONTINUE      => -4;
-
+# IupPopup e IupShowXY  
 use constant IUP_CENTER        => 0xFFFF; # 65535
 use constant IUP_LEFT          => 0xFFFE; # 65534
 use constant IUP_RIGHT         => 0xFFFD; # 65533
@@ -476,11 +505,54 @@ use constant IUP_CENTERPARENT  => 0xFFFA; # 65530
 use constant IUP_TOP           => 0xFFFE; # = IUP_LEFT
 use constant IUP_BOTTOM        => 0xFFFD; # = IUP_RIGHT
 
+# BUTTON_CB
 use constant IUP_BUTTON1       => 1;
 use constant IUP_BUTTON2       => 2;
 use constant IUP_BUTTON3       => 3;
 use constant IUP_BUTTON4       => 4;
 use constant IUP_BUTTON5       => 5;
+
+# Callback return values
+use constant IUP_IGNORE        => -1;
+use constant IUP_DEFAULT       => -2;
+use constant IUP_CLOSE         => -3;
+use constant IUP_CONTINUE      => -4;
+
+# Scrollbar
+use constant IUP_SBUP          => 0;
+use constant IUP_SBDN          => 1;
+use constant IUP_SBPGUP        => 2;
+use constant IUP_SBPGDN        => 3;
+use constant IUP_SBPOSV        => 4;
+use constant IUP_SBDRAGV       => 5;
+use constant IUP_SBLEFT        => 6;
+use constant IUP_SBRIGHT       => 7;
+use constant IUP_SBPGLEFT      => 8;
+use constant IUP_SBPGRIGHT     => 9;
+use constant IUP_SBPOSH        => 10;
+use constant IUP_SBDRAGH       => 11;
+
+# SHOW_CB
+use constant IUP_SHOW          => 0;
+use constant IUP_RESTORE       => 1;
+use constant IUP_MINIMIZE      => 2;
+use constant IUP_MAXIMIZE      => 3;
+use constant IUP_HIDE          => 4;
+
+# Pre-Defined Masks        
+use constant IUP_MASK_FLOAT    => "[+/-]?(/d+/.?/d*|/./d+)";
+use constant IUP_MASK_UFLOAT   => "(/d+/.?/d*|/./d+)";
+use constant IUP_MASK_EFLOAT   => "[+/-]?(/d+/.?/d*|/./d+)([eE][+/-]?/d+)?";
+use constant IUP_MASK_INT      => "[+/-]?/d+";
+use constant IUP_MASK_UINT     => "/d+";
+
+# Pre-Defined Colors
+use constant IUP_RED           => "255 0 0";
+use constant IUP_GREEN         => "0 255 0";
+use constant IUP_BLUE          => "0 0 255";
+use constant IUP_BLACK         => "0 0 0";
+use constant IUP_WHITE         => "1 1 1";
+use constant IUP_YELLOW        => "1 1 0";
 
 ### keys ###
 
@@ -593,12 +665,26 @@ use constant IUP_K_CR     => 13; # '\r' (0x0D)
 # Modifiers use 256 interval
 # These key code definitions are specific to IUP
 
-sub IUP_isprint     { my $c = shift; return ($c > 31 && $c < 127) };
-sub IUP_isXkey      { my $c = shift; return ($c > 128) };
-sub IUP_isShiftXkey { my $c = shift; return ($c > 256  && $c < 512) };
-sub IUP_isCtrlXkey  { my $c = shift; return ($c > 512  && $c < 768) };
-sub IUP_isAltXkey   { my $c = shift; return ($c > 768  && $c < 1024) };
-sub IUP_isSysXkey   { my $c = shift; return ($c > 1024 && $c < 1280) };
+sub IUP_isXkey      { return ($_[0] > 128) };
+sub IUP_isShiftXkey { return ($_[0] > 256  && $_[0] < 512) };
+sub IUP_isCtrlXkey  { return ($_[0] > 512  && $_[0] < 768) };
+sub IUP_isAltXkey   { return ($_[0] > 768  && $_[0] < 1024) };
+sub IUP_isSysXkey   { return ($_[0] > 1024 && $_[0] < 1280) };
+
+# xxx TODO xxx case not fixed, check what is 'isprint'
+sub IUP_isprint     { return ($_[0] > 31 && $_[0] < 127) };
+
+# xxx TODO xxx case not fixed
+sub IUP_isSshift     { return ($_[0] eq 'S') };
+sub IUP_isControl   { return ($_[0] eq 'C') };
+sub IUP_isAlt       { return ($_[0] eq 'A') };
+sub IUP_isSys       { return ($_[0] eq 'Y') };
+sub IUP_isButton1   { return ($_[0] eq '1') };
+sub IUP_isButton2   { return ($_[0] eq '2') };
+sub IUP_isButton3   { return ($_[0] eq '3') };
+sub IUP_isButton4   { return ($_[0] eq '4') };
+sub IUP_isButton5   { return ($_[0] eq '5') };
+sub IUP_isDouble    { return ($_[0] eq 'D') };
 
 # N + 128  - Normal (must be above 128)
 # N + 256  - Shift (must have range to include the standard keys and the normal extended keys, so must be above 256

@@ -10,10 +10,12 @@ use IUP;
 my $male = IUP::Toggle->new( TITLE=>"Male" );
 my $female = IUP::Toggle->new( TITLE=>"Female" );
 
-# xxx TODO xxx TIP unknown
-my $exclusive = IUP::Radio->new( child=>IUP::Vbox->new( child=>[$male, $female] ), VALUE=>$female, TIP=>"Two state button - Exclusive - RADIO");
+# xxx TODO.ASKIUP xxx TIP attribute with iupradio does not work
+my $exclusive = IUP::Radio->new( child=>IUP::Vbox->new( child=>[$male, $female] ),
+                                 VALUE=>$female,
+                                 TIP=>"Two state button - Exclusive - RADIO" );
 
-my $frame = IUP::Frame->new( child=>$exclusive, TITLE=>"G}er" );
+my $frame = IUP::Frame->new( child=>$exclusive, TITLE=>"Gender" );
 
 my $dialog = IUP::Dialog->new( child=>IUP::Hbox->new( child=>[ IUP::Fill->new(), $frame, IUP::Fill->new() ]),
                                TITLE=>"IupRadio",

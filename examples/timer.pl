@@ -8,7 +8,7 @@ use IUP;
 my $timer1 = IUP::Timer->new(TIME=>100);
 my $timer2 = IUP::Timer->new(TIME=>2000);
 
-# xxx TODO why ACTION_CB not ACTION
+# xxx TODO.ASKIUP why iuptimer has ACTION_CB not ACTION
 
 $timer1->ACTION_CB( sub {
   print("timer 1 called\n");

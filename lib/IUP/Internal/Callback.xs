@@ -1835,7 +1835,7 @@ internal_cb_DROPSELECT_CB_iinsii (Ihandle* ih,int lin,int col,Ihandle* drop,char
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push params for _execute_cb_ih3() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
 	XPUSHs(sv_2mortal(newSVpvn("DROPSELECT_CB", 13)));
@@ -1847,7 +1847,7 @@ internal_cb_DROPSELECT_CB_iinsii (Ihandle* ih,int lin,int col,Ihandle* drop,char
 	XPUSHs(sv_2mortal(newSViv(v)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb_ih3",G_SCALAR);
 
 	SPAGAIN;
 
@@ -1871,7 +1871,7 @@ internal_cb_DROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push params for _execute_cb_ih1() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
 	XPUSHs(sv_2mortal(newSVpvn("DROP_CB", 7)));
@@ -1880,7 +1880,7 @@ internal_cb_DROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb_ih1",G_SCALAR);
 
 	SPAGAIN;
 
@@ -2734,7 +2734,7 @@ internal_cb_TABCHANGE_CB_nn (Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push params for _execute_cb_ih12() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
 	XPUSHs(sv_2mortal(newSVpvn("TABCHANGE_CB", 12)));
@@ -2742,7 +2742,7 @@ internal_cb_TABCHANGE_CB_nn (Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab)
 	XPUSHs(sv_2mortal(newSViv(PTR2IV(old_tab))));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb_ih12",G_SCALAR);
 
 	SPAGAIN;
 

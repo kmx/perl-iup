@@ -6,9 +6,9 @@ use warnings;
 
 use IUP;
 
-# xxx TODO xxx ignoring illegal parameter 'TYPE' (IUP::Label)
-my $lbl_v = IUP::Label->new( TITLE=>"VALUE=   ", SIZE=>70, TYPE=>"1" );
-my $lbl_h = IUP::Label->new( TITLE=>"VALUE=   ", SIZE=>70, TYPE=>"2" );
+# xxx TODO.ASKIUP xxx iuplabel does not accept attribute TYPE
+my $lbl_v = IUP::Label->new( TITLE=>"VALUE=n.a.", SIZE=>70, TYPE=>"1" );
+my $lbl_h = IUP::Label->new( TITLE=>"VALUE=n.a.", SIZE=>70, TYPE=>"2" );
 
 sub fbuttonpress {
   my ($self) = @_;
@@ -21,7 +21,7 @@ sub fbuttonpress {
   return IUP_DEFAULT;
 }
 
-sub fbuttonrelease(self) {
+sub fbuttonrelease {
   my ($self) = @_;
   if ($self->TYPE == "VERTICAL") {
     $lbl_v->FGCOLOR = "0 0 0";
@@ -33,13 +33,8 @@ sub fbuttonrelease(self) {
 }
 
 sub cb_change {
-  my ($self, $elem) = @_;
-  
-  # xxx TODO xxx VALUECHANGED_CB should return IHandle as a param
-  use Data::Dumper;
-  warn Dumper($elem);
-  
-  my $val = -1;
+  my $self = shift;  
+  my $val = $self->VALUE || 0;
   my $buffer = sprintf("VALUE=%.2f", $val);
   if ($self->TYPE eq "VERTICAL") {
     $lbl_v->TITLE($buffer);
@@ -50,10 +45,10 @@ sub cb_change {
   return IUP_DEFAULT;
 }
 
-my $val_v = IUP::Val->new( TYPE=>"VERTICAL", MIN=>0.0, MAX=>1.1, VALUE=>0.3,
+my $val_v = IUP::Val->new( TYPE=>"VERTICAL", MIN=>0.0, MAX=>1.0, VALUE=>0.3,
                            VALUECHANGED_CB=>\&cb_change );
 
-my $val_h = IUP::Val->new( TYPE=>"HORIZONTAL", MIN=>0, MAX=>1, VALUE=>0,
+my $val_h = IUP::Val->new( TYPE=>"HORIZONTAL", MIN=>0.0, MAX=>1.0, VALUE=>0,
                            VALUECHANGED_CB=>\&cb_change );
 
 my $dlg_val = IUP::Dialog->new( TITLE=>"Valuator Test", child=>

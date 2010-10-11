@@ -1,3 +1,20 @@
+Constants:
+- iup\srclua5\constants.lua
+- iup\srclua3\constants.lua
+- helper funcs:
+      isshift(_s)    (_s[0]=='S')
+      iscontrol(_s)  (_s[1]=='C')
+      isbutton1(_s)  (_s[2]=='1')
+      isbutton2(_s)  (_s[3]=='2')
+      isbutton3(_s)  (_s[4]=='3')
+      isdouble(_s)   (_s[5]=='D')
+      isalt(_s)      (_s[6]=='A')
+      issys(_s)      (_s[7]=='Y')
+      isbutton4(_s)  (_s[8]=='4')
+      isbutton5(_s)  (_s[9]=='5')
+- missing
+
+
 Callbacks
 IUP::Matrix;DROPSELECT_CB;iinsii;int;Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v
 IUP::Matrix;DROP_CB      ;nii   ;int;Ihandle* ih,Ihandle* drop,int lin,int col
@@ -8,6 +25,10 @@ IUP::PPlot;POSTDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
 IUP::PPlot;PREDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
 !!!
 missing support for K_* callbacks
+
+DOC
+- pplot.pl: # xxx TODO.DOC xxx note in doc that DS_ has to be set after ->PPlotEnd()
+- tree: # xxx TODO xxx note in doc that tree->SetAttribude has to go after dialog->Show
 
 XS
 - LibraryIUP / Linux: warning: ISO C90 forbids mixed declarations and code (when using myST2xxx)
@@ -38,8 +59,7 @@ GLOBAL
 - memory leaks - http://use.perl.org/~jozef/journal/40411
 - detection when running without initialized GUI
 - _generators 
-  + attributes
-  + check against GetAttrNames
+  + keys
 - rewrite all examples from lua to perl
 - consider redesign
   IUP::Internal::LibraryIUP
@@ -81,6 +101,7 @@ IUP
 
 IUP::Constants
 - K_* (see iupkey.h)
+- maybe move to IUP::Keys
 
 IUP::Internal::Element
 - maybe missing (comparing to LUA)
@@ -127,3 +148,12 @@ IUP::ImageLib
 
 IUP::Element
 - _create_element should set ihandle
+
+Build.PL
+ meta_merge => {
+        keywords => [
+            qw[FLTK Fast Light Toolkit widget FL GUI UI window 2.0.x experimental]
+
+Build.PL - RHEL5 compatibility
+- create_makefile_pl => 'small'; (see Alien::wxWidgets)
+- using: release_testing automated_testing interactive

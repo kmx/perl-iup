@@ -69,9 +69,8 @@ $dg->Show();
 $dg->HIDETASKBAR("YES");
 
 $dg->TRAYCLICK_CB( sub {
-  my ($self, $b, $press, $dclick) = @_;
-  warn "xxxxx button=$b, press=$press, dclick=$dclick";
-  if ( defined $b && $b == 1 && $press ) {
+  my ($self, $button, $press, $dclick) = @_;
+  if ( defined $button && $button == 1 && $press ) {
     my $item_show = IUP::Item->new( TITLE=>"Show", ACTION=>sub { $dg->Show() } );
     my $item_exit = IUP::Item->new( TITLE=>"Exit", ACTION=>sub { $dg->TRAY("NO"); $dg->Hide(); } );
     my $menu = IUP::Menu->new( child=>[$item_show, $item_exit] );
