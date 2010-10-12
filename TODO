@@ -1,100 +1,66 @@
-Callback
-- remove ihandle stuff from *.tt
+Callbacks generation
+- missing support for K_* callbacks
 
-XS.Boot
+Examples
+- rewrite all examples from lua to perl
+- synchronize ratehr with C examples (they are more complete)
+
+Generate POD documentation
+- work on _generators/proc-html2pod.pl
+- perhaps html > pod.tt > manually edit *.pod.tt >  conversion *.pod.tt to *.pod
+
+all XSs - BOOT section
 - put init calls somewhere else
 
 Constants:
-- iup\srclua5\constants.lua
-- iup\srclua3\constants.lua
-- helper funcs:
-      isshift(_s)    (_s[0]=='S')
-      iscontrol(_s)  (_s[1]=='C')
-      isbutton1(_s)  (_s[2]=='1')
-      isbutton2(_s)  (_s[3]=='2')
-      isbutton3(_s)  (_s[4]=='3')
-      isdouble(_s)   (_s[5]=='D')
-      isalt(_s)      (_s[6]=='A')
-      issys(_s)      (_s[7]=='Y')
-      isbutton4(_s)  (_s[8]=='4')
-      isbutton5(_s)  (_s[9]=='5')
-- missing
-
-
-Callbacks
-IUP::Matrix;DROPSELECT_CB;iinsii;int;Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v
-IUP::Matrix;DROP_CB      ;nii   ;int;Ihandle* ih,Ihandle* drop,int lin,int col
-IUP::Tabs  ;TABCHANGE_CB ;nn    ;int;Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
-IUP::Cells;DRAW_CB;iiiiiiv;int;Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas
-IUP::Matrix;DRAW_CB;iiiiiiv;int;Ihandle* ih,int lin,int col,int x1,int x2,int y1,int y2,cdCanvas* cnv
-IUP::PPlot;POSTDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
-IUP::PPlot;PREDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
-!!!
-missing support for K_* callbacks
+- maybe move key related constants into to IUP::Keys (waht about mouse related constants)
+- decide what to do with: sub IUP_isPrint (check the doc)
 
 DOC
 - pplot.pl: # xxx TODO.DOC xxx note in doc that DS_ has to be set after ->PPlotEnd()
 - tree: # xxx TODO xxx note in doc that tree->SetAttribude has to go after dialog->Show
 
-XS
+XS - compile warnings
 - LibraryIUP / Linux: warning: ISO C90 forbids mixed declarations and code (when using myST2xxx)
 - LibraryIUP / Linux: warning: unused variable targ | RETVAL (when using PPCODE)
-- LibraryIUP+Callback+other *.xs - fix BOOT sections
 - LibraryIUP - remove unnecessary use of MyST2xxx() macros
 
-Linux:
+Linux - platform specific issues
 - (<unknown>:4352): Pango-WARNING **: Error loading GSUB table 85
   before MainLoop
 - 'Quit' in main menu requires double click
 
 Packaging
-- RHEL 5
-- FC 13,12,11
+- RHEL 5 + FC 13,12,11
+  - http://search.cpan.org/dist/cpan2rpm/
+  - http://search.cpan.org/dist/Ovid/
 - Db 4,5 (Ubuntu?)
-http://distrowatch.com/table.php?distribution=ubuntu (10.04/LTS,9.10,8.04/LTS)
-http://distrowatch.com/table.php?distribution=debian (5,4)
-http://distrowatch.com/table.php?distribution=fedora (13,12,11)
-http://distrowatch.com/table.php?distribution=redhat (5,4)
+  - http://search.cpan.org/dist/Debian-Apt-PM/
+  - http://www.debian-administration.org/articles/78
+- Linux distro info
+  - http://distrowatch.com/table.php?distribution=ubuntu (10.04/LTS,9.10,8.04/LTS)
+  - http://distrowatch.com/table.php?distribution=debian (5,4)
+  - http://distrowatch.com/table.php?distribution=fedora (13,12,11)
+  - http://distrowatch.com/table.php?distribution=redhat (5,4)
 - vmware images: 
-http://chrysaor.info/?page=images&filter=Ubuntu
-http://www.thoughtpolice.co.uk/vmware/
+  - http://chrysaor.info/?page=images&filter=Ubuntu
+  - http://www.thoughtpolice.co.uk/vmware/
 
-- http://www.debian-administration.org/articles/78
-
-GLOBAL
-- memory leaks - http://use.perl.org/~jozef/journal/40411
+Global issues
+- check memory leaks - http://use.perl.org/~jozef/journal/40411
 - detection when running without initialized GUI
-- _generators 
-  + keys
-- rewrite all examples from lua to perl
-- consider redesign
-  IUP::Internal::LibraryIup
-  IUP::Internal::LibraryCD
-  IUP::Internal::LibraryIM
-  IUP::Internal::LibraryIMLIB
-  ...
-- move global ihandle table from IUP::Internal::Callback to IUP::Internal::LibraryIup
-- put somewhere key related functions (see iupkey.h + iup.h) - ?IUP::Constants?
-  sub IUP_isAltXkey
-  sub IUP_isCtrlXkey
-  sub IUP_isShiftXkey
-  sub IUP_isSysXkey
-  sub IUP_isXkey
-  sub IUP_isalt
-  sub IUP_iscontrol
-  sub IUP_isdouble
-  sub IUP_isprint
-  sub IUP_isshift
-  sub IUP_issys
-  sub IUP_isxkey
-  sub IUP_isbutton1
-  sub IUP_isbutton2
-  sub IUP_isbutton3
-  sub IUP_isbutton4
-  sub IUP_isbutton5
-- update README + Changes
+- detection of current windowing system
+- detection of codepage used in GUI
 
-IUP
+Consider splitting IUP::Internal::LibraryIup into:
+- IUP::Internal::LibraryIup
+- IUP::Internal::LibraryIupControl
+- IUP::Internal::LibraryCd
+- IUP::Internal::LibraryIm
+- IUP::Internal::LibraryImLib
+(postponed, the first try did not work as expected)
+
+IUP module
 - maybe missing (comparing to LUA)
   sub SetHandle ... IUP->SetHandle('xx', $d->ihandle);  
 - maybe not needed (comparing to LUA)
@@ -104,10 +70,6 @@ IUP
 - consider:
   sub Open (probably not)
 - tests for all global functions
-
-IUP::Constants
-- K_* (see iupkey.h)
-- maybe move to IUP::Keys
 
 IUP::Internal::Element
 - maybe missing (comparing to LUA)
@@ -128,18 +90,17 @@ IUP::Image*
   iup.SaveImage(ih: ihandle, file_name, format: string) -> (ret: boolean) [in Lua]
   iup.GetNativeHandleImage(handle: userdata) -> (image: imImage) [in Lua]
   iup.GetImageNativeHandle(image: imImage) -> (handle: userdata) [in Lua]
-- base IUP::Image::* on IUP::Image
+- base IUP::Image::* on IUP::Image (or consider IUP::Internal::Element::Image)
 - new( ... colors=>[ ] )
 - new( ... pixels=>pack('C*', @array) );
 - 1=>.. 2=>.. 3=>..
 
 IUP::(dialogs)
-- move relevant methods from IUP::Internal::Element > IUP::Dialog
+- move dialog related methods from IUP::Internal::Element > IUP::Internal::Element::Dialog
   IUP::Dialog->popup([x, y: number]) -> (ret: number) [in Lua]
   IUP::Dialog->show() -> (ret: number) [in IupLua]
   IUP::Dialog->showxy([x, y: number]) -> (ret: number) [in Lua]
   IUP::Dialog->hide() -> (ret: number) [in Lua]
-- base IUP::(File|Message|Color|Font)Dlg on IUP::Dialog
 
 IUP::Canvas
 - implement missing methods
@@ -153,13 +114,13 @@ IUP::ImageLib
 - check memory consumption
 
 IUP::Element
-- _create_element should set ihandle
+- change: _create_element should set ihandle
 
 Build.PL
  meta_merge => {
         keywords => [
             qw[FLTK Fast Light Toolkit widget FL GUI UI window 2.0.x experimental]
 
-Build.PL - RHEL5 compatibility
-- create_makefile_pl => 'small'; (see Alien::wxWidgets)
+Build.PL
+- RHEL5 compatibility: create_makefile_pl => 'small'; (see Alien::wxWidgets) - probably not
 - using: release_testing automated_testing interactive
