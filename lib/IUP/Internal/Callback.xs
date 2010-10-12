@@ -74,247 +74,6 @@ internal_cb_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char
 } 
 
 int
-internal_cb_ENTERWINDOW_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("ENTERWINDOW_CB", 14)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(ENTERWINDOW_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_GETFOCUS_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("GETFOCUS_CB", 11)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(GETFOCUS_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_HELP_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("HELP_CB", 7)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(HELP_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_KILLFOCUS_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("KILLFOCUS_CB", 12)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(KILLFOCUS_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_K_ANY_i (Ihandle* ih,int c)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("K_ANY", 5)));
-	XPUSHs(sv_2mortal(newSViv(c)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(K_ANY) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_LEAVEWINDOW_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("LEAVEWINDOW_CB", 14)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(LEAVEWINDOW_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_MAP_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("MAP_CB", 6)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(MAP_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_UNMAP_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("UNMAP_CB", 8)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(UNMAP_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
 internal_cb_ACTION_ff (Ihandle* ih,float posx,float posy)
 {
 	dSP;
@@ -933,102 +692,6 @@ internal_cb_WIDTH_CB_i (Ihandle* ih,int column)
 	return rv;
 } 
 
-int
-internal_cb_CHANGE_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned char b)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("CHANGE_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(r)));
-	XPUSHs(sv_2mortal(newSViv(g)));
-	XPUSHs(sv_2mortal(newSViv(b)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(CHANGE_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_DRAG_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned char b)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("DRAG_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(r)));
-	XPUSHs(sv_2mortal(newSViv(g)));
-	XPUSHs(sv_2mortal(newSViv(b)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(DRAG_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_VALUECHANGED_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("VALUECHANGED_CB", 15)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(VALUECHANGED_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
 char*
 internal_cb_CELL_CB_i (Ihandle* ih,int cell)
 {
@@ -1156,6 +819,102 @@ internal_cb_SWITCH_CB_ii (Ihandle* ih,int prim_cell,int sec_cell)
 } 
 
 int
+internal_cb_CHANGE_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned char b)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("CHANGE_CB", 9)));
+	XPUSHs(sv_2mortal(newSViv(r)));
+	XPUSHs(sv_2mortal(newSViv(g)));
+	XPUSHs(sv_2mortal(newSViv(b)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(CHANGE_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_DRAG_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned char b)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("DRAG_CB", 7)));
+	XPUSHs(sv_2mortal(newSViv(r)));
+	XPUSHs(sv_2mortal(newSViv(g)));
+	XPUSHs(sv_2mortal(newSViv(b)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(DRAG_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_VALUECHANGED_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("VALUECHANGED_CB", 15)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(VALUECHANGED_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
 internal_cb_BUTTON_PRESS_CB_d (Ihandle* ih,double angle)
 {
 	dSP;
@@ -1239,194 +998,6 @@ internal_cb_MOUSEMOVE_CB_d (Ihandle* ih,double angle)
 	SPAGAIN;
 
 	if (count != 1) croak("Error: _execute_cb(MOUSEMOVE_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_CLOSE_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("CLOSE_CB", 8)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(CLOSE_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_COPYDATA_CB_si (Ihandle* ih,char* cmdLine,int size)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("COPYDATA_CB", 11)));
-	XPUSHs(sv_2mortal(newSVpv(cmdLine, 0)));
-	XPUSHs(sv_2mortal(newSViv(size)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(COPYDATA_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_MDIACTIVATE_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("MDIACTIVATE_CB", 14)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(MDIACTIVATE_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_MOVE_CB_ii (Ihandle* ih,int x,int y)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("MOVE_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(x)));
-	XPUSHs(sv_2mortal(newSViv(y)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(MOVE_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_SHOW_CB_i (Ihandle* ih,int state)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("SHOW_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(state)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(SHOW_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_TRAYCLICK_CB_iii (Ihandle* ih,int but,int pressed,int dclick)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("TRAYCLICK_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(but)));
-	XPUSHs(sv_2mortal(newSViv(pressed)));
-	XPUSHs(sv_2mortal(newSViv(dclick)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(TRAYCLICK_CB) has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -3197,6 +2768,435 @@ internal_cb_SHOWRENAME_CB_i (Ihandle* ih,int id)
 	return rv;
 } 
 
+int
+internal_cb_ENTERWINDOW_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("ENTERWINDOW_CB", 14)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(ENTERWINDOW_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_GETFOCUS_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("GETFOCUS_CB", 11)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(GETFOCUS_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_HELP_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("HELP_CB", 7)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(HELP_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_KILLFOCUS_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("KILLFOCUS_CB", 12)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(KILLFOCUS_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_K_ANY_i (Ihandle* ih,int c)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("K_ANY", 5)));
+	XPUSHs(sv_2mortal(newSViv(c)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(K_ANY) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_LEAVEWINDOW_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("LEAVEWINDOW_CB", 14)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(LEAVEWINDOW_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_MAP_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("MAP_CB", 6)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(MAP_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_UNMAP_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("UNMAP_CB", 8)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(UNMAP_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_CLOSE_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("CLOSE_CB", 8)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(CLOSE_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_COPYDATA_CB_si (Ihandle* ih,char* cmdLine,int size)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("COPYDATA_CB", 11)));
+	XPUSHs(sv_2mortal(newSVpv(cmdLine, 0)));
+	XPUSHs(sv_2mortal(newSViv(size)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(COPYDATA_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_MDIACTIVATE_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("MDIACTIVATE_CB", 14)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(MDIACTIVATE_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_MOVE_CB_ii (Ihandle* ih,int x,int y)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("MOVE_CB", 7)));
+	XPUSHs(sv_2mortal(newSViv(x)));
+	XPUSHs(sv_2mortal(newSViv(y)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(MOVE_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_SHOW_CB_i (Ihandle* ih,int state)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("SHOW_CB", 7)));
+	XPUSHs(sv_2mortal(newSViv(state)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(SHOW_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_TRAYCLICK_CB_iii (Ihandle* ih,int but,int pressed,int dclick)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("TRAYCLICK_CB", 12)));
+	XPUSHs(sv_2mortal(newSViv(but)));
+	XPUSHs(sv_2mortal(newSViv(pressed)));
+	XPUSHs(sv_2mortal(newSViv(dclick)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(TRAYCLICK_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
 
 MODULE = IUP::Internal::Callback	PACKAGE = IUP::Internal::Callback
 
@@ -3217,62 +3217,6 @@ _init_cb_BUTTON_CB_iiiis(ih,action)
 		char* action;
 	CODE:
 		IupSetCallback(ih, action, (Icallback)internal_cb_BUTTON_CB_iiiis);
-
-void
-_init_cb_ENTERWINDOW_CB_(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_ENTERWINDOW_CB_);
-
-void
-_init_cb_GETFOCUS_CB_(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_GETFOCUS_CB_);
-
-void
-_init_cb_HELP_CB_(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_HELP_CB_);
-
-void
-_init_cb_KILLFOCUS_CB_(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_KILLFOCUS_CB_);
-
-void
-_init_cb_K_ANY_i(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_K_ANY_i);
-
-void
-_init_cb_LEAVEWINDOW_CB_(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_LEAVEWINDOW_CB_);
-
-void
-_init_cb_MAP_CB_(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MAP_CB_);
-
-void
-_init_cb_UNMAP_CB_(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_UNMAP_CB_);
 
 void
 _init_cb_ACTION_ff(ih,action)
@@ -3408,27 +3352,6 @@ _init_cb_WIDTH_CB_i(ih,action)
 		IupSetCallback(ih, action, (Icallback)internal_cb_WIDTH_CB_i);
 
 void
-_init_cb_CHANGE_CB_ccc(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_CHANGE_CB_ccc);
-
-void
-_init_cb_DRAG_CB_ccc(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DRAG_CB_ccc);
-
-void
-_init_cb_VALUECHANGED_CB_(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_VALUECHANGED_CB_);
-
-void
 _init_cb_CELL_CB_i(ih,action)
 		Ihandle* ih;
 		char* action;
@@ -3457,6 +3380,27 @@ _init_cb_SWITCH_CB_ii(ih,action)
 		IupSetCallback(ih, action, (Icallback)internal_cb_SWITCH_CB_ii);
 
 void
+_init_cb_CHANGE_CB_ccc(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_CHANGE_CB_ccc);
+
+void
+_init_cb_DRAG_CB_ccc(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_DRAG_CB_ccc);
+
+void
+_init_cb_VALUECHANGED_CB_(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_VALUECHANGED_CB_);
+
+void
 _init_cb_BUTTON_PRESS_CB_d(ih,action)
 		Ihandle* ih;
 		char* action;
@@ -3476,48 +3420,6 @@ _init_cb_MOUSEMOVE_CB_d(ih,action)
 		char* action;
 	CODE:
 		IupSetCallback(ih, action, (Icallback)internal_cb_MOUSEMOVE_CB_d);
-
-void
-_init_cb_CLOSE_CB_(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_CLOSE_CB_);
-
-void
-_init_cb_COPYDATA_CB_si(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_COPYDATA_CB_si);
-
-void
-_init_cb_MDIACTIVATE_CB_(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MDIACTIVATE_CB_);
-
-void
-_init_cb_MOVE_CB_ii(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MOVE_CB_ii);
-
-void
-_init_cb_SHOW_CB_i(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SHOW_CB_i);
-
-void
-_init_cb_TRAYCLICK_CB_iii(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_TRAYCLICK_CB_iii);
 
 void
 _init_cb_FILE_CB_ss(ih,action)
@@ -3903,4 +3805,102 @@ _init_cb_SHOWRENAME_CB_i(ih,action)
 		char* action;
 	CODE:
 		IupSetCallback(ih, action, (Icallback)internal_cb_SHOWRENAME_CB_i);
+
+void
+_init_cb_ENTERWINDOW_CB_(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_ENTERWINDOW_CB_);
+
+void
+_init_cb_GETFOCUS_CB_(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_GETFOCUS_CB_);
+
+void
+_init_cb_HELP_CB_(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_HELP_CB_);
+
+void
+_init_cb_KILLFOCUS_CB_(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_KILLFOCUS_CB_);
+
+void
+_init_cb_K_ANY_i(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_K_ANY_i);
+
+void
+_init_cb_LEAVEWINDOW_CB_(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_LEAVEWINDOW_CB_);
+
+void
+_init_cb_MAP_CB_(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_MAP_CB_);
+
+void
+_init_cb_UNMAP_CB_(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_UNMAP_CB_);
+
+void
+_init_cb_CLOSE_CB_(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_CLOSE_CB_);
+
+void
+_init_cb_COPYDATA_CB_si(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_COPYDATA_CB_si);
+
+void
+_init_cb_MDIACTIVATE_CB_(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_MDIACTIVATE_CB_);
+
+void
+_init_cb_MOVE_CB_ii(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_MOVE_CB_ii);
+
+void
+_init_cb_SHOW_CB_i(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_SHOW_CB_i);
+
+void
+_init_cb_TRAYCLICK_CB_iii(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_TRAYCLICK_CB_iii);
 

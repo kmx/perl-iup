@@ -9,149 +9,65 @@ use warnings;
 require DynaLoader;
 our @ISA = qw/ DynaLoader /;
 
-use IUP::Internal::LibraryIup;
-
 bootstrap IUP::Internal::Callback;
+
+use IUP::Internal::LibraryIup;
 
 my $cb_table = {
   'IUP::Button' => {
     ACTION => \&_init_cb_ACTION_,
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
-    HELP_CB => \&_init_cb_HELP_CB_,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    K_ANY => \&_init_cb_K_ANY_i,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
   },
   'IUP::Canvas' => {
     ACTION => \&_init_cb_ACTION_ff,
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
     DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
     FOCUS_CB => \&_init_cb_FOCUS_CB_i,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
-    HELP_CB => \&_init_cb_HELP_CB_,
     KEYPRESS_CB => \&_init_cb_KEYPRESS_CB_ii,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    K_ANY => \&_init_cb_K_ANY_i,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
     MOTION_CB => \&_init_cb_MOTION_CB_iis,
     RESIZE_CB => \&_init_cb_RESIZE_CB_ii,
     SCROLL_CB => \&_init_cb_SCROLL_CB_iff,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
     WHEEL_CB => \&_init_cb_WHEEL_CB_fiis,
     WOM_CB => \&_init_cb_WOM_CB_i,
   },
   'IUP::Cells' => {
     DRAW_CB => \&_init_cb_DRAW_CB_iiiiiiv,
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
     HEIGHT_CB => \&_init_cb_HEIGHT_CB_i,
-    HELP_CB => \&_init_cb_HELP_CB_,
     HSPAN_CB => \&_init_cb_HSPAN_CB_ii,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    K_ANY => \&_init_cb_K_ANY_i,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
     MOUSECLICK_CB => \&_init_cb_MOUSECLICK_CB_iiiiiis,
     MOUSEMOTION_CB => \&_init_cb_MOUSEMOTION_CB_iiiis,
     NCOLS_CB => \&_init_cb_NCOLS_CB_,
     NLINES_CB => \&_init_cb_NLINES_CB_,
     SCROLLING_CB => \&_init_cb_SCROLLING_CB_ii,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
     VSPAN_CB => \&_init_cb_VSPAN_CB_ii,
     WIDTH_CB => \&_init_cb_WIDTH_CB_i,
+  },
+  'IUP::ColorBar' => {
+    CELL_CB => \&_init_cb_CELL_CB_i,
+    EXTENDED_CB => \&_init_cb_EXTENDED_CB_i,
+    SELECT_CB => \&_init_cb_SELECT_CB_ii,
+    SWITCH_CB => \&_init_cb_SWITCH_CB_ii,
   },
   'IUP::ColorBrowser' => {
     CHANGE_CB => \&_init_cb_CHANGE_CB_ccc,
     DRAG_CB => \&_init_cb_DRAG_CB_ccc,
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
-    HELP_CB => \&_init_cb_HELP_CB_,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    K_ANY => \&_init_cb_K_ANY_i,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
     VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
-  },
-  'IUP::ColorDlg' => {
-    HELP_CB => \&_init_cb_HELP_CB_,
-  },
-  'IUP::Colorbar' => {
-    CELL_CB => \&_init_cb_CELL_CB_i,
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
-    EXTENDED_CB => \&_init_cb_EXTENDED_CB_i,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
-    HELP_CB => \&_init_cb_HELP_CB_,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    K_ANY => \&_init_cb_K_ANY_i,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
-    SELECT_CB => \&_init_cb_SELECT_CB_ii,
-    SWITCH_CB => \&_init_cb_SWITCH_CB_ii,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
   },
   'IUP::Dial' => {
     BUTTON_PRESS_CB => \&_init_cb_BUTTON_PRESS_CB_d,
     BUTTON_RELEASE_CB => \&_init_cb_BUTTON_RELEASE_CB_d,
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
-    HELP_CB => \&_init_cb_HELP_CB_,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    K_ANY => \&_init_cb_K_ANY_i,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
     MOUSEMOVE_CB => \&_init_cb_MOUSEMOVE_CB_d,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
     VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
-  },
-  'IUP::Dialog' => {
-    CLOSE_CB => \&_init_cb_CLOSE_CB_,
-    COPYDATA_CB => \&_init_cb_COPYDATA_CB_si,
-    DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
-    HELP_CB => \&_init_cb_HELP_CB_,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    K_ANY => \&_init_cb_K_ANY_i,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
-    MDIACTIVATE_CB => \&_init_cb_MDIACTIVATE_CB_,
-    MOVE_CB => \&_init_cb_MOVE_CB_ii,
-    RESIZE_CB => \&_init_cb_RESIZE_CB_ii,
-    SHOW_CB => \&_init_cb_SHOW_CB_i,
-    TRAYCLICK_CB => \&_init_cb_TRAYCLICK_CB_iii,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
   },
   'IUP::FileDlg' => {
     FILE_CB => \&_init_cb_FILE_CB_ss,
-    HELP_CB => \&_init_cb_HELP_CB_,
-  },
-  'IUP::FontDlg' => {
-    HELP_CB => \&_init_cb_HELP_CB_,
-  },
-  'IUP::Frame' => {
-    MAP_CB => \&_init_cb_MAP_CB_,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
   },
   'IUP::GLCanvas' => {
     RESIZE_CB => \&_init_cb_RESIZE_CB_ii,
   },
   'IUP::Item' => {
     ACTION => \&_init_cb_ACTION_,
-    HELP_CB => \&_init_cb_HELP_CB_,
     HIGHLIGHT_CB => \&_init_cb_HIGHLIGHT_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
-  },
-  'IUP::Label' => {
-    MAP_CB => \&_init_cb_MAP_CB_,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
   },
   'IUP::List' => {
     ACTION => \&_init_cb_ACTION_sii,
@@ -161,16 +77,8 @@ my $cb_table = {
     DROPDOWN_CB => \&_init_cb_DROPDOWN_CB_i,
     DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
     EDIT_CB => \&_init_cb_EDIT_CB_is,
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
-    HELP_CB => \&_init_cb_HELP_CB_,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    K_ANY => \&_init_cb_K_ANY_i,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
     MOTION_CB => \&_init_cb_MOTION_CB_iis,
     MULTISELECT_CB => \&_init_cb_MULTISELECT_CB_s,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
     VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
   },
   'IUP::Matrix' => {
@@ -195,21 +103,8 @@ my $cb_table = {
     VALUE_EDIT_CB => \&_init_cb_VALUE_EDIT_CB_iis,
   },
   'IUP::Menu' => {
-    MAP_CB => \&_init_cb_MAP_CB_,
     MENUCLOSE_CB => \&_init_cb_MENUCLOSE_CB_,
     OPEN_CB => \&_init_cb_OPEN_CB_,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
-  },
-  'IUP::MessageDlg' => {
-    HELP_CB => \&_init_cb_HELP_CB_,
-  },
-  'IUP::OleControl' => {
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
   },
   'IUP::PPlot' => {
     DELETEBEGIN_CB => \&_init_cb_DELETEBEGIN_CB_,
@@ -218,23 +113,11 @@ my $cb_table = {
     EDITBEGIN_CB => \&_init_cb_EDITBEGIN_CB_,
     EDITEND_CB => \&_init_cb_EDITEND_CB_,
     EDIT_CB => \&_init_cb_EDIT_CB_iiffFF,
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
-    HELP_CB => \&_init_cb_HELP_CB_,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    K_ANY => \&_init_cb_K_ANY_i,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
     POSTDRAW_CB => \&_init_cb_POSTDRAW_CB_v,
     PREDRAW_CB => \&_init_cb_PREDRAW_CB_v,
     SELECTBEGIN_CB => \&_init_cb_SELECTBEGIN_CB_,
     SELECTEND_CB => \&_init_cb_SELECTEND_CB_,
     SELECT_CB => \&_init_cb_SELECT_CB_iiffi,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
-  },
-  'IUP::ProgressBar' => {
-    MAP_CB => \&_init_cb_MAP_CB_,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
   },
   'IUP::Spin' => {
     SPIN_CB => \&_init_cb_SPIN_CB_i,
@@ -244,35 +127,17 @@ my $cb_table = {
   },
   'IUP::Submenu' => {
     HIGHLIGHT_CB => \&_init_cb_HIGHLIGHT_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
   },
   'IUP::Tabs' => {
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
-    HELP_CB => \&_init_cb_HELP_CB_,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    K_ANY => \&_init_cb_K_ANY_i,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
     TABCHANGE_CB => \&_init_cb_TABCHANGE_CB_nn,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
   },
   'IUP::Text' => {
     ACTION => \&_init_cb_ACTION_is,
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
     CARET_CB => \&_init_cb_CARET_CB_iii,
     DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
-    HELP_CB => \&_init_cb_HELP_CB_,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    K_ANY => \&_init_cb_K_ANY_i,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
     MOTION_CB => \&_init_cb_MOTION_CB_iis,
     SPIN_CB => \&_init_cb_SPIN_CB_i,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
     VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
   },
   'IUP::Timer' => {
@@ -280,14 +145,6 @@ my $cb_table = {
   },
   'IUP::Toggle' => {
     ACTION => \&_init_cb_ACTION_i,
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
-    HELP_CB => \&_init_cb_HELP_CB_,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    K_ANY => \&_init_cb_K_ANY_i,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
     VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
   },
   'IUP::Tree' => {
@@ -296,14 +153,7 @@ my $cb_table = {
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
     DRAGDROP_CB => \&_init_cb_DRAGDROP_CB_iiii,
     DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
-    ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
     EXECUTELEAF_CB => \&_init_cb_EXECUTELEAF_CB_i,
-    GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
-    HELP_CB => \&_init_cb_HELP_CB_,
-    KILLFOCUS_CB => \&_init_cb_KILLFOCUS_CB_,
-    K_ANY => \&_init_cb_K_ANY_i,
-    LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
-    MAP_CB => \&_init_cb_MAP_CB_,
     MOTION_CB => \&_init_cb_MOTION_CB_iis,
     MULTISELECTION_CB => \&_init_cb_MULTISELECTION_CB_Ai,
     MULTIUNSELECTION_CB => \&_init_cb_MULTIUNSELECTION_CB_Ai,
@@ -312,9 +162,11 @@ my $cb_table = {
     RIGHTCLICK_CB => \&_init_cb_RIGHTCLICK_CB_i,
     SELECTION_CB => \&_init_cb_SELECTION_CB_ii,
     SHOWRENAME_CB => \&_init_cb_SHOWRENAME_CB_i,
-    UNMAP_CB => \&_init_cb_UNMAP_CB_,
   },
   'IUP::Val' => {
+    VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
+  },
+  '_base' => {
     ENTERWINDOW_CB => \&_init_cb_ENTERWINDOW_CB_,
     GETFOCUS_CB => \&_init_cb_GETFOCUS_CB_,
     HELP_CB => \&_init_cb_HELP_CB_,
@@ -323,14 +175,90 @@ my $cb_table = {
     LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
     MAP_CB => \&_init_cb_MAP_CB_,
     UNMAP_CB => \&_init_cb_UNMAP_CB_,
-    VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
+  },
+  '_dialog' => {
+    CLOSE_CB => \&_init_cb_CLOSE_CB_,
+    COPYDATA_CB => \&_init_cb_COPYDATA_CB_si,
+    DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
+    MDIACTIVATE_CB => \&_init_cb_MDIACTIVATE_CB_,
+    MOVE_CB => \&_init_cb_MOVE_CB_ii,
+    RESIZE_CB => \&_init_cb_RESIZE_CB_ii,
+    SHOW_CB => \&_init_cb_SHOW_CB_i,
+    TRAYCLICK_CB => \&_init_cb_TRAYCLICK_CB_iii,
   },
 };
 
-sub _execute_cb { #TODO: maybe return something else then -1 in case of error
+# xxx TODO xxx: maybe return something else then -1 in case of error
+
+sub _execute_cb { # convert just the first arg from ihandle to objref
   my ($ih, $action, @args) = @_;
-  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);
+  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);         # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
   return -1 unless ref($ref);
+  my $func = $ref->{$action};
+  return -1 unless (ref($func) eq 'CODE');
+  my $rv = &$func($ref, @args);
+  return -1 unless defined $rv;
+  return $rv;
+}
+
+sub _execute_cb_ih3 {  #Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v
+  my ($ih, $action, @args) = @_;
+  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  return -1 unless ref($ref);
+  $args[2] = IUP::Internal::LibraryIup::_translate_ih($args[2]);    # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($args[2]);
+  return -1 unless ref($args[2]);
+  my $func = $ref->{$action};
+  return -1 unless (ref($func) eq 'CODE');
+  my $rv = &$func($ref, @args);
+  return -1 unless defined $rv;
+  return $rv;
+}
+
+sub _execute_cb_ih1 {  #Ihandle* ih,Ihandle* drop,int lin,int col
+  my ($ih, $action, @args) = @_;
+  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  return -1 unless ref($ref);
+  $args[0] = IUP::Internal::LibraryIup::_translate_ih($args[0]);    # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($args[0]);
+  return -1 unless ref($args[0]);
+  my $func = $ref->{$action};
+  return -1 unless (ref($func) eq 'CODE');
+  my $rv = &$func($ref, @args);
+  return -1 unless defined $rv;
+  return $rv;
+}
+
+sub _execute_cb_ih12 { #Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
+  my ($ih, $action, @args) = @_;
+  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  return -1 unless ref($ref);
+  $args[0] = IUP::Internal::LibraryIup::_translate_ih($args[0]);    # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($args[0]);
+  return -1 unless ref($args[0]);
+  $args[1] = IUP::Internal::LibraryIup::_translate_ih($args[1]);    # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($args[1]);
+  return -1 unless ref($args[1]);
+  my $func = $ref->{$action};
+  return -1 unless (ref($func) eq 'CODE');
+  my $rv = &$func($ref, @args);
+  return -1 unless defined $rv;
+  return $rv;
+}
+
+sub _execute_cb_cnv7 { #Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas
+  my ($ih, $action, @args) = @_;
+  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  return -1 unless ref($ref);
+  warn "### xxx TODO xxx _execute_cb_cnv7(): do not know how to convert canvas handle ($args[6])";
+  my $func = $ref->{$action};
+  return -1 unless (ref($func) eq 'CODE');
+  my $rv = &$func($ref, @args);
+  return -1 unless defined $rv;
+  return $rv;
+}
+
+sub _execute_cb_cnv1 { #Ihandle* ih,cdCanvas* cnv
+  my ($ih, $action, @args) = @_;
+  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  return -1 unless ref($ref);
+  warn "### xxx TODO xxx _execute_cb_cnv1(): do not know how to convert canvas handle ($args[0])";
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
   my $rv = &$func($ref, @args);
@@ -361,6 +289,20 @@ sub _get_cb_list {
   my ($element) = @_;
   my $h = $cb_table->{$element} or return;
   return keys %$h;
+}
+
+sub _get_cb_eval_code {
+  my ($element, $p) = @_;
+  my $rv = '';
+  my $h = $cb_table->{$element} or return $rv;
+  
+  for (keys %$h) {
+    next if defined *{"$p\::$_"};
+    # xxx TODO xxx: making rw accessors for callbacks does not make much sense
+    $rv .= "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetCallback('$_', \$_[1]) : \$_[0]->{$_} };\n";
+  }
+
+  return $rv;
 }
 
 1;

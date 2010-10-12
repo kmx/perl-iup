@@ -113,35 +113,20 @@ sub import {
   my $p = shift;
   #warn "### IUP::Internal::Element->import($p) called";
 
-  #xxx TODO xxx
-  #my $at2eval = IUP::Internal::Attribute::_get_attr_eval_code('_base');
-  #eval $at2eval;  
-  #my $cb2eval = IUP::Internal::Callback::_get_cb_eval_code('_base');
-  #eval $cb2eval;
+  # xxx TODO xxx maybe move accessors to Internal::Element::Dialog + Internal::Element::Box + IUP::<element>
   
-  # xxx to-be-deleted start
-  my @cb_list = IUP::Internal::Callback::_get_cb_list($p);
-  my @attrib_list = IUP::Internal::Attribute::_get_attr_list($p);
-  my $c = '';
-  for (@cb_list) {
-    next if defined *{"$p\::$_"};
-    $c .= "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetCallback('$_', \$_[1]) : \$_[0]->{$_} };\n"; #TODO: rw does not make much sense
-  }
-  eval $c;
+  # callback accessors
+  eval IUP::Internal::Callback::_get_cb_eval_code('_base', $p) .
+       (($p =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/) ? IUP::Internal::Callback::_get_cb_eval_code('_dialog', $p) : '') .
+       IUP::Internal::Callback::_get_cb_eval_code($p, $p);
+  die "###ERROR### import failed(cb): " . $@ if $@;
   
-  my $a = '';
-  for (@attrib_list) {
-    next if defined *{"$p\::$_"};
-    $a .= "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetAttribute('$_', \$_[1]) : \$_[0]->GetAttribute('$_') };\n";
-  }
-  eval $a;
-  # xxx to-be-deleted end
-  
-  #for (@param_list) {
-  #  next if defined *{"$p\::$_"};
-  #  #warn "creating.p: $p\::$_";
-  #  eval "*$p\::$_ = sub { return \$_[1] ? \$_[0]->{___$_} = \$_[1] : \$_[0]->{___$_} }";
-  #}
+  # attribute accessors
+  eval IUP::Internal::Attribute::_get_attr_eval_code('_base', $p) .
+       (($p =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/) ? IUP::Internal::Attribute::_get_attr_eval_code('_dialog', $p) : '') .
+       (($p =~ /^IUP::[CHVZ]box$/) ? IUP::Internal::Attribute::_get_attr_eval_code('_box', $p) : '') .
+       IUP::Internal::Attribute::_get_attr_eval_code($p, $p);
+  die "###ERROR### import failed(attr): " . $@ if $@;
   
 }
 

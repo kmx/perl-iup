@@ -208,7 +208,13 @@ my $attrib_table = {
   },
   'IUP::Item' => {
     AUTOTOGGLE => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
+    HIDEMARK => 'unknown',                                    # src=no doc=yes
+    IMAGE => 'unknown',                                       # src=no doc=yes
+    IMPRESS => 'unknown',                                     # src=no doc=yes
     KEY => 'NOT_MAPPED|NO_INHERIT',                           # src=yes doc=yes
+    TITLE => 'unknown',                                       # src=no doc=yes
+    TITLEIMAGE => 'unknown',                                  # src=no doc=yes
+    VALUE => 'unknown',                                       # src=no doc=yes
   },
   'IUP::Label' => {
     ALIGNMENT => 'NO_INHERIT',                                # src=yes doc=yes
@@ -319,6 +325,17 @@ my $attrib_table = {
     VALUE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=no
     WIDTH => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=no
     WIDTHDEF => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=no
+  },
+  'IUP::Menu' => {
+    BGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
+    FLAT_ALPHA => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=no
+    HIDEMARK => 'NOT_MAPPED',                                 # src=yes doc=no
+    IMAGE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=no
+    IMPRESS => 'NO_DEFAULTVALUE|NO_INHERIT',                  # src=yes doc=no
+    RADIO => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=yes
+    TITLE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=no
+    TITLEIMAGE => 'NO_DEFAULTVALUE|NO_INHERIT',               # src=yes doc=no
+    VALUE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=no
   },
   'IUP::MessageDlg' => {
     BUTTONDEFAULT => 'NO_INHERIT',                            # src=yes doc=yes
@@ -448,7 +465,9 @@ my $attrib_table = {
     VALUE => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=yes
   },
   'IUP::Submenu' => {
+    IMAGE => 'unknown',                                       # src=no doc=yes
     KEY => 'NOT_MAPPED|NO_INHERIT',                           # src=yes doc=yes
+    TITLE => 'unknown',                                       # src=no doc=yes
   },
   'IUP::Tabs' => {
     ALIGNMENT => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=no
@@ -727,17 +746,6 @@ my $attrib_table = {
     TRAYTIP => 'NO_INHERIT',                                  # src=yes doc=yes
     XWINDOW => 'NO_INHERIT|NO_STRING',                        # src=yes doc=yes
   },
-  '_menu' => {
-    BGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    FLAT_ALPHA => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=no
-    HIDEMARK => 'NOT_MAPPED',                                 # src=yes doc=no
-    IMAGE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=no
-    IMPRESS => 'NO_DEFAULTVALUE|NO_INHERIT',                  # src=yes doc=no
-    RADIO => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=yes
-    TITLE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=no
-    TITLEIMAGE => 'NO_DEFAULTVALUE|NO_INHERIT',               # src=yes doc=no
-    VALUE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=no
-  },
 };
 
 sub _get_attr_list {
@@ -745,7 +753,6 @@ sub _get_attr_list {
   my @rv = ();
   push(@rv, keys(%{$attrib_table->{_base}}));
   push(@rv, keys(%{$attrib_table->{_dialog}})) if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/;
-  push(@rv, keys(%{$attrib_table->{_menu}}))   if $pkg =~ /^IUP::(Menu|Submenu|Item)$/;
   push(@rv, keys(%{$attrib_table->{_box}}))    if $pkg =~ /^IUP::[CHVZ]box$/;
   push(@rv, keys(%{$attrib_table->{$pkg}}));
   return @rv;
@@ -759,6 +766,20 @@ sub _is_attr_valid {
   carp "Warning: DO NOT USE _is_attr_valid!";
   return 1;
 }
+
+sub _get_attr_eval_code {
+  my ($element, $p) = @_;
+  my $rv = '';
+  my $h = $attrib_table->{$element} or return $rv;
+  
+  for (keys %$h) {
+    next if defined *{"$p\::$_"};
+    $rv .= "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetAttribute('$_', \$_[1]) : \$_[0]->GetAttribute('$_') };\n";
+  }
+
+  return $rv;
+}
+
 
 1;
 
