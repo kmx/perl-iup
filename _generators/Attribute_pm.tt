@@ -24,7 +24,6 @@ sub _get_attr_list {
   my @rv = ();
   push(@rv, keys(%{$attrib_table->{_base}}));
   push(@rv, keys(%{$attrib_table->{_dialog}})) if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/;
-  push(@rv, keys(%{$attrib_table->{_menu}}))   if $pkg =~ /^IUP::(Menu|Submenu|Item)$/;
   push(@rv, keys(%{$attrib_table->{_box}}))    if $pkg =~ /^IUP::[CHVZ]box$/;
   push(@rv, keys(%{$attrib_table->{$pkg}}));
   return @rv;
@@ -38,6 +37,20 @@ sub _is_attr_valid {
   carp "Warning: DO NOT USE _is_attr_valid!";
   return 1;
 }
+
+sub _get_attr_eval_code {
+  my ($element, $p) = @_;
+  my $rv = '';
+  my $h = $attrib_table->{$element} or return $rv;
+  
+  for (keys %$h) {
+    next if defined *{"$p\::$_"};
+    $rv .= "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetAttribute('$_', \$_[1]) : \$_[0]->GetAttribute('$_') };\n";
+  }
+
+  return $rv;
+}
+
 
 1;
 

@@ -139,6 +139,7 @@ my %type_patch = (
   'IUP::Tree' => { MULTISELECTION_CB => 'Ai', MULTIUNSELECTION_CB => 'Ai'},	
   'IUP::Matrix' => { DRAW_CB => 'iiiiiiv' },
   'IUP::PPlot' => { EDIT_CB => 'iiffFF' },
+  'IUP::Dialog' => { COPYDATA_CB => 'si', MOVE_CB => 'ii' },
 );
 
 sub raw2pname {
@@ -450,7 +451,7 @@ sub print_c1 {
   print F '#module;#action;#type;#c_retval;#c_params;#c1;#c2;#c3;#c4;#c5', "\n";
   for my $class (sort keys %c_list) {
     next unless $class;
-    next if $class =~ /^(IUP::GetParam|IUP::MultiLine|IUP::Gauge)/;  
+    next if $class =~ /^(IUP::GetParam|IUP::MultiLine|IUP::Gauge)/; #legacy
     
     my %t = %{$c_list{$class}};
     for my $cb (sort keys %t) {
@@ -486,23 +487,25 @@ sub print_c1 {
 	  $t{$cb}->{comment3} = "default.src_common2";
         }
         else {
-	  $t{$cb}->{type} = '#undef#';
+	  $t{$cb}->{type} = $type_patch{$class}->{$cb} || '#undef#'; # type patching
+	  warn ">>>> $class $cb $type_patch{$class}->{$cb}";
         }
       }
       $t{$cb}->{par} =~ s/ \*/* /g if defined $t{$cb}->{par};
       $common_src{$class}->{$cb} ||= '';
       
       #xxx TODO xxx not tested yet
-      $class = '_base' if $class eq 'IUP::Classbase';
-      $class = '_box' if $class eq 'IUP::Box';
-      $class = '_dialog' if $class eq 'IUP::Dialog';
-      #$class = '_menu' if $class eq 'IUP::Menu';
-      next if $class !~ /^_base/ && $base{$cb};
-      next if $class !~ /^_box/ && $box{$cb} && $class =~ /^IUP::[CHVZ]box$/;
-      next if $class !~ /^_dialog/ && $dialog{$cb} && $class =~ /^IUP::(Color|File|Font|Message)Dlg$/;
-      #next if $class !~ /^_menu/ && $menu{$cb} && $class =~ /^IUP::(Submenu|Item)$/;
+      my $class2 = $class;
+      $class2 = '_base' if $class2 eq 'IUP::Classbase';
+      $class2 = '_box' if $class2 eq 'IUP::Box';
+      $class2 = '_dialog' if $class2 eq 'IUP::Dialog';
+      #$class2 = '_menu' if $class2 eq 'IUP::Menu';
+      next if $class2 !~ /^_base/ && $base{$cb};
+      next if $class2 !~ /^_box/ && $box{$cb} && $class2 =~ /^IUP::[CHVZ]box$/;
+      next if $class2 !~ /^_dialog/ && $dialog{$cb} && $class2 =~ /^IUP::(Color|File|Font|Message)Dlg$/;
+      #next if $class2 !~ /^_menu/ && $menu{$cb} && $class2 =~ /^IUP::(Submenu|Item)$/;
 
-      print F $class, ";";
+      print F $class2, ";";
       print F $cb, ";";
       print F $t{$cb}->{type}, ";";
       print F (($t{$cb}->{rv} || '#'), ";");

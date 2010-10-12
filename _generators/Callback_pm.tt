@@ -11,6 +11,8 @@ our @ISA = qw/ DynaLoader /;
 
 bootstrap IUP::Internal::Callback;
 
+use IUP::Internal::LibraryIup;
+
 my $cb_table = {
 [% FOR i IN pmitems -%]
   '[% i.module %]' => {
@@ -21,10 +23,77 @@ my $cb_table = {
 [% END -%]
 };
 
-sub _execute_cb { #TODO: maybe return something else then -1 in case of error
+# xxx TODO xxx: maybe return something else then -1 in case of error
+
+sub _execute_cb { # convert just the first arg from ihandle to objref
   my ($ih, $action, @args) = @_;
-  my $ref = _translate_ih($ih);
+  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);         # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
   return -1 unless ref($ref);
+  my $func = $ref->{$action};
+  return -1 unless (ref($func) eq 'CODE');
+  my $rv = &$func($ref, @args);
+  return -1 unless defined $rv;
+  return $rv;
+}
+
+sub _execute_cb_ih3 {  #Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v
+  my ($ih, $action, @args) = @_;
+  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  return -1 unless ref($ref);
+  $args[2] = IUP::Internal::LibraryIup::_translate_ih($args[2]);    # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($args[2]);
+  return -1 unless ref($args[2]);
+  my $func = $ref->{$action};
+  return -1 unless (ref($func) eq 'CODE');
+  my $rv = &$func($ref, @args);
+  return -1 unless defined $rv;
+  return $rv;
+}
+
+sub _execute_cb_ih1 {  #Ihandle* ih,Ihandle* drop,int lin,int col
+  my ($ih, $action, @args) = @_;
+  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  return -1 unless ref($ref);
+  $args[0] = IUP::Internal::LibraryIup::_translate_ih($args[0]);    # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($args[0]);
+  return -1 unless ref($args[0]);
+  my $func = $ref->{$action};
+  return -1 unless (ref($func) eq 'CODE');
+  my $rv = &$func($ref, @args);
+  return -1 unless defined $rv;
+  return $rv;
+}
+
+sub _execute_cb_ih12 { #Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
+  my ($ih, $action, @args) = @_;
+  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  return -1 unless ref($ref);
+  $args[0] = IUP::Internal::LibraryIup::_translate_ih($args[0]);    # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($args[0]);
+  return -1 unless ref($args[0]);
+  $args[1] = IUP::Internal::LibraryIup::_translate_ih($args[1]);    # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($args[1]);
+  return -1 unless ref($args[1]);
+  my $func = $ref->{$action};
+  return -1 unless (ref($func) eq 'CODE');
+  my $rv = &$func($ref, @args);
+  return -1 unless defined $rv;
+  return $rv;
+}
+
+sub _execute_cb_cnv7 { #Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas
+  my ($ih, $action, @args) = @_;
+  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  return -1 unless ref($ref);
+  warn "### xxx TODO xxx _execute_cb_cnv7(): do not know how to convert canvas handle ($args[6])";
+  my $func = $ref->{$action};
+  return -1 unless (ref($func) eq 'CODE');
+  my $rv = &$func($ref, @args);
+  return -1 unless defined $rv;
+  return $rv;
+}
+
+sub _execute_cb_cnv1 { #Ihandle* ih,cdCanvas* cnv
+  my ($ih, $action, @args) = @_;
+  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  return -1 unless ref($ref);
+  warn "### xxx TODO xxx _execute_cb_cnv1(): do not know how to convert canvas handle ($args[0])";
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
   my $rv = &$func($ref, @args);
@@ -57,11 +126,19 @@ sub _get_cb_list {
   return keys %$h;
 }
 
-#TODO: maybe something more thread safe
-my %ih_register; #global table mapping IUP Ihandles to perl objrefs
-sub _translate_ih  { $ih_register{$_[0]} if $_[0] }         #params: ih
-sub _unregister_ih { delete $ih_register{$_[0]} if $_[0] }  #params: ih
-sub _register_ih   { $ih_register{$_[0]} = $_[1] if $_[0] } #params: ih, objref
+sub _get_cb_eval_code {
+  my ($element, $p) = @_;
+  my $rv = '';
+  my $h = $cb_table->{$element} or return $rv;
+  
+  for (keys %$h) {
+    next if defined *{"$p\::$_"};
+    # xxx TODO xxx: making rw accessors for callbacks does not make much sense
+    $rv .= "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetCallback('$_', \$_[1]) : \$_[0]->{$_} };\n";
+  }
+
+  return $rv;
+}
 
 1;
 
