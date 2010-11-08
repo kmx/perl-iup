@@ -55,8 +55,6 @@ my $attrib_table = {
     YMAX => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=no
     YMIN => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=no
   },
-  'IUP::Cbox' => {
-  },
   'IUP::Cells' => {
     BGCOLOR => 'NO_INHERIT',                                  # src=yes doc=yes
     BOXED => 'NOT_MAPPED',                                    # src=yes doc=yes
@@ -643,6 +641,8 @@ my $attrib_table = {
     ACTIVE => 'DEFAULT',                                      # src=yes doc=no
     CANFOCUS => 'NO_INHERIT',                                 # src=yes doc=no
     CHARSIZE => 'NO_DEFAULTVALUE|READONLY|NOT_MAPPED|NO_INHERIT', # src=yes doc=no
+    CX => 'unknown',                                          # src=no doc=no
+    CY => 'unknown',                                          # src=no doc=no
     ENTERWINDOW_CB => 'NO_INHERIT',                           # src=yes doc=no
     EXPAND => 'NOT_MAPPED|NO_INHERIT',                        # src=yes doc=no
     EXPANDWEIGHT => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=no

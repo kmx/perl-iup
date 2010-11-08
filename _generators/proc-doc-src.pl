@@ -404,7 +404,11 @@ foreach my $f (@all_doc) {
 #print Dumper(\%a_list);
 #print Dumper(\%c_list);
 
-#ad hoc patching
+#ad hoc patching - attributes
+$a_list{'IUP::Classbase'}->{CX}->{type}='unknown';
+$a_list{'IUP::Classbase'}->{CY}->{type}='unknown';
+
+#ad hoc patching - callbacks
 $c_list{'IUP::Matrix'}->{EDITION_CB}->{type}='iiii';
 $c_list{'IUP::GLCanvas'}->{RESIZE_CB}->{type}='ii';
 
