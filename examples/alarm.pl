@@ -1,5 +1,6 @@
-# IupAlarm Example
-# Shows a dialog similar to the one shown when you exit a program without saving.
+# IUP->Alarm() example
+#
+# Shows a dialog similar to the one shown when you exit a program without saving
 
 use IUP;
 

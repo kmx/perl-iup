@@ -11,9 +11,10 @@ Generate POD documentation
 
 all XSs - BOOT section
 - put init calls somewhere else
+- maybe BEGIN / END
 
 Constants:
-- maybe move key related constants into to IUP::Keys (waht about mouse related constants)
+- maybe move key related constants into to IUP::Keys (what about mouse related constants)
 - decide what to do with: sub IUP_isPrint (check the doc)
 
 DOC
@@ -95,13 +96,6 @@ IUP::Image*
 - new( ... pixels=>pack('C*', @array) );
 - 1=>.. 2=>.. 3=>..
 
-IUP::(dialogs)
-- move dialog related methods from IUP::Internal::Element > IUP::Internal::Element::Dialog
-  IUP::Dialog->popup([x, y: number]) -> (ret: number) [in Lua]
-  IUP::Dialog->show() -> (ret: number) [in IupLua]
-  IUP::Dialog->showxy([x, y: number]) -> (ret: number) [in Lua]
-  IUP::Dialog->hide() -> (ret: number) [in Lua]
-
 IUP::Canvas
 - implement missing methods
 
@@ -115,11 +109,6 @@ IUP::ImageLib
 
 IUP::Element
 - change: _create_element should set ihandle
-
-Build.PL
- meta_merge => {
-        keywords => [
-            qw[FLTK Fast Light Toolkit widget FL GUI UI window 2.0.x experimental]
 
 Build.PL
 - RHEL5 compatibility: create_makefile_pl => 'small'; (see Alien::wxWidgets) - probably not

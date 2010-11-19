@@ -10,8 +10,18 @@ use IUP::Internal::LibraryIup;
 sub _create_element {
   my($self, $args) = @_;
   my $ih = IUP::Internal::LibraryIup::_IupCanvas(0); #xxx TODO fix '0'
-  #my $cnvh = IUP::Internal::LibraryIup::_cdCreateCanvas(CD_IUP, $ih);
+  # xxx todo xxx
+  # call IupMap(dlg) before cdCreateCanvas
+  my $ch = IUP::Internal::LibraryIup::_cdCreateCanvas_CD_IUP($ih);
+  $self->ihandle($ih);
+  $self->cnvhandle($ch);
+  warn "[DBG] ih=$ih ch=$ch\n";
   return $ih;
+}
+
+sub cdCanvasLine {
+  my($self, $x1, $y1, $x2, $y2) = @_;
+  return IUP::Internal::LibraryIup::_cdCanvasLine($self->cnvhandle, $x1, $y1, $x2, $y2);
 }
 
 sub Box {

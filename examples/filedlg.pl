@@ -9,7 +9,7 @@ my $filedlg = IUP::FileDlg->new( DIALOGTYPE=>"SAVE", TITLE=>"File save",
                                  DIRECTORY=>'c:\windows' );
 
 # Shows file dialog in the center of the screen;
-$filedlg->Popup(IUP_ANYWHERE, IUP_ANYWHERE); # xxx TODO missing constatnt
+$filedlg->Popup(IUP_CENTER, IUP_CENTER);
 
 # Gets file dialog status;
 my $status = $filedlg->STATUS;

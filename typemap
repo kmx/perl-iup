@@ -1,6 +1,7 @@
 TYPEMAP
 char *			T_STR_OR_NULL
 Ihandle *		T_PTR_OR_NULL
+cdCanvas *		T_PTR_OR_NULL
 unsigned char *		T_PTR_OR_NULL
 Icallback		T_PTR_OR_NULL
 Iparamcb		T_PTR_OR_NULL

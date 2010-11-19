@@ -32,6 +32,7 @@ my $builder = Module::Build->new(
   extra_compiler_flags => Alien::IUP->config('INC'),
   extra_linker_flags   => Alien::IUP->config('LIBS'),
   meta_merge => {
+    keywords => [ qw[IUP portable toolkit graphical user interfaces tecgraf cross-platform GUI Windows GTK Motif X11] ],
     resources => {
       bugtracker => 'http://rt.cpan.org/NoAuth/Bugs.html?Dist=IUP',
       repository => 'http://github.com/kmx/perl-iup',

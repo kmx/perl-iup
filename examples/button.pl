@@ -1,5 +1,7 @@
-# Creates four buttons. The first uses images, the second turns the first;
-# on and off, the third exits the application and the last does nothing;
+# IUP::Button example
+#
+# Creates four buttons. The first uses images, the second turns the first
+# on and off, the third exits the application and the last does nothing
 
 use IUP;
 
@@ -69,24 +71,23 @@ my $img_inactive = IUP::Image->new( pixels=>
      ], colors=>["0 0 0", "215 215 215", "40 40 40", "100 100 100", "200 200 200"]
 );
 
-# creates a text box;
+# creates a text box
 my $text = IUP::Text->new( READONLY=>"YES", SIZE=>"EIGHTH" );
 
-# creates a button with image;
+# creates a button with image
 my $btn_image = IUP::Button->new( TITLE=>"Button with image", IMAGE=>$img_release, IMPRESS=>$img_press, IMINACTIVE=>$img_inactive );
 
-# creates a button;
+# creates a button
 my $btn_big = IUP::Button->new( TITLE=>"Big useless button", SIZE=>"EIGHTHxEIGHTH" );
 
-# creates a button entitled Exit;
+# creates a button entitled Exit
 my $btn_exit = IUP::Button->new( TITLE=>"Exit" );
 
-# creates a button entitled Activate;
-my $btn_on_off = IUP::Button->new( TITLE=>"Activate" );
+# creates a button entitled on/off
+my $btn_on_off = IUP::Button->new( TITLE=>"on/off" );
 
-# creates a dialog and sets dialog's title and turns off resize, menubox, maximize and minimize;
-my $dlg = IUP::Dialog->new( child=>
-                              IUP::Vbox->new( child=>[
+# creates a dialog and sets dialog's title and turns off resize, menubox, maximize and minimize
+my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new( child=>[
                                 IUP::Hbox->new( child=>[ IUP::Fill->new(), $btn_image, $btn_on_off, $btn_exit, IUP::Fill->new() ]),
 				$text, 
 				$btn_big
@@ -103,7 +104,7 @@ $btn_on_off->ACTION( sub {
   return IUP_DEFAULT;
 } );
 
-# callback called when the button is pressed or released;
+# callback called when the button is pressed or released
 sub cb_btn_image {
   my ($self, $b, $e) = @_;
   if ( b == IUP_BUTTON1 ) {
@@ -118,12 +119,10 @@ sub cb_btn_image {
 }
 $btn_image->BUTTON_CB(\&cb_btn_image);
 
-# callback called when the exit button is activated;
+# callback called when the exit button is activated
 $btn_exit->ACTION( sub { $dlg->Hide() } );
 
-# shows dialog;
+# shows dialog
 $dlg->ShowXY( IUP_CENTER, IUP_CENTER );
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

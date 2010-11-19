@@ -7,6 +7,8 @@
 #include <iupcontrols.h>
 #include <iup_pplot.h>
 #include <iupgl.h>
+#include <cd.h>
+#include <cdiup.h>
 
 /* macros for processing args in fuctions with variable arg list, e.g. 'func(...)' */
 #define myST2IHN(a) (items>(a)) && (SvIOK(ST(a))) ? INT2PTR(Ihandle*, SvIVX(ST(a))) : NULL;
@@ -441,16 +443,17 @@ _IupGetDialogChild(ih,name)
 	OUTPUT:
 		RETVAL
 
+#xxx changed between iup3.2 and iup 3.3
 #### Original C function from <iup.h>
 # int IupReparent (Ihandle* ih, Ihandle* new_parent);
-int
-_IupReparent(ih,new_parent)
-		Ihandle* ih = myST2IHN(0);
-		Ihandle* new_parent = myST2IHN(1);
-	CODE:
-		RETVAL = IupReparent(ih,new_parent);
-	OUTPUT:
-		RETVAL
+#int
+#_IupReparent(ih,new_parent)
+#		Ihandle* ih = myST2IHN(0);
+#		Ihandle* new_parent = myST2IHN(1);
+#	CODE:
+#		RETVAL = IupReparent(ih,new_parent);
+#	OUTPUT:
+#		RETVAL
 
 #### Original C function from <iup.h>
 # int IupPopup (Ihandle* ih, int x, int y);
@@ -2090,6 +2093,38 @@ _IupPPlotPaintTo(ih,cnv)
 	CODE:
 		IupPPlotPaintTo(ih,cnv);
 
+################################################################################ cd.h
+
+# cdCanvas*   cdCreateCanvas(cdContext *context, void *data);
+cdCanvas*
+_cdCreateCanvas_CD_IUP(ih)
+		Ihandle* ih;
+	CODE:
+		fprintf(stderr,"ih=%d Hi!!!\n", ih);
+		RETVAL = cdCreateCanvas(CD_IUP, ih);
+		cdCanvasForeground(RETVAL, CD_GREEN);
+		cdCanvasClear(RETVAL);		
+	OUTPUT:
+		RETVAL
+
+# void cdCanvasLine(cdCanvas* canvas, int x1, int y1, int x2, int y2);
+void
+_cdCanvasLine(canvas,x1,y1,x2,y2)
+		cdCanvas* canvas;
+		int x1;
+		int y1;
+		int x2;
+		int y2;
+	CODE:
+		/* xxx hack xxx */
+		cdCanvasActivate(canvas);
+		cdCanvasForeground(canvas, CD_BLUE);
+		cdCanvasClear(canvas);
+		cdCanvasLine(canvas,x1,y1,x2,y2);
+
+# void        cdKillCanvas(cdCanvas* canvas);
+# xxx TODO
+		
 ################################################################################ iupgl.h
 
 #### Original C function from <iupgl.h>
