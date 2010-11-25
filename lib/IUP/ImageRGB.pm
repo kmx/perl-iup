@@ -3,7 +3,7 @@
 package IUP::ImageRGB;
 use strict;
 use warnings;
-use base 'IUP::Internal::Element';
+use base 'IUP::Internal::Element::Image';
 use IUP::Internal::LibraryIup;
 use Carp;
 

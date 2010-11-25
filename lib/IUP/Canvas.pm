@@ -7,15 +7,25 @@ use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 #use IUP::Internal::LibraryCD;
 
+sub _special_initial_map_cb {
+  my $self = shift;
+  if (!$self->cnvhandle) {
+    warn "Mapping...!\n";
+    my $ch = IUP::Internal::LibraryIup::_cdCreateCanvas_CD_IUP($self->ihandle);  
+    $self->cnvhandle($ch);
+  }
+  else {
+    warn "Nothing!\n";
+    # xxx TODO xxx perhaps deactivate callback here
+  }
+}
+
 sub _create_element {
   my($self, $args) = @_;
   my $ih = IUP::Internal::LibraryIup::_IupCanvas(0); #xxx TODO fix '0'
-  # xxx todo xxx
-  # call IupMap(dlg) before cdCreateCanvas
-  my $ch = IUP::Internal::LibraryIup::_cdCreateCanvas_CD_IUP($ih);
   $self->ihandle($ih);
-  $self->cnvhandle($ch);
-  warn "[DBG] ih=$ih ch=$ch\n";
+  my $f = \&_special_initial_map_cb;
+  $self->MAP_CB($f);
   return $ih;
 }
 

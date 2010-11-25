@@ -268,9 +268,10 @@ sub _execute_cb_cnv1 { #Ihandle* ih,cdCanvas* cnv
 
 sub _get_cb_init_function {
   my ($pkg, $action) = @_;
-  my $rv = $cb_table->{$pkg};
+  my $rv = $cb_table->{$pkg} || $cb_table->{'_base'};
+  #xxx TODO xxx _dialog & co
   return unless defined $rv;
-  my $f = $rv->{$action};
+  my $f = $rv->{$action} || $cb_table->{'_base'}->{$action};
   # xxx TODO xxx add support for K_* callbacks
   #if (!$f && $action =~ /^K_/) {
   #  $f = $rv->{K_ANY};

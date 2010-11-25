@@ -7,8 +7,8 @@ my $cv = IUP::Canvas->new( SCROLLBAR=>"YES", SIZE=>"300x300", DX=>10, POSX=>0, X
 
 $cv->ACTION( sub {
   my ($self, $sx, $sy) = @_;
-  $cv->cdCanvasLine(0,0,100,100);
-  print "redraw sx=$sx sy=$sy rest=@_\n";
+  print "redraw sx=$sx sy=$sy cnv=".$self->cnvhandle."\n";
+  $self->cdCanvasLine(10,10,500,500);
 } );
 
 $cv->MOTION_CB( sub {

@@ -22,6 +22,8 @@ deps
 ^test
 \.c$
 \.o$
+\.obj$
+\.pdb$
 \.old$
 \.tmp$
 \.bak$

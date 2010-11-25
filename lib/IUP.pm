@@ -3,6 +3,10 @@ package IUP;
 use strict;
 use warnings;
 
+# following recommendation from http://www.dagolden.com/index.php/369/version-numbers-should-be-boring/
+our $VERSION = "0.000_01";
+$VERSION = eval $VERSION;
+
 use Carp;
 use IUP::Internal::LibraryIup;
 use IUP::Internal::Callback;
@@ -104,8 +108,6 @@ sub import {
   IUP::Vbox->import();
   IUP::Zbox->import();
 };
-
-our $VERSION = 'v0.0.0_1';
 
 use Data::Dumper;
 
@@ -434,7 +436,7 @@ IUP - The great new IUP!
 
 =head1 VERSION
 
-Version 0.0.0_1
+Version 0.000_01
 
 =head1 SYNOPSIS
 
