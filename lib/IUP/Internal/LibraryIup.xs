@@ -2130,6 +2130,15 @@ _cdCanvasLine(canvas,x1,y1,x2,y2)
 		cdCanvasClear(canvas);
 		cdCanvasLine(canvas,x1,y1,x2,y2);
 
+# void cdCanvasMark(cdCanvas* canvas, int x, int y);
+void
+_cdCanvasMark(canvas,x,y)
+		cdCanvas* canvas;
+		int x;
+		int y;
+	CODE:
+		cdCanvasMark(canvas,x,y);
+
 # void        cdKillCanvas(cdCanvas* canvas);
 # xxx TODO
 		
