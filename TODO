@@ -1,5 +1,9 @@
-Linking order
-- move iup after cdiup
+Linking order (Alien::IUP)
+- move -liup after -lcdiup (otherwise link error on Win32)
+
+IUP::Canvas
+- implement missing XS methods to IUP::Internal::Canvas (update XS generator)
+- cdCanvasMark is already implemented in a "new style"
 
 IUP::Element
 - change: _create_element should set $self->ihandle value
@@ -13,10 +17,6 @@ IUP::Image*
 - new( ... colors=>[ ] )
 - new( ... pixels=>pack('C*', @array) )
 - new( ... 1=>.. 2=>.. 3=>.. )
-
-IUP::Canvas
-- initialization does not work
-- implement missing methods
 
 IUP::OleControl
 - missing
