@@ -1,4 +1,6 @@
 #IupCanvas Example in IupLua;
+use strict;
+use warnings;
 
 use IUP;
 
@@ -7,13 +9,24 @@ my $cv = IUP::Canvas->new( SCROLLBAR=>"YES", SIZE=>"300x300", DX=>10, POSX=>0, X
 
 $cv->ACTION( sub {
   my ($self, $sx, $sy) = @_;
-  print "redraw sx=$sx sy=$sy cnv=".$self->cnvhandle."\n";
-  $self->cdCanvasLine(10,10,500,500);
+  #print "redraw sx=$sx sy=$sy cnv=".$self->cnvhandle."\n";
 } );
+
+$cv->BUTTON_CB( sub {
+  my ($self, $b, $s, $x, $y) = @_;
+  warn "b=$b, s=$s, x=$x, y=$y\n";
+  #if($b == IUP_BUTTON1 && $s) { # xxx TODO xxx IUP_BUTTON1 does not work
+  printf STDERR ("1=%d 2=%d 3=%d\n", IUP_BUTTON1, IUP_BUTTON2, IUP_BUTTON3);
+  if($b == 49 && $s) {
+    $self->cdCanvasLine(10,10,500,500);
+    $self->cdCanvasMark($x,$y);
+  }
+} );
+
 
 $cv->MOTION_CB( sub {
   my ($self, $x, $y, $r) = @_;
-  print "mouse_x=$x mouse_y=$y mouse_button=$r\n";
+  #print "mouse_x=$x mouse_y=$y mouse_button=$r\n";
 } );
 
 my $dg = IUP::Dialog->new( child=>IUP::Frame->new($cv), TITLE=>"IupCanvas" );

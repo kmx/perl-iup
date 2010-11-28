@@ -34,6 +34,11 @@ sub cdCanvasLine {
   return IUP::Internal::LibraryIup::_cdCanvasLine($self->cnvhandle, $x1, $y1, $x2, $y2);
 }
 
+sub cdCanvasMark {
+  my($self, $x, $y) = @_;
+  return IUP::Internal::LibraryIup::_cdCanvasMark($self->cnvhandle, $x, $y);
+}
+
 sub Box {
   my($self, $x1, $y1, $x2, $y2) = @_;
   #return IUP::Internal::LibraryCD::_cdCanvasBox($self->cvnhandle, $x1, $x2, $y1, $y2);
