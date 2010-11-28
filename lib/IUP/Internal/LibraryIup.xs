@@ -10,6 +10,10 @@
 #include <cd.h>
 #include <cdiup.h>
 
+/* Used only by the Perl binding not in iup.h */
+int iupGetParamCount(const char *format, int *param_extra);
+char iupGetParamType(const char* format, int *line_size);
+
 /* macros for processing args in fuctions with variable arg list, e.g. 'func(...)' */
 #define myST2IHN(a) (items>(a)) && (SvIOK(ST(a))) ? INT2PTR(Ihandle*, SvIVX(ST(a))) : NULL;
 #define myST2STR(a) (items>(a)) && (SvPOK(ST(a))) ? SvPVX(ST(a)) : NULL;
@@ -197,7 +201,7 @@ _IupExitLoop()
 # void IupUpdate (Ihandle* ih);
 void
 _IupUpdate(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		IupUpdate(ih);
 
@@ -205,7 +209,7 @@ _IupUpdate(ih)
 # void IupUpdateChildren(Ihandle* ih);
 void
 _IupUpdateChildren(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		IupUpdateChildren(ih);
 
@@ -213,7 +217,7 @@ _IupUpdateChildren(ih)
 # void IupRedraw (Ihandle* ih, int children);
 void
 _IupRedraw(ih,children)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		int children;
 	CODE:
 		IupRedraw(ih,children);
@@ -222,7 +226,7 @@ _IupRedraw(ih,children)
 # void IupRefresh (Ihandle* ih);
 void
 _IupRefresh(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		IupRefresh(ih);
 
@@ -230,7 +234,7 @@ _IupRefresh(ih)
 # char* IupMapFont (const char *iupfont);
 char*
 _IupMapFont(iupfont)
-		char* iupfont = myST2STR(0);
+		char* iupfont;
 	CODE:
 		RETVAL = IupMapFont(iupfont);
 	OUTPUT:
@@ -240,7 +244,7 @@ _IupMapFont(iupfont)
 # char* IupUnMapFont (const char *driverfont);
 char*
 _IupUnMapFont(driverfont)
-		const char* driverfont = myST2STR(0);
+		const char* driverfont;
 	CODE:
 		RETVAL = IupUnMapFont(driverfont);
 	OUTPUT:
@@ -250,7 +254,7 @@ _IupUnMapFont(driverfont)
 # int IupHelp (const char* url);
 int
 _IupHelp(url)
-		char* url = myST2STR(0);
+		char* url;
 	CODE:
 		RETVAL = IupHelp(url);
 	OUTPUT:
@@ -270,7 +274,7 @@ _IupLoad(filename)
 # char* IupLoadBuffer (const char *buffer);
 char*
 _IupLoadBuffer(buffer)
-		char* buffer = myST2STR(0);
+		char* buffer;
 	CODE:
 		RETVAL = IupLoadBuffer(buffer);
 	OUTPUT:
@@ -307,7 +311,7 @@ _IupVersionNumber()
 # void IupSetLanguage (const char *lng);
 void
 _IupSetLanguage(lng)
-		char* lng = myST2STR(0);
+		char* lng;
 	CODE:
 		IupSetLanguage(lng);
 
@@ -324,7 +328,7 @@ _IupGetLanguage()
 # void IupDestroy (Ihandle* ih);
 void
 _IupDestroy(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		IupDestroy(ih);
 
@@ -332,7 +336,7 @@ _IupDestroy(ih)
 # void IupDetach (Ihandle* child);
 void
 _IupDetach(child)
-		Ihandle* child = myST2IHN(0);
+		Ihandle* child;
 	CODE:
 		IupDetach(child);
 
@@ -340,8 +344,8 @@ _IupDetach(child)
 # Ihandle* IupAppend (Ihandle* ih, Ihandle* child);
 Ihandle*
 _IupAppend(ih,child)
-		Ihandle* ih = myST2IHN(0);
-		Ihandle* child = myST2IHN(1);
+		Ihandle* ih;
+		Ihandle* child;
 	CODE:
 		RETVAL = IupAppend(ih,child);
 	OUTPUT:
@@ -351,9 +355,9 @@ _IupAppend(ih,child)
 # Ihandle* IupInsert (Ihandle* ih, Ihandle* ref_child, Ihandle* child);
 Ihandle*
 _IupInsert(ih,ref_child,child)
-		Ihandle* ih = myST2IHN(0);
-		Ihandle* ref_child = myST2IHN(1);
-		Ihandle* child = myST2IHN(2);
+		Ihandle* ih;
+		Ihandle* ref_child;
+		Ihandle* child;
 	CODE:
 		RETVAL = IupInsert(ih,ref_child,child);
 	OUTPUT:
@@ -363,7 +367,7 @@ _IupInsert(ih,ref_child,child)
 # Ihandle* IupGetChild (Ihandle* ih, int pos);
 Ihandle*
 _IupGetChild(ih,pos)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		int pos;
 	CODE:
 		RETVAL = IupGetChild(ih,pos);
@@ -374,8 +378,8 @@ _IupGetChild(ih,pos)
 # int IupGetChildPos (Ihandle* ih, Ihandle* child);
 int
 _IupGetChildPos(ih,child)
-		Ihandle* ih = myST2IHN(0);
-		Ihandle* child = myST2IHN(1);
+		Ihandle* ih;
+		Ihandle* child;
 	CODE:
 		RETVAL = IupGetChildPos(ih,child);
 	OUTPUT:
@@ -385,7 +389,7 @@ _IupGetChildPos(ih,child)
 # int IupGetChildCount(Ihandle* ih);
 int
 _IupGetChildCount(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupGetChildCount(ih);
 	OUTPUT:
@@ -395,8 +399,8 @@ _IupGetChildCount(ih)
 # Ihandle* IupGetNextChild (Ihandle* ih, Ihandle* child);
 Ihandle*
 _IupGetNextChild(ih,child)
-		Ihandle* ih = myST2IHN(0);
-		Ihandle* child = myST2IHN(1);
+		Ihandle* ih;
+		Ihandle* child;
 	CODE:
 		RETVAL = IupGetNextChild(ih,child);
 	OUTPUT:
@@ -406,7 +410,7 @@ _IupGetNextChild(ih,child)
 # Ihandle* IupGetBrother (Ihandle* ih);
 Ihandle*
 _IupGetBrother(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupGetBrother(ih);
 	OUTPUT:
@@ -416,7 +420,7 @@ _IupGetBrother(ih)
 # Ihandle* IupGetParent (Ihandle* ih);
 Ihandle*
 _IupGetParent(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupGetParent(ih);
 	OUTPUT:
@@ -426,7 +430,7 @@ _IupGetParent(ih)
 # Ihandle* IupGetDialog (Ihandle* ih);
 Ihandle*
 _IupGetDialog(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupGetDialog(ih);
 	OUTPUT:
@@ -436,7 +440,7 @@ _IupGetDialog(ih)
 # Ihandle* IupGetDialogChild(Ihandle* ih, const char* name);
 Ihandle*
 _IupGetDialogChild(ih,name)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 	CODE:
 		RETVAL = IupGetDialogChild(ih,name);
@@ -448,8 +452,8 @@ _IupGetDialogChild(ih,name)
 # int IupReparent (Ihandle* ih, Ihandle* new_parent);
 #int
 #_IupReparent(ih,new_parent)
-#		Ihandle* ih = myST2IHN(0);
-#		Ihandle* new_parent = myST2IHN(1);
+#		Ihandle* ih;
+#		Ihandle* new_parent;
 #	CODE:
 #		RETVAL = IupReparent(ih,new_parent);
 #	OUTPUT:
@@ -459,7 +463,7 @@ _IupGetDialogChild(ih,name)
 # int IupPopup (Ihandle* ih, int x, int y);
 int
 _IupPopup(ih,x,y)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		int x;
 		int y;
 	CODE:
@@ -471,7 +475,7 @@ _IupPopup(ih,x,y)
 # int IupShow (Ihandle* ih);
 int
 _IupShow(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupShow(ih);
 	OUTPUT:
@@ -481,7 +485,7 @@ _IupShow(ih)
 # int IupShowXY (Ihandle* ih, int x, int y);
 int
 _IupShowXY(ih,x,y)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		int x;
 		int y;
 	CODE:
@@ -493,7 +497,7 @@ _IupShowXY(ih,x,y)
 # int IupHide (Ihandle* ih);
 int
 _IupHide(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupHide(ih);
 	OUTPUT:
@@ -503,7 +507,7 @@ _IupHide(ih)
 # int IupMap (Ihandle* ih);
 int
 _IupMap(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupMap(ih);
 	OUTPUT:
@@ -513,7 +517,7 @@ _IupMap(ih)
 # void IupUnmap (Ihandle *ih);
 void
 _IupUnmap(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		IupUnmap(ih);
 
@@ -521,9 +525,9 @@ _IupUnmap(ih)
 # void IupSetAttribute (Ihandle* ih, const char* name, const char* value);
 void
 _IupSetAttribute(ih,name,value)
-		Ihandle* ih = myST2IHN(0);
-		char* name = myST2STR(1);
-		char* value = myST2STR(2);
+		Ihandle* ih;
+		char* name;
+		char* value;
 	CODE:
 		//xxx warn("#XS# ih='%p' name='%s' value='%s'", ih, name, value);
 		IupSetAttribute(ih,name,value);
@@ -532,7 +536,7 @@ _IupSetAttribute(ih,name,value)
 # void IupStoreAttribute(Ihandle* ih, const char* name, const char* value);
 void
 _IupStoreAttribute(ih,name,value)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		const char* value;
 	CODE:
@@ -542,7 +546,7 @@ _IupStoreAttribute(ih,name,value)
 # Ihandle* IupSetAttributes (Ihandle* ih, const char *str);
 Ihandle*
 _IupSetAttributes(ih,str)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* str;
 	CODE:
 		RETVAL = IupSetAttributes(ih,str);
@@ -573,7 +577,7 @@ _IupGetAttributeIH(ih,name)
 # char* IupGetAttributes (Ihandle* ih);
 char*
 _IupGetAttributes(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupGetAttributes(ih);
 	OUTPUT:
@@ -583,7 +587,7 @@ _IupGetAttributes(ih)
 # int IupGetInt (Ihandle* ih, const char* name);
 int
 _IupGetInt(ih,name)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 	CODE:
 		RETVAL = IupGetInt(ih,name);
@@ -594,7 +598,7 @@ _IupGetInt(ih,name)
 # int IupGetInt2 (Ihandle* ih, const char* name);
 int
 _IupGetInt2(ih,name)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 	CODE:
 		RETVAL = IupGetInt2(ih,name);
@@ -605,7 +609,7 @@ _IupGetInt2(ih,name)
 # int IupGetIntInt (Ihandle *ih, const char* name, int *i1, int *i2);
 int
 _IupGetIntInt(ih,name,i1,i2)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		int &i1;
 		int &i2;
@@ -618,7 +622,7 @@ _IupGetIntInt(ih,name,i1,i2)
 # float IupGetFloat (Ihandle* ih, const char* name);
 float
 _IupGetFloat(ih,name)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 	CODE:
 		RETVAL = IupGetFloat(ih,name);
@@ -629,7 +633,7 @@ _IupGetFloat(ih,name)
 # void IupSetfAttribute (Ihandle* ih, const char* name, const char* format, ...);
 void
 _IupSetfAttribute(ih,name,format,...)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		const char* format;
 	CODE:
@@ -639,7 +643,7 @@ _IupSetfAttribute(ih,name,format,...)
 # void IupResetAttribute(Ihandle *ih, const char* name);
 void
 _IupResetAttribute(ih,name)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 	CODE:
 		IupResetAttribute(ih,name);
@@ -649,7 +653,7 @@ _IupResetAttribute(ih,name)
 Ihandle*
 _IupSetAtt(handle_name,ih,name,...)
 		const char* handle_name;
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 	CODE:
 		RETVAL = IupSetAtt(handle_name,ih,name);
@@ -660,8 +664,8 @@ _IupSetAtt(handle_name,ih,name,...)
 # void IupSetGlobal (const char* name, const char* value);
 void
 _IupSetGlobal(name,value)
-		char* name = myST2STR(0);
-		char* value = myST2STR(1);
+		char* name;
+		char* value;
 	CODE:
 		IupSetGlobal(name,value);
 
@@ -669,8 +673,8 @@ _IupSetGlobal(name,value)
 # void IupStoreGlobal (const char* name, const char* value);
 void
 _IupStoreGlobal(name,value)
-		char* name = myST2STR(0);
-		char* value = myST2STR(1);
+		char* name;
+		char* value;
 	CODE:
 		IupStoreGlobal(name,value);
 
@@ -678,7 +682,7 @@ _IupStoreGlobal(name,value)
 # char* IupGetGlobal (const char* name);
 char*
 _IupGetGlobal(name)
-		char* name = myST2STR(0);
+		char* name;
 	CODE:
 		RETVAL = IupGetGlobal(name);
 	OUTPUT:
@@ -688,7 +692,7 @@ _IupGetGlobal(name)
 # Ihandle* IupSetFocus (Ihandle* ih);
 Ihandle*
 _IupSetFocus(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupSetFocus(ih);
 	OUTPUT:
@@ -707,7 +711,7 @@ _IupGetFocus()
 # Ihandle* IupPreviousField (Ihandle* ih); 
 Ihandle*
 _IupPreviousField(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupPreviousField(ih);
 	OUTPUT:
@@ -717,7 +721,7 @@ _IupPreviousField(ih)
 # Ihandle* IupNextField (Ihandle* ih);
 Ihandle*
 _IupNextField(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupNextField(ih);
 	OUTPUT:
@@ -727,7 +731,7 @@ _IupNextField(ih)
 # Icallback IupGetCallback(Ihandle* ih, const char *name);
 Icallback
 _IupGetCallback(ih,name)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 	CODE:
 		RETVAL = IupGetCallback(ih,name);
@@ -738,7 +742,7 @@ _IupGetCallback(ih,name)
 # Icallback IupSetCallback(Ihandle* ih, const char *name, Icallback func);
 Icallback
 _IupSetCallback(ih,name,func)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		Icallback func;
 	CODE:
@@ -750,7 +754,7 @@ _IupSetCallback(ih,name,func)
 # Ihandle* IupSetCallbacks(Ihandle* ih, const char *name, Icallback func, ...);
 Ihandle*
 _IupSetCallbacks(ih,name,func,...)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		Icallback func;
 	CODE:
@@ -783,7 +787,7 @@ _IupSetFunction(name,func)
 # Ihandle* IupGetHandle (const char *name);
 Ihandle*
 _IupGetHandle(name)
-		char* name = myST2STR(0);
+		char* name;
 	CODE:
 		RETVAL = IupGetHandle(name);
 	OUTPUT:
@@ -794,7 +798,7 @@ _IupGetHandle(name)
 Ihandle*
 _IupSetHandle(name,ih)
 		const char* name;
-		Ihandle* ih = myST2IHN(1);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupSetHandle(name,ih);
 	OUTPUT:
@@ -804,7 +808,7 @@ _IupSetHandle(name,ih)
 # char* IupGetName (Ihandle* ih);
 char*
 _IupGetName(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupGetName(ih);
 	OUTPUT:
@@ -814,9 +818,9 @@ _IupGetName(ih)
 # void IupSetAttributeHandle(Ihandle* ih, const char* name, Ihandle* ih_named);
 void
 _IupSetAttributeHandle(ih,name,ih_named)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
-		Ihandle* ih_named = myST2IHN(2);
+		Ihandle* ih_named;
 	CODE:
 		//xxx warn("#XS# ih='%p' name='%s' ih_named='%p'", ih, name, ih_named);
 		IupSetAttributeHandle(ih,name,ih_named);
@@ -825,7 +829,7 @@ _IupSetAttributeHandle(ih,name,ih_named)
 # Ihandle* IupGetAttributeHandle(Ihandle* ih, const char* name);
 Ihandle*
 _IupGetAttributeHandle(ih,name)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 	CODE:
 		RETVAL = IupGetAttributeHandle(ih,name);		
@@ -836,7 +840,7 @@ _IupGetAttributeHandle(ih,name)
 # char* IupGetClassName(Ihandle* ih);
 char*
 _IupGetClassName(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupGetClassName(ih);
 	OUTPUT:
@@ -846,7 +850,7 @@ _IupGetClassName(ih)
 # char* IupGetClassType(Ihandle* ih);
 char*
 _IupGetClassType(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		RETVAL = IupGetClassType(ih);
 	OUTPUT:
@@ -856,7 +860,7 @@ _IupGetClassType(ih)
 # void IupSaveClassAttributes(Ihandle* ih);
 void
 _IupSaveClassAttributes(ih)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 	CODE:
 		IupSaveClassAttributes(ih);
 
@@ -864,9 +868,9 @@ _IupSaveClassAttributes(ih)
 # void IupSetClassDefaultAttribute(const char* classname, const char *name, const char* value);
 void
 _IupSetClassDefaultAttribute(classname,name,value)
-		char* classname = myST2STR(0);
-		char* name = myST2STR(1);
-		char* value = myST2STR(2);
+		char* classname;
+		char* name;
+		char* value;
 	CODE:
 		IupSetClassDefaultAttribute(classname,name,value);
 
@@ -904,7 +908,7 @@ _IupFill()
 # Ihandle* IupRadio (Ihandle* child);
 Ihandle*
 _IupRadio(child)
-		Ihandle* child = myST2IHN(0);
+		Ihandle* child;
 	CODE:
 		RETVAL = IupRadio(child);
 	OUTPUT:
@@ -1009,7 +1013,7 @@ _IupCbox(...)
 # Ihandle* IupSbox (Ihandle *child);
 Ihandle*
 _IupSbox(child)
-		Ihandle* child = myST2IHN(0);
+		Ihandle* child;
 	CODE:
 		RETVAL = IupSbox(child);
 	OUTPUT:
@@ -1019,8 +1023,8 @@ _IupSbox(child)
 # Ihandle* IupSplit (Ihandle* child1, Ihandle* child2);
 Ihandle*
 _IupSplit(child1,child2)
-		Ihandle* child1 = myST2IHN(0);
-		Ihandle* child2 = myST2IHN(1);
+		Ihandle* child1;
+		Ihandle* child2;
 	CODE:
 		RETVAL = IupSplit(child1,child2);
 	OUTPUT:
@@ -1030,7 +1034,7 @@ _IupSplit(child1,child2)
 # Ihandle* IupFrame (Ihandle* child);
 Ihandle*
 _IupFrame(child)
-		Ihandle* child = myST2IHN(0);
+		Ihandle* child;
 	CODE:
 		RETVAL = IupFrame(child);
 	OUTPUT:
@@ -1076,8 +1080,8 @@ _IupImageRGBA(width,height,pixmap)
 # Ihandle* IupItem (const char* title, const char* action);
 Ihandle*
 _IupItem(title,action)
-		const char* title = myST2STR(0);
-		const char* action = myST2STR(1);
+		const char* title;
+		const char* action;
 	CODE:
 		RETVAL = IupItem(title,action);
 	OUTPUT:
@@ -1087,8 +1091,8 @@ _IupItem(title,action)
 # Ihandle* IupSubmenu (const char* title, Ihandle* child);
 Ihandle*
 _IupSubmenu(title,child)
-		const char* title = myST2STR(0);
-		Ihandle* child = myST2IHN(1);
+		const char* title;
+		Ihandle* child;
 	CODE:
 		RETVAL = IupSubmenu(title,child);
 	OUTPUT:
@@ -1126,8 +1130,8 @@ _IupMenu(...)
 # Ihandle* IupButton (const char* title, const char* action);
 Ihandle*
 _IupButton(title,action)
-		const char* title = myST2STR(0);
-		const char* action = myST2STR(1);
+		const char* title;
+		const char* action;
 	CODE:
 		RETVAL = IupButton(title,action);
 	OUTPUT:
@@ -1137,7 +1141,7 @@ _IupButton(title,action)
 # Ihandle* IupCanvas (const char* action);
 Ihandle*
 _IupCanvas(action)
-		const char* action = myST2STR(0);
+		const char* action;
 	CODE:
 		RETVAL = IupCanvas(action);
 	OUTPUT:
@@ -1147,7 +1151,7 @@ _IupCanvas(action)
 # Ihandle* IupDialog (Ihandle* child);
 Ihandle*
 _IupDialog(child)
-		Ihandle* child = myST2IHN(0);
+		Ihandle* child;
 	CODE:
 		RETVAL = IupDialog(child);
 	OUTPUT:
@@ -1166,7 +1170,7 @@ _IupUser()
 # Ihandle* IupLabel (const char* title);
 Ihandle*
 _IupLabel(title)
-		const char* title = myST2STR(0);
+		const char* title;
 	CODE:
 		RETVAL = IupLabel(title);
 	OUTPUT:
@@ -1206,8 +1210,8 @@ _IupMultiLine(action)
 # Ihandle* IupToggle (const char* title, const char* action);
 Ihandle*
 _IupToggle(title,action)
-		const char* title = myST2STR(0);
-		const char* action = myST2STR(1);
+		const char* title;
+		const char* action;
 	CODE:
 		RETVAL = IupToggle(title,action);
 	OUTPUT:
@@ -1244,7 +1248,7 @@ _IupProgressBar()
 # Ihandle* IupVal (const char *type);
 Ihandle*
 _IupVal(type)
-		char* type = myST2STR(0);
+		char* type;
 	CODE:
 		RETVAL = IupVal(type);
 	OUTPUT:
@@ -1291,7 +1295,7 @@ _IupSpin()
 # Ihandle* IupSpinbox (Ihandle* child);
 Ihandle*
 _IupSpinbox(child)
-		Ihandle* child = myST2IHN(0);
+		Ihandle* child;
 	CODE:
 		RETVAL = IupSpinbox(child);
 	OUTPUT:
@@ -1301,7 +1305,7 @@ _IupSpinbox(child)
 # int IupSaveImageAsText(Ihandle* ih, const char* file_name, const char* format, const char* name);
 int
 _IupSaveImageAsText(ih,file_name,format,name)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* file_name;
 		const char* format;
 		const char* name;
@@ -1314,7 +1318,7 @@ _IupSaveImageAsText(ih,file_name,format,name)
 # void IupTextConvertLinColToPos(Ihandle* ih, int lin, int col, int *pos);
 void
 _IupTextConvertLinColToPos(ih,lin,col,pos)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		int lin;
 		int col;
 		int &pos;
@@ -1325,7 +1329,7 @@ _IupTextConvertLinColToPos(ih,lin,col,pos)
 # void IupTextConvertPosToLinCol(Ihandle* ih, int pos, int *lin, int *col);
 void
 _IupTextConvertPosToLinCol(ih,pos,lin,col)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		int pos;
 		int &lin;
 		int &col;
@@ -1336,7 +1340,7 @@ _IupTextConvertPosToLinCol(ih,pos,lin,col)
 # int IupConvertXYToPos(Ihandle* ih, int x, int y);
 int
 _IupConvertXYToPos(ih,x,y)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		int x;
 		int y;
 	CODE:
@@ -1348,7 +1352,7 @@ _IupConvertXYToPos(ih,x,y)
 # int IupTreeSetUserId(Ihandle* ih, int id, void* userid);
 int
 _IupTreeSetUserId(ih,id,userid)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		int id;
 		void* userid;
 	CODE:
@@ -1360,7 +1364,7 @@ _IupTreeSetUserId(ih,id,userid)
 # void* IupTreeGetUserId(Ihandle* ih, int id);
 void*
 _IupTreeGetUserId(ih,id)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		int id;
 	CODE:
 		RETVAL = IupTreeGetUserId(ih,id);
@@ -1371,7 +1375,7 @@ _IupTreeGetUserId(ih,id)
 # int IupTreeGetId(Ihandle* ih, void *userid);
 int
 _IupTreeGetId(ih,userid)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		void* userid;
 	CODE:
 		RETVAL = IupTreeGetId(ih,userid);
@@ -1382,7 +1386,7 @@ _IupTreeGetId(ih,userid)
 # void IupTreeSetAttribute (Ihandle* ih, const char* name, int id, const char* value);
 void
 _IupTreeSetAttribute(ih,name,id,value)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		int id;
 		const char* value;
@@ -1393,7 +1397,7 @@ _IupTreeSetAttribute(ih,name,id,value)
 # void IupTreeStoreAttribute(Ihandle* ih, const char* name, int id, const char* value);
 void
 _IupTreeStoreAttribute(ih,name,id,value)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		int id;
 		const char* value;
@@ -1404,7 +1408,7 @@ _IupTreeStoreAttribute(ih,name,id,value)
 # char* IupTreeGetAttribute (Ihandle* ih, const char* name, int id);
 char*
 _IupTreeGetAttribute(ih,name,id)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		int id;
 	CODE:
@@ -1416,7 +1420,7 @@ _IupTreeGetAttribute(ih,name,id)
 # int IupTreeGetInt (Ihandle* ih, const char* name, int id);
 int
 _IupTreeGetInt(ih,name,id)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		int id;
 	CODE:
@@ -1428,7 +1432,7 @@ _IupTreeGetInt(ih,name,id)
 # float IupTreeGetFloat (Ihandle* ih, const char* name, int id);
 float
 _IupTreeGetFloat(ih,name,id)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		int id;
 	CODE:
@@ -1440,7 +1444,7 @@ _IupTreeGetFloat(ih,name,id)
 # void IupTreeSetfAttribute (Ihandle* ih, const char* name, int id, const char* format, ...);
 void
 _IupTreeSetfAttribute(ih,name,id,format,...)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		int id;
 		const char* format;
@@ -1451,10 +1455,10 @@ _IupTreeSetfAttribute(ih,name,id,format,...)
 # void IupTreeSetAttributeHandle(Ihandle* ih, const char* a, int id, Ihandle* ih_named);
 void
 _IupTreeSetAttributeHandle(ih,a,id,ih_named)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* a;
 		int id;
-		Ihandle* ih_named = myST2IHN(3);
+		Ihandle* ih_named;
 	CODE:
 		IupTreeSetAttributeHandle(ih,a,id,ih_named);
 
@@ -1519,8 +1523,8 @@ _IupGetFile(arq)
 # void IupMessage(const char *title, const char *msg);
 void
 _IupMessage(title,msg)
-		const char* title = myST2STR(0);
-		const char* msg = myST2STR(1);
+		const char* title;
+		const char* msg;
 	CODE:
 		IupMessage(title,msg);
 
@@ -1528,8 +1532,8 @@ _IupMessage(title,msg)
 # void IupMessagef(const char *title, const char *format, ...);
 void
 _IupMessagef(title,format,...)
-		const char* title = myST2STR(0);
-		const char* format = myST2STR(1);
+		const char* title;
+		const char* format;
 	CODE:
 		IupMessagef(title,format);
 
@@ -1537,11 +1541,11 @@ _IupMessagef(title,format,...)
 # int IupAlarm(const char *title, const char *msg, const char *b1, const char *b2, const char *b3);
 int
 _IupAlarm(title,msg,b1,b2,b3)
-		const char* title = myST2STR(0);
-		const char* msg = myST2STR(1);
-		const char* b1 = myST2STR(2);
-		const char* b2 = myST2STR(3);
-		const char* b3 = myST2STR(4);
+		const char* title;
+		const char* msg;
+		const char* b1;
+		const char* b2;
+		const char* b3;
 	CODE:
 		RETVAL = IupAlarm(title,msg,b1,b2,b3);
 	OUTPUT:
@@ -1559,14 +1563,19 @@ _IupScanf(format,...)
 
 #### Original C function from <iup.h>
 # int IupGetText(const char* title, char* text);
-int
+void
 _IupGetText(title,text)
-		char* title = myST2STR(0);
-		char* text = myST2STR(1); /* xxx asi reference */
-	CODE:
-		RETVAL = IupGetText(title,text);
-	OUTPUT:
-		RETVAL
+		char* title;
+		char* text;
+	INIT:
+		int rv;
+		char newtext[1000]; /* xxx hardcoded length */ 
+	PPCODE:
+		strncpy(newtext, text, 999);
+		newtext[999] = 0;
+		rv = IupGetText(title,newtext);
+		/* gonna return text or undef */
+		XPUSHs(sv_2mortal(newSVpv(newtext,0)));
 
 #### Original C function from <iup.h>
 # int IupGetColor(int x, int y, unsigned char* r, unsigned char* g, unsigned char* b);
@@ -1594,10 +1603,10 @@ _IupGetColor(x,y,r,g,b)
 # int IupGetParam(const char* title, Iparamcb action, void* user_data, const char* format,...);
 void
 _IupGetParam(title,action,action_data,format,...)
-		char* title = myST2STR(0);
+		char* title;
 		SV* action;
 		SV* action_data;
-		char* format = myST2STR(3);
+		char* format;
 	INIT:
 		getparam_data gp;
 		void* gp_user_data = (void*)&gp;
@@ -1708,7 +1717,7 @@ _IupGetParam(title,action,action_data,format,...)
 void
 _IupListDialog(type,title,list,op,max_col,max_lin,marks)
 		int type;
-		char *title = myST2STR(1);
+		char *title;
 		SV* list;
 		int op;
 		int max_col;
@@ -1764,13 +1773,13 @@ _IupListDialog(type,title,list,op,max_col,max_lin,marks)
 #### Original C function from <iup.h>
 # int IupGetAllNames(char** names, int max_n);
 void
-_IupGetAllNames(max_n)
-		int max_n = myST2INT(0);
+_IupGetAllNames(...)
 	INIT:
-		int i, rv, count;
+		int i, rv, count, max_n;
 		int items = -1;
 		char** list = NULL;		  
 	PPCODE:
+		max_n = myST2INT(0);
 		count = IupGetAllNames(NULL,0);
 		if (max_n > 0) count = max_n;
 		list = malloc( count * sizeof(void*) );
@@ -1786,12 +1795,12 @@ _IupGetAllNames(max_n)
 #### Original C function from <iup.h>
 # int IupGetAllDialogs(char** names, int max_n);
 void
-_IupGetAllDialogs(max_n)
-		int max_n = myST2INT(0);
+_IupGetAllDialogs(...)
 	INIT:
-		int i, rv, count;
+		int i, rv, count, max_n;
 		char** list = NULL;		  
 	PPCODE:
+		max_n = myST2INT(0);
 		count = IupGetAllDialogs(NULL,0);
 		if (max_n > 0) count = max_n;
 		list = malloc( count * sizeof(void*) );
@@ -1807,13 +1816,13 @@ _IupGetAllDialogs(max_n)
 #### Original C function from <iup.h>
 # int IupGetClassAttributes(const char* classname, char** names, int max_n);
 void
-_IupGetClassAttributes(classname,max_n)
-		const char* classname = myST2STR(0);
-		int max_n = myST2INT(1);
+_IupGetClassAttributes(classname,...)
+		const char* classname;
 	INIT:
-		int i, rv, count;
+		int i, rv, count, max_n;
 		char** list = NULL;		  
 	PPCODE:
+		max_n = myST2INT(1);
 		count = IupGetClassAttributes(classname,NULL,0);
 		if (max_n > 0) count = max_n;
 		list = malloc( count * sizeof(void*) );
@@ -1829,13 +1838,13 @@ _IupGetClassAttributes(classname,max_n)
 #### Original C function from <iup.h>
 # int IupGetAllAttributes(Ihandle* ih, char** names, int max_n);
 void
-_IupGetAllAttributes(ih,max_n)
-		Ihandle* ih = myST2IHN(0);
-		int max_n = myST2INT(1);
+_IupGetAllAttributes(ih,...)
+		Ihandle* ih;
 	INIT:
-		int i, rv, count;
+		int i, rv, count, max_n;
 		char** list = NULL;		  
 	PPCODE:
+		max_n = myST2INT(1);
 		count = IupGetAllAttributes(ih,NULL,0);
 		if (max_n > 0) count = max_n;
 		list = malloc( count * sizeof(void*) );
@@ -1863,7 +1872,7 @@ _IupColorBrowser()
 # Ihandle* IupDial(const char* type);
 Ihandle*
 _IupDial(type)
-		char* type = myST2STR(0);
+		char* type;
 	CODE:
 		RETVAL = IupDial(type);
 	OUTPUT:
@@ -1907,7 +1916,7 @@ _IupCells()
 # Ihandle* IupMatrix(const char *action);
 Ihandle*
 _IupMatrix(action)
-		char* action = myST2STR(0);
+		char* action;
 	CODE:
 		RETVAL = IupMatrix(action);
 	OUTPUT:
@@ -1917,7 +1926,7 @@ _IupMatrix(action)
 # void IupMatSetAttribute (Ihandle* ih, const char* name, int lin, int col, char* value);
 void
 _IupMatSetAttribute(ih,name,lin,col,value)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		int lin;
 		int col;
@@ -1929,7 +1938,7 @@ _IupMatSetAttribute(ih,name,lin,col,value)
 # void IupMatStoreAttribute(Ihandle* ih, const char* name, int lin, int col, char* value);
 void
 _IupMatStoreAttribute(ih,name,lin,col,value)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		int lin;
 		int col;
@@ -1941,7 +1950,7 @@ _IupMatStoreAttribute(ih,name,lin,col,value)
 # char* IupMatGetAttribute (Ihandle* ih, const char* name, int lin, int col);
 char*
 _IupMatGetAttribute(ih,name,lin,col)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		int lin;
 		int col;
@@ -1954,7 +1963,7 @@ _IupMatGetAttribute(ih,name,lin,col)
 # int IupMatGetInt (Ihandle* ih, const char* name, int lin, int col);
 int
 _IupMatGetInt(ih,name,lin,col)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		int lin;
 		int col;
@@ -1967,7 +1976,7 @@ _IupMatGetInt(ih,name,lin,col)
 # float IupMatGetFloat (Ihandle* ih, const char* name, int lin, int col);
 float
 _IupMatGetFloat(ih,name,lin,col)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		int lin;
 		int col;
@@ -1980,7 +1989,7 @@ _IupMatGetFloat(ih,name,lin,col)
 # void IupMatSetfAttribute (Ihandle* ih, const char* name, int lin, int col, char* format, ...);
 void
 _IupMatSetfAttribute(ih,name,lin,col,format,...)
-		Ihandle* ih = myST2IHN(0);
+		Ihandle* ih;
 		const char* name;
 		int lin;
 		int col;
@@ -2100,7 +2109,6 @@ cdCanvas*
 _cdCreateCanvas_CD_IUP(ih)
 		Ihandle* ih;
 	CODE:
-		fprintf(stderr,"ih=%d Hi!!!\n", ih);
 		RETVAL = cdCreateCanvas(CD_IUP, ih);
 		cdCanvasForeground(RETVAL, CD_GREEN);
 		cdCanvasClear(RETVAL);		
@@ -2131,7 +2139,7 @@ _cdCanvasLine(canvas,x1,y1,x2,y2)
 # Ihandle *IupGLCanvas(const char *action);
 Ihandle*
 _IupGLCanvas(type)
-		char* type = myST2STR(0);
+		char* type;
 	CODE:
 		RETVAL = IupGLCanvas(type);
 	OUTPUT:
