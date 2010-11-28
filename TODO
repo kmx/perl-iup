@@ -1,3 +1,6 @@
+Linking order
+- move iup after cdiup
+
 IUP::Element
 - change: _create_element should set $self->ihandle value
 

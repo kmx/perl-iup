@@ -96,17 +96,6 @@ sub ihandle {
 }
 
 # accessor
-sub cnvhandle {
-  if ($_[1]) {
-    IUP::Internal::LibraryIup::_register_ch($_[1], $_[0]);    
-    return $_[0]->{___cnvhandle} = $_[1]
-  }
-  else {
-    return $_[0]->{___cnvhandle};
-  }
-}
-
-# accessor
 sub name {
   if ($_[1]) {
     #Ihandle *IupSetHandle(const char *name, Ihandle *ih); [in C]

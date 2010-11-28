@@ -18,8 +18,8 @@ $cv->BUTTON_CB( sub {
   #if($b == IUP_BUTTON1 && $s) { # xxx TODO xxx IUP_BUTTON1 does not work
   printf STDERR ("1=%d 2=%d 3=%d\n", IUP_BUTTON1, IUP_BUTTON2, IUP_BUTTON3);
   if($b == 49 && $s) {
-    $self->cdCanvasLine(10,10,500,500);
-    $self->cdCanvasMark($x,$y);
+    $self->cdCanvasLine(10,10,500,500);   
+    $self->cdCanvasMark($x,$self->cdCanvasUpdateYAxis($y));
   }
 } );
 
