@@ -1,13 +1,3 @@
-Linking order (Alien::IUP)
-- move -liup after -lcdiup (otherwise link error on Win32)
-
-IUP::Canvas
-- implement missing XS methods to IUP::Internal::Canvas (update XS generator)
-- cdCanvasMark is already implemented in a "new style"
-
-IUP::Element
-- change: _create_element should set $self->ihandle value
-
 IUP::Image*
 - implement missing methods 
   iup.LoadImage(file_name: string) -> (elem: ihandle) [in Lua]
@@ -17,6 +7,12 @@ IUP::Image*
 - new( ... colors=>[ ] )
 - new( ... pixels=>pack('C*', @array) )
 - new( ... 1=>.. 2=>.. 3=>.. )
+
+IUP::Canvas
+- implement missing XS methods to IUP::Internal::Canvas (see Canvas.xs - look for 'xxx TODO')
+
+IUP::Element
+- change: _create_element should set $self->ihandle value
 
 IUP::OleControl
 - missing
