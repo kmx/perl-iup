@@ -1,0 +1,39 @@
+#include "EXTERN.h"
+#include "perl.h"
+#include "XSUB.h"
+#include "ppport.h"
+
+#include <iup.h>
+
+MODULE = IUP::Internal	PACKAGE = IUP::Internal
+
+BOOT:
+warn("Helo from bootstrap");
+IupOpen(NULL, NULL);
+
+# http://perldoc.perl.org/perlxs.html
+# http://perldoc.perl.org/perlxstut.html
+
+### generated part - start ###
+
+[% FOREACH f IN allfnc -%]
+#### Original C function from <[% f.header %]>
+# [% f.orig %]
+[% f.rvtype %]
+_[% f.fnc %]([% f.params_n1 %])
+[% FOREACH p IN f.params -%]
+		[% p.type %] [% p.name %];
+[% END -%]
+[% IF f.rvtype == 'void' -%]
+	CODE:
+		[% f.fnc %]([% f.params_n2 %]);
+[% ELSE -%]
+	CODE:
+		RETVAL = [% f.fnc %]([% f.params_n2 %]);
+	OUTPUT:
+		RETVAL
+[% END -%]
+
+[% END -%]
+
+### generated part - end ###

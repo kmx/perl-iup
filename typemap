@@ -2,7 +2,11 @@ TYPEMAP
 char *			T_STR_OR_NULL
 Ihandle *		T_PTR_OR_NULL
 cdCanvas *		T_PTR_OR_NULL
+cdState *		T_PTR_OR_NULL
 cdContext *		T_PTR_OR_NULL
+cdBitmap *		T_PTR_OR_NULL
+cdImage *		T_PTR_OR_NULL
+const unsigned char *	T_PTR_OR_NULL
 unsigned char *		T_PTR_OR_NULL
 Icallback		T_PTR_OR_NULL
 Iparamcb		T_PTR_OR_NULL
