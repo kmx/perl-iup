@@ -74,298 +74,6 @@ internal_cb_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char
 } 
 
 int
-internal_cb_ACTION_ff (Ihandle* ih,float posx,float posy)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("ACTION", 6)));
-	XPUSHs(sv_2mortal(newSVnv(posx)));
-	XPUSHs(sv_2mortal(newSVnv(posy)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(ACTION) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_DROPFILES_CB_siii (Ihandle* ih,const char* filename,int num,int x,int y)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("DROPFILES_CB", 12)));
-	XPUSHs(sv_2mortal(newSVpv(filename, 0)));
-	XPUSHs(sv_2mortal(newSViv(num)));
-	XPUSHs(sv_2mortal(newSViv(x)));
-	XPUSHs(sv_2mortal(newSViv(y)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(DROPFILES_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_FOCUS_CB_i (Ihandle* ih,int focus)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("FOCUS_CB", 8)));
-	XPUSHs(sv_2mortal(newSViv(focus)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(FOCUS_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_KEYPRESS_CB_ii (Ihandle* ih,int c,int press)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("KEYPRESS_CB", 11)));
-	XPUSHs(sv_2mortal(newSViv(c)));
-	XPUSHs(sv_2mortal(newSViv(press)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(KEYPRESS_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_MOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("MOTION_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(x)));
-	XPUSHs(sv_2mortal(newSViv(y)));
-	XPUSHs(sv_2mortal(newSVpv(status, 0)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(MOTION_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("RESIZE_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(width)));
-	XPUSHs(sv_2mortal(newSViv(height)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(RESIZE_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_SCROLL_CB_iff (Ihandle* ih,int op,float posx,float posy)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("SCROLL_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(op)));
-	XPUSHs(sv_2mortal(newSVnv(posx)));
-	XPUSHs(sv_2mortal(newSVnv(posy)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(SCROLL_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_WHEEL_CB_fiis (Ihandle* ih,float delta,int x,int y,char* status)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("WHEEL_CB", 8)));
-	XPUSHs(sv_2mortal(newSVnv(delta)));
-	XPUSHs(sv_2mortal(newSViv(x)));
-	XPUSHs(sv_2mortal(newSViv(y)));
-	XPUSHs(sv_2mortal(newSVpv(status, 0)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(WHEEL_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_WOM_CB_i (Ihandle* ih,int state)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("WOM_CB", 6)));
-	XPUSHs(sv_2mortal(newSViv(state)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(WOM_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
 internal_cb_DRAW_CB_iiiiiiv (Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas)
 {
 	dSP;
@@ -1040,6 +748,38 @@ internal_cb_FILE_CB_ss (Ihandle* ih,const char* file_name,const char* status)
 } 
 
 int
+internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("RESIZE_CB", 9)));
+	XPUSHs(sv_2mortal(newSViv(width)));
+	XPUSHs(sv_2mortal(newSViv(height)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(RESIZE_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
 internal_cb_HIGHLIGHT_CB_ (Ihandle* ih)
 {
 	dSP;
@@ -1199,6 +939,40 @@ internal_cb_DROPDOWN_CB_i (Ihandle* ih,int state)
 } 
 
 int
+internal_cb_DROPFILES_CB_siii (Ihandle* ih,const char* filename,int num,int x,int y)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("DROPFILES_CB", 12)));
+	XPUSHs(sv_2mortal(newSVpv(filename, 0)));
+	XPUSHs(sv_2mortal(newSViv(num)));
+	XPUSHs(sv_2mortal(newSViv(x)));
+	XPUSHs(sv_2mortal(newSViv(y)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(DROPFILES_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
 internal_cb_EDIT_CB_is (Ihandle* ih,int c,char* new_value)
 {
 	dSP;
@@ -1221,6 +995,39 @@ internal_cb_EDIT_CB_is (Ihandle* ih,int c,char* new_value)
 	SPAGAIN;
 
 	if (count != 1) croak("Error: _execute_cb(EDIT_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_MOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("MOTION_CB", 9)));
+	XPUSHs(sv_2mortal(newSViv(x)));
+	XPUSHs(sv_2mortal(newSViv(y)));
+	XPUSHs(sv_2mortal(newSVpv(status, 0)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(MOTION_CB) has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -3010,6 +2817,199 @@ internal_cb_UNMAP_CB_ (Ihandle* ih)
 } 
 
 int
+internal_cb_ACTION_ff (Ihandle* ih,float posx,float posy)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("ACTION", 6)));
+	XPUSHs(sv_2mortal(newSVnv(posx)));
+	XPUSHs(sv_2mortal(newSVnv(posy)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(ACTION) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_FOCUS_CB_i (Ihandle* ih,int focus)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("FOCUS_CB", 8)));
+	XPUSHs(sv_2mortal(newSViv(focus)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(FOCUS_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_KEYPRESS_CB_ii (Ihandle* ih,int c,int press)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("KEYPRESS_CB", 11)));
+	XPUSHs(sv_2mortal(newSViv(c)));
+	XPUSHs(sv_2mortal(newSViv(press)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(KEYPRESS_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_SCROLL_CB_iff (Ihandle* ih,int op,float posx,float posy)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("SCROLL_CB", 9)));
+	XPUSHs(sv_2mortal(newSViv(op)));
+	XPUSHs(sv_2mortal(newSVnv(posx)));
+	XPUSHs(sv_2mortal(newSVnv(posy)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(SCROLL_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_WHEEL_CB_fiis (Ihandle* ih,float delta,int x,int y,char* status)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("WHEEL_CB", 8)));
+	XPUSHs(sv_2mortal(newSVnv(delta)));
+	XPUSHs(sv_2mortal(newSViv(x)));
+	XPUSHs(sv_2mortal(newSViv(y)));
+	XPUSHs(sv_2mortal(newSVpv(status, 0)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(WHEEL_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_WOM_CB_i (Ihandle* ih,int state)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("WOM_CB", 6)));
+	XPUSHs(sv_2mortal(newSViv(state)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(WOM_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
 internal_cb_CLOSE_CB_ (Ihandle* ih)
 {
 	dSP;
@@ -3219,69 +3219,6 @@ _init_cb_BUTTON_CB_iiiis(ih,action)
 		IupSetCallback(ih, action, (Icallback)internal_cb_BUTTON_CB_iiiis);
 
 void
-_init_cb_ACTION_ff(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_ACTION_ff);
-
-void
-_init_cb_DROPFILES_CB_siii(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DROPFILES_CB_siii);
-
-void
-_init_cb_FOCUS_CB_i(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_FOCUS_CB_i);
-
-void
-_init_cb_KEYPRESS_CB_ii(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_KEYPRESS_CB_ii);
-
-void
-_init_cb_MOTION_CB_iis(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MOTION_CB_iis);
-
-void
-_init_cb_RESIZE_CB_ii(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_RESIZE_CB_ii);
-
-void
-_init_cb_SCROLL_CB_iff(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SCROLL_CB_iff);
-
-void
-_init_cb_WHEEL_CB_fiis(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_WHEEL_CB_fiis);
-
-void
-_init_cb_WOM_CB_i(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_WOM_CB_i);
-
-void
 _init_cb_DRAW_CB_iiiiiiv(ih,action)
 		Ihandle* ih;
 		char* action;
@@ -3429,6 +3366,13 @@ _init_cb_FILE_CB_ss(ih,action)
 		IupSetCallback(ih, action, (Icallback)internal_cb_FILE_CB_ss);
 
 void
+_init_cb_RESIZE_CB_ii(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_RESIZE_CB_ii);
+
+void
 _init_cb_HIGHLIGHT_CB_(ih,action)
 		Ihandle* ih;
 		char* action;
@@ -3464,11 +3408,25 @@ _init_cb_DROPDOWN_CB_i(ih,action)
 		IupSetCallback(ih, action, (Icallback)internal_cb_DROPDOWN_CB_i);
 
 void
+_init_cb_DROPFILES_CB_siii(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_DROPFILES_CB_siii);
+
+void
 _init_cb_EDIT_CB_is(ih,action)
 		Ihandle* ih;
 		char* action;
 	CODE:
 		IupSetCallback(ih, action, (Icallback)internal_cb_EDIT_CB_is);
+
+void
+_init_cb_MOTION_CB_iis(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_MOTION_CB_iis);
 
 void
 _init_cb_MULTISELECT_CB_s(ih,action)
@@ -3861,6 +3819,48 @@ _init_cb_UNMAP_CB_(ih,action)
 		char* action;
 	CODE:
 		IupSetCallback(ih, action, (Icallback)internal_cb_UNMAP_CB_);
+
+void
+_init_cb_ACTION_ff(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_ACTION_ff);
+
+void
+_init_cb_FOCUS_CB_i(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_FOCUS_CB_i);
+
+void
+_init_cb_KEYPRESS_CB_ii(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_KEYPRESS_CB_ii);
+
+void
+_init_cb_SCROLL_CB_iff(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_SCROLL_CB_iff);
+
+void
+_init_cb_WHEEL_CB_fiis(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_WHEEL_CB_fiis);
+
+void
+_init_cb_WOM_CB_i(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_WOM_CB_i);
 
 void
 _init_cb_CLOSE_CB_(ih,action)

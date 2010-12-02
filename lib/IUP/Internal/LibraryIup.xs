@@ -2144,33 +2144,76 @@ _cdCanvasMark(canvas,x,y)
 		
 ################################################################################ iupgl.h
 
-#### Original C function from <iupgl.h>
+#### Original C function from <.../iup/include/iupgl.h>
+# void IupGLCanvasOpen(void);
+void
+_IupGLCanvasOpen()
+	CODE:
+		IupGLCanvasOpen();
+
+#### Original C function from <.../iup/include/iupgl.h>
 # Ihandle *IupGLCanvas(const char *action);
 Ihandle*
-_IupGLCanvas(type)
-		char* type;
+_IupGLCanvas(action)
+		const char* action;
 	CODE:
-		RETVAL = IupGLCanvas(type);
+		RETVAL = IupGLCanvas(action);
 	OUTPUT:
 		RETVAL
 
-#### Original C function from <iupgl.h>
-# void IupGLCanvasOpen(void);
-
-#### Original C function from <iupgl.h>
+#### Original C function from <.../iup/include/iupgl.h>
 # void IupGLMakeCurrent(Ihandle* ih);
+void
+_IupGLMakeCurrent(ih)
+		Ihandle* ih;
+	CODE:
+		IupGLMakeCurrent(ih);
 
-#### Original C function from <iupgl.h>
+#### Original C function from <.../iup/include/iupgl.h>
 # int IupGLIsCurrent(Ihandle* ih);
+int
+_IupGLIsCurrent(ih)
+		Ihandle* ih;
+	CODE:
+		RETVAL = IupGLIsCurrent(ih);
+	OUTPUT:
+		RETVAL
 
-#### Original C function from <iupgl.h>
+#### Original C function from <.../iup/include/iupgl.h>
 # void IupGLSwapBuffers(Ihandle* ih);
+void
+_IupGLSwapBuffers(ih)
+		Ihandle* ih;
+	CODE:
+		IupGLSwapBuffers(ih);
 
-#### Original C function from <iupgl.h>
+#### Original C function from <.../iup/include/iupgl.h>
 # void IupGLPalette(Ihandle* ih, int index, float r, float g, float b);
+void
+_IupGLPalette(ih,index,r,g,b)
+		Ihandle* ih;
+		int index;
+		float r;
+		float g;
+		float b;
+	CODE:
+		IupGLPalette(ih,index,r,g,b);
 
-#### Original C function from <iupgl.h>
+#### Original C function from <.../iup/include/iupgl.h>
 # void IupGLUseFont(Ihandle* ih, int first, int count, int list_base);
+void
+_IupGLUseFont(ih,first,count,list_base)
+		Ihandle* ih;
+		int first;
+		int count;
+		int list_base;
+	CODE:
+		IupGLUseFont(ih,first,count,list_base);
 
-#### Original C function from <iupgl.h>
+#### Original C function from <.../iup/include/iupgl.h>
 # void IupGLWait(int gl);
+void
+_IupGLWait(gl)
+		int gl;
+	CODE:
+		IupGLWait(gl);

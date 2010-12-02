@@ -116,17 +116,15 @@ sub import {
   # xxx TODO xxx maybe move accessors to Internal::Element::Dialog + Internal::Element::Box + IUP::<element>
   
   # callback accessors
-  eval IUP::Internal::Callback::_get_cb_eval_code('_base', $p) .
-       (($p =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/) ? IUP::Internal::Callback::_get_cb_eval_code('_dialog', $p) : '') .
-       IUP::Internal::Callback::_get_cb_eval_code($p, $p);
-  die "###ERROR### import failed(cb): " . $@ if $@;
+  eval IUP::Internal::Callback::_get_cb_eval_code($p, $p);
+  die "###ERROR### import failed(cb) '$p': " . $@ if $@;
   
   # attribute accessors
   eval IUP::Internal::Attribute::_get_attr_eval_code('_base', $p) .
        (($p =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/) ? IUP::Internal::Attribute::_get_attr_eval_code('_dialog', $p) : '') .
        (($p =~ /^IUP::[CHVZ]box$/) ? IUP::Internal::Attribute::_get_attr_eval_code('_box', $p) : '') .
        IUP::Internal::Attribute::_get_attr_eval_code($p, $p);
-  die "###ERROR### import failed(attr): " . $@ if $@;
+  die "###ERROR### import failed(attr) '$p': " . $@ if $@;
   
 }
 

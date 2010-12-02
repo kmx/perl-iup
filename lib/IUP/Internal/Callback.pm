@@ -18,18 +18,6 @@ my $cb_table = {
     ACTION => \&_init_cb_ACTION_,
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
   },
-  'IUP::Canvas' => {
-    ACTION => \&_init_cb_ACTION_ff,
-    BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
-    DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
-    FOCUS_CB => \&_init_cb_FOCUS_CB_i,
-    KEYPRESS_CB => \&_init_cb_KEYPRESS_CB_ii,
-    MOTION_CB => \&_init_cb_MOTION_CB_iis,
-    RESIZE_CB => \&_init_cb_RESIZE_CB_ii,
-    SCROLL_CB => \&_init_cb_SCROLL_CB_iff,
-    WHEEL_CB => \&_init_cb_WHEEL_CB_fiis,
-    WOM_CB => \&_init_cb_WOM_CB_i,
-  },
   'IUP::Cells' => {
     DRAW_CB => \&_init_cb_DRAW_CB_iiiiiiv,
     HEIGHT_CB => \&_init_cb_HEIGHT_CB_i,
@@ -176,6 +164,18 @@ my $cb_table = {
     MAP_CB => \&_init_cb_MAP_CB_,
     UNMAP_CB => \&_init_cb_UNMAP_CB_,
   },
+  '_canvas' => {
+    ACTION => \&_init_cb_ACTION_ff,
+    BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
+    DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
+    FOCUS_CB => \&_init_cb_FOCUS_CB_i,
+    KEYPRESS_CB => \&_init_cb_KEYPRESS_CB_ii,
+    MOTION_CB => \&_init_cb_MOTION_CB_iis,
+    RESIZE_CB => \&_init_cb_RESIZE_CB_ii,
+    SCROLL_CB => \&_init_cb_SCROLL_CB_iff,
+    WHEEL_CB => \&_init_cb_WHEEL_CB_fiis,
+    WOM_CB => \&_init_cb_WOM_CB_i,
+  },
   '_dialog' => {
     CLOSE_CB => \&_init_cb_CLOSE_CB_,
     COPYDATA_CB => \&_init_cb_COPYDATA_CB_si,
@@ -267,42 +267,36 @@ sub _execute_cb_cnv1 { #Ihandle* ih,cdCanvas* cnv
 }
 
 sub _get_cb_init_function {
-  my ($pkg, $action) = @_;
-  my $rv = $cb_table->{$pkg} || $cb_table->{'_base'};
-  #xxx TODO xxx _dialog & co
-  return unless defined $rv;
-  my $f = $rv->{$action} || $cb_table->{'_base'}->{$action};
-  # xxx TODO xxx add support for K_* callbacks
-  #if (!$f && $action =~ /^K_/) {
-  #  $f = $rv->{K_ANY};
-  #}
+  my ($pkg, $action) = @_;  
+  my $p = $cb_table->{$pkg};
+  my $f = $p->{$action} if $p;
+  $f ||= $cb_table->{_dialog}->{$action} if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/;
+  $f ||= $cb_table->{_canvas}->{$action} if $pkg =~ /^IUP::(Canvas|GLCanvas)$/;
+  $f ||= $cb_table->{_base}->{$action};  
   return $f;
 }
 
 sub _is_cb_valid {
   my ($pkg, $action) = @_;
-  my $h = $cb_table->{$pkg};
-  return 0 unless defined($h);
-  return defined($h->{$action}) ? 1 : 0;
+  return (_get_cb_init_function($pkg, $action)) ? 1 : 0;
 }
 
 sub _get_cb_list {
-  my ($element) = @_;
-  my $h = $cb_table->{$element} or return;
-  return keys %$h;
+  my $pkg = shift;
+  my @list;
+  push @list, keys(%{$cb_table->{$pkg}});
+  push @list, keys(%{$cb_table->{_dialog}}) if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/;
+  push @list, keys(%{$cb_table->{_canvas}}) if $pkg =~ /^IUP::(Canvas|GLCanvas)$/;
+  push @list, keys(%{$cb_table->{_base}});
+  return keys %{{ map { $_ => 1 } @list }}; #return just uniq items
 }
 
 sub _get_cb_eval_code {
-  my ($element, $p) = @_;
-  my $rv = '';
-  my $h = $cb_table->{$element} or return $rv;
-  
-  for (keys %$h) {
-    next if defined *{"$p\::$_"};
-    # xxx TODO xxx: making rw accessors for callbacks does not make much sense
-    $rv .= "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetCallback('$_', \$_[1]) : \$_[0]->{$_} };\n";
+  my ($pkg, $caller) = @_;
+  my $rv;
+  for (_get_cb_list($pkg)) {
+    $rv .= "*$caller\::$_ = sub { return \$_[1] ? \$_[0]->SetCallback('$_', \$_[1]) : \$_[0]->{$_} };\n";
   }
-
   return $rv;
 }
 

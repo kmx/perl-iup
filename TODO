@@ -1,28 +1,35 @@
 IUP::Image*
 - implement missing methods 
-  iup.LoadImage(file_name: string) -> (elem: ihandle) [in Lua]
+  iup.LoadImage(file_name: string) -> (elem: ihandle) [in Lua] (xxx check what obj type has resulting iHandle xxx)
   iup.SaveImage(ih: ihandle, file_name, format: string) -> (ret: boolean) [in Lua]
-  iup.GetNativeHandleImage(handle: userdata) -> (image: imImage) [in Lua]
-  iup.GetImageNativeHandle(image: imImage) -> (handle: userdata) [in Lua]
+- maybe one IUP::Image (not 3 Image/ImageRGB/ImageRGBA)
 - new( ... colors=>[ ] )
 - new( ... pixels=>pack('C*', @array) )
 - new( ... 1=>.. 2=>.. 3=>.. )
+- new( file=>.. )
+- no need for:
+  iup.GetNativeHandleImage(handle: userdata) -> (image: imImage) [in Lua]
+  iup.GetImageNativeHandle(image: imImage) -> (handle: userdata) [in Lua]
 
 IUP::Canvas
 - implement missing XS methods to IUP::Internal::Canvas (see Canvas.xs - look for 'xxx TODO')
+- maybe call cdCanvasActivate() inside cdLine and similar cases
+- maybe not name methods like "cdMark" but rather just "Mark" (maybe not: collision SetAttribute vs. cdSetAttribute)
+- somehow handle CD_xxx constants
+- check wd.h for wdCanvas... functions + add them to Canvas.xs
 
-IUP::Element
-- change: _create_element should set $self->ihandle value
-
-IUP::OleControl
-- missing
-- conditionally only on Win32
+IUP::CanvasGL
+- finish implementation in LibraryIUP.xs
+- IupGLCanvasOpen global function or IUP::CanvasGL class method?
+- IupGLWait       global function or IUP::CanvasGL class method?
 
 IUP::ImageLib
-- missing
-- check memory consumption
+- missing -> add
+- check memory consumption (maybe separate lib/IUP/Internal/ImageLib.xs)
+- Iup::ImageLib->Open() - perhaps follow lua: In Lua, when require "iupluaimglib" is used this function will be automatically called.
 
 IUP::Internal::Element
+- change: _create_element should set $self->ihandle value
 - maybe missing (comparing to LUA)
   sub GetAttributeData (see LUA implementation)
   sub SetAttributes vs. sub StoreAttribute
@@ -34,6 +41,10 @@ IUP::Internal::Element
   or: GetAttributesStr vs. GetAttributesHRef
 - tests for all common functions
 
+IUP::OleControl
+- missing -> add
+- conditionally only on Win32
+
 IUP module
 - maybe missing (comparing to LUA)
   sub SetHandle ... IUP->SetHandle('xx', $d->ihandle);  
@@ -44,6 +55,14 @@ IUP module
 - consider:
   sub Open (probably not)
 - tests for all global functions
+
+Ideas from ruby bindings:
+- iup.* namespace
+- cd.* namespace (constants cd::BLUE, ...)
+- just one iup.image (RGB, RGBA - ??? perhaps not supported)
+- cdcanvas = Cd.ActiveCanvas()
+- iupim just: IupLoadImage, IupSaveImage
+- GLCanvasOpen, GL... (global function, not methods of glcanvas class)
 
 Examples
 - rewrite all examples from lua to perl

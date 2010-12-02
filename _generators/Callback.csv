@@ -1,16 +1,16 @@
 #module;#action;#type;#c_retval;#c_params;#c1;#c2;#c3;#c4;#c5
 IUP::Button;ACTION;;int;Ihandle* ih;src=yes;doc=single;#;?;
 IUP::Button;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status;src=yes;doc=single;#;?;
-IUP::Canvas;ACTION;ff;int;Ihandle* ih,float posx,float posy;src=yes;doc=single;#;ff;
-IUP::Canvas;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status;src=yes;doc=single;#;?;
-IUP::Canvas;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y;src=yes;doc=single;#;?;
-IUP::Canvas;FOCUS_CB;i;int;Ihandle* ih,int focus;src=yes;doc=single;#;?;
-IUP::Canvas;KEYPRESS_CB;ii;int;Ihandle* ih,int c,int press;src=yes;doc=single;#;?;
-IUP::Canvas;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status;src=yes;doc=single;#;?;
-IUP::Canvas;RESIZE_CB;ii;int;Ihandle* ih,int width,int height;src=yes;doc=single;#;ii;
-IUP::Canvas;SCROLL_CB;iff;int;Ihandle* ih,int op,float posx,float posy;src=yes;doc=single;#;iff;
-IUP::Canvas;WHEEL_CB;fiis;int;Ihandle* ih,float delta,int x,int y,char* status;src=yes;doc=single;#;fiis;
-IUP::Canvas;WOM_CB;i;int;Ihandle* ih,int state;src=yes;doc=single;#;?;
+_canvas;ACTION;ff;int;Ihandle* ih,float posx,float posy;src=yes;doc=single;#;ff;
+_canvas;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status;src=yes;doc=single;#;?;
+_canvas;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y;src=yes;doc=single;#;?;
+_canvas;FOCUS_CB;i;int;Ihandle* ih,int focus;src=yes;doc=single;#;?;
+_canvas;KEYPRESS_CB;ii;int;Ihandle* ih,int c,int press;src=yes;doc=single;#;?;
+_canvas;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status;src=yes;doc=single;#;?;
+_canvas;RESIZE_CB;ii;int;Ihandle* ih,int width,int height;src=yes;doc=single;#;ii;
+_canvas;SCROLL_CB;iff;int;Ihandle* ih,int op,float posx,float posy;src=yes;doc=single;#;iff;
+_canvas;WHEEL_CB;fiis;int;Ihandle* ih,float delta,int x,int y,char* status;src=yes;doc=single;#;fiis;
+_canvas;WOM_CB;i;int;Ihandle* ih,int state;src=yes;doc=single;#;?;
 IUP::Cells;DRAW_CB;iiiiiiv;int;Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas;src=yes;doc=single;#;iiiiii;BEWARE
 IUP::Cells;HEIGHT_CB;i;int;Ihandle* ih,int line;src=yes;doc=single;#;i;
 IUP::Cells;HSPAN_CB;ii;int;Ihandle* ih,int line,int column;src=yes;doc=single;#;ii;
