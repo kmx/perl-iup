@@ -16,7 +16,7 @@ sub proc_headers {
       s/[\r\n]*$//;
       next if /^typedef/;
       
-      if ( /^([a-zA-Z].*)((Iup|cd|im)[^ \(]*) *\((.*?)\)/) {
+      if ( /^([a-zA-Z].*)((Iup|cd|im|wd)[^ \(]*) *\((.*?)\)/) {
       #die "1=$1 2=$2 3=$3 4=$4\n";
         my ($r, $f) = ($1, $2);
         my $o = $_;
@@ -252,6 +252,7 @@ my $h = [
 proc_headers($h, 'Internal.tt', 'Internal.xs');
 
 proc_headers( ["$srcroot/cd/include/cd.h"], 'Canvas.tt', 'Canvas.xs');
+proc_headers( ["$srcroot/cd/include/wd.h"], 'Canvas.tt', 'WDCanvas.xs');
 
 #cd
 #cdContextRegisterCallback

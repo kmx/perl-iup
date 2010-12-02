@@ -19,9 +19,7 @@ IUP::Canvas
 - check wd.h for wdCanvas... functions + add them to Canvas.xs
 
 IUP::CanvasGL
-- finish implementation in LibraryIUP.xs
-- IupGLCanvasOpen global function or IUP::CanvasGL class method?
-- IupGLWait       global function or IUP::CanvasGL class method?
+- consider IUP::Canvas::GL
 
 IUP::ImageLib
 - missing -> add
@@ -130,3 +128,6 @@ Consider splitting IUP::Internal::LibraryIup into:
 Build.PL
 - RHEL5 compatibility: create_makefile_pl => 'small'; (see Alien::wxWidgets) - probably not
 - using: release_testing automated_testing interactive
+
+Bugs (the same trouble in C):
+- glcanvas example sometimes lasts too long to start

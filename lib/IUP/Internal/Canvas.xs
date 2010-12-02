@@ -145,6 +145,7 @@ cdDeactivate(canvas)
 
 #### Original C function from <.../cd/include/cd.h>
 # int cdContextRegisterCallback(cdContext *context, int cb, cdCallback func);
+# cd.ContextRegisterCallback(ctx, cb: number, func: function) -> (status: number) [in Lua]
 #xxx TODO
 #int
 #cdContextRegisterCallback(context,cb,func)
@@ -269,7 +270,7 @@ cdPlay(canvas,context,xmin,xmax,ymin,ymax,data)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetSize(cdCanvas* canvas, int *width, int *height, double *width_mm, double *height_mm);
-#xxx TODO
+# canvas:GetSize() -> (width, height, mm_width, mm_height: number) [in Lua]
 #void
 #cdGetSize(canvas,width,height,width_mm,height_mm)
 #		SV* canvas;
@@ -282,6 +283,8 @@ cdPlay(canvas,context,xmin,xmax,ymin,ymax,data)
 
 #### Original C function from <.../cd/include/cd.h>
 # int cdCanvasUpdateYAxis(cdCanvas* canvas, int* y);
+# canvas:UpdateYAxis(yc: number) -> (yr: number) [in Lua]
+#xxx TODO
 int
 cdUpdateYAxis(canvas,y)
 		SV* canvas;
@@ -293,7 +296,7 @@ cdUpdateYAxis(canvas,y)
 
 #### Original C function from <.../cd/include/cd.h>
 # double cdfCanvasUpdateYAxis(cdCanvas* canvas, double* y);
-#xxx TODO
+#xxx TODO (maybe not needed)
 #double
 #cdfUpdateYAxis(canvas,y)
 #		SV* canvas;
@@ -338,6 +341,8 @@ cdfInvertYAxis(canvas,y)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasMM2Pixel(cdCanvas* canvas, double mm_dx, double mm_dy, int *dx, int *dy);
+# canvas:MM2Pixel(mm_dx, mm_dy: number) -> (dx, dy: number) [in Lua]
+#xxx TODO
 void
 cdMM2Pixel(canvas,mm_dx,mm_dy,dx,dy)
 		SV* canvas;
@@ -350,6 +355,7 @@ cdMM2Pixel(canvas,mm_dx,mm_dy,dx,dy)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPixel2MM(cdCanvas* canvas, int dx, int dy, double *mm_dx, double *mm_dy);
+# canvas:Pixel2MM(dx, dy: number) -> (mm_dx, mm_dy: number) [in Lua]
 #xxx TODO
 #void
 #cdPixel2MM(canvas,dx,dy,mm_dx,mm_dy)
@@ -363,6 +369,7 @@ cdMM2Pixel(canvas,mm_dx,mm_dy,dx,dy)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdfCanvasMM2Pixel(cdCanvas* canvas, double mm_dx, double mm_dy, double *dx, double *dy);
+# canvas:fMM2Pixel(mm_dx, mm_dy: number) -> (dx, dy: number) [in Lua]
 #xxx TODO
 #void
 #cdfMM2Pixel(canvas,mm_dx,mm_dy,dx,dy)
@@ -376,7 +383,7 @@ cdMM2Pixel(canvas,mm_dx,mm_dy,dx,dy)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdfCanvasPixel2MM(cdCanvas* canvas, double dx, double dy, double *mm_dx, double *mm_dy);
-#xxx TODO
+# canvas:fPixel2MM(dx, dy: number) -> (mm_dx, mm_dy: number) [in Lua]
 #void
 #cdfPixel2MM(canvas,dx,dy,mm_dx,mm_dy)
 #		SV* canvas;
@@ -409,6 +416,8 @@ cdfOrigin(canvas,x,y)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetOrigin(cdCanvas* canvas, int *x, int *y);
+# canvas:GetOrigin() -> (x, y: number) [in Lua]
+#xxx TODO
 void
 cdGetOrigin(canvas,x,y)
 		SV* canvas;
@@ -419,6 +428,7 @@ cdGetOrigin(canvas,x,y)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdfCanvasGetOrigin(cdCanvas* canvas, double *x, double *y);
+# canvas:fGetOrigin() -> (x, y: number) [in Lua]
 #xxx TODO
 #void
 #cdfGetOrigin(canvas,x,y)
@@ -430,6 +440,7 @@ cdGetOrigin(canvas,x,y)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasTransform(cdCanvas* canvas, const double* matrix);
+# canvas:Transform(matrix: table) [in Lua]
 #xxx TODO
 #void
 #cdTransform(canvas,matrix)
@@ -440,6 +451,7 @@ cdGetOrigin(canvas,x,y)
 
 #### Original C function from <.../cd/include/cd.h>
 # double* cdCanvasGetTransform(cdCanvas* canvas);
+# canvas:GetTransformation() -> (matrix: table) [in Lua]
 #xxx TODO
 #double*
 #cdGetTransform(canvas)
@@ -451,6 +463,7 @@ cdGetOrigin(canvas,x,y)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasTransformMultiply(cdCanvas* canvas, const double* matrix);
+# canvas:TransformMultiply(matrix: table) [in Lua]
 #xxx TODO
 #void
 #cdTransformMultiply(canvas,matrix)
@@ -490,6 +503,8 @@ cdTransformTranslate(canvas,dx,dy)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasTransformPoint(cdCanvas* canvas, int x, int y, int *tx, int *ty);
+# canvas:TransformPoint(x, y: number) -> (tx, ty: number) [in Lua]
+#xxx TODO
 void
 cdTransformPoint(canvas,x,y,tx,ty)
 		SV* canvas;
@@ -502,6 +517,7 @@ cdTransformPoint(canvas,x,y,tx,ty)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdfCanvasTransformPoint(cdCanvas* canvas, double x, double y, double *tx, double *ty);
+# canvas:fTransformPoint(x, y: number) -> (tx, ty: number) [in Lua]
 #xxx TODO
 #void
 #cdfTransformPoint(canvas,x,y,tx,ty)
@@ -538,6 +554,8 @@ cdClipArea(canvas,xmin,xmax,ymin,ymax)
 
 #### Original C function from <.../cd/include/cd.h>
 # int cdCanvasGetClipArea(cdCanvas* canvas, int *xmin, int *xmax, int *ymin, int *ymax);
+# canvas:GetClipArea() -> (xmin, xmax, ymin, ymax, status: number) [in Lua]
+#xxx TODO
 int
 cdGetClipArea(canvas,xmin,xmax,ymin,ymax)
 		SV* canvas;
@@ -564,6 +582,7 @@ cdfClipArea(canvas,xmin,xmax,ymin,ymax)
 
 #### Original C function from <.../cd/include/cd.h>
 # int cdfCanvasGetClipArea(cdCanvas* canvas, double *xmin, double *xmax, double *ymin, double *ymax);
+# canvas:GetClipArea() -> (xmin, xmax, ymin, ymax, status: number) [in Lua]
 #xxx TODO
 #int
 #cdfGetClipArea(canvas,xmin,xmax,ymin,ymax)
@@ -601,6 +620,8 @@ cdOffsetRegion(canvas,x,y)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetRegionBox(cdCanvas* canvas, int *xmin, int *xmax, int *ymin, int *ymax);
+# canvas:GetRegionBox() -> (xmin, xmax, ymin, ymax, status: number) [in Lua]
+#xxx TODO
 void
 cdGetRegionBox(canvas,xmin,xmax,ymin,ymax)
 		SV* canvas;
@@ -942,6 +963,7 @@ cdLineStyle(canvas,style)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasLineStyleDashes(cdCanvas* canvas, const int* dashes, int count);
+# canvas:LineStyleDashes(dashes: table, count: number) -> (old_style: number) [in Lua]
 #xxx TODO
 #void
 #cdLineStyleDashes(canvas,dashes,count)
@@ -1019,6 +1041,8 @@ cdStipple(canvas,w,h,stipple)
 
 #### Original C function from <.../cd/include/cd.h>
 # unsigned char* cdCanvasGetStipple(cdCanvas* canvas, int *n, int *m);
+# canvas:GetStipple() - > (stipple: cdStipple) [in Lua]
+#xxx TODO
 unsigned char*
 cdGetStipple(canvas,n,m)
 		SV* canvas;
@@ -1031,6 +1055,7 @@ cdGetStipple(canvas,n,m)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPattern(cdCanvas* canvas, int w, int h, long const int *pattern);
+# canvas:Pattern(pattern: cdPattern) [in Lua]
 #xxx TODO
 #void
 #cdPattern(canvas,w,h,pattern)
@@ -1043,6 +1068,7 @@ cdGetStipple(canvas,n,m)
 
 #### Original C function from <.../cd/include/cd.h>
 # long* cdCanvasGetPattern(cdCanvas* canvas, int* n, int* m);
+# canvas:GetPattern() - > (pattern: cdPattern) [in Lua]
 #xxx TODO
 #long*
 #cdGetPattern(canvas,n,m)
@@ -1080,6 +1106,8 @@ cdFont(canvas,type_face,style,size)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetFont(cdCanvas* canvas, char *type_face, int *style, int *size);
+# canvas:GetFont() -> (typeface: string, style, size: number) [in Lua]
+#xxx TODO
 void
 cdGetFont(canvas,type_face,style,size)
 		SV* canvas;
@@ -1191,6 +1219,7 @@ cdVectorTextDirection(canvas,x1,y1,x2,y2)
 
 #### Original C function from <.../cd/include/cd.h>
 # double* cdCanvasVectorTextTransform(cdCanvas* canvas, const double* matrix);
+# canvas:VectorTextTransform(matrix: table) -> (old_matrix: table) [in Lua] 
 #xxx TODO
 #double*
 #cdVectorTextTransform(canvas,matrix)
@@ -1203,6 +1232,7 @@ cdVectorTextDirection(canvas,x1,y1,x2,y2)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasVectorTextSize(cdCanvas* canvas, int size_x, int size_y, const char* s);
+# canvas:VectorTextSize(width, height: number, text: string) [in Lua]
 #xxx TODO
 #void
 #cdVectorTextSize(canvas,size_x,size_y,s)
@@ -1236,6 +1266,7 @@ cdVectorFontSize(canvas,size_x,size_y)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetVectorFontSize(cdCanvas* canvas, double *size_x, double *size_y);
+# canvas:GetVectorFontSize() -> (size_x, size_y: number) [in Lua]
 #xxx TODO
 #void
 #cdGetVectorFontSize(canvas,size_x,size_y)
@@ -1247,6 +1278,8 @@ cdVectorFontSize(canvas,size_x,size_y)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetVectorTextSize(cdCanvas* canvas, const char* s, int *x, int *y);
+# canvas:GetVectorTextSize(text: string) -> (width, height: number) [in Lua]
+#xxx TODO
 void
 cdGetVectorTextSize(canvas,s,x,y)
 		SV* canvas;
@@ -1258,6 +1291,8 @@ cdGetVectorTextSize(canvas,s,x,y)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetVectorTextBounds(cdCanvas* canvas, const char* s, int x, int y, int *rect);
+# canvas:GetVectorTextBounds(text: string, x, y: number) -> (rect: table) [in Lua]
+#xxx TODO
 void
 cdGetVectorTextBounds(canvas,s,x,y,rect)
 		SV* canvas;
@@ -1270,6 +1305,8 @@ cdGetVectorTextBounds(canvas,s,x,y,rect)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetVectorTextBox(cdCanvas* canvas, int x, int y, const char *s, int *xmin, int *xmax, int *ymin, int *ymax);
+# canvas:GetVectorTextBox(x, y: number, text: string) -> (xmin, xmax, ymin, ymax: number) [in Lua]
+#xxx TODO
 void
 cdGetVectorTextBox(canvas,x,y,s,xmin,xmax,ymin,ymax)
 		SV* canvas;
@@ -1285,6 +1322,7 @@ cdGetVectorTextBox(canvas,x,y,s,xmin,xmax,ymin,ymax)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetFontDim(cdCanvas* canvas, int *max_width, int *height, int *ascent, int *descent);
+# canvas:GetFontDim() -> (max_width, height, ascent, descent: number) [in Lua]
 #xxx TODO
 #void cdCanvasGetFontD
 #im(canvas,max_width,height,ascent,descent)
@@ -1300,6 +1338,8 @@ cdGetVectorTextBox(canvas,x,y,s,xmin,xmax,ymin,ymax)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetTextSize(cdCanvas* canvas, const char* s, int *width, int *height);
+# canvas:GetTextSize(text: string) -> (width, heigth: number) [in Lua]
+#xxx TODO
 void
 cdGetTextSize(canvas,s,width,height)
 		SV* canvas;
@@ -1311,6 +1351,8 @@ cdGetTextSize(canvas,s,width,height)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetTextBox(cdCanvas* canvas, int x, int y, const char* s, int *xmin, int *xmax, int *ymin, int *ymax);
+# canvas:GetTextBox(x, y: number, text: string) -> (xmin, xmax, ymin, ymax: number) [in Lua]
+#xxx TODO
 void
 cdGetTextBox(canvas,x,y,s,xmin,xmax,ymin,ymax)
 		SV* canvas;
@@ -1326,6 +1368,8 @@ cdGetTextBox(canvas,x,y,s,xmin,xmax,ymin,ymax)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetTextBounds(cdCanvas* canvas, int x, int y, const char* s, int *rect);
+# canvas:GetTextBounds(x, y: number, text: string) -> (rect: table) [in Lua]
+#xxx TODO
 void
 cdGetTextBounds(canvas,x,y,s,rect)
 		SV* canvas;
@@ -1348,6 +1392,11 @@ cdGetColorPlanes(canvas)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPalette(cdCanvas* canvas, int n, const long *palette, int mode);
+# canvas:Palette(palette: cdPalette; mode: number) [in Lua]
+#!!!NOTE!!!
+# cd.CreatePalette(size: number) -> (palette: cdPalette) [in Lua Only]
+# palette[index] = cd.EncodeColor(r, g, b)
+# cd.KillPalette(palette: cdPalette) [in Lua Only]
 #xxx TODO
 #void
 #cdPalette(canvas,n,palette,mode)
@@ -1375,6 +1424,7 @@ cdGetImageRGB(canvas,r,g,b,x,y,w,h)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPutImageRectRGB(cdCanvas* canvas, int iw, int ih, const unsigned char* r, const unsigned char* g, const unsigned char* b, int x, int y, int w, int h, int xmin, int xmax, int ymin, int ymax);
+# canvas:PutImageRectRGB(imagergb: cdImageRGB; x, y, w, h, xmin, xmax, ymin, ymax: number) [in Lua]
 #xxx TODO
 #void
 #cdPutImageRectRGB(canvas,iw,ih,r,g,b,x,y,w,h,xmin,xmax,ymin,ymax)
@@ -1397,6 +1447,7 @@ cdGetImageRGB(canvas,r,g,b,x,y,w,h)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPutImageRectRGBA(cdCanvas* canvas, int iw, int ih, const unsigned char* r, const unsigned char* g, const unsigned char* b, const unsigned char* a, int x, int y, int w, int h, int xmin, int xmax, int ymin, int ymax);
+# canvas:PutImageRectRGBA(imagergba: cdImageRGBA; x, y, w, h, xmin, xmax, ymin, ymax: number) [in Lua]
 #xxx TODO
 #void
 #cdPutImageRectRGBA(canvas,iw,ih,r,g,b,a,x,y,w,h,xmin,xmax,ymin,ymax)
@@ -1420,6 +1471,7 @@ cdGetImageRGB(canvas,r,g,b,x,y,w,h)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPutImageRectMap(cdCanvas* canvas, int iw, int ih, const unsigned char* index, const long* colors, int x, int y, int w, int h, int xmin, int xmax, int ymin, int ymax);
+# canvas:PutImageRectMap(imagemap: cdImageMap; palette: cdPalette; x, y, w, h, xmin, xmax, ymin, ymax: number) [in Lua]
 #xxx TODO
 #void
 #cdPutImageRectMap(canvas,iw,ih,index,colors,x,y,w,h,xmin,xmax,ymin,ymax)
@@ -1633,6 +1685,7 @@ cdEncodeAlpha(color,alpha)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdRGB2Map(int width, int height, const unsigned char* red, const unsigned char* green, const unsigned char* blue, unsigned char* index, int pal_size, long *color);
+# cd.RGB2Map(imagergb: cdImageRGB, imagemap: cdImageMap, palette: cdPalette) [in Lua]
 #xxx TODO
 #void
 #cdRGB2Map(width,height,red,green,blue,index,pal_size,color)
@@ -1647,5 +1700,671 @@ cdEncodeAlpha(color,alpha)
 #	CODE:
 #		cdRGB2Map(width,height,red,green,blue,index,pal_size,color);
 
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasWindow(cdCanvas* canvas, double xmin, double xmax, double ymin, double ymax);
+void
+wdCanvasWindow(canvas,xmin,xmax,ymin,ymax)
+		SV* canvas;
+		double xmin;
+		double xmax;
+		double ymin;
+		double ymax;
+	CODE:
+		wdCanvasWindow(ref2cnv(canvas),xmin,xmax,ymin,ymax);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasGetWindow(cdCanvas* canvas, double *xmin, double *xmax, double *ymin, double *ymax);
+# canvas:wGetWindow() -> (xmin, xmax, ymin, ymax: number) [in Lua]
+#xxx TODO
+#void
+#wdCanvasGetWindow(canvas,xmin,xmax,ymin,ymax)
+#		SV* canvas;
+#		double* xmin;
+#		double * xmax;
+#		double * ymin;
+#		double* ymax;
+#	CODE:
+#		wdCanvasGetWindow(ref2cnv(canvas),xmin,xmax,ymin,ymax);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasViewport(cdCanvas* canvas, int xmin, int xmax, int ymin, int ymax);
+void
+wdCanvasViewport(canvas,xmin,xmax,ymin,ymax)
+		SV* canvas;
+		int xmin;
+		int xmax;
+		int ymin;
+		int ymax;
+	CODE:
+		wdCanvasViewport(ref2cnv(canvas),xmin,xmax,ymin,ymax);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasGetViewport(cdCanvas* canvas, int *xmin, int *xmax, int *ymin, int *ymax);
+# canvas:wGetViewport() -> (xmin, xmax, ymin, ymax: number) [in Lua]
+#xxx TODO
+#void
+#wdCanvasGetViewport(canvas,xmin,xmax,ymin,ymax)
+#		SV* canvas;
+#		int &xmin;
+#		int * xmax;
+#		int * ymin;
+#		int &ymax;
+#	CODE:
+#		wdCanvasGetViewport(ref2cnv(canvas),&xmin,xmax,ymin,&ymax);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasWorld2Canvas(cdCanvas* canvas, double xw, double yw, int *xv, int *yv);
+# canvas:wWorld2Canvas(xw, yw: number) -> (xv, yv: number) [in Lua]
+#xxx TODO
+void
+wdCanvasWorld2Canvas(canvas,xw,yw,xv,yv)
+		SV* canvas;
+		double xw;
+		double yw;
+		int &xv;
+		int &yv;
+	CODE:
+		wdCanvasWorld2Canvas(ref2cnv(canvas),xw,yw,&xv,&yv);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasWorld2CanvasSize(cdCanvas* canvas, double hw, double vw, int *hv, int *vv);
+#xxx TODO???
+#void
+#wdCanvasWorld2CanvasSize(canvas,hw,vw,hv,vv)
+#		SV* canvas;
+#		double hw;
+#		double vw;
+#		int &hv;
+#		int &vv;
+#	CODE:
+#		wdCanvasWorld2CanvasSize(ref2cnv(canvas),hw,vw,&hv,&vv);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasCanvas2World(cdCanvas* canvas, int xv, int yv, double *xw, double *yw);
+# canvas:wCanvas2World(xv, yv: number) -> (xw, yw: number) [in Lua]
+#xxx TODO
+#void
+#wdCanvasCanvas2World(canvas,xv,yv,xw,yw)
+#		SV* canvas;
+#		int xv;
+#		int yv;
+#		double* xw;
+#		double* yw;
+#	CODE:
+#		wdCanvasCanvas2World(ref2cnv(canvas),xv,yv,xw,yw);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasSetTransform(cdCanvas* canvas, double sx, double sy, double tx, double ty);
+void
+wdCanvasSetTransform(canvas,sx,sy,tx,ty)
+		SV* canvas;
+		double sx;
+		double sy;
+		double tx;
+		double ty;
+	CODE:
+		wdCanvasSetTransform(ref2cnv(canvas),sx,sy,tx,ty);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasGetTransform(cdCanvas* canvas, double *sx, double *sy, double *tx, double *ty);
+# canvas:wGetTransform() -> (sx, sy, tx, ty: number) [in Lua]
+#xxx TODO
+#void
+#wdCanvasGetTransform(canvas,sx,sy,tx,ty)
+#		SV* canvas;
+#		double* sx;
+#		double* sy;
+#		double* tx;
+#		double* ty;
+#	CODE:
+#		wdCanvasGetTransform(ref2cnv(canvas),sx,sy,tx,ty);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasTranslate(cdCanvas* canvas, double dtx, double dty);
+void
+wdCanvasTranslate(canvas,dtx,dty)
+		SV* canvas;
+		double dtx;
+		double dty;
+	CODE:
+		wdCanvasTranslate(ref2cnv(canvas),dtx,dty);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasScale(cdCanvas* canvas, double dsx, double dsy);
+void
+wdCanvasScale(canvas,dsx,dsy)
+		SV* canvas;
+		double dsx;
+		double dsy;
+	CODE:
+		wdCanvasScale(ref2cnv(canvas),dsx,dsy);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasClipArea(cdCanvas* canvas, double xmin, double xmax, double ymin, double ymax);
+void
+wdCanvasClipArea(canvas,xmin,xmax,ymin,ymax)
+		SV* canvas;
+		double xmin;
+		double xmax;
+		double ymin;
+		double ymax;
+	CODE:
+		wdCanvasClipArea(ref2cnv(canvas),xmin,xmax,ymin,ymax);
+
+#### Original C function from <.../cd/include/wd.h>
+# int wdCanvasGetClipArea(cdCanvas* canvas, double *xmin, double *xmax, double *ymin, double *ymax);
+# canvas:wGetClipArea() -> (xmin, xmax, ymin, ymax, status: number) (WC) [in Lua]
+#xxx TODO
+#int
+#wdCanvasGetClipArea(canvas,xmin,xmax,ymin,ymax)
+#		SV* canvas;
+#		double* xmin;
+#		double* xmax;
+#		double* ymin;
+#		double* ymax;
+#	CODE:
+#		RETVAL = wdCanvasGetClipArea(ref2cnv(canvas),xmin,xmax,ymin,ymax);
+#	OUTPUT:
+#		RETVAL
+
+#### Original C function from <.../cd/include/wd.h>
+# int wdCanvasIsPointInRegion(cdCanvas* canvas, double x, double y);
+int
+wdCanvasIsPointInRegion(canvas,x,y)
+		SV* canvas;
+		double x;
+		double y;
+	CODE:
+		RETVAL = wdCanvasIsPointInRegion(ref2cnv(canvas),x,y);
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasOffsetRegion(cdCanvas* canvas, double x, double y);
+void
+wdCanvasOffsetRegion(canvas,x,y)
+		SV* canvas;
+		double x;
+		double y;
+	CODE:
+		wdCanvasOffsetRegion(ref2cnv(canvas),x,y);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasGetRegionBox(cdCanvas* canvas, double *xmin, double *xmax, double *ymin, double *ymax);
+# canvas:wGetRegionBox() -> (xmin, xmax, ymin, ymax, status: number) (WC) [in Lua]
+#xxx TODO
+#void
+#wdCanvasGetRegionBox(canvas,xmin,xmax,ymin,ymax)
+#		SV* canvas;
+#		double* xmin;
+#		double* xmax;
+#		double* ymin;
+#		double* ymax;
+#	CODE:
+#		wdCanvasGetRegionBox(ref2cnv(canvas),xmin,xmax,ymin,ymax);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasHardcopy(cdCanvas* canvas, cdContext* ctx, void *data, void(*draw_func)(cdCanvas *canvas_copy));
+# canvas:wCanvasHardcopy(ctx: number, data: string or userdata, draw_func: function) [in Lua]
+#xxx TODO
+#void
+#wdCanvasHardcopy(canvas,ctx,data,draw_func)
+#		SV* canvas;
+#		cdContext* ctx;
+#		void* data;
+#		void(* draw_func;
+#	CODE:
+#		wdCanvasHardcopy(ref2cnv(canvas),ctx,data,draw_func);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasPixel(cdCanvas* canvas, double x, double y, long color);
+void
+wdCanvasPixel(canvas,x,y,color)
+		SV* canvas;
+		double x;
+		double y;
+		long color;
+	CODE:
+		wdCanvasPixel(ref2cnv(canvas),x,y,color);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasMark(cdCanvas* canvas, double x, double y);
+void
+wdCanvasMark(canvas,x,y)
+		SV* canvas;
+		double x;
+		double y;
+	CODE:
+		wdCanvasMark(ref2cnv(canvas),x,y);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasLine(cdCanvas* canvas, double x1, double y1, double x2, double y2);
+void
+wdCanvasLine(canvas,x1,y1,x2,y2)
+		SV* canvas;
+		double x1;
+		double y1;
+		double x2;
+		double y2;
+	CODE:
+		wdCanvasLine(ref2cnv(canvas),x1,y1,x2,y2);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasVertex(cdCanvas* canvas, double x, double y);
+void
+wdCanvasVertex(canvas,x,y)
+		SV* canvas;
+		double x;
+		double y;
+	CODE:
+		wdCanvasVertex(ref2cnv(canvas),x,y);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasRect(cdCanvas* canvas, double xmin, double xmax, double ymin, double ymax);
+void
+wdCanvasRect(canvas,xmin,xmax,ymin,ymax)
+		SV* canvas;
+		double xmin;
+		double xmax;
+		double ymin;
+		double ymax;
+	CODE:
+		wdCanvasRect(ref2cnv(canvas),xmin,xmax,ymin,ymax);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasBox(cdCanvas* canvas, double xmin, double xmax, double ymin, double ymax);
+void
+wdCanvasBox(canvas,xmin,xmax,ymin,ymax)
+		SV* canvas;
+		double xmin;
+		double xmax;
+		double ymin;
+		double ymax;
+	CODE:
+		wdCanvasBox(ref2cnv(canvas),xmin,xmax,ymin,ymax);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasArc(cdCanvas* canvas, double xc, double yc, double w, double h, double angle1, double angle2);
+void
+wdCanvasArc(canvas,xc,yc,w,h,angle1,angle2)
+		SV* canvas;
+		double xc;
+		double yc;
+		double w;
+		double h;
+		double angle1;
+		double angle2;
+	CODE:
+		wdCanvasArc(ref2cnv(canvas),xc,yc,w,h,angle1,angle2);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasSector(cdCanvas* canvas, double xc, double yc, double w, double h, double angle1, double angle2);
+void
+wdCanvasSector(canvas,xc,yc,w,h,angle1,angle2)
+		SV* canvas;
+		double xc;
+		double yc;
+		double w;
+		double h;
+		double angle1;
+		double angle2;
+	CODE:
+		wdCanvasSector(ref2cnv(canvas),xc,yc,w,h,angle1,angle2);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasChord(cdCanvas* canvas, double xc, double yc, double w, double h, double angle1, double angle2);
+void
+wdCanvasChord(canvas,xc,yc,w,h,angle1,angle2)
+		SV* canvas;
+		double xc;
+		double yc;
+		double w;
+		double h;
+		double angle1;
+		double angle2;
+	CODE:
+		wdCanvasChord(ref2cnv(canvas),xc,yc,w,h,angle1,angle2);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasText(cdCanvas* canvas, double x, double y, const char* s);
+void
+wdCanvasText(canvas,x,y,s)
+		SV* canvas;
+		double x;
+		double y;
+		const char* s;
+	CODE:
+		wdCanvasText(ref2cnv(canvas),x,y,s);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasPutImageRect(cdCanvas* canvas, cdImage* image, double x, double y, int xmin, int xmax, int ymin, int ymax);
+void
+wdCanvasPutImageRect(canvas,image,x,y,xmin,xmax,ymin,ymax)
+		SV* canvas;
+		cdImage* image;
+		double x;
+		double y;
+		int xmin;
+		int xmax;
+		int ymin;
+		int ymax;
+	CODE:
+		wdCanvasPutImageRect(ref2cnv(canvas),image,x,y,xmin,xmax,ymin,ymax);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasPutImageRectRGB(cdCanvas* canvas, int iw, int ih, const unsigned char* r, const unsigned char* g, const unsigned char* b, double x, double y, double w, double h, int xmin, int xmax, int ymin, int ymax);
+void
+wdCanvasPutImageRectRGB(canvas,iw,ih,r,g,b,x,y,w,h,xmin,xmax,ymin,ymax)
+		SV* canvas;
+		int iw;
+		int ih;
+		const unsigned char* r;
+		const unsigned char* g;
+		const unsigned char* b;
+		double x;
+		double y;
+		double w;
+		double h;
+		int xmin;
+		int xmax;
+		int ymin;
+		int ymax;
+	CODE:
+		wdCanvasPutImageRectRGB(ref2cnv(canvas),iw,ih,r,g,b,x,y,w,h,xmin,xmax,ymin,ymax);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasPutImageRectRGBA(cdCanvas* canvas, int iw, int ih, const unsigned char* r, const unsigned char* g, const unsigned char* b, const unsigned char* a, double x, double y, double w, double h, int xmin, int xmax, int ymin, int ymax);
+void
+wdCanvasPutImageRectRGBA(canvas,iw,ih,r,g,b,a,x,y,w,h,xmin,xmax,ymin,ymax)
+		SV* canvas;
+		int iw;
+		int ih;
+		const unsigned char* r;
+		const unsigned char* g;
+		const unsigned char* b;
+		const unsigned char* a;
+		double x;
+		double y;
+		double w;
+		double h;
+		int xmin;
+		int xmax;
+		int ymin;
+		int ymax;
+	CODE:
+		wdCanvasPutImageRectRGBA(ref2cnv(canvas),iw,ih,r,g,b,a,x,y,w,h,xmin,xmax,ymin,ymax);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasPutImageRectMap(cdCanvas* canvas, int iw, int ih, const unsigned char* index, const long* colors, double x, double y, double w, double h, int xmin, int xmax, int ymin, int ymax);
+# canvas:wPutImageRectMap(imagemap: cdImageMap; palette: cdPalette; x, y, w, h, xmin, xmax, ymin, ymax: number) (WC) [in Lua]
+#xxx TODO
+#void
+#wdCanvasPutImageRectMap(canvas,iw,ih,index,colors,x,y,w,h,xmin,xmax,ymin,ymax)
+#		SV* canvas;
+#		int iw;
+#		int ih;
+#		const unsigned char* index;
+#		const long* colors;
+#		double x;
+#		double y;
+#		double w;
+#		double h;
+#		int xmin;
+#		int xmax;
+#		int ymin;
+#		int ymax;
+#	CODE:
+#		wdCanvasPutImageRectMap(ref2cnv(canvas),iw,ih,index,colors,x,y,w,h,xmin,xmax,ymin,ymax);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasPutBitmap(cdCanvas* canvas, cdBitmap* bitmap, double x, double y, double w, double h);
+void
+wdCanvasPutBitmap(canvas,bitmap,x,y,w,h)
+		SV* canvas;
+		cdBitmap* bitmap;
+		double x;
+		double y;
+		double w;
+		double h;
+	CODE:
+		wdCanvasPutBitmap(ref2cnv(canvas),bitmap,x,y,w,h);
+
+#### Original C function from <.../cd/include/wd.h>
+# double wdCanvasLineWidth(cdCanvas* canvas, double width);
+double
+wdCanvasLineWidth(canvas,width)
+		SV* canvas;
+		double width;
+	CODE:
+		RETVAL = wdCanvasLineWidth(ref2cnv(canvas),width);
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <.../cd/include/wd.h>
+# int wdCanvasFont(cdCanvas* canvas, const char* type_face, int style, double size);
+int
+wdCanvasFont(canvas,type_face,style,size)
+		SV* canvas;
+		const char* type_face;
+		int style;
+		double size;
+	CODE:
+		RETVAL = wdCanvasFont(ref2cnv(canvas),type_face,style,size);
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasGetFont(cdCanvas* canvas, char *type_face, int *style, double *size);
+# canvas:wGetFont() -> (typeface: string, style, size: number) (WC) [in Lua]
+#xxx TODO
+#void
+#wdCanvasGetFont(canvas,type_face,style,size)
+#		SV* canvas;
+#		char* type_face;
+#		int &style;
+#		double* size;
+#	CODE:
+#		wdCanvasGetFont(ref2cnv(canvas),type_face,&style,size);
+
+#### Original C function from <.../cd/include/wd.h>
+# double wdCanvasMarkSize(cdCanvas* canvas, double size);
+double
+wdCanvasMarkSize(canvas,size)
+		SV* canvas;
+		double size;
+	CODE:
+		RETVAL = wdCanvasMarkSize(ref2cnv(canvas),size);
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasGetFontDim(cdCanvas* canvas, double *max_width, double *height, double *ascent, double *descent);
+# canvas:wGetFontDim() -> (max_width, height, ascent, descent: number) (WC) [in Lua]
+#xxx TODO
+#void
+#wdGetFontDim(canvas,max_width,height,ascent,descent)
+#		SV* canvas;
+#		double* max_width;
+#		double* height;
+#		double* ascent;
+#		double* descent;
+#	CODE:
+#		RETVAL = wdCanvasGetFontDim(ref2cnv(canvas),max_width,height,ascent,descent);
+#	OUTPUT:
+#		RETVAL
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasGetTextSize(cdCanvas* canvas, const char* s, double *width, double *height);
+# canvas:wGetTextSize(text: string) -> (width, heigth: number) (WC) [in Lua]
+#xxx TODO
+#void
+#wdCanvasGetTextSize(canvas,s,width,height)
+#		SV* canvas;
+#		const char* s;
+#		double* width;
+#		double* height;
+#	CODE:
+#		wdCanvasGetTextSize(ref2cnv(canvas),s,width,height);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasGetTextBox(cdCanvas* canvas, double x, double y, const char* s, double *xmin, double *xmax, double *ymin, double *ymax);
+# canvas:wGetTextBox(x, y: number, text: string) -> (xmin, xmax, ymin, ymax: number) (WC) [in Lua]
+#xxx TODO
+#void
+#wdCanvasGetTextBox(canvas,x,y,s,xmin,xmax,ymin,ymax)
+#		SV* canvas;
+#		double x;
+#		double y;
+#		const char* s;
+#		double* xmin;
+#		double* xmax;
+#		double* ymin;
+#		double* ymax;
+#	CODE:
+#		wdCanvasGetTextBox(ref2cnv(canvas),x,y,s,xmin,xmax,ymin,ymax);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasGetTextBounds(cdCanvas* canvas, double x, double y, const char* s, double *rect);
+# canvas:wGetTextBounds(x, y: number, text: string) -> (rect: table) (WC) [in Lua]
+#xxx TODO
+#void
+#wdCanvasGetTextBounds(canvas,x,y,s,rect)
+#		SV* canvas;
+#		double x;
+#		double y;
+#		const char* s;
+#		double* rect;
+#	CODE:
+#		wdCanvasGetTextBounds(ref2cnv(canvas),x,y,s,rect);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasStipple(cdCanvas* canvas, int w, int h, const unsigned char*fgbg, double w_mm, double h_mm);
+void
+wdCanvasStipple(canvas,w,h,fgbg,w_mm,h_mm)
+		SV* canvas;
+		int w;
+		int h;
+		const unsigned char* fgbg;
+		double w_mm;
+		double h_mm;
+	CODE:
+		wdCanvasStipple(ref2cnv(canvas),w,h,fgbg,w_mm,h_mm);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasPattern(cdCanvas* canvas, int w, int h, const long *color, double w_mm, double h_mm);
+# canvas:wPattern(pattern: cdPattern, w_mm, h_mm: number) [in Lua]
+#xxx TODO
+#void
+#wdCanvasPattern(canvas,w,h,color,w_mm,h_mm)
+#		SV* canvas;
+#		int w;
+#		int h;
+#		const long* color;
+#		double w_mm;
+#		double h_mm;
+#	CODE:
+#		wdCanvasPattern(ref2cnv(canvas),w,h,color,w_mm,h_mm);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasVectorTextDirection(cdCanvas* canvas, double x1, double y1, double x2, double y2);
+void
+wdCanvasVectorTextDirection(canvas,x1,y1,x2,y2)
+		SV* canvas;
+		double x1;
+		double y1;
+		double x2;
+		double y2;
+	CODE:
+		wdCanvasVectorTextDirection(ref2cnv(canvas),x1,y1,x2,y2);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasVectorTextSize(cdCanvas* canvas, double size_x, double size_y, const char* s);
+void
+wdCanvasVectorTextSize(canvas,size_x,size_y,s)
+		SV* canvas;
+		double size_x;
+		double size_y;
+		const char* s;
+	CODE:
+		wdCanvasVectorTextSize(ref2cnv(canvas),size_x,size_y,s);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasGetVectorTextSize(cdCanvas* canvas, const char* s, double *x, double *y);
+# canvas:wGetVectorTextSize(text: string) -> (width, height: number) [in Lua]
+#xxx TODO
+#void
+#wdCanvasGetVectorTextSize(canvas,s,x,y)
+#		SV* canvas;
+#		const char* s;
+#		double* x;
+#		double* y;
+#	CODE:
+#		wdCanvasGetVectorTextSize(ref2cnv(canvas),s,x,y);
+
+#### Original C function from <.../cd/include/wd.h>
+# double wdCanvasVectorCharSize(cdCanvas* canvas, double size);
+double
+wdCanvasVectorCharSize(canvas,size)
+		SV* canvas;
+		double size;
+	CODE:
+		RETVAL = wdCanvasVectorCharSize(ref2cnv(canvas),size);
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasVectorText(cdCanvas* canvas, double x, double y, const char* s);
+void
+wdCanvasVectorText(canvas,x,y,s)
+		SV* canvas;
+		double x;
+		double y;
+		const char* s;
+	CODE:
+		wdCanvasVectorText(ref2cnv(canvas),x,y,s);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasMultiLineVectorText(cdCanvas* canvas, double x, double y, const char* s);
+void
+wdCanvasMultiLineVectorText(canvas,x,y,s)
+		SV* canvas;
+		double x;
+		double y;
+		const char* s;
+	CODE:
+		wdCanvasMultiLineVectorText(ref2cnv(canvas),x,y,s);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasGetVectorTextBounds(cdCanvas* canvas, const char* s, double x, double y, double *rect);
+# canvas:wGetVectorTextBounds(text: string, x, y: number) -> (rect: table) [in Lua] 
+#xxx TODO
+#void
+#wdCanvasGetVectorTextBounds(canvas,s,x,y,rect)
+#		SV* canvas;
+#		const char* s;
+#		double x;
+#		double y;
+#		double* rect;
+#	CODE:
+#		wdCanvasGetVectorTextBounds(ref2cnv(canvas),s,x,y,rect);
+
+#### Original C function from <.../cd/include/wd.h>
+# void wdCanvasGetVectorTextBox(cdCanvas* canvas, double x, double y, const char *s, double *xmin, double *xmax, double *ymin, double *ymax);
+# canvas:wGetVectorTextBox(x, y: number, text: string) -> (xmin, xmax, ymin, ymax: number) [in Lua]
+#xxx TODO
+#void
+#wdCanvasGetVectorTextBox(canvas,x,y,s,xmin,xmax,ymin,ymax)
+#		SV* canvas;
+#		double x;
+#		double y;
+#		const char* s;
+#		double* xmin;
+#		double* xmax;
+#		double* ymin;
+#		double* ymax;
+#	CODE:
+#		wdCanvasGetVectorTextBox(ref2cnv(canvas),x,y,s,xmin,xmax,ymin,ymax);
+
+### generated part - end ###
 
 ### generated part - end ###
