@@ -12,11 +12,55 @@ IUP::Image*
   iup.GetImageNativeHandle(image: imImage) -> (handle: userdata) [in Lua]
 
 IUP::Canvas
-- implement missing XS methods to IUP::Internal::Canvas (see Canvas.xs - look for 'xxx TODO')
-- maybe call cdCanvasActivate() inside cdLine and similar cases
-- maybe not name methods like "cdMark" but rather just "Mark" (maybe not: collision SetAttribute vs. cdSetAttribute)
+- implement missing XS methods to IUP::Internal::Canvas (see notes in Canvas.xs)
+# void cdCanvasTransform(cdCanvas* canvas, const double* matrix);
+# double* cdCanvasGetTransform(cdCanvas* canvas);
+# void cdCanvasTransformMultiply(cdCanvas* canvas, const double* matrix);
+# void cdCanvasLineStyleDashes(cdCanvas* canvas, const int* dashes, int count);
+# void cdCanvasStipple(cdCanvas* canvas, int w, int h, const unsigned char* stipple);
+# unsigned char* cdCanvasGetStipple(cdCanvas* canvas, int *n, int *m);
+# void cdCanvasPattern(cdCanvas* canvas, int w, int h, long const int *pattern);
+# long* cdCanvasGetPattern(cdCanvas* canvas, int* n, int* m);
+# double* cdCanvasVectorTextTransform(cdCanvas* canvas, const double* matrix);
+# void cdCanvasPalette(cdCanvas* canvas, int n, const long *palette, int mode);
+# void cdCanvasGetImageRGB(cdCanvas* canvas, unsigned char* r, unsigned char* g, unsigned char* b, int x, int y, int w, int h);
+# void cdCanvasPutImageRectRGB(...);
+# void cdCanvasPutImageRectRGBA(...);
+# void cdCanvasPutImageRectMap(...);
+# void wdCanvasPutImageRectRGB(...);
+# void wdCanvasPutImageRectRGBA(...);
+# void wdCanvasPutImageRectMap(...);
+# cdBitmap* cdCreateBitmap(int w, int h, int type);
+# cdBitmap* cdInitBitmap(int w, int h, int type, ...);
+# void cdKillBitmap(cdBitmap* bitmap);
+# unsigned char* cdBitmapGetData(cdBitmap* bitmap, int dataptr);
+# void cdBitmapSetRect(cdBitmap* bitmap, int xmin, int xmax, int ymin, int ymax);
+# void cdCanvasPutBitmap(cdCanvas* canvas, cdBitmap* bitmap, int x, int y, int w, int h);
+# void cdCanvasGetBitmap(cdCanvas* canvas, cdBitmap* bitmap, int x, int y);
+# void cdBitmapRGB2Map(cdBitmap* bitmap_rgb, cdBitmap* bitmap_map);
+# void cdRGB2Map(int width, int height, const unsigned char* red, const unsigned char* green, const unsigned char* blue, unsigned char* index, int pal_size, long *color);
+# void wdCanvasHardcopy(cdCanvas* canvas, cdContext* ctx, void *data, void(*draw_func)(cdCanvas *canvas_copy));
+# void wdCanvasPutBitmap(cdCanvas* canvas, cdBitmap* bitmap, double x, double y, double w, double h);
+# void wdCanvasStipple(cdCanvas* canvas, int w, int h, const unsigned char*fgbg, double w_mm, double h_mm);
+# void wdCanvasPattern(cdCanvas* canvas, int w, int h, const long *color, double w_mm, double h_mm);
+--
+cd.CreatePattern(width, height: number) -> (pattern: cdPattern)
+cd.KillPattern(pattern: cdPattern)
+--
+cd.CreateStipple(width, height: number) -> (stipple: cdStipple)
+cd.KillStipple(stipple: cdStipple)
+--
+cd.CreatePalette(size: number) -> (palette: cdPalette) [in Lua Only]
+cd.KillPalette(palette: cdPalette) [in Lua Only]
+--
+(exists)cd.CreateBitmap(w, h, type: number) -> (bitmap: cdBitmap) [in Lua]
+(exists)cd.KillBitmap(bitmap: cdBitmap) [in Lua]
+--
+deprecated kill/create
+cd.KillImageRGB
+cd.KillImageRGBA
+cd.KillImageMap
 - somehow handle CD_xxx constants
-- check wd.h for wdCanvas... functions + add them to Canvas.xs
 
 IUP::CanvasGL
 - consider IUP::Canvas::GL
@@ -39,7 +83,7 @@ IUP::Internal::Element
   or: GetAttributesStr vs. GetAttributesHRef
 - tests for all common functions
 
-IUP::OleControl
+IUP::OleControl (not a priority)
 - missing -> add
 - conditionally only on Win32
 
@@ -82,17 +126,12 @@ DOC
 - pplot.pl: # xxx TODO.DOC xxx note in doc that DS_ has to be set after ->PPlotEnd()
 - tree: # xxx TODO xxx note in doc that tree->SetAttribude has to go after dialog->Show
 
-XS - compile warnings
-- LibraryIUP / Linux: warning: ISO C90 forbids mixed declarations and code (when using myST2xxx)
-- LibraryIUP / Linux: warning: unused variable targ | RETVAL (when using PPCODE)
-- LibraryIUP - remove unnecessary use of MyST2xxx() macros
-
 Linux - platform specific issues
 - (<unknown>:4352): Pango-WARNING **: Error loading GSUB table 85
   before MainLoop
 - 'Quit' in main menu requires double click
 
-Packaging
+Packaging (not a priority)
 - RHEL 5 + FC 13,12,11
   - http://search.cpan.org/dist/cpan2rpm/
   - http://search.cpan.org/dist/Ovid/
@@ -108,8 +147,8 @@ Packaging
   - http://chrysaor.info/?page=images&filter=Ubuntu
   - http://www.thoughtpolice.co.uk/vmware/
 
-Callbacks generation
-- missing support for K_* callbacks (no hurry, lua does not implemt them)
+Callbacks generation (not a priority)
+- missing support for K_* callbacks (no hurry, lua does not implement them as well)
 
 Global issues
 - check memory leaks - http://use.perl.org/~jozef/journal/40411
@@ -117,7 +156,8 @@ Global issues
 - detection of current windowing system
 - detection of codepage used in GUI
 
-Consider splitting IUP::Internal::LibraryIup into:
+Consider splitting IUP::Internal::LibraryIup (not a priority)
+into:
 - IUP::Internal::LibraryIup
 - IUP::Internal::LibraryIupControl
 - IUP::Internal::LibraryCd
@@ -125,7 +165,7 @@ Consider splitting IUP::Internal::LibraryIup into:
 - IUP::Internal::LibraryImLib
 (postponed, the first try did not work as expected)
 
-Build.PL
+Build.PL (not a priority)
 - RHEL5 compatibility: create_makefile_pl => 'small'; (see Alien::wxWidgets) - probably not
 - using: release_testing automated_testing interactive
 

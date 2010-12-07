@@ -1588,7 +1588,7 @@ _IupGetColor(x,y,r,g,b)
 		unsigned char b;
 	INIT:
 		int rv;
-		unsigned char newr = r;
+		unsigned char newr = r; /* xxx check this assignment newr=r or newr=*r ? */
 		unsigned char newg = g;
 		unsigned char newb = b;
 	PPCODE:

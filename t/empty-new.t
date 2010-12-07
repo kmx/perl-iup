@@ -1,8 +1,11 @@
 #!perl -T
 
-use Test::More tests => 46;
+use Test::More tests => 44;
 
 use IUP;
+
+#xxx TODO: not tested, skip on non-Windows platform
+#isnt(IUP::OleControl->new(),undef,'Testing IUP::OleControl->new()');
 
 isnt(IUP::Button->new(),undef,'Testing IUP::Button->new()');
 isnt(IUP::Canvas->new(),undef,'Testing IUP::Canvas->new()');
@@ -30,15 +33,13 @@ isnt(IUP::Matrix->new(),undef,'Testing IUP::Matrix->new()');
 isnt(IUP::Menu->new(),undef,'Testing IUP::Menu->new()');
 isnt(IUP::MessageDlg->new(),undef,'Testing IUP::MessageDlg->new()');
 isnt(IUP::Normalizer->new(),undef,'Testing IUP::Normalizer->new()');
-is  (IUP::OleControl->new(),undef,'Testing IUP::OleControl->new()');
 isnt(IUP::PPlot->new(),undef,'Testing IUP::PPlot->new()');
 isnt(IUP::ProgressBar->new(),undef,'Testing IUP::ProgressBar->new()');
 isnt(IUP::Radio->new(),undef,'Testing IUP::Radio->new()');
 isnt(IUP::Sbox->new(),undef,'Testing IUP::Sbox->new()');
 isnt(IUP::Separator->new(),undef,'Testing IUP::Separator->new()');
 isnt(IUP::Spin->new(),undef,'Testing IUP::Spin->new()');
-is  (IUP::Spinbox->new(),undef,'Testing IUP::Spinbox->new()');
-isnt(IUP::Spinbox->new(child=>IUP::Text->new()),undef,'Testing IUP::Spinbox->new()');
+isnt(IUP::Spinbox->new(),undef,'Testing IUP::Spinbox->new()');
 isnt(IUP::Split->new(),undef,'Testing IUP::Split->new()');
 isnt(IUP::Submenu->new(),undef,'Testing IUP::Submenu->new()');
 isnt(IUP::Tabs->new(),undef,'Testing IUP::Tabs->new()');
