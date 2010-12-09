@@ -1,17 +1,11 @@
 IUP::Image*
-- implement missing methods 
-  iup.LoadImage(file_name: string) -> (elem: ihandle) [in Lua] (xxx check what obj type has resulting iHandle xxx)
-  iup.SaveImage(ih: ihandle, file_name, format: string) -> (ret: boolean) [in Lua]
-- maybe one IUP::Image (not 3 Image/ImageRGB/ImageRGBA)
-- new( ... colors=>[ ] )
-- new( ... pixels=>pack('C*', @array) )
-- new( ... 1=>.. 2=>.. 3=>.. )
-- new( file=>.. )
+- remove IUP::ImageRGB IUP::ImageRGBA
+- check whether new( ... 1=>.. 2=>.. 3=>.. ) works
 - no need for:
   iup.GetNativeHandleImage(handle: userdata) -> (image: imImage) [in Lua]
   iup.GetImageNativeHandle(image: imImage) -> (handle: userdata) [in Lua]
 
-IUP::Canvas
+IUP::Canvas (now works without Bitmap/Image/Palette/Pattern-related functions)
 - implement missing XS methods to IUP::Internal::Canvas (see notes in Canvas.xs)
 # void cdCanvasTransform(cdCanvas* canvas, const double* matrix);
 # double* cdCanvasGetTransform(cdCanvas* canvas);
@@ -63,7 +57,7 @@ cd.KillImageMap
 - somehow handle CD_xxx constants
 
 IUP::CanvasGL
-- consider IUP::Canvas::GL
+- consider moving to IUP::Canvas::GL
 
 IUP::ImageLib
 - missing -> add

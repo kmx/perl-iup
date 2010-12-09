@@ -144,7 +144,7 @@ my $i4 = IUP::Item->new(TITLE => "Quit", ACTION=>\&item_close_cb);
 #$i4->SetCallback( ACTION=>\&item_close_cb ), 
 #$i3->ACTION( \&item_remove_cb ), 
 
-my $sub1 = IUP::Submenu->new( TITLE=>'Sub Test', menu=>IUP::Menu->new( child=>[
+my $sub1 = IUP::Submenu->new( TITLE=>'Sub Test', child=>IUP::Menu->new( child=>[
   IUP::Item->new(TITLE => "It1", ACTION=>sub{IUP->Message('It1!')}, IMAGE=>$im_rgba ),
   IUP::Item->new(TITLE => "It2", ACTION=>sub{IUP->Message('It2!')}, IMAGE=>$im1),
   IUP::Item->new(TITLE => "It3", ACTION=>sub{IUP->Message('It3!')}, IMAGE=>$im_rgb ),
@@ -159,6 +159,7 @@ $dialog = IUP::Dialog->new(child => $c, MENU=>$m);
 
 $dialog->SetAttribute( SIZE=>'QUARTERxQUARTER', MENU=>$m );
 $dialog->TITLE('XXaaaaaaaaaaaaa'); 
+$dialog->TITLE(undef); 
 
 $dialog->ShowXY(30,30);
 

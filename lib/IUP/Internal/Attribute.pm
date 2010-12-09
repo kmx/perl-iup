@@ -643,7 +643,6 @@ my $attrib_table = {
     CHARSIZE => 'NO_DEFAULTVALUE|READONLY|NOT_MAPPED|NO_INHERIT', # src=yes doc=no
     CX => 'unknown',                                          # src=no doc=no
     CY => 'unknown',                                          # src=no doc=no
-    ENTERWINDOW_CB => 'NO_INHERIT',                           # src=yes doc=no
     EXPAND => 'NOT_MAPPED|NO_INHERIT',                        # src=yes doc=no
     EXPANDWEIGHT => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=no
     FLOATING => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=no
@@ -651,13 +650,7 @@ my $attrib_table = {
     FONTFACE => 'READONLY|NOT_MAPPED|NO_INHERIT',             # src=yes doc=no
     FONTSIZE => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=no
     FONTSTYLE => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=no
-    GETFOCUS_CB => 'NO_INHERIT',                              # src=yes doc=no
-    HELP_CB => 'NO_INHERIT',                                  # src=yes doc=no
     HFONT => 'NOT_MAPPED|NO_INHERIT|NO_STRING',               # src=yes doc=no
-    KILLFOCUS_CB => 'NO_INHERIT',                             # src=yes doc=no
-    K_ANY => 'NO_INHERIT',                                    # src=yes doc=no
-    LEAVEWINDOW_CB => 'NO_INHERIT',                           # src=yes doc=no
-    MAP_CB => 'NO_INHERIT',                                   # src=yes doc=no
     MAXSIZE => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=no
     MINSIZE => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=no
     NAME => 'NO_DEFAULTVALUE|NOT_MAPPED|NO_INHERIT',          # src=yes doc=no
@@ -672,7 +665,6 @@ my $attrib_table = {
     TIPDELAY => 'NOT_MAPPED',                                 # src=yes doc=no
     TIPFGCOLOR => 'NOT_MAPPED',                               # src=yes doc=no
     TIPVISIBLE => 'NO_INHERIT',                               # src=yes doc=no
-    UNMAP_CB => 'NO_INHERIT',                                 # src=yes doc=no
     VISIBLE => 'DEFAULT',                                     # src=yes doc=no
     WID => 'READONLY|NO_INHERIT|NO_STRING',                   # src=yes doc=no
     X => 'READONLY|NO_INHERIT',                               # src=yes doc=no
@@ -750,33 +742,26 @@ my $attrib_table = {
 
 sub _get_attr_list {
   my $pkg = shift;
-  my @rv = ();
-  push(@rv, keys(%{$attrib_table->{_base}}));
-  push(@rv, keys(%{$attrib_table->{_dialog}})) if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/;
-  push(@rv, keys(%{$attrib_table->{_box}}))    if $pkg =~ /^IUP::[CHVZ]box$/;
-  push(@rv, keys(%{$attrib_table->{$pkg}}));
-  return @rv;
+  my @list;
+  push(@list, keys(%{$attrib_table->{_base}}));
+  push(@list, keys(%{$attrib_table->{_dialog}})) if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/;
+  push(@list, keys(%{$attrib_table->{_box}}))    if $pkg =~ /^IUP::[CHVZ]box$/;
+  push(@list, keys(%{$attrib_table->{$pkg}}));
+  return keys %{{ map { $_ => 1 } @list }}; #return just uniq items
 }
 
 sub _is_attr_valid {
   my ($pkg, $name) = @_;
-  #my $h = $attrib_table->{$pkg};
-  #return 0 unless defined($h);
-  #return defined($h->{$name}) ? 1 : 0;
   carp "Warning: DO NOT USE _is_attr_valid!";
   return 1;
 }
 
 sub _get_attr_eval_code {
-  my ($element, $p) = @_;
-  my $rv = '';
-  my $h = $attrib_table->{$element} or return $rv;
-  
-  for (keys %$h) {
-    next if defined *{"$p\::$_"};
-    $rv .= "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetAttribute('$_', \$_[1]) : \$_[0]->GetAttribute('$_') };\n";
+  my $pkg = shift;
+  my $rv;
+  for (_get_attr_list($pkg)) {
+    $rv .= "*$pkg\::$_ = sub { return (scalar(\@_)>1) ? \$_[0]->SetAttribute('$_', \$_[1]) : \$_[0]->GetAttribute('$_') };\n";
   }
-
   return $rv;
 }
 
@@ -789,4 +774,4 @@ __END__
 
 IUP::Internal::Attribute - INTERNAL FUNCTIONS, do not use them from outside!
 
-=cut 
+=cut

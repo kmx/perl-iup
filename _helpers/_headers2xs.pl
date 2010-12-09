@@ -240,12 +240,15 @@ sub proc_doc {
   }
 }
 
-my $h = [ 
+my $h = [
   "$srcroot/iup/include/iup.h",
   "$srcroot/iup/include/iupcontrols.h",
   "$srcroot/iup/include/iupole.h",
   "$srcroot/iup/include/iup_pplot.h",
   "$srcroot/iup/include/iupgl.h",
+  "$srcroot/iup/include/iupim.h",
+  "$srcroot/iup/include/iuptuio.h",
+  "$srcroot/iup/include/iupweb.h",
   "$srcroot/cd/include/cd.h",
   "$srcroot/im/include/im.h",
 ];

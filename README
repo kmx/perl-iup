@@ -1,48 +1,45 @@
 IUP
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+The IUP module is perl binding for cross-platform GUI toolkit designed to run
+on the following platforms: 
+*/ Win32 native GUI (native Windows + Cygwin)
+*/ GTK2+
+*/ Motif-X11
+On all platform it uses native GUI widgets.
 
-A README file is required for CPAN modules since CPAN extracts the README
-file from a module distribution so that people browsing the archive
-can use it to get an idea of the module's uses. It is usually a good idea
-to provide version information here so that people can decide whether
-fixes for the module are worth downloading.
+It is based on the following libraries:
+*/ iup library - see http://www.tecgraf.puc-rio.br/iup/
+*/ im library  - see http://www.tecgraf.puc-rio.br/im/
+*/ cd library  - see http://www.tecgraf.puc-rio.br/cd/
+There is no need to install them before installing IUP; they are handled by 
+separate Alien::IUP module.
 
+See 'examples' folder to see how the perl programs using IUP module look like.
+
+BEWARE
+
+The module is still under development:
+*/ the API was not fixed yet and is still slightly changing
+*/ no documentation at the moment (look at examples)
+*/ very basic (incomplet) test suite
 
 INSTALLATION
 
-To install this module, run the following commands:
+To install this module:
 
-	perl Build.PL
-	./Build
-	./Build test
-	./Build install
+*/ get latest src tarball from https://github.com/kmx/perl-iup/tarball/master
 
-SUPPORT AND DOCUMENTATION
+*/ unpack src tarball and run the following commands:
 
-After installing, you can find documentation for this module with the
-perldoc command.
+    perl Build.PL
+    ./Build
+    ./Build test
+    ./Build install
 
-    perldoc IUP
+*/ if you have 'pip' (1.17 or later) utility installed simply run:
 
-You can also look for information at:
-
-    RT, CPAN's request tracker
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=IUP
-
-    AnnoCPAN, Annotated CPAN documentation
-        http://annocpan.org/dist/IUP
-
-    CPAN Ratings
-        http://cpanratings.perl.org/d/IUP
-
-    Search CPAN
-        http://search.cpan.org/dist/IUP/
-
-
+    pip https://github.com/kmx/perl-iup/tarball/master
+    
 LICENSE AND COPYRIGHT
 
 Copyright (C) 2010 KMX
@@ -70,4 +67,3 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
-

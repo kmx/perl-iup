@@ -40,17 +40,11 @@ sub new {
     if ($self->IsValidCallbackName($_)) {
       push(@cb, $_, $args{$_});
     }
-    # xxx TODO xxx remove
-    #elsif ($self->IsValidAttributeName($_)) {
-    #  push(@at, $_, $args{$_});
-    #}
     elsif ($_ eq 'name') {
       $self->name($args{$_});
     }
     elsif ($_ eq uc($_)) {
-      push(@at, $_, $args{$_});
-      # xxx TODO xxx comment
-      #carp "Warning: $class->new() unknown parameter '$_', assuming an attribute";
+      push(@at, $_, $args{$_});  # assuming an attribute
     }
     else {
       carp "Warning: $class->new() ignoring unknown parameter '$_'";
@@ -59,7 +53,8 @@ sub new {
   $self->SetAttribute(@at) if scalar(@at);
   $self->SetCallback(@cb) if scalar(@cb);
   if (!$self->HasValidClassName) {
-    my $c = $_[0]->GetClassName || '';
+    # xxx todo somehow handle image/imagergb/imagergba
+    my $c = $self->GetClassName || '';
     carp "Warning: $class->new() classname mismatch '$class' vs. '$c'";
   }
   return $self;
@@ -113,17 +108,12 @@ sub import {
   my $p = shift;
   #warn "### IUP::Internal::Element->import($p) called";
 
-  # xxx TODO xxx maybe move accessors to Internal::Element::Dialog + Internal::Element::Box + IUP::<element>
-  
   # callback accessors
-  eval IUP::Internal::Callback::_get_cb_eval_code($p, $p);
+  eval IUP::Internal::Callback::_get_cb_eval_code($p);
   die "###ERROR### import failed(cb) '$p': " . $@ if $@;
   
   # attribute accessors
-  eval IUP::Internal::Attribute::_get_attr_eval_code('_base', $p) .
-       (($p =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/) ? IUP::Internal::Attribute::_get_attr_eval_code('_dialog', $p) : '') .
-       (($p =~ /^IUP::[CHVZ]box$/) ? IUP::Internal::Attribute::_get_attr_eval_code('_box', $p) : '') .
-       IUP::Internal::Attribute::_get_attr_eval_code($p, $p);
+  eval IUP::Internal::Attribute::_get_attr_eval_code($p);
   die "###ERROR### import failed(attr) '$p': " . $@ if $@;
   
 }

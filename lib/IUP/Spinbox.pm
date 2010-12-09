@@ -18,7 +18,7 @@ sub _create_element {
     delete $args->{child};
   }
   else {
-    carp "Warning: IUP::Spinbox->new() cannot be called without params";
+    #carp "Warning: IUP::Spinbox->new() cannot be called without params";
     $ih = IUP::Internal::LibraryIup::_IupSpinbox(undef);
   }  
   return $ih;

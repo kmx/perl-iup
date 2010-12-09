@@ -292,10 +292,10 @@ sub _get_cb_list {
 }
 
 sub _get_cb_eval_code {
-  my ($pkg, $caller) = @_;
+  my $pkg = shift;
   my $rv;
   for (_get_cb_list($pkg)) {
-    $rv .= "*$caller\::$_ = sub { return \$_[1] ? \$_[0]->SetCallback('$_', \$_[1]) : \$_[0]->{$_} };\n";
+    $rv .= "*$pkg\::$_ = sub { return \$_[1] ? \$_[0]->SetCallback('$_', \$_[1]) : \$_[0]->{$_} };\n";
   }
   return $rv;
 }

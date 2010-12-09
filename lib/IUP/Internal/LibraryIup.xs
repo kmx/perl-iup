@@ -7,6 +7,7 @@
 #include <iupcontrols.h>
 #include <iup_pplot.h>
 #include <iupgl.h>
+#include <iupim.h>
 #include <cd.h>
 #include <cdiup.h>
 
@@ -1849,8 +1850,9 @@ _IupGetAllAttributes(ih,...)
 		if (max_n > 0) count = max_n;
 		list = malloc( count * sizeof(void*) );
 		rv = IupGetAllAttributes(ih,list,count);
+		#warn("[DEBUG.XS] rv=%d count=%d\n", rv, count); /* xxx why are these values different? */
 		if(GIMME_V == G_ARRAY) {
-		  for(i=0; i<count; i++) XPUSHs(sv_2mortal(newSVpv(list[i],0)));
+		  for(i=0; i<rv; i++) XPUSHs(sv_2mortal(newSVpv(list[i],0)));
 		}
 		else {
 		  XPUSHs(sv_2mortal(newSViv(rv)));
@@ -2217,3 +2219,25 @@ _IupGLWait(gl)
 		int gl;
 	CODE:
 		IupGLWait(gl);
+
+#### Original C function from <.../iup/include/iupim.h>
+# Ihandle* IupLoadImage(const char* file_name);
+Ihandle*
+_IupLoadImage(file_name)
+		const char* file_name;
+	CODE:
+		RETVAL = IupLoadImage(file_name);
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <.../iup/include/iupim.h>
+# int IupSaveImage(Ihandle* ih, const char* file_name, const char* format);
+int
+_IupSaveImage(ih,file_name,format)
+		Ihandle* ih;
+		const char* file_name;
+		const char* format;
+	CODE:
+		RETVAL = IupSaveImage(ih,file_name,format);
+	OUTPUT:
+		RETVAL

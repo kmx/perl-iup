@@ -21,33 +21,26 @@ my $attrib_table = {
 
 sub _get_attr_list {
   my $pkg = shift;
-  my @rv = ();
-  push(@rv, keys(%{$attrib_table->{_base}}));
-  push(@rv, keys(%{$attrib_table->{_dialog}})) if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/;
-  push(@rv, keys(%{$attrib_table->{_box}}))    if $pkg =~ /^IUP::[CHVZ]box$/;
-  push(@rv, keys(%{$attrib_table->{$pkg}}));
-  return @rv;
+  my @list;
+  push(@list, keys(%{$attrib_table->{_base}}));
+  push(@list, keys(%{$attrib_table->{_dialog}})) if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/;
+  push(@list, keys(%{$attrib_table->{_box}}))    if $pkg =~ /^IUP::[CHVZ]box$/;
+  push(@list, keys(%{$attrib_table->{$pkg}}));
+  return keys %{{ map { $_ => 1 } @list }}; #return just uniq items
 }
 
 sub _is_attr_valid {
   my ($pkg, $name) = @_;
-  #my $h = $attrib_table->{$pkg};
-  #return 0 unless defined($h);
-  #return defined($h->{$name}) ? 1 : 0;
   carp "Warning: DO NOT USE _is_attr_valid!";
   return 1;
 }
 
 sub _get_attr_eval_code {
-  my ($element, $p) = @_;
-  my $rv = '';
-  my $h = $attrib_table->{$element} or return $rv;
-  
-  for (keys %$h) {
-    next if defined *{"$p\::$_"};
-    $rv .= "*$p\::$_ = sub { return \$_[1] ? \$_[0]->SetAttribute('$_', \$_[1]) : \$_[0]->GetAttribute('$_') };\n";
+  my $pkg = shift;
+  my $rv;
+  for (_get_attr_list($pkg)) {
+    $rv .= "*$pkg\::$_ = sub { return (scalar(\@_)>1) ? \$_[0]->SetAttribute('$_', \$_[1]) : \$_[0]->GetAttribute('$_') };\n";
   }
-
   return $rv;
 }
 
@@ -60,4 +53,4 @@ __END__
 
 IUP::Internal::Attribute - INTERNAL FUNCTIONS, do not use them from outside!
 
-=cut 
+=cut

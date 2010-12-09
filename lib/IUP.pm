@@ -178,7 +178,7 @@ sub GetFocus {
   return IUP->GetOrCreateByIhandle($ih);
 }
 
-sub GetClassName {
+sub GetClassName { # duplicated also in Element.pm
   #char* IupGetClassName(Ihandle* ih); [in C]
   #iup.GetClassName(ih: ihandle) -> (name: string) [in Lua]
   my ($pkg, $ih) = @_;
