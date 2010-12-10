@@ -1,42 +1,44 @@
-IUP
+### IUP perl module ###
 
-The IUP module is perl binding for cross-platform GUI toolkit designed to run
+The IUP module is a perl binding for cross-platform GUI toolkit designed to run
 on the following platforms: 
-*/ Win32 native GUI (native Windows + Cygwin)
-*/ GTK2+
-*/ Motif-X11
+* Win32 native GUI (native Windows + Cygwin)
+* GTK2+
+* Motif-X11
 On all platform it uses native GUI widgets.
 
 It is based on the following libraries:
-*/ iup library - see http://www.tecgraf.puc-rio.br/iup/
-*/ im library  - see http://www.tecgraf.puc-rio.br/im/
-*/ cd library  - see http://www.tecgraf.puc-rio.br/cd/
+* iup library - see http://www.tecgraf.puc-rio.br/iup/
+* im library  - see http://www.tecgraf.puc-rio.br/im/
+* cd library  - see http://www.tecgraf.puc-rio.br/cd/
 There is no need to install them before installing IUP; they are handled by 
-separate Alien::IUP module.
+separate Alien::IUP module - http://search.cpan.org/dist/Alien-IUP/
 
 See 'examples' folder to see how the perl programs using IUP module look like.
 
 BEWARE
 
 The module is still under development:
-*/ the API was not fixed yet and is still slightly changing
-*/ no documentation at the moment (look at examples)
-*/ very basic (incomplet) test suite
+* the API was not fixed yet and is still slightly changing
+* no documentation at the moment (look at examples)
+* very basic (incomplete) test suite
 
 INSTALLATION
 
 To install this module:
 
-*/ get latest src tarball from https://github.com/kmx/perl-iup/tarball/master
+* get latest src tarball from https://github.com/kmx/perl-iup/tarball/master
 
-*/ unpack src tarball and run the following commands:
+* unpack src tarball and run the following commands:
 
     perl Build.PL
     ./Build
     ./Build test
     ./Build install
+    
+    note: you need to install Alien::IUP from CPAN before building IUP module
 
-*/ if you have 'pip' (1.17 or later) utility installed simply run:
+* if you have 'pip' (1.17 or later) utility installed simply run:
 
     pip https://github.com/kmx/perl-iup/tarball/master
     
