@@ -33,7 +33,7 @@ sub _create_element {
   if ($f) {
     # load image from file
     $ih = IUP::Internal::LibraryIup::_IupLoadImage($f);
-    carp "Warning: LoadImage failed!" unless $ih;    
+    carp "Warning: file '$f' cannot be loaded!" unless $ih;    
     carp "Warning: ignoring parameter 'pixels' when using parameter 'file'" if $p;
     carp "Warning: ignoring parameter 'colors' when using parameter 'file'" if $c;
     carp "Warning: ignoring parameter 'type' when using parameter 'file'" if $t;

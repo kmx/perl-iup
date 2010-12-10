@@ -7,10 +7,6 @@ use IUP;
 # Defines an "X" image;
 #my $img_x = IUP::Image->new( file=>'y:\@repos\perl-iup\examples\logo.gif' );
 my $img_x = IUP::Image->new( file=>'y:\@repos\perl-iup\examples\google.jpg' );
-warn "ref=".ref($img_x)."\n";
-warn "ClassName=".$img_x->GetClassName."\n";
-$img_x->SaveImage('tmp.png', 'PNG') || warn "error";
-warn "bpp=".$img_x->BPP."\n";
 # Defines a cursor image;
 my $img_cursor = IUP::Image->new( pixels=>
   [[ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],

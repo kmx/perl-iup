@@ -19,7 +19,8 @@ my $img_star = IUP::Image->new( pixels=>
    [ 1,1,2,2,1,1,1,1,1,2,2,1,1 ],
    [ 1,2,2,1,1,1,1,1,1,1,2,2,1 ],
    [ 2,2,1,1,1,1,1,1,1,1,1,2,2 ],
-  ], colors=> [ "0 0 0", "0 0 0", "0 198 0" ]
+  ], 
+  1=>"0 0 0", 2=>"0 198 0" #colors]
 );
 
 # Creates a label and sets all the attributes of label lbl, except for image;

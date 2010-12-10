@@ -55,9 +55,6 @@ cd.KillImageRGBA
 cd.KillImageMap
 - somehow handle CD_xxx constants
 
-IUP::Image*
-- check whether new( ... 1=>.. 2=>.. 3=>.. ) works
-
 IUP::CanvasGL
 - consider moving to IUP::Canvas::GL
 
