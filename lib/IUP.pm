@@ -31,8 +31,6 @@ require IUP::Frame;
 require IUP::GLCanvas;
 require IUP::Hbox;
 require IUP::Image;
-require IUP::ImageRGB;
-require IUP::ImageRGBA;
 require IUP::Item;
 require IUP::Label;
 require IUP::List;

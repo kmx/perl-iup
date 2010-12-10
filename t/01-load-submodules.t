@@ -1,6 +1,6 @@
 #!perl -T
 
-use Test::More tests => 46;
+use Test::More tests => 44;
 
 use_ok('IUP::Button');
 use_ok('IUP::Canvas');
@@ -20,8 +20,6 @@ use_ok('IUP::Frame');
 use_ok('IUP::GLCanvas');
 use_ok('IUP::Hbox');
 use_ok('IUP::Image');
-use_ok('IUP::ImageRGB');
-use_ok('IUP::ImageRGBA');
 use_ok('IUP::Item');
 use_ok('IUP::Label');
 use_ok('IUP::List');

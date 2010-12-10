@@ -206,6 +206,9 @@ sub IsValidCallbackName {
 
 sub HasValidClassName {  
   my $c = $_[0]->GetClassName || '';
+  # we are using IUP::Image for all - image, imagergb, imagergba
+  $c = 'image' if $c eq 'imagergb';
+  $c = 'image' if $c eq 'imagergba';
   return lc(ref($_[0])) eq "iup::$c" ? 1 : 0;
 }
 
