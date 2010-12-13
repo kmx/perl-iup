@@ -1,9 +1,3 @@
-IUP::ImageLib
-- maybe IUP::Image->new( imglib=>'name xxx')
-- missing -> add
-- check memory consumption (maybe separate lib/IUP/Internal/ImageLib.xs)
-- Iup::ImageLib->Open() - perhaps follow lua: In Lua, when require "iupluaimglib" is used this function will be automatically called.
-
 IUP::Canvas (now works without Bitmap/Image/Palette/Pattern-related functions)
 - implement missing XS methods to IUP::Internal::Canvas (see notes in Canvas.xs)
 # void cdCanvasTransform(cdCanvas* canvas, const double* matrix);

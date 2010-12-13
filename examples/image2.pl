@@ -55,7 +55,7 @@ my $tgl = IUP::Toggle->new( IMAGE=>$img_x );
 
 # Creates two toggles and associates image img_x to them;
 my $tgl_radio_1 = IUP::Toggle->new( IMAGE=>$img_x );
-my $tgl_radio_2 = IUP::Toggle->new( IMAGE=>$img_x );
+my $tgl_radio_2 = IUP::Toggle->new( IMAGE=>"IUP_Petrobras" ); #imglib demonstration
 
 # Creates label showing image size;
 my $lbl_size = IUP::Label->new( TITLE=>'"X" image width = '.$img_x->WIDTH.', "X" image height = '.$img_x->HEIGHT );

@@ -111,7 +111,7 @@ IupOpen(NULL, NULL);
 IupControlsOpen();
 IupPPlotOpen();
 IupGLCanvasOpen();
-/* xxx IupImageLibOpen(); */
+IupImageLibOpen();
 
 ################################################################################
 SV*

@@ -9,25 +9,22 @@ use Carp;
 
 sub _create_element {
   my($self, $args) = @_;
-
-  my %type2bytes_per_pix = (  MAP => 1, RGB => 3, RGBA => 4 );
   
-  # xxx todo: decide whether type=>'RGB' or bpp=>24 or BPP=>24 ?
-  #my %bpp2bytes_per_pix = ( 8 => 1, 24 => 3, 32 => 4 ); 
+  my %bpp2bytes_per_pix = ( 8 => 1, 24 => 3, 32 => 4 ); 
 
   my $bytes_per_pix;
   my $p = $args->{pixels};
   my $c = $args->{colors};
   my $f = $args->{file};
-  my $t = $args->{type};  
+  my $b = $args->{BPP} || 0;
   my $w = $args->{WIDTH} || 0;
   my $h = $args->{HEIGHT} || 0;      
   my $data = '';
   my $ih;  
   
-  if (defined $t) {
-    $bytes_per_pix = $type2bytes_per_pix{$t};
-    carp "Warning: 'type' parameter - invalid/unexpected value '$t'" unless $bytes_per_pix;
+  if ($b) {
+    $bytes_per_pix = $bpp2bytes_per_pix{$b};
+    carp "Warning: 'BPP' invalid value '$b' (expected: 8 or 24 or 32)" unless $bytes_per_pix;
   }
 
   if ($f) {
@@ -36,18 +33,24 @@ sub _create_element {
     carp "Warning: file '$f' cannot be loaded!" unless $ih;    
     carp "Warning: ignoring parameter 'pixels' when using parameter 'file'" if $p;
     carp "Warning: ignoring parameter 'colors' when using parameter 'file'" if $c;
-    carp "Warning: ignoring parameter 'type' when using parameter 'file'" if $t;
+    carp "Warning: ignoring parameter 'BPP' when using parameter 'file'" if $b;
     carp "Warning: ignoring parameter 'WIDTH' when using parameter 'file'" if $w;
     carp "Warning: ignoring parameter 'HEIGHT' when using parameter 'file'" if $h;
   }
   elsif (defined $p) {    
     if (ref($p) eq 'ARRAY' && ref($p->[0]) eq 'ARRAY') {
-      # ref to array of array refs (2-dims)
-      $h = scalar(@$p);  
-      $w = scalar(@{$p->[0]});
+      # ref to array of array refs (2-dims)      
+      my $w_tmp = scalar(@{$p->[0]});
+      my $h_tmp = scalar(@$p);
+      carp "Warning: 'HEIGHT' does not match given 'pixels'" if $h && $h != $h_tmp;
+      carp "Warning: 'WIDTH' does not match given 'pixels'" if $w && !$bytes_per_pix && $w != $w_tmp && $w != 3*$w_tmp && $w != 4*$w_tmp;
+      carp "Warning: 'WIDTH' + 'BPP' does not match given 'pixels'" if $w && $bytes_per_pix && $w*$bytes_per_pix != $w_tmp;
+      $bytes_per_pix ||= ($w>0) ? int($w_tmp/$w) : 1;
+      $w ||= ($bytes_per_pix>1) ? int($w_tmp/$bytes_per_pix) : $w_tmp;
+      $h ||= $h_tmp;
       my $error_shown;
       for (@$p) {
-        if ($w != scalar @$_ && !$error_shown) {
+        if ($w_tmp != scalar @$_ && !$error_shown) {
 	  carp "Warning: 'pixels' parameter - invalid data (all lines be the same length)";
 	  $error_shown++;
 	}
@@ -63,21 +66,21 @@ sub _create_element {
       $data = $p;
     }
     
-    my $l = length($data);    
+    my $l = length($data); # the raw binary data
     my $pixels = $w * $h;
-    if (!$bytes_per_pix) {
-      # bpp detection if image type not given
-      if (0 == $pixels) {
-        $bytes_per_pix = 0; # we will warn later
-      }
-      elsif ($l == $pixels) {
+    if (!$bytes_per_pix && $pixels>0) {
+      # we have WIDTH+HEIGHT but not BPP
+      if ($l == $pixels) {
         $bytes_per_pix = 1;
       }
       elsif ($l == $pixels * 3) {
         $bytes_per_pix = 3;
       }
       elsif ($l == $pixels * 4) {
-        $bytes_per_pix = 4 
+        $bytes_per_pix = 4
+      }
+      else {
+        carp "Warning: cannot guess BPP from WIDTH=$w HEIGHT=$h datasize=$l";
       }
     }
     my $size = $pixels * $bytes_per_pix;
@@ -116,14 +119,14 @@ sub _create_element {
       $self->SetAttribute($i++, $_) for (@$c);
     }
     else {
-      carp "Warning: ignoring parameter 'colors' by image types RGB and RGBA" if $c;
+      carp "Warning: ignoring parameter 'colors' by image with 'BPP' 24 or 32" if $c;
     }
   }
   
   delete $args->{pixels};
   delete $args->{colors};
   delete $args->{file};
-  delete $args->{type};
+  delete $args->{BPP};
   delete $args->{WIDTH};
   delete $args->{HEIGHT};
 
