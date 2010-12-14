@@ -7,7 +7,7 @@ use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 
 sub _create_element {
-  my ($self, $args) = @_;  # xxx TODO two ref args (maybe)
+  my ($self, $args, $firstonly) = @_;
   my ($c1, $c2);
   if (defined $args) {
     $c1 = $args->{child1}->ihandle if defined $args->{child1};

@@ -10,7 +10,7 @@ use IUP::Internal::LibraryIup;
 # xxx TODO check integration with Win32::OLE
 
 sub _create_element {
-  my($self, $args) = @_;
+  my ($self, $args, $firstonly) = @_;
   #my $ih = IUP::Internal::LibraryIup::_IupOleControl($args->{ProgID}); # xxx TODO fix '0'
   #return $ih;
   return;

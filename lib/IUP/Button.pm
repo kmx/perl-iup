@@ -7,7 +7,7 @@ use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 
 sub _create_element {
-  my ($self, $args) = @_;
+  my ($self, $args, $firstonly) = @_;
   my $ih = IUP::Internal::LibraryIup::_IupButton($args->{TITLE}, undef);
   delete $args->{TITLE};
   return $ih;

@@ -11,22 +11,20 @@ sub _create_element {
   my ($self, $args, $firstonly) = @_;
   my $ih;
   if (defined $firstonly) {
-    my $r = ref($firstonly);
-    if ($r && ($r =~ /^IUP::/)) {
+    if (ref($firstonly) && $firstonly->can('ihandle')) {
       $ih = IUP::Internal::LibraryIup::_IupFrame($firstonly->ihandle);
     }
     else {
       $ih = IUP::Internal::LibraryIup::_IupFrame(undef);
-      carp "Warning: parameter of IUP::Frame has to be a reference to IUP element"; # xxx TODO maybe duplicate this style to other places
+      carp "Warning: parameter of IUP::Frame has to be a reference to IUP element";
     }
   }
   elsif (defined $args && defined $args->{child}) {
-    my $r = ref($args->{child});
-    if ($r && ($r =~ /^IUP::/)) {
+    if (ref($args->{child}) && $args->{child}->can('ihandle')) {
       $ih = IUP::Internal::LibraryIup::_IupFrame($args->{child}->ihandle);
     }
     else {
-      carp "Warning: 'child' parameter of IUP::Frame has to be a reference to IUP element"; # xxx TODO maybe duplicate this style to other places
+      carp "Warning: 'child' parameter of IUP::Frame has to be a reference to IUP element";
       $ih = IUP::Internal::LibraryIup::_IupFrame(undef);
     }
     delete $args->{child};

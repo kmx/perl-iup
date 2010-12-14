@@ -1,5 +1,45 @@
-IUP::Canvas (now works without Bitmap/Image/Palette/Pattern-related functions)
+######## IUP::Internal::Element Attributes (1)
+- maybe replace
+  $self->SetAttribute(a,v) + $self->GetAttribute(a)
+  with
+  $self->Attribute(a,v)            + $self->Attribute(a)
+  $self->AttributeId(a,id,v)       + $self->AttributeId(a,id)
+  $self->AttributeId2(a,lin,col,v) + $self->AttributeId2(a,lin,col)
+- Lua:
+  ResetAttribute
+  SetAttributes
+  SetAttribute
+  SetAttributeId
+  StoreAttribute
+  StoreAttributeId  
+  GetAttribute
+  GetAttributeId
+  GetAttributeData
+  GetAttributes
+  GetAllAttributes
+  
+######## global registers
+- Lua: _IUPLUA_WIDGET_TABLE_REF
+
+######## global initialization
+- IUP_OPENED
+  
+######## IUP::Internal::Element Attributes (2)
+- SetAttribute - value is always a string
+- GetAttribute - return string
+- ??? void IupSetAttributeId(Ihandle *ih, const char* name, int id, const char *value)
+- ??? void IupSetAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* value)
+- ??? char* IupGetAttributeId(Ihandle *ih, const char* name, int id)
+- ??? char* IupGetAttributeId2(Ihandle* ih, const char* name, int lin, int col)
+- SetfAttribute - ??? (not in Lua)
+- GetAttributeInt - ??? (not in Lua)
+- GetAttributeFloat - ??? (not in Lua)
+
+######## IUP::Canvas (now works without Bitmap/Image/Palette/Pattern-related functions)
+- somehow handle CD_xxx constants
 - implement missing XS methods to IUP::Internal::Canvas (see notes in Canvas.xs)
+
+1/ non-Bitmap (easier to implement)
 # void cdCanvasTransform(cdCanvas* canvas, const double* matrix);
 # double* cdCanvasGetTransform(cdCanvas* canvas);
 # void cdCanvasTransformMultiply(cdCanvas* canvas, const double* matrix);
@@ -10,13 +50,89 @@ IUP::Canvas (now works without Bitmap/Image/Palette/Pattern-related functions)
 # long* cdCanvasGetPattern(cdCanvas* canvas, int* n, int* m);
 # double* cdCanvasVectorTextTransform(cdCanvas* canvas, const double* matrix);
 # void cdCanvasPalette(cdCanvas* canvas, int n, const long *palette, int mode);
-# void cdCanvasGetImageRGB(cdCanvas* canvas, unsigned char* r, unsigned char* g, unsigned char* b, int x, int y, int w, int h);
-# void cdCanvasPutImageRectRGB(...);
-# void cdCanvasPutImageRectRGBA(...);
-# void cdCanvasPutImageRectMap(...);
-# void wdCanvasPutImageRectRGB(...);
-# void wdCanvasPutImageRectRGBA(...);
-# void wdCanvasPutImageRectMap(...);
+# void wdCanvasStipple(cdCanvas* canvas, int w, int h, const unsigned char *fgbg, double w_mm, double h_mm);
+# void wdCanvasPattern(cdCanvas* canvas, int w, int h, const long *color, double w_mm, double h_mm);
+    n_idata2SV(count,dataptr)
+    SV2n_idata(srcSV,&count,&dataptr)		do malloc!!!
+    r_c_cdata2SV(rows,cols,dataptr)
+    SV2r_c_cdata(srcSV,&rows,&cols,&dataptr)	do malloc!!!
+    r_c_ldata2SV(rows,cols,dataptr)
+    SV2r_c_ldata(srcSV,&rows,&cols,&dataptr)	do malloc!!!
+    transf_matrix2SV(matrix_2x3)
+    SV2transf_matrix(srcSV,&matrix_2x3)
+
+sample XS code from FTDI::D2XX:
+
+FT_STATUS
+FT_Read( pHandle, Buffer, nBufferSize, lpBytesReturned)
+    FT_HANDLE * pHandle
+    SV * Buffer = NO_INIT
+    DWORD nBufferSize
+    DWORD lpBytesReturned = NO_INIT
+	PREINIT:
+		char* lpBuffer;
+		AV* array;
+		DWORD i;
+	CODE:		
+		lpBuffer = malloc(nBufferSize); // get mem
+		RETVAL = FT_Read(*pHandle, lpBuffer, nBufferSize, &lpBytesReturned);		
+		array = (AV *)sv_2mortal((SV *)newAV()); // new array		
+		av_extend(array,lpBytesReturned); // extend it ( not required but faster) 		
+		for( i = 0; i< lpBytesReturned; i++) { // copy to array
+		  av_push(array,newSVuv(lpBuffer[i]));
+		}		
+		free(lpBuffer); // give back mem		
+		Buffer = newRV((SV *) array); // return reference of the array
+	OUTPUT: 
+		Buffer
+		lpBytesReturned
+		RETVAL
+
+FT_STATUS
+FT_Write( ftHandle, Buffer, nBufferSize, BytesWritten)
+    	FT_HANDLE  ftHandle
+    	SV * Buffer
+    	DWORD nBufferSize
+    	DWORD BytesWritten = NO_INIT
+    	PREINIT:
+		AV * arrayBuffer;
+		char * lpBuffer;
+		DWORD i;
+	CODE:	
+		if( (!SvROK(Buffer)) || (SvTYPE(SvRV(Buffer)) != SVt_PVAV) || !((DWORD)av_len((AV *)SvRV(Buffer)) < nBufferSize)) {
+		  printf("Data type error\n");			
+		  XSRETURN_UNDEF;
+		}
+		lpBuffer = malloc(nBufferSize);
+		arrayBuffer = (AV *)SvRV(Buffer);
+		for(i=0; i<nBufferSize;i++) {
+		  lpBuffer[i] = (char)SvUV(*av_fetch(arrayBuffer,i,0));
+		}
+		RETVAL = FT_Write( ftHandle, lpBuffer, nBufferSize, &BytesWritten);
+		free(lpBuffer);
+	OUTPUT:
+		RETVAL
+		BytesWritten
+
+    
+--
+cd.CreatePattern(width, height: number) -> (pattern: cdPattern)
+cd.KillPattern(pattern: cdPattern)
+--
+cd.CreateStipple(width, height: number) -> (stipple: cdStipple)
+cd.KillStipple(stipple: cdStipple)
+--
+cd.CreatePalette(size: number) -> (palette: cdPalette) [in Lua Only]
+cd.KillPalette(palette: cdPalette) [in Lua Only]
+
+2/ Bitmap related - not decided yet how to implement them
+#(depr) void cdCanvasGetImageRGB(cdCanvas* canvas, unsigned char* r, unsigned char* g, unsigned char* b, int x, int y, int w, int h);
+#(depr) void cdCanvasPutImageRectRGB(...);
+#(depr) void cdCanvasPutImageRectRGBA(...);
+#(depr) void cdCanvasPutImageRectMap(...);
+#(depr) void wdCanvasPutImageRectRGB(...);
+#(depr) void wdCanvasPutImageRectRGBA(...);
+#(depr) void wdCanvasPutImageRectMap(...);
 # cdBitmap* cdCreateBitmap(int w, int h, int type);
 # cdBitmap* cdInitBitmap(int w, int h, int type, ...);
 # void cdKillBitmap(cdBitmap* bitmap);
@@ -28,17 +144,11 @@ IUP::Canvas (now works without Bitmap/Image/Palette/Pattern-related functions)
 # void cdRGB2Map(int width, int height, const unsigned char* red, const unsigned char* green, const unsigned char* blue, unsigned char* index, int pal_size, long *color);
 # void wdCanvasHardcopy(cdCanvas* canvas, cdContext* ctx, void *data, void(*draw_func)(cdCanvas *canvas_copy));
 # void wdCanvasPutBitmap(cdCanvas* canvas, cdBitmap* bitmap, double x, double y, double w, double h);
-# void wdCanvasStipple(cdCanvas* canvas, int w, int h, const unsigned char*fgbg, double w_mm, double h_mm);
-# void wdCanvasPattern(cdCanvas* canvas, int w, int h, const long *color, double w_mm, double h_mm);
---
-cd.CreatePattern(width, height: number) -> (pattern: cdPattern)
-cd.KillPattern(pattern: cdPattern)
---
-cd.CreateStipple(width, height: number) -> (stipple: cdStipple)
-cd.KillStipple(stipple: cdStipple)
---
-cd.CreatePalette(size: number) -> (palette: cdPalette) [in Lua Only]
-cd.KillPalette(palette: cdPalette) [in Lua Only]
+#? cdImage* cdCanvasCreateImage(cdCanvas* canvas, int w, int h); [in C]
+#? void cdKillImage(cdImage* image); [in C]
+#? void cdCanvasGetImage(cdCanvas* canvas, cdImage* image, int x, int y); [in C]
+#? void cdCanvasPutImageRect(cdCanvas* canvas, cdImage* image, int x, int y, int xmin, int xmax, int ymin, int ymax); [in C]
+#? void cdCanvasScrollArea(cdCanvas* canvas, int xmin, int xmax, int ymin, int ymax, int dx, int dy); [in C]
 --
 (exists)cd.CreateBitmap(w, h, type: number) -> (bitmap: cdBitmap) [in Lua]
 (exists)cd.KillBitmap(bitmap: cdBitmap) [in Lua]
@@ -47,12 +157,53 @@ deprecated kill/create
 cd.KillImageRGB
 cd.KillImageRGBA
 cd.KillImageMap
-- somehow handle CD_xxx constants
 
-IUP::CanvasGL
+######## IUP::Internal::Canvas
+- move 'my %ch_register' from Internal::LibraryIup to Internal::Canvas
+
+######## IUP::Submenu
+- cpnsider using $firstonly param of new()
+
+######## IUP::ProgressBar
+- FGCOLOR seems to be ignored
+
+######## IUP::Cells
+- Note: LIMITS<L>:<C> - does not have an accessor
+
+######## IUP::Split
+- maybe support new($child1, $child2) instead of new(child1=>$child1, child2=>$child2)
+
+######## IUP::Frame
+- maybe duplicate its style to other IUP::*box*
+- maybe some common helper function 
+  _create_element_child_single($self, $args, $firstonly, \&fucname)
+  _create_element_child_multi($self, $args, $firstonly, \&fucname)
+
+######## IUP::Matrix (same as with common attributes)
+- IupMatGetAttribute vs. IupMatGetInt vs. IupMatGetFloat
+- IupMatSetAttribute vs. IupMatSetfAttribute
+- IupMatSetAttribute vs. IupMatStoreAttribute
+- try to implement:
+  my $m = IUP::Matrix->new(...);
+  $m->[12,44] = 'value';
+  $m->{"BGCOLOR12:44"} = '12 12 12';
+  (see SDLx::Surface + SDLx::Surface::TiedMatrix)
+
+######## IUP::Tree
+- some unimplemented methods
+- most of the methods not tested at all
+
+######## IUP::Image
+- maybe merge IUP::Internal::Element::Image to IUP::Image
+
+######## IUP::PPlot  
+- PPlotAddStr vs. PPlotAdd (maybe autodetection based on type of $x arg - float/string)
+- PPlotPaintTo - maybe remove (does not make much sense)
+  
+######## IUP::CanvasGL
 - consider moving to IUP::Canvas::GL
 
-IUP::Internal::Element
+######## IUP::Internal::Element
 - change: _create_element should set $self->ihandle value
 - maybe missing (comparing to LUA)
   sub GetAttributeData (see LUA implementation)
@@ -65,11 +216,11 @@ IUP::Internal::Element
   or: GetAttributesStr vs. GetAttributesHRef
 - tests for all common functions
 
-IUP::OleControl (not a priority)
+######## IUP::OleControl (not a priority)
 - missing -> add
 - conditionally only on Win32
 
-IUP module
+######## IUP (main module)
 - maybe missing (comparing to LUA)
   sub SetHandle ... IUP->SetHandle('xx', $d->ihandle);  
 - maybe not needed (comparing to LUA)
@@ -80,7 +231,7 @@ IUP module
   sub Open (probably not)
 - tests for all global functions
 
-Ideas from ruby bindings:
+######## Ideas from ruby bindings:
 - iup.* namespace
 - cd.* namespace (constants cd::BLUE, ...)
 - just one iup.image (RGB, RGBA - ??? perhaps not supported)
@@ -88,32 +239,32 @@ Ideas from ruby bindings:
 - iupim just: IupLoadImage, IupSaveImage
 - GLCanvasOpen, GL... (global function, not methods of glcanvas class)
 
-Examples
+######## Examples
 - rewrite all examples from lua to perl
 - synchronize ratehr with C examples (they are more complete)
 
-Generate POD documentation
+######## Generate POD documentation
 - work on _generators/proc-html2pod.pl
 - perhaps html > pod.tt > manually edit *.pod.tt >  conversion *.pod.tt to *.pod
 
-all XSs - BOOT section
+######## all XSs - BOOT section
 - put init calls somewhere else
 - maybe BEGIN / END
 
-Constants:
+######## Constants:
 - maybe move key related constants into to IUP::Keys (what about mouse related constants)
 - decide what to do with: sub IUP_isPrint (check the doc)
 
-DOC
+######## DOC
 - pplot.pl: # xxx TODO.DOC xxx note in doc that DS_ has to be set after ->PPlotEnd()
 - tree: # xxx TODO xxx note in doc that tree->SetAttribude has to go after dialog->Show
 
-Linux - platform specific issues
+######## Linux - platform specific issues
 - (<unknown>:4352): Pango-WARNING **: Error loading GSUB table 85
   before MainLoop
 - 'Quit' in main menu requires double click
 
-Packaging (not a priority)
+######## Packaging (not a priority)
 - RHEL 5 + FC 13,12,11
   - http://search.cpan.org/dist/cpan2rpm/
   - http://search.cpan.org/dist/Ovid/
@@ -129,16 +280,16 @@ Packaging (not a priority)
   - http://chrysaor.info/?page=images&filter=Ubuntu
   - http://www.thoughtpolice.co.uk/vmware/
 
-Callbacks generation (not a priority)
+######## Callbacks generation (not a priority)
 - missing support for K_* callbacks (no hurry, lua does not implement them as well)
 
-Global issues
+######## Global issues
 - check memory leaks - http://use.perl.org/~jozef/journal/40411
 - detection when running without initialized GUI
 - detection of current windowing system
 - detection of codepage used in GUI
 
-Consider splitting IUP::Internal::LibraryIup (not a priority)
+######## Consider splitting IUP::Internal::LibraryIup (not a priority)
 into:
 - IUP::Internal::LibraryIup
 - IUP::Internal::LibraryIupControl
@@ -147,9 +298,6 @@ into:
 - IUP::Internal::LibraryImLib
 (postponed, the first try did not work as expected)
 
-Build.PL (not a priority)
+######## Build.PL (not a priority)
 - RHEL5 compatibility: create_makefile_pl => 'small'; (see Alien::wxWidgets) - probably not
 - using: release_testing automated_testing interactive
-
-Bugs (the same trouble in C):
-- glcanvas example sometimes lasts too long to start

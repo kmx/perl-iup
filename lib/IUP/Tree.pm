@@ -7,33 +7,72 @@ use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 
 sub _create_element {
-  my($self, $args) = @_;
+  #my ($self, $args, $firstonly) = @_;
   return IUP::Internal::LibraryIup::_IupTree();
 }
 
-# xxx TODO xxx many unimplemented IUP::Tree methods
+sub TreeSetUserId {
+  #int IupTreeSetUserId(Ihandle *ih, int id, void *userid); [in C]
+  #iup.TreeSetUserId(ih: ihandle, id: number, userid: userdata/table) [in Lua]
+  # xxx TODO xxx somehow handle pointer to user data
+}
 
-#int IupTreeSetUserId(Ihandle *ih, int id, void *userid); [in C]
-#iup.TreeSetUserId(ih: ihandle, id: number, userid: userdata/table) [in Lua]
+sub TreeGetUserId {
+  #void* IupTreeGetUserId(Ihandle *ih, int id); [in C] 
+  #iup.TreeGetUserId(ih: ihandle, id: number) -> (ret: userdata/table) [in Lua]
+  # xxx TODO xxx somehow handle pointer to user data
+}
 
-#void* IupTreeGetUserId(Ihandle *ih, int id); [in C] 
-#iup.TreeGetUserId(ih: ihandle, id: number) -> (ret: userdata/table) [in Lua]
+sub TreeGetId {
+  #int IupTreeGetId(Ihandle *ih, void *userid); [in C] 
+  #iup.TreeGetId(ih: ihandle, userid: userdata/table) -> (ret: number) [in Lua]
+  # xxx TODO xxx somehow handle pointer to user data
+}
 
-#int IupTreeGetId(Ihandle *ih, void *userid); [in C] 
-#iup.TreeGetId(ih: ihandle, userid: userdata/table) -> (ret: number) [in Lua]
+sub TreeSetAncestorsAttributes {
+  my ($self, $ini, $attrs) = @_;
+  #iup.TreeSetAncestorsAttributes(ih: ihandle, id: number, attrs: table) [in Lua]
+  $ini = $self->GetAttribute("PARENT$ini");
+  my @stack = ();  
+  while (defined $ini) {
+    push @stack, $ini;
+    $ini = $self->GetAttribute("PARENT$ini");
+  }
+  $self->TreeSetNodeAttributes($_, $attrs) for (@stack);
+}
+
+sub TreeSetDescentsAttributes {
+  my ($self, $ini, $attrs) = @_;
+  #iup.TreeSetDescentsAttributes(ih: ihandle, id: number, attrs: table) [in Lua] 
+  my $id = $ini;
+  my $count = $self->GetAttribute("CHILDCOUNT$ini");
+  for(my $i=0; $i<$count; $i++) {
+    $id++;
+    $self->TreeSetNodeAttributes($id, $attrs);
+    if ($self->GetAttribute("KIND$id") eq "BRANCH") {
+      $id = $self->TreeSetDescentsAttributes($id, $attrs);
+    }
+  }
+  return $id;
+}
+
+sub TreeSetNodeAttributes {
+  my ($self, $id, $attrs) = @_;
+  #iup.TreeSetNodeAttributes(ih: ihandle, id: number, attrs: table) [in Lua]  
+  while (my ($attr, $val) = each %$attrs) {
+    $self->SetAttribute("$attr$id", $val);
+  }
+}
 
 sub TreeSetState {
   my ($self, $tnode, $id) = @_;
-  warn "xxx TODO xxx: TreeSetState not tested";
   if ($tnode->{state}) {
     $self->SetAttribute("STATE$id", $tnode->{state})
   }
 }
 
-sub TreeSetNodeAttrib {
-  #iup.TreeSetNodeAttributes(ih: ihandle, id: number, attrs: table) [in Lua]
+sub TreeSetNodeAttrib {  
   my ($self, $tnode, $id) = @_;
-  warn "xxx TODO xxx: TreeSetNodeAttrib not tested";
   $self->SetAttribute("COLOR$id", $tnode->{color})                           if $tnode->{color};
   $self->SetAttribute("TITLEFONT$id", $tnode->{titlefont})                   if $tnode->{titlefont};
   $self->SetAttribute("MARKED$id", $tnode->{marked})                         if $tnode->{marked};
@@ -45,7 +84,6 @@ sub TreeSetNodeAttrib {
 sub TreeAddNodes {
   #iup.TreeAddNodes(ih: ihandle, tree: table, [id: number]) [in Lua]
   my ($self, $t, $id) = @_;
-  warn "xxx TODO xxx: TreeAddNodes not tested $t->{branchname} $id";
   return unless defined $t;
   if (! defined $id) {
     $id = 0; # default is the root
@@ -58,12 +96,10 @@ sub TreeAddNodes {
 
 sub TreeAddNodesRec {
   my ($self, $t, $id) = @_;
-  warn "xxx TODO xxx: TreeAddNodesRec not tested $t->{branchname} $id";
   return unless defined $t;
   foreach my $tt (@{$t->{child}}) {
     if (ref $tt) {
       if ($tt->{branchname}) {
-warn "xxxxxxxxxxxxxxxxxxxxxxxxxxx ADDBRANCH$id, $tt->{branchname} ";
         $self->SetAttribute("ADDBRANCH$id", $tt->{branchname});
         $self->TreeSetNodeAttrib($tt, $id+1);
         $self->TreeAddNodesRec($tt, $id+1);
@@ -79,18 +115,5 @@ warn "xxxxxxxxxxxxxxxxxxxxxxxxxxx ADDBRANCH$id, $tt->{branchname} ";
     }
   }
 }
-
-#iup.TreeSetAncestorsAttributes(ih: ihandle, id: number, attrs: table) [in Lua]
-
-#iup.TreeSetDescentsAttributes(ih: ihandle, id: number, attrs: table) [in Lua]
-
-#void  IupTreeSetAttribute (Ihandle *ih, const char* name, int id, const char* value);
-#void  IupTreeSetfAttribute (Ihandle *ih, const char* name, int id, const char* format, ...);
-#void  IupTreeStoreAttribute(Ihandle *ih, const char* name, int id, const char* value);
-
-#char* IupTreeGetAttribute (Ihandle *ih, const char* name, int id);
-#int   IupTreeGetInt (Ihandle *ih, const char* name, int id);
-#float IupTreeGetFloat (Ihandle *ih, const char* name, int id);
-
 
 1;

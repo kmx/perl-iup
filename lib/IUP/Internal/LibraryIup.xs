@@ -1322,9 +1322,11 @@ _IupTextConvertLinColToPos(ih,lin,col,pos)
 		Ihandle* ih;
 		int lin;
 		int col;
-		int &pos;
-	CODE:
+	INIT:
+		int pos;
+	PPCODE:
 		IupTextConvertLinColToPos(ih,lin,col,&pos);
+		XPUSHs(sv_2mortal(newSViv(pos)));
 
 #### Original C function from <iup.h>
 # void IupTextConvertPosToLinCol(Ihandle* ih, int pos, int *lin, int *col);
@@ -1332,10 +1334,14 @@ void
 _IupTextConvertPosToLinCol(ih,pos,lin,col)
 		Ihandle* ih;
 		int pos;
-		int &lin;
-		int &col;
-	CODE:
+	INIT:
+		int lin;
+		int col;
+	PPCODE:
 		IupTextConvertPosToLinCol(ih,pos,&lin,&col);
+		XPUSHs(sv_2mortal(newSViv(lin)));
+		XPUSHs(sv_2mortal(newSViv(col)));
+
 
 #### Original C function from <iup.h>
 # int IupConvertXYToPos(Ihandle* ih, int x, int y);

@@ -37,8 +37,8 @@ my $menu_file = IUP::Menu->new( child=>[$item_exit] );
 my $menu_text = IUP::Menu->new( child=>[$item_show, $item_hide, $item_edit] );
 
 # Creates two submenus;
-my $submenu_file = IUP::Submenu->new( menu=>$menu_file, TITLE=>"File" );
-my $submenu_text = IUP::Submenu->new( menu=>$menu_text, TITLE=>"Text" );
+my $submenu_file = IUP::Submenu->new( child=>$menu_file, TITLE=>"File" );
+my $submenu_text = IUP::Submenu->new( child=>$menu_text, TITLE=>"Text" );
 
 # Creates main menu with two submenus;
 my $menu = IUP::Menu->new( child=>[$submenu_file, $submenu_text] );

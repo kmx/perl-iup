@@ -49,11 +49,10 @@ sub new {
     else {
       carp "Warning: $class->new() ignoring unknown parameter '$_'";
     }
-  }
+  }  
   $self->SetAttribute(@at) if scalar(@at);
   $self->SetCallback(@cb) if scalar(@cb);
   if (!$self->HasValidClassName) {
-    # xxx todo somehow handle image/imagergb/imagergba
     my $c = $self->GetClassName || '';
     carp "Warning: $class->new() classname mismatch '$class' vs. '$c'";
   }
@@ -125,11 +124,7 @@ sub SetAttribute {
   #iup.StoreAttribute(ih: iulua_tag, name: string, value: string) [in Lua] 
   my ($self, %args) = @_;  
   for (keys %args) {    
-    my ($k, $v) = ($_, $args{$_});
-
-    # xxx TODO xxx remove this warning in the future
-    # xxx carp "Warning: unknown attribute '$k' val='$v' (".ref($self).")" if (!$self->IsValidAttributeName($k));
-    
+    my ($k, $v) = ($_, $args{$_});     
     if (ref($v)) {
       #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
       IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
@@ -139,6 +134,10 @@ sub SetAttribute {
       #IUP::Internal::LibraryIup::_IupSetAttribute($self->ihandle, $k, $v);
       # xxx TODO allow using undef value without warnings
       #carp "Debug: setting $k='$v'";
+      
+      # xxx ultra ugly hack but for some reason we need to have $v as a string
+      $v = "$v";
+      # xxx todo: maybe somehow detect string/int/float
       IUP::Internal::LibraryIup::_IupStoreAttribute($self->ihandle, $k, $v);
     }
   }

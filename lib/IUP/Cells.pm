@@ -7,12 +7,8 @@ use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 
 sub _create_element {
-  my($self, $args) = @_;
-  my $ih = IUP::Internal::LibraryIup::_IupCells();
-  return $ih;
+  my ($self, $args, $firstonly) = @_;
+  return IUP::Internal::LibraryIup::_IupCells();
 }
-
-#Note:
-# LIMITSL:C - does not have an accessor
 
 1;

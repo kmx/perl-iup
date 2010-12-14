@@ -10,7 +10,7 @@ my $item_exit     = IUP::Item->new( TITLE=>"Exit\tAlt+X", KEY=>"K_x" );
 
 my $menu_file = IUP::Menu->new( child=>[$item_save, $item_autosave, $item_exit] );
 
-my $submenu_file = IUP::Submenu->new( TITLE=>"File", menu=>$menu_file );
+my $submenu_file = IUP::Submenu->new( TITLE=>"File", child=>$menu_file );
 
 my $menu = IUP::Menu->new( child=>$submenu_file );
 

@@ -7,7 +7,7 @@ use base 'IUP::Internal::Element::Dialog';
 use IUP::Internal::LibraryIup;
 
 sub _create_element {
-  my($self, $args) = @_;
+  my ($self, $args, $firstonly) = @_;
   my $c = defined $args->{child} ? $args->{child}->ihandle : undef;  
   my $ih = IUP::Internal::LibraryIup::_IupDialog($c);    
   delete $args->{child};

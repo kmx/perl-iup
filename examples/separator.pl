@@ -22,7 +22,7 @@ my $menu_file = IUP::Menu->new( child=>[$item_new, $item_open, $item_close, IUP:
 
 # Creates file submenus;
 # xxx TODO xxx Submenu: maybe child instead of menu
-my $submenu_file = IUP::Submenu->new( menu=>$menu_file, TITLE=>"File");
+my $submenu_file = IUP::Submenu->new( child=>$menu_file, TITLE=>"File");
 
 # Creates main menu with file submenu;
 my $menu = IUP::Menu->new( child=>$submenu_file );

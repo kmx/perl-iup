@@ -87,7 +87,7 @@ sub init_dialog {
                               0=>"0 0 0", 1=>"0 255 0", 2=>"BGCOLOR", 3=>"255 0 0" );
 
   my $menu = IUP::Menu->new( child=>[
-               IUP::Submenu->new( TITLE=>"IupSubmenu 1", menu=>IUP::Menu->new( child=>[
+               IUP::Submenu->new( TITLE=>"IupSubmenu 1", child=>IUP::Menu->new( child=>[
                  IUP::Item->new( TITLE=>"IupItem 1 Checked", ACTION=>\&myaction, VALUE=>"ON" ),
                  IUP::Separator->new(),
                  IUP::Item->new( TITLE=>"IupItem 2 Disabled", ACTION=>\&myaction, ACTIVE=>"NO" ),

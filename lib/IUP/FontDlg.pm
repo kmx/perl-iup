@@ -7,7 +7,7 @@ use base 'IUP::Internal::Element::Dialog';
 use IUP::Internal::LibraryIup;
 
 sub _create_element {
-  my($self, $args) = @_;
+  #my ($self, $args, $firstonly) = @_;
   return IUP::Internal::LibraryIup::_IupFontDlg();
 }
 

@@ -478,6 +478,7 @@ cdTransform(canvas,matrix)
 	INIT:
 		double tmpmatrix[6];
 	CODE:
+		/* xxx TODO call:SV2transf_matrix(matrix,&tmpmatrix) */
 		/* xxx TODO matrix -> tmpmatrix (how will be 2x3 matrix represented?) */
 		cdCanvasTransform(ref2cnv(canvas),tmpmatrix);
 
@@ -493,6 +494,7 @@ cdGetTransform(canvas)
 	PPCODE:
 		matrix = cdCanvasGetTransform(ref2cnv(canvas));
 		/* xxx TODO matrix > retval array (how will be 2x3 matrix represented?) */
+		/* xxx TODO call:transf_matrix2SV(matrix) */
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasTransformMultiply(cdCanvas* canvas, const double* matrix);
@@ -506,6 +508,7 @@ cdTransformMultiply(canvas,matrix)
 		double tmpmatrix[6];
 	CODE:
 		/* xxx TODO matrix -> tmpmatrix (how will be 2x3 matrix represented?) */
+		/* xxx TODO call:SV2transf_matrix(matrix,&tmpmatrix) */
 		cdCanvasTransformMultiply(ref2cnv(canvas),tmpmatrix);
 
 #### Original C function from <.../cd/include/cd.h>
@@ -1033,6 +1036,7 @@ cdLineStyleDashes(canvas,dashes,count)
 		int tmpdashes[4];
 	CODE:
 		/* xxx TODO dashes>tmpdashes */
+		/* xxx TODO call:SV2int_array(dashes,&tmpdashes,count) */
 		cdCanvasLineStyleDashes(ref2cnv(canvas),tmpdashes,count);
 
 #### Original C function from <.../cd/include/cd.h>
@@ -1103,6 +1107,7 @@ cdStipple(canvas,stipple)
 		unsigned char* tmpstipple;
 	CODE:
 		/* xxx TODO cdstipple > rawdata */
+		/* xxx TODO call:SV2r_c_cdata(stipple,&w,&h,&tmpstipple) */
 		cdCanvasStipple(ref2cnv(canvas),w,h,tmpstipple);
 
 #### Original C function from <.../cd/include/cd.h>
@@ -1118,6 +1123,7 @@ cdGetStipple(canvas,n,m)
 		unsigned char* stipple;
 	CODE:
 		stipple = cdCanvasGetStipple(ref2cnv(canvas),&n,&m);
+		/* xxx TODO call:r_c_cdata2SV(n,m,stipple) */
 		/* xxx TODO rawdata > cdstipple */
 	OUTPUT:
 		RETVAL
@@ -1136,6 +1142,7 @@ cdPattern(canvas,pattern)
 		long int* tmppattern; /* xxx maybe size of [100] will be enough - ruby is wrong */
 	CODE:
 		/* xxx pattern > raw data (w/h/tmppaterrn) */
+		/* xxx TODO call:SV2r_c_ldata(pattern,&w,&h,&tmppattern) */
 		cdCanvasPattern(ref2cnv(canvas),w,h,tmppattern);
 
 #### Original C function from <.../cd/include/cd.h>
@@ -1151,6 +1158,7 @@ cdGetPattern(canvas,n,m)
 		long *data;
 	PPCODE:
 		data = cdCanvasGetPattern(ref2cnv(canvas),&n,&m);
+		/* xxx TODO call:r_c_ldata2SV(n,m,data) */
 		/* xxx data > retval stucture */
 
 #### Original C function from <.../cd/include/cd.h>
@@ -1307,7 +1315,9 @@ cdVectorTextTransform(canvas,matrix)
 		double *rv;
 	PPCODE:
 		/* xxx matrix array > tmpmatrix */
+		/* xxx TODO call:SV2transf_matrix(matrix,&tmpmatrix) */
 		rv = cdCanvasVectorTextTransform(ref2cnv(canvas),tmpmatrix);
+		/* xxx TODO call:transf_matrix2SV(rv) */
 		/* xxx rv > matrix array */
 
 #### Original C function from <.../cd/include/cd.h>
@@ -1526,6 +1536,7 @@ cdPalette(canvas,n,palette,mode)
 		long* tmppalette;
 	CODE:
 		/* xxx convert: palette > n+tmppalette */
+		/* xxx TODO call:SV2n_ldata(palette,&n,tmppalette) */
 		cdCanvasPalette(ref2cnv(canvas),n,tmppalette,mode);
 
 #### Original C function from <.../cd/include/cd.h>
@@ -1689,7 +1700,7 @@ cdCreateBitmap(w,h,type)
 
 #### Original C function from <.../cd/include/cd.h>
 # cdBitmap* cdInitBitmap(int w, int h, int type, ...);
-#xxx TODO/important (cdBitmap) - variable arg list? (no need to be Canvas method)
+#xxx TODO/important (cdBitmap) - variable arg list? (no need to be Canvas method) what is the diff cdCreateBitmap vs. cdInitBitmap?
 cdBitmap*
 cdInitBitmap(w,h,type,...)
 		int w;

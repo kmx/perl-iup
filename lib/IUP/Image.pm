@@ -8,7 +8,7 @@ use IUP::Internal::LibraryIup;
 use Carp;
 
 sub _create_element {
-  my($self, $args) = @_;
+  my ($self, $args, $firstonly) = @_;
   
   my %bpp2bytes_per_pix = ( 8 => 1, 24 => 3, 32 => 4 ); 
 

@@ -27,8 +27,7 @@ my $item_scalenus    = IUP::Item->new( TITLE=>"Scalenus" );
 my $menu_triangle = IUP::Menu->new( child=>[$item_equilateral, $item_isoceles, $item_scalenus] );
 
 # Creates submenu triangle
-# xxx TODO xxx Submenu: menu=> cannot be arrayref
-my $submenu_triangle = IUP::Submenu->new( menu=>$menu_triangle, TITLE=>"Triangle" );
+my $submenu_triangle = IUP::Submenu->new( child=>$menu_triangle, TITLE=>"Triangle" );
 
 # Creates items of menu create
 my $item_line   = IUP::Item->new( TITLE=>"Line" );
@@ -38,7 +37,7 @@ my $item_circle = IUP::Item->new( TITLE=>"Circle" );
 my $menu_create = IUP::Menu->new( child=>[$item_line, $item_circle, $submenu_triangle] );
 
 # Creates submenu create
-my $submenu_create = IUP::Submenu->new( menu=>$menu_create, TITLE=>"Create" );
+my $submenu_create = IUP::Submenu->new( child=>$menu_create, TITLE=>"Create" );
 
 # Creates items of menu help
 my $item_help = IUP::Item->new( TITLE=>"Help" );
@@ -49,9 +48,9 @@ my $menu_edit = IUP::Menu->new( child=>[$item_copy, $item_paste, IUP::Separator-
 my $menu_help = IUP::Menu->new( child=>[$item_help] );
 
 # Creates submenus of the main menu
-my $submenu_file = IUP::Submenu->new( menu=>$menu_file, TITLE=>"File" );
-my $submenu_edit = IUP::Submenu->new( menu=>$menu_edit, TITLE=>"Edit" );
-my $submenu_help = IUP::Submenu->new( menu=>$menu_help, TITLE=>"Help" );
+my $submenu_file = IUP::Submenu->new( child=>$menu_file, TITLE=>"File" );
+my $submenu_edit = IUP::Submenu->new( child=>$menu_edit, TITLE=>"Edit" );
+my $submenu_help = IUP::Submenu->new( child=>$menu_help, TITLE=>"Help" );
 
 # Creates main menu with file submenu
 my $menu = IUP::Menu->new( child=>[$submenu_file, $submenu_edit, $submenu_help] );
@@ -59,7 +58,7 @@ my $menu = IUP::Menu->new( child=>[$submenu_file, $submenu_edit, $submenu_help] 
 # Creates dialog with a text, sets its title and associates a menu to it
 my $dlg = IUP::Dialog->new( child=>$text,
                             TITLE=>"IupSubmenu Example",
-			    MENU=>$menu,
+			    child=>$menu,
 			    SIZE=>"QUARTERxEIGHTH" );
 
 # Shows dialog in the center of the screen

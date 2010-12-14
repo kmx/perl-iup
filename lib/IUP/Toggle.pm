@@ -7,8 +7,8 @@ use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 
 sub _create_element {
-  my ($self, $args) = @_;
-  my $ih = IUP::Internal::LibraryIup::_IupToggle($args->{TITLE}, 0); # xxx TODO fix '0'
+  my ($self, $args, $firstonly) = @_;
+  my $ih = IUP::Internal::LibraryIup::_IupToggle($args->{TITLE}, undef);
   delete $args->{TITLE};
   return $ih;
 }

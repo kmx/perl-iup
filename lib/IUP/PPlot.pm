@@ -7,13 +7,10 @@ use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 
 sub _create_element {
-  my ($self, $args) = @_;
+  my ($self, $args, $firstonly) = @_;
   my $ih = IUP::Internal::LibraryIup::_IupPPlot();
   return $ih;
 }
-
-# xxx TODO decide whether to name methods: PPlotBegin or just Begin
-# xxx TODO Add vs. AddStr
 
 sub PPlotBegin {
   #void IupPPlotBegin(Ihandle* ih, int strXdata); [in C]
@@ -29,7 +26,6 @@ sub PPlotAdd {
   return IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $x, $y);
 }
 
-# xxx TODO maybe autoselection PPlotAddStr vs. PPlotAdd
 sub PPlotAddStr {
   #void IupPPlotAddStr(Ihandle* ih, const char* x, float y); [in C]
   #iup.PPlotAddStr(ih: ihandle, x: string, y: number) [in Lua]
@@ -67,10 +63,9 @@ sub PPlotTransform {
 }
 
 sub PPlotPaintTo {
-  # xxx TODO do we need this?
   #void IupPPlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C]
   #iup.PPlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
-  #Plots to the given CD canvas instead of the display canvas.
+  ####maybe not needed: Plots to the given CD canvas instead of the display canvas.
   my ($self, $cnv) = @_;
   return IUP::Internal::LibraryIup::_IupPPlotPaintTo($self->ihandle, $cnv->cnvhandle);
 }

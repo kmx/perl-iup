@@ -8,11 +8,13 @@ use File::Path qw(make_path remove_tree);
 use File::Slurp;
 use Pod::Simple::HTMLBatch;
 
-my $docroot = 'y:\@repos\perl-iup\_internal\doc\iup';
+my $docroot = 'y:\IUP3.3\doc\iup';
+my $rawroot = './pod.raw.v3.3';
 my $podroot = './pod.tt';
 my $htmlout = './pod.tt.html';
 
 my $html_files = {
+  'Attributes' => 'html/en/_all_attribs.html',
   'Attributes::00main' => 'html/en/attrib.html',
   'Attributes::ACTIVE' => 'html/en/attrib/iup_active.html',
   'Attributes::BGCOLOR' => 'html/en/attrib/iup_bgcolor.html',
@@ -266,16 +268,27 @@ foreach my $n (keys %$html_files) {
     'content' => $b->as_HTML,
     'a_href' => 1,  # try converting links
     'a_name' => 1,
-  );
+  );  
   
   my $name = $n;
   $name =~ s|::|/|g;
   $name = "$podroot/$name.pod";
   $name =~ s|\\|/|g;
-
   my $dir = $name;
   $dir =~ s|[^/]*$||;
   make_path($dir);
+  
+  my $rawname = $n;
+  $rawname =~ s|::|/|g;
+  $rawname = "$rawroot/$rawname.pod.raw";
+  $rawname =~ s|\\|/|g;  
+  my $rawdir = $rawname;
+  $rawdir =~ s|[^/]*$||;
+  make_path($rawdir);
+
+  my $rawpod = $pod;
+  $rawpod =~ s/=cut.*/=cut/sg;
+  write_file($rawname, $rawpod); #save original
   
   # POD replacements here
   $pod =~ s|X<SeeAlso>||g;
@@ -284,11 +297,19 @@ foreach my $n (keys %$html_files) {
   $pod =~ s|=head2 Callbacks|=head2 Callbacks_xxx|g;
   $pod =~ s|=head2 Attributes|=head2 Attributes_xxx|g;
   $pod =~ s|=head2 Notes|=head2 Notes_xxx|g;
+  $pod =~ s|=head2 Value|=head2 Value_xxx|g;
+  $pod =~ s|=head2 Affects|=head2 Affects_xxx|g;  
   $pod =~ s|=head2 Examples|=head1 EXAMPLES_xxx|g;
-  $pod =~ s|=head2 See Also|=head1 SEE ALSO_xxx|g;
+  $pod =~ s|=head2 See Also|=head1 SEE ALSO_xxx|g;  
+  $pod =~ s/L<Iup([a-zA-Z0-9]+)\|.*?>/L<IUP::$1|IUP::$1>/g;
+  $pod =~ s/Iup([a-zA-Z0-9]+)/IUP::$1/g;
+  $pod =~ s/B<(IUP::.*?)>/L<$1|$1>/g;
+  $pod =~ s/L<([A-Z0-9]+)\|iup_([a-z0-9]+)\.html>/'L<'.$1.'|IUP::Manual::Attributes::'.uc($2).'>'/eg; #if in attrib dir
+  $pod =~ s/L<([A-Z0-9]+)\|..\/attrib\/iup_([a-z0-9]+)\.html>/'L<'.$1.'|IUP::Manual::Attributes::'.uc($2).'>'/eg;
+  $pod =~ s/\(since 3.0\)//g;
   if ($pod =~ /=head2 Attributes_xxx(.*?)=head/s ) {
     my $c = $1;
-    $c =~ s|\n([LB]<[^ :]*)[ :]*|\n=item * $1\n\n|g;
+    $c =~ s|\n([LB]<[^ :]*) *:]*|\n=item * $1\n\n|g;
     #$c =~ s|): *([^\n])|):\n\n$1|g;
     $pod =~ s|=head2 Attributes_xxx(.*?)=head|=head2 Attributes_xxx\n\nAttr intro text_xxx\n\n=over$c=back\n\n=head|sg;    
     $pod =~ s|=over\n\n----\n\n=back|=back\n\nCommon attributes_xxx:\n\n=over|;
@@ -296,9 +317,8 @@ foreach my $n (keys %$html_files) {
   
   print STDERR "Writting '$name' ...\n";
   
-  open DAT, ">", $name;
-  print DAT $pod;
-  close DAT;  
+  write_file($name, $pod);
+  
 }
 
 
