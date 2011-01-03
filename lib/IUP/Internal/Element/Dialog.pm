@@ -47,6 +47,6 @@ __END__
 
 =head1 NAME
 
-IUP::Internal::Element::Dialog - Perl extension for IUP
+IUP::Internal::Element::Dialog - [internal only] DO NOT USE this unless you know what could happen!
 
 =cut

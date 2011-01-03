@@ -32,6 +32,6 @@ __END__
 
 =head1 NAME
 
-IUP::Internal::Element::Image - Perl extension for IUP
+IUP::Internal::Element::Image - [internal only] DO NOT USE this unless you know what could happen!
 
 =cut

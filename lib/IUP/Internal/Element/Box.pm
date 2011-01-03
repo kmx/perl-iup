@@ -16,6 +16,6 @@ __END__
 
 =head1 NAME
 
-IUP::Internal::Element::Box - Perl extension for IUP
+IUP::Internal::Element::Box - [internal only] DO NOT USE this unless you know what could happen!
 
 =cut

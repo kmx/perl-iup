@@ -4,6 +4,7 @@ Build.bat
 _build/*
 pm_to_blib*
 tmp*
+pod.raw*
 *.tar.gz
 *.old
 *.bak

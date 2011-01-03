@@ -25,6 +25,6 @@ __END__
 
 =head1 NAME
 
-IUP::Internal::LibraryIup - INTERNAL FUNCTIONS, do not use them from outside!
+IUP::Internal::LibraryIup - [internal only] DO NOT USE this unless you know what could happen!
 
 =cut

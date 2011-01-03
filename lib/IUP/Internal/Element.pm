@@ -493,6 +493,6 @@ __END__
 
 =head1 NAME
 
-IUP::Internal::Element - Perl extension for IUP xxx
+IUP::Internal::Element - [internal only] DO NOT USE this unless you know what could happen!
 
 =cut

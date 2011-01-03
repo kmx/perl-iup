@@ -772,6 +772,6 @@ __END__
 
 =head1 NAME
 
-IUP::Internal::Attribute - INTERNAL FUNCTIONS, do not use them from outside!
+IUP::Internal::Attribute - [internal only] DO NOT USE this unless you know what could happen!
 
 =cut

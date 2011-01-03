@@ -37,6 +37,6 @@ __END__
 
 =head1 NAME
 
-IUP::Internal::Canvas - INTERNAL FUNCTIONS, do not use them from outside!
+IUP::Internal::Canvas - [internal only] DO NOT USE this unless you know what could happen!
 
 =cut
