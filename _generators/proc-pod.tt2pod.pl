@@ -115,7 +115,7 @@ my $ttdata = {
     examples => 'IUP::Manual::13_Examples',
   },
   txt => {
-    new_attr  => "B<Note:> You can pass to C<new()> any other C<ATTRIBUTE=E<gt>'value'> pair relevant\n" .
+    new_attr  => "B<Note:> You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> pairs relevant\n" .
                  "to this element - see L<[%m.elem%]|[%m.elem%]>.",
     at_intro  => "For more info about concept of attributes (setting/getting values etc.)\n" .
                  "see L<[%m.at%]|[%m.at%]>. Attributes specific to this element:",

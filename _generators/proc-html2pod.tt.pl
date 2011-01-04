@@ -95,6 +95,7 @@ sub procfile {
   $pod =~ s/^=pod[\r\n\s]*E<iuml>E<rchevron>E<iquest>[\r\n\s]*=head/=head/sg;
   $pod =~ s/^B<([A-Z0-9]+) +> */B<$1> /g;
   $pod =~ s/ *B< > */ /g;
+  $pod =~ s/[LBC]<:>/:/g;
   $pod =~ s/, L<\n/,\nL</sg;
   
   #warn " -> writting POD.RAW '$rawname' ...\n";  
@@ -129,9 +130,12 @@ sub procfile {
   if ($pod =~ /\[% h\.cb %\](.*?)\[% h/s ) {
     my $c = $1;
     #die $c;
-    $c =~ s|\n([LB]<[^>]*>[^:]*):\s*|\n=item * $1\n\n|g;
-    $pod =~ s|\[% h\.cb %\](.*?)\[% h|[% h.cb %]\n\n[%txt.cb_intro%]\n\n=over$c=back\n\n[% h|sg;    
-    $pod =~ s|=over\n\n----\n\n=back|=back\n\n[%txt.cb_common%]\n\n=over|;
+    $c =~ s|\n([LB]<[A-Z][^>]*>[^:]*):\s*|\n=back\n\n=item * $1\n\n|g;
+    $c =~ s|^\n*=back\n||;
+    $c =~ s|(\n( .*?\n)+)|$1\n=over\n|g;
+    $c =~ s|\n([LB]<[^>]*>[^:]*):\s*|\n=item * $1 - |g;
+    $pod =~ s|\[% h\.cb %\](.*?)\[% h|[% h.cb %]\n\n[%txt.cb_intro%]\n\n=over\n$c=back\n\n[% h|sg;    
+    $pod =~ s|=over\n\n----\n\n=back\n\n=back|=back\n\n[%txt.cb_common%]\n\n=over|;
   }
   $pod =~ s/§§/::/g;
   

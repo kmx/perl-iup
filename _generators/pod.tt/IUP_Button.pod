@@ -189,9 +189,13 @@ mouse is released and when it is released inside the button area.
    #...
  }
 
-B<$self:> identifier of the element that activated the event (referrence to IUP::Button).
+=over
 
-B<Returns:> IUP_CLOSE will be processed.
+=item * B<$self:> reference to the element (IUP::Button) that activated the event
+
+=item * B<Returns:> IUP_CLOSE will be processed.
+
+=back
 
 =item * B<L<BUTTON_CB|Manual::Attributes/BUTTON_CB>>
 

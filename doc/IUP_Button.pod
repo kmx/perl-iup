@@ -88,7 +88,7 @@ Color button with background color set:
  my $button1 = IUP::Button->new( BGCOLOR=>"0 200 0" ); #defined by RGB values
  my $button2 = IUP::Button->new( BGCOLOR=>IUP_RED );   #build-in constant
  
-B<Note:> You can pass to C<new()> any other C<ATTRIBUTE=E<gt>'value'> pair relevant
+B<Note:> You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> pairs relevant
 to this element - see L<IUP::Manual::02_CreatingElements|IUP::Manual::02_CreatingElements>.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
@@ -237,9 +237,13 @@ mouse is released and when it is released inside the button area.
    #...
  }
 
-B<$self:> identifier of the element that activated the event (referrence to IUP::Button).
+=over
 
-B<Returns:> IUP_CLOSE will be processed.
+=item * B<$self:> reference to the element (IUP::Button) that activated the event
+
+=item * B<Returns:> IUP_CLOSE will be processed.
+
+=back
 
 =item * B<L<BUTTON_CB|Manual::Attributes/BUTTON_CB>>
 
