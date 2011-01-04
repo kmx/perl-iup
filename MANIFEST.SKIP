@@ -18,8 +18,9 @@ deps
 ^build_
 ^download
 ^share
-^tmp
 ^test
+^tmp
+tmp/*
 \.c$
 \.o$
 \.obj$

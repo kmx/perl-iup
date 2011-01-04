@@ -6,7 +6,14 @@ use Module::Build;
 eval { require Alien::IUP };
 die "You need to have Alien::IUP installed\n" if $@;
 
-my $builder = Module::Build->new(
+#hack for generating *.pod documentation via './Build doc'
+my $class = Module::Build->subclass(
+  class => "Module::Build::Custom",
+  code => 'sub ACTION_doc { system($^X, qw[_generators/proc-pod.tt2pod.pl -podtt _generators/pod.tt -pod pod]) }',
+);
+
+#my $builder = Module::Build->new(
+my $builder = $class->new(
   module_name          => 'IUP',
   license              => 'mit',
   dist_abstract        => 'IUP bindings to Perl',
