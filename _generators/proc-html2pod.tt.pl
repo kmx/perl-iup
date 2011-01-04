@@ -118,13 +118,20 @@ sub procfile {
   $pod =~ s/B<(IUP§§.*?)>/L<$1|$1>/g;
   $pod =~ s/L<([A-Z0-9]+)\|iup_([a-z0-9]+)\.html>/'L<'.$1.'|[%m.at%]\/'.uc($2).'>'/eg; #if in attrib dir
   $pod =~ s/L<([A-Z0-9]+)\|..\/attrib\/iup_([a-z0-9]+)\.html>/'L<'.$1.'|[%m.at%]\/'.uc($2).'>'/eg;
+  $pod =~ s/L<([A-Z0-9]+)\|..\/call\/iup_([a-z0-9]+)\.html>/'L<'.$1.'|[%m.cb%]\/'.uc($2).'>'/eg;
   $pod =~ s/\(since 3.0\)//g;
-  if ($pod =~ /\[% h.at %\](.*?)\[%/s ) {
+  if ($pod =~ /\[% h\.at %\](.*?)\[% h/s ) {
     my $c = $1;
     $c =~ s|\n([LB]<[^>]*>[^:]*):\s*|\n=item * $1\n\n|g;
-    #$c =~ s|): *([^\n])|):\n\n$1|g;
-    $pod =~ s|\[% h.at %\](.*?)\[%|[% h.at %]\n\n[%txt.at_intro%]\n\n=over$c=back\n\n[%|sg;    
+    $pod =~ s|\[% h\.at %\](.*?)\[% h|[% h.at %]\n\n[%txt.at_intro%]\n\n=over$c=back\n\n[% h|sg;    
     $pod =~ s|=over\n\n----\n\n=back|=back\n\n[%txt.at_common%]\n\n=over|;
+  }
+  if ($pod =~ /\[% h\.cb %\](.*?)\[% h/s ) {
+    my $c = $1;
+    #die $c;
+    $c =~ s|\n([LB]<[^>]*>[^:]*):\s*|\n=item * $1\n\n|g;
+    $pod =~ s|\[% h\.cb %\](.*?)\[% h|[% h.cb %]\n\n[%txt.cb_intro%]\n\n=over$c=back\n\n[% h|sg;    
+    $pod =~ s|=over\n\n----\n\n=back|=back\n\n[%txt.cb_common%]\n\n=over|;
   }
   $pod =~ s/§§/::/g;
   
