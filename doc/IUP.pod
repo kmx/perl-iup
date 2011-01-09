@@ -1,0 +1,163 @@
+=pod
+
+=head1 NAME
+
+IUP - Cross-platform GUI toolkit for building graphical user interfaces
+
+=head1 DESCRIPTION
+
+=begin HTML
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th style="text-align: center;">GTK</th>
+        <th style="text-align: center;">Windows Vista</th>
+      </tr>
+      <tr>      
+        <td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.3/spec/sample_gtk_small.png"></td>
+        <td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.3/spec/sample_vista_small.png"></td>
+      </tr>
+    </tbody>
+  </table>
+<p>  
+  <table border="1">
+    <tbody align="center">
+      <tr>
+	<th style="text-align: center;">Motif</th>
+	<th style="text-align: center;">Windows Classic</th>
+      </tr>
+      <tr>      
+	<td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.3/spec/sample_mot_small.png"></td>
+	<td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.3/spec/sample_win2k_small.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end HTML
+
+xxxTODO some catchy intro text here
+
+=head1 Comparing IUP with Other Interface Toolkits
+
+=head2 Why to still maintain IUP if today we have so many other popular
+toolkits?
+
+This is a question we always ask to ourselves before going on for
+another year.
+
+To answer that question we must first define the characteristics of the
+"ideal" toolkit, list the available toolkits and compare them with the
+"ideal" and with IUP.
+
+We would like a toolkit that has:
+
+=over
+
+=item * B<Portability.> That provides an abstraction for User Interface
+in Windows, UNIX and Macintosh.
+
+=item * B<MIT License and Open Source.> This means that we can also
+produce commercial applications.
+
+=item * B<Small and Simple API. >This is rare. Many libraries assume
+that an Interface toolkit is also a synonymous of a system abstraction
+and accumulate thousands of extra functions that are not related to
+User Interface. The use of attributes makes a lot of things more elegant
+and simpler to understand.
+
+=item * B<Native Look & Feel>. Many toolkits draw their own controls.
+This gives an uniformity among systems, but also a disparity among the
+available applications in the same system. Native controls are also
+faster because they are drawn by the system. But the problem is what's
+"native" in UNIX? Some commercial applications in UNIX start using
+Motif as the "native" option. It was the official standard but because
+of license restrictions, before the OpenMotif event, the system became
+old and some good alternatives were developed, including GTK and Qt.
+
+=back
+
+=head1 IUP Overview
+
+IUP's purpose is to allow a program to run in different systems without
+changes - the toolkit provides the application portability. Supported
+systems include: GTK+, Motif and Windows.
+
+IUP uses an abstract layout model based on the boxes-and-glue paradigm
+from the TEX text editor. This model makes the dialog creation
+task more flexible and independent from the graphics system's
+resolution.
+
+Currently available interface elements can be categorized as follows:
+
+=over
+
+=item * B<Primitives> (effective user interaction): B<dialog, label,
+button, text, multi-line, list, toggle, canvas, frame, image>.
+
+=item * B<Composition> (ways to show the elements): B<hbox, vbox,>
+B<zbox, fill>.
+
+=item * B<Grouping> (definition of a common functionality for a group
+of elements): B<radio>.
+
+=item * B<Menu> (related both to menu bars and to pop-up menus):
+B<menu, submenu, item, separator>.
+
+=item * Additional (elements built outside the main library): B<dial,
+gauge, matrix, tabs, valuator, OpenGL canvas, color chooser, color
+browser>.
+
+=item * B<Dialogs> (useful predefined dialogs): B<file selection,
+message, alarm, data input, list selection>.
+
+=back
+
+Hence IUP has some advantages over other interface toolkits available:
+
+=over
+
+=item * B<Simplicity:> due to the small number of functions and to its
+attribute mechanism, the learning curve for a new user is often faster.
+
+=item * B<Portability:> the same functions are implemented in each one
+of the platforms, thus assuring the interface system's portability.
+
+=item * B<Customization:> the dialog specification language (LED) and
+the Lua binding (IUP::Lua) are two mechanisms in which it is possible to
+customize an application for a specific user with a simple-syntax text
+file.
+
+=item * B<Flexibility>: its abstract layout mechanism provides
+flexibility to dialog creation.
+
+=item * B<Extensibility:> the programmer can create new interface
+elements as needed.
+
+=back
+
+IUP is free software, can be used for public and commercial
+applications.
+
+=head1 Availability
+
+The library is available for several B<operating systems>:
+
+=over
+
+=item * UNIX (SunOS, IRIX, and AIX) using Motif 2.x
+
+=item * UNIX (FreeBSD and Linux) using GTK+ 
+
+=item * Microsoft Windows 2000/XP/2003/Vista/7 using the Win32 API
+
+=back
+
+=head1 IUP
+
+IUP is registered at the National Institute of Intellectual Property in
+Brazil (INPI) under the number 07569-0, and so it is protected against
+illegal use. See the L<Tecgraf Library License|copyright.html> for
+further usage information and Copyright.

@@ -1,0 +1,497 @@
+=pod
+
+=head1 NAME
+
+IUP::Manual::03_Attributes - Attribute concept, using attributes, common + global attributes
+
+=head1 INTRODUCTION
+
+IUP has four important concepts that are implemented in a very different way from other toolkits.
+
+First is the control creation timeline. When a control is created it is not immediately mapped to the native system. So some attributes will not work until the control is mapped. The mapping is done when the dialog is shown or manually calling IupMap for the dialog. You can not map a control without inserting it into a dialog.
+
+Second is the attribute system. IUP has only a few functions because it uses string attributes to access the properties of each control. So get used to IupSetAttribute and IupGetAttribute, because you are going to use them a lot.
+
+Third is the abstract layout positioning. IUP controls are never positioned in a specific (x,y) coordinate inside the dialog. The positioning is always calculated dynamically from the abstract layout hierarchy. So get used to the IupFill, IupHbox and IupVbox controls that allows you to position the controls in the dialog.
+
+Fourth is the callback system. Because of the LED resource files IUP has an indirect form to associate a callback to a control. You associate a C function with a name using IupSetFunction, and then associate the callback attribute with that name using IupSetAttribute. But applications now should use the IupSetCallback function to directly associate a callback for a control. 
+
+LED is the original IUP resource file which has been deprecated in favor of Lua files. But keep in mind that you can use IUP without using LED or Lua, using only the C API.
+
+xxx elements attributes callbacks
+
+=head1 IUP ELEMENTS
+
+IUP contains several user interface controls. The libraryE<rsquo>s main
+characteristic is the use of native elements. This means that the
+drawing and management of a button or text box is done by the native
+interface system, not by IUP. This makes the applicationE<rsquo>s
+appearance more similar to other applications in that system. On the
+other hand, the applicationE<rsquo>s appearance can vary from one
+system to another.
+
+But this is valid only for the standard controls, many additional
+controls are drawn by IUP. Composition controls are not visible, so
+they are independent from the native system.
+
+Each control has an unique creation function, and all of its management
+is done by means of B<attributes> and B<callbacks>, using functions
+common to all the controls. This simple but powerful approach is one of
+the advantages of using IUP.
+
+Controls are automatically destroyed when the dialog is destroyed. 
+
+The main GUI element: IUP::Dialog
+
+Other GUI elements: IUP::Menu, IUP::Text
+
+Non-GUI elements: IUP::Timer
+
+Every IUP based application has the main IUP::Dialog object and a set
+of other child GUI objects. Example:
+
+ use IUP;
+ my $dlg = IUP::Dialog->new(...);
+ IUP->MainLoop;
+
+For more info see separate documents
+
+=over
+
+=item * IUP::Manual::LayoutGuide - composing more complex application layout
+
+=item * IUP::Manual::CreatingElements - composing more complex application layout
+
+=back
+ 
+=head1 CONCEPT OF IUP ATTRIBUTES
+
+Attributes are used to change or consult properties of elements. Each
+element has a set of attributes that affect it, and each attribute can
+work differently for each element. Depending on the element, its value
+can be computed or simply verified. Also it can be internally stored or
+not.
+
+Attribute names are always upper case, lower case names will not work.
+But attribute values like "YES", "NO", "TOP", are case insensitive, so
+"Yes", "no", "top", and other variations will work.
+
+If not defined their value can be inherited from the parent container.
+
+=head2 Using Attributes
+
+Attributes are a way to send and obtain information to and from
+elements. They are used by the application to communicate with the user
+interface system, on the other hand callbacks are used by the
+application to receive notifications from the system that the user or
+the system itself has interacted with the user interface of the
+application.
+
+There are two functions to change them:
+
+=over
+
+=item * L<IUP::SetAttribute|IUP::SetAttribute> stores only a pointer to the string and does
+not duplicate it.
+
+=item * L<IUP::StoreAtribute|IUP::StoreAtribute> duplicates the string, allowing you to use
+it for other purposes.
+
+=back
+
+With L<IUP::SetAttribute|IUP::SetAttribute> you can also store application pointers that
+can be strings or not. This can be very useful, for instance, used
+inside B<callbacks>. For example, by storing a C pointer of an
+application defined structure, the application can retrieve this
+pointer inside the callback through function L<IUP::GetAttribute|IUP::GetAttribute>.
+Therefore, even if the callbacks are global functions, the same
+callback can be used for several objects, even of different types.
+
+When an attribute is updated (B<Set>) it is stored internally at the
+hash table of the control only if the control class allows it. If the
+value is NULL, the attribute will also be removed from the hash table
+and the default value will be used if there is one defined. Finally the
+attribute is updated for the children of the control if they do not
+have the attribute defined in their own hash table. Here is a
+pseudo-code:
+
+ IUP::SetAttribute(ih, name, value)
+ #
+ if ih.SetClassAttribute(name, value)==store then
+   ih.SetHashTableAttribute(name, value)
+ endif
+ if (ih.IsInheritable(name))    -- NotifyChildren
+   for each child of ih do
+     if not child.GetHashTableAttribute(name) then
+       child.SetClassAttribute(name, value)
+       child.NotifyChildren(name, value)
+     endif
+   endfor
+ endif
+
+When an attribute is retrieved (B<Get>) it will first be checked at the
+control class. If not defined then it checks in the hash table. If not
+defined it checks its parent hash table and so forth, until it reaches
+the dialog. And finally if still not defined then a default value is
+returned (the default value can also be NULL).
+
+ value = IUP::GetAttribute(ih, name)
+ #
+ value = ih.GetClassAttribute(name)
+ if not value then
+   value = ih.GetHashTableAttribute(name)
+ endif
+ if not value and ih.isInheritable(name) then
+   parent = ih.parent
+   while (parent and not value)
+     value = parent.GetHashTableAttribute(name)
+     parent = parent.parent
+   endwhile
+ endif
+ if not value then
+   value = ih.GetDefaultAttribute(name)
+ endif
+
+Notice that the parent recursion is done only at the parent hash table,
+the parent control class is not consulted.
+
+The control class can update or retrieve a value even if the control is
+not mapped. When the control is not mapped and its implementation can
+not process the attribute, then the attribute is simply stored in the
+hash table. After the element is mapped its attributes are re-processed
+to be updated in the native system and they can be removed from the
+hash table at that time.
+
+All this flexibility turns the attribute system very complex with
+several nuances. If the attribute is checked before the control is
+mapped and just after, its value can be completely different. Depending
+on how the attribute is stored its inheritance can be completely
+ignored.
+
+Attribute names are always upper case, lower case names will not work.
+But attribute values like "YES", "NO", "TOP", are case insensitive, so
+"Yes", "no", "top", and other variations will work.
+
+Boolean attributes accept the values "1", "YES", "ON" or "TRUE" for
+B<true>, and NULL (not defined), "0", "NO", "OFF" or "FALSE" for
+B<false>, even if in the documentation is only one of these
+combinations.
+
+There are attributes common to all the elements. In some cases, common
+attributes behave differently in different elements, but in such cases,
+there are comments in the documentation of the element explaining the
+different behavior.
+
+In LED there is no quotation marks for attributes, names or values. In
+Lua attribute names can be lower case.
+
+=head2 Inheritance
+
+Elements included in other elements can inherit their attributes. There
+is an B<inheritance> mechanism inside a given child tree.
+
+This means, for example, that if you set the "MARGIN" attribute of a
+Vbox containing several other elements, including other Vboxes, all the
+elements depending on the attribute "MARGIN" will be affected, except
+for those who the "MARGIN" attribute is already defined.
+
+Please note that not all attributes are inherited. As general rules the
+following attributes are B<NON> inheritable always:
+
+=over
+
+=item * Essential attributes like VALUE, TITLE, SIZE, RASTERSIZE, X and
+Y
+
+=item * Id numbered attributes (like "1" or "MARK1:1")
+
+=item * Handle names (like "CURSOR", "IMAGE" and "MENU")
+
+=item * Pointers that are not strings (like WID)
+
+=item * Read-only or write-only attributes
+
+=item * Internal attributes that starts with "_IUP"
+
+=back
+
+Inheritable attributes are stored in the hash table so the
+IUP::Get/SetAttribute logic can work, even if the control class store it
+internally. But when you change an attribute to NULL, then its value is
+removed from the hash table and the default value if any is passed to
+the native system.
+
+When consulted the attribute is first checked at the control class. If
+not defined then it checks in the hash table. If not defined in its
+hash table, the attribute will be inherited from its parent's hash
+table and so forth, until it reaches the root child (usually the
+dialog). But if still then the attribute is not defined a default value
+for the element is returned (the default value can also be NULL).
+
+When changed the attribute change is propagated to all children except
+for those who the attribute is already defined in the hash table.
+
+But some attributes can be marked as B<non inheritable> at the control
+class.
+
+B<Non inheritable> attributes at the element are not propagated to its
+children. If an attribute is not marked as B<non inheritable> at the
+element it is propagated as expected, but if marked as B<non
+inheritable> at a child, that child will ignore the propagated value.
+
+Since Vbox, Hbox, and other containers have only a few registered
+attributes, by default an unknown attribute is treated as inheritable,
+that's why it will be automatically propagated.
+
+An example: the IMAGE attribute of a Label is B<non inheritable>, so
+when checked at the Label it will return NULL if not defined, and the
+Label parent tree will not be consulted. If you change the IMAGE
+attribute at a Vbox that contains several Labels, the child Labels will
+not be affected.
+
+=head2 Availability
+
+Although attributes can be changed and retrieved at any time there are
+exceptions and some rules that must be followed according to the
+documentation of the attribute:
+
+=over
+
+=item * B<read only>: the attribute can not be changed. Ignored when
+set.
+
+=item * B<write only>: the attribute can not be retrieved. Normally
+used for action attributes. Returns NULL, or eventually some value set
+before the element was mapped.
+
+=item * B<creation only>: it will be used only when the element is
+mapped on the native system. So set it before the element is mapped.
+Ignored when set after the element is mapped.
+
+=back
+
+=head2 IUP perl specifics xxxTODOxxx
+
+Each interface element is created as a Lua table, and its attributes
+are fields in this table. Some of these attributes are directly
+transferred to IUP, so that any changes made to them immediately
+reflect on the screen. However, not all attributes are transferred to
+IUP.
+
+Control attributes, such as handle, which stores the handle of the IUP
+element, and parent, which stores the object immediately above in the
+class hierarchy, are not transferred. Attributes that receive strings
+or numbers as values are immediately transferred to IUP. Other values
+(such as functions or objects) are stored in IUP::Lua and might receive
+special treatment.
+
+For instance, a button can be created as follows (defining a title and
+the background color):
+
+Creating a button with text label "Hello":
+
+  my $demo_button = IUP::Button->new( TITLE=>"Ok"
+
+If you want the same buttno with changed background color, you can:
+
+=over
+
+=item * specify BGCOLOR attribute value when creating the element:
+
+ my $demo_button = IUP::Button->new( TITLE=>"Hello", BGCOLOR=>"0 255 0" );
+ 
+=item * or using BGCOLOR accessor:
+
+ my $demo_button = IUP::Button->new( TITLE=>"Hello" );
+ $demo_button->BGCOLOR("0 255 0");
+
+=item * or via SetAttribute method:
+ 
+ my $demo_button = IUP::Button->new( TITLE=>"Hello" );
+ $demo_button->SetAttribute("BGCOLOR", "0 255 0");
+
+=back
+
+Some interface elements can contain one or more elements, as is the
+case of dialogs, lists and boxes. In such cases, the objectE<rsquo>s
+element list is put together as a vector, that is, the elements are
+placed one after the other, separated by commas. They can be accessed
+by indexing the object containing them, as can be seen in this example:
+
+ $mybox = IUP::Hbox->new( [ $bt1, $bt2, $bt3] );
+ mybox[1].fgcolor = "255 0 0" -- changes bt1 foreground color
+ mybox[2].fgcolor = caixa[1].fgcolor  -- changes bt2 foreground color
+
+While the attributes receiving numbers or strings are directly
+transferred to IUP, attributes receiving other interface objects are
+not directly transferred, because IUP only accepts strings as a value.
+The method that transfers attributes to IUP verifies if the attribute
+value is a handle, that is, if it is an interface element. If the
+element already has a name, this name is passed to IUP. If not, a new
+name is created, associated to the element and passed to IUP as the
+value of the attribute being defined.
+
+This policy is very useful for associating two interface elements,
+because you can abstract the fact that IUP uses a string to make
+associations and imagine the interface element itself is being used.
+
+=head1 CONCEPT OF IUP CALLBACKS/EVENTS
+
+IUP is a graphics interface library, so most of the time it waits for
+an event to occur, such as a button click or a mouse leaving a window.
+The application can inform IUP which callback to be called, informing
+that an event has taken place. Hence events are handled through
+callbacks, which are just functions that the application register in
+IUP.
+
+The events are processed only when IUP has the control of the
+application. After the application creates and shows a dialog it must
+return the control to IUP so it can process incoming events. This is
+done in the IUP main event loop. And it is usually done once at the
+application "mainxxx" function. One exception is the display of modal
+dialogs. These dialogs will have their own event loop and the previous
+shown dialogs will stop receiving events until the modal dialog
+returns. 
+
+=head2 Using Callbacks
+
+Callbacks are used by the application to receive notifications from the
+system that the user or the system itself has interacted with the user
+interface of the application. On the other hand attributes are used by
+the application to communicate with the user interface system.
+
+Even though callbacks have different purposes from attributes, they are
+also associated to an element by means of an name.
+
+xxxThe OLD method to associate a function to a callback, the application
+must employ the L<IUP::SetAttribute|IUP::SetAttribute> function, linking the action to a
+name (passed as a string). From this point on, this name will refer to
+a callback. By means of function L<IUP::SetFunction|IUP::SetFunction>, the user connects
+this name to the callback. For example:
+
+ sub button_action {
+ }
+ ...
+ IUP::SetAttribute(myButton, "ACTION", "my_button_action");
+ IUP::SetFunction("my_button_action", (Icallback)myButton_action);
+
+In LED, callback are only assigned by their names. It will be still
+necessary to associate the name with the corresponding function in C
+using L<IUP::SetFunction|IUP::SetFunction>. For example:
+
+ # In LED, is equivalent to the IUP::SetAttribute command in the previous example.
+ bt = button("Title", my_button_action)  
+
+In the NEW method, the application does not needs a global name, it
+directly sets the callback using the attribute name using
+L<IUP::SetCallback|IUP::SetCallback>. For example:
+
+ int myButton_action(Ihandle* self);
+ ...
+ IUP::SetCallback(myButton, "ACTION", (Icallback)myButton_action);
+
+The new method is more efficient and more secure, because there is no
+risk of a name conflict. If the application uses LED, just ignore the
+name in the LED, and replace L<IUP::SetFunction|IUP::SetFunction> by L<IUP::SetCallback|IUP::SetCallback>.
+
+Although enabled in old versions, callbacks do NOT have B<inheritance>
+like attributes.
+
+All callbacks receive at least the element which activated the action
+as a parameter ($self).
+
+The callbacks implemented in C by the application must return one of
+the following values:
+
+=over
+
+=item * IUP_DEFAULT: Proceeds normally with user interaction. In case
+other return values do not apply, the callback should return this
+value.
+
+=item * IUP_CLOSE: Call L<IUP::ExitLoop|IUP::ExitLoop> after return. Depending on the
+state of the application it will close all windows and exit the
+application. Applies only to some actions.
+
+=item * IUP_IGNORE: Makes the native system ignore that callback
+action. Applies only to some actions.
+
+=item * IUP_CONTINUE: Makes the element to ignore the callback and pass
+the treatment of the execution to the parent element. Applies only to
+some actions.
+
+=back
+
+Only some callbacks support the last 3 return values. Check each
+callback documentation. When nothing is documented then only
+IUP_DEFAULT is supported.
+
+An important detail when using callbacks is that they are only called
+when the user actually executes an action over an element. A callback
+is not called when the programmer sets a value via L<IUP::SetAttribute|IUP::SetAttribute>.
+For instance: when the programmer changes a selected item on a list, no
+callback is called.
+
+The order of callback calling is system dependent. For instance, the
+RESIZE_CB and the SHOW_CB are called in different order in Win32 and in
+X-Windows when the dialog is shown for the first time.
+
+=head2 MainLoop
+
+IUP is an event-oriented interface system, so it will keep a loop
+E<ldquo>waitingE<rdquo> for the user to interact with the application.
+For this loop to occur, the application must call the L<IUP::MainLoop|IUP::MainLoop>
+function, which is generally used right before L<IUP::Close|IUP::Close>.
+
+When the application is closed by returning IUP_CLOSE in a callback,
+calling L<IUP::ExitLoop|IUP::ExitLoop> or by hiding the last visible dialog, the
+function L<IUP::MainLoop|IUP::MainLoop> will return.
+
+The L<IUP::LoopStep|IUP::LoopStep> and the L<IUP::Flush|IUP::Flush> functions force the processing
+of incoming events while inside an application callback.
+
+=head2 IUP::Lua
+
+Callbacks in Lua have the same names and receive the same parameters as
+callbacks in C, in the same order. In Lua the callbacks they can either
+return a value or not, the IUP::Lua binding will automatically return
+IUP_DEFAULT if no value is returned. In Lua callbacks can be Lua
+functions or strings with Lua code.
+
+The callbacks can also be implemented as methods, using the
+languageE<rsquo>s resources for object orientation. Thus, the element
+is implicitly passed as the B<self> parameter.
+
+The following example shows the definition of an action for a button.
+
+ function myButton:action ()
+   local aux = self.fgcolor
+   self.fgcolor = self.bgcolor
+   self.bgcolor = aux
+ end 
+
+Or you can do
+
+ function myButton_action(self)
+   ...
+ end
+ myButton.action = myButton_action
+
+Or also
+
+ myButton.action = function (self)
+   ...
+ end
+
+Or, as a string
+
+ myButton.action = "local aux = self.fgcolor; 
+                    self.fgcolor = self.bgcolor; 
+                    self.bgcolor = aux"
+
+Altough some callbacks exists only in specific controls, all the
+callbacks can be set for all the controls. This is usefull to set a
+callback for a box, so it will be inherited by all the elements inside
+that box which implements that callback.
+
+=cut
