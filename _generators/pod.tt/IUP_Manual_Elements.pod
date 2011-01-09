@@ -1,0 +1,113 @@
+=pod
+
+=head1 NAME
+
+IUP::Manual::Elements - Manuals element guide
+
+=head1 INTRODUCTION
+
+xxxTODO GUI vs. non-GUI
+
+=head1 CREATING ELEMENTS
+
+xxxTODO new() and its params (ATTRIB=>'val', param=>'val')
+
+=head1 CONSTRUCTORS
+
+ new
+ new_no_ihandle
+ new_from_ihandle
+
+=head1 ACCESSORS
+
+ ihandle
+ name
+
+=head1 COMMON METHODS
+
+ Append
+ ConvertXYToPos
+ Destroy
+ Detach
+ GetAllAttributes
+ GetAttribute
+ GetAttributes
+ GetBrother
+ GetCallback
+ GetChild
+ GetChildCount
+ GetChildPos
+ GetClassName
+ GetClassType
+ GetDialog
+ GetDialogChild
+ GetFloat
+ GetInt
+ GetNextChild
+ GetParamParam
+ GetParamVal
+ GetParent
+ HasValidClassName
+ Insert
+ IsValidAttributeName
+ IsValidCallbackName
+ Map
+ NextField
+ PreviousField
+ Redraw
+ Refresh
+ Reparent
+ ResetAttribute
+ SaveClassAttributes
+ SaveImageAsText
+ SetAttribute
+ SetCallback
+ SetFocus
+ SetfAttribute
+ Unmap
+ Update
+ UpdateChildren
+
+Test: 
+L<Append|Append>,
+L<ConvertXYToPos|ConvertXYToPos>,
+L<Destroy|Destroy>,
+L<Detach|Detach>,
+L<GetAllAttributes|GetAllAttributes>,
+L<GetAttribute|GetAttribute>,
+L<GetAttributes|GetAttributes>,
+L<GetBrother|GetBrother>,
+L<GetCallback|GetCallback>,
+L<GetChild|GetChild>,
+L<GetChildCount|GetChildCount>,
+L<GetChildPos|GetChildPos>,
+L<GetClassName|GetClassName>,
+L<GetClassType|GetClassType>,
+L<GetDialog|GetDialog>,
+L<GetDialogChild|GetDialogChild>,
+L<GetFloat|GetFloat>,
+L<GetInt|GetInt>,
+L<GetNextChild|GetNextChild>,
+L<GetParamParam|GetParamParam>,
+L<GetParamVal|GetParamVal>,
+L<GetParent|GetParent>,
+L<HasValidClassName|HasValidClassName>,
+L<Insert|Insert>,
+L<IsValidAttributeName|IsValidAttributeName>,
+L<IsValidCallbackName|IsValidCallbackName>,
+L<Map|Map>,
+L<NextField|NextField>,
+L<PreviousField|PreviousField>,
+L<Redraw|Redraw>,
+L<Refresh|Refresh>,
+L<Reparent|Reparent>,
+L<ResetAttribute|ResetAttribute>,
+L<SaveClassAttributes|SaveClassAttributes>,
+L<SaveImageAsText|SaveImageAsText>,
+L<SetAttribute|SetAttribute>,
+L<SetCallback|SetCallback>,
+L<SetfAttribute|SetfAttribute>,
+L<SetFocus|SetFocus>,
+L<Unmap|Unmap>,
+L<Update|Update>,
+L<UpdateChildren|UpdateChildren>,
