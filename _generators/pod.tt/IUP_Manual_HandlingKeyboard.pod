@@ -10,7 +10,7 @@ IUP::Manual::Elements - Manuals element guide
 
 =item * L<[%m.intro%]|[%m.intro%]>
 
-=item * L<[[%m.elem%]|[%m.elem%]>
+=item * L<[%m.elem%]|[%m.elem%]>
 
 =item * L<[%m.at%]|[%m.at%]>
 

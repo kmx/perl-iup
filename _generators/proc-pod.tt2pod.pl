@@ -116,6 +116,7 @@ my $ttdata = {
     cb       => 'IUP::Manual::04_Callbacks',
     keys     => 'IUP::Manual::05_HandlingKeyboard',
     dlg      => 'IUP::Manual::06_DialogLayout',
+    examples => 'IUP::Manual::07_Examples',
     
     imglib   => 'IUP::Manual::06_BuiltInImageLibrary',
     predlg   => 'IUP::Manual::07_PredefinedDialogs',
@@ -123,7 +124,6 @@ my $ttdata = {
     acomplex => 'IUP::Manual::10_ComplexApplication',
     amdi     => 'IUP::Manual::11_MDIApplication',
     galery   => 'IUP::Manual::12_ScreenshotGalery',
-    examples => 'IUP::Manual::13_Examples',
   },
   txt => {
     new_attr  => "B<Note:> You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> pairs relevant\n" .
@@ -135,6 +135,9 @@ my $ttdata = {
                  "see L<[%m.cb%]|[%m.cb%]>. Callbacks specific to this element:",
     cb_common => "The following L<common callbacks|[%m.cb%]/Common Callbacks> are also accepted:",
     cb_ih     => 'B<$self:> reference to the element that activated the event.',
+  },
+  url => {
+    examples => 'https://github.com/kmx/perl-iup/tree/master/examples',
   },
   html => { }, #this is loaded via load_htmlinc()
 };

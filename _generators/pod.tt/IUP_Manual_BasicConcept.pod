@@ -24,6 +24,12 @@
 
 =head1 INTRODUCTION
 
+IUP uses an abstract layout model based on the boxes-and-glue paradigm
+from the TEX text editor. This model makes the dialog creation
+task more flexible and independent from the graphics system's
+resolution.
+
+
 IUP has four important concepts that are implemented in a very different way from other toolkits.
 
 First is the control creation timeline. When a control is created it is not immediately mapped to the native system. So some attributes will not work until the control is mapped. The mapping is done when the dialog is shown or manually calling IupMap for the dialog. You can not map a control without inserting it into a dialog.

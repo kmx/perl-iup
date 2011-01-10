@@ -6,6 +6,10 @@ IUP - Cross-platform GUI toolkit for building graphical user interfaces
 
 =head1 DESCRIPTION
 
+The IUP module is a cross-platform GUI toolkit designed to run on
+B<MS Windows> (incl. Cygwin), B<GTK+> and B<Motif/X11>.
+On all platform it uses native GUI widgets.
+
 =begin HTML
 
 <p>
@@ -38,57 +42,234 @@ IUP - Cross-platform GUI toolkit for building graphical user interfaces
 
 =end HTML
 
-xxxTODO some catchy intro text here
-
-=head1 Comparing IUP with Other Interface Toolkits
-
-=head2 Why to still maintain IUP if today we have so many other popular
-toolkits?
-
-This is a question we always ask to ourselves before going on for
-another year.
-
-To answer that question we must first define the characteristics of the
-"ideal" toolkit, list the available toolkits and compare them with the
-"ideal" and with IUP.
-
-We would like a toolkit that has:
+=head2 IUP's Strengths
 
 =over
 
-=item * B<Portability.> That provides an abstraction for User Interface
-in Windows, UNIX and Macintosh.
+=item * B<Portability:> The same perl script implementing GUI application
+works on Windows and UNIX systems.
 
-=item * B<MIT License and Open Source.> This means that we can also
-produce commercial applications.
+=item * B<Small and Simple API:> This is rare. Many libraries assume
+that a GUI toolkit is also a synonymous with a system abstraction
+and accumulate a bunch of extra functions that are not related to
+User Interface.
 
-=item * B<Small and Simple API. >This is rare. Many libraries assume
-that an Interface toolkit is also a synonymous of a system abstraction
-and accumulate thousands of extra functions that are not related to
-User Interface. The use of attributes makes a lot of things more elegant
-and simpler to understand.
+=item * B<Easy to Learn:> The learning curve for a new IUP user is often
+faster due to the small number of functions and to IUP's
+L<attributes concept|IUP::Manual::01_BasicConcept/"Attributes Concept"> which makes a lot of
+things more elegant and simpler to understand.
 
-=item * B<Native Look & Feel>. Many toolkits draw their own controls.
+=item * B<Native Look & Feel:> Many toolkits draw their own controls.
 This gives an uniformity among systems, but also a disparity among the
 available applications in the same system. Native controls are also
-faster because they are drawn by the system. But the problem is what's
-"native" in UNIX? Some commercial applications in UNIX start using
-Motif as the "native" option. It was the official standard but because
-of license restrictions, before the OpenMotif event, the system became
-old and some good alternatives were developed, including GTK and Qt.
+faster because they are drawn by the system.
+
+=item * B<Excelent Documentation:> Which is not so common by other
+perl GUI toolkits. Good starting points are L<IUP|IUP> and L<IUP::Manual>.
 
 =back
 
-=head1 IUP Overview
+=head2 IUP's Background
 
-IUP's purpose is to allow a program to run in different systems without
-changes - the toolkit provides the application portability. Supported
-systems include: GTK+, Motif and Windows.
+IUP perl module is based on the following libraries delivered by
+B<Tecgraf - Computer Graphics Technology Group, PUC-Rio, Brazil>
+L<http://www.tecgraf.puc-rio.br/iup|http://www.tecgraf.puc-rio.br/iup>:
 
-IUP uses an abstract layout model based on the boxes-and-glue paradigm
-from the TEX text editor. This model makes the dialog creation
-task more flexible and independent from the graphics system's
-resolution.
+=over
+
+=item * iup library - see L<http://www.tecgraf.puc-rio.br/iup/|http://www.tecgraf.puc-rio.br/iup/>
+
+=item * im library  - see L<http://www.tecgraf.puc-rio.br/im/|http://www.tecgraf.puc-rio.br/im/>
+
+=item * cd library  - see L<http://www.tecgraf.puc-rio.br/cd/|http://www.tecgraf.puc-rio.br/cd/>
+
+=back
+
+There is no need to install them before installing L<IUP|IUP> module;
+they are handled by separate L<Alien::IUP|Alien::IUP> module.
+
+=head1 IUP APPLICATION EXAMPLES
+
+At this point we show just basic ideas behind IUP based GUI applications.
+For more details see L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>.
+Or if you wanna skip the theory you can go directly to L<examples|https://github.com/kmx/perl-iup/tree/master/examples>
+directory of IUP distribution or look at L<IUP::Manual::07_Examples|IUP::Manual::07_Examples>.
+
+=head3 Simple GUI Functions
+
+ use IUP;
+
+ my ($ret, $b, $i, $a, $s, $l, $f, $c) = IUP->GetParam(
+   "Simple Dialog Title", undef,
+   #define dialog controls
+   "Boolean: %b[No,Yes]{Boolean Tip}\n".
+   "Integer: %i[0,255]{Integer Tip 2}\n".
+   "Angle: %a[0,360]{Angle Tip}\n".
+   "String: %s{String Tip}\n".
+   "List: %l|item1|item2|item3|{List Tip}\n".
+   "File: %f[OPEN|*.bmp;*.jpg|CURRENT|NO|NO]{File Tip}\n".
+   "Color: %c{Color Tip}\n",
+   #set default values
+   1, 100, 45, 'test string', 2, 'test.jpg', '255 0 128'
+ );
+ 
+ IUP->Message("Results",
+   "Boolean:\t$b\n".
+   "Integer:\t$i\n".
+   "Angle:\t$a\n".
+   "String:\t$s\n".
+   "List Index:\t$l\n".
+   "File:\t$f\n".
+   "Color:\t$c\n"
+ ) if $ret;
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th style="text-align: center;">Application</th>
+        <th style="text-align: center;">After "OK"</th>
+      </tr>
+      <tr>      
+        <td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.3/spec/app_simple1.png"></td>
+	<td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.3/spec/app_simple2.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head3 Pre-defined Dialogs
+
+ use IUP;
+ 
+ my $dlg = IUP::ColorDlg->new( VALUE=>"128 0 255", ALPHA=>"142",
+                               SHOWHEX=>"YES", SHOWCOLORTABLE=>"YES",
+                               TITLE=>"IUP::ColorDlg Test" );
+
+ $dlg->Popup(IUP_CENTER, IUP_CENTER); 
+
+ IUP->Message("Chosen color", "Color:\t" . $dlg->VALUE) if $dlg->STATUS;
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th style="text-align: center;">Application</th>
+        <th style="text-align: center;">After "OK"</th>
+      </tr>
+      <tr>      
+        <td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.3/spec/app_predefined1.png"></td>
+	<td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.3/spec/app_predefined2.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head3 Custom Dialogs
+
+ use IUP;
+ 
+ # demo callback handler
+ sub my_cb {
+   my $self = shift;
+   IUP->Message("Hello from callback handler");
+ }
+ 
+ # create the main dialog
+ sub init_dialog {
+   my $menu = IUP::Menu->new( child=>[
+                IUP::Item->new(TITLE=>"Message", ACTION=>\&my_cb ),
+                IUP::Item->new(TITLE=>"Quit", ACTION=>sub { IUP_CLOSE } ),
+              ]);
+ 
+   my $frm1 = IUP::Frame->new( TITLE=>"IUP::Button", child=>
+                IUP::Vbox->new( child=>[
+                  IUP::Button->new( TITLE=>"Test Me", ACTION=>\&my_cb ),
+                  IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf", TITLE=>"Text" ),
+	          IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf" ),
+                  IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf", IMPRESS=>"IUP_Tecgraf" ),
+                ])
+              );
+
+   my $frm2 = IUP::Frame->new( TITLE=>"IUP::Label", child=>
+                IUP::Vbox->new( child=>[
+                  IUP::Label->new( TITLE=>"Label Text" ),
+                  IUP::Label->new( SEPARATOR=>"HORIZONTAL" ),
+                  IUP::Label->new( IMAGE=>"IUP_Tecgraf" ),
+                ])
+              );
+ 
+   my $frm3 = IUP::Frame->new( TITLE=>"IUP::Radio", child=>
+                IUP::Vbox->new( child=>
+                  IUP::Radio->new( child=>
+                    IUP::Vbox->new( child=>[
+                      IUP::Toggle->new( TITLE=>"Toggle Text", ACTION=>\&my_cb ),
+                      IUP::Toggle->new( TITLE=>"Toggle Text", ACTION=>\&my_cb ),
+                    ])
+                  )
+                )
+              );
+ 
+   my $frm4 = IUP::Frame->new( TITLE=>"IUP::Val", child=>IUP::Val->new( MIN=>0, MAX=>100 ) );
+
+   my $frm5 = IUP::Frame->new( TITLE=>"IUP::ProgressBar", child=>IUP::ProgressBar->new( MIN=>0, MAX=>100, VALUE=>50 ) );
+
+   my $hbox1 = IUP::Hbox->new( child=>[ $frm1, $frm2, $frm3 ] );
+   my $hbox2 = IUP::Hbox->new( child=>[ $frm4, $frm5 ] );
+   my $vbox1 = IUP::Vbox->new( child=>[ $hbox1, $hbox2 ], MARGIN=>"5x5", ALIGNMENT=>"ARIGHT", GAP=>"5" );
+ 
+   return IUP::Dialog->new( MENU=>$menu, TITLE=>"Custom Dialog Sample", child=>$vbox1 );
+ }
+
+ # main program
+ my $dlg = init_dialog();
+ $dlg->Show();
+ IUP->MainLoop();
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th style="text-align: center;">Application</th>
+        <th style="text-align: center;">After clicking "Test Me"</th>
+      </tr>
+      <tr>      
+        <td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.3/spec/app_custom1.png"></td>
+	<td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.3/spec/app_custom2.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head1 USING IUP
+
+=head2 What is included in IUP's interface ?
+
+=head3 IUP Global Function
+
+xxx functions included directly in L<IUP|IUP> module - see L<GLOBAL FUNCTIONS|IUP/"GLOBAL FUNCTIONS">.
+
+xxx handling of ... manipulating with ... accessing global attributes ...
+
+=head3 IUP Global Constants
+
+xxx IUP related constants are defined in L<IUP::Constants|IUP::Constants>.
+
+xxx not variables, cannot be used inside "..."
+
+=head3 IUP Elemenets
 
 Currently available interface elements can be categorized as follows:
 
@@ -115,49 +296,79 @@ message, alarm, data input, list selection>.
 
 =back
 
-Hence IUP has some advantages over other interface toolkits available:
+=head3 Using IUP in your perl program
 
-=over
+By default, IUP doesn't import other IUP related classes.
 
-=item * B<Simplicity:> due to the small number of functions and to its
-attribute mechanism, the learning curve for a new user is often faster.
+  # Don't import other modules
+  use IUP;
 
-=item * B<Portability:> the same functions are implemented in each one
-of the platforms, thus assuring the interface system's portability.
+You may, however, instruct IUP to import all modules by using the following syntax:
 
-=item * B<Customization:> the dialog specification language (LED) and
-the Lua binding (IUP::Lua) are two mechanisms in which it is possible to
-customize an application for a specific user with a simple-syntax text
-file.
+  # import all IUP modules
+  use IUP ':all';
 
-=item * B<Flexibility>: its abstract layout mechanism provides
-flexibility to dialog creation.
+Or you can import just selected modules by this:
 
-=item * B<Extensibility:> the programmer can create new interface
-elements as needed.
+  # import IUP::Button and IUP::Menu only.
+  use IUP qw(Button Menu);
 
-=back
+xxx not implemented in this way yet
 
-IUP is free software, can be used for public and commercial
-applications.
+=head1 GLOBAL FUNCTIONS
 
-=head1 Availability
+xxx TODO xxx
 
-The library is available for several B<operating systems>:
+=head1 AUTHOR
 
-=over
+KMX, E<lt>kmx at cpan.orgE<gt>
 
-=item * UNIX (SunOS, IRIX, and AIX) using Motif 2.x
+=head1 BUGS
 
-=item * UNIX (FreeBSD and Linux) using GTK+ 
+Please report any bugs or feature requests to C<bug-iup at rt.cpan.org>, or through
+the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=IUP>.
 
-=item * Microsoft Windows 2000/XP/2003/Vista/7 using the Win32 API
+=head1 ACKNOWLEDGEMENTS
 
-=back
+xxx Tecgraf, PUC-Rio. L<http://www.tecgraf.puc-rio.br>
 
-=head1 IUP
+xxx do not forget to mention the documentation
+
+=head1 LICENSE AND COPYRIGHT
+
+External libraries I<iup>, I<im> and I<cd>: 
+Copyright (C) 1994-2010 Tecgraf, PUC-Rio. L<http://www.tecgraf.puc-rio.br>
+
+IUP perl module: Copyright (C) 2010 KMX.
+
+This program is distributed under the MIT License:
+L<http://www.opensource.org/licenses/mit-license.php>
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+=head1 IUP TRADEMARK
 
 IUP is registered at the National Institute of Intellectual Property in
 Brazil (INPI) under the number 07569-0, and so it is protected against
-illegal use. See the L<Tecgraf Library License|copyright.html> for
-further usage information and Copyright.
+illegal use. 
+See the L<Tecgraf Library License|http://www.tecgraf.puc-rio.br/iup/en/copyright.html>
+for further usage information and Copyright.

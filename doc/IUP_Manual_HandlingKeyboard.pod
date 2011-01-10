@@ -10,7 +10,7 @@ IUP::Manual::Elements - Manuals element guide
 
 =item * L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>
 
-=item * L<[IUP::Manual::02_Elements|IUP::Manual::02_Elements>
+=item * L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>
 
 =item * L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>
 
