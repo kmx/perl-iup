@@ -4,6 +4,24 @@
 
 IUP::Manual::Elements - Manuals element guide
 
+=head1 IUP MANUAL
+
+=over
+
+=item * L<[%m.intro%]|[%m.intro%]>
+
+=item * [%m.elem%] E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
+
+=item * L<[%m.at%]|[%m.at%]>
+
+=item * L<[%m.cb%]|[%m.cb%]>
+
+=item * L<[%m.keys%]|[%m.keys%]>
+
+=item * L<[%m.dlg%]|[%m.dlg%]>
+
+=back
+
 =head1 INTRODUCTION
 
 xxxTODO GUI vs. non-GUI

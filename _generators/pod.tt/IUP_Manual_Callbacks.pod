@@ -4,11 +4,63 @@
 
 [% m.cb %] - Common callbacks, reference guide
 
+=head1 IUP MANUAL
+
+=over
+
+=item * L<[%m.intro%]|[%m.intro%]>
+
+=item * L<[%m.elem%]|[%m.elem%]>
+
+=item * L<[%m.at%]|[%m.at%]>
+
+=item * [%m.cb%] E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
+
+=item * L<[%m.keys%]|[%m.keys%]>
+
+=item * L<[%m.dlg%]|[%m.dlg%]>
+
+=back
+
 =head1 INTRODUCTION
 
-xxxTODO link to callback concept in IUP::Manual::BasicConcept
+This document is intended as a reference list for common callbacks used by several
+or all GUI elements + global B<IDLE_ACTION> callback.
 
-xxxTODO this is just a refference guide for common callbacks
+For more information about using callbacks see L<Callbacks Concept|[%m.intro%]/"Callbacks Concept">
+in L<[%m.intro%]|[%m.intro%]>.
+
+Callbacks described in this document:
+
+=over
+
+L<ACTION|/"ACTION">,
+L<BUTTON_CB|/"BUTTON_CB">,
+L<CLOSE_CB|/"CLOSE_CB">,
+L<DESTROY_CB|/"DESTROY_CB">,
+L<DROPFILES_CB|/"DROPFILES_CB">,
+L<ENTERWINDOW_CB|/"ENTERWINDOW_CB">,
+L<GETFOCUS_CB|/"GETFOCUS_CB">,
+L<HELP_CB|/"HELP_CB">,
+L<HIGHLIGHT_CB|/"HIGHLIGHT_CB">,
+L<IDLE_ACTION|/"IDLE_ACTION">,
+L<KEYPRESS_CB|/"KEYPRESS_CB">,
+L<KILLFOCUS_CB|/"KILLFOCUS_CB">,
+L<K_ANY|/"K_ANY">,
+L<LEAVEWINDOW_CB|/"LEAVEWINDOW_CB">,
+L<MAP_CB|/"MAP_CB">,
+L<MENUCLOSE_CB|/"MENUCLOSE_CB">,
+L<MOTION_CB|/"MOTION_CB">,
+L<OPEN_CB|/"OPEN_CB">,
+L<RESIZE_CB|/"RESIZE_CB">,
+L<SCROLL_CB|/"SCROLL_CB">,
+L<SHOW_CB|/"SHOW_CB">,
+L<UNMAP_CB|/"UNMAP_CB">,
+L<WHEEL_CB|/"WHEEL_CB">,
+L<WOM_CB|/"WOM_CB">
+
+=back
+
 
 =head1 CALLBACKS
 
@@ -52,16 +104,24 @@ Action generated when a mouse button is pressed or released.
 
 B<$button:> identifies the activated mouse button:
 
- IUP_BUTTON1 ... left mouse button (button 1)
- IUP_BUTTON2 ... middle mouse button (button 2)
- IUP_BUTTON3 ... right mouse button (button 3)
+=over
+
+ IUP_BUTTON1 or "1" ... left mouse button (button 1)
+ IUP_BUTTON2 or "2" ... middle mouse button (button 2)
+ IUP_BUTTON3 or "3" ... right mouse button (button 3)
  
 Note: C<IUP_BUTTON?> constants are defined in L<IUP::Constants|IUP::Constants>.
  
+=back
+
 B<$pressed:> boolean that indicates the state of the button:
+
+=over
 
  0 ... mouse button was released;
  1 ... mouse button was pressed.
+
+=back
 
 B<$x>, B<$y:> position in the canvas where the event has occurred, in
 pixels.
@@ -69,6 +129,8 @@ pixels.
 B<$status:> status of the mouse buttons and some keyboard keys at the
 moment the event is generated. The following macros must be used for
 verification:
+
+=over
 
  IUP->isshift($status)
  IUP->iscontrol($status)
@@ -84,6 +146,8 @@ verification:
 They return 1 if the respective key or button is pressed, and 0
 otherwise.
 
+=back
+
 B<Returns:> IUP_CLOSE will be processed. On some controls if IUP_IGNORE is
 returned the action is ignored (this is system dependent).
 
@@ -96,14 +160,14 @@ A double click is preceded by two single clicks, one for pressed=1 and
 one for pressed=0, and followed by a press=0, all three without the
 double click flag set. In GTK, it is preceded by an additional two
 single clicks sequence. For example, for one double click all the
-following calls are made:
+following calls to BUTTON_CB callback handler are made:
 
-  BUTTON_CB(but=1 (1), x=154, y=83 [  1       ])
-  BUTTON_CB(but=1 (0), x=154, y=83 [  1       ])
-  BUTTON_CB(but=1 (1), x=154, y=83 [  1       ])     (in GTK only)
-  BUTTON_CB(but=1 (0), x=154, y=83 [  1       ])     (in GTK only)
-  BUTTON_CB(but=1 (1), x=154, y=83 [  1  D    ])
-  BUTTON_CB(but=1 (0), x=154, y=83 [  1       ])
+  BUTTON_CB($but=1, $pressed=1, $x=154, $y=83, $status='[  1       ]')
+  BUTTON_CB($but=1, $pressed=0, $x=154, $y=83, $status='[  1       ]')
+  BUTTON_CB($but=1, $pressed=1, $x=154, $y=83, $status='[  1       ]') (in GTK only)
+  BUTTON_CB($but=1, $pressed=0, $x=154, $y=83, $status='[  1       ]') (in GTK only)
+  BUTTON_CB($but=1, $pressed=1, $x=154, $y=83, $status='[  1  D    ]')
+  BUTTON_CB($but=1, $pressed=0, $x=154, $y=83, $status='[  1       ]')
 
 [% h.at_affects %] L<IUP::Canvas|IUP::Canvas>,
 L<IUP::Button|IUP::Button>, L<IUP::Text|IUP::Text>,
@@ -129,45 +193,6 @@ you destroy the dialog in this callback, you must return IUP_IGNORE.
 IUP_CLOSE will be processed.
 
 [% h.at_affects %] L<IUP::Dialog|IUP::Dialog>
-
-=item B<DEFAULT_ACTION>
-
-Predefined IUP action, generated every time an action has no associated
-function (except for the IDLE_ACTION).
-
-[%h.at_handler%]
-
- sub action_handler {
-   my ($self) = @_;
-   #...
- }
- [xxxThere is no Lua equivalent]
-
-[%txt.cb_ih%]
-
-[%h.at_notes%]
-
-Often a programmer defines an action with a name and, when associating
-it to a function, he/she mistypes the action name, or vice-versa. This
-kind of mistake is very common, and IUP is not able to automatically
-detect it. This predefined action, combined with function
-L<IUP::GetActionName|IUP::GetActionName>, can help the programmer detect this problem. All
-you have to do is define a default action and verify which is the name
-of the action that activated it. For example:
-
- IUP::SetFunction("myFunctionName", (Icallback)myFunction);
- IUP::SetAttribute(myButton, "ACTION", "myFunctionNamr");   /* notice the typo error here */
-
-In this case the incorrect name "myFunctionNamr" (typo error here) will
-not be found, so if the DEFAULT_ACTION is defined it will be called
-when "ACTION" in invoked for the button. In fact it will be called for
-all the actions that do not have an action associated.
-
-[% h.at_affects %] All callbacks when L<IUP::SetFunction|IUP::SetFunction> is used.
-If L<IUP::SetCallback|IUP::SetCallback> is used DEFAULT_ACTION is ignored.
-
-[% h.at_see %] L<IUP::SetFunction|IUP::SetFunction>,
-L<IUP::GetActionName|IUP::GetActionName>.
 
 =item B<DESTROY_CB>
 
@@ -286,8 +311,10 @@ L<IUP::Submenu|IUP::Submenu>.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih); [in C]
- elem:highlight_cb() -> (ret: number) [in Lua]
+ sub highlight_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
@@ -300,6 +327,10 @@ to be processed. Often used to perform background operations.
 
 [%h.at_handler%]
 
+ sub idle_handler() {
+   # no parameters
+   #...
+ }
  int function(void); [in C]
 
 B<Returns:> if IUP_CLOSE is returned the current loop will be closed and
@@ -316,19 +347,14 @@ that the Idle will be called before another mouse move message is
 schedule to processing.
 
 So this callback changes the message loop to a more CPU consuming one.
-It is important that you set it to NULL when not using it. Or the
+It is important that you set it to C<undef> when not using it. Or the
 application will be consuming CPU even if the callback is doing
 nothing.
 
-It can only be set using L<IUP::SetFunction|IUP::SetFunction>.
-
-xxx=head4 Lua Binding
-
-To modify this action use the function C<< IUP->SetIdle(myfunctionB) >>.
+To set this action use the function C<< IUP->SetIdle(\&myfunction) >>. xxxcheckthis
 Using C<undef> as a parameter to remove the association.
 
-xxx=head4 Long Time Operations
-
+B<Long Time Operations:>
 If you create a loop or an operation that takes a long time to complete
 inside a callback of your application then the user interface message
 loop processing is interrupted until the callback returns, so the user
@@ -337,31 +363,28 @@ handle that:
 
 =over
 
-=item * call L<IUP::LoopStep|IUP::LoopStep> or L<IUP::Flush|IUP::Flush> inside the application
+=item * call L<IUP-E<gt>LoopStep|IUP/LoopStep> or L<IUP-E<gt>Flush|IUP/Flush> inside the application
 callback when it is performing long time operations. This will allow
 the user to click on a cancel button for instance, because the user
 interface message loop will be processed.
 
 =item * split the operation in several parts that are processed by the
-C<< IUP->Idle >> function when no messages are left to be processed for the
+L<IUP-E<gt>Idle|IUP/Idle> xxxcheckthis
+function when no messages are left to be processed for the
 user interface message loop. This will make a heavy use of the CPU,
 even if the callback is doing nothing.
 
-=item * split the operation in several parts but use a B<Timer> to
-process each part.
+=item * split the operation in several parts but use a L<IUP::Timer|IUP::Timer>
+to process each part.
 
 =back
 
-If you just want to do something simple as a background redraw of an B<
-IUP::Canvas>, then a better idea is to handle the "idle" state yourself.
+If you just want to do something simple as a background redraw of an B<IUP::Canvas>, 
+then a better idea is to handle the "idle" state yourself.
 For example, register a timer for a small time like 500ms, and reset
 the timer in all the mouse and keyboard callbacks of the L<IUP::Canvas|IUP::Canvas>.
 If the timer is trigged then you are in idle state. If the L<IUP::Canvas|IUP::Canvas>
 loses its focus then stop the timer.
-
-[% h.at_examples %]
-
-L<Browse for Example Files|../../examples/>
 
 [% h.at_see %] L<IUP::SetFunction|IUP::SetFunction>,
 L<IUP::Timer|IUP::Timer>.
@@ -374,15 +397,17 @@ callback B<K_ANY> is processed.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih, int c, int press); [in C]
- elem:keypress_cb(c, press: number) -> (ret: number) [in Lua]
+ sub keypress_cb_handler {
+   my ($self, $c, $press) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
 B<$c:> identifier of typed key. Please refer to the L<Keyboard
 Codes|../attrib/key.html> table for a list of possible values.
 
-B<$press:> 1 is the user pressed the key or 0 otherwise.
+B<$press:> 1 is the user pressed the key or 0 otherwise. xxxotherwise means what?
 
 B<Returns:> If IUP_IGNORE is returned the key is ignored by the system.
 IUP_CLOSE will be processed.
@@ -396,8 +421,10 @@ called before the GETFOCUS_CB of the element that gets the focus.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih); [in C]
- elem:killfocus_cb() -> (ret: number) [in Lua]
+ sub killfocus_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
@@ -413,8 +440,10 @@ Action generated when a keyboard event occurs.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih, int c); [in C]
- elem:k_any(c: number) -> (ret: number) [in Lua]
+ sub k_any_handler {
+   my ($self, $c) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
@@ -451,8 +480,10 @@ Action generated when the mouse leaves a canvas or button.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih); [in C]
- elem:leavewindow_cb() -> (ret: number) [in Lua]
+ sub leavewindow_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
@@ -464,8 +495,10 @@ Called right after an element is mapped and its layout updated.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih); [in C]
- elem:map_cb() -> (ret: number) [in Lua]
+ sub map_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
@@ -477,8 +510,10 @@ Called just after the menu is closed.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih); [in C]
- elem:menuclose_cb() -> (ret: number) [in Lua]
+ sub menuclose_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
@@ -492,6 +527,10 @@ Action generated when the mouse moves.
 
  int function(Ihandle *ih, int x, int y, char *status); [in C]
  elem:motion_cb(x, y: number, status: string) -> (ret: number) [in Lua]
+ sub motion_cb_handler {
+   my ($self, $x, $y, $number, $status) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
@@ -511,8 +550,10 @@ Called just before the menu is opened.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih); [in C]
- elem:open_cb() -> (ret: number) [in Lua]
+ sub open_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
@@ -524,16 +565,18 @@ Action generated when the element size is changed.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih, int width, int height); [in C]
- elem:resize_cb(width, height: number) -> (ret: number) [in Lua]
+ sub resize_cb_handler {
+   my ($self, $width, $height) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
 B<$width:> the width of the internal element size in pixels not
-considering the decorations (client size)
+considering the decorations (client size) xxxlink to "client size" description in layout.pod
 
 B<$height:> the height of the internal element size in pixels not
-considering the decorations (client size)
+considering the decorations (client size) xxxlink to "client size" description in layout.pod
 
 [%h.at_notes%]
 
@@ -553,8 +596,10 @@ automatically redrawn only if this callback is NOT defined.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih, int op, float posx, float posy); [in C]
- elem:scroll_cb(op, posx, posy: number) -> (ret: number) [in Lua]
+ sub scroll_cb_handler {
+   my ($self, $op, $posx, $posy) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
@@ -565,27 +610,23 @@ B<$op:> indicates the operation performed on the scrollbar.
 If the manipulation was made on the vertical scrollbar, it can have the
 following values:
 
-=back
-
- IUP_SBUP - line up
- IUP_SBDN - line down
- IUP_SBPGUP - page up
- IUP_SBPGDN - page down
- IUP_SBPOSV - vertical positioning
- IUP_SBDRAGV - vertical drag 
-
-=over
+ IUP_SBUP    ... line up
+ IUP_SBDN    ... line down
+ IUP_SBPGUP  ... page up
+ IUP_SBPGDN  ... page down
+ IUP_SBPOSV  ... vertical positioning
+ IUP_SBDRAGV ... vertical drag 
 
 If it was on the horizontal scrollbar, the following values are valid:
 
-=back
-
- IUP_SBLEFT - column left
- IUP_SBRIGHT - column right
- IUP_SBPGLEFT - page left
- IUP_SBPGRIGHT - page right
- IUP_SBPOSH - horizontal positioning
+ IUP_SBLEFT    ... column left
+ IUP_SBRIGHT   ... column right
+ IUP_SBPGLEFT  ... page left
+ IUP_SBPGRIGHT ... page right
+ IUP_SBPOSH    ... horizontal positioning
  IUP_SBDRAGH - horizontal drag
+
+=back
 
 B<$posx>, B<posy:> the same as the B<ACTION> canvas callback
 (corresponding to the values of attributes POSX and POSY).
@@ -606,8 +647,10 @@ by the user or programmatically by the application.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih, int state); [in C]
- elem:show_cb(state: number) -> (ret: number) [in Lua]
+ sub show_cb_handler {
+   my ($self, $state) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
@@ -616,10 +659,13 @@ event:
 
 =over
 
-IUP_HIDE, IUP_SHOW, IUP_RESTORE (was minimized or maximized),
-IUP_MINIMIZE or IUP_MAXIMIZE. (IUP_HIDE and IUP_MAXIMIZE since 3.0)
+ IUP_HIDE
+ IUP_SHOW
+ IUP_RESTORE  (was minimized or maximized)
+ IUP_MINIMIZE
+ IUP_MAXIMIZE
 
-IUP_MAXIMIZE is not received in Motif when activated from the maximize
+Note: IUP_MAXIMIZE is not received in Motif when activated from the maximize
 button.
 
 =back
@@ -634,8 +680,10 @@ Called right before an element is unmapped.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih); [in C]
- elem:unmap_cb() -> (ret: number) [in Lua]
+ sub unmap_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
@@ -650,8 +698,10 @@ will be called with the IUP_SBDRAGV operation.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih, float delta, int x, int y, char *status); [in C]
- elem:wheel_cb(delta, x, y: number, status: string) -> (ret: number) [in Lua]
+ sub wheel_cb_handler {
+   my ($self, $delta, $x, $y, $status) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 
@@ -662,7 +712,7 @@ pixels.
 
 B<$status:> status of mouse buttons and certain keyboard keys at the
 moment the event was generated. The same macros used for
-L<BUTTON_CB|../call/iup_button_cb.html> can be used for this status.
+L<BUTTON_CB|/"BUTTON_CB"> can be used for this status.
 
 [%h.at_notes%]
 
@@ -683,8 +733,10 @@ Action generated when an audio device receives an event.
 
 [%h.at_handler%]
 
- int function(Ihandle *ih, int state); [in C]
- elem:wom_cb(state: number) -> (ret: number) [in Lua]
+ sub wom_cb_handler {
+   my ($self, $state) = @_;
+   #...
+ }
 
 [%txt.cb_ih%]
 

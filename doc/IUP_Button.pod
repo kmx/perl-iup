@@ -89,7 +89,7 @@ Color button with background color set:
  my $button2 = IUP::Button->new( BGCOLOR=>IUP_RED );   #build-in constant
  
 B<Note:> You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> pairs relevant
-to this element - see L<IUP::Manual::02_CreatingElements|IUP::Manual::02_CreatingElements>.
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 

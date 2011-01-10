@@ -4,6 +4,24 @@
 
 IUP::Manual::Elements - Manuals element guide
 
+=head1 IUP MANUAL
+
+=over
+
+=item * L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>
+
+=item * IUP::Manual::02_Elements E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
+
+=item * L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>
+
+=item * L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>
+
+=item * L<IUP::Manual::05_HandlingKeyboard|IUP::Manual::05_HandlingKeyboard>
+
+=item * L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout>
+
+=back
+
 =head1 INTRODUCTION
 
 xxxTODO GUI vs. non-GUI

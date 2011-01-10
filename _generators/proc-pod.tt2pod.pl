@@ -110,14 +110,15 @@ my $ttdata = {
     iupzbox         =>         'IUP::Zbox - [GUI element] container for composing elements in hidden layers with only one layer visible',
   },
   m => {
-    intro    => 'IUP::Manual::01_Introduction',
-    elem     => 'IUP::Manual::02_CreatingElements',
+    intro    => 'IUP::Manual::01_BasicConcept',
+    elem     => 'IUP::Manual::02_Elements',
     at       => 'IUP::Manual::03_Attributes',
     cb       => 'IUP::Manual::04_Callbacks',
     keys     => 'IUP::Manual::05_HandlingKeyboard',
+    dlg      => 'IUP::Manual::06_DialogLayout',
+    
     imglib   => 'IUP::Manual::06_BuiltInImageLibrary',
     predlg   => 'IUP::Manual::07_PredefinedDialogs',
-    dlg      => 'IUP::Manual::08_DialogLayout',
     asimple  => 'IUP::Manual::09_SimpleApplication',
     acomplex => 'IUP::Manual::10_ComplexApplication',
     amdi     => 'IUP::Manual::11_MDIApplication',

@@ -4,6 +4,24 @@
 
 [% m.at %] - Attribute concept, using attributes, common + global attributes
 
+=head1 IUP MANUAL
+
+=over
+
+=item * [%m.intro%] E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
+
+=item * L<[%m.elem%]|[%m.elem%]>
+
+=item * L<[%m.at%]|[%m.at%]>
+
+=item * L<[%m.cb%]|[%m.cb%]>
+
+=item * L<[%m.keys%]|[%m.keys%]>
+
+=item * L<[%m.dlg%]|[%m.dlg%]>
+
+=back
+
 =head1 INTRODUCTION
 
 IUP has four important concepts that are implemented in a very different way from other toolkits.
