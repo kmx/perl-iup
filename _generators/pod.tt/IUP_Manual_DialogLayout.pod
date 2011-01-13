@@ -2,14 +2,36 @@
 
 [% h.name %]
 
-[% m.layout %] - Dialor Layout Composition
+[% m.dlg %] - Dialor Layout Composition
+
+=head1 IUP MANUAL
+
+=over
+
+=item * L<[%m.intro%]|[%m.intro%]>
+
+=item * L<[%m.elem%]|[%m.elem%]>
+
+=item * L<[%m.at%]|[%m.at%]>
+
+=item * L<[%m.cb%]|[%m.cb%]>
+
+=item * L<[%m.keys%]|[%m.keys%]>
+
+=item * [%m.dlg%] E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
+
+=back
 
 =head1 INTRODUCTION
 
 xxxTODO text text text text text text text text text text text text
 text text text text text text text text text text text text text text
 
-=head1 Layout Composition
+xxx IUP::Dialog the main container
+
+xxx talking about "custom dialogs"
+
+=head1 LAYOUT COMPOSITION
 
 =head2 Abstract Layout
 
@@ -51,20 +73,6 @@ boxes (B<hbox>) and filling (B<fill>). There is also a depth box
 dialog, and the elements in each layer are only visible when that given
 layer is active.
 
-in Windows
-
-in IUP::Lua
-
- dialog DIALOG 0, 0, 117, 32
- STYLE WS_MINIMIZEBOX | WS_MAXIMIZEBOX |
-       WS_CAPTION | WS_SYSMENU |
-       WS_THICKFRAME
- CAPTION "Title"
- BEGIN
-     PUSHBUTTON "Ok",IDOK,17,9,33,15
-     PUSHBUTTON "Cancel",IDCANCEL,66,9,33,15
- END
-
  dialog = iup.dialog
  {
    iup.hbox
@@ -78,28 +86,38 @@ in IUP::Lua
    ;title="Title"
  }
 
-xxx[IMAGE]
-
-xxx[IMAGE]
-
 Following, the abstract layout representation of this dialog:
 
 Layout Hierarchy
 
+ IUP::Dialog
+ |
+ +-> IUP::HBox
+     |
+     +->IUP::Fill
+     |
+     +->IUP::Button
+     |
+     +->IUP::Button
+     |
+     +->IUP::Fill
+
 Layout Visualization
 
- Dialog
-   HBox
-     Fill
-     Button
-     Button
-     Fill
+=begin html
 
-layout.gif (2278 bytes)
+[%html.layout_composition%]
 
-=head1 Layout Guide
+=end html
 
-=head2 X<native>Native Sizes (Window and Client)
+=head2 xxx hbox, vbox & co.
+
+xxxTODO text text text text text text text text text text text text
+text text text text text text text text text text text text text
+
+=head1 LAYOUT GUIDE
+
+=head2 Native Sizes (Window and Client)
 
 Because of the dynamic nature of the abstract layout IUP elements have
 implicit many types of size. But the native elements have only two
@@ -109,11 +127,11 @@ inner size of the window that excludes the decorations and margins. For
 many elements these two sizes are equal, but for many containers they
 are quite different. See some examples bellow.
 
-[IMAGE]
+=begin html
 
-[IMAGE]
+[%html.layout_native%]
 
-[IMAGE]
+=end html
 
 The IUP sizes (B<User>, B<Natural> and B< Current>) described bellow
 are all related to the B<Window> size.
@@ -122,9 +140,9 @@ The native B<Client> size is used only internally to reposition the
 elements in the abstract layout, but it is available using the
 CLIENTSIZE attribute.
 
-=head2 X<iup>IUP Sizes
+=head2 IUP Sizes
 
-=head2 Natural Size
+=head3 Natural Size
 
 IUP does not require that the application specifies the size of any
 element. The sizes are automatically calculated so the contents of each
@@ -155,9 +173,13 @@ buttons do not move or change their sizes.
  }
  dlg:show()
 
-[IMAGE]
+=begin html
 
-=head2 Current Size and User Size (SIZE or RASTERSIZE)
+[%html.layout_natural%]
+
+=end html
+
+=head3 Current Size and User Size (SIZE or RASTERSIZE)
 
 When the application defines the L<SIZE|attrib/iup_size.html> or
 L<RASTERSIZE|attrib/iup_rastersize.html> attributes, it changes the
@@ -197,7 +219,11 @@ changed after it was displayed on screen)
  }
  dlg:show()
 
-[IMAGE]
+=begin html
+ 
+[%html.layout_client%]
+
+=end html
 
 So when EXPAND=NO (see bellow) for elements that are not containers if
 B<User> size is defined then the B<Natural> size is ignored.
@@ -206,7 +232,7 @@ If you want to adjust sizes in the dialog do it after the layout size
 and positioning are done, i.e. after the dialog is mapped or after
 L<IUP::Refresh|IUP::Refresh> is called.
 
-=head2 EXPAND
+=head3 EXPAND
 
 Another way to increase the size of elements is to use the EXPAND
 attribute. When there is room in the container to expand an element,
@@ -230,7 +256,11 @@ Using EXPAND in the example, we obtain the following result:
  }
  dlg:show()
 
-[IMAGE]
+=begin html
+ 
+[%html.layout_expand1%]
+
+=end html
 
 So for elements that are NOT containers, when EXPAND is enabled the B<
 Natural> size and the B<User> size are ignored.
@@ -243,7 +273,11 @@ even if EXPAND is enabled for its elements. In fact the actual dialog
 size can be smaller, but its contents will stop to follow the resize
 and they will be clipped at right and bottom.
 
-[IMAGE]
+=begin html
+ 
+[%html.layout_expand2%]
+
+=end html
 
 If the expansion is in the same direction of the box, for instance
 expand="VERTICAL" in the Vbox of the previous example, then the
@@ -251,7 +285,7 @@ expandable elements will receive equal spaces to expand according to
 the remaining empty space in the box. This is why elements in diferent
 boxes does not align perfectly when EXPAND is set.
 
-=head2 SHRINK
+=head3 SHRINK
 
 To reduce the size of the dialog and its containers to a size smaller
 than the B<Natural> size the SHRINK attribute of the dialog can be
@@ -277,9 +311,13 @@ set the dialog initial size.
  }
  dlg:show()
 
-[IMAGE]
+=begin html
+ 
+[%html.layout_shrink%]
 
-=head2 Layout X<Hierarchy>Hierarchy
+=end html
+
+=head2 Layout Hierarchy
 
 The layout of the elements of a dialog in IUP has a natural hierarchy
 because of the way they are composed together.
@@ -343,7 +381,7 @@ of the child. For example:
  }
  cancel_button = dlg[1][2]
 
-=head2 Layout X<Display>Display
+=head2 Layout Display
 
 The layout size and positioning is automatically updated by L<IUP::Map|IUP::Map>.
 L<IUP::Map|IUP::Map> also updates the dialog layout even if it is already mapped,

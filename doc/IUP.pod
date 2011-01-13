@@ -4,13 +4,13 @@
 
 IUP - Cross-platform GUI toolkit for building graphical user interfaces
 
-=head1 DESCRIPTION
+
 
 The IUP module is a cross-platform GUI toolkit designed to run on
 B<MS Windows> (incl. Cygwin), B<GTK+> and B<Motif/X11>.
 On all platform it uses native GUI widgets.
 
-=begin HTML
+=begin html
 
 <p>
   <table border="1">
@@ -40,19 +40,21 @@ On all platform it uses native GUI widgets.
   </table>
 </p>
 
-=end HTML
+=end html
+
+B<Source code:> see L<sample.pl|https://github.com/kmx/perl-iup/tree/master/examples/sample.pl>
 
 =head2 IUP's Strengths
 
 =over
 
-=item * B<Portability:> The same perl script implementing GUI application
+=item * B<Portability:> The same GUI application written in perl
 works on Windows and UNIX systems.
 
 =item * B<Small and Simple API:> This is rare. Many libraries assume
 that a GUI toolkit is also a synonymous with a system abstraction
-and accumulate a bunch of extra functions that are not related to
-User Interface.
+and accumulate a bunch of extra functions and/or classes that are not
+related to User Interface.
 
 =item * B<Easy to Learn:> The learning curve for a new IUP user is often
 faster due to the small number of functions and to IUP's
@@ -64,8 +66,13 @@ This gives an uniformity among systems, but also a disparity among the
 available applications in the same system. Native controls are also
 faster because they are drawn by the system.
 
-=item * B<Excelent Documentation:> Which is not so common by other
+=item * B<Exhaustive Documentation:> Which is not so common by other
 perl GUI toolkits. Good starting points are L<IUP|IUP> and L<IUP::Manual>.
+
+=item * B<Advanced Visualization Elements:> Thanks to IUP'S academic origin
+it has several fairly advanced GUI elemts handy for visualisation of scientific
+data (L<IUP::PPlot|IUP::PPlot>, L<IUP::Matrix|IUP::Matrix>) and 2D
+drawing (L<IUP::Canvas|IUP::Canvas>).
 
 =back
 
@@ -73,7 +80,7 @@ perl GUI toolkits. Good starting points are L<IUP|IUP> and L<IUP::Manual>.
 
 IUP perl module is based on the following libraries delivered by
 B<Tecgraf - Computer Graphics Technology Group, PUC-Rio, Brazil>
-L<http://www.tecgraf.puc-rio.br/iup|http://www.tecgraf.puc-rio.br/iup>:
+L<http://www.tecgraf.puc-rio.br/iup|http://www.tecgraf.puc-rio.br>:
 
 =over
 
@@ -88,14 +95,14 @@ L<http://www.tecgraf.puc-rio.br/iup|http://www.tecgraf.puc-rio.br/iup>:
 There is no need to install them before installing L<IUP|IUP> module;
 they are handled by separate L<Alien::IUP|Alien::IUP> module.
 
-=head1 IUP APPLICATION EXAMPLES
+=head1 QUICK START
 
 At this point we show just basic ideas behind IUP based GUI applications.
 For more details see L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>.
 Or if you wanna skip the theory you can go directly to L<examples|https://github.com/kmx/perl-iup/tree/master/examples>
 directory of IUP distribution or look at L<IUP::Manual::07_Examples|IUP::Manual::07_Examples>.
 
-=head3 Simple GUI Functions
+=head3 Simple GUI Dialogs
 
  use IUP;
 
@@ -142,6 +149,15 @@ directory of IUP distribution or look at L<IUP::Manual::07_Examples|IUP::Manual:
 
 =end html
 
+All functions from this category:
+L<Alarm|/"Alarm">,
+L<GetFile|/"GetFile">,
+L<GetColor|/"GetColor">,
+L<GetParam|/"GetParam">,
+L<GetText|/"GetText">,
+L<ListDialog|/"ListDialog">,
+L<Message|Message> - see L<simple GUI dialogs|/"Simple GUI dialogs"> section.
+
 =head3 Pre-defined Dialogs
 
  use IUP;
@@ -172,6 +188,14 @@ directory of IUP distribution or look at L<IUP::Manual::07_Examples|IUP::Manual:
 </p>
 
 =end html
+
+=for comment generated list - predefined dialogs
+
+All pre-defined dialogs supported by IUP:
+L<IUP::ColorDlg|IUP::ColorDlg>,
+L<IUP::FileDlg|IUP::FileDlg>,
+L<IUP::FontDlg|IUP::FontDlg>,
+L<IUP::MessageDlg|IUP::MessageDlg>.
 
 =head3 Custom Dialogs
 
@@ -253,71 +277,1002 @@ directory of IUP distribution or look at L<IUP::Manual::07_Examples|IUP::Manual:
 
 =end html
 
+The main GUI element (the main application window) is always
+L<IUP::Dialog|IUP::Dialog> - for more info see L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout>.
+
 =head1 USING IUP
 
 =head2 What is included in IUP's interface ?
 
 =head3 IUP Global Function
 
-xxx functions included directly in L<IUP|IUP> module - see L<GLOBAL FUNCTIONS|IUP/"GLOBAL FUNCTIONS">.
+These functions are placed directly in L<IUP|IUP> module - see L<GLOBAL FUNCTIONS|/"GLOBAL FUNCTIONS">.
+They are never exported from IUP module, you have to call them via C<< IUP->FunctionName() >>.
 
-xxx handling of ... manipulating with ... accessing global attributes ...
+ use IUP;
+ my $s = IUP->GetGlobal('SCREENSIZE');
+ my $d = IUP->GetGlobal('DRIVER');
+ print "GUI driver=$d\nScreen resolution=$s\n";
 
-=head3 IUP Global Constants
-
-xxx IUP related constants are defined in L<IUP::Constants|IUP::Constants>.
-
-xxx not variables, cannot be used inside "..."
-
-=head3 IUP Elemenets
-
-Currently available interface elements can be categorized as follows:
+Global funtions cover:
 
 =over
 
-=item * B<Primitives> (effective user interaction): B<dialog, label,
-button, text, multi-line, list, toggle, canvas, frame, image>.
+=item * handling IUP event loop
 
-=item * B<Composition> (ways to show the elements): B<hbox, vbox,>
-B<zbox, fill>.
+=item * accessing global attributes
 
-=item * B<Grouping> (definition of a common functionality for a group
-of elements): B<radio>.
+=item * simple GUI dialogs
 
-=item * B<Menu> (related both to menu bars and to pop-up menus):
-B<menu, submenu, item, separator>.
-
-=item * Additional (elements built outside the main library): B<dial,
-gauge, matrix, tabs, valuator, OpenGL canvas, color chooser, color
-browser>.
-
-=item * B<Dialogs> (useful predefined dialogs): B<file selection,
-message, alarm, data input, list selection>.
+=item * other helper functions
 
 =back
 
+=head3 IUP Global Constants
+
+All IUP related constants (e.g. C<IUP_CLOSE>, C<IUP_ERROR>, ...)
+are defined in L<IUP::Constants|IUP::Constants>. Please note that:
+
+=over
+
+=item * all constants are defined via C<use constant> pragma
+
+=item * constants are usable as barewords therefore they do not
+interpolate in interpolation contexts such as double-quoted strings
+
+  use IUP;
+  
+  # beware!!!
+  print "color is - IUP_GREEN";    # prints: color is - IUP_GREEN
+  
+  # this is probably what you want
+  print "color is - " . IUP_GREEN; # prints: color is - 0 255 0
+
+=back
+
+=head3 IUP Elemenets
+
+Currently available IUP elements:
+
+=over
+
+=item * The most important GUI element used for the main applications window:
+
+L<IUP::Dialog>
+
+=for comment generated list - GUI elements
+
+=item * GUI elements:
+
+L<IUP::Button|IUP::Button>,
+L<IUP::Canvas|IUP::Canvas>,
+L<IUP::CanvasGL|IUP::CanvasGL>,
+L<IUP::Cbox|IUP::Cbox>,
+L<IUP::Cells|IUP::Cells>,
+L<IUP::ColorBar|IUP::ColorBar>,
+L<IUP::ColorBrowser|IUP::ColorBrowser>,
+L<IUP::Dial|IUP::Dial>,
+L<IUP::Dialog|IUP::Dialog>,
+L<IUP::Fill|IUP::Fill>,
+L<IUP::Frame|IUP::Frame>,
+L<IUP::Hbox|IUP::Hbox>,
+L<IUP::Image|IUP::Image>,
+L<IUP::Item|IUP::Item>,
+L<IUP::Label|IUP::Label>,
+L<IUP::List|IUP::List>,
+L<IUP::Matrix|IUP::Matrix>,
+L<IUP::Menu|IUP::Menu>,
+L<IUP::Normalizer|IUP::Normalizer>,
+L<IUP::Ole|IUP::Ole>,
+L<IUP::PPlot|IUP::PPlot>,
+L<IUP::ProgressBar|IUP::ProgressBar>,
+L<IUP::Radio|IUP::Radio>,
+L<IUP::Sbox|IUP::Sbox>,
+L<IUP::Separator|IUP::Separator>,
+L<IUP::Spin|IUP::Spin>,
+L<IUP::Spinbox|IUP::Spinbox>,
+L<IUP::Split|IUP::Split>,
+L<IUP::Submenu|IUP::Submenu>,
+L<IUP::Tabs|IUP::Tabs>,
+L<IUP::Text|IUP::Text>,
+L<IUP::Toggle|IUP::Toggle>,
+L<IUP::Tree|IUP::Tree>,
+L<IUP::Val|IUP::Val>,
+L<IUP::Vbox|IUP::Vbox>,
+L<IUP::Zbox|IUP::Zbox>
+
+=for comment generated list - predefined dialogs
+
+=item * Pre-defined dialogs:
+
+L<IUP::ColorDlg|IUP::ColorDlg>,
+L<IUP::FileDlg|IUP::FileDlg>,
+L<IUP::FontDlg|IUP::FontDlg>,
+L<IUP::MessageDlg|IUP::MessageDlg>
+
+=item * Special non-GUI elements:
+
+L<IUP::Clipboard|IUP::Clipboard>,
+L<IUP::Timer|IUP::Timer>,
+L<IUP::User|IUP::User>
+
+=back
+
+All IUP elements are perl classes with C<new()> constructor. The are used in this way:
+
+ my $button = IUP::Button->new( TITLE=>'Hello' ); # creating
+ $button->SetAttribute('FGCOLOR', '255 128 128'); # calling a method
+
+For more info see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+ 
 =head3 Using IUP in your perl program
 
-By default, IUP doesn't import other IUP related classes.
+By default, IUP doesn't import any other IUP related modules:
 
-  # Don't import other modules
-  use IUP;
+ # import IUP but don't import other modules
+ use IUP;
 
 You may, however, instruct IUP to import all modules by using the following syntax:
 
-  # import all IUP modules
-  use IUP ':all';
+ # import IUP + all IUP::* modules - short, easy but memory consuming
+ use IUP ':all';
 
-Or you can import just selected modules by this:
+Or you can import just selected modules by using:
 
-  # import IUP::Button and IUP::Menu only.
-  use IUP qw(Button Menu);
+ # import IUP + IUP::Button and IUP::Menu
+ use IUP qw(Button Menu);
 
-xxx not implemented in this way yet
+Which is equivalent to:
+
+ use IUP;
+ use IUP::Button;
+ use IUP::Menu;
+ 
+B<IMPORTANT NOTE:> If you are the first time reader of this document at this point
+you might wanna jumt to L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>. The rest of this document is just
+the reference list of all functions available in the main L<IUP|IUP> module.
 
 =head1 GLOBAL FUNCTIONS
 
-xxx TODO xxx
+=head2 Handling IUP event loop
+
+=head3 MainLoop()
+
+Executes the user interaction until a callback returns C<IUP_CLOSE>,
+C<L<< IUP->ExitLoop|/"ExitLoop" >>> is called, or hiding the last visible dialog.
+
+ IUP->MainLoop();
+
+B<Returns:> Always C<IUP_NOERROR>
+
+B<Notes:>
+
+When this function is called, it will interrupt the program execution
+until a callback returns C<IUP_CLOSE>, C<L<< IUP->ExitLoop|/"ExitLoop" >>> is called, 
+or there are no visible dialogs.
+
+If you cascade many calls to C<L<< IUP->MainLoop|/"MainLoop" >>> there must be a C<return
+IUP_CLOSE;> or C<L<< IUP->ExitLoop|/"ExitLoop" >>> call for each cascade level, hidding all
+dialogs will close only one level. Call C<L<< IUP->MainLoopLevel|/"MainLoopLevel" >>>
+to obtain the current level.
+
+If C<L<< IUP->MainLoop|/"MainLoop" >>> is called without any visible dialogs and no active
+timers, the application will hang and will not be possible to close the
+main loop. The process will have to be interrupted by the system.
+
+When the last visible dialog is hidden the C<L<< IUP->ExitLoop|/"ExitLoop" >>> function is
+automatically called, causing the C<L<< IUP->MainLoop|/"MainLoop" >>> to return. To avoid
+that set global attribute C<LOCKLOOP> to C<"YES"> before hiding the last dialog.
+
+B<See Also:>
+L<IUP-E<gt>Open|/"Open">, L<IUP-E<gt>Close|/"Close">,
+L<IUP-E<gt>LoopStep|/"LoopStep">, L<IUP-E<gt>ExitLoop|/"ExitLoop">,
+L<IDLE_ACTION|IUP::Manual::04_Callbacks/"IDLE_ACTION">,
+L<LOCKLOOP|IUP::Manual::03_Attributes/"LOCKLOOP">.
+ 
+=head3 MainLoopLevel()
+
+Returns the current cascade level of C<L<< IUP->MainLoop|/"MainLoop" >>>. 
+When no calls were done, return value is 0.
+
+ IUP->MainLoopLevel();
+
+B<Returns:> the cascade level
+
+B<Notes:>
+
+You can use this function to check if C<L<< IUP->MainLoop|/"MainLoop" >>> was already called
+and avoid calling it again.
+
+A call to C<L<< $element->Popup|IUP::Manual::02_Elements/"Popup" >>> will increase one level.
+
+B<See Also:>
+L<IUP-E<gt>Open|/"Open">, L<IUP-E<gt>Close|/"Close">,
+L<IUP-E<gt>LoopStep|/"LoopStep">,
+L<IDLE_ACTION|IUP::Manual::04_Callbacks/"IDLE_ACTION">,
+L<LOCKLOOP|IUP::Manual::03_Attributes/"LOCKLOOP">.
+
+=head3 LoopStep()
+
+ IUP->LoopStep();
+
+See C<L<< IUP->LoopStepWait|/"LoopStepWait" >>>
+
+=head3 LoopStepWait()
+
+Runs one iteration of the message loop.
+
+ IUP->LoopStepWait();
+
+B<Returns:> C<IUP_CLOSE> or C<IUP_DEFAULT>
+
+B<Notes:>
+
+This function is useful for allowing a second message loop to be
+managed by the application itself. This means that messages can be
+intercepted and callbacks can be processed inside an application loop.
+
+L<IUP::LoopStep|IUP::LoopStep> returns immediately after processing any messages or if
+there are no messages to process. L<IUP::LoopStepWait|IUP::LoopStepWait> put the system in
+idle until a message is processed .
+
+If IUP_CLOSE is returned the L<IUP::MainLoop|IUP::MainLoop> will not end because the
+return code was already processed. If you want to end B< IUP::MainLoop>
+when IUP_CLOSE is returned by L<IUP::LoopStep|IUP::LoopStep> then call L<IUP::ExitLoop|IUP::ExitLoop>
+after L<IUP::LoopStep|IUP::LoopStep> returns.
+
+An example of how to use this function is a counter that can be stopped
+by the user. For such, the user has to interact with the system, which
+is possible by calling the function periodically.
+
+This way, this function replaces old mechanisms implemented using the
+Idle callback.
+
+Note that this function does not replace L<IUP::MainLoop|IUP::MainLoop>.
+
+B<See Also:>
+L<IUP::Open|IUP::Open>, L<IUP::Close|IUP::Close>,
+L<IUP::MainLoop|IUP::MainLoop>, L<IUP::ExitLoop|IUP::ExitLoop>,
+L<IDLE_ACTION|../call/iup_idle_action.html>
+
+=head3 ExitLoop()
+
+Terminates the current message loop. It has the same effect of a
+callback returning IUP_CLOSE.
+
+ IUP->ExitLoop();
+
+=head3 Flush()
+
+Processes all pending messages in the message queue.
+
+ IUP->Flush();
+
+B<Notes:>
+
+When you change an attribute of a certain element, the change may not
+take place immediately. For this update to occur faster than usual,
+call C<< IUP->Flush >> after the attribute is changed.
+
+B<Important:> A call to this function may cause other callbacks to be
+processed before it returns.
+
+In Motif, if the X server sent an event which is not yet in the event
+queue, after a call to C<< IUP->Flush >> the queue might not be empty. 
+
+=head3 SetIdle()
+
+Setting global L<IDLE_ACTION|IUP::Manual::04_Callbacks/"IDLE_ACTION"> callback ("idle callback") handler.
+
+ sub idle_cb {
+   #...
+ }
+ 
+ IUP->SetIdle(\&idle_cb);  #set idle callback handler
+ 
+ #at some point later
+ IUP->SetIdle(undef);      #unset idle callback handler
+
+B<See Also:>
+L<IDLE_ACTION|IUP::Manual::04_Callbacks/"IDLE_ACTION">
+
+=head2 Accessing global attributes
+
+=head3 GetGlobal()
+
+Returns an attribute value from the global environment. The value can
+be returned from the driver or from the internal storage.
+
+ IUP->GetGlobal($name);
+
+B<$name>: name of the attribute - see L<global attributes|IUP::Manual::03_Attributes/"GLOBAL ATTRIBUTES">.
+
+B<Returns:> the attribute value. If the attribute does not exist C<undef> is returned.
+
+B<Notes:>
+
+This functionE<rsquo>s return value is not necessarily the same one
+used by the application to define the attributeE<rsquo>s value.
+
+B<See Also:>
+C<L<< IUP->SetGlobal|/"SetGlobal" >>>
+
+=head3 SetGlobal()
+
+Defines an attribute for the global environment. If the driver process
+the attribute then it will not be stored internally.
+
+ IUP->SetGlobal($name, $value);
+
+B<$name>: name of the attribute - see L<global attributes|IUP::Manual::03_Attributes/"GLOBAL ATTRIBUTES">.
+
+B<$value>: value of the attribute. If it equals C<undef> the attribute will be removed.
+
+B<Notes:>
+
+The value stored in the attribute is not duplicated. Therefore, you can
+store your private attributes, such as a structure of data to be used
+in a callback.
+
+B<See Also:>
+L<IUP::GetGlobal|IUP::GetGlobal>,
+
+=head3 GetLanguage()
+
+Returns the value of global attribute C<L<LANGUAGE|IUP::Manual::03_Attributes/"LANGUAGE">>.
+
+ IUP->GetLanguage();
+
+B<Returns:> string with the language name - e.g. C<"ENGLISH">.
+
+B<See Also:>
+L<SetLanguage|/"SetLanguage">,
+L<LANGUAGE|IUP::Manual::03_Attributes/"LANGUAGE">
+
+=head3 SetLanguage()
+
+Defines the language used by some pre-defined dialogs. This is an old
+function, it just sets the global attribute C<L<LANGUAGE|IUP::Manual::03_Attributes/"LANGUAGE">>.
+
+ IUP->SetLanguage($lng);
+
+B<$lng>: Language to be used. Can have one of the following values:
+
+=over
+
+=item * "ENGLISH"
+
+=item * "PORTUGUESE"
+
+=back
+
+B<Default:> "ENGLISH"
+
+B<Examples:>
+
+ use IUP;
+ IUP->SetLanguage("ENGLISH"); 
+ IUP->Message("IUP Language", IUP->GetLanguage());
+
+B<See Also:>
+L<GetLanguage|/"GetLanguage">,
+L<LANGUAGE|IUP::Manual::03_Attributes/"LANGUAGE">
+
+=head3 Version()
+
+Returns the value of global attribute C<L<VERSION|IUP::Manual::03_Attributes/"VERSION">>.
+
+ my $verstring = IUP->Version();
+
+B<Returns:> the version of underlaying iup library - for example: "3.3". 
+
+=head3 VersionNumber()
+
+Returns numeric represenatation of underlaying iup library version. The
+return value can be used for numeric comparison.
+
+my $vernumger = IUP->VersionNumber();
+
+B<Returns:> the version number - for example: 303000 for version "3.3". 
+
+=head3 SetClassDefaultAttribute()
+
+Changes the default value of an attribute for a class. It can be any
+attribute, i.e. registered attributes or user custom attributes.
+
+ IUP->SetClassDefaultAttribute($classname, $name, $value);
+
+B<$classname:> name of the class
+
+B<$name:> name of the attribute
+
+B<$value>: new default value.
+
+B<Notes:>
+
+If the value is DEFAULTFONT, DLGBGCOLOR, DLGFGCOLOR, TXTBGCOLOR,
+TXTFGCOLOR or MENUBGCOLOR then the actual default value will be the
+global attribute of the same name consulted at the time the attribute
+is consulted.
+
+Attributes that are not strings and attributes that have variable
+names, like those which has a complementary number, can NOT have a
+default value. Some attributes can NOT have a default value by
+definition.
+
+If the new default value is C<-1> xxxcheck thisxxx, then the default value is set to
+be the system default if any is defined.
+
+B<See Also:>
+L<IUP::GetClassName|IUP::GetClassName>,
+L<IUP::GetClassType|IUP::GetClassType>,
+L<IUP::GetAllAttributes|IUP::GetAllAttributes>
+ 
+=head2 Simple GUI dialogs
+
+=head3 Alarm()
+
+Shows a modal dialog containing a message and up to three buttons.
+
+=begin html
+
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.3/dlg/alarm.png"></td>
+</p>
+
+=end html
+
+ my $buttonA = IUP->Alarm($t, $m, $b1);  # message box with 1 button
+ #or
+ my $buttonB = IUP->Alarm($t, $m, $b1, $b2); # message box with 2 buttons
+ #or
+ my $buttonC = IUP->Alarm($t, $m, $b1, $b2, $b3); # message box with 3 buttons
+
+B<$t:> Dialog's title
+
+B<$m:> Message text
+
+B<$b1:> Text of the first button
+
+B<$b2:> Text of the second button (optional)
+
+B<$b3:> Text of the third button (optional)
+
+B<Returns:> the number of the B<button> selected by the user (1, 2 or 3),
+or 0 if failed. It fails only if $b1 is not defined.
+
+B<Notes:>
+
+This function shows a dialog centralized on the screen, with the
+message and the buttons. The C<\n> character can be added
+to the message to indicate line change.
+
+A button is not shown if its parameter is C<undef>. This is valid only for
+B<$b2> and B<$b3>.
+
+Button 1 is set as the "DEFAULTENTER" and "DEFAULTESC". If Button 2
+exists it is set as the "DEFAULTESC". If Button 3 exists it is set as
+the "DEFAULTESC".
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined.
+
+B<See Also:>
+L<Message|IUP::Message>,
+L<ListDialog|IUP::ListDialog>,
+L<GetFile|IUP::GetFile>.
+
+=head3 GetColor()
+
+Shows a modal dialog which allows the user to select a color. Based on
+pre-defined dialog L<IUP::ColorDlg|IUP::ColorDlg>.
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th>MS&nbsp;Windows</th>
+        <td style="text-align:left;"><img src="http://kmx.github.com/perl-iup/img-3.3/dlg/colordlg_cb.png"></td>
+      </tr>
+      <tr>
+        <th>GTK</th>
+        <td style="text-align:left;"><img src="http://kmx.github.com/perl-iup/img-3.3/dlg/colordlg_gtk.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+ my ($r1, $g1, $b1) = IUP->GetColor($x, $y);
+ #or
+ my ($r2, $g2, $b2) = IUP->GetColor($x, $y, $r, $g, $b);
+
+B<$x, $y:> x, y values of the L<Popup|IUP::Popupxxx> function.
+
+B<$r, $g, $b:>Initialization values defining the color being selected when
+the dialog is shown.
+
+B<Returns:> List of three (R, G, B) values are returned if the OK button
+is pressedor C<undef> otherwise.
+
+B<Notes:>
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined.
+
+B<See Also:>
+L<Message|IUP::Message>,
+L<IUP::ListDialog|IUP::ListDialog>,
+L<IUP::Alarm|IUP::Alarm>,
+L<IUP::GetFile|IUP::GetFile>.
+
+=head3 GetFile()
+
+Shows a modal dialog of the native interface system to select a
+filename. Uses pre-defined dialog L<IUP::FileDlg|IUP::FileDlg>. 
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th>MS&nbsp;Windows</th>
+        <td style="text-align:left;"><img src="http://kmx.github.com/perl-iup/img-3.3/dlg/filedlg_win.png"></td>
+      </tr>
+      <tr>
+        <th>GTK</th>
+        <td style="text-align:left;"><img src="http://kmx.github.com/perl-iup/img-3.3/dlg/filedlg_gtk.png"></td>
+      </tr>
+      <tr>
+        <th>Motif</th>
+        <td style="text-align:left;"><img src="http://kmx.github.com/perl-iup/img-3.3/dlg/filedlg_mot.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+ my ($filename, $status) = IUP->GetFile($filename_spec);
+
+B<$filename_spec:> This parameter is used as an input value to define the
+default filter and directory. Example: "../docs/*.txt".
+
+Returns: a list with 2 values: B<filename> of chosen file; B<status> code, 
+whose values can be:
+
+=over
+
+=item * "1": New file.
+
+=item * "0": Normal, existing file.
+
+=item * "-1": Operation cancelled.
+
+=back
+
+B<Notes:>
+
+The function will reuse the directory from one call to another, so in
+the next call will open in the directory of the last selected file.
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined.
+
+B<See Also:>
+L<FileDlg|IUP::FileDlg>,
+L<Message|IUP::Message>,
+L<ListDialog|IUP::ListDialog>,
+L<Alarm|IUP::Alarm>,
+L<SetLanguage|IUP::SetLanguage>.
+
+=head3 GetParam()
+
+Shows a modal dialog for capturing parameter values using several types
+of controls.
+
+=begin html
+
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.3/dlg/getparam.png"></td>
+</p>
+
+
+=end html
+
+ my ($status, @values) = IUP->GetParam($title, $action, $user_data, $format);
+
+B<$title:> dialog title.
+
+B<action:> user callback to be called whenever a parameter value was
+changed, and when the user pressed the OK button. It can be C<undef>.
+
+B<$user_data>: user pointer passed to the user callback. xxxcheck this
+
+B<$format>: string describing the parameter
+
+...: list of variables address with initial values for the parameters.
+
+B<Returns:> a B<$status> code 1 if the "OK" button is pressed, 0 if the user
+canceled or if an error occurred.
+
+The function will abort if there are errors in the format string as in
+the number of the expected parameters. The values are returned
+by the function in the same order they were passed.
+
+xxxxxx TODO
+
+=head3 GetText()
+
+Shows a modal dialog to edit a multiline text.
+
+=begin html
+
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.3/dlg/gettext.png"></td>
+</p>
+
+=end html
+
+ my $text = IUP->GetText($title, $initial_text);
+
+B<$initial_text:> It contains the initial value of the text.
+
+B<Returns:> The text or C<undef> if an error occured.
+
+B<Notes:>
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined.
+
+B<See Also:>
+L<IUP::Message|IUP::Message>,
+L<IUP::ListDialog|IUP::ListDialog>,
+L<IUP::Alarm|IUP::Alarm>,
+L<IUP::SetLanguage|IUP::SetLanguage>
+
+=head3 ListDialog()
+
+Shows a modal dialog to select items from a simple or multiple
+selection list.
+
+=begin html
+
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.3/dlg/listdialog.png"></td>
+</p>
+
+=end html
+
+ my $status = IUP->ListDialog($type, $title, $list, $op, $max_col, $max_lin, $marks);
+
+B<$type:> 1=simple selection; 2=multiple selection
+
+B<$title:> Text for the dialog's title
+
+B<$list:> A reference to array of list items.
+
+B<$op:> Initial selected item when B<$type> is 1. Index starts at 1
+(note that this index is different from the return value, 
+kept for compability reasons). xxxcheck this
+
+B<$max_col:> Maximum number of columns in the list.
+
+B<$max_lin:> Maximum number of lines in the list.
+
+B<$marks:> A refence to array of selection states (1 for selected items,
+0 for unselected items), used only when B<$type> is 2.
+Can be C<undef> when B<$type> is 1. When defined must have
+the same number of elements as B<$list>.
+
+B<Returns:> When $type is 1, the function returns the number of the selected
+option (starts at 0), or -1 if the user cancels the operation.
+
+When $type is 2, the function returns -1 when the user cancels the
+operation. If the user does not cancel the operation the function
+returns 1 and the B<$marks> parameter will have value 1 for the options
+selected by the user and value 0 for non-selected options.
+
+B<Notes:>
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined.
+
+B<See Also:>
+L<Message|IUP::Message>,
+L<GetFile|IUP::GetFile>,
+L<Alarm|iupalarm.html>
+
+=head3 Message()
+
+Shows a modal dialog containing a message. It simply creates and popup
+a L<IUP::MessageDlg|IUP::MessageDlg>.
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th>MS&nbsp;Windows</th>
+        <td style="text-align:left;"><img src="http://kmx.github.com/perl-iup/img-3.3/dlg/messagedlg_win.png"></td>
+      </tr>
+      <tr>
+        <th>GTK</th>
+        <td style="text-align:left;"><img src="http://kmx.github.com/perl-iup/img-3.3/dlg/messagedlg_gtk.png"></td>
+      </tr>
+      <tr>
+        <th>Motif</th>
+        <td style="text-align:left;"><img src="http://kmx.github.com/perl-iup/img-3.3/dlg/messagedlg_mot.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+ IUP->Message($message);
+ #or
+ IUP->Message($title, $message);
+
+B<$title:> dialog title
+
+B<$message:> text message contents
+
+=head1 NOTES
+
+The L<Message|/"Message"> function shows a dialog centralized on the screen,
+showing the message and the "OK" button. The "\n" character can be added
+to the message to indicate line change.
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined (used only in Motif, in Windows
+MessageBox does not have an icon in the title bar).
+
+B<See Also:>
+L<GetFile|IUP::GetFile>,
+L<ListDialog|IUP::ListDialog>,
+L<Alarm|IUP::Alarm>,
+L<MessageDlg|IUP::MessageDlg>
+
+=head2 Other helper functions
+
+=head3 GetAllClasses()
+
+Returns the internal names of all registered classes.
+
+ my @list1 = IUP->GetAllClasses();
+ #or
+ my @list1 = IUP->GetAllClasses($max_n);
+
+B<$max_n:> maximum number of names we want to receive. Can be omitted.
+
+B<Returns:> The list of all names (or just C<$max_n> first items). The names
+are internal iup library class names B<not perl class names> - e.g.
+
+=over
+
+=item * "button" corresponds to IUP::Button
+
+=item * "canvas" corresponds to IUP::Canvas
+
+=item * "dialog" corresponds to IUP::Dialog
+
+=item * etc.
+
+=back
+
+B<See Also:>
+L<GetClassName|IUP::GetClassName>,
+L<GetClassType|IUP::GetClassType>,
+L<GetAllAttributes|IUP::GetAllAttributes> 
+
+=head3 GetAllDialogs()
+
+Returns the names of all dialogs that have an associated name using
+C<L<< $elem->SetName()|IUP::Manual::02_Elements/SetName >>> or using LED - C<L<< IUP->LoadLED()|/LoadLED >>>.
+Other existing dialogs (without assigned name) will not be returned.
+
+ my @list1 = IUP->GetAllDialogs();
+ #or
+ my @list1 = IUP->GetAllDialogs($max_n);
+
+
+B<$max_n:> maximum number of names we want to receive. Can be omitted.
+
+B<Returns:> The list of all names (or just C<$max_n> first items).
+
+B<See Also:>
+L<SetName|IUP::SetHandle>
+L<GetName|IUP::GetName>
+L<GetByName|IUP::GetHandle>,
+L<GetAllNames|IUP::GetAllNames>.
+
+=head3 GetAllNames()
+
+Returns the names of all interface elements that have an associated name using
+C<L<< $elem->SetName()|IUP::Manual::02_Elements/SetName >>> or using LED - C<L<< IUP->LoadLED()|/LoadLED >>>.
+
+ my @list1 = IUP->GetAllNames();
+ #or
+ my @list1 = IUP->GetAllNames($max_n);
+
+B<$max_n:> maximum number of names we want to receive. Can be omitted.
+
+B<Returns:> The list of all names (or just C<$max_n> first items).
+
+B<See Also:>
+L<SetName|IUP::SetHandle>,
+L<GetName|IUP::GetName>,
+L<GetByName|IUP::GetHandle>,
+L<GetAllDialogs|IUP::GetAllDialogs>. 
+
+=head3 GetClassAttributes()
+
+Returns the names of all registered attributes of a class.
+
+ my @list1 = IUP->GetClassAttributes($classname);
+ #or
+ my @list2 = IUP->GetClassAttributes($classname, $max_n);
+
+B<$classname:> internal name of the class - e.g. xxx
+
+B<$max_n:> maximum number of names we want to receive. Can be omitted.
+
+B<Returns:> the list of all names (or just C<$max_n> first items).
+
+B<See Also:>
+L<IUP::GetClassName|IUP::GetClassName>,
+L<IUP::GetClassType|IUP::GetClassType>,
+L<IUP::GetAllAttributes|IUP::GetAllAttributes>
+
+=head3 GetClassCallbacks()
+
+Returns the names of all registered callbacks of a class.
+
+ my @list1 = IUP->GetClassCallbacks($classname);
+ #or
+ my @list2 = IUP->GetClassCallbacks($classname, $max_n);
+
+B<$classname:> internal name of the class - e.g. xxx
+
+B<$max_n:> maximum number of names we want to receive. Can be omitted.
+
+B<Returns:> the list of all names (or just C<$max_n> first items).
+
+B<See Also:>
+L<IUP::GetClassName|IUP::GetClassName>,
+L<IUP::GetClassType|IUP::GetClassType>,
+L<IUP::GetAllAttributes|IUP::GetAllAttributes>
+
+=head3 GetFocus()
+
+Returns the reference to a GUI element that has the keyboard
+focus, i.e. the element that will receive keyboard events.
+
+ my $elem = IUP->GetFocus();
+
+B<See Also:>
+L<SetFocus|IUP::SetFocus>
+
+=head3 GetByName()
+
+Returns the reference to a GUI element that has an associated name using
+C<L<< $elem->SetName()|IUP::Manual::02_Elements/SetName >>> or using LED - C<L<< IUP->LoadLED()|/LoadLED >>>.
+
+ my $elem = IUP->GetByName($name);
+
+B<$name:> name of an GUI element
+
+B<Notes:>
+
+This function is used for integrating IUP and LED. To manipulate an
+interface element defined in LED, first capture its reference using
+function L<GetByName|/"GetByName">, passing the name of the GUI element as
+parameter, then use this reference on the calls to IUP element methods - for example:
+
+ use IUP;
+ my $ledfile = 'file.led';
+ IUP->LoadLED($ledfile) or die "cannot load '$ledfile'\n";
+ my $button = IUP->GetByName('button1');
+ die "GetByName() failed\n" unless $button;
+ print "FGCOLOR=", $button->GetAttribute('FGCOLOR'), "\n";
+
+B<See Also:>
+L<SetName|IUP::SetHandle>,
+L<LoadLED|/"LoadLED">,
+L<IUP::Manual::06_UsingLED|IUP::Manual::06_UsingLED>
+
+=head3 Help()
+
+Opens the given URL. In UNIX executes Netscape, Safari (MacOS) or
+Firefox (in Linux) passing the desired URL as a parameter. In Windows
+executes the shell "open" operation on the given URL.
+
+In UNIX you can change the used browser setting the environment
+variable IUP_HELPAPP or using the global attribute "HELPAPP".
+
+It is a non synchronous operation, i.e. the function will return just
+after execute the command and it will not wait for its result.
+
+ IUP->Help($url);
+
+B<$url:> may be any kind of address accepted by the Browser, that is, it
+can include 'http://', or be just a file name, etc.
+
+B<Returns:> 1 if successfull, -1 if failed. In Windows can return -2 if
+file not found.
+
+=head3 LoadLED()
+
+Loads and compiles a LED specification from file.
+
+ my $rv1 = IUP->LoadLED($led_filename);
+ #or
+ my $rv2 = IUP->LoadLED(\$led_string); #passing as a reference
+
+B<$led_filename>: name of the file containing the LED specification.
+
+B<$led_string:> string with the LED specification
+
+B<Returns:> C<undef> if the file was successfully compiled;
+otherwise it returns a string containing the error message.
+
+B<Notes:>
+
+Each time the function loads a LED file, the elements contained in it
+are created. Therefore, the same LED file cannot be loaded several
+times, otherwise the elements will also be created several times. 
+
+=head2 Special Functions
+
+=head3 Open()
+
+Initializes the IUP toolkit. Usually there is no need to call this function
+as it is call automatically during: C<use IUP;>
+
+ IUP->Open();
+
+B<Returns:> IUP_OPENED (already opened), IUP_ERROR or IUP_NOERROR. Only in
+UNIX can fail to open, because X-Windows may be not initialized.
+
+B<Notes:>
+
+The toolkit's initialization depends also on platform-dependent
+environment variables, see each driver documentation.
+
+=over
+
+=item * QUIET
+
+When this variable is set to NO, IUP will generate a message in console
+indicating the driverE<rsquo>s version when initializing. Default: YES.
+
+=item * VERSION
+
+When this variable is set to YES, IUP generates a message dialog
+indicating the driver's version when initializing. Default: NO.
+
+=back
+
+=head3 Close()
+
+Ends the IUP toolkit and releases internal memory. It will also
+automatically destroy all dialogs and all elements that have names.
+
+ IUP->Close();
+
+B<Notes:> Situations when you need to call this function are quite rare.
 
 =head1 AUTHOR
 
@@ -330,9 +1285,13 @@ the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=IUP>.
 
 =head1 ACKNOWLEDGEMENTS
 
-xxx Tecgraf, PUC-Rio. L<http://www.tecgraf.puc-rio.br>
+Thanks to Tecgraf, PUC-Rio. L<http://www.tecgraf.puc-rio.br> for excelent 
+work on L<iup|http://www.tecgraf.puc-rio.br/iup/>,
+L<cd|http://www.tecgraf.puc-rio.br/cd/> and
+L<im|http://www.tecgraf.puc-rio.br/im/> libraries.
 
-xxx do not forget to mention the documentation
+Special thanks for the original documentation that was a very usefull
+resource for creating the documentation for IUP perl module.
 
 =head1 LICENSE AND COPYRIGHT
 

@@ -29,20 +29,18 @@ from the TEX text editor. This model makes the dialog creation
 task more flexible and independent from the graphics system's
 resolution.
 
+IUP has four important concepts that are implemented in a very
+different way from other toolkits.
 
-IUP has four important concepts that are implemented in a very different way from other toolkits.
+=over
 
-First is the control creation timeline. When a control is created it is not immediately mapped to the native system. So some attributes will not work until the control is mapped. The mapping is done when the dialog is shown or manually calling IupMap for the dialog. You can not map a control without inserting it into a dialog.
+=item B<First is the control creation timeline.> When a control is created it is not immediately mapped to the native system. So some attributes will not work until the control is mapped. The mapping is done when the dialog is shown or manually calling IupMap for the dialog. You can not map a control without inserting it into a dialog.
 
-Second is the attribute system. IUP has only a few functions because it uses string attributes to access the properties of each control. So get used to IupSetAttribute and IupGetAttribute, because you are going to use them a lot.
+=item B<Second is the attribute system.> IUP has only a few functions because it uses string attributes to access the properties of each control. So get used to IupSetAttribute and IupGetAttribute, because you are going to use them a lot.
 
-Third is the abstract layout positioning. IUP controls are never positioned in a specific (x,y) coordinate inside the dialog. The positioning is always calculated dynamically from the abstract layout hierarchy. So get used to the IupFill, IupHbox and IupVbox controls that allows you to position the controls in the dialog.
+=item B<Third is the abstract layout positioning.> IUP controls are never positioned in a specific (x,y) coordinate inside the dialog. The positioning is always calculated dynamically from the abstract layout hierarchy. So get used to the IupFill, IupHbox and IupVbox controls that allows you to position the controls in the dialog.
 
-Fourth is the callback system. Because of the LED resource files IUP has an indirect form to associate a callback to a control. You associate a C function with a name using IupSetFunction, and then associate the callback attribute with that name using IupSetAttribute. But applications now should use the IupSetCallback function to directly associate a callback for a control. 
-
-LED is the original IUP resource file which has been deprecated in favor of Lua files. But keep in mind that you can use IUP without using LED or Lua, using only the C API.
-
-xxx elements attributes callbacks
+=item B<Fourth is the callback system.> Because of the LED resource files IUP has an indirect form to associate a callback to a control. You associate a C function with a name using IupSetFunction, and then associate the callback attribute with that name using IupSetAttribute. But applications now should use the IupSetCallback function to directly associate a callback for a control. 
 
 =head1 IUP ELEMENTS
 
@@ -88,7 +86,7 @@ For more info see separate documents
 
 =back
  
-=head1 CONCEPT OF IUP ATTRIBUTES
+=head1 ATTRIBUTES CONCEPT
 
 Attributes are used to change or consult properties of elements. Each
 element has a set of attributes that affect it, and each attribute can
@@ -359,7 +357,7 @@ This policy is very useful for associating two interface elements,
 because you can abstract the fact that IUP uses a string to make
 associations and imagine the interface element itself is being used.
 
-=head1 CONCEPT OF IUP CALLBACKS/EVENTS
+=head1 ATTRIBUTES CONCEPT
 
 IUP is a graphics interface library, so most of the time it waits for
 an event to occur, such as a button click or a mouse leaving a window.

@@ -26,6 +26,30 @@ IUP::Manual::Elements - Manuals element guide
 
 xxxTODO GUI vs. non-GUI
 
+Currently available interface elements can be categorized as follows:
+
+=over
+
+=item * B<Primitives> (effective user interaction): B<dialog, label,
+button, text, multi-line, list, toggle, canvas, frame, image>.
+
+=item * B<Composition> (ways to show the elements): B<hbox, vbox,>
+B<zbox, fill>.
+
+=item * B<Grouping> (definition of a common functionality for a group
+of elements): B<radio>.
+
+=item * B<Menu> (related both to menu bars and to pop-up menus):
+B<menu, submenu, item, separator>.
+
+=item * Additional (elements built outside the main library): B<dial,
+gauge, matrix, tabs, valuator, OpenGL canvas, color chooser, color
+browser>.
+
+=item * B<Dialogs> (useful predefined dialogs): B<file selection,
+message, alarm, data input, list selection>.
+
+
 =head1 CREATING ELEMENTS
 
 xxxTODO new() and its params (ATTRIB=>'val', param=>'val')

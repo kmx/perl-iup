@@ -311,7 +311,7 @@ sub Redraw {
   #void IupRedraw(Ihandle* ih, int children); [in C]
   #iup.Redraw(ih: ihandle, children: boolen) [in Lua]
   my ($self, $children) = @_;
-  return IUP::Internal::LibraryIup::_IupPopup($self->ihandle, $children);  
+  return IUP::Internal::LibraryIup::_IupRedraw($self->ihandle, $children);  
 }
 
 sub Refresh {

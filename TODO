@@ -1,3 +1,15 @@
+######## IMPORTANT
+- use IUP ':all';
+- test IUP::Internal::LibraryIup::_IupGetClassCallbacks
+- IUP->GetHandle vs. IUP->GetByName
+- add
+IUP->GetAllClasses()
+IUP->LoadLED()
+- remove
+IUP::Internal::Box
+IUP::Internal::Image
+
+
 ######## IUP::Internal::Element Attributes (1)
 - maybe replace
   $self->SetAttribute(a,v) + $self->GetAttribute(a)

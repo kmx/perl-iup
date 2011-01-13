@@ -61,7 +61,6 @@ L<WOM_CB|/"WOM_CB">
 
 =back
 
-
 =head1 CALLBACKS
 
 =over
@@ -351,7 +350,7 @@ It is important that you set it to C<undef> when not using it. Or the
 application will be consuming CPU even if the callback is doing
 nothing.
 
-To set this action use the function C<< IUP->SetIdle(\&myfunction) >>. xxxcheckthis
+To set this action use the function C<L<< IUP->SetIdle(\&myfunction)|IUP/"SetIdle" >>>.
 Using C<undef> as a parameter to remove the association.
 
 B<Long Time Operations:>

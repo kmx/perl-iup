@@ -291,12 +291,26 @@ sub GetClassAttributes {
   return IUP::Internal::LibraryIup::_IupGetClassAttributes($classname, $max_n);	
 }
 
+sub GetClassCallbacks {
+  #int IUP::GetClassCallbacks(const char* classname, char** names, int max_n); [in C]
+  #iup.GetClassCallbacks(classname: string[, max_n: number]) -> (names: table, n: number) [in Lua] 
+  my ($pkg, $classname, $max_n) = @_;
+  return IUP::Internal::LibraryIup::_IupGetClassCallbacks($classname, $max_n);	
+}
+
 sub SetClassDefaultAttribute {
   #void IupSetClassDefaultAttribute(const char* classname, const char *name, const char *value); [in C]
   #iup.SetClassDefaultAttribute(classname, name, value: string) [in Lua]
   my ($pkg, $classname, $name, $value) = @_;
   IUP::Internal::LibraryIup::_IupSetClassDefaultAttribute($classname, $name, $value);
 }
+
+sub SetIdle {
+  my ($pkg, $func) = @_;
+  return IUP::Internal::LibraryIup::_SetIdle($func);
+}
+
+### accessing global attributes
 
 sub GetGlobal {
   #char *IupGetGlobal(const char *name); [in C]
@@ -419,11 +433,6 @@ sub Message {
   }
   carp('Warning: wrong params - IUP->Message($title, $msg)');
   return;
-}
-
-sub SetIdle {
-  my ($pkg, $func) = @_;
-  return IUP::Internal::LibraryIup::_SetIdle($func);
 }
 
 ###
