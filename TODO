@@ -1,5 +1,5 @@
 ######## IMPORTANT
-- use IUP ':all';
+- use IUP ':all'; - see http://perldoc.perl.org/autodie.html - maybe :dialogs :controls ...
 - test IUP::Internal::LibraryIup::_IupGetClassCallbacks
 - IUP->GetHandle vs. IUP->GetByName
 - add

@@ -387,7 +387,7 @@ until a callback returns C<IUP_CLOSE>, C<L<< IUP->ExitLoop|/"ExitLoop" >>> is ca
 or there are no visible dialogs.
 
 If you cascade many calls to C<L<< IUP->MainLoop|/"MainLoop" >>> there must be a C<return
-IUP_CLOSE;> or C<L<< IUP->ExitLoop|/"ExitLoop" >>> call for each cascade level, hidding all
+IUP_CLOSE> or C<L<< IUP->ExitLoop|/"ExitLoop" >>> call for each cascade level, hidding all
 dialogs will close only one level. Call C<L<< IUP->MainLoopLevel|/"MainLoopLevel" >>>
 to obtain the current level.
 
@@ -400,10 +400,12 @@ automatically called, causing the C<L<< IUP->MainLoop|/"MainLoop" >>> to return.
 that set global attribute C<LOCKLOOP> to C<"YES"> before hiding the last dialog.
 
 [% h.at_see %]
-L<IUP-E<gt>Open|/"Open">, L<IUP-E<gt>Close|/"Close">,
-L<IUP-E<gt>LoopStep|/"LoopStep">, L<IUP-E<gt>ExitLoop|/"ExitLoop">,
-L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION">,
-L<LOCKLOOP|[%m.at%]/"LOCKLOOP">.
+L<Open|/"Open()"> (global method),
+L<Close|/"Close()"> (global method),
+L<LoopStep|/"LoopStep()"> (global method),
+L<ExitLoop|/"ExitLoop()"> (global method),
+L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> (callback),
+L<LOCKLOOP|[%m.at%]/"LOCKLOOP"> (attribute).
  
 =head3 MainLoopLevel()
 
@@ -422,16 +424,17 @@ and avoid calling it again.
 A call to C<L<< $element->Popup|[%m.elem%]/"Popup" >>> will increase one level.
 
 [% h.at_see %]
-L<IUP-E<gt>Open|/"Open">, L<IUP-E<gt>Close|/"Close">,
-L<IUP-E<gt>LoopStep|/"LoopStep">,
-L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION">,
-L<LOCKLOOP|[%m.at%]/"LOCKLOOP">.
+L<Open|/"Open()"> (global function),
+L<Close|/"Close()"> (global function),
+L<LoopStep|/"LoopStep()"> (global function),
+L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> (callback),
+L<LOCKLOOP|[%m.at%]/"LOCKLOOP"> (attribute).
 
 =head3 LoopStep()
 
  IUP->LoopStep();
 
-See C<L<< IUP->LoopStepWait|/"LoopStepWait" >>>
+See L<LoopStepWait|/"LoopStepWait()">.
 
 =head3 LoopStepWait()
 
@@ -447,14 +450,14 @@ This function is useful for allowing a second message loop to be
 managed by the application itself. This means that messages can be
 intercepted and callbacks can be processed inside an application loop.
 
-L<IUP::LoopStep|IUP::LoopStep> returns immediately after processing any messages or if
-there are no messages to process. L<IUP::LoopStepWait|IUP::LoopStepWait> put the system in
+C<L<< IUP->LoopStep|/"LoopStep()" >>> returns immediately after processing any messages or if
+there are no messages to process. C<L<< IUP->LoopStepWait|/"LoopStepWait()" >>> put the system in
 idle until a message is processed .
 
-If IUP_CLOSE is returned the L<IUP::MainLoop|IUP::MainLoop> will not end because the
-return code was already processed. If you want to end B< IUP::MainLoop>
-when IUP_CLOSE is returned by L<IUP::LoopStep|IUP::LoopStep> then call L<IUP::ExitLoop|IUP::ExitLoop>
-after L<IUP::LoopStep|IUP::LoopStep> returns.
+If C<IUP_CLOSE> is returned the C<L<< IUP->MainLoop|/"MainLoop" >>> will not end because the
+return code was already processed. If you want to end C<L<< IUP->MainLoop|/"MainLoop" >>>
+when C<IUP_CLOSE> is returned by C<L<< IUP->LoopStep|/"LoopStep()" >>> then call C<L<< IUP->ExitLoop|/"ExitLoop()" >>>
+after C<L<< IUP->LoopStep|/"LoopStep()" >>> returns.
 
 An example of how to use this function is a counter that can be stopped
 by the user. For such, the user has to interact with the system, which
@@ -463,17 +466,19 @@ is possible by calling the function periodically.
 This way, this function replaces old mechanisms implemented using the
 Idle callback.
 
-Note that this function does not replace L<IUP::MainLoop|IUP::MainLoop>.
+Note that this function does not replace C<L<< IUP->MainLoop|/"MainLoop()" >>>.
 
 [% h.at_see %]
-L<IUP::Open|IUP::Open>, L<IUP::Close|IUP::Close>,
-L<IUP::MainLoop|IUP::MainLoop>, L<IUP::ExitLoop|IUP::ExitLoop>,
-L<IDLE_ACTION|../call/iup_idle_action.html>
+L<Open|/"Open"> (global function),
+L<Close|/"Close"> (global function),
+L<MainLoop|/"MainLoop"> (global function),
+L<ExitLoop|/"ExitLoop"> (global function),
+L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> (callback).
 
 =head3 ExitLoop()
 
 Terminates the current message loop. It has the same effect of a
-callback returning IUP_CLOSE.
+callback returning C<IUP_CLOSE>.
 
  IUP->ExitLoop();
 
@@ -509,7 +514,7 @@ Setting global L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> callback ("idle callback") 
  IUP->SetIdle(undef);      #unset idle callback handler
 
 [% h.at_see %]
-L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION">
+L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> (callback).
 
 =head2 Accessing global attributes
 
@@ -530,7 +535,7 @@ This functionE<rsquo>s return value is not necessarily the same one
 used by the application to define the attributeE<rsquo>s value.
 
 [% h.at_see %]
-C<L<< IUP->SetGlobal|/"SetGlobal" >>>
+L<SetGlobal|/"SetGlobal"> (global function).
 
 =head3 SetGlobal()
 
@@ -550,7 +555,7 @@ store your private attributes, such as a structure of data to be used
 in a callback.
 
 [% h.at_see %]
-L<IUP::GetGlobal|IUP::GetGlobal>,
+L<GetGlobal|/"GetGlobal"> (global function).
 
 =head3 GetLanguage()
 
@@ -561,8 +566,8 @@ Returns the value of global attribute C<L<LANGUAGE|[%m.at%]/"LANGUAGE">>.
 B<Returns:> string with the language name - e.g. C<"ENGLISH">.
 
 [% h.at_see %]
-L<SetLanguage|/"SetLanguage">,
-L<LANGUAGE|[%m.at%]/"LANGUAGE">
+L<SetLanguage|/"SetLanguage()"> (global function),
+L<LANGUAGE|[%m.at%]/"LANGUAGE"> (attribute).
 
 =head3 SetLanguage()
 
@@ -590,8 +595,8 @@ B<Default:> "ENGLISH"
  IUP->Message("IUP Language", IUP->GetLanguage());
 
 [% h.at_see %]
-L<GetLanguage|/"GetLanguage">,
-L<LANGUAGE|[%m.at%]/"LANGUAGE">
+L<GetLanguage|/"GetLanguage()"> (global function),
+L<LANGUAGE|[%m.at%]/"LANGUAGE"> (attribute).
 
 =head3 Version()
 
@@ -617,7 +622,20 @@ attribute, i.e. registered attributes or user custom attributes.
 
  IUP->SetClassDefaultAttribute($classname, $name, $value);
 
-B<$classname:> name of the class
+B<$classname:> name of the class - B<BEWARE:> this is IUP internal class
+name e.g. "dialog", "image" or "button"; not a perl class name:
+
+=over
+
+=item * "button" corresponds to IUP::Button
+
+=item * "canvas" corresponds to IUP::Canvas
+
+=item * "dialog" corresponds to IUP::Dialog
+
+=item * etc.
+
+=back
 
 B<$name:> name of the attribute
 
@@ -625,8 +643,8 @@ B<$value>: new default value.
 
 [% h.at_notes %]
 
-If the value is DEFAULTFONT, DLGBGCOLOR, DLGFGCOLOR, TXTBGCOLOR,
-TXTFGCOLOR or MENUBGCOLOR then the actual default value will be the
+If the value is "DEFAULTFONT", "DLGBGCOLOR", "DLGFGCOLOR", "TXTBGCOLOR",
+"TXTFGCOLOR" or "MENUBGCOLOR" then the actual default value will be the
 global attribute of the same name consulted at the time the attribute
 is consulted.
 
@@ -639,9 +657,9 @@ If the new default value is C<-1> xxxcheck thisxxx, then the default value is se
 be the system default if any is defined.
 
 [% h.at_see %]
-L<IUP::GetClassName|IUP::GetClassName>,
-L<IUP::GetClassType|IUP::GetClassType>,
-L<IUP::GetAllAttributes|IUP::GetAllAttributes>
+L<GetClassName|[%m.elem%]/"GetClassName()"> (element method),
+L<GetClassType|[%m.elem%]/"GetClassType()"> (element method),
+L<GetAllAttributes|[%m.elem%]/"GetAllAttributes()"> (element method).
  
 =head2 Simple GUI dialogs
 
@@ -692,9 +710,9 @@ dialog if it is defined. It also uses a global attribute called "ICON"
 as the dialog icon if it is defined.
 
 [% h.at_see %]
-L<Message|IUP::Message>,
-L<ListDialog|IUP::ListDialog>,
-L<GetFile|IUP::GetFile>.
+L<Message|/"Message()"> (global function),
+L<ListDialog|/"ListDialog()"> (global function),
+L<GetFile|/"GetFile()"> (global function).
 
 =head3 GetColor()
 
@@ -711,7 +729,7 @@ pre-defined dialog L<IUP::ColorDlg|IUP::ColorDlg>.
  #or
  my ($r2, $g2, $b2) = IUP->GetColor($x, $y, $r, $g, $b);
 
-B<$x, $y:> x, y values of the L<Popup|IUP::Popupxxx> function.
+B<$x, $y:> x, y values of the L<Popup|[%m.elem%]/"Popup()"> function.
 
 B<$r, $g, $b:>Initialization values defining the color being selected when
 the dialog is shown.
@@ -726,10 +744,10 @@ dialog if it is defined. It also uses a global attribute called "ICON"
 as the dialog icon if it is defined.
 
 [% h.at_see %]
-L<Message|IUP::Message>,
-L<IUP::ListDialog|IUP::ListDialog>,
-L<IUP::Alarm|IUP::Alarm>,
-L<IUP::GetFile|IUP::GetFile>.
+L<Message|/"Message()"> (global function),
+L<ListDialog|/"ListDialog()"> (global function),
+L<Alarm|/"Alarm()"> (global function),
+L<GetFile|/"GetFile()"> (global function).
 
 =head3 GetFile()
 
@@ -770,11 +788,11 @@ dialog if it is defined. It also uses a global attribute called "ICON"
 as the dialog icon if it is defined.
 
 [% h.at_see %]
-L<FileDlg|IUP::FileDlg>,
-L<Message|IUP::Message>,
-L<ListDialog|IUP::ListDialog>,
-L<Alarm|IUP::Alarm>,
-L<SetLanguage|IUP::SetLanguage>.
+L<IUP::FileDlg|IUP::FileDlg> (pre-defined dialog),
+L<Message|/"Message()"> (global function),
+L<ListDialog|/"ListDialog()"> (global function),
+L<Alarm|/"Alarm()"> (global function),
+L<SetLanguage|/"SetLanguage()"> (global function).
 
 =head3 GetParam()
 
@@ -787,27 +805,247 @@ of controls.
 
 =end html
 
- my ($status, @values) = IUP->GetParam($title, $action, $user_data, $format);
+ my ($status, @values) = IUP->GetParam($title, $action, $format, @initial_values);
 
 B<$title:> dialog title.
 
-B<action:> user callback to be called whenever a parameter value was
-changed, and when the user pressed the OK button. It can be C<undef>.
-
-B<$user_data>: user pointer passed to the user callback. xxxcheck this
+B<$action:> user callback (reference to a perl function) to be called whenever
+a parameter value was changed, and when the user pressed the OK button.
+It can be C<undef>.
 
 B<$format>: string describing the parameter
 
-...: list of variables address with initial values for the parameters.
+=over
+
+The format string must have the following format, notice the "\n" at
+the end:
+
+ "<text>%<x><extra>{<tip>}\n"
+
+Where:
+
+B<< <text> >> is a descriptive text, to be placed to the left of the entry
+field in a label.
+
+B<< <x> >> is the type of the parameter (always a single character). The valid options are:
+
+=over
+
+=item * B<b> = boolean (shows a True/False toggle)
+
+=item * B<i> = integer (shows a integer number filtered text box)
+
+=item * B<r> = real (shows a real number filtered text box, use "float" in C)
+
+=item * B<a> = angle in degrees (shows a real number filtered text box and a dial)
+
+=item * B<s> = string (shows a text box)
+
+=item * B<m> = multiline string (shows a multiline text box)
+
+=item * B<l> = list (shows a dropdown list box, use xxxcheckthis for the zero
+based item index selected)
+
+=item * B<o> = list (shows a list of toggles inside a radio, use xxxcheckthis
+for the zero based item index selected)
+
+=item * B<t> = separator (shows a horizontal line separator label, in this case
+text can be an empty string, not included in parameter count)
+
+=item * B<f> = string (same as 's', but also show a button to open a file
+selection dialog box)
+
+=item * B<c> = string (same as 's', but also show a color button to open a
+color selection dialog box)
+
+=item * B<n> = string (same as 's', but also show a font button to open a font
+selection dialog box)
+
+=item * B<u> = buttons names (allow to redefine the OK and Cancel button names,
+and to add a Help button, use [ok,cancel,help] as extra data,
+can omit one of them, it will use the default name, not included
+in parameter count)
+
+=back
+
+B<< <extra> >> is one or more additional options for the given type
+
+=over
+
+=item * B<[min,max,step]> are optional limits for B<integer> and B<real> types. The
+B<max> and B<step> values can be omitted. When B<min> and B<max> are
+specified a valuator will also be added to change the value. To specify
+B<step>, B<max> must be also specified. B<step> is the size of the
+increment.
+
+=item * B<[false,true]> are optional strings for B<boolean> types to be displayed
+after the toggle. The strings can not have commas 'B<,>', nor brackets
+'B<[>' or 'B<]>'.
+
+=item * B<mask> is an optional mask for the B<string> and B<multiline> types. The dialog
+uses the L<MASK|[%m.at%]/MASK> attribute internally. In this
+case we do no use the brackets 'B<[>' and 'B<]>' to avoid confusion
+with the specified mask.
+
+=item * B<|item0|item1|item2,...|> are the items of the B<list>. At least one item
+must exist. Again the brackets are not used to increase the
+possibilities for the strings, instead you must use 'B<|>'. Items index
+are zero based start.
+
+=item * B<[dialogtype|filter|directory|nochangedir|nooverwriteprompt]> are the
+respective attribute values passed to the L<IUP::FileDlg|IUP::FileDlg>
+control when activated. All commas must exist, but you can let empty
+values to use the default values. No mask can be set.
+
+=back
+
+B<< <tip> >> is a string that is displayed in a TIP for the main control of
+the parameter. 
+
+There are no extra parameters for the B<color> string. The mask is
+automatically set to capture 3 or 4 unsigned integers from 0 to 255 (R
+G B) or (R G B A) (alpha is optional).
+
+The number of lines in the format string (number of '\n') will
+determine the number of required parameters. But separators will not
+count as parameters.
+
+A integer parameter always has a spin attached to the text to increment
+and decrement the value. A real parameter only has a spin if a full
+interval is defined (min and max), in this case the default step is
+(max-min)/20. When the callback is called because a spin was activated
+then the attribute SPINNING of the dialog will be defined to a non C<undef>
+and non zero value.
+
+Examples of format strings:
+
+ my $format1 = "Real 2: %r[-1.5,1.5,0.05]\n";       # [min,max,step] example
+ my $format2 = "Numeric string: %s/d+\n";           # mask example
+ my $format3 = "Boolean: %b[No,Yes]{tip text}\n";   # [false,true] + tip text example
+ my $format4 = "List: %l|item0|item1|item2|item3|item4|item5|item6|\n"; # list example
+ my $format5 = "File: %f[OPEN|*.bmp;*.jpg|CURRENT|NO|NO]\n" # [dialogtype|filter|directory|nochangedir|nooverwriteprompt] example
+
+=back
+
+B<@initial_values:> list of variables with initial values for the parameters
+used in format string.
 
 B<Returns:> a B<$status> code 1 if the "OK" button is pressed, 0 if the user
-canceled or if an error occurred.
+canceled or if an error occurred + list of values corresponding to format
+string parameters, the values are returned by the function in the same
+order they were passed.
 
 The function will abort if there are errors in the format string as in
-the number of the expected parameters. The values are returned
-by the function in the same order they were passed.
+the number of the expected parameters. 
 
-xxxxxx TODO
+B<Handling GetParam Callback:>
+
+=over
+
+This callback is called whenever a parameter value was changed, and when
+the user pressed the OK button.
+
+  sub getparam_cb {
+    my ($dialog, $param_index) = @_;
+    #...
+  }
+
+B<$dialog> - Reference to the dialog object (L<IUP::Dialog|IUP::Dialog>).
+
+B<param_index> - Current parameter index (0 based) being changed. 
+It is -1 if the user pressed the B<OK> button. It is -2 after the dialog
+is B<mapped> and just before it is shown. It is -3 if the user pressed
+the B<Cancel> button. It is -4 if the user pressed the B<Help> button, if any.
+
+B<Returns:> You can reject the change or the OK action by returning 0 in
+the callback, otherwise you must return 1.
+
+B<You should not programmatically change the current parameter value
+during the callback>. On the other hand you can freely change the value
+of other parameters.
+
+xxxcheckthis Use the dialog attribute "PARAMn" to get the parameter "Ihandle*",
+where "n" is the parameter index in the order they are specified
+starting at 0, but separators and button names are not counted. Notice
+that this is not the actual control, use the parameter attribute
+"CONTROL" to get the actual control. For example:
+
+ sub getparam_cb {
+   my ($dialog, $param_index) = @_;
+   
+   my $param2 = $dialog->GetAttribute("PARAM2"); #xxx maybe use $dialog->GetParamParam(2)
+   my $value2 = $param2->GetInt(param2, IUP_VALUE);
+ 
+   my $param5 = $dialog->GetAttribute("PARAM5"); #xxx maybe use $dialog->GetParamParam(5)
+   my $ctrl5 = $param5->GetAttribute("CONTROL");
+ 
+   if ($value2 == 0) {
+     $param5->SetAttribute("IUP_VALUE", "New Value");
+     $ctrl5->SetAttribute("IUP_VALUE", "New Value");
+   }
+   
+   return 1;
+ }
+
+Since parameters are user controls and not real controls, you must
+update the control value and the parameter value.
+
+Be aware that programmatically changes are not filtered. The valuator,
+when available, can be retrieved using the parameter attribute
+"AUXCONTROL". The valuator is not automatically updated when the text
+box is changed programmatically. The parameter label is also available
+using the parameter attribute "LABEL".
+
+=back
+
+B<Attributes Inside GetParam Callback:>
+
+=over
+
+For the dialog:
+
+=over
+
+=item * "PARAMn" - returns an IUP Ihandle* representing the nth parameter,
+indexed by the declaration order, not counting separators or button
+names.
+
+=item * "OK" - returns an IUP Ihandle*, the main button.
+
+=item * "CANCEL" - returns an IUP Ihandle*, the close button.
+
+=back
+
+For a parameter:
+
+=over
+
+=item * "LABEL" - returns an IUP Ihandle*, the label associated with the
+parameter.
+
+=item * "CONTROL" - returns an IUP Ihandle*, the real control associated with
+the parameter.
+
+=item * "AUXCONTROL" - returns an IUP Ihandle*, the auxiliary control
+associated with the parameter (only for Valuators).
+
+=item * "INDEX" - returns an integer value associated with the parameter index.
+L<GetInt|[%m.elem%]/"GetInt()"> xxxcheckthisxxx can also be used.
+
+=item * "VALUE" - returns the parameter value as a string, but L<GetFloat|[%m.elem%]/"GetFloat()">
+and L<GetInt|[%m.elem%]/"GetInt"> can also be used. It usually contains the new value of
+the control while the VALUE attribute of the control still has the old
+value.
+
+=back
+
+xxxcheckthisxxx To retrieve a parameter you must use the following function:
+
+ IUP->GetParamParam($dialog, $param_index);
+ #xxxmaybe
+ $dialog->GetParamParam($param_index);
+
+=back
 
 =head3 GetText()
 
@@ -832,10 +1070,10 @@ dialog if it is defined. It also uses a global attribute called "ICON"
 as the dialog icon if it is defined.
 
 [% h.at_see %]
-L<IUP::Message|IUP::Message>,
-L<IUP::ListDialog|IUP::ListDialog>,
-L<IUP::Alarm|IUP::Alarm>,
-L<IUP::SetLanguage|IUP::SetLanguage>
+L<Message|/"Message()"> (global function),
+L<ListDialog|/"ListDialog()"> (global function),
+L<Alarm|/"Alarm()"> (global function),
+L<SetLanguage|/"SetLanguage()"> (global function).
 
 =head3 ListDialog()
 
@@ -884,9 +1122,9 @@ dialog if it is defined. It also uses a global attribute called "ICON"
 as the dialog icon if it is defined.
 
 [% h.at_see %]
-L<Message|IUP::Message>,
-L<GetFile|IUP::GetFile>,
-L<Alarm|iupalarm.html>
+L<Message|/"Message()"> (global function),
+L<GetFile|/"GetFile()"> (global function),
+L<Alarm|/"Alarm()"> (global function).
 
 =head3 Message()
 
@@ -919,10 +1157,10 @@ as the dialog icon if it is defined (used only in Motif, in Windows
 MessageBox does not have an icon in the title bar).
 
 [% h.at_see %]
-L<GetFile|IUP::GetFile>,
-L<ListDialog|IUP::ListDialog>,
-L<Alarm|IUP::Alarm>,
-L<MessageDlg|IUP::MessageDlg>
+L<GetFile|/"GetFile()"> (global function),
+L<ListDialog|/"ListDialog()"> (global function),
+L<Alarm|/"Alarm()"> (global function),
+L<IUP::MessageDlg|IUP::MessageDlg> (pre-defined dialog).
 
 =head2 Other helper functions
 
@@ -937,7 +1175,7 @@ Returns the internal names of all registered classes.
 B<$max_n:> maximum number of names we want to receive. Can be omitted.
 
 B<Returns:> The list of all names (or just C<$max_n> first items). The names
-are internal iup library class names B<not perl class names> - e.g.
+are internal iup library class names B<not perl class names>:
 
 =over
 
@@ -952,9 +1190,9 @@ are internal iup library class names B<not perl class names> - e.g.
 =back
 
 [% h.at_see %]
-L<GetClassName|IUP::GetClassName>,
-L<GetClassType|IUP::GetClassType>,
-L<GetAllAttributes|IUP::GetAllAttributes> 
+L<GetClassName|[%m.elem%]/"GetClassName()"> (element method),
+L<GetClassType|[%m.elem%]/"GetClassType()"> (element method),
+L<GetAllAttributes|[%m.elem%]/"GetAllAttributes()"> (element method).
 
 =head3 GetAllDialogs()
 
@@ -972,10 +1210,10 @@ B<$max_n:> maximum number of names we want to receive. Can be omitted.
 B<Returns:> The list of all names (or just C<$max_n> first items).
 
 [% h.at_see %]
-L<SetName|IUP::SetHandle>
-L<GetName|IUP::GetName>
-L<GetByName|IUP::GetHandle>,
-L<GetAllNames|IUP::GetAllNames>.
+L<SetName|[%m.elem%]/"SetName()"> (element method),
+L<GetName|[%m.elem%]/"GetName()"> (element method),
+L<GetByName|/"GetByName()"> (global function),
+L<GetAllNames|/"GetAllNames()"> (global function).
 
 =head3 GetAllNames()
 
@@ -991,10 +1229,10 @@ B<$max_n:> maximum number of names we want to receive. Can be omitted.
 B<Returns:> The list of all names (or just C<$max_n> first items).
 
 [% h.at_see %]
-L<SetName|IUP::SetHandle>,
-L<GetName|IUP::GetName>,
-L<GetByName|IUP::GetHandle>,
-L<GetAllDialogs|IUP::GetAllDialogs>. 
+L<SetName|[%m.elem%]/"SetName()"> (element method),
+L<GetName|[%m.elem%]/"GetName()"> (element method),
+L<GetByName|/"GetByName()"> (global function),
+L<GetAllDialogs|/"GetAllDialogs()"> (global function).
 
 =head3 GetClassAttributes()
 
@@ -1004,16 +1242,29 @@ Returns the names of all registered attributes of a class.
  #or
  my @list2 = IUP->GetClassAttributes($classname, $max_n);
 
-B<$classname:> internal name of the class - e.g. xxx
+B<$classname:> internal name of the class - e.g. "button",
+"image" or "dialog"; not a perl class name:
+
+=over
+
+=item * "button" corresponds to IUP::Button
+
+=item * "canvas" corresponds to IUP::Canvas
+
+=item * "dialog" corresponds to IUP::Dialog
+
+=item * etc.
+
+=back
 
 B<$max_n:> maximum number of names we want to receive. Can be omitted.
 
 B<Returns:> the list of all names (or just C<$max_n> first items).
 
 [% h.at_see %]
-L<IUP::GetClassName|IUP::GetClassName>,
-L<IUP::GetClassType|IUP::GetClassType>,
-L<IUP::GetAllAttributes|IUP::GetAllAttributes>
+L<GetClassName|[%m.elem%]/"GetClassName()"> (element method),
+L<GetClassType|[%m.elem%]/"GetClassType()"> (element method),
+L<GetAllAttributes|[%m.elem%]/"GetAllAttributes()"> (element method).
 
 =head3 GetClassCallbacks()
 
@@ -1023,16 +1274,30 @@ Returns the names of all registered callbacks of a class.
  #or
  my @list2 = IUP->GetClassCallbacks($classname, $max_n);
 
-B<$classname:> internal name of the class - e.g. xxx
+B<$classname:> internal name of the class - e.g. "button",
+"image" or "dialog"; not a perl class name:
+
+=over
+
+=item * "button" corresponds to IUP::Button
+
+=item * "canvas" corresponds to IUP::Canvas
+
+=item * "dialog" corresponds to IUP::Dialog
+
+=item * etc.
+
+=back
+
 
 B<$max_n:> maximum number of names we want to receive. Can be omitted.
 
 B<Returns:> the list of all names (or just C<$max_n> first items).
 
 [% h.at_see %]
-L<IUP::GetClassName|IUP::GetClassName>,
-L<IUP::GetClassType|IUP::GetClassType>,
-L<IUP::GetAllAttributes|IUP::GetAllAttributes>
+L<GetClassName|[%m.elem%]/"GetClassName()"> (element method),
+L<GetClassType|[%m.elem%]/"GetClassType()"> (element method),
+L<GetAllAttributes|[%m.elem%]/"GetAllAttributes()"> (element method).
 
 =head3 GetFocus()
 
@@ -1042,7 +1307,7 @@ focus, i.e. the element that will receive keyboard events.
  my $elem = IUP->GetFocus();
 
 [% h.at_see %]
-L<SetFocus|IUP::SetFocus>
+L<SetFocus|[%m.elem%]/"SetFocus()"> (element method).
 
 =head3 GetByName()
 
@@ -1068,9 +1333,9 @@ parameter, then use this reference on the calls to IUP element methods - for exa
  print "FGCOLOR=", $button->GetAttribute('FGCOLOR'), "\n";
 
 [% h.at_see %]
-L<SetName|IUP::SetHandle>,
-L<LoadLED|/"LoadLED">,
-L<[%m.led%]|[%m.led%]>
+L<SetName|[%m.elem%]/"SetName()"> (element method),
+L<LoadLED|/"LoadLED"> (global function),
+L<[%m.led%]|[%m.led%]>.
 
 =head3 Help()
 
@@ -1079,7 +1344,7 @@ Firefox (in Linux) passing the desired URL as a parameter. In Windows
 executes the shell "open" operation on the given URL.
 
 In UNIX you can change the used browser setting the environment
-variable IUP_HELPAPP or using the global attribute "HELPAPP".
+variable C<IUP_HELPAPP> or using the global attribute "HELPAPP".
 
 It is a non synchronous operation, i.e. the function will return just
 after execute the command and it will not wait for its result.
@@ -1122,7 +1387,7 @@ as it is call automatically during: C<use IUP;>
 
  IUP->Open();
 
-B<Returns:> IUP_OPENED (already opened), IUP_ERROR or IUP_NOERROR. Only in
+B<Returns:> C<IUP_OPENED> (already opened), C<IUP_ERROR> or C<IUP_NOERROR>. Only in
 UNIX can fail to open, because X-Windows may be not initialized.
 
 [% h.at_notes %]

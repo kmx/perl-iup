@@ -67,48 +67,50 @@ xxxTODO new() and its params (ATTRIB=>'val', param=>'val')
 
 =head1 COMMON METHODS
 
- Append
- ConvertXYToPos
- Destroy
- Detach
- GetAllAttributes
- GetAttribute
- GetAttributes
- GetBrother
- GetCallback
- GetChild
- GetChildCount
- GetChildPos
- GetClassName
- GetClassType
- GetDialog
- GetDialogChild
- GetFloat
- GetInt
- GetNextChild
- GetParamParam
- GetParamVal
- GetParent
- HasValidClassName
- Insert
- IsValidAttributeName
- IsValidCallbackName
- Map
- NextField
- PreviousField
- Redraw
- Refresh
- Reparent
- ResetAttribute
- SaveClassAttributes
- SaveImageAsText
- SetAttribute
- SetCallback
- SetFocus
- SetfAttribute
- Unmap
- Update
- UpdateChildren
+=head2 Handling Callback
+
+ Append()
+ ConvertXYToPos()
+ Destroy()
+ Detach()
+ GetAllAttributes()
+ GetAttribute()
+ GetAttributes()
+ GetBrother()
+ GetCallback()
+ GetChild()
+ GetChildCount()
+ GetChildPos()
+ GetClassName()
+ GetClassType()
+ GetDialog()
+ GetDialogChild()
+ GetFloat()
+ GetInt()
+ GetNextChild()
+ GetParamParam()
+ GetParamVal()
+ GetParent()
+ HasValidClassName()
+ Insert()
+ IsValidAttributeName()
+ IsValidCallbackName()
+ Map()
+ NextField()
+ PreviousField()
+ Redraw()
+ Refresh()
+ Reparent()
+ ResetAttribute()
+ SaveClassAttributes()
+ SaveImageAsText()
+ SetAttribute()
+ SetCallback()
+ SetFocus()
+ SetfAttribute()
+ Unmap()
+ Update()
+ UpdateChildren()
 
 Test: 
 L<Append|Append>,
