@@ -373,6 +373,8 @@ the reference list of all functions available in the main L<IUP|IUP> module.
 
 =head3 MainLoop()
 
+=over
+
 Executes the user interaction until a callback returns C<IUP_CLOSE>,
 C<L<< IUP->ExitLoop|/"ExitLoop" >>> is called, or hiding the last visible dialog.
 
@@ -407,7 +409,11 @@ L<ExitLoop|/"ExitLoop()"> (global method),
 L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> (callback),
 L<LOCKLOOP|[%m.at%]/"LOCKLOOP"> (attribute).
  
+=back
+
 =head3 MainLoopLevel()
+
+=over
 
 Returns the current cascade level of C<L<< IUP->MainLoop|/"MainLoop" >>>. 
 When no calls were done, return value is 0.
@@ -430,13 +436,21 @@ L<LoopStep|/"LoopStep()"> (global function),
 L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> (callback),
 L<LOCKLOOP|[%m.at%]/"LOCKLOOP"> (attribute).
 
+=back
+
 =head3 LoopStep()
+
+=over
 
  IUP->LoopStep();
 
 See L<LoopStepWait|/"LoopStepWait()">.
 
+=back
+
 =head3 LoopStepWait()
+
+=over
 
 Runs one iteration of the message loop.
 
@@ -475,14 +489,22 @@ L<MainLoop|/"MainLoop"> (global function),
 L<ExitLoop|/"ExitLoop"> (global function),
 L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> (callback).
 
+=back
+
 =head3 ExitLoop()
+
+=over
 
 Terminates the current message loop. It has the same effect of a
 callback returning C<IUP_CLOSE>.
 
  IUP->ExitLoop();
 
+=back
+
 =head3 Flush()
+
+=over
 
 Processes all pending messages in the message queue.
 
@@ -500,7 +522,11 @@ processed before it returns.
 In Motif, if the X server sent an event which is not yet in the event
 queue, after a call to C<< IUP->Flush >> the queue might not be empty. 
 
+=back
+
 =head3 SetIdle()
+
+=over
 
 Setting global L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> callback ("idle callback") handler.
 
@@ -516,9 +542,13 @@ Setting global L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> callback ("idle callback") 
 [% h.at_see %]
 L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> (callback).
 
+=back
+
 =head2 Accessing global attributes
 
 =head3 GetGlobal()
+
+=over
 
 Returns an attribute value from the global environment. The value can
 be returned from the driver or from the internal storage.
@@ -537,7 +567,11 @@ used by the application to define the attributeE<rsquo>s value.
 [% h.at_see %]
 L<SetGlobal|/"SetGlobal"> (global function).
 
+=back
+
 =head3 SetGlobal()
+
+=over
 
 Defines an attribute for the global environment. If the driver process
 the attribute then it will not be stored internally.
@@ -557,7 +591,11 @@ in a callback.
 [% h.at_see %]
 L<GetGlobal|/"GetGlobal"> (global function).
 
+=back
+
 =head3 GetLanguage()
+
+=over
 
 Returns the value of global attribute C<L<LANGUAGE|[%m.at%]/"LANGUAGE">>.
 
@@ -569,7 +607,11 @@ B<Returns:> string with the language name - e.g. C<"ENGLISH">.
 L<SetLanguage|/"SetLanguage()"> (global function),
 L<LANGUAGE|[%m.at%]/"LANGUAGE"> (attribute).
 
+=back
+
 =head3 SetLanguage()
+
+=over
 
 Defines the language used by some pre-defined dialogs. This is an old
 function, it just sets the global attribute C<L<LANGUAGE|[%m.at%]/"LANGUAGE">>.
@@ -598,7 +640,11 @@ B<Default:> "ENGLISH"
 L<GetLanguage|/"GetLanguage()"> (global function),
 L<LANGUAGE|[%m.at%]/"LANGUAGE"> (attribute).
 
+=back
+
 =head3 Version()
+
+=over
 
 Returns the value of global attribute C<L<VERSION|[%m.at%]/"VERSION">>.
 
@@ -606,7 +652,11 @@ Returns the value of global attribute C<L<VERSION|[%m.at%]/"VERSION">>.
 
 B<Returns:> the version of underlaying iup library - for example: "3.3". 
 
+=back
+
 =head3 VersionNumber()
+
+=over
 
 Returns numeric represenatation of underlaying iup library version. The
 return value can be used for numeric comparison.
@@ -615,7 +665,11 @@ my $vernumger = IUP->VersionNumber();
 
 B<Returns:> the version number - for example: 303000 for version "3.3". 
 
+=back
+
 =head3 SetClassDefaultAttribute()
+
+=over
 
 Changes the default value of an attribute for a class. It can be any
 attribute, i.e. registered attributes or user custom attributes.
@@ -661,9 +715,13 @@ L<GetClassName|[%m.elem%]/"GetClassName()"> (element method),
 L<GetClassType|[%m.elem%]/"GetClassType()"> (element method),
 L<GetAllAttributes|[%m.elem%]/"GetAllAttributes()"> (element method).
  
+=back
+
 =head2 Simple GUI dialogs
 
 =head3 Alarm()
+
+=over
 
 Shows a modal dialog containing a message and up to three buttons.
 
@@ -714,7 +772,11 @@ L<Message|/"Message()"> (global function),
 L<ListDialog|/"ListDialog()"> (global function),
 L<GetFile|/"GetFile()"> (global function).
 
+=back
+
 =head3 GetColor()
+
+=over
 
 Shows a modal dialog which allows the user to select a color. Based on
 pre-defined dialog L<IUP::ColorDlg|IUP::ColorDlg>.
@@ -749,7 +811,11 @@ L<ListDialog|/"ListDialog()"> (global function),
 L<Alarm|/"Alarm()"> (global function),
 L<GetFile|/"GetFile()"> (global function).
 
+=back
+
 =head3 GetFile()
+
+=over
 
 Shows a modal dialog of the native interface system to select a
 filename. Uses pre-defined dialog L<IUP::FileDlg|IUP::FileDlg>. 
@@ -794,7 +860,11 @@ L<ListDialog|/"ListDialog()"> (global function),
 L<Alarm|/"Alarm()"> (global function),
 L<SetLanguage|/"SetLanguage()"> (global function).
 
+=back
+
 =head3 GetParam()
+
+=over
 
 Shows a modal dialog for capturing parameter values using several types
 of controls.
@@ -1047,7 +1117,11 @@ xxxcheckthisxxx To retrieve a parameter you must use the following function:
 
 =back
 
+=back
+
 =head3 GetText()
+
+=over
 
 Shows a modal dialog to edit a multiline text.
 
@@ -1075,7 +1149,11 @@ L<ListDialog|/"ListDialog()"> (global function),
 L<Alarm|/"Alarm()"> (global function),
 L<SetLanguage|/"SetLanguage()"> (global function).
 
+=back
+
 =head3 ListDialog()
+
+=over
 
 Shows a modal dialog to select items from a simple or multiple
 selection list.
@@ -1126,7 +1204,11 @@ L<Message|/"Message()"> (global function),
 L<GetFile|/"GetFile()"> (global function),
 L<Alarm|/"Alarm()"> (global function).
 
+=back
+
 =head3 Message()
+
+=over
 
 Shows a modal dialog containing a message. It simply creates and popup
 a L<IUP::MessageDlg|IUP::MessageDlg>.
@@ -1145,7 +1227,7 @@ B<$title:> dialog title
 
 B<$message:> text message contents
 
-[% h.notes %]
+[% h.at_notes %]
 
 The L<Message|/"Message"> function shows a dialog centralized on the screen,
 showing the message and the "OK" button. The "\n" character can be added
@@ -1162,9 +1244,13 @@ L<ListDialog|/"ListDialog()"> (global function),
 L<Alarm|/"Alarm()"> (global function),
 L<IUP::MessageDlg|IUP::MessageDlg> (pre-defined dialog).
 
+=back
+
 =head2 Other helper functions
 
 =head3 GetAllClasses()
+
+=over
 
 Returns the internal names of all registered classes.
 
@@ -1194,7 +1280,11 @@ L<GetClassName|[%m.elem%]/"GetClassName()"> (element method),
 L<GetClassType|[%m.elem%]/"GetClassType()"> (element method),
 L<GetAllAttributes|[%m.elem%]/"GetAllAttributes()"> (element method).
 
+=back
+
 =head3 GetAllDialogs()
+
+=over
 
 Returns the names of all dialogs that have an associated name using
 C<L<< $elem->SetName()|[%m.elem%]/SetName >>> or using LED - C<L<< IUP->LoadLED()|/LoadLED >>>.
@@ -1215,7 +1305,11 @@ L<GetName|[%m.elem%]/"GetName()"> (element method),
 L<GetByName|/"GetByName()"> (global function),
 L<GetAllNames|/"GetAllNames()"> (global function).
 
+=back
+
 =head3 GetAllNames()
+
+=over
 
 Returns the names of all interface elements that have an associated name using
 C<L<< $elem->SetName()|[%m.elem%]/SetName >>> or using LED - C<L<< IUP->LoadLED()|/LoadLED >>>.
@@ -1234,7 +1328,11 @@ L<GetName|[%m.elem%]/"GetName()"> (element method),
 L<GetByName|/"GetByName()"> (global function),
 L<GetAllDialogs|/"GetAllDialogs()"> (global function).
 
+=back
+
 =head3 GetClassAttributes()
+
+=over
 
 Returns the names of all registered attributes of a class.
 
@@ -1266,7 +1364,11 @@ L<GetClassName|[%m.elem%]/"GetClassName()"> (element method),
 L<GetClassType|[%m.elem%]/"GetClassType()"> (element method),
 L<GetAllAttributes|[%m.elem%]/"GetAllAttributes()"> (element method).
 
+=back
+
 =head3 GetClassCallbacks()
+
+=over
 
 Returns the names of all registered callbacks of a class.
 
@@ -1289,7 +1391,6 @@ B<$classname:> internal name of the class - e.g. "button",
 
 =back
 
-
 B<$max_n:> maximum number of names we want to receive. Can be omitted.
 
 B<Returns:> the list of all names (or just C<$max_n> first items).
@@ -1299,7 +1400,11 @@ L<GetClassName|[%m.elem%]/"GetClassName()"> (element method),
 L<GetClassType|[%m.elem%]/"GetClassType()"> (element method),
 L<GetAllAttributes|[%m.elem%]/"GetAllAttributes()"> (element method).
 
+=back
+
 =head3 GetFocus()
+
+=over
 
 Returns the reference to a GUI element that has the keyboard
 focus, i.e. the element that will receive keyboard events.
@@ -1309,7 +1414,11 @@ focus, i.e. the element that will receive keyboard events.
 [% h.at_see %]
 L<SetFocus|[%m.elem%]/"SetFocus()"> (element method).
 
+=back
+
 =head3 GetByName()
+
+=over
 
 Returns the reference to a GUI element that has an associated name using
 C<L<< $elem->SetName()|[%m.elem%]/SetName >>> or using LED - C<L<< IUP->LoadLED()|/LoadLED >>>.
@@ -1337,7 +1446,11 @@ L<SetName|[%m.elem%]/"SetName()"> (element method),
 L<LoadLED|/"LoadLED"> (global function),
 L<[%m.led%]|[%m.led%]>.
 
+=back
+
 =head3 Help()
+
+=over
 
 Opens the given URL. In UNIX executes Netscape, Safari (MacOS) or
 Firefox (in Linux) passing the desired URL as a parameter. In Windows
@@ -1357,7 +1470,11 @@ can include 'http://', or be just a file name, etc.
 B<Returns:> 1 if successfull, -1 if failed. In Windows can return -2 if
 file not found.
 
+=back
+
 =head3 LoadLED()
+
+=over
 
 Loads and compiles a LED specification from file.
 
@@ -1378,9 +1495,13 @@ Each time the function loads a LED file, the elements contained in it
 are created. Therefore, the same LED file cannot be loaded several
 times, otherwise the elements will also be created several times. 
 
+=back
+
 =head2 Special Functions
 
 =head3 Open()
+
+=over
 
 Initializes the IUP toolkit. Usually there is no need to call this function
 as it is call automatically during: C<use IUP;>
@@ -1409,7 +1530,11 @@ indicating the driver's version when initializing. Default: NO.
 
 =back
 
+=back
+
 =head3 Close()
+
+=over
 
 Ends the IUP toolkit and releases internal memory. It will also
 automatically destroy all dialogs and all elements that have names.
@@ -1417,6 +1542,8 @@ automatically destroy all dialogs and all elements that have names.
  IUP->Close();
 
 [% h.at_notes %] Situations when you need to call this function are quite rare.
+
+=back
 
 =head1 AUTHOR
 

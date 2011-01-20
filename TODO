@@ -2,13 +2,23 @@
 - use IUP ':all'; - see http://perldoc.perl.org/autodie.html - maybe :dialogs :controls ...
 - test IUP::Internal::LibraryIup::_IupGetClassCallbacks
 - IUP->GetHandle vs. IUP->GetByName
+- check
+iupsetatt
 - add
 IUP->GetAllClasses()
 IUP->LoadLED()
+elem method - RefreshChildren()
+- move
+SaveImageAsText() from element to image
+GetDialogChild() from element to dialog ???
 - remove
 IUP::Internal::Box
 IUP::Internal::Image
-
+elem method - GetCallback()
+elem method - GetFloat()
+elem method - GetInt()
+elem method - IsValidAttributeName()
+elem method - SetfAttribute()
 
 ######## IUP::Internal::Element Attributes (1)
 - maybe replace

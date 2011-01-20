@@ -1,157 +1,1286 @@
-=pod
-
-=head1 NAME
-
-IUP::Manual::Elements - Manuals element guide
-
-=head1 IUP MANUAL
-
-=over
-
-=item * L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>
-
-=item * IUP::Manual::02_Elements E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
-
-=item * L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>
-
-=item * L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>
-
-=item * L<IUP::Manual::05_HandlingKeyboard|IUP::Manual::05_HandlingKeyboard>
-
-=item * L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout>
-
-=back
-
-=head1 INTRODUCTION
-
-xxxTODO GUI vs. non-GUI
-
-Currently available interface elements can be categorized as follows:
-
-=over
-
-=item * B<Primitives> (effective user interaction): B<dialog, label,
-button, text, multi-line, list, toggle, canvas, frame, image>.
-
-=item * B<Composition> (ways to show the elements): B<hbox, vbox,>
-B<zbox, fill>.
-
-=item * B<Grouping> (definition of a common functionality for a group
-of elements): B<radio>.
-
-=item * B<Menu> (related both to menu bars and to pop-up menus):
-B<menu, submenu, item, separator>.
-
-=item * Additional (elements built outside the main library): B<dial,
-gauge, matrix, tabs, valuator, OpenGL canvas, color chooser, color
-browser>.
-
-=item * B<Dialogs> (useful predefined dialogs): B<file selection,
-message, alarm, data input, list selection>.
-
-
-=head1 CREATING ELEMENTS
-
-xxxTODO new() and its params (ATTRIB=>'val', param=>'val')
-
-=head1 CONSTRUCTORS
-
- new
- new_no_ihandle
- new_from_ihandle
-
-=head1 ACCESSORS
-
- ihandle
- name
-
-=head1 COMMON METHODS
-
-=head2 Handling Callback
-
- Append()
- ConvertXYToPos()
- Destroy()
- Detach()
- GetAllAttributes()
- GetAttribute()
- GetAttributes()
- GetBrother()
- GetCallback()
- GetChild()
- GetChildCount()
- GetChildPos()
- GetClassName()
- GetClassType()
- GetDialog()
- GetDialogChild()
- GetFloat()
- GetInt()
- GetNextChild()
- GetParamParam()
- GetParamVal()
- GetParent()
- HasValidClassName()
- Insert()
- IsValidAttributeName()
- IsValidCallbackName()
- Map()
- NextField()
- PreviousField()
- Redraw()
- Refresh()
- Reparent()
- ResetAttribute()
- SaveClassAttributes()
- SaveImageAsText()
- SetAttribute()
- SetCallback()
- SetFocus()
- SetfAttribute()
- Unmap()
- Update()
- UpdateChildren()
-
-Test: 
-L<Append|Append>,
-L<ConvertXYToPos|ConvertXYToPos>,
-L<Destroy|Destroy>,
-L<Detach|Detach>,
-L<GetAllAttributes|GetAllAttributes>,
-L<GetAttribute|GetAttribute>,
-L<GetAttributes|GetAttributes>,
-L<GetBrother|GetBrother>,
-L<GetCallback|GetCallback>,
-L<GetChild|GetChild>,
-L<GetChildCount|GetChildCount>,
-L<GetChildPos|GetChildPos>,
-L<GetClassName|GetClassName>,
-L<GetClassType|GetClassType>,
-L<GetDialog|GetDialog>,
-L<GetDialogChild|GetDialogChild>,
-L<GetFloat|GetFloat>,
-L<GetInt|GetInt>,
-L<GetNextChild|GetNextChild>,
-L<GetParamParam|GetParamParam>,
-L<GetParamVal|GetParamVal>,
-L<GetParent|GetParent>,
-L<HasValidClassName|HasValidClassName>,
-L<Insert|Insert>,
-L<IsValidAttributeName|IsValidAttributeName>,
-L<IsValidCallbackName|IsValidCallbackName>,
-L<Map|Map>,
-L<NextField|NextField>,
-L<PreviousField|PreviousField>,
-L<Redraw|Redraw>,
-L<Refresh|Refresh>,
-L<Reparent|Reparent>,
-L<ResetAttribute|ResetAttribute>,
-L<SaveClassAttributes|SaveClassAttributes>,
-L<SaveImageAsText|SaveImageAsText>,
-L<SetAttribute|SetAttribute>,
-L<SetCallback|SetCallback>,
-L<SetfAttribute|SetfAttribute>,
-L<SetFocus|SetFocus>,
-L<Unmap|Unmap>,
-L<Update|Update>,
-L<UpdateChildren|UpdateChildren>,
+=pod
+
+=head1 NAME
+
+IUP::Manual::Elements - Manuals element guide
+
+=head1 IUP MANUAL
+
+=over
+
+=item * L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>
+
+=item * IUP::Manual::02_Elements E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
+
+=item * L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>
+
+=item * L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>
+
+=item * L<IUP::Manual::05_HandlingKeyboard|IUP::Manual::05_HandlingKeyboard>
+
+=item * L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout>
+
+=back
+
+=head1 INTRODUCTION
+
+This document is intended as a reference list for common methods used by all IUP elements.
+
+For more information about using elemets see L<Elements Concept|IUP::Manual::01_BasicConcept/"Elements Concept">
+in L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>.
+
+xxxTODO GUI vs. non-GUI
+
+Currently available interface elements can be categorized as follows:
+
+=over
+
+=item * B<Primitives> (effective user interaction): B<dialog, label,
+button, text, multi-line, list, toggle, canvas, frame, image>.
+
+=item * B<Composition> (ways to show the elements): B<hbox, vbox,>
+B<zbox, fill>.
+
+=item * B<Grouping> (definition of a common functionality for a group
+of elements): B<radio>.
+
+=item * B<Menu> (related both to menu bars and to pop-up menus):
+B<menu, submenu, item, separator>.
+
+=item * Additional (elements built outside the main library): B<dial,
+gauge, matrix, tabs, valuator, OpenGL canvas, color chooser, color
+browser>.
+
+=item * B<Dialogs> (useful predefined dialogs): B<file selection,
+message, alarm, data input, list selection>.
+
+=back
+
+=head1 CREATING ELEMENTS
+
+xxxTODO new() and its params (ATTRIB=>'val', param=>'val')
+
+=head1 CONSTRUCTORS
+
+ new
+ new_no_ihandle
+ new_from_ihandle
+
+=head1 ACCESSORS
+
+ ihandle
+ name
+
+=head1 COMMON METHODS
+
+=head2 Element constructors
+
+=head3 new()
+
+=head3 new_by_ihandle()
+
+=head2 Methods available in all IUP elements
+
+=head3 Append()
+
+=over
+
+Inserts an interface element at the end of the container, B<after> the
+last element of the container. Valid for any element that contains
+other elements like dialog, frame, hbox, vbox, zbox or menu.
+
+ Ihandle* IUP::Append(Ihandle* ih, Ihandle* new_child); [in C]
+ iup.Append(ih, new_child: ihandle) -> (parent: ihandle) [in Lua]
+
+B<ih>: Identifier of a container like hbox, vbox, zbox and menu.
+
+B<new_child>: Identifier of the element to be inserted.
+
+Returns: the actual B<parent> if the interface element was successfully
+inserted. Otherwise returns NULL (nil in Lua). Notice that the desired
+parent can contains a set of elements and containers where the child
+will be actually attached so the function returns the actual parent of
+the element.
+
+B<Notes:>
+
+This function can be used when elements that will compose a container
+are not known I<a priori> and should be dynamically constructed.
+
+The new child can NOT be mapped. It will NOT map the new child into the
+native system. If the parent is already mapped you must explicitly call
+L<IUP::Map|IUP::Map> for the appended child.
+
+If the actual parent is a layout box (L<IUP::Vbox|IUP::Vbox>, B< IUP::Hbox> or
+L<IUP::Zbox|IUP::Zbox>) and you try to append a child that it is already at the
+parent child list, then the child is moved to the last child position.
+
+The elements are NOT immediately repositioned. Call L<IUP::Refresh|IUP::Refresh> for
+the container (or any other element in the dialog) to update the dialog
+layout.
+
+B<See Also:>
+L<IUP::Detach|IUP::Detach>,
+L<IUP::Insert|IUP::Insert>,
+L<IUP::Hbox|IUP::Hbox>,
+L<IUP::Vbox|IUP::Vbox>,
+L<IUP::Zbox|IUP::Zbox>,
+L<IUP::Menu|IUP::Menu>,
+L<IUP::Map|IUP::Map>,
+L<IUP::Unmap|IUP::Unmap>,
+L<IUP::Refresh|IUP::Refresh>.
+
+=back
+
+=head3 ConvertXYToPos()
+
+=over
+
+Converts a (x,y) coordinate in an item position.
+
+ int IUP::ConvertXYToPos(Ihandle *ih, int x, int y); [in C]
+ iup.ConvertXYToPos(ih: ihandle, x, y: number) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the element.
+
+B<x>: X coordinate of the left corner of the interface element.
+
+B<y>: Y coordinate of the upper part of the interface element.
+
+Returns: the position starting at 0 (except for L<IUP::List|IUP::List> that starts
+at 1). If fails returns -1.
+
+B<Notes:>
+
+It can be used for L<IUP::Text|IUP::Text> (returns a position in the string),
+L<IUP::List|IUP::List> (returns an item) or L<IUP::Tree|IUP::Tree> (returns a node identifier).
+
+B<See Also:>
+L<IUP::Text|IUP::Text>,
+L<IUP::List|IUP::List>,
+L<IUP::Tree|IUP::Tree>.
+
+=back
+
+=head3 Destroy()
+
+=over
+
+Destroys an interface element and all its children. Only dialogs,
+timers, popup menus and images should be normally destroyed, but
+B<detached> controls can also be destroyed.
+
+ void IUP::Destroy(Ihandle *ih); [in C]
+ iup.Destroy(ih: ihandle) [in Lua]
+ or ih:destroy() [in Lua]
+
+B<ih>: Identifier of the interface element to be destroyed.
+
+B<Notes:>
+
+It will automatically B<unmap> and B<detach> the element if necessary,
+and then B<destroy> the element.
+
+This function also deletes the main names associated to the interface
+element being destroyed, but if it has more than one name then some
+names may be left behind.
+
+B<Menu> bars associated with dialogs are automatically destroyed when
+the dialog is destroyed.
+
+B<Images> associated with controls are NOT automatically destroyed,
+because images can be reused in several controls the application must
+destroy them when they are not used anymore.
+
+All dialogs and all elements that have names are automatically
+destroyed in L<IUP::Close|IUP::Close>.
+
+B<See Also:>
+L<IUP::Append|IUP::Append>,
+L<IUP::Detach|IUP::Detach>,
+L<IUP::Map|IUP::Map>,
+L<IUP::Unmap|IUP::Unmap>,
+L<IUP::Create|IUP::Create>.
+
+=back
+
+=head3 Detach()
+
+=over
+
+B<Detaches> an interface element from its parent.
+
+ void IUP::Detach(Ihandle *child); [in C]
+ iup.Detach(child: ihandle) [in Lua]
+ or child:detach() [in Lua]
+
+B<child>: Identifier of the interface element to be detached.
+
+B<Notes:>
+
+It will automatically call L<IUP::Unmap|IUP::Unmap> to B<unmap> the element if
+necessary, and then B<detach> the element.
+
+If left B<detached> it is still necessary to call L<IUP::Destroy|IUP::Destroy> to B<
+destroy> the IUP element.
+
+The elements are NOT immediately repositioned. Call L<IUP::Refresh|IUP::Refresh> for
+the container (or any other element in the dialog) to update the dialog
+layout.
+
+When the element is mapped some attributes are stored only in the
+native system. If the element is B<unmaped> those attributes are lost.
+Use the function L<IUP::SaveClassAttributes|IUP::SaveClassAttributes>
+when you want to B<unmap> the element and keep its attributes.
+
+B<See Also:>
+L<IUP::Append|IUP::Append>,
+L<IUP::Insert|IUP::Insert>,
+L<IUP::Refresh|IUP::Refresh>,
+L<IUP::Unmap|IUP::Unmap>,
+L<IUP::Create|IUP::Create>,
+L<IUP::Destroy|IUP::Destroy>.
+
+=back
+
+=head3 GetAllAttributes()
+
+=over
+
+Returns the names of all attributes of an element that are defined in
+its internal hash table only.
+
+ int IUP::GetAllAttributes(Ihandle* ih, char** names, int max_n); [in C]
+ iup.GetAllAttributes(ih: ihandle[, max_n: number]) -> (names: table, n: number) [in Lua]
+
+B<ih>: identifier of the interface element.
+
+names: table receiving the names. Only the list of names need to be
+allocated. Each name will point to an internal string.
+
+B<max_n>: maximum number of names the table can receive. Can be omitted
+in Lua.
+
+Returns: the actual number of names loaded to the table. If names==NULL
+or max_n==0 then returns the maximum number of names.
+
+B<See Also:>
+L<IUP::GetAttribute|IUP::GetAttribute>,
+L<IUP::SetAttribute|IUP::SetAttribute>,
+L<IUP::SetAttributes|IUP::SetAttributes>,
+L<IUP::StoreAttribute|IUP::StoreAttribute>.
+
+=back
+
+=head3 GetAttribute()
+
+=over
+
+Returns the name of an interface element attribute. See also the
+L<Attributes Guide|../attrib_guide.html> section.
+
+ char *IUP::GetAttribute(Ihandle *ih, const char *name); [in C]iup.GetAttribute(ih: ihandle, name: string) -> value: string [in Lua]
+ char *IUP::GetAttributeId(Ihandle *ih, const char *name, int id); [in C]iup.GetAttributeId(ih: ihandle, name: string, id: number) -> value: string [in Lua]
+
+B<ih>: Identifier of the interface element. If NULL will retrieve from
+the global environment.
+
+B<name>: name of the attribute.
+
+B<id>: used when the attribute has an additional id.
+
+Returns: the attribute value or NULL (nil in Lua) if the attribute is
+not defined or does not exist.
+
+B<Notes:>
+
+See the L<Attributes Guide|../attrib_guide.html> for more details.
+
+This function return value is not necessarily the same pointer used by
+the application to define the attribute value. The pointers of internal
+IUP attributes returned by L<IUP::GetAttribute|IUP::GetAttribute> should B<never> be freed
+or changed, except when you allocated the memory for that pointer at
+set it using B< IUP::SetAttribute>.
+
+xxxcheckthisxxx In IUP::Lua, only known internal pointer attributes are returned as
+B<user data> or as an ihandle, all other attributes are returned as
+strings. To access attribute data always as B<user data> use
+iup.GetAttributeData:
+
+ iup.GetAttributeData(ih: ihandle) -> value: userdata [in Lua]
+
+B<Examples:>
+
+L<Browse for Example Files|../../examples/>
+
+B<See Also:>
+L<IUP::SetAttribute|IUP::SetAttribute>,
+L<IUP::GetInt|IUP::GetInt>,
+L<IUP::GetFloat|IUP::GetFloat>,
+L<IUP::SetAttributes|IUP::SetAttributes>,
+L<IUP::GetHandle|IUP::GetHandle>.
+
+=back
+
+=head3 GetAttributes()
+
+=over
+
+Returns all attributes of a given element that are in the internal hash
+table. The known attributes that are pointers (not strings) are
+returned as integers.
+
+The internal attributes are not returned (attributes prefixed with
+"_IUP").
+
+Before calling this function the application must ensure that there is
+no pointer attributes set for that element, although some known
+pointers are handled.
+
+This function should be avoided. Use L<IUP::GetAllAttributes|IUP::GetAllAttributes> instead.
+
+ char* IUP::GetAttributes (Ihandle *ih); [in C]
+ iup.GetAttributes(ih: ihandle) -> (ret: string) [in Lua] 
+
+B<ih>: Identifier of the interface element.
+
+Returns: a string with all attributes in the format: "NAME=VALUE,
+NAME="VALUE", ...".
+
+B<See Also:>
+L<IUP::GetAttribute|IUP::GetAttribute>,
+L<IUP::GetAllAttributes|IUP::GetAllAttributes>,
+L<IUP::SetAttribute|IUP::SetAttribute>,
+L<IUP::SetAttributes|IUP::SetAttributes>,
+L<IUP::StoreAttribute|IUP::StoreAttribute>.
+
+=back
+
+=head3 GetBrother()
+
+=over
+
+Returns the brother of a control or NULL if there is none.
+
+ Ihandle* IUP::GetBrother(Ihandle* ih); [in C]
+ iup.GetBrother(ih: ihandle) -> brother: ihandle [in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<See Also:>
+L<IUP::GetChild|IUP::GetChild>,
+L<IUP::GetNextChild|IUP::GetNextChild>,
+L<IUP::GetParent|IUP::GetParent>.
+
+=back
+
+=head3 GetChild()
+
+=over
+
+Returns the a child of the given control given its position.
+
+ Ihandle *IUP::GetChild(Ihandle* ih, int pos); [in C]
+ iup.GetChild(ih: ihandle, pos: number) -> child: ihandle [in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<pos>: position of the desire child.
+
+B<Notes:>
+
+This function will return the children of the control in the exact same
+order in which they were assigned.
+
+B<See Also:>
+L<IUP::GetChildPos|IUP::GetChildPos>,
+L<IUP::GetNextChild|IUP::GetNextChild>,
+L<IUP::GetBrother|IUP::GetBrother>,
+L<IUP::GetParent|IUP::GetParent>.
+
+=back
+
+=head3 GetChildCount()
+
+=over
+
+Returns the number of children of the given control.
+
+ int IUP::GetChildCount(Ihandle* ih); [in C]
+ iup.GetChildCount(ih: ihandle) ->  pos: number [in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<See Also:>
+L<IUP::GetChildPos|IUP::GetChildPos>,
+L<IUP::GetChild|IUP::GetChild>,
+L<IUP::GetNextChild|IUP::GetNextChild>,
+L<IUP::GetBrother|IUP::GetBrother>,
+L<IUP::GetParent|IUP::GetParent>.
+
+=back
+
+=head3 GetChildPos()
+
+=over
+
+Returns the position of a child of the given control.
+
+ int IUP::GetChildPos(Ihandle* ih, Ihandle* child); [in C]
+ iup.GetChildPos(ih, child: ihandle) ->  pos: number [in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<pos>: position of the desire child or -1 if child not found.
+
+B<Notes:>
+
+This function will return the children of the control in the exact same
+order in which they were assigned.
+
+B<See Also:>
+L<IUP::GetChild|IUP::GetChild>,
+L<IUP::GetChildCount|IUP::GetChildCount>,
+L<IUP::GetNextChild|IUP::GetNextChild>,
+L<IUP::GetBrother|IUP::GetBrother>,
+L<IUP::GetParent|IUP::GetParent>.
+
+=back
+
+=head3 GetClassName()
+
+=over
+
+Returns the name of the class of an interface element.
+
+ char* IUP::GetClassName(Ihandle* ih); [in C]
+ iup.GetClassName(ih: ihandle) -> (name: string) [in Lua]
+
+B<ih>: Identifier of the interface element.
+
+B<Notes:>
+
+The following names are known:
+
+ "image"
+ "button"
+ "canvas"
+ "dialog"
+ "fill"
+ "frame" 
+ "hbox"
+ "item"
+ "separator"
+ "submenu"
+ "label"
+ "list"
+ "menu"
+ "radio"
+ "text" 
+ "toggle"
+ "vbox"
+ "zbox"
+ "multiline"
+ "user"
+ "matrix"
+ "tree"
+ "dial"
+ "gauge"
+ "val"
+ "glcanvas"
+ "tabs"
+ "cells"
+ "colorbrowser"
+ "colorbar"
+ "spin"
+ "sbox"
+ "cbox"
+ "progressbar"
+ "olecontrol"
+
+B<See Also:>
+L<IUP::GetClassType|IUP::GetClassType>,
+L<IUP::GetClassAttributes|IUP::GetClassAttributes>.
+
+=back
+
+=head3 GetClassType()
+
+=over
+
+Returns the name of the native type of an interface element.
+
+ char* IUP::GetClassType(Ihandle* ih); [in C]
+ iup.GetClassType(ih: ihandle) -> (name: string) [in Lua]
+
+B<ih>: Identifier of the interface element.
+
+B<Notes:>
+
+There are only a few pre-defined class types:
+
+ "void" - No native representation - HBOX, VBOX, ZBOX, FILL, RADIO
+ "control" - Native controls - BUTTON, LABEL, TOGGLE, LIST, TEXT, MULTILINE, ITEM, SEPARATOR, SUBMENU, FRAME, others
+ "canvas" - Drawing canvas, also used as a base control for custom controls.
+ "dialog"
+ "image"
+ "menu"
+
+B<See Also:>
+L<IUP::GetClassName|IUP::GetClassName>,
+L<IUP::GetClassAttributes|IUP::GetClassAttributes>.
+
+=back
+
+=head3 GetDialog()
+
+=over
+
+Returns the handle of the dialog that contains that interface element.
+Works also for children of a menu that is associated with a dialog.
+
+ Ihandle* IUP::GetDialog(Ihandle *ih); [in C]
+ iup.GetDialog(ih: ihandle) -> (ih: ihandle) [in Lua]
+
+B<ih>: Identifier of an interface element.
+
+Returns: the handle of the dialog or NULL if not found.
+
+=back
+
+=head3 GetDialogChild()
+
+=over
+
+Returns the identifier of the child element that has the NAME attribute
+equals to the given value on the same dialog hierarchy. Works also for
+children of a menu that is associated with a dialog.
+
+ Ihandle* IUP::GetDialogChild(Ihandle *ih, const char* name); [in C]
+ iup.GetDialogChild(ih: ihandle, name: string) -> (ih: ihandle) [in Lua]
+
+B<ih>: Identifier of an interface element that belongs to the
+hierarchy.
+
+B<name>: name of the control to be found
+
+Returns: NULL if not found.
+
+B<Notes:>
+
+This function will only found the child if the NAME attribute is set at
+the control.
+
+Before the dialog is mapped the function searches the hierarchy, even
+if the hierarchy does not belongs to a dialog yet, but after the child
+is mapped the result is immediate (the hierarchy is not searched).
+
+B<See Also:>
+L<NAME|IUP::Manual::03_Attributes/NAME>.
+
+=back
+
+=head3 GetNextChild()
+
+=over
+
+Returns the a child of the given control given its brother.
+
+ Ihandle *IUP::GetNextChild(Ihandle* ih, Ihandle* child); [in C]
+ iup.GetNextChild(ih, child: ihandle) -> next_child: ihandle [in Lua]
+
+B<ih>: identifier of the interface element. Can be NULL if child not
+NULL.
+
+B<child>: Identifier of the child brother to be used as reference. To
+get the first child use NULL.
+
+Returns: the handle of the child or NULL.
+
+B<Notes:>
+
+This function will return the children of the control in the exact same
+order in which they were assigned. If child in not NULL then it returns
+exactly the same result as L<IUP::GetBrother|IUP::GetBrother>.
+
+B<Examples:>
+
+ /* Lists all children of a IUP::Vbox */
+ #include <stdio.h>
+ #include "iup.h"
+ 
+ int main(int argc, char* argv[])
+ {
+   Ihandle *dialog, *bt, *lb, *vbox, *child;
+ 
+   IUP::Open(&argc, &argv);
+ 
+   bt = IUP::Button("Button", NULL);
+   lb = IUP::Label("Label");
+ 
+   vbox = IUP::Vbox(bt, lb, NULL);
+ 
+   dialog = IUP::Dialog(vbox);
+   IUP::Show(dialog);
+ 
+   child = IUP::GetNextChild(vbox, NULL);
+ 
+   while(child)
+   {
+     printf("vbox has a child of type %s\n", IUP::GetClassName(child));
+     child = IUP::GetNextChild(NULL, child);
+   }
+ 
+   IUP::MainLoop();
+   IUP::Close();
+ 
+   return 0;
+ }
+
+B<See Also:>
+L<IUP::GetBrother|IUP::GetBrother>,
+L<IUP::GetParent|IUP::GetParent>,
+L<IUP::GetChild|IUP::GetChild>.
+
+=back
+
+=head3 GetParamParam()
+
+=over
+
+xxxcheckthisxxx To retrieve a parameter of IUP->GetParam dialog 
+you must use the following function:
+
+ my $element = $dialog->GetParamParam($param_index);
+
+=over
+
+=item * B<$dialog:> Reference to IUP::Dialog object.
+
+=item * B<$param_index:> Parameter to be retrieved.
+
+=back 
+
+=back
+
+=head3 GetParamVal()
+
+=over
+
+xxxhack related to GetParamParam
+
+=back
+
+=head3 GetParent()
+
+=over
+
+Returns the parent of a control.
+
+ Ihandle* IUP::GetParent(Ihandle *ih); [in C]
+ iup.GetParent(ih: ihandle) -> parent: ihandle [in Lua]
+
+B<ih>: identifier of the interface element.
+
+Returns: the handle of the parent or NULL if does not have a parent.
+
+B<See Also:>
+L<IUP::GetChild|IUP::GetChild>,
+L<IUP::GetNextChild|IUP::GetNextChild>,
+L<IUP::GetBrother|IUP::GetBrother>.
+
+=back
+
+=head3 HasValidClassName()
+
+=over
+
+xxxspecial perl specific hack
+
+xxxmaybe make it an internal method
+
+=back
+
+=head3 Insert()
+
+=over
+
+Inserts an interface element B<before> another child of the container.
+Valid for any element that contains other elements like dialog, frame,
+hbox, vbox, zbox, menu, etc.
+
+ Ihandle* IUP::Insert(Ihandle* ih, Ihandle* ref_child, Ihandle* new_child); [in C]
+ iup.Insert(ih, ref_child, new_child: ihandle) -> (parent: ihandle) [in Lua]
+
+B<ih>: Identifier of a container like hbox, vbox, zbox and menu.
+
+B<ref_child>: Identifier of the element to be used as reference. Can be
+NULL to insert as the first element.
+
+B<new_child>: Identifier of the element to be inserted before the
+reference.
+
+Returns: the actual B<parent> if the interface element was successfully
+inserted. Otherwise returns NULL (nil in Lua). Notice that the desired
+parent can contains a set of elements and containers where the child
+will be actually attached so the function returns the actual parent of
+the element.
+
+B<Notes:>
+
+This function can be used when elements that will compose a container
+are not known I<a priori> and should be dynamically constructed.
+
+The new child can NOT be mapped. It will NOT map the new child into the
+native system. If the parent is already mapped you must explicitly call
+L<IUP::Map|IUP::Map> for the appended child.
+
+If the actual parent is a layout box (L<IUP::Vbox|IUP::Vbox>, B< IUP::Hbox> or
+L<IUP::Zbox|IUP::Zbox>) and you try to insert a child that it is already at the
+parent child list, then the child is moved to the insert position.
+
+The elements are NOT immediately repositioned. Call L<IUP::Refresh|IUP::Refresh> for
+the container* to update the dialog layout (* or any other element in
+the dialog).
+
+B<See Also:>
+L<IUP::Append|IUP::Append>,
+L<IUP::Detach|IUP::Detach>,
+L<IUP::Hbox|IUP::Hbox>,
+L<IUP::Vbox|IUP::Vbox>,
+L<IUP::Zbox|IUP::Zbox>,
+L<IUP::Menu|IUP::Menu>,
+L<IUP::Map|IUP::Map>,
+L<IUP::Unmap|IUP::Unmap>,
+L<IUP::Refresh|IUP::Refresh>.
+
+=back
+
+=head3 IsValidCallbackName()
+
+=over
+
+xxxhack - perl specific
+
+=back
+
+=head3 Map()
+
+=over
+
+Creates (B<maps>) the native interface objects corresponding to the
+given IUP interface elements.
+
+It will also create the native element of all the children in the
+element's tree.
+
+The element must be already B<attached> to a container if not a dialog.
+
+ int IUP::Map(Ihandle* ih); [in C]
+ iup.Map(ih: iuplua-tag) -> ret: number [in Lua]
+
+B<ih>: Identifier of an interface element.
+
+Returns: IUP_NOERROR if successful. If the element was already mapped
+returns IUP_NOERROR. If the native creation failed returns IUP_ERROR.
+
+B<Notes:>
+
+If the element is a dialog then the abstract layout will be updated
+even if the element is already mapped. If the dialog is visible the
+elements will be immediately repositioned. Calling L<IUP::Map|IUP::Map> for an
+already mapped dialog is the same as only calling L<IUP::Refresh|IUP::Refresh> for the
+dialog.
+
+If you add new elements to an already mapped dialog you must call
+L<IUP::Map|IUP::Map> for that elements. And then call L<IUP::Refresh|IUP::Refresh> to update the
+dialog layout.
+
+If the WID attribute is NULL, it means the element was not already
+mapped. Some containers do not have a native element associated, like
+VBOX and HBOX. In this case their WID is a fake (-1) value.
+
+A child is only mapped if its parent is already mapped.
+
+This function is automatically called before the dialog is shown in
+L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup>.
+
+It is usefull for the application to call L<IUP::Map|IUP::Map> when the value of
+the WID attribute must be known, or the native element must exist,
+before a dialog is made visible.
+
+The MAP_CB callback is called just after the native element is created
+and the dialog layout updated, so it can also be used to create other
+things that depend on the WID attribute.
+
+B<See Also:>
+L<IUP::Append|IUP::Append>,
+L<IUP::Detach|IUP::Detach>,
+L<IUP::Unmap|IUP::Unmap>,
+L<IUP::Create|IUP::Create>,
+L<IUP::Destroy|IUP::Destroy>,
+L<IUP::ShowXY|IUP::ShowXY>,
+L<IUP::Show|IUP::Show>,
+L<IUP::Popup|IUP::Popup>,
+L<MAP_CB|../call/iup_map_cb.html>.
+
+=back
+
+=head3 NextField()
+
+=over
+
+Shifts the focus to the next element that can have the focus. It is
+relative to the given element and does not depend on the element
+currently with the focus.
+
+It will search for the next element first in the children, then in the
+brothers, then in the uncles and their children, and so on.
+
+This sequence is not the same sequence used by the Tab key, which is
+dependent on the native system.
+
+ Ihandle* IUP::NextField(Ihandle* ih); [in C]
+ iup.NextField(ih: ihandle) -> (next: ihandle) [in Lua]
+
+B<ih>: identifier of the interface element.
+
+Returns: the element that received the focus or NULL if not found.
+
+B<See Also:>
+L<IUP::PreviousField|IUP::PreviousField>.
+
+=back
+
+=head3 PreviousField()
+
+=over
+
+Shifts the focus to the previous element that can have the focus. It is
+relative to the given element and does not depend on the element
+currently with the focus.
+
+ Ihandle* IUP::PreviousField(Ihandle* ih); [in C]
+ iup.PreviousField(ih: ihandle) -> (previous: ihandle) [in Lua]
+
+B<ih>: identifier of the interface element.
+
+Returns: the element that received the focus or NULL if not found.
+
+B<See Also:>
+
+L<IUP::NextField|IUP::NextField>.
+
+=back
+
+=head3 Redraw()
+
+=over
+
+Force the element and its children to be redraw immediately.
+
+ void IUP::Redraw(Ihandle* ih, int children); [in C]
+ iup.Redraw(ih: ihandle, children: boolen) [in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<children>: flag to update its children. 
+
+=back
+
+=head3 Refresh()
+
+=over
+
+Updates the size and layout of controls after changing size attributes.
+Can be used for any element inside a dialog, the layout of the dialog
+will be updated. It can change the layout of all the controls inside
+the dialog because of the dynamic layout positioning.
+
+ void IUP::Refresh(Ihandle *ih); [in C]
+ iup.Refresh(ih: ihandle) [in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<Notes:>
+
+Can be used for any control, but it will always affect the whole
+dialog. Can be called even if the dialog is not mapped.
+
+The elements are immediately repositioned, if the dialog is visible
+then the change will be immediately reflected on the display.
+
+This function will NOT change the size of the dialog, except when the
+SIZE or RASTERSIZE attributes of the dialog where changed before the
+call.
+
+If you also want to change the size of the dialog use:
+
+ IUP::SetAttribute(dialog, "SIZE", ...);
+ IUP::Refresh(dialog);
+
+So the dialog will be resized for the new B<User> size, if the new size
+is NULL the dialog will be resized to the B<Natural> size that include
+all the elements.
+
+Changing the size of elements without changing the dialog size may
+position some controls outside the dialog area at the left or bottom
+borders (the elements will be cropped at the dialog borders by the
+native system).
+
+L<IUP::Map|IUP::Map> also updates the dialog layout even if the control is already
+mapped, so using it or using L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup>
+(they all call L<IUP::Map|IUP::Map>) will also update the dialog layout.
+
+B<See Also:>
+L<SIZE|IUP::Manual::03_Attributes/SIZE>,
+L<IUP::Map|IUP::Map>,
+L<IUP::RefreshChildren|IUP::RefreshChildren>.
+
+=back
+
+=head3 RefreshChildren()
+
+=over
+
+Updates the size and layout of controls after changing size attributes.
+Can be used for any element inside a dialog, only its children will be
+updated. It can change the layout of all the controls inside the given
+element because of the dynamic layout positioning.
+
+ void IUP::RefreshChildren(Ihandle *ih); [in C]
+ iup.RefreshChildren(ih: ihandle) [in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<Notes:>
+
+The given element must be a container. It must be inside a dialog
+hierarchy and must be mapped. It can not be a dialog. For dialogs use
+L<IUP::Refresh|IUP::Refresh>.
+
+The children are immediately repositioned, if the dialog is visible
+then the change will be immediately reflected on the display.
+
+This function will NOT change the size of the given element, even if
+the natural size of its children would increase its natural size.
+
+If your dialog has too many controls and you want to hide or destroy
+some, then add some other in the same place, so you actually know that
+the dialog layout would not change, this is a much faster function than
+L<IUP::Refresh|IUP::Refresh>.
+
+B<See Also:>
+L<IUP::Refresh|IUP::Refresh>.
+
+=back
+
+=head3 Reparent()
+
+=over
+
+Moves an interface element from one position in the hierarchy tree to
+another.
+
+Both B<new_parent> and B<child> must be mapped or unmapped at the same
+time.
+
+If B<ref_child> is NULL, then it will I<append> the B<child> to the
+B<new_parent>. If B<ref_child> is NOT NULL then it will I<insert>
+B<child> before B<ref_child> inside the B< new_parent>.
+
+ int IUP::Reparent(Ihandle* child, Ihandle* new_parent, Ihandle* ref_child); [in C]
+ iup.Reparent(child, new_parent, ref_child: ihandle) -> error: number [in Lua]
+
+B<child>: Identifier of the element to be moved.
+
+B<new_parent>: Identifier of the new parent.
+
+B<ref_child>: Identifier of the element to be used as reference, where
+the child will be inserted before it. Can be NULL. (since 3.3)
+
+Returns: IUP_NOERROR if successfully, IUP_ERROR if failed.
+
+B<Notes:>
+
+This function is faster and easier than doing the sequence B<unmap>, B<
+detach>, B<append/insert> and B<map>.
+
+The elements are NOT immediately repositioned. Call L<IUP::Refresh|IUP::Refresh> for
+the container (or any other element in the dialog) to update the dialog
+layout.
+
+Motif does not support the re-parent function, but we simulate a
+re-parent doing a B<unmap>/B<map> sequence. But some attributes may be
+lost during the operation, mostly attributes that are id dependent.
+
+B<See Also:>
+L<IUP::Append|IUP::Append>,
+L<IUP::Insert|IUP::Insert>,
+L<IUP::Detach|IUP::Detach>,
+L<IUP::Map|IUP::Map>,
+L<IUP::Unmap|IUP::Unmap>,
+L<IUP::Refresh|IUP::Refresh>
+
+=back
+
+=head3 ResetAttribute()
+
+=over
+
+Removes an attribute from the hash table of the element, and its
+children if the attribute is inheritable. It is useful to reset the
+state of inheritable attributes in a tree of elements.
+
+ void IUP::ResetAttribute(Ihandle *ih, const char *name); [in C]iup.ResetAttribute(ih: ihandle, name: string) [in Lua] 
+
+B<ih>: Identifier of the interface element. If NULL will set in the
+global environment.
+
+B<name>: name of the attribute.
+
+B<See Also:>
+L<IUP::GetAttribute|IUP::GetAttribute>,
+L<IUP::SetAttribute|IUP::SetAttribute>.
+
+=back
+
+=head3 SaveClassAttributes()
+
+=over
+
+Saves all registered attributes on the internal hash table.
+
+ void IUP::SaveClassAttributes(Ihandle* ih); [in C]
+ iup.SaveClassAttributes(ih: ihandle) [in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<Notes:>
+
+When the element is mapped some attributes are stored only in the
+native system. If the element is B<unmaped> those attributes are lost.
+So this function is useful when you want to B<unmap> the element and
+keep its attributes.
+
+It will not save id dependent attributes, like those which has a
+complementary number. For example: items in a L<IUP::List|IUP::List>, B< IUP::Tree>
+or L<IUP::Matrix|IUP::Matrix>.
+
+B<See Also:>
+L<IUP::GetClassAttributes|IUP::GetClassAttributes>,
+L<IUP::GetClassName|IUP::GetClassName>,
+L<IUP::GetClassType|IUP::GetClassType>,
+L<IUP::GetAllAttributes|IUP::GetAllAttributes>,
+L<IUP::CopyClassAttributes|IUP::CopyClassAttributes>.
+
+=back
+
+=head3 SetAttribute()
+
+=over
+
+Defines an attribute for an interface element. See also the
+L<Attributes Guide|../attrib_guide.html> section.
+
+ void IUP::SetAttribute(Ihandle *ih, const char *name, const char *value); [in C]iup.SetAttribute(ih: ihandle, name: string, value: string) [in Lua] 
+ void IUP::SetAttributeId(Ihandle *ih, const char *name, int id, const char *value); [in C]iup.SetAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua] 
+
+B<ih>: Identifier of the interface element. If NULL will set in the
+global environment.
+
+B<name>: name of the attribute.
+
+B<id>: used when the attribute has an additional id.
+
+B<value>: value of the attribute. If NULL (nil in Lua), the default
+value will be used.
+
+B<Notes:>
+
+See the L<Attributes Guide|../attrib_guide.html> for more details.
+
+xxxcheckthisxxx The value stored in the attribute is not duplicated. Therefore, you can
+store your private attributes, such as a structure with data to be used
+in a callback. When you want IUP to store an attribute by duplicating a
+string passed as a value, use function
+L<IUP::StoreAttribute|IUP::StoreAttribute>.
+
+ struct myData* mydata = malloc(sizeof(struct myData));IUP::SetAttribute(dlg, "MYDATA", (char*)mydata)     // correct  (unknown attributes will be stored as pointers)
+
+B<See Also:>
+L<IUP::GetAttribute|IUP::GetAttribute>,
+L<IUP::SetAttributes|IUP::SetAttributes>,
+L<IUP::GetAttributes|IUP::GetAttributes>.
+
+=back
+
+=head3 SetCallback()
+
+=over
+
+Associates a callback to an event.
+
+ Icallback IUP::SetCallback(Ihandle* ih, const char *name, Icallback func); [in C]
+ [There is no equivalent in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<name>: attribute name of the callback.
+
+B<func>: address of a C function. If NULL removes the association.
+
+Returns: the address of the previous function associated to the action.
+
+B<Notes:>
+
+This function replaces the combination:
+
+ IUP::SetFunction(global_name, func);
+ IUP::SetAttribute(ih, name, global_name);
+
+So it eliminates the need for a global name.
+
+Callbacks set using L<IUP::SetCallback|IUP::SetCallback> can not be retrieved using
+L<IUP::GetFunction|IUP::GetFunction>.
+
+In Lua, callbacks are associated by simply setting a function as the
+value of the callback name, for example:
+
+ button = iup.button{...
+ 
+ button.action = function(...    OR
+ function button:action(...
+
+B<See Also:>
+L<IUP::GetCallback|IUP::GetCallback>,
+L<IUP::SetFunction|IUP::SetFunction>.
+
+=back
+
+=head3 SetFocus()
+
+=over
+
+Defines the interface element that will receive the keyboard focus,
+i.e., the element that will receive keyboard events. But this will be
+processed only after the con
+
+ Ihandle *IUP::SetFocus(Ihandle *ih); [in C]
+ iup.SetFocus(ih: ihandle) -> ih: ihandle [in Lua]
+
+B<ih>: identifier of the interface element that will receive the
+keyboard focus. Only elements that can have the keyboard focus, are
+mapped, active and visible can be used, other elements are ignored.
+
+Returns: the identifier of the interface element that previously had
+the keyboard focus.
+
+B<Notes:>
+
+The value returned by L<IUP::GetFocus|IUP::GetFocus> will be updated only after the
+main loop regain the control and the control actually receive the
+focus. So if you call L<IUP::GetFocus|IUP::GetFocus> right after L<IUP::SetFocus|IUP::SetFocus> the
+return value will be different. You could call L<IUP::Flush|IUP::Flush> between the
+two functions to obtain the same value.
+
+B<See Also:>
+L<IUP::GetFocus|IUP::GetFocus>. 
+
+=back
+
+=head3 Unmap()
+
+=over
+
+B<Unmap> the element from the native system. It will also unmap all its
+children.
+
+It will NOT B<detach> the element from its parent, , and it will NOT
+B<destroy> the IUP element.
+
+ void IUP::Unmap(Ihandle* ih); [in C]
+ iup.Unmap(ih: iuplua-tag) [in Lua]
+
+B<ih>: Identifier of an interface element.
+
+B<Notes:>
+
+When the element is mapped some attributes are stored only in the
+native system. If the element is B<unmaped> those attributes are lost.
+Use the function L<IUP::SaveClassAttributes|IUP::SaveClassAttributes>
+when you want to B<unmap> the element and keep its attributes.
+
+B<See Also:>
+L<IUP::Append|IUP::Append>,
+L<IUP::Detach|IUP::Detach>,
+L<IUP::Map|IUP::Map>,
+L<IUP::Create|IUP::Create>,
+L<IUP::Destroy|IUP::Destroy>.
+
+=back
+
+=head3 Update()
+
+=over
+
+IUP::UpdateChildren
+
+Mark the element to be redraw when the control returns to the system.
+
+ $element->Update;
+
+B<$element:> identifier of the interface element. 
+
+=back
+
+=head3 UpdateChildren()
+
+=over
+
+Mark the element or its children to be redraw when the control returns
+to the system.
+
+ $element->UpdateChildren;
+
+B<$element:> identifier of the interface element. 
+
+=back
+
+=head1 Methods common for all elements
+
+L<Append|/"Append()">,
+L<ConvertXYToPos|/"ConvertXYToPos()">,
+L<Destroy|/"Destroy()">,
+L<Detach|/"Detach()">,
+L<GetAllAttributes|/"GetAllAttributes()">,
+L<GetAttribute|/"GetAttribute()">,
+L<GetAttributes|/"GetAttributes()">,
+L<GetBrother|/"GetBrother()">,
+L<GetChild|/"GetChild()">,
+L<GetChildCount|/"GetChildCount()">,
+L<GetChildPos|/"GetChildPos()">,
+L<GetClassName|/"GetClassName()">,
+L<GetClassType|/"GetClassType()">,
+L<GetDialog|/"GetDialog()">,
+L<GetDialogChild|/"GetDialogChild()">,
+L<GetNextChild|/"GetNextChild()">,
+L<GetParent|/"GetParent()">,
+L<HasValidClassName|/"HasValidClassName()">,
+L<Insert|/"Insert()">,
+L<IsValidCallbackName|/"IsValidCallbackName()">,
+L<Map|/"Map()">,
+L<NextField|/"NextField()">,
+L<PreviousField|/"PreviousField()">,
+L<Redraw|/"Redraw()">,
+L<Refresh|/"Refresh()">,
+L<RefreshChildren|/"RefreshChildren()">,
+L<Reparent|/"Reparent()">,
+L<ResetAttribute|/"ResetAttribute()">,
+L<SaveClassAttributes|/"SaveClassAttributes()">,
+L<SetAttribute|/"SetAttribute()">,
+L<SetCallback|/"SetCallback()">,
+L<SetFocus|/"SetFocus()">,
+L<Unmap|/"Unmap()">,
+L<Update|/"Update()">,
+L<UpdateChildren|/"UpdateChildren()">.
