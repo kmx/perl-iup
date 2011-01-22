@@ -1369,6 +1369,28 @@ L<IUP::MessageDlg|IUP::MessageDlg> (pre-defined dialog).
 
 =head2 Other helper functions
 
+=head3 CopyClassAttributes()
+
+=over
+
+Copies all registered attributes from one element to another. Both
+elements must be of the same internal class (see L<GetClassName|/"GetClassName()">).
+
+ IUP->CopyClassAttributes($src_element, $dst_element);
+
+B<$src_elem:> reference of the source element.
+
+B<$dst_elem:> reference of the destination element.
+
+=head1 SEE ALSO
+L<GetClassAttributes|/"GetClassAttributes()"> (global function),
+L<GetClassName|/"GetClassName()"> (element method),
+L<GetClassType|/"GetClassType()"> (element method),
+L<GetAllAttributes|/"GetAllAttributes()"> (element method),
+L<SaveClassAttributes|IUP::Manual::02_Elements/"SaveClassAttributes()"> (element method).
+
+=back
+
 =head3 GetAllClasses()
 
 =over

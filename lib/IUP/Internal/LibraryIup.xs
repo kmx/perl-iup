@@ -142,6 +142,15 @@ _IupClose()
 		IupClose();
 
 #### Original C function from <iup.h>
+# IupOpen(NULL, NULL); xxxTODO not sure if this is a good idea
+int
+_IupOpen()
+	CODE:
+		RETVAL = IupOpen(NULL,NULL);
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <iup.h>
 # void IupImageLibOpen (void);
 void
 _IupImageLibOpen()

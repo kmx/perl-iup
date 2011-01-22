@@ -89,15 +89,14 @@ Inserts an interface element at the end of the container, B<after> the
 last element of the container. Valid for any element that contains
 other elements like dialog, frame, hbox, vbox, zbox or menu.
 
- Ihandle* IUP::Append(Ihandle* ih, Ihandle* new_child); [in C]
- iup.Append(ih, new_child: ihandle) -> (parent: ihandle) [in Lua]
+ $element->Append($new_child);
 
-B<ih>: Identifier of a container like hbox, vbox, zbox and menu.
+B<$ih:> Identifier of a container like hbox, vbox, zbox and menu.
 
-B<new_child>: Identifier of the element to be inserted.
+B<$new_child>: Identifier of the element to be inserted.
 
-Returns: the actual B<parent> if the interface element was successfully
-inserted. Otherwise returns NULL (nil in Lua). Notice that the desired
+B<Returns:> the actual B<parent> if the interface element was successfully
+inserted. Otherwise returns C<undef>. Notice that the desired
 parent can contains a set of elements and containers where the child
 will be actually attached so the function returns the actual parent of
 the element.
@@ -105,30 +104,30 @@ the element.
 [% h.at_notes %]
 
 This function can be used when elements that will compose a container
-are not known I<a priori> and should be dynamically constructed.
+are not known a priori and should be dynamically constructed.
 
 The new child can NOT be mapped. It will NOT map the new child into the
 native system. If the parent is already mapped you must explicitly call
-L<IUP::Map|IUP::Map> for the appended child.
+L<Map|/"Map()">, for the appended child.
 
-If the actual parent is a layout box (L<IUP::Vbox|IUP::Vbox>, B< IUP::Hbox> or
-L<IUP::Zbox|IUP::Zbox>) and you try to append a child that it is already at the
+If the actual parent is a layout box (L<IUP::Vbox|IUP::Vbox>, L<IUP::Hbox|IUP::Hbox>
+or L<IUP::Zbox|IUP::Zbox>) and you try to append a child that it is already at the
 parent child list, then the child is moved to the last child position.
 
-The elements are NOT immediately repositioned. Call L<IUP::Refresh|IUP::Refresh> for
+The elements are NOT immediately repositioned. Call L<Refresh|/"Refresh()"> for
 the container (or any other element in the dialog) to update the dialog
 layout.
 
 [% h.at_see %]
-L<IUP::Detach|IUP::Detach>,
-L<IUP::Insert|IUP::Insert>,
+L<Detach|/"Detach()">,
+L<Insert|/"Insert()">,
+L<Map|/"Map()">,
+L<Unmap|/"Unmap()">,
+L<Refresh|/"Refresh()">,
 L<IUP::Hbox|IUP::Hbox>,
 L<IUP::Vbox|IUP::Vbox>,
 L<IUP::Zbox|IUP::Zbox>,
-L<IUP::Menu|IUP::Menu>,
-L<IUP::Map|IUP::Map>,
-L<IUP::Unmap|IUP::Unmap>,
-L<IUP::Refresh|IUP::Refresh>.
+L<IUP::Menu|IUP::Menu>.
 
 =back
 
@@ -138,16 +137,15 @@ L<IUP::Refresh|IUP::Refresh>.
 
 Converts a (x,y) coordinate in an item position.
 
- int IUP::ConvertXYToPos(Ihandle *ih, int x, int y); [in C]
- iup.ConvertXYToPos(ih: ihandle, x, y: number) -> (ret: number) [in Lua]
+ my $position = $element->ConvertXYToPos($x, $y);
 
-B<ih>: Identifier of the element.
+B<$ih:> Identifier of the element.
 
-B<x>: X coordinate of the left corner of the interface element.
+B<$x:> X coordinate of the left corner of the interface element.
 
-B<y>: Y coordinate of the upper part of the interface element.
+B<$y:> Y coordinate of the upper part of the interface element.
 
-Returns: the position starting at 0 (except for L<IUP::List|IUP::List> that starts
+B<Returns:> the position starting at 0 (except for L<IUP::List|IUP::List> that starts
 at 1). If fails returns -1.
 
 [% h.at_notes %]
@@ -170,11 +168,9 @@ Destroys an interface element and all its children. Only dialogs,
 timers, popup menus and images should be normally destroyed, but
 B<detached> controls can also be destroyed.
 
- void IUP::Destroy(Ihandle *ih); [in C]
- iup.Destroy(ih: ihandle) [in Lua]
- or ih:destroy() [in Lua]
+ $element->Destroy();
 
-B<ih>: Identifier of the interface element to be destroyed.
+B<$ih:> Identifier of the interface element to be destroyed.
 
 [% h.at_notes %]
 
@@ -193,14 +189,14 @@ because images can be reused in several controls the application must
 destroy them when they are not used anymore.
 
 All dialogs and all elements that have names are automatically
-destroyed in L<IUP::Close|IUP::Close>.
+destroyed in L<Close|IUP/"Close()">.
 
 [% h.at_see %]
-L<IUP::Append|IUP::Append>,
-L<IUP::Detach|IUP::Detach>,
-L<IUP::Map|IUP::Map>,
-L<IUP::Unmap|IUP::Unmap>,
-L<IUP::Create|IUP::Create>.
+L<Append|/"Append()">,
+L<Detach|/"Detach()">,
+L<Map|/"Map()">,
+L<Unmap|/"Unmap()">,
+L<Create|/"Create()">.
 
 =back
 
@@ -210,36 +206,34 @@ L<IUP::Create|IUP::Create>.
 
 B<Detaches> an interface element from its parent.
 
- void IUP::Detach(Ihandle *child); [in C]
- iup.Detach(child: ihandle) [in Lua]
- or child:detach() [in Lua]
+ $element->Detach();
 
-B<child>: Identifier of the interface element to be detached.
+B<$child:> Identifier of the interface element to be detached.
 
 [% h.at_notes %]
 
-It will automatically call L<IUP::Unmap|IUP::Unmap> to B<unmap> the element if
+It will automatically call L<Unmap|/"Unmap()"> to B<unmap> the element if
 necessary, and then B<detach> the element.
 
-If left B<detached> it is still necessary to call L<IUP::Destroy|IUP::Destroy> to B<
+If left B<detached> it is still necessary to call L<Destroy|/"Destroy()"> to B<
 destroy> the IUP element.
 
-The elements are NOT immediately repositioned. Call L<IUP::Refresh|IUP::Refresh> for
+The elements are NOT immediately repositioned. Call L<Refresh|/"Refresh()"> for
 the container (or any other element in the dialog) to update the dialog
 layout.
 
 When the element is mapped some attributes are stored only in the
 native system. If the element is B<unmaped> those attributes are lost.
-Use the function L<IUP::SaveClassAttributes|IUP::SaveClassAttributes>
+Use the function L<SaveClassAttributes|/"SaveClassAttributes()">
 when you want to B<unmap> the element and keep its attributes.
 
 [% h.at_see %]
-L<IUP::Append|IUP::Append>,
-L<IUP::Insert|IUP::Insert>,
-L<IUP::Refresh|IUP::Refresh>,
-L<IUP::Unmap|IUP::Unmap>,
-L<IUP::Create|IUP::Create>,
-L<IUP::Destroy|IUP::Destroy>.
+L<Append|/"Append()">,
+L<Insert|/"Insert()">,
+L<Refresh|/"Refresh()">,
+L<Unmap|/"Unmap()">,
+L<Create|/"Create()">,
+L<Destroy|/"Destroy()">.
 
 =back
 
@@ -250,25 +244,23 @@ L<IUP::Destroy|IUP::Destroy>.
 Returns the names of all attributes of an element that are defined in
 its internal hash table only.
 
- int IUP::GetAllAttributes(Ihandle* ih, char** names, int max_n); [in C]
- iup.GetAllAttributes(ih: ihandle[, max_n: number]) -> (names: table, n: number) [in Lua]
+ my @attr_names1 = $element->GetAllAttributes();
+ #or
+ my @attr_names2 = $element->GetAllAttributes($max_n);
 
-B<ih>: identifier of the interface element.
+B<$ih:> identifier of the interface element.
 
 names: table receiving the names. Only the list of names need to be
-allocated. Each name will point to an internal string.
+allocated. Each name will point to an internal string.xxxTODOxxx
 
-B<max_n>: maximum number of names the table can receive. Can be omitted
-in Lua.
+B<$max_n:> maximum number of names the table can receive. Can be omitted. xxxtodo reuse txt
 
-Returns: the actual number of names loaded to the table. If names==NULL
-or max_n==0 then returns the maximum number of names.
+B<Returns:> the actual number of names loaded to the table. If $names
+is C<undef> or $max_n is 0 then returns the maximum number of names.
 
 [% h.at_see %]
-L<IUP::GetAttribute|IUP::GetAttribute>,
-L<IUP::SetAttribute|IUP::SetAttribute>,
-L<IUP::SetAttributes|IUP::SetAttributes>,
-L<IUP::StoreAttribute|IUP::StoreAttribute>.
+L<GetAttribute|/"GetAttribute()">,
+L<SetAttribute|/"SetAttribute()">.
 
 =back
 
@@ -279,46 +271,56 @@ L<IUP::StoreAttribute|IUP::StoreAttribute>.
 Returns the name of an interface element attribute. See also the
 L<Attributes Guide|../attrib_guide.html> section.
 
- char *IUP::GetAttribute(Ihandle *ih, const char *name); [in C]iup.GetAttribute(ih: ihandle, name: string) -> value: string [in Lua]
- char *IUP::GetAttributeId(Ihandle *ih, const char *name, int id); [in C]iup.GetAttributeId(ih: ihandle, name: string, id: number) -> value: string [in Lua]
+ my $val = $element->GetAttribute($name);
+ #or
+ my @values = $element->GetAttribute(@names);
 
-B<ih>: Identifier of the interface element. If NULL will retrieve from
-the global environment.
+B<$ih:> Identifier of the interface element.
+If C<undef> will retrieve from the global environment. xxxcheckthis is it the same as getglobal?
 
-B<name>: name of the attribute.
+B<$name:> name of the attribute.
 
-B<id>: used when the attribute has an additional id.
+B<$id:> used when the attribute has an additional id.
 
-Returns: the attribute value or NULL (nil in Lua) if the attribute is
+B<Returns:> the attribute value or C<undef> if the attribute is
 not defined or does not exist.
 
 [% h.at_notes %]
-
 See the L<Attributes Guide|../attrib_guide.html> for more details.
 
-This function return value is not necessarily the same pointer used by
-the application to define the attribute value. The pointers of internal
-IUP attributes returned by L<IUP::GetAttribute|IUP::GetAttribute> should B<never> be freed
-or changed, except when you allocated the memory for that pointer at
-set it using B< IUP::SetAttribute>.
+[% h.at_examples %]
+L<Browse for Example Files|../../examples/>
 
-xxxcheckthisxxx In IUP::Lua, only known internal pointer attributes are returned as
+[% h.at_see %]
+L<SetAttribute|/"SetAttribute()">.
+
+=back
+
+=head3 GetAttributeData()
+
+=over
+
+xxxcheckthisxxx In Lua, only known internal pointer attributes are returned as
 B<user data> or as an ihandle, all other attributes are returned as
 strings. To access attribute data always as B<user data> use
 iup.GetAttributeData:
 
- iup.GetAttributeData(ih: ihandle) -> value: userdata [in Lua]
+ my $data = $element->GetAttributeData($name);
 
-[% h.at_examples %]
+xxxTODO2xxx consider rename GetAttributeData > GetAttributeSV
 
-L<Browse for Example Files|../../examples/>
+xxxTODO1xxx consider introducing SetAttributeSV
 
-[% h.at_see %]
-L<IUP::SetAttribute|IUP::SetAttribute>,
-L<IUP::GetInt|IUP::GetInt>,
-L<IUP::GetFloat|IUP::GetFloat>,
-L<IUP::SetAttributes|IUP::SetAttributes>,
-L<IUP::GetHandle|IUP::GetHandle>.
+=back
+
+=head3 GetAttributeId()
+
+=over
+
+xxxTODOxxx
+
+ my $val = $element->GetAttributeId($name, $id);
+
 
 =back
 
@@ -337,22 +339,21 @@ Before calling this function the application must ensure that there is
 no pointer attributes set for that element, although some known
 pointers are handled.
 
-This function should be avoided. Use L<IUP::GetAllAttributes|IUP::GetAllAttributes> instead.
+This function should be avoided. Use L<GetAllAttributes|/"GetAllAttributes()"> instead.
 
- char* IUP::GetAttributes (Ihandle *ih); [in C]
- iup.GetAttributes(ih: ihandle) -> (ret: string) [in Lua] 
+ my %attr = $element->GetAttributes();
+ #later on
+ print "Title=", $attr{TITLE}, "\n";
+ print "Color=", $attr{FGCOLOR}, "\n";
 
-B<ih>: Identifier of the interface element.
+B<$ih:> Identifier of the interface element.
 
-Returns: a string with all attributes in the format: "NAME=VALUE,
-NAME="VALUE", ...".
+B<Returns:> a hash of C<< ATTRIBUTE => VALUE >> pairs for all attributes of given element.
 
 [% h.at_see %]
-L<IUP::GetAttribute|IUP::GetAttribute>,
-L<IUP::GetAllAttributes|IUP::GetAllAttributes>,
-L<IUP::SetAttribute|IUP::SetAttribute>,
-L<IUP::SetAttributes|IUP::SetAttributes>,
-L<IUP::StoreAttribute|IUP::StoreAttribute>.
+L<GetAttribute|/"GetAttribute()">,
+L<GetAllAttributes|/"GetAllAttributes()">,
+L<SetAttribute|/"SetAttribute()">.
 
 =back
 
@@ -360,17 +361,18 @@ L<IUP::StoreAttribute|IUP::StoreAttribute>.
 
 =over
 
-Returns the brother of a control or NULL if there is none.
+Returns the brother of a control or C<undef> if there is none.
 
- Ihandle* IUP::GetBrother(Ihandle* ih); [in C]
- iup.GetBrother(ih: ihandle) -> brother: ihandle [in Lua]
+ my $brother_elem = $element->GetBrother();
 
-B<ih>: identifier of the interface element.
+B<$ih:> identifier of the interface element.
+
+B<Returns:> xxxtodo
 
 [% h.at_see %]
-L<IUP::GetChild|IUP::GetChild>,
-L<IUP::GetNextChild|IUP::GetNextChild>,
-L<IUP::GetParent|IUP::GetParent>.
+L<GetChild|/"GetChild()">,
+L<GetNextChild|/"GetNextChild()">,
+L<GetParent|/"GetParent()">.
 
 =back
 
@@ -380,12 +382,11 @@ L<IUP::GetParent|IUP::GetParent>.
 
 Returns the a child of the given control given its position.
 
- Ihandle *IUP::GetChild(Ihandle* ih, int pos); [in C]
- iup.GetChild(ih: ihandle, pos: number) -> child: ihandle [in Lua]
+ my $child_elem = $element->GetChild($position);
 
-B<ih>: identifier of the interface element.
+B<$ih:> identifier of the interface element.
 
-B<pos>: position of the desire child.
+B<$position:> position of the desire child.
 
 [% h.at_notes %]
 
@@ -393,10 +394,10 @@ This function will return the children of the control in the exact same
 order in which they were assigned.
 
 [% h.at_see %]
-L<IUP::GetChildPos|IUP::GetChildPos>,
-L<IUP::GetNextChild|IUP::GetNextChild>,
-L<IUP::GetBrother|IUP::GetBrother>,
-L<IUP::GetParent|IUP::GetParent>.
+L<GetChildPos|/"GetChildPos()">,
+L<GetNextChild|/"GetNextChild()">,
+L<GetBrother|/"GetBrother()">,
+L<GetParent|/"GetParent()">.
 
 =back
 
@@ -406,17 +407,16 @@ L<IUP::GetParent|IUP::GetParent>.
 
 Returns the number of children of the given control.
 
- int IUP::GetChildCount(Ihandle* ih); [in C]
- iup.GetChildCount(ih: ihandle) ->  pos: number [in Lua]
+ my $count = $element->GetChildCount();
 
-B<ih>: identifier of the interface element.
+B<$ih:> identifier of the interface element.
 
 [% h.at_see %]
-L<IUP::GetChildPos|IUP::GetChildPos>,
-L<IUP::GetChild|IUP::GetChild>,
-L<IUP::GetNextChild|IUP::GetNextChild>,
-L<IUP::GetBrother|IUP::GetBrother>,
-L<IUP::GetParent|IUP::GetParent>.
+L<GetChildPos|/"GetChildPos()">,
+L<GetChild|/"GetChild()">,
+L<GetNextChild|/"GetNextChild()">,
+L<GetBrother|/"GetBrother()">,
+L<GetParent|/"GetParent()">.
 
 =back
 
@@ -426,12 +426,13 @@ L<IUP::GetParent|IUP::GetParent>.
 
 Returns the position of a child of the given control.
 
- int IUP::GetChildPos(Ihandle* ih, Ihandle* child); [in C]
- iup.GetChildPos(ih, child: ihandle) ->  pos: number [in Lua]
+ my $position = $elmenet->GetChildPos($child_element);
 
-B<ih>: identifier of the interface element.
+B<$ih:> identifier of the interface element.
 
-B<pos>: position of the desire child or -1 if child not found.
+B<$child_element:> xxxTODOxxx
+
+B<Returns:> position of the desire child or -1 if child not found.
 
 [% h.at_notes %]
 
@@ -439,11 +440,11 @@ This function will return the children of the control in the exact same
 order in which they were assigned.
 
 [% h.at_see %]
-L<IUP::GetChild|IUP::GetChild>,
-L<IUP::GetChildCount|IUP::GetChildCount>,
-L<IUP::GetNextChild|IUP::GetNextChild>,
-L<IUP::GetBrother|IUP::GetBrother>,
-L<IUP::GetParent|IUP::GetParent>.
+L<GetChild|/"GetChild()">,
+L<GetChildCount|/"GetChildCount()">,
+L<GetNextChild|/"GetNextChild()">,
+L<GetBrother|/"GetBrother()">,
+L<GetParent|/"GetParent()">.
 
 =back
 
@@ -453,10 +454,9 @@ L<IUP::GetParent|IUP::GetParent>.
 
 Returns the name of the class of an interface element.
 
- char* IUP::GetClassName(Ihandle* ih); [in C]
- iup.GetClassName(ih: ihandle) -> (name: string) [in Lua]
+ my $name = $element->GetClassName();
 
-B<ih>: Identifier of the interface element.
+B<$ih:> Identifier of the interface element.
 
 [% h.at_notes %]
 
@@ -499,8 +499,8 @@ The following names are known:
  "olecontrol"
 
 [% h.at_see %]
-L<IUP::GetClassType|IUP::GetClassType>,
-L<IUP::GetClassAttributes|IUP::GetClassAttributes>.
+L<GetClassType|/"GetClassType()">,
+L<GetClassAttributes|IUP/"GetClassAttributes()">.
 
 =back
 
@@ -510,10 +510,9 @@ L<IUP::GetClassAttributes|IUP::GetClassAttributes>.
 
 Returns the name of the native type of an interface element.
 
- char* IUP::GetClassType(Ihandle* ih); [in C]
- iup.GetClassType(ih: ihandle) -> (name: string) [in Lua]
+ my $type = $element->GetClassType();
 
-B<ih>: Identifier of the interface element.
+B<$ih:> Identifier of the interface element.
 
 [% h.at_notes %]
 
@@ -527,8 +526,8 @@ There are only a few pre-defined class types:
  "menu"
 
 [% h.at_see %]
-L<IUP::GetClassName|IUP::GetClassName>,
-L<IUP::GetClassAttributes|IUP::GetClassAttributes>.
+L<GetClassName|/"GetClassName()">,
+L<GetClassAttributes|IUP/"GetClassAttributes()">.
 
 =back
 
@@ -539,12 +538,11 @@ L<IUP::GetClassAttributes|IUP::GetClassAttributes>.
 Returns the handle of the dialog that contains that interface element.
 Works also for children of a menu that is associated with a dialog.
 
- Ihandle* IUP::GetDialog(Ihandle *ih); [in C]
- iup.GetDialog(ih: ihandle) -> (ih: ihandle) [in Lua]
+ my $dialog = $element->GetDialog();
 
-B<ih>: Identifier of an interface element.
+B<$ih:> Identifier of an interface element.
 
-Returns: the handle of the dialog or NULL if not found.
+B<Returns:> the handle of the dialog or C<undef> if not found.
 
 =back
 
@@ -556,15 +554,14 @@ Returns the identifier of the child element that has the NAME attribute
 equals to the given value on the same dialog hierarchy. Works also for
 children of a menu that is associated with a dialog.
 
- Ihandle* IUP::GetDialogChild(Ihandle *ih, const char* name); [in C]
- iup.GetDialogChild(ih: ihandle, name: string) -> (ih: ihandle) [in Lua]
+ my $child_elem = $element->GetDialogChild($name);
 
-B<ih>: Identifier of an interface element that belongs to the
+B<$ih:> Identifier of an interface element that belongs to the
 hierarchy.
 
-B<name>: name of the control to be found
+B<$name:> name of the control to be found
 
-Returns: NULL if not found.
+B<Returns:> xxxtodo C<undef> if not found.
 
 [% h.at_notes %]
 
@@ -586,61 +583,44 @@ L<NAME|[%m.at%]/NAME>.
 
 Returns the a child of the given control given its brother.
 
- Ihandle *IUP::GetNextChild(Ihandle* ih, Ihandle* child); [in C]
- iup.GetNextChild(ih, child: ihandle) -> next_child: ihandle [in Lua]
+ my $child_elem = $element->GetNextChild($child);
 
-B<ih>: identifier of the interface element. Can be NULL if child not
-NULL.
+B<$ih:> identifier of the interface element. 
+Can be C<undef> if child not C<undef>. xxxcheckthis
 
-B<child>: Identifier of the child brother to be used as reference. To
-get the first child use NULL.
+B<$child:> Identifier of the child brother to be used as reference. To
+get the first child use C<undef>.
 
-Returns: the handle of the child or NULL.
+B<Returns:> the handle of the child or C<undef>.
 
 [% h.at_notes %]
 
 This function will return the children of the control in the exact same
-order in which they were assigned. If child in not NULL then it returns
-exactly the same result as L<IUP::GetBrother|IUP::GetBrother>.
+order in which they were assigned. If child in not C<undef> then it returns
+exactly the same result as L<GetBrother|/"GetBrother()">.
 
 [% h.at_examples %]
 
- /* Lists all children of a IUP::Vbox */
- #include <stdio.h>
- #include "iup.h"
+ my $bt = IUP::Button->new( TITLE=>"Button" );
+ my $lb = IUP::Label->new( TITLE=>"Label" );
+ my $vbox = IUP::Vbox->new( child=>[$bt, $lb] );
+ my $dialog = IUP::Dialog( child=>$vbox );
  
- int main(int argc, char* argv[])
- {
-   Ihandle *dialog, *bt, *lb, *vbox, *child;
+ $dialog->Show();
  
-   IUP::Open(&argc, &argv);
+ my $child = undef; #passing undef to GetNextChild gives the first child
  
-   bt = IUP::Button("Button", NULL);
-   lb = IUP::Label("Label");
- 
-   vbox = IUP::Vbox(bt, lb, NULL);
- 
-   dialog = IUP::Dialog(vbox);
-   IUP::Show(dialog);
- 
-   child = IUP::GetNextChild(vbox, NULL);
- 
-   while(child)
-   {
-     printf("vbox has a child of type %s\n", IUP::GetClassName(child));
-     child = IUP::GetNextChild(NULL, child);
-   }
- 
-   IUP::MainLoop();
-   IUP::Close();
- 
-   return 0;
+ while($child = $vbox->GetNextChild($child)) {
+   print "vbox has a child of type ", ref($child), "\n";
  }
+ 
+ IUP->MainLoop;
+ return 0;
 
 [% h.at_see %]
-L<IUP::GetBrother|IUP::GetBrother>,
-L<IUP::GetParent|IUP::GetParent>,
-L<IUP::GetChild|IUP::GetChild>.
+L<GetBrother|/"GetBrother()">,
+L<GetParent|/"GetParent()">,
+L<GetChild|/"GetChild()">.
 
 =back
 
@@ -677,17 +657,16 @@ xxxhack related to GetParamParam
 
 Returns the parent of a control.
 
- Ihandle* IUP::GetParent(Ihandle *ih); [in C]
- iup.GetParent(ih: ihandle) -> parent: ihandle [in Lua]
+ my $parent_elem = $element->GetParent();
 
-B<ih>: identifier of the interface element.
+B<$ih:> identifier of the interface element.
 
-Returns: the handle of the parent or NULL if does not have a parent.
+B<Returns:> the handle of the parent or C<undef> if does not have a parent.
 
 [% h.at_see %]
-L<IUP::GetChild|IUP::GetChild>,
-L<IUP::GetNextChild|IUP::GetNextChild>,
-L<IUP::GetBrother|IUP::GetBrother>.
+L<GetChild|/"GetChild()">,
+L<GetNextChild|/"GetNextChild()">,
+L<GetBrother|/"GetBrother()">.
 
 =back
 
@@ -709,19 +688,18 @@ Inserts an interface element B<before> another child of the container.
 Valid for any element that contains other elements like dialog, frame,
 hbox, vbox, zbox, menu, etc.
 
- Ihandle* IUP::Insert(Ihandle* ih, Ihandle* ref_child, Ihandle* new_child); [in C]
- iup.Insert(ih, ref_child, new_child: ihandle) -> (parent: ihandle) [in Lua]
+ my $parent = $element->Insert($ref_child, $new_child);
 
-B<ih>: Identifier of a container like hbox, vbox, zbox and menu.
+B<$ih:> Identifier of a container like hbox, vbox, zbox and menu.
 
-B<ref_child>: Identifier of the element to be used as reference. Can be
-NULL to insert as the first element.
+B<$ref_child:> Identifier of the element to be used as reference. Can be
+C<undef> to insert as the first element.
 
-B<new_child>: Identifier of the element to be inserted before the
+B<$new_child:> Identifier of the element to be inserted before the
 reference.
 
-Returns: the actual B<parent> if the interface element was successfully
-inserted. Otherwise returns NULL (nil in Lua). Notice that the desired
+B<Returns:> the actual B<parent> if the interface element was successfully
+inserted. Otherwise returns C<undef>. Notice that the desired
 parent can contains a set of elements and containers where the child
 will be actually attached so the function returns the actual parent of
 the element.
@@ -733,26 +711,26 @@ are not known I<a priori> and should be dynamically constructed.
 
 The new child can NOT be mapped. It will NOT map the new child into the
 native system. If the parent is already mapped you must explicitly call
-L<IUP::Map|IUP::Map> for the appended child.
+L<Map|/"Map()"> for the appended child.
 
-If the actual parent is a layout box (L<IUP::Vbox|IUP::Vbox>, B< IUP::Hbox> or
+If the actual parent is a layout box (L<IUP::Vbox|IUP::Vbox>, L<IUP::Hbox|IUP::Hbox> or
 L<IUP::Zbox|IUP::Zbox>) and you try to insert a child that it is already at the
 parent child list, then the child is moved to the insert position.
 
-The elements are NOT immediately repositioned. Call L<IUP::Refresh|IUP::Refresh> for
+The elements are NOT immediately repositioned. Call L<Refresh|/"Refresh()"> for
 the container* to update the dialog layout (* or any other element in
 the dialog).
 
 [% h.at_see %]
-L<IUP::Append|IUP::Append>,
-L<IUP::Detach|IUP::Detach>,
+L<Append|/"Append()">,
+L<Detach|/"Detach()">,
 L<IUP::Hbox|IUP::Hbox>,
 L<IUP::Vbox|IUP::Vbox>,
 L<IUP::Zbox|IUP::Zbox>,
 L<IUP::Menu|IUP::Menu>,
-L<IUP::Map|IUP::Map>,
-L<IUP::Unmap|IUP::Unmap>,
-L<IUP::Refresh|IUP::Refresh>.
+L<Map|/"Map()">,
+L<Unmap|/"Unmap()">,
+L<Refresh|/"Refresh()">.
 
 =back
 
@@ -776,36 +754,35 @@ element's tree.
 
 The element must be already B<attached> to a container if not a dialog.
 
- int IUP::Map(Ihandle* ih); [in C]
- iup.Map(ih: iuplua-tag) -> ret: number [in Lua]
+ my $retval = $element->Map();
 
-B<ih>: Identifier of an interface element.
+B<$ih:> Identifier of an interface element.
 
-Returns: IUP_NOERROR if successful. If the element was already mapped
+B<Returns:> IUP_NOERROR if successful. If the element was already mapped
 returns IUP_NOERROR. If the native creation failed returns IUP_ERROR.
 
 [% h.at_notes %]
 
 If the element is a dialog then the abstract layout will be updated
 even if the element is already mapped. If the dialog is visible the
-elements will be immediately repositioned. Calling L<IUP::Map|IUP::Map> for an
-already mapped dialog is the same as only calling L<IUP::Refresh|IUP::Refresh> for the
+elements will be immediately repositioned. Calling L<Map|/"Map()"> for an
+already mapped dialog is the same as only calling L<Refresh|/"Refresh()"> for the
 dialog.
 
 If you add new elements to an already mapped dialog you must call
-L<IUP::Map|IUP::Map> for that elements. And then call L<IUP::Refresh|IUP::Refresh> to update the
+L<Map|/"Map()"> for that elements. And then call L<Refresh|/"Refresh()"> to update the
 dialog layout.
 
-If the WID attribute is NULL, it means the element was not already
+If the WID attribute is C<undef>, it means the element was not already
 mapped. Some containers do not have a native element associated, like
 VBOX and HBOX. In this case their WID is a fake (-1) value.
 
 A child is only mapped if its parent is already mapped.
 
 This function is automatically called before the dialog is shown in
-L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup>.
+L<Show|/"Show()">, L<ShowXY|/"ShowXY()"> or L<Popup|/"Popup()">.
 
-It is usefull for the application to call L<IUP::Map|IUP::Map> when the value of
+It is usefull for the application to call L<Map|/"Map()"> when the value of
 the WID attribute must be known, or the native element must exist,
 before a dialog is made visible.
 
@@ -814,14 +791,14 @@ and the dialog layout updated, so it can also be used to create other
 things that depend on the WID attribute.
 
 [% h.at_see %]
-L<IUP::Append|IUP::Append>,
-L<IUP::Detach|IUP::Detach>,
-L<IUP::Unmap|IUP::Unmap>,
-L<IUP::Create|IUP::Create>,
-L<IUP::Destroy|IUP::Destroy>,
-L<IUP::ShowXY|IUP::ShowXY>,
-L<IUP::Show|IUP::Show>,
-L<IUP::Popup|IUP::Popup>,
+L<Append|/"Append()">,
+L<Detach|/"Detach()">,
+L<Unmap|/"Unmap()">,
+L<Create|/"Create()">,
+L<Destroy|/"Destroy()">,
+L<ShowXY|/"ShowXY()">,
+L<Show|/"Show()">,
+L<Popup|/"Popup()">,
 L<MAP_CB|../call/iup_map_cb.html>.
 
 =back
@@ -840,15 +817,14 @@ brothers, then in the uncles and their children, and so on.
 This sequence is not the same sequence used by the Tab key, which is
 dependent on the native system.
 
- Ihandle* IUP::NextField(Ihandle* ih); [in C]
- iup.NextField(ih: ihandle) -> (next: ihandle) [in Lua]
+ my $next_elem = $element->NextField();
 
-B<ih>: identifier of the interface element.
+B<$ih:> identifier of the interface element.
 
-Returns: the element that received the focus or NULL if not found.
+B<Returns:> the element that received the focus or C<undef> if not found.
 
 [% h.at_see %]
-L<IUP::PreviousField|IUP::PreviousField>.
+L<PreviousField|/"PreviousField()">.
 
 =back
 
@@ -860,16 +836,15 @@ Shifts the focus to the previous element that can have the focus. It is
 relative to the given element and does not depend on the element
 currently with the focus.
 
- Ihandle* IUP::PreviousField(Ihandle* ih); [in C]
- iup.PreviousField(ih: ihandle) -> (previous: ihandle) [in Lua]
+ my $prev_elem = $element->PreviousField();
 
-B<ih>: identifier of the interface element.
+B<$ih:> identifier of the interface element.
 
-Returns: the element that received the focus or NULL if not found.
+B<Returns:> the element that received the focus or C<undef> if not found.
 
 [% h.at_see %]
 
-L<IUP::NextField|IUP::NextField>.
+L<NextField|/"NextField()">.
 
 =back
 
@@ -879,12 +854,11 @@ L<IUP::NextField|IUP::NextField>.
 
 Force the element and its children to be redraw immediately.
 
- void IUP::Redraw(Ihandle* ih, int children); [in C]
- iup.Redraw(ih: ihandle, children: boolen) [in Lua]
+ $element->Redraw($children);
 
-B<ih>: identifier of the interface element.
+B<$ih:> identifier of the interface element.
 
-B<children>: flag to update its children. 
+B<$children:> flag to update its children. xxxcheckthis vales 0 or 1 
 
 =back
 
@@ -897,10 +871,9 @@ Can be used for any element inside a dialog, the layout of the dialog
 will be updated. It can change the layout of all the controls inside
 the dialog because of the dynamic layout positioning.
 
- void IUP::Refresh(Ihandle *ih); [in C]
- iup.Refresh(ih: ihandle) [in Lua]
+ $element->Refresh();
 
-B<ih>: identifier of the interface element.
+B<$ih:> identifier of the interface element.
 
 [% h.at_notes %]
 
@@ -916,11 +889,11 @@ call.
 
 If you also want to change the size of the dialog use:
 
- IUP::SetAttribute(dialog, "SIZE", ...);
- IUP::Refresh(dialog);
+ $dialog->SetAttribute("SIZE", $newsize);
+ $dialog->Refresh();
 
 So the dialog will be resized for the new B<User> size, if the new size
-is NULL the dialog will be resized to the B<Natural> size that include
+is C<undef> the dialog will be resized to the B<Natural> size that include
 all the elements.
 
 Changing the size of elements without changing the dialog size may
@@ -928,14 +901,14 @@ position some controls outside the dialog area at the left or bottom
 borders (the elements will be cropped at the dialog borders by the
 native system).
 
-L<IUP::Map|IUP::Map> also updates the dialog layout even if the control is already
-mapped, so using it or using L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup>
-(they all call L<IUP::Map|IUP::Map>) will also update the dialog layout.
+L<Map|/"Map()"> also updates the dialog layout even if the control is already
+mapped, so using it or using L<Show|/"Show()">, L<ShowXY|/"ShowXY()"> or L<Popup|/"Popup()">
+(they all call L<Map|/"Map()">) will also update the dialog layout.
 
 [% h.at_see %]
 L<SIZE|[%m.at%]/SIZE>,
-L<IUP::Map|IUP::Map>,
-L<IUP::RefreshChildren|IUP::RefreshChildren>.
+L<Map|/"Map()">,
+L<RefreshChildren|/"RefreshChildren()">.
 
 =back
 
@@ -948,16 +921,15 @@ Can be used for any element inside a dialog, only its children will be
 updated. It can change the layout of all the controls inside the given
 element because of the dynamic layout positioning.
 
- void IUP::RefreshChildren(Ihandle *ih); [in C]
- iup.RefreshChildren(ih: ihandle) [in Lua]
+ $element->RefreshChildren();
 
-B<ih>: identifier of the interface element.
+B<$ih:> identifier of the interface element.
 
 [% h.at_notes %]
 
 The given element must be a container. It must be inside a dialog
 hierarchy and must be mapped. It can not be a dialog. For dialogs use
-L<IUP::Refresh|IUP::Refresh>.
+L<Refresh|/"Refresh()">.
 
 The children are immediately repositioned, if the dialog is visible
 then the change will be immediately reflected on the display.
@@ -968,10 +940,10 @@ the natural size of its children would increase its natural size.
 If your dialog has too many controls and you want to hide or destroy
 some, then add some other in the same place, so you actually know that
 the dialog layout would not change, this is a much faster function than
-L<IUP::Refresh|IUP::Refresh>.
+L<Refresh|/"Refresh()">.
 
 [% h.at_see %]
-L<IUP::Refresh|IUP::Refresh>.
+L<Refresh|/"Refresh()">.
 
 =back
 
@@ -982,31 +954,30 @@ L<IUP::Refresh|IUP::Refresh>.
 Moves an interface element from one position in the hierarchy tree to
 another.
 
-Both B<new_parent> and B<child> must be mapped or unmapped at the same
+ my $retval = $element->Reparent($new_parent, $ref_child);
+
+B<$element:> Reference to the element to be moved.
+
+B<new_parent:> Identifier of the new parent.
+
+B<ref_child:> Identifier of the element to be used as reference, where
+the child will be inserted before it. Can be C<undef>.
+
+B<Returns:> IUP_NOERROR if successfully, IUP_ERROR if failed.
+
+Both B<$new_parent> and B<$element> must be mapped or unmapped at the same
 time.
 
-If B<ref_child> is NULL, then it will I<append> the B<child> to the
-B<new_parent>. If B<ref_child> is NOT NULL then it will I<insert>
-B<child> before B<ref_child> inside the B< new_parent>.
-
- int IUP::Reparent(Ihandle* child, Ihandle* new_parent, Ihandle* ref_child); [in C]
- iup.Reparent(child, new_parent, ref_child: ihandle) -> error: number [in Lua]
-
-B<child>: Identifier of the element to be moved.
-
-B<new_parent>: Identifier of the new parent.
-
-B<ref_child>: Identifier of the element to be used as reference, where
-the child will be inserted before it. Can be NULL. (since 3.3)
-
-Returns: IUP_NOERROR if successfully, IUP_ERROR if failed.
+If B<$ref_child> is C<undef>, then it will B<append> the B<$child> to the
+B<$new_parent>. If B<$ref_child> is NOT C<undef> then it will B<insert>
+B<$element> before B<$ref_child> inside the B<$new_parent>.
 
 [% h.at_notes %]
 
 This function is faster and easier than doing the sequence B<unmap>, B<
 detach>, B<append/insert> and B<map>.
 
-The elements are NOT immediately repositioned. Call L<IUP::Refresh|IUP::Refresh> for
+The elements are NOT immediately repositioned. Call L<Refresh|/"Refresh()"> for
 the container (or any other element in the dialog) to update the dialog
 layout.
 
@@ -1015,12 +986,12 @@ re-parent doing a B<unmap>/B<map> sequence. But some attributes may be
 lost during the operation, mostly attributes that are id dependent.
 
 [% h.at_see %]
-L<IUP::Append|IUP::Append>,
-L<IUP::Insert|IUP::Insert>,
-L<IUP::Detach|IUP::Detach>,
-L<IUP::Map|IUP::Map>,
-L<IUP::Unmap|IUP::Unmap>,
-L<IUP::Refresh|IUP::Refresh>
+L<Append|/"Append()">,
+L<Insert|/"Insert()">,
+L<Detach|/"Detach()">,
+L<Map|/"Map()">,
+L<Unmap|/"Unmap()">,
+L<Refresh|/"Refresh()">
 
 =back
 
@@ -1032,16 +1003,16 @@ Removes an attribute from the hash table of the element, and its
 children if the attribute is inheritable. It is useful to reset the
 state of inheritable attributes in a tree of elements.
 
- void IUP::ResetAttribute(Ihandle *ih, const char *name); [in C]iup.ResetAttribute(ih: ihandle, name: string) [in Lua] 
+ $element->ResetAttribute($name);
 
-B<ih>: Identifier of the interface element. If NULL will set in the
-global environment.
+B<$ih:> Identifier of the interface element. 
+If C<undef> will set in the global environment. xxxcheckthis
 
-B<name>: name of the attribute.
+B<$name:> name of the attribute.
 
 [% h.at_see %]
-L<IUP::GetAttribute|IUP::GetAttribute>,
-L<IUP::SetAttribute|IUP::SetAttribute>.
+L<GetAttribute|/"GetAttribute()">,
+L<SetAttribute|/"SetAttribute()">.
 
 =back
 
@@ -1051,10 +1022,9 @@ L<IUP::SetAttribute|IUP::SetAttribute>.
 
 Saves all registered attributes on the internal hash table.
 
- void IUP::SaveClassAttributes(Ihandle* ih); [in C]
- iup.SaveClassAttributes(ih: ihandle) [in Lua]
+ $element->SaveClassAttributes();
 
-B<ih>: identifier of the interface element.
+B<$ih:> identifier of the interface element.
 
 [% h.at_notes %]
 
@@ -1064,15 +1034,15 @@ So this function is useful when you want to B<unmap> the element and
 keep its attributes.
 
 It will not save id dependent attributes, like those which has a
-complementary number. For example: items in a L<IUP::List|IUP::List>, B< IUP::Tree>
+complementary number. For example: items in a L<IUP::List|IUP::List>, L<IUP::Tree|IUP::Tree>
 or L<IUP::Matrix|IUP::Matrix>.
 
 [% h.at_see %]
-L<IUP::GetClassAttributes|IUP::GetClassAttributes>,
-L<IUP::GetClassName|IUP::GetClassName>,
-L<IUP::GetClassType|IUP::GetClassType>,
-L<IUP::GetAllAttributes|IUP::GetAllAttributes>,
-L<IUP::CopyClassAttributes|IUP::CopyClassAttributes>.
+L<GetClassAttributes|IUP/"GetClassAttributes()">,
+L<GetClassName|/"GetClassName()">,
+L<GetClassType|/"GetClassType()">,
+L<GetAllAttributes|/"GetAllAttributes()">,
+L<CopyClassAttributes|IUP/"CopyClassAttributes()">.
 
 =back
 
@@ -1083,18 +1053,21 @@ L<IUP::CopyClassAttributes|IUP::CopyClassAttributes>.
 Defines an attribute for an interface element. See also the
 L<Attributes Guide|../attrib_guide.html> section.
 
- void IUP::SetAttribute(Ihandle *ih, const char *name, const char *value); [in C]iup.SetAttribute(ih: ihandle, name: string, value: string) [in Lua] 
- void IUP::SetAttributeId(Ihandle *ih, const char *name, int id, const char *value); [in C]iup.SetAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua] 
+ $element->SetAttribute($name, $value);
+ #or
+ $element->SetAttribute( $name1=>$value1, $name2=>$value2, $name3=>$value3 );
+ #or
+ my %attr_values = ( $name1=>$value1, $name2=>$value2, $name3=>$value3 );
+ $element->SetAttribute( %attr_values );
 
-B<ih>: Identifier of the interface element. If NULL will set in the
-global environment.
+B<$ih:> Identifier of the interface element.
+If C<undef> will set in the global environment. xxxcheckthis
 
-B<name>: name of the attribute.
+B<$name:> name of the attribute.
 
-B<id>: used when the attribute has an additional id.
+B<$id:> used when the attribute has an additional id.
 
-B<value>: value of the attribute. If NULL (nil in Lua), the default
-value will be used.
+B<$value:> value of the attribute. If C<undef>, the default value will be used.
 
 [% h.at_notes %]
 
@@ -1104,14 +1077,23 @@ xxxcheckthisxxx The value stored in the attribute is not duplicated. Therefore, 
 store your private attributes, such as a structure with data to be used
 in a callback. When you want IUP to store an attribute by duplicating a
 string passed as a value, use function
-L<IUP::StoreAttribute|IUP::StoreAttribute>.
+L<StoreAttribute|/"StoreAttribute()xxxremove">.
 
  struct myData* mydata = malloc(sizeof(struct myData));IUP::SetAttribute(dlg, "MYDATA", (char*)mydata)     // correct  (unknown attributes will be stored as pointers)
 
 [% h.at_see %]
-L<IUP::GetAttribute|IUP::GetAttribute>,
-L<IUP::SetAttributes|IUP::SetAttributes>,
-L<IUP::GetAttributes|IUP::GetAttributes>.
+L<GetAttribute|/"GetAttribute()">,
+L<GetAttributes|/"GetAttributes()">.
+
+=back
+
+=head3 SetAttributeId()
+
+=over
+
+xxxTODO
+
+ $element->SetAttributeId($name, $id, $value);
 
 =back
 
@@ -1121,40 +1103,28 @@ L<IUP::GetAttributes|IUP::GetAttributes>.
 
 Associates a callback to an event.
 
- Icallback IUP::SetCallback(Ihandle* ih, const char *name, Icallback func); [in C]
- [There is no equivalent in Lua]
-
-B<ih>: identifier of the interface element.
-
-B<name>: attribute name of the callback.
-
-B<func>: address of a C function. If NULL removes the association.
-
-Returns: the address of the previous function associated to the action.
-
-[% h.at_notes %]
-
-This function replaces the combination:
-
- IUP::SetFunction(global_name, func);
- IUP::SetAttribute(ih, name, global_name);
-
-So it eliminates the need for a global name.
-
-Callbacks set using L<IUP::SetCallback|IUP::SetCallback> can not be retrieved using
-L<IUP::GetFunction|IUP::GetFunction>.
-
-In Lua, callbacks are associated by simply setting a function as the
-value of the callback name, for example:
-
- button = iup.button{...
+ sub cb_handler {
+   #...
+ }
  
- button.action = function(...    OR
- function button:action(...
+ $element->SetCallback($cb_name, \&cb_handler);
+ #or
+ $element->SetCallback( $cb_name1=>\&cb_handler, $cb_name2=>\&cb_handler, $cb_name3=>\&cb_handler );
+ #or
+ my %callbacks = ( $cb_name1=>\&cb_handler, $cb_name2=>\&cb_handler, $cb_name3=>\&cb_handler );
+ $element->SetCallback( %callbacks );
+ 
+
+B<$ih:> identifier of the interface element.
+
+B<$cb_name:> attribute name of the callback. xxxsee
+
+B<$cb_handler:> xxxTODO func refxxx. If C<undef> removes the association.
+
+B<Returns:> the address of the previous function associated to the action xxxTODO ???.
 
 [% h.at_see %]
-L<IUP::GetCallback|IUP::GetCallback>,
-L<IUP::SetFunction|IUP::SetFunction>.
+L<Callback Concept|[%m.intro%]/"xxxCallback Conceptxxx">.
 
 =back
 
@@ -1166,26 +1136,25 @@ Defines the interface element that will receive the keyboard focus,
 i.e., the element that will receive keyboard events. But this will be
 processed only after the con
 
- Ihandle *IUP::SetFocus(Ihandle *ih); [in C]
- iup.SetFocus(ih: ihandle) -> ih: ihandle [in Lua]
+ my $focused_elem = $element->SetFocus();
 
-B<ih>: identifier of the interface element that will receive the
+B<$ih:> identifier of the interface element that will receive the
 keyboard focus. Only elements that can have the keyboard focus, are
 mapped, active and visible can be used, other elements are ignored.
 
-Returns: the identifier of the interface element that previously had
+B<Returns:> the identifier of the interface element that previously had
 the keyboard focus.
 
 [% h.at_notes %]
 
-The value returned by L<IUP::GetFocus|IUP::GetFocus> will be updated only after the
+The value returned by L<GetFocus|IUP/"GetFocus()"> will be updated only after the
 main loop regain the control and the control actually receive the
-focus. So if you call L<IUP::GetFocus|IUP::GetFocus> right after L<IUP::SetFocus|IUP::SetFocus> the
-return value will be different. You could call L<IUP::Flush|IUP::Flush> between the
+focus. So if you call L<GetFocus|IUP/"GetFocus()"> right after L<SetFocus|/"SetFocus()"> the
+return value will be different. You could call L<Flush|/"Flush()"> between the
 two functions to obtain the same value.
 
 [% h.at_see %]
-L<IUP::GetFocus|IUP::GetFocus>. 
+L<GetFocus|IUP/"GetFocus()">. 
 
 =back
 
@@ -1199,24 +1168,23 @@ children.
 It will NOT B<detach> the element from its parent, , and it will NOT
 B<destroy> the IUP element.
 
- void IUP::Unmap(Ihandle* ih); [in C]
- iup.Unmap(ih: iuplua-tag) [in Lua]
+ $element->Unmap();
 
-B<ih>: Identifier of an interface element.
+B<$ih:> Identifier of an interface element.
 
 [% h.at_notes %]
 
 When the element is mapped some attributes are stored only in the
 native system. If the element is B<unmaped> those attributes are lost.
-Use the function L<IUP::SaveClassAttributes|IUP::SaveClassAttributes>
+Use the function L<SaveClassAttributes|/"SaveClassAttributes()">
 when you want to B<unmap> the element and keep its attributes.
 
 [% h.at_see %]
-L<IUP::Append|IUP::Append>,
-L<IUP::Detach|IUP::Detach>,
-L<IUP::Map|IUP::Map>,
-L<IUP::Create|IUP::Create>,
-L<IUP::Destroy|IUP::Destroy>.
+L<Append|/"Append()">,
+L<Detach|/"Detach()">,
+L<Map|/"Map()">,
+L<Create|/"Create()">,
+L<Destroy|/"Destroy()">.
 
 =back
 

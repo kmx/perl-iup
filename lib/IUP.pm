@@ -58,6 +58,8 @@ require IUP::Val;
 require IUP::Vbox;
 require IUP::Zbox;
 
+use IUP::Constants; #xxx kind of a hack - we need some IUP_... constnts inside of IUP
+
 sub import {
   IUP::Constants->import(caller); #kind of a hack - see IUP/Constants.pm  
   IUP::Button->import();
@@ -153,6 +155,13 @@ sub Close {
   #void IupClose(void); [in C]
   #iup.Close() [in Lua]
   IUP::Internal::LibraryIup::_IupClose();
+}
+
+sub Open {
+  #int IupOpen(int *argc, char ***argv); [in C]
+  #[There is no equivalent in Lua]
+  IUP::Internal::LibraryIup::_IupOpen();
+  #xxxTODO not sure if this function is a good idea
 }
 
 sub GetAllDialogs {
@@ -426,10 +435,10 @@ sub Alarm {
 sub Message {
   my $pkg = shift;
   if (scalar @_ == 1) {
-    return IUP::Internal::LibraryIup::_IupMessage('', $_[0]);
+    return IUP::Internal::LibraryIup::_IupMessage('', "$_[0]"); #xxx stringification needed
   }
   elsif (scalar @_ == 2) {
-    return IUP::Internal::LibraryIup::_IupMessage($_[0], $_[1]);
+    return IUP::Internal::LibraryIup::_IupMessage("$_[0]", "$_[1]"); #xxx stringification needed
   }
   carp('Warning: wrong params - IUP->Message($title, $msg)');
   return;
