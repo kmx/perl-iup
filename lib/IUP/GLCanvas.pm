@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::GLCanvas;
 use strict;
 use warnings;

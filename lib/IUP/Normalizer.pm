@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Normalizer;
 use strict;
 use warnings;

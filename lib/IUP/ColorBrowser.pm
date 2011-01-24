@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::ColorBrowser;
 use strict;
 use warnings;

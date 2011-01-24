@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Tree;
 use strict;
 use warnings;

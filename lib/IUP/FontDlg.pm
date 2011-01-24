@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::FontDlg;
 use strict;
 use warnings;

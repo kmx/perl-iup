@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Clipboard;
 use strict;
 use warnings;

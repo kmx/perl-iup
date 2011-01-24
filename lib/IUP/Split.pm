@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Split;
 use strict;
 use warnings;

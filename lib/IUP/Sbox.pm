@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Sbox;
 use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;

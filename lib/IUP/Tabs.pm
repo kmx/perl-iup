@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Tabs;
 use strict;
 use warnings;

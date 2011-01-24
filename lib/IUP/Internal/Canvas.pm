@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Internal::Canvas;
 
 @ISA = qw/ DynaLoader /;

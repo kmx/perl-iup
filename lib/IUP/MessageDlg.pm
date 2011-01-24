@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::MessageDlg;
 use strict;
 use warnings;

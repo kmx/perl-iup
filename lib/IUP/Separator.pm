@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Separator;
 use strict;
 use warnings;

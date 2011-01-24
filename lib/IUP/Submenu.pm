@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Submenu;
 use strict;
 use warnings;

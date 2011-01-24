@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Label;
 use strict;
 use warnings;

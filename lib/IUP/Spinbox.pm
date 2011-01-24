@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Spinbox;
 use strict;
 use warnings;

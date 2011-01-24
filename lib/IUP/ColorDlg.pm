@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::ColorDlg;
 use strict;
 use warnings;

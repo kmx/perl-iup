@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Spin;
 use strict;
 use warnings;

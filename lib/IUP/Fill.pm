@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Fill;
 use strict;
 use warnings;

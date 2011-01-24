@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::FileDlg;
 use strict;
 use warnings;

@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Radio;
 use strict;
 use warnings;

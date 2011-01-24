@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Hbox;
 use strict;
 use warnings;

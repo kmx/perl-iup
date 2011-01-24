@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Dialog;
 use strict;
 use warnings;

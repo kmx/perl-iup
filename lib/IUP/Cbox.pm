@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Cbox;
 use strict;
 use warnings;

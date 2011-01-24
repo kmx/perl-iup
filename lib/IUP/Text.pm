@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Text;
 use strict;
 use warnings;

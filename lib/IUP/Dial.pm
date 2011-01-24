@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::Dial;
 use strict;
 use warnings;

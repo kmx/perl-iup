@@ -1,5 +1,3 @@
-#!/usr/bin/env perl
-
 package IUP::ProgressBar;
 use strict;
 use warnings;
