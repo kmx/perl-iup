@@ -1541,6 +1541,7 @@ _IupTreeSetAttributeHandle(ih,a,id,ih_named)
 
 #### Original C function from <iup.h>
 # Ihandle* IupLayoutDialog(Ihandle* dialog);
+Ihandle*
 _IupLayoutDialog(dialog)
 		Ihandle* dialog;
 	CODE:

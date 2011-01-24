@@ -33,6 +33,7 @@ require IUP::Hbox;
 require IUP::Image;
 require IUP::Item;
 require IUP::Label;
+require IUP::LayoutDialog; #maybe not this one xxxTODO
 require IUP::List;
 require IUP::Matrix;
 require IUP::Menu;
@@ -83,6 +84,7 @@ sub import {
   IUP::ImageRGBA->import();
   IUP::Item->import();
   IUP::Label->import();
+  IUP::LayoutDialog->import();
   IUP::List->import();
   IUP::Matrix->import();
   IUP::Menu->import();
