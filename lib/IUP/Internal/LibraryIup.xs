@@ -1540,6 +1540,16 @@ _IupTreeSetAttributeHandle(ih,a,id,ih_named)
 		IupTreeSetAttributeHandle(ih,a,id,ih_named);
 
 #### Original C function from <iup.h>
+# Ihandle* IupLayoutDialog(Ihandle* dialog);
+_IupLayoutDialog(dialog)
+		Ihandle* dialog;
+	CODE:
+		RETVAL = IupLayoutDialog(dialog);
+	OUTPUT:
+		RETVAL
+
+
+#### Original C function from <iup.h>
 # Ihandle* IupFileDlg(void);
 Ihandle*
 _IupFileDlg()
