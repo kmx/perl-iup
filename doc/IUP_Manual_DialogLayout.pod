@@ -8,7 +8,7 @@ IUP::Manual::06_DialogLayout - Dialor Layout Composition
 
 =over
 
-=item * L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>
+=item * L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>
 
 =item * L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>
 
@@ -27,7 +27,7 @@ IUP::Manual::06_DialogLayout - Dialor Layout Composition
 xxxTODO text text text text text text text text text text text text
 text text text text text text text text text text text text text text
 
-xxxhave a look at: iup\html\download\spe95.pdf 
+xxxhave a look at: http://www.tecgraf.puc-rio.br/iup/download/spe95.pdf
 
 xxx IUP::Dialog the main container
 

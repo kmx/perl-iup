@@ -8,7 +8,7 @@ IUP::Manual::03_Attributes - Attribute concept, using attributes, common + globa
 
 =over
 
-=item * L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>
+=item * L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>
 
 =item * L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>
 
@@ -27,8 +27,8 @@ IUP::Manual::03_Attributes - Attribute concept, using attributes, common + globa
 This document is intended as a reference list for common attributes used by several
 (or all) GUI elements and global attributes which are not associated with any element.
 
-For more information about using attributes see L<Attributes Concept|IUP::Manual::01_BasicConcept/"Attributes Concept">
-in L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>.
+For more information about using attributes see L<Attributes Concept|IUP::Manual::01_Introduction/"Attributes Concept">
+in L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>.
 
 =head2 Common and/or frequently used attributes
 

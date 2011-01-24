@@ -27,7 +27,7 @@
 xxxTODO text text text text text text text text text text text text
 text text text text text text text text text text text text text text
 
-xxxhave a look at: iup\html\download\spe95.pdf 
+xxxhave a look at: http://www.tecgraf.puc-rio.br/iup/download/spe95.pdf
 
 xxx IUP::Dialog the main container
 

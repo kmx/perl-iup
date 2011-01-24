@@ -143,10 +143,20 @@ sub SetAttribute {
   }
 }
 
-sub SetfAttribute {
-  # xxx workaround
-  my ($self, $name, $format, @v) = @_;
-  $self->SetAttribute($name, sprintf($format, @v));
+sub SetAttributeId {
+  #void IupSetAttributeId(Ihandle *ih, const char *name, int id, const char *value); [in C]
+  #iup.SetAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua] 
+  #void IupStoreAttributeId(Ihandle *ih, const char *name, int id, const char *value); [in C]
+  #iup.StoreAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua] 
+  #
+  # xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
+  my ($self, $name, %args) = @_;  
+  for (keys %args) {    
+    my ($id, $v) = ($_, $args{$_});     
+    # xxx ultra ugly hack but for some reason we need to have $v as a string
+    $v = "$v";
+    IUP::Internal::LibraryIup::_IupStoreAttributeId($self->ihandle, $name, $id, $v);
+  }
 }
   
 sub GetAttribute {
@@ -159,18 +169,13 @@ sub GetAttribute {
   return (scalar(@names) == 1) ? $rv[0] : @rv; #TODO: not sure if this is a good idea
 }
 
-sub GetInt {
-  my ($self, @names) = @_;
+sub GetAttributeId {
+  #char *IupGetAttributeId(Ihandle *ih, const char *name, int id); [in C]
+  #iup.GetAttributeId(ih: ihandle, name: string, id: number) -> value: string [in Lua]
+  my ($self, $name, @ids) = @_;
   my @rv = ();
-  push(@rv, IUP::Internal::LibraryIup::_IupGetInt($self->ihandle, $_)) for (@names);    
-  return (scalar(@names) == 1) ? $rv[0] : @rv; #TODO: not sure if this is a good idea
-}
-
-sub GetFloat {
-  my ($self, @names) = @_;
-  my @rv = ();
-  push(@rv, IUP::Internal::LibraryIup::_IupGetFloat($self->ihandle, $_)) for (@names);    
-  return (scalar(@names) == 1) ? $rv[0] : @rv; #TODO: not sure if this is a good idea
+  push(@rv, IUP::Internal::LibraryIup::_IupGetAttributeId($self->ihandle, $name, $_)) for (@ids);
+  return (scalar(@ids) == 1) ? $rv[0] : @rv; #TODO: not sure if this is a good idea
 }
 
 sub SetCallback {
@@ -188,18 +193,7 @@ sub SetCallback {
   }
 }
 
-sub GetCallback {
-  my ($self, @names) = @_;
-  my @rv = ();  
-  push(@rv, $self->IsValidCallbackName($_) ? $self->{$_} : undef) for (@names);    
-  return (scalar(@names) == 1) ? $rv[0] : @rv; #TODO: not sure if this is a good idea
-}
-
-sub IsValidAttributeName {
-  return IUP::Internal::Attribute::_is_attr_valid(ref($_[0]), $_[1]);
-}
-
-sub IsValidCallbackName {  
+sub IsValidCallbackName { 
   return IUP::Internal::Callback::_is_cb_valid(ref($_[0]), $_[1]);
 }
 
@@ -321,6 +315,13 @@ sub Refresh {
   return IUP::Internal::LibraryIup::_IupRefresh($self->ihandle);  
 }
 
+sub RefreshChildren {
+  #void IupRefreshChildren(Ihandle *ih); [in C]
+  #iup.RefreshChildren(ih: ihandle) [in Lua]
+  my $self = shift;
+  return IUP::Internal::LibraryIup::_IupRefreshChildren($self->ihandle);
+}
+
 sub Reparent {
   #void IupReparent(Ihandle* child, Ihandle* parent); [in C]
   #iup.Reparent(child, parent: ihandle) [in Lua]
@@ -340,14 +341,6 @@ sub SaveClassAttributes {
   #iup.SaveClassAttributes(ih: ihandle) [in Lua]
   my $self = shift;
   return IUP::Internal::LibraryIup::_IupSaveClassAttributes($self->ihandle);  
-}
-
-sub SaveImageAsText {
-  # xxx Image
-  #int IupSaveImageAsText(Ihandle* ih, const char* file_name, const char* format, const char* name); [in C]
-  #iup.SaveImageAsText(ih: ihandle, file_name, format[, name]: string) -> (ret: boolean) [in Lua]
-  my ($self, $file_name, $format, $name) = @_;
-  return IUP::Internal::LibraryIup::_IupSaveImageAsText($self->ihandle, $file_name, $format, $name);
 }
 
 sub SetFocus {

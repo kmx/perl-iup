@@ -3,7 +3,7 @@
 package IUP::Zbox;
 use strict;
 use warnings;
-use base 'IUP::Internal::Element::Box';
+use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 
 sub _create_element {

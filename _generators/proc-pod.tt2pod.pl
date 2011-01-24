@@ -110,7 +110,7 @@ my $ttdata = {
     iupzbox         =>         'IUP::Zbox - [GUI element] container for composing elements in hidden layers with only one layer visible',
   },
   m => {
-    intro    => 'IUP::Manual::01_BasicConcept',
+    intro    => 'IUP::Manual::01_Introduction',
     elem     => 'IUP::Manual::02_Elements',
     at       => 'IUP::Manual::03_Attributes',
     cb       => 'IUP::Manual::04_Callbacks',

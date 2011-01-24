@@ -8,7 +8,7 @@ IUP::Manual::04_Callbacks - Common callbacks, reference guide
 
 =over
 
-=item * L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>
+=item * L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>
 
 =item * L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>
 
@@ -27,8 +27,8 @@ IUP::Manual::04_Callbacks - Common callbacks, reference guide
 This document is intended as a reference list for common callbacks used by several
 or all GUI elements + global B<IDLE_ACTION> callback.
 
-For more information about using callbacks see L<Callbacks Concept|IUP::Manual::01_BasicConcept/"Callbacks Concept">
-in L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>.
+For more information about using callbacks see L<Callbacks Concept|IUP::Manual::01_Introduction/"Callbacks Concept">
+in L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>.
 
 Callbacks described in this document:
 

@@ -241,6 +241,14 @@ _IupRefresh(ih)
 		IupRefresh(ih);
 
 #### Original C function from <iup.h>
+# void IupRefreshChildren(Ihandle *ih);
+void
+_IupRefreshChildren(ih)
+		Ihandle* ih;
+	CODE:
+		IupRefreshChildren(ih);
+
+#### Original C function from <iup.h>
 # char* IupMapFont (const char *iupfont);
 char*
 _IupMapFont(iupfont)
@@ -553,6 +561,17 @@ _IupStoreAttribute(ih,name,value)
 		IupStoreAttribute(ih,name,value);
 
 #### Original C function from <iup.h>
+# void IupStoreAttributeId(Ihandle *ih, const char *name, int id, const char *value);
+void
+_IupStoreAttributeId(ih,name,id,value)
+		Ihandle* ih;
+		const char* name;
+		int id;
+		const char* value;
+	CODE:
+		IupStoreAttributeId(ih,name,id,value);
+
+#### Original C function from <iup.h>
 # Ihandle* IupSetAttributes (Ihandle* ih, const char *str);
 Ihandle*
 _IupSetAttributes(ih,str)
@@ -573,13 +592,25 @@ _IupGetAttribute(ih,name)
 		RETVAL = IupGetAttribute(ih,name);
 	OUTPUT:
 		RETVAL
-
+		
 Ihandle*
 _IupGetAttributeIH(ih,name)
 		Ihandle* ih;
 		const char* name;
 	CODE:
 		RETVAL = (Ihandle*)IupGetAttribute(ih,name);
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <iup.h>
+# char *IupGetAttributeId(Ihandle *ih, const char *name, int id);
+char*
+_IupGetAttributeId(ih,name,id)
+		Ihandle* ih;
+		const char* name;
+		int id;
+	CODE:
+		RETVAL = IupGetAttributeId(ih,name,id);
 	OUTPUT:
 		RETVAL
 
@@ -865,6 +896,36 @@ _IupGetClassType(ih)
 		RETVAL = IupGetClassType(ih);
 	OUTPUT:
 		RETVAL
+
+#### Original C function from <iup.h>
+# void IupCopyClassAttributes(Ihandle* src_ih, Ihandle* dst_ih);
+void
+_IupCopyClassAttributes(src_ih,dst_ih)
+		Ihandle* src_ih;
+		Ihandle* dst_ih;
+	CODE:
+		IupCopyClassAttributes(src_ih,dst_ih);
+
+#### Original C function from <iup.h>
+# int IupGetAllClasses(char** names, int max_n);
+void
+_IupGetAllClasses(...)
+	INIT:
+		int i, rv, count, max_n;
+		char** list = NULL;		  
+	PPCODE:
+		max_n = myST2INT(1);
+		count = IupGetAllClasses(NULL,0);
+		if (max_n > 0) count = max_n;
+		list = malloc( count * sizeof(void*) );
+		rv = IupGetAllClasses(list,count);
+		if(GIMME_V == G_ARRAY) {
+		  for(i=0; i<count; i++) XPUSHs(sv_2mortal(newSVpv(list[i],0)));
+		}
+		else {
+		  XPUSHs(sv_2mortal(newSViv(rv)));
+		}
+		if (list != NULL) free(list);
 
 #### Original C function from <iup.h>
 # void IupSaveClassAttributes(Ihandle* ih);

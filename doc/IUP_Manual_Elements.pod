@@ -8,7 +8,7 @@ IUP::Manual::Elements - Manuals element guide
 
 =over
 
-=item * L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>
+=item * L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>
 
 =item * IUP::Manual::02_Elements E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
 
@@ -26,8 +26,8 @@ IUP::Manual::Elements - Manuals element guide
 
 This document is intended as a reference list for common methods used by all IUP elements.
 
-For more information about using elemets see L<Elements Concept|IUP::Manual::01_BasicConcept/"Elements Concept">
-in L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>.
+For more information about using elemets see L<Elements Concept|IUP::Manual::01_Introduction/"Elements Concept">
+in L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>.
 
 xxxTODO GUI vs. non-GUI
 
@@ -77,7 +77,15 @@ xxxTODO new() and its params (ATTRIB=>'val', param=>'val')
 
 =head3 new()
 
-=head3 new_by_ihandle()
+xxxtodo
+
+=head3 new_from_ihandle()
+
+xxxtodo
+
+=head3 new_no_ihandle()
+
+xxxtodo
 
 =head2 Methods available in all IUP elements
 
@@ -1124,7 +1132,7 @@ B<$cb_handler:> xxxTODO func refxxx. If C<undef> removes the association.
 B<Returns:> the address of the previous function associated to the action xxxTODO ???.
 
 B<See Also:>
-L<Callback Concept|IUP::Manual::01_BasicConcept/"xxxCallback Conceptxxx">.
+L<Callback Concept|IUP::Manual::01_Introduction/"xxxCallback Conceptxxx">.
 
 =back
 
@@ -1212,6 +1220,293 @@ to the system.
  $element->UpdateChildren;
 
 B<$element:> identifier of the interface element. 
+
+=back
+
+=head1 Methods common for all Dialog-like elements
+
+xxx IUP::Dialog, IUP::ColorDlg etc
+
+=head3 Hide()
+
+=over
+
+Hides an interface element. This function has the same effect as
+attributing value "NO" to the interface elementE<rsquo>s VISIBLE
+attribute.
+
+ $element->Hide();
+ #xxxcheckthis ?is it dialog only? - $dialog->Hide();
+
+B<$ih:> Identifier of the interface element.
+
+B<Returns:> IUP_NOERROR always.
+
+B<Notes:>
+
+Once a dialog is hidden, either by means of L<Hide|/"Hide()"> method or by changing
+the VISIBLE attribute or by means of a click in the window close
+button, the elements inside this dialog are not destroyed, so that you
+can show them again. To destroy dialogs, the L<Destroy|/"Destroy()"> method
+must be called.
+
+B<See Also:>
+L<ShowXY|/"ShowXY()">,
+L<Show|/"Show()">,
+L<Popup|/"Popup()">,
+L<Destroy|/"Destroy()">.
+ 
+=back
+
+=head3 Popup()
+
+=over
+
+Shows a dialog or menu and restricts user interaction only to the
+specified element. It is equivalent of creating a Modal dialog is some
+tooklits.
+
+If another dialog is shown after L<Popup|/"Popup()"> using L<Show|/"Show()">, then its
+interaction will not be inhibited. Every L<Popup|/"Popup()"> call creates a new
+popup level that inhibits all previous dialogs interactions, but does
+not disable new ones. IMPORTANT: The popup levels must be closed in the
+reverse order they were created or unpredictable results will occur.
+
+For a dialog this function will only return the control to the
+application after a callback returns IUP_CLOSE, L<ExitLoop|IUP/"ExitLoop()"> is
+called, or when the popup dialog is hidden, for exemple using
+L<Hide|/"Hide()">. For a menu it returns automatically after a menu item is
+selected. IMPORTANT: If a menu item callback returns IUP_CLOSE, it will
+ends the current popup level dialog.
+
+ $dialog->Popup($x, $y);
+ #or
+ $dialog->Popup();
+
+B<$ih:> Identifier of a dialog or a menu.
+
+B<$x>: horizontal position of the dialog or menu relative to the origin
+of the main screen. The following constants (see L<IUP::Constants|IUP::Constants>)
+are valid:
+
+=over
+
+=item * IUP_LEFT: Positions the element on the left corner of the
+screen
+
+=item * IUP_CENTER: Centers the element on the screen
+
+=item * IUP_RIGHT: Positions the element on the right corner of the
+screen
+
+=item * IUP_MOUSEPOS: Positions the element on the mouse cursor
+
+=item * IUP_CENTERPARENT: Horizontally centralizes the dialog relative
+to its parent. Not valid for menus.
+
+=item * IUP_CURRENT: use the current position of the dialog. This is
+the default value in Lua if the parameter is not defined. Not valid for
+menus.
+
+=back
+
+B<$y:> vertical position of the dialog or menu relative to the origin of
+the main screen. The following constants (see L<IUP::Constants|IUP::Constants>)
+are valid:
+
+=over
+
+=item * IUP_TOP: Positions the element on the top of the screen
+
+=item * IUP_CENTER: Vertically centers the element on the screen
+
+=item * IUP_BOTTOM: Positions the element on the base of the screen
+
+=item * IUP_MOUSEPOS: Positions the element on the mouse cursor
+
+=item * IUP_CENTERPARENT: Vertically centralizes the dialog relative to
+its parent. Not valid for menus.
+
+=item * IUP_CURRENT: use the current position of the dialog. This is
+the default value in Lua if the parameter is not defined. Not valid for
+menus.
+
+=back
+
+B<Returns:> IUP_NOERROR if sucessful. Returns IUP_INVALID if not a dialog
+or menu. If there was an error returns IUP_ERROR.
+
+B<Notes:>
+
+Will call L<Map|/"Map()"> for the element.
+
+See the L<PLACEMENT|xxx../dlg/iupdialog.html#PLACEMENT> attribute for
+other position and show options.
+
+When IUP_CENTERPARENT is used but PARENTDIALOG is not defined then it
+is replaced by IUP_CENTER.
+
+When IUP_CURRENT is used at the first time the dialog is shown then it
+will be replaced by IUP_CENTERPARENT.
+
+The main screen size does not include additional monitors.
+
+L<Popup|/"Popup()"> works just like L<Show|/"Show()"> and L<ShowXY|/"ShowXY()">, but it
+inhibits interaction with other dialogs and interrupts the processing
+until IUP_CLOSE is returned in a callback or the dialog is hidden.
+Althougth it interrupts the processing, it does not destroy the dialog
+when it ends. To destroy the dialog, L<Destroy|/"Destroy()"> must be called.
+
+IMPORTANT: Calling L<Popup|/"Popup()"> for an already visible dialog will only
+update its position and/or size on screen, will NOT change its modal
+state and will NOT interrupt processing.
+
+In GTK and Motif the inactive dialogs will still be able to move,
+resize and change their Z-order. Although their contents will be
+inactive, keyboard will be disabled, and they can not be closed from
+the close box.
+
+B<See Also:>
+L<ShowXY|/"ShowXY()">,
+L<Show|/"Show()">,
+L<Hide|/"Hide()">,
+L<Map|/"Map()">.
+
+=back
+
+=head3 Show()
+
+=over
+
+Displays a dialog in the current position, or changes a control VISIBLE
+attribute. If the dialog needs to be mapped and the current position is
+not known then the dialog is centered.
+
+For a dialog to set the attribute VISIBLE=YES is the same as calling
+L<Show|"/Show()">. For other controls, to call IUP::Show is the same as setting
+VISIBLE=YES.
+
+ $dialog->Show();
+
+B<$ih:> identifier of the interface element.
+
+B<Returns:> IUP_NOERROR if sucessful. If there was an error returns
+IUP_ERROR.
+
+B<Notes:>
+
+For dialogs it is equivalent to L<ShowXY|/"ShowXY()"> using IUP_CURRENT (or
+IUP_CENTER if not mapped).
+
+Will call L<Map|/"Map()"> for the element.
+
+See the L<PLACEMENT|xxx../dlg/iupdialog.html#PLACEMENT> attribute for
+other position and show options.
+
+This function can be executed more than once for the same dialog. This
+will make the dialog be placed above all other dialogs in the
+application, changing its Z-order, and update its position and/or size
+on screen.
+
+IMPORTANT: Calling L<Show|/"Show()"> for a visible dialog shown with
+L<Popup|/"Popup()"> does nothing.
+
+B<See Also:>
+L<ShowXY|/"ShowXY()">,
+L<Hide|/"Hide()">,
+L<Popup|/"Popup()">,
+L<Map|/"Map()">.
+
+=back
+
+=head3 ShowXY()
+
+=over
+
+Displays a dialog in a given position on the screen.
+
+ $dialog->ShowXY($x, $y);
+ #or
+ $dialog->ShowXY();
+
+B<$ih:> identifier of the dialog.
+
+B<$x:> horizontal position of the dialog relative to the origin of the
+main screen. The following constants (see L<IUP::Constants|IUP::Constants>)
+are valid:
+
+=over
+
+=item * IUP_LEFT: Positions the dialog on the left corner of the screen
+
+=item * IUP_CENTER: Horizontally centralizes the dialog on the screen
+
+=item * IUP_RIGHT: Positions the dialog on the right corner of the
+screen
+
+=item * IUP_MOUSEPOS: Positions the dialog on the mouse position
+
+=item * IUP_CENTERPARENT: Horizontally centralizes the dialog relative
+to its parent
+
+=item * IUP_CURRENT: use the current position of the dialog. This is
+the default value in Lua if the parameter is not defined.
+
+=back
+
+B<$y:> vertical position of the dialog relative to the origin of the
+main screen. The following constants (see L<IUP::Constants|IUP::Constants>)
+are valid:
+
+=over
+
+=item * IUP_TOP: Positions the dialog on the top of the screen
+
+=item * IUP_CENTER: Vertically centralizes the dialog on the screen
+
+=item * IUP_BOTTOM: Positions the dialog on the base of the screen
+
+=item * IUP_MOUSEPOS: Positions the dialog on the mouse position
+
+=item * IUP_CENTERPARENT: Vertically centralizes the dialog relative to
+its parent
+
+=item * IUP_CURRENT: use the current position of the dialog. This is
+the default value in Lua if the parameter is not defined.
+
+=back
+
+B<Returns:> IUP_NOERROR if sucessful. Returns IUP_INVALID if not a dialog.
+If there was an error returns IUP_ERROR.
+
+B<Notes:>
+
+Will call L<Map|/"Map()"> for the element.
+
+See the L<PLACEMENT|xxx../dlg/iupdialog.html#PLACEMENT> attribute for
+other position and show options.
+
+When IUP_CENTERPARENT is used but PARENTDIALOG is not defined then it
+is replaced by IUP_CENTER.
+
+When IUP_CURRENT is used at the first time the dialog is shown then it
+will be replaced by IUP_CENTERPARENT.
+
+The main screen size does not include additional monitors.
+
+This function can be executed more than once for the same dialog. This
+will make the dialog be placed above all other dialogs in the
+application, changing its Z-order, and update its position and/or size
+on screen.
+
+IMPORTANT: Calling L<ShowXY|/"ShowXY()"> for a visible dialog shown with
+L<Popup|/"Popup()"> does nothing.
+
+B<See Also:>
+L<Show|/"Show()">,
+L<Hide|/"Hide()">,
+L<Popup|/"Popup()">,
+L<Map|/"Map()">.
 
 =back
 

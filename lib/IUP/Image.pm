@@ -3,7 +3,7 @@
 package IUP::Image;
 use strict;
 use warnings;
-use base 'IUP::Internal::Element::Image';
+use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 use Carp;
 
@@ -131,6 +131,20 @@ sub _create_element {
   delete $args->{HEIGHT};
 
   return $ih;
+}
+
+sub SaveImage {
+  #int IupSaveImage(Ihandle* ih, const char* file_name, const char* format); [in C]
+  #iup.SaveImage(ih: ihandle, file_name, format: string) -> (ret: boolean) [in Lua]
+  my ($self, $filename, $format) = @_;
+  return IUP::Internal::LibraryIup::_IupSaveImage($self->ihandle, $filename, $format);
+}
+
+sub SaveImageAsText {
+  #int IupSaveImageAsText(Ihandle* ih, const char* file_name, const char* format, const char* name); [in C]
+  #iup.SaveImageAsText(ih: ihandle, file_name, format[, name]: string) -> (ret: boolean) [in Lua]
+  my ($self, $filename, $format, $name) = @_;
+  return IUP::Internal::LibraryIup::_IupSaveImageAsText($self->ihandle, $filename, $format, $name);
 }
 
 1;

@@ -1,25 +1,27 @@
 ######## IMPORTANT
-- use IUP ':all'; - see http://perldoc.perl.org/autodie.html - maybe :dialogs :controls ...
-- test IUP::Internal::LibraryIup::_IupGetClassCallbacks
-- IUP->GetHandle vs. IUP->GetByName
-- check
-iupsetatt
-- add
-IUP->GetAllClasses()
-IUP->LoadLED()
-elem method - RefreshChildren()
-- move
-SaveImageAsText() from element to image
-GetDialogChild() from element to dialog ???
-- remove
-IUP::Internal::Box
-IUP::Internal::Image
-elem method - GetCallback()
-elem method - GetFloat()
-elem method - GetInt()
-elem method - IsValidAttributeName()
-elem method - SetfAttribute()
+Implement use IUP ':all';
+- see http://perldoc.perl.org/autodie.html - maybe :dialogs :controls ...
 
+GetOrCreateByIhandle vs GetByIhandle
+- maybe merge into one function
+- GetByIhandle($ih, $flag);
+
+Consider - element method:
+- GetAttributeData() | GetAttributeSV() for storing perl SVs
+
+Check
+- if Hide() is dialog only - decide Element.pm vs. Dialog.pm
+- if GetDialogChild() is dialog only - decide Element.pm vs. Dialog.pm
+- iupsetatt
+
+Check difference
+ return IUP::Internal::LibraryIup::_IupCopyClassAttributes($src->ihandle, $dst->ihandle);
+ vs.
+ IUP::Internal::LibraryIup::_IupCopyClassAttributes($src->ihandle, $dst->ihandle);
+
+Test:
+- IUP::Internal::LibraryIup::_IupGetClassCallbacks
+ 
 ######## IUP::Internal::Element Attributes (1)
 - maybe replace
   $self->SetAttribute(a,v) + $self->GetAttribute(a)

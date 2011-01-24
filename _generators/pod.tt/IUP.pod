@@ -1261,7 +1261,7 @@ B<$src_elem:> reference of the source element.
 
 B<$dst_elem:> reference of the destination element.
 
-[% h.see %]
+[% h.at_see %]
 L<GetClassAttributes|/"GetClassAttributes()"> (global function),
 L<GetClassName|/"GetClassName()"> (element method),
 L<GetClassType|/"GetClassType()"> (element method),
@@ -1435,6 +1435,21 @@ focus, i.e. the element that will receive keyboard events.
 
 [% h.at_see %]
 L<SetFocus|[%m.elem%]/"SetFocus()"> (element method).
+
+=back
+
+=head3 GetByIhandle()
+
+=over
+
+Returns the reference to a GUI element that is associated with internal C<ihandle>
+given as a parameter.
+
+  my $elem = IUP->GetByName($ihandle);
+
+B<$ihandle:> xxxin fact C pointer
+
+xxxcheckthis
 
 =back
 

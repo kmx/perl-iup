@@ -58,7 +58,7 @@ related to User Interface.
 
 =item * B<Easy to Learn:> The learning curve for a new IUP user is often
 faster due to the small number of functions and to IUP's
-L<attributes concept|IUP::Manual::01_BasicConcept/"Attributes Concept"> which makes a lot of
+L<attributes concept|IUP::Manual::01_Introduction/"Attributes Concept"> which makes a lot of
 things more elegant and simpler to understand.
 
 =item * B<Native Look & Feel:> Many toolkits draw their own controls.
@@ -98,7 +98,7 @@ they are handled by separate L<Alien::IUP|Alien::IUP> module.
 =head1 QUICK START
 
 At this point we show just basic ideas behind IUP based GUI applications.
-For more details see L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>.
+For more details see L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>.
 Or if you wanna skip the theory you can go directly to L<examples|https://github.com/kmx/perl-iup/tree/master/examples>
 directory of IUP distribution or look at L<IUP::Manual::07_Examples|IUP::Manual::07_Examples>.
 
@@ -429,7 +429,7 @@ Which is equivalent to:
  use IUP::Menu;
  
 B<IMPORTANT NOTE:> If you are the first time reader of this document at this point
-you might wanna jumt to L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>. The rest of this document is just
+you might wanna jumt to L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>. The rest of this document is just
 the reference list of all functions available in the main L<IUP|IUP> module.
 
 =head1 GLOBAL FUNCTIONS
@@ -1382,7 +1382,7 @@ B<$src_elem:> reference of the source element.
 
 B<$dst_elem:> reference of the destination element.
 
-=head1 SEE ALSO
+B<See Also:>
 L<GetClassAttributes|/"GetClassAttributes()"> (global function),
 L<GetClassName|/"GetClassName()"> (element method),
 L<GetClassType|/"GetClassType()"> (element method),
@@ -1556,6 +1556,21 @@ focus, i.e. the element that will receive keyboard events.
 
 B<See Also:>
 L<SetFocus|IUP::Manual::02_Elements/"SetFocus()"> (element method).
+
+=back
+
+=head3 GetByIhandle()
+
+=over
+
+Returns the reference to a GUI element that is associated with internal C<ihandle>
+given as a parameter.
+
+  my $elem = IUP->GetByName($ihandle);
+
+B<$ihandle:> xxxin fact C pointer
+
+xxxcheckthis
 
 =back
 

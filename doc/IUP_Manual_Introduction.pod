@@ -8,7 +8,7 @@ IUP::Manual::03_Attributes - Attribute concept, using attributes, common + globa
 
 =over
 
-=item * IUP::Manual::01_BasicConcept E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
+=item * IUP::Manual::01_Introduction E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
 
 =item * L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>
 

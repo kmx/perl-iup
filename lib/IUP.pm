@@ -185,18 +185,8 @@ sub GetFocus {
   return IUP->GetOrCreateByIhandle($ih);
 }
 
-sub GetClassName { # duplicated also in Element.pm
-  #char* IupGetClassName(Ihandle* ih); [in C]
-  #iup.GetClassName(ih: ihandle) -> (name: string) [in Lua]
-  my ($pkg, $ih) = @_;
-  return IUP::Internal::LibraryIup::_IupGetClassName($ih);
-}
-
 sub GetByName {
-  return GetHandle(@_);
-}
-
-sub GetHandle {
+  # BEWARE: different name form the oricinal C API
   #Ihandle *IupGetHandle(const char *name); [in C]
   #iup.GetHandle(name: string) -> ih: ihandle [in Lua]
   my ($pkg, $name) = @_;
@@ -278,19 +268,25 @@ sub Help {
   return IUP::Internal::LibraryIup::_IupHelp($url);
 }
 
-sub Load {
+sub LoadLED {
   #char *IupLoad(const char *filename); [in C]
   #iup.Load(filename: string) -> error: string [in Lua]
-  my ($pkg, $filename) = @_;
-  return IUP::Internal::LibraryIup::_IupLoad($filename);
-}
-
-sub LoadBuffer {
-  # xxx TODO maybe integrate into one Load() or accept also filehandle
   #char *IupLoadBuffer(const char *buffer); [in C] (since 3.0)
   #iup.LoadBuffer(buffer: string) -> error: string [in Lua]
-  my ($pkg, $buffer) = @_;
-  return IUP::Internal::LibraryIup::_IupLoadBuffer($buffer);
+  my ($pkg, $led) = @_;
+  if (ref($led) eq 'SCALAR') {
+    my $ledtxt = $$led;
+    return IUP::Internal::LibraryIup::_IupLoadBuffer($$led);
+  }
+  else {
+    if (-f $led) {
+      return IUP::Internal::LibraryIup::_IupLoad($led);
+    }
+    else {
+      carp "[warning] non-existing file '$led'";
+      return;
+    }
+  }
 }
 
 sub GetClassAttributes {
@@ -314,6 +310,20 @@ sub SetClassDefaultAttribute {
   IUP::Internal::LibraryIup::_IupSetClassDefaultAttribute($classname, $name, $value);
 }
 
+sub CopyClassAttributes {
+  #void IupCopyClassAttributes(Ihandle* src_ih, Ihandle* dst_ih); [in C]
+  #iup.CopyClassAttributes(src_ih, dst_ih: ihandle) [in Lua]
+  my ($pkg, $src, $dst) = @_;
+  return IUP::Internal::LibraryIup::_IupCopyClassAttributes($src->ihandle, $dst->ihandle);
+}
+
+sub GetAllClasses {
+  #int IupGetAllClasses(char** names, int max_n); [in C]
+  #iup.GetAllClasses([max_n: number]) -> (names: table, n: number) [in Lua]
+  my ($pkg, $max_n) = @_;
+  return IUP::Internal::LibraryIup::_IupGetAllClasses($max_n);	
+}
+
 sub SetIdle {
   my ($pkg, $func) = @_;
   return IUP::Internal::LibraryIup::_SetIdle($func);
@@ -331,15 +341,10 @@ sub GetGlobal {
 sub SetGlobal {
   #void IupSetGlobal(const char *name, const char *value); [in C]
   #iup.SetGlobal(name: string, value: string) [in Lua] 
-  my ($pkg, $name, $value) = @_;
-  #IUP::Internal::LibraryIup::_IupSetGlobal($name, $value); # xxx TODO SetGlobal vs. StoreGlobal xxx
-  IUP::Internal::LibraryIup::_IupStoreGlobal($name, $value);
-}
-
-sub StoreGlobal {
   #void IupStoreGlobal(const char *name, const char *value); [in C]
   #iup.StoreGlobal(name: string, value: string) [in Lua] 
   my ($pkg, $name, $value) = @_;
+  #IUP::Internal::LibraryIup::_IupSetGlobal($name, $value); # xxx TODO SetGlobal vs. StoreGlobal xxx
   IUP::Internal::LibraryIup::_IupStoreGlobal($name, $value);
 }
 
@@ -354,20 +359,6 @@ sub SetLanguage {
   #iup.SetLanguage(lng: string) [in Lua]
   my ($pkg, $lng) = @_;
   IUP::Internal::LibraryIup::_IupSetLanguage($lng);
-}
-
-sub MapFont {
-  #char* IupMapFont(const char *iupfont); [in C]
-  #iup.MapFont(iupfont : string) -> (driverfont : string) [in Lua]
-  my ($pkg, $iupfont) = @_;
-  return IUP::Internal::LibraryIup::_IupMapFont($iupfont);
-}
-
-sub UnMapFont {
-  #char* IupUnMapFont(const char *driverfont); [in C]
-  #iup.UnMapFont(driverfont :string) -> (iupfont : string) [in Lua]
-  my ($pkg, $driverfont) = @_;
-  IUP::Internal::LibraryIup::_IupUnMapFont($driverfont);
 }
 
 sub Version {

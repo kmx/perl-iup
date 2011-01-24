@@ -8,7 +8,7 @@ IUP::Manual::Elements - Manuals element guide
 
 =over
 
-=item * L<IUP::Manual::01_BasicConcept|IUP::Manual::01_BasicConcept>
+=item * L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>
 
 =item * L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>
 
