@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 sub cb_text_k_any {
   my ($self, $c) = @_;

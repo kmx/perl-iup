@@ -2,7 +2,7 @@
 # callbacks, the values of texts representing the R, G and B;
 # components of the selected color.;
 
-use IUP;
+use IUP ':all';
 
 my $text_red = IUP::Text->new();
 my $text_green = IUP::Text->new();

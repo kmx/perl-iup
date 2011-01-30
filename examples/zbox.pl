@@ -7,7 +7,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 my $fill = IUP::Fill->new();
 my $text = IUP::Text->new( VALUE=>"Enter your text here", EXPAND=>"YES" );

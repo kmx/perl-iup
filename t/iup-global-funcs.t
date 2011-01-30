@@ -1,7 +1,7 @@
 #!perl -T
 
 use Test::More tests => 5;
-use IUP;
+use IUP ':all';
 use Data::Dumper;
 
 like(IUP->Version, qr/^[0-9]\.[0-9]$/, 'IUP->Version' );
@@ -71,5 +71,4 @@ diag "RV=".Dumper($rv10);
 my $i = -1;
 $i=IUP->GetByName('xxx')->ihandle;
 diag "IH=$i";
-diag "CL=".Dumper(IUP->GetOrCreateByIhandle($i));
-#diag "CL=".Dumper(IUP->GetByIhandle($i));
+diag "CL=".Dumper(IUP->GetByIhandle($i));

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 # Creates a text, sets its value and turns on text readonly mode;
 my $text = IUP::Text->new( READONLY=>"YES", VALUE=>"Selecting show or hide will affect this text", SIZE=>300 );

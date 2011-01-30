@@ -2,7 +2,7 @@
 # Creates three labels, one using all attributes except for image, other
 # with normal text and the last one with an image.
 
-use IUP;
+use IUP ':all';
 
 # Defines a star image;
 my $img_star = IUP::Image->new( pixels=>

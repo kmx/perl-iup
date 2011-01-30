@@ -2,7 +2,7 @@
 # Creates a predefined color selection dialog which returns the
 # selected color in the RGB format.
 
-use IUP;
+use IUP ':all';
 
 my ($r, $g, $b) = IUP->GetColor(100, 100, 255, 255, 255);
 

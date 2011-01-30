@@ -8,6 +8,7 @@
 #include <iup_pplot.h>
 #include <iupgl.h>
 #include <iupim.h>
+#include <iupole.h>
 #include <cd.h>
 #include <cdiup.h>
 
@@ -104,14 +105,6 @@ static int cb_idle_action() {
 }
 
 MODULE = IUP::Internal::LibraryIup	PACKAGE = IUP::Internal::LibraryIup
-
-BOOT:
-/* xxx warn("Helo from bootstrap!"); */
-IupOpen(NULL, NULL);
-IupControlsOpen();
-IupPPlotOpen();
-IupGLCanvasOpen();
-IupImageLibOpen();
 
 ################################################################################
 SV*
@@ -222,6 +215,16 @@ _IupUpdateChildren(ih)
 		Ihandle* ih;
 	CODE:
 		IupUpdateChildren(ih);
+
+#### Original C function from <iup.h>
+# int IupReparent(Ihandle* ih, Ihandle* new_parent, Ihandle* ref_child);
+void
+_IupReparent(ih,child,parent)
+		Ihandle* ih;
+		Ihandle* child;
+		Ihandle* parent;
+	CODE:
+		IupReparent(ih,child,parent);
 
 #### Original C function from <iup.h>
 # void IupRedraw (Ihandle* ih, int children);
@@ -572,6 +575,18 @@ _IupStoreAttributeId(ih,name,id,value)
 		IupStoreAttributeId(ih,name,id,value);
 
 #### Original C function from <iup.h>
+# void  IupStoreAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* value);
+void
+_IupStoreAttributeId2(ih,name,lin,col,value)
+		Ihandle* ih;
+		const char* name;
+		int lin;
+		int col;
+		const char* value;
+	CODE:
+		IupStoreAttributeId2(ih,name,lin,col,value);
+
+#### Original C function from <iup.h>
 # Ihandle* IupSetAttributes (Ihandle* ih, const char *str);
 Ihandle*
 _IupSetAttributes(ih,str)
@@ -611,6 +626,19 @@ _IupGetAttributeId(ih,name,id)
 		int id;
 	CODE:
 		RETVAL = IupGetAttributeId(ih,name,id);
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <iup.h>
+# char* IupGetAttributeId2(Ihandle* ih, const char* name, int lin, int col);
+char*
+_IupGetAttributeId2(ih,name,lin,col)
+		Ihandle* ih;
+		const char* name;
+		int lin;
+		int col;
+	CODE:
+		RETVAL = IupGetAttributeId2(ih,name,lin,col);
 	OUTPUT:
 		RETVAL
 
@@ -1859,6 +1887,30 @@ _IupListDialog(type,title,list,op,max_col,max_lin,marks)
 		if (i_marks != NULL) free(i_marks);
 
 #### Original C function from <iup.h>
+#int IUP::GetClassCallbacks(const char* classname, char** names, int max_n);
+void
+_IupGetClassCallbacks(...)
+	INIT:
+		int i, rv, count, max_n;
+		int items = -1;
+		char* classname;
+		char** list = NULL;		  
+	PPCODE:
+		classname = myST2STR(0);
+		max_n = myST2INT(1);
+		count = IupGetClassCallbacks(classname,NULL,0);
+		if (max_n > 0) count = max_n;
+		list = malloc( count * sizeof(void*) );
+		rv = IupGetClassCallbacks(classname,list,count);
+		if(GIMME_V == G_ARRAY) {
+		  for(i=0; i<count; i++) XPUSHs(sv_2mortal(newSVpv(list[i],0)));
+		}
+		else {
+		  XPUSHs(sv_2mortal(newSViv(rv)));
+		}
+		if (list != NULL) free(list);
+
+#### Original C function from <iup.h>
 # int IupGetAllNames(char** names, int max_n);
 void
 _IupGetAllNames(...)
@@ -2230,7 +2282,28 @@ _cdCanvasMark(canvas,x,y)
 
 # void        cdKillCanvas(cdCanvas* canvas);
 # xxx TODO
-		
+
+################################################################################ iupole.h 
+
+#### Original C function
+# Ihandle *IupOleControl(const char* progid);
+Ihandle*
+_IupOleControl(progid)
+		const char* progid;
+	CODE:
+		RETVAL = IupOleControl(progid);
+	OUTPUT:
+		RETVAL
+
+#### Original C function
+# int IupOleControlOpen(void);
+int
+_IupOleControlOpen()
+	CODE:
+		RETVAL = IupOleControlOpen();
+	OUTPUT:
+		RETVAL
+
 ################################################################################ iupgl.h
 
 #### Original C function from <.../iup/include/iupgl.h>
@@ -2326,5 +2399,175 @@ _IupSaveImage(ih,file_name,format)
 		const char* format;
 	CODE:
 		RETVAL = IupSaveImage(ih,file_name,format);
+	OUTPUT:
+		RETVAL
+
+#### keyboard related macros
+int
+_isXkey(c)
+		int c;
+	CODE:
+		RETVAL = iup_isXkey(c);
+	OUTPUT:
+		RETVAL
+
+int
+_isShiftXkey(c)
+		int c;
+	CODE:
+		RETVAL = iup_isShiftXkey(c);
+	OUTPUT:
+		RETVAL
+
+int
+_isCtrlXkey(c)
+		int c;
+	CODE:
+		RETVAL = iup_isCtrlXkey(c);
+	OUTPUT:
+		RETVAL
+
+int
+_isAltXkey(c)
+		int c;
+	CODE:
+		RETVAL = iup_isAltXkey(c);
+	OUTPUT:
+		RETVAL
+
+int
+_isSysXkey(c)
+		int c;
+	CODE:
+		RETVAL = iup_isSysXkey(c);
+	OUTPUT:
+		RETVAL
+
+int
+_isPrintable(c)
+		int c;
+	CODE:
+		RETVAL = iup_isprint(c);
+	OUTPUT:
+		RETVAL
+
+int
+_xCODE(c)
+		int c;
+	CODE:
+		RETVAL = IUPxCODE(c); /* Normal (must be above 128) */
+	OUTPUT:
+		RETVAL
+
+int
+_sxCODE(c)
+		int c;
+	CODE:
+		RETVAL = IUPsxCODE(c); /* Shift  */
+	OUTPUT:
+		RETVAL
+
+int
+_cxCODE(c)
+		int c;
+	CODE:
+		RETVAL = IUPcxCODE(c); /* Ctrl   */
+	OUTPUT:
+		RETVAL
+
+int
+_mxCODE(c)
+		int c;
+	CODE:
+		RETVAL = IUPmxCODE(c); /* Alt    */
+	OUTPUT:
+		RETVAL
+
+int
+_yxCODE(c)
+		int c;
+	CODE:
+		RETVAL = IUPyxCODE(c); /* Sys (Win or Apple) */
+	OUTPUT:
+		RETVAL
+
+#### mouse related macros
+int
+_isShift(s)
+		char* s;
+	CODE:
+		RETVAL = iup_isshift(s);
+	OUTPUT:
+		RETVAL
+
+int
+_isControl(s)
+		char* s;
+	CODE:
+		RETVAL = iup_iscontrol(s);
+	OUTPUT:
+		RETVAL
+
+int
+_isButton1(s)
+		char* s;
+	CODE:
+		RETVAL = iup_isbutton1(s);
+	OUTPUT:
+		RETVAL
+
+int
+_isButton2(s)
+		char* s;
+	CODE:
+		RETVAL = iup_isbutton2(s);
+	OUTPUT:
+		RETVAL
+
+int
+_isButton3(s)
+		char* s;
+	CODE:
+		RETVAL = iup_isbutton3(s);
+	OUTPUT:
+		RETVAL
+
+int
+_isButton4(s)
+		char* s;
+	CODE:
+		RETVAL = iup_isbutton4(s);
+	OUTPUT:
+		RETVAL
+
+int
+_isButton5(s)
+		char* s;
+	CODE:
+		RETVAL = iup_isbutton5(s);
+	OUTPUT:
+		RETVAL
+
+int
+_isDouble(s)
+		char* s;
+	CODE:
+		RETVAL = iup_isdouble(s);
+	OUTPUT:
+		RETVAL
+
+int
+_isAlt(s)
+		char* s;
+	CODE:
+		RETVAL = iup_isalt(s);
+	OUTPUT:
+		RETVAL
+
+int
+_isSys(s)
+		char* s;
+	CODE:
+		RETVAL = iup_issys(s);
 	OUTPUT:
 		RETVAL

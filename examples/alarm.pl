@@ -2,7 +2,7 @@
 #
 # Shows a dialog similar to the one shown when you exit a program without saving
 
-use IUP;
+use IUP ':all';
 
 my $b = IUP->Alarm("IupAlarm Example", "File not saved! Save it now?" ,"Yes" ,"No" ,"Cancel");
 

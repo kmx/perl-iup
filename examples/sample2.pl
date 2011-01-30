@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use IUP;
+use IUP ':all';
 
 # demo callback handler
 sub my_cb {

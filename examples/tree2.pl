@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 my $tree = IUP::Tree->new();
 my $dlg = IUP::Dialog->new( child=>$tree, TITLE=>"TableTree result", SIZE=>"200x200" );

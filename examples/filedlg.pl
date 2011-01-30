@@ -1,7 +1,7 @@
 # IupFileDlg Example
 # Shows a typical file-saving dialog.
 
-use IUP;
+use IUP ':all';
 
 # Creates a file dialog and sets its type, title, filter and filter info;
 my $filedlg = IUP::FileDlg->new( DIALOGTYPE=>"SAVE", TITLE=>"File save",

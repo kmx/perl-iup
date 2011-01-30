@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 # Creates boxes;
 my $vboxA = IUP::Vbox->new( child=>[

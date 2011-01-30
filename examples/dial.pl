@@ -1,6 +1,6 @@
 #IupDial Example
 
-use IUP;
+use IUP ':all';
 
 my $lbl_h = IUP::Label->new( TITLE=>"0", ALIGNMENT=>"ACENTER", SIZE=>"100x10" );
 my $lbl_v = IUP::Label->new( TITLE=>"0", ALIGNMENT=>"ACENTER", SIZE=>"100x10" );

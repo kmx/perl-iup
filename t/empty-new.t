@@ -2,7 +2,7 @@
 
 use Test::More tests => 44;
 
-use IUP;
+use IUP ':all';
 
 #xxx TODO: not tested, skip on non-Windows platform
 #isnt(IUP::OleControl->new(),undef,'Testing IUP::OleControl->new()');

@@ -4,6 +4,11 @@ use warnings;
 use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 
+sub BEGIN {
+  #warn "[DEBUG] IUP::PPlot::BEGIN() started\n";
+  IUP::Internal::LibraryIup::_IupPPlotOpen();
+}
+
 sub _create_element {
   my ($self, $args, $firstonly) = @_;
   my $ih = IUP::Internal::LibraryIup::_IupPPlot();

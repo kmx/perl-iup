@@ -352,6 +352,10 @@ You may, however, instruct IUP to import all modules by using the following synt
  # import IUP + all IUP::* modules - short, easy but memory consuming
  use IUP ':all';
 
+Or you can import just basic elements (all except Canvas, Matrix, Cell, PPlot ....) xxxTODO:
+
+ use IUP ':basic';
+
 Or you can import just selected modules by using:
 
  # import IUP + IUP::Button and IUP::Menu
@@ -664,6 +668,18 @@ return value can be used for numeric comparison.
 my $vernumger = IUP->VersionNumber();
 
 B<Returns:> the version number - for example: 303000 for version "3.3". 
+
+=back
+
+=head3 VersionDate()
+
+=over
+
+Returns a release date of underlaying iup library.
+
+my $vernumger = IUP->VersionDate();
+
+B<Returns:> date string - for example: "2010/11/09". 
 
 =back
 
@@ -1531,6 +1547,240 @@ otherwise it returns a string containing the error message.
 Each time the function loads a LED file, the elements contained in it
 are created. Therefore, the same LED file cannot be loaded several
 times, otherwise the elements will also be created several times. 
+
+=back
+
+=head2 Keyboard Related Functions
+
+=head3 isXkey()
+
+=over
+
+Informs if a given key is an extended code (returns 1) or not (returns 0).
+
+ my $is_xkey = IUP->isXkey($code);
+
+B<$code:> Key code number e.g. value passed to L<K_ANY|[%m.cb%]/"K_ANY"> callback handler.
+
+B<Returns:> 1 or 0
+
+=back
+
+=head3 isShiftXkey()
+
+=over
+
+Informs if a given key is an extended code using the C<Shift> modifier (returns 1) or not (returns 0).
+
+ my $is_shiftxkey = IUP->isShiftXkey($code);
+
+B<$code:> Key code number e.g. value passed to L<K_ANY|[%m.cb%]/"K_ANY"> callback handler.
+
+B<Returns:> 1 or 0
+
+=back
+
+=head3 isCtrlXkey()
+
+=over
+
+Informs if a given key is an extended code using the C<Ctrl> modifier (returns 1) or not (returns 0).
+
+ my $is_ctrlxkey = IUP->isCtrlXkey($code);
+
+B<$code:> Key code number e.g. value passed to L<K_ANY|[%m.cb%]/"K_ANY"> callback handler.
+
+B<Returns:> 1 or 0
+
+=back
+
+=head3 isAltXkey()
+
+=over
+
+Informs if a given key is an extended code using the C<Alt> modifier (returns 1) or not (returns 0).
+
+ my $is_altxkey = IUP->isAltXkey($code);
+
+B<$code:> Key code number e.g. value passed to L<K_ANY|[%m.cb%]/"K_ANY"> callback handler.
+
+B<Returns:> 1 or 0
+
+=back
+
+=head3 isSysXkey()
+
+=over
+
+Informs if a given key is an extended code using the C<Sys> (on Windows C<WindowKey>, on Mac C<AppleKey>)
+modifier (returns 1) or not (returns 0).
+
+ my $is_sysxkey = IUP->isSysXkey($code);
+
+B<$code:> Key code number e.g. value passed to L<K_ANY|[%m.cb%]/"K_ANY"> callback handler.
+
+B<Returns:> 1 or 0
+
+=back
+
+=head3 isPrintable()
+
+=over
+
+Informs if a key can be directly used as a printable character (31 < ASCII code < 127).
+
+ my $is_printable = IUP->isPrintable($code);
+
+B<$code:> Key code number.
+
+B<Returns:> 1 (is printable) or 0 (otherwise)
+
+=back
+
+=head2 Mouse Related Functions
+
+=head3 isShift()
+
+=over
+
+Checks the given mouse buttons and keyboard keys status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+whether C<Shift> key was pressed at the time of mouse click event or not.
+
+ my $shift_pressed = IUP->isShift($status);
+
+B<Returns:> 1 (pressed) or 0 (not pressed)
+
+=back
+
+=head3 isControl()
+
+=over
+
+Checks the given mouse buttons and keyboard keys status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+whether C<Control> key was pressed at the time of mouse click event or not.
+
+ my $crtl_pressed = IUP->isControl($status);
+
+B<Returns:> 1 (pressed) or 0 (not pressed)
+
+=back
+
+=head3 isAlt()
+
+=over
+
+Checks the given mouse buttons and keyboard keys status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+whether C<Alt> key was pressed at the time of mouse click event or not.
+
+ my $alt_pressed = IUP->isControl($status);
+
+B<Returns:> 1 (pressed) or 0 (not pressed)
+
+=back
+
+=head3 isSys()
+
+=over
+
+Checks the given mouse buttons and keyboard keys status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+whether C<Sys> key (on Windows C<WindowKey>, on Mac C<AppleKey>) was pressed at the time of mouse click event or not.
+
+ my $sys_pressed = IUP->isSys($status);
+
+B<Returns:> 1 (pressed) or 0 (not pressed)
+
+=back
+
+=head3 isButton1()
+
+=over
+
+Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+whether the B<left button> was pressed at the time of mouse click event or not.
+
+NOTE: It does not mean that this button generated the event, it might be already pressed before other 
+mouse button click.
+
+ my $letft_mouse_button_pressed = IUP->isButton1($status);
+
+B<Returns:> 1 (pressed) or 0 (not pressed)
+
+=back
+
+=head3 isButton2()
+
+=over
+
+Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+whether the B<middle button> was pressed at the time of mouse click event or not.
+
+NOTE: It does not mean that this button generated the event, it might be already pressed before other 
+mouse button click.
+
+ my $middle_mouse_button_pressed = IUP->isButton2($status);
+
+B<Returns:> 1 (pressed) or 0 (not pressed)
+
+=back
+
+=head3 isButton3()
+
+=over
+
+Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+whether the B<right button> was pressed at the time of mouse click event or not.
+
+NOTE: It does not mean that this button generated the event, it might be already pressed before other 
+mouse button click.
+
+ my $right_mouse_button_pressed = IUP->isButton3($status);
+
+B<Returns:> 1 (pressed) or 0 (not pressed)
+
+=back
+
+=head3 isButton4()
+
+=over
+
+Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+whether the B<button 4> (Windows: 1st X button) was pressed at the time of mouse click event or not.
+
+NOTE: It does not mean that this button generated the event, it might be already pressed before other 
+mouse button click.
+
+ my $mouse_button4_pressed = IUP->isButton4($status);
+
+B<Returns:> 1 (pressed) or 0 (not pressed)
+
+=back
+
+=head3 isButton5()
+
+=over
+
+Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+whether the B<button 5> (Windows: 2nd X button) was pressed at the time of mouse click event or not.
+
+NOTE: It does not mean that this button generated the event, it might be already pressed before other 
+mouse button click.
+
+ my $mouse_button5_pressed = IUP->isButton5($status);
+
+B<Returns:> 1 (pressed) or 0 (not pressed)
+
+=back
+
+=head3 isDouble()
+
+=over
+
+Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+whether the click event was double click or not.
+
+ my $double_click = IUP->isDouble($status);
+
+B<Returns:> 1 (double click) or 0 (otherwise)
 
 =back
 

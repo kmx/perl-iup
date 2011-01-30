@@ -6,7 +6,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 my $tree = IUP::Tree->new();
 

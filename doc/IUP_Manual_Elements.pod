@@ -304,23 +304,6 @@ L<SetAttribute|/"SetAttribute()">.
 
 =back
 
-=head3 GetAttributeData()
-
-=over
-
-xxxcheckthisxxx In Lua, only known internal pointer attributes are returned as
-B<user data> or as an ihandle, all other attributes are returned as
-strings. To access attribute data always as B<user data> use
-iup.GetAttributeData:
-
- my $data = $element->GetAttributeData($name);
-
-xxxTODO2xxx consider rename GetAttributeData > GetAttributeSV
-
-xxxTODO1xxx consider introducing SetAttributeSV
-
-=back
-
 =head3 GetAttributeId()
 
 =over
@@ -328,6 +311,17 @@ xxxTODO1xxx consider introducing SetAttributeSV
 xxxTODOxxx
 
  my $val = $element->GetAttributeId($name, $id);
+
+
+=back
+
+=head3 GetAttributeId2()
+
+=over
+
+xxxTODOxxx
+
+ my $val = $element->GetAttributeId2($name, $lin, $col);
 
 
 =back
@@ -349,10 +343,10 @@ pointers are handled.
 
 This function should be avoided. Use L<GetAllAttributes|/"GetAllAttributes()"> instead.
 
- my %attr = $element->GetAttributes();
+ my $attr = $element->GetAttributes();
  #later on
- print "Title=", $attr{TITLE}, "\n";
- print "Color=", $attr{FGCOLOR}, "\n";
+ print "Title=", $attr->{TITLE}, "\n";
+ print "Color=", $attr->{FGCOLOR}, "\n";
 
 B<$ih:> Identifier of the interface element.
 
@@ -582,6 +576,27 @@ is mapped the result is immediate (the hierarchy is not searched).
 
 B<See Also:>
 L<NAME|IUP::Manual::03_Attributes/NAME>.
+
+=back
+
+=head3 GetName()
+
+=over
+
+Returns the name of an interface element, if the element has an
+associated name using L<SetName|/"SetName()"> or using LED or
+by C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
+
+ my $name = $element->GetName();
+
+B<$ih:> Identifier of the interface element.
+
+B<Returns:> the name.
+
+B<See Also:>
+L<SetName|/"SetName()"> (element method),
+L<GetByName|IUP/"GetByName()"> (global function),
+L<GetAllNames|IUP/"GetAllNames()"> (global function).
 
 =back
 
@@ -1105,6 +1120,16 @@ xxxTODO
 
 =back
 
+=head3 SetAttributeId2()
+
+=over
+
+xxxTODO
+
+ $element->SetAttributeId2($name, $lin, $col, $value);
+
+=back
+
 =head3 SetCallback()
 
 =over
@@ -1163,6 +1188,35 @@ two functions to obtain the same value.
 
 B<See Also:>
 L<GetFocus|IUP/"GetFocus()">. 
+
+=back
+
+=head3 SetName()
+
+=over
+
+Associates a name with an interface element. This name can be later used for
+element lookup via global function L<GetByName|IUP/"GetByName()">.
+
+ $element->SetName($name);
+
+B<$ih:> identifier of the interface element.
+Use NULL to remove the association. xxxcheckthis
+
+B<$name:> name of the interface element.
+
+B<Returns:> the identifier of the interface element previously associated
+to the parameter B<$name>.
+
+B<Notes:>
+
+Also L<SetName|/"SetName()"> can be called several times with the same element
+and different names. There is no restriction for the number of names a
+element can have, but L<GetName|/"GetName()"> will return the first name found.
+
+B<See Also:>
+L<GetName|/"GetName()"> (element method),
+L<GetByName|IUP/"GetByName()"> (global function).
 
 =back
 
@@ -1305,7 +1359,7 @@ screen
 to its parent. Not valid for menus.
 
 =item * IUP_CURRENT: use the current position of the dialog. This is
-the default value in Lua if the parameter is not defined. Not valid for
+the B<default value> if the parameter is not defined. Not valid for
 menus.
 
 =back
@@ -1328,7 +1382,7 @@ are valid:
 its parent. Not valid for menus.
 
 =item * IUP_CURRENT: use the current position of the dialog. This is
-the default value in Lua if the parameter is not defined. Not valid for
+the B<default value> if the parameter is not defined. Not valid for
 menus.
 
 =back
@@ -1450,7 +1504,7 @@ screen
 to its parent
 
 =item * IUP_CURRENT: use the current position of the dialog. This is
-the default value in Lua if the parameter is not defined.
+the B<default value> if the parameter is not defined.
 
 =back
 
@@ -1472,7 +1526,7 @@ are valid:
 its parent
 
 =item * IUP_CURRENT: use the current position of the dialog. This is
-the default value in Lua if the parameter is not defined.
+the B<default value> if the parameter is not defined.
 
 =back
 

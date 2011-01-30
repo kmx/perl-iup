@@ -1,4 +1,4 @@
-use IUP;
+use IUP ':all';
 
 my $l = IUP::Label->new( TITLE=>"1", SIZE=>"200x" );
 

@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 #my $cv = IUP::Canvas->new( SIZE=>"300x100", XMIN=>0, XMAX=>99, POSX=>0, DX=>10 );
 my $cv = IUP::Canvas->new( SCROLLBAR=>"YES", SIZE=>"300x300", DX=>10, POSX=>0, XMIN=>0, XMAX=>99);

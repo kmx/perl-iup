@@ -2,7 +2,7 @@
 # Draws a frame around a button. Note that FGCOLOR is added to the frame but;
 # it is inherited by the button.;
 
-use IUP;
+use IUP ':all';
 
 # Creates frame with a label;
 my $frame = IUP::Frame->new( IUP::Hbox->new( MARGIN=>"20x20", child=>[

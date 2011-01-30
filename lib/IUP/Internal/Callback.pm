@@ -190,7 +190,7 @@ my $cb_table = {
 
 sub _execute_cb { # convert just the first arg from ihandle to objref
   my ($ih, $action, @args) = @_;
-  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);         # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  my $ref = IUP->GetByIhandle($ih);
   return -1 unless ref($ref);
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
@@ -201,9 +201,9 @@ sub _execute_cb { # convert just the first arg from ihandle to objref
 
 sub _execute_cb_ih3 {  #Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v
   my ($ih, $action, @args) = @_;
-  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  my $ref = IUP->GetByIhandle($ih);
   return -1 unless ref($ref);
-  $args[2] = IUP::Internal::LibraryIup::_translate_ih($args[2]);    # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($args[2]);
+  $args[2] = IUP->GetByIhandle($args[2]);
   return -1 unless ref($args[2]);
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
@@ -214,9 +214,9 @@ sub _execute_cb_ih3 {  #Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,
 
 sub _execute_cb_ih1 {  #Ihandle* ih,Ihandle* drop,int lin,int col
   my ($ih, $action, @args) = @_;
-  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  my $ref = IUP->GetByIhandle($ih);
   return -1 unless ref($ref);
-  $args[0] = IUP::Internal::LibraryIup::_translate_ih($args[0]);    # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($args[0]);
+  $args[0] = IUP->GetByIhandle($args[0]);
   return -1 unless ref($args[0]);
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
@@ -227,11 +227,11 @@ sub _execute_cb_ih1 {  #Ihandle* ih,Ihandle* drop,int lin,int col
 
 sub _execute_cb_ih12 { #Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
   my ($ih, $action, @args) = @_;
-  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  my $ref = IUP->GetByIhandle($ih);
   return -1 unless ref($ref);
-  $args[0] = IUP::Internal::LibraryIup::_translate_ih($args[0]);    # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($args[0]);
+  $args[0] = IUP->GetByIhandle($args[0]);
   return -1 unless ref($args[0]);
-  $args[1] = IUP::Internal::LibraryIup::_translate_ih($args[1]);    # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($args[1]);
+  $args[1] = IUP->GetByIhandle($args[1]);
   return -1 unless ref($args[1]);
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
@@ -242,7 +242,7 @@ sub _execute_cb_ih12 { #Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
 
 sub _execute_cb_cnv7 { #Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas
   my ($ih, $action, @args) = @_;
-  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  my $ref = IUP->GetByIhandle($ih);
   return -1 unless ref($ref);
   warn "### xxx TODO xxx _execute_cb_cnv7(): do not know how to convert canvas handle ($args[6])";
   my $func = $ref->{$action};
@@ -254,7 +254,7 @@ sub _execute_cb_cnv7 { #Ihandle* ih,int line,int column,int xmin,int xmax,int ym
 
 sub _execute_cb_cnv1 { #Ihandle* ih,cdCanvas* cnv
   my ($ih, $action, @args) = @_;
-  my $ref = IUP::Internal::LibraryIup::_translate_ih($ih);          # xxx TODO xxx maybe IUP->GetOrCreateByIhandle($ih);
+  my $ref = IUP->GetByIhandle($ih);
   return -1 unless ref($ref);
   warn "### xxx TODO xxx _execute_cb_cnv1(): do not know how to convert canvas handle ($args[0])";
   my $func = $ref->{$action};
@@ -293,6 +293,7 @@ sub _get_cb_eval_code {
   my $pkg = shift;
   my $rv;
   for (_get_cb_list($pkg)) {
+    next if defined  *{"$pkg\::$_"};
     $rv .= "*$pkg\::$_ = sub { return \$_[1] ? \$_[0]->SetCallback('$_', \$_[1]) : \$_[0]->{$_} };\n";
   }
   return $rv;

@@ -1,7 +1,7 @@
 # IupGetParam Example in IupLua;
 # Shows a dialog with all possible fields.;
 
-use IUP;
+use IUP ':all';
 
 IUP->SetLanguage("ENGLISH");
 

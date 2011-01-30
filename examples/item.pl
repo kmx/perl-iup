@@ -1,4 +1,4 @@
-use IUP;
+use IUP ':all';
 
 # create the main application windows (dialog)
 

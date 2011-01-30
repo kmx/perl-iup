@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 #xxx TODO xxx many unknown Dialog attributes
 

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 my $ml = IUP::Text->new( MULTILINE=>"YES", EXPAND=>"YES", VALUE=>"I ignore the 'g' key!", BORDER=>"YES" );
 

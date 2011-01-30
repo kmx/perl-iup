@@ -1,7 +1,7 @@
 package IUP::MessageDlg;
 use strict;
 use warnings;
-use base 'IUP::Internal::Element::Dialog';
+use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 
 sub _create_element {

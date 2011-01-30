@@ -2,7 +2,7 @@
 # Uses the Fill element to horizontally centralize a button and to
 # justify it to the left and right.
 
-use IUP;
+use IUP ':all';
 
 # Creates frame with left aligned button
 my $frame_left = IUP::Frame->new( TITLE=>"Left aligned", child=>

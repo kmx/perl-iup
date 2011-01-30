@@ -1,65 +1,71 @@
-######## IMPORTANT
-Implement use IUP ':all';
-- see http://perldoc.perl.org/autodie.html - maybe :dialogs :controls ...
+######## IUP::Internal::Element
+- change: _create_element should set $self->ihandle value
 
-GetOrCreateByIhandle vs GetByIhandle
-- maybe merge into one function
-- GetByIhandle($ih, $flag);
+######## IUP::Matrix (same as with common attributes)
+- IupMatGetAttribute vs. IupMatGetInt vs. IupMatGetFloat
+- try to implement:
+  my $m = IUP::Matrix->new(...);
+  $m->[12,44] = 'value';
+  $m->data->[12,44] = 'value';
+  $m->{"BGCOLOR12:44"} = '12 12 12';
+  (see SDLx::Surface + SDLx::Surface::TiedMatrix)
 
-Consider - element method:
-- GetAttributeData() | GetAttributeSV() for storing perl SVs
+######## IUP::Tree
+- some unimplemented methods
+- most of the methods not tested at all
 
-Check
-- if Hide() is dialog only - decide Element.pm vs. Dialog.pm
-- if GetDialogChild() is dialog only - decide Element.pm vs. Dialog.pm
-- iupsetatt
-
-Check difference
- return IUP::Internal::LibraryIup::_IupCopyClassAttributes($src->ihandle, $dst->ihandle);
- vs.
- IUP::Internal::LibraryIup::_IupCopyClassAttributes($src->ihandle, $dst->ihandle);
-
-Test:
-- IUP::Internal::LibraryIup::_IupGetClassCallbacks
- 
-######## IUP::Internal::Element Attributes (1)
-- maybe replace
-  $self->SetAttribute(a,v) + $self->GetAttribute(a)
-  with
-  $self->Attribute(a,v)            + $self->Attribute(a)
-  $self->AttributeId(a,id,v)       + $self->AttributeId(a,id)
-  $self->AttributeId2(a,lin,col,v) + $self->AttributeId2(a,lin,col)
-- Lua:
-  ResetAttribute
-  SetAttributes
-  SetAttribute
-  SetAttributeId
-  StoreAttribute
-  StoreAttributeId  
-  GetAttribute
-  GetAttributeId
-  GetAttributeData
-  GetAttributes
-  GetAllAttributes
+######## IUP::PPlot  
+- PPlotAddStr vs. PPlotAdd (maybe autodetection based on type of $x arg - float/string)
+- PPlotPaintTo - maybe remove (does not make much sense)
   
-######## global registers
-- Lua: _IUPLUA_WIDGET_TABLE_REF
+######## IUP::GLCanvas
+- consider renaming to IUP::CanvasGL or IUP::Canvas::GL
 
-######## global initialization
-- IUP_OPENED
-  
-######## IUP::Internal::Element Attributes (2)
-- SetAttribute - value is always a string
-- GetAttribute - return string
-- ??? void IupSetAttributeId(Ihandle *ih, const char* name, int id, const char *value)
-- ??? void IupSetAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* value)
-- ??? char* IupGetAttributeId(Ihandle *ih, const char* name, int id)
-- ??? char* IupGetAttributeId2(Ihandle* ih, const char* name, int lin, int col)
-- SetfAttribute - ??? (not in Lua)
-- GetAttributeInt - ??? (not in Lua)
-- GetAttributeFloat - ??? (not in Lua)
+######## IUP::Internal::Canvas
+- consider moving 'my %ch_register' from Internal::LibraryIup to Internal::Canvas
 
-######## IUP::Canvas (now works without Bitmap/Image/Palette/Pattern-related functions)
+######## Examples
+- rewrite all examples from lua to perl
+- synchronize ratehr with C examples (they are more complete)
+
+(cosmetics)######## IUP (main module)
+- ??? better detection of initialized gui than (IUP->Open == IUP_OPENED)?
+- ??? detection of codepage used in GUI
+
+(cosmetics)######## all XSs
+- consider IUP::Internal::AllInOneLib.xs
+
+(cosmetics)######## IUP::Submenu
+- consider using $firstonly param of new()
+
+(cosmetics)######## IUP::ProgressBar
+- FGCOLOR seems to be ignored
+
+(cosmetics)######## IUP::Split
+- maybe support new($child1, $child2) instead of new(child1=>$child1, child2=>$child2)
+
+(cosmetics)######## IUP::Frame
+- maybe duplicate its style to other IUP::*box*
+- maybe some common helper function 
+  _create_element_child_single($self, $args, $firstonly, \&fucname)
+  _create_element_child_multi($self, $args, $firstonly, \&fucname)
+
+######## Check impacts of:
+- return IUP::Internal::LibraryIup::_IupCopyClassAttributes($src->ihandle, $dst->ihandle);
+  vs.
+  IUP::Internal::LibraryIup::_IupCopyClassAttributes($src->ihandle, $dst->ihandle);
+- http://stackoverflow.com/questions/3435122/whats-the-difference-between-return-and-return-undef-in-perl
+- what returns void function from XS?
+- "Perl Best Practices" (and Perl::Critic) suggest not using return undef
+
+######## Global issues
+- check memory leaks - http://use.perl.org/~jozef/journal/40411
+
+######## DOC notes
+- pplot.pl: # xxx TODO.DOC xxx note in doc that DS_ has to be set after ->PPlotEnd()
+- tree: # xxx TODO xxx note in doc that tree->SetAttribude has to go after dialog->Show
+
+!!Big Task!!######## IUP::Canvas (now works without Bitmap/Image/Palette/Pattern related functions)
 - somehow handle CD_xxx constants
 - implement missing XS methods to IUP::Internal::Canvas (see notes in Canvas.xs)
 
@@ -182,80 +188,17 @@ cd.KillImageRGB
 cd.KillImageRGBA
 cd.KillImageMap
 
-######## IUP::Internal::Canvas
-- move 'my %ch_register' from Internal::LibraryIup to Internal::Canvas
-
-######## IUP::Submenu
-- cpnsider using $firstonly param of new()
-
-######## IUP::ProgressBar
-- FGCOLOR seems to be ignored
-
-######## IUP::Cells
-- Note: LIMITS<L>:<C> - does not have an accessor
-
-######## IUP::Split
-- maybe support new($child1, $child2) instead of new(child1=>$child1, child2=>$child2)
-
-######## IUP::Frame
-- maybe duplicate its style to other IUP::*box*
-- maybe some common helper function 
-  _create_element_child_single($self, $args, $firstonly, \&fucname)
-  _create_element_child_multi($self, $args, $firstonly, \&fucname)
-
-######## IUP::Matrix (same as with common attributes)
-- IupMatGetAttribute vs. IupMatGetInt vs. IupMatGetFloat
-- IupMatSetAttribute vs. IupMatSetfAttribute
-- IupMatSetAttribute vs. IupMatStoreAttribute
-- try to implement:
-  my $m = IUP::Matrix->new(...);
-  $m->[12,44] = 'value';
-  $m->{"BGCOLOR12:44"} = '12 12 12';
-  (see SDLx::Surface + SDLx::Surface::TiedMatrix)
-
-######## IUP::Tree
-- some unimplemented methods
-- most of the methods not tested at all
-
-######## IUP::Image
-- maybe merge IUP::Internal::Element::Image to IUP::Image
-
-######## IUP::PPlot  
-- PPlotAddStr vs. PPlotAdd (maybe autodetection based on type of $x arg - float/string)
-- PPlotPaintTo - maybe remove (does not make much sense)
-  
-######## IUP::CanvasGL
-- consider moving to IUP::Canvas::GL
-
-######## IUP::Internal::Element
-- change: _create_element should set $self->ihandle value
-- maybe missing (comparing to LUA)
-  sub GetAttributeData (see LUA implementation)
-  sub SetAttributes vs. sub StoreAttribute
-  sub GetName (we have $self->name)
-- maybe not needed (comparing to LUA)
-  sub GetCallback
-- GetAttributes 
-  in scalar context = string, in list? context = hash?
-  or: GetAttributesStr vs. GetAttributesHRef
-- tests for all common functions
-
-######## IUP::OleControl (not a priority)
+NOT NOW>>>######## IUP::OleControl (not a priority)
 - missing -> add
 - conditionally only on Win32
 
-######## IUP (main module)
-- maybe missing (comparing to LUA)
-  sub SetHandle ... IUP->SetHandle('xx', $d->ihandle);  
-- maybe not needed (comparing to LUA)
-  sub Close
-  sub GetFocus  (we have in Element)
-  sub GetHandle (we have in Element)
-- consider:
-  sub Open (probably not)
-- tests for all global functions
+NOT NOW>>>######## IUP::LayoutDialog
+- somehow works but generaly not usable
 
-######## Ideas from ruby bindings:
+NOT NOW>>>######## Ideas from lua bindings:
+- global registers _IUPLUA_WIDGET_TABLE_REF
+
+NOT NOW>>>######## Ideas from ruby bindings:
 - iup.* namespace
 - cd.* namespace (constants cd::BLUE, ...)
 - just one iup.image (RGB, RGBA - ??? perhaps not supported)
@@ -263,32 +206,12 @@ cd.KillImageMap
 - iupim just: IupLoadImage, IupSaveImage
 - GLCanvasOpen, GL... (global function, not methods of glcanvas class)
 
-######## Examples
-- rewrite all examples from lua to perl
-- synchronize ratehr with C examples (they are more complete)
-
-######## Generate POD documentation
-- work on _generators/proc-html2pod.pl
-- perhaps html > pod.tt > manually edit *.pod.tt >  conversion *.pod.tt to *.pod
-
-######## all XSs - BOOT section
-- put init calls somewhere else
-- maybe BEGIN / END
-
-######## Constants:
-- maybe move key related constants into to IUP::Keys (what about mouse related constants)
-- decide what to do with: sub IUP_isPrint (check the doc)
-
-######## DOC
-- pplot.pl: # xxx TODO.DOC xxx note in doc that DS_ has to be set after ->PPlotEnd()
-- tree: # xxx TODO xxx note in doc that tree->SetAttribude has to go after dialog->Show
-
-######## Linux - platform specific issues
+NOT NOW>>>######## Linux - platform specific issues
 - (<unknown>:4352): Pango-WARNING **: Error loading GSUB table 85
   before MainLoop
 - 'Quit' in main menu requires double click
 
-######## Packaging (not a priority)
+NOT NOW>>>######## Packaging (not a priority)
 - RHEL 5 + FC 13,12,11
   - http://search.cpan.org/dist/cpan2rpm/
   - http://search.cpan.org/dist/Ovid/
@@ -304,16 +227,10 @@ cd.KillImageMap
   - http://chrysaor.info/?page=images&filter=Ubuntu
   - http://www.thoughtpolice.co.uk/vmware/
 
-######## Callbacks generation (not a priority)
+NOT NOW>>>######## Callbacks generation (not a priority)
 - missing support for K_* callbacks (no hurry, lua does not implement them as well)
 
-######## Global issues
-- check memory leaks - http://use.perl.org/~jozef/journal/40411
-- detection when running without initialized GUI
-- detection of current windowing system
-- detection of codepage used in GUI
-
-######## Consider splitting IUP::Internal::LibraryIup (not a priority)
+NOT NOW>>>######## Consider splitting IUP::Internal::LibraryIup (not a priority)
 into:
 - IUP::Internal::LibraryIup
 - IUP::Internal::LibraryIupControl
@@ -322,6 +239,6 @@ into:
 - IUP::Internal::LibraryImLib
 (postponed, the first try did not work as expected)
 
-######## Build.PL (not a priority)
+NOT NOW>>>######## Build.PL (not a priority)
 - RHEL5 compatibility: create_makefile_pl => 'small'; (see Alien::wxWidgets) - probably not
 - using: release_testing automated_testing interactive

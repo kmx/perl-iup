@@ -3,115 +3,76 @@ package IUP;
 use strict;
 use warnings;
 
+use Carp;
+use Data::Dumper;
+
+use IUP::Internal::LibraryIup;
+use IUP::Constants;
+
 # following recommendation from http://www.dagolden.com/index.php/369/version-numbers-should-be-boring/
 our $VERSION = "0.000_01";
 $VERSION = eval $VERSION;
 
-use Carp;
-use IUP::Internal::LibraryIup;
-use IUP::Internal::Callback;
+sub BEGIN {
+  #warn "[DEBUG] IUP::BEGIN() started\n";
+  IUP::Internal::LibraryIup::_IupOpen();
+  IUP::Internal::LibraryIup::_IupImageLibOpen();
+}
 
-# the following modules will be autoimported by calling 'use IUP;'
-# using 'require ...' instead of 'use ...' to avoid double calling <mod>->import() twice - works but maybe done somehow better
-require IUP::Button;
-require IUP::Canvas;
-require IUP::Cbox;
-require IUP::Cells;
-require IUP::Clipboard;
-require IUP::ColorBar;
-require IUP::ColorBrowser;
-require IUP::ColorDlg;
-require IUP::Constants;
-require IUP::Dial;
-require IUP::Dialog;	# required by IUP.pm (GetParam)
-require IUP::FileDlg;
-require IUP::Fill;
-require IUP::FontDlg;
-require IUP::Frame;
-require IUP::GLCanvas;
-require IUP::Hbox;
-require IUP::Image;
-require IUP::Item;
-require IUP::Label;
-require IUP::LayoutDialog; #maybe not this one xxxTODO
-require IUP::List;
-require IUP::Matrix;
-require IUP::Menu;
-require IUP::MessageDlg;
-require IUP::Normalizer;
-require IUP::OleControl;
-require IUP::PPlot;
-require IUP::ProgressBar;
-require IUP::Radio;
-require IUP::Sbox;
-require IUP::Separator;
-require IUP::Spin;
-require IUP::Spinbox;
-require IUP::Split;
-require IUP::Submenu;
-require IUP::Tabs;
-require IUP::Text;
-require IUP::Timer;
-require IUP::Toggle;
-require IUP::Tree;
-require IUP::User;
-require IUP::Val;
-require IUP::Vbox;
-require IUP::Zbox;
-
-use IUP::Constants; #xxx kind of a hack - we need some IUP_... constnts inside of IUP
+sub END {
+  #warn "[DEBUG] IUP::END() started\n";
+  IUP::Internal::LibraryIup::_IupClose();
+}
 
 sub import {
-  IUP::Constants->import(caller); #kind of a hack - see IUP/Constants.pm  
-  IUP::Button->import();
-  IUP::Canvas->import();
-  IUP::Cbox->import();
-  IUP::Cells->import();
-  IUP::Clipboard->import();
-  IUP::ColorBar->import();
-  IUP::ColorBrowser->import();
-  IUP::ColorDlg->import();
-  IUP::Dial->import();
-  IUP::Dialog->import();
-  IUP::FileDlg->import();
-  IUP::Fill->import();
-  IUP::FontDlg->import();
-  IUP::Frame->import();
-  IUP::GLCanvas->import();
-  IUP::Hbox->import();
-  IUP::Image->import();
-  IUP::ImageRGB->import();
-  IUP::ImageRGBA->import();
-  IUP::Item->import();
-  IUP::Label->import();
-  IUP::LayoutDialog->import();
-  IUP::List->import();
-  IUP::Matrix->import();
-  IUP::Menu->import();
-  IUP::MessageDlg->import();
-  IUP::Normalizer->import();
-  IUP::OleControl->import();
-  IUP::PPlot->import();
-  IUP::ProgressBar->import();
-  IUP::Radio->import();
-  IUP::Sbox->import();
-  IUP::Separator->import();
-  IUP::Spin->import();
-  IUP::Spinbox->import();
-  IUP::Split->import();
-  IUP::Submenu->import();
-  IUP::Tabs->import();
-  IUP::Text->import();
-  IUP::Timer->import();
-  IUP::Toggle->import();
-  IUP::Tree->import();
-  IUP::User->import();
-  IUP::Val->import();
-  IUP::Vbox->import();
-  IUP::Zbox->import();
-};
+  my $pkg = shift;
+  #warn "[DEBUG] IUP::import() started\n";
+  return unless scalar(@_); #nothing to do
 
-use Data::Dumper;
+  my %tags = (
+     #UPDATE when element list change
+     ':basic' => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg Dial Dialog FileDlg Fill FontDlg Frame
+                     Hbox Image Item Label LayoutDialog List Menu MessageDlg Normalizer OleControl ProgressBar Radio 
+                     Sbox Separator Spin Spinbox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox/],
+     ':extended' => [qw/Matrix Cells Canvas GLCanvas PPlot/],
+     ':all' => [],
+  );
+  @{$tags{':all'}} = ( @{$tags{':basic'}}, @{$tags{':extended'}} );
+
+  my %valid = map { $_ => 1 } @{$tags{':all'}};
+  my %all_params = map { $_ => 1 } @_;
+  my @wanted,  
+  my @unknown;
+  for my $m (@_) {
+    if ($tags{$m}) {
+      push @wanted, @{$tags{$m}};
+    }
+    elsif ($valid{$m}) {
+      push @wanted, $m;
+    }
+    else {
+      push @unknown, $m;
+    }
+  }
+  croak "IUP: unexpected parameter: '" . (join "','", @unknown) . "'" if @unknown;
+
+  my $eval_command;
+  for (@wanted) {
+    my @tags;
+    #sort of a hack related to IUP::Constants
+    push (@tags, ':all')   if ($_ eq 'Constants') && $all_params{':all'};
+    push (@tags, ':basic') if ($_ eq 'Constants') && $all_params{':basic'};
+    my $t = scalar(@tags) ? 'qw('.join(' ',@tags).')' : '';
+    $eval_command .= "use IUP::$_ $t;\n";
+  }
+  if ($eval_command) {
+    my $c = caller;
+    my $code = "package $c;$eval_command";
+    #warn "$code\n";
+    eval($code);    
+    croak "IUP: import() failed\n$@" if $@;
+  }
+}
 
 ### the main IUP control functions
 
@@ -163,7 +124,7 @@ sub Open {
   #int IupOpen(int *argc, char ***argv); [in C]
   #[There is no equivalent in Lua]
   IUP::Internal::LibraryIup::_IupOpen();
-  #xxxTODO not sure if this function is a good idea
+  #xxxTODO what about other opens (iupcontrol, canvas, ...)
 }
 
 sub GetAllDialogs {
@@ -184,7 +145,7 @@ sub GetFocus {
   #Ihandle* IupGetFocus(void); [in C]
   #iup.GetFocus() -> elem: ihandle [in Lua]
   my $ih = IUP::Internal::LibraryIup::_IupGetFocus();
-  return IUP->GetOrCreateByIhandle($ih);
+  return IUP->GetByIhandle($ih);
 }
 
 sub GetByName {
@@ -193,74 +154,73 @@ sub GetByName {
   #iup.GetHandle(name: string) -> ih: ihandle [in Lua]
   my ($pkg, $name) = @_;
   my $ih = IUP::Internal::LibraryIup::_IupGetHandle($name);
-  return IUP->GetOrCreateByIhandle($ih);
+  return IUP->GetByIhandle($ih);
 }
 
 sub GetByIhandle {
-  my ($pkg, $ih) = @_;
-  return IUP::Internal::LibraryIup::_translate_ih($ih) if defined $ih;
-  return; #undef
-}
-
-sub GetOrCreateByIhandle {
-  my ($pkg, $ih) = @_;
+  my ($pkg, $ih, $flag) = @_;
+  $flag = 1 unless defined $flag; # default = 1 (create corresponding perl object if necessary)
   my $mapping = {
-    button => "IUP::Button",
-    canvas => "IUP::Canvas",
-    cbox => "IUP::Cbox",
-    cells => "IUP::Cells",
-    clipboard => "IUP::Clipboard",
-    colorbar => "IUP::ColorBar",
+    #UPDATE when element list change
+    button       => "IUP::Button",
+    canvas       => "IUP::Canvas",
+    cbox         => "IUP::Cbox",
+    cells        => "IUP::Cells",
+    clipboard    => "IUP::Clipboard",
+    colorbar     => "IUP::ColorBar",
     colorbrowser => "IUP::ColorBrowser",
-    colordlg => "IUP::ColorDlg",
-    constants => "IUP::Constants",
-    dial => "IUP::Dial",
-    dialog => "IUP::Dialog",
-    filedlg => "IUP::FileDlg",
-    fill => "IUP::Fill",
-    fontdlg => "IUP::FontDlg",
-    frame => "IUP::Frame",
-    glcanvas => "IUP::GLCanvas",
-    hbox => "IUP::Hbox",
-    image => "IUP::Image",
-    imagergb => "IUP::ImageRGB",
-    imagergba => "IUP::ImageRGBA",
-    item => "IUP::Item",
-    label => "IUP::Label",
-    list => "IUP::List",
-    matrix => "IUP::Matrix",
-    menu => "IUP::Menu",
-    messagedlg => "IUP::MessageDlg",
-#    multiline => "IUP::MultiLine", # xxx TODO xxx deprecated
-    normalizer => "IUP::Normalizer",
-    olecontrol => "IUP::OleControl",
-    pplot => "IUP::PPlot",
-    progressbar => "IUP::ProgressBar",
-    radio => "IUP::Radio",
-    sbox => "IUP::Sbox",
-    separator => "IUP::Separator",
-    spin => "IUP::Spin",
-    spinbox => "IUP::Spinbox",
-    split => "IUP::Split",
-    submenu => "IUP::Submenu",
-    tabs => "IUP::Tabs",
-    text => "IUP::Text",
-    timer => "IUP::Timer",
-    toggle => "IUP::Toggle",
-    tree => "IUP::Tree",
-    user => "IUP::User",
-    val => "IUP::Val",
-    vbox => "IUP::Vbox",
-    zbox => "IUP::Zbox",  
+    colordlg     => "IUP::ColorDlg",
+    constants    => "IUP::Constants",
+    dial         => "IUP::Dial",
+    dialog       => "IUP::Dialog",
+    filedlg      => "IUP::FileDlg",
+    fill         => "IUP::Fill",
+    fontdlg      => "IUP::FontDlg",
+    frame        => "IUP::Frame",
+    glcanvas     => "IUP::GLCanvas",
+    hbox         => "IUP::Hbox",
+    image        => "IUP::Image",
+    imagergb     => "IUP::Image",
+    imagergba    => "IUP::Image",
+    item         => "IUP::Item",
+    label        => "IUP::Label",
+    list         => "IUP::List",
+    matrix       => "IUP::Matrix",
+    menu         => "IUP::Menu",
+    messagedlg   => "IUP::MessageDlg",
+    normalizer   => "IUP::Normalizer",
+    olecontrol   => "IUP::OleControl",
+    pplot        => "IUP::PPlot",
+    progressbar  => "IUP::ProgressBar",
+    radio        => "IUP::Radio",
+    sbox         => "IUP::Sbox",
+    separator    => "IUP::Separator",
+    spin         => "IUP::Spin",
+    spinbox      => "IUP::Spinbox",
+    split        => "IUP::Split",
+    submenu      => "IUP::Submenu",
+    tabs         => "IUP::Tabs",
+    text         => "IUP::Text",
+    timer        => "IUP::Timer",
+    toggle       => "IUP::Toggle",
+    tree         => "IUP::Tree",
+    user         => "IUP::User",
+    val          => "IUP::Val",
+    vbox         => "IUP::Vbox",
+    zbox         => "IUP::Zbox",  
   };
   return unless $ih;
   my $e = IUP::Internal::LibraryIup::_translate_ih($ih);
   return $e if defined $e;
-  my $c = IUP->GetClassName($ih);
-  return unless $c;
-  my $p = $mapping->{$c};
-  return unless $p;
-  return $p->new_from_ihandle($ih);  
+  if ($flag == 1) {
+    my $c = IUP->GetClassName($ih);
+    return unless $c;
+    my $p = $mapping->{$c};
+    require $p;
+    return unless $p;
+    return $p->new_from_ihandle($ih);
+  }
+  return;
 }
 
 sub Help {
@@ -346,7 +306,7 @@ sub SetGlobal {
   #void IupStoreGlobal(const char *name, const char *value); [in C]
   #iup.StoreGlobal(name: string, value: string) [in Lua] 
   my ($pkg, $name, $value) = @_;
-  #IUP::Internal::LibraryIup::_IupSetGlobal($name, $value); # xxx TODO SetGlobal vs. StoreGlobal xxx
+  #xxx-consider-later SetGlobal vs. StoreGlobal
   IUP::Internal::LibraryIup::_IupStoreGlobal($name, $value);
 }
 
@@ -375,6 +335,10 @@ sub VersionNumber {
   return IUP::Internal::LibraryIup::_IupVersionNumber();
 }
 
+sub VersionDate {
+  return IUP::Internal::LibraryIup::_IupVersionDate();
+}
+
 ### simple dialogues
 
 sub GetColor {
@@ -393,6 +357,7 @@ sub GetParam {
   #int IupGetParam(const char* title, Iparamcb action, void* user_data, const char* format,...); [in C]
   #iup.GetParam(title: string, action: function, format: string,...) -> (status: boolean, ...) [in Lua]
   my ($pkg, $title, $action, $format, @initial_values) = @_;
+  require IUP::Dialog;
   my $dlg = IUP::Dialog->new_no_ihandle();
   # we do not have ihandle of the new dialog at this point
   # we are gonna set ihandle doring the first callback invocation (see XS code)
@@ -428,117 +393,39 @@ sub Alarm {
 sub Message {
   my $pkg = shift;
   if (scalar @_ == 1) {
-    return IUP::Internal::LibraryIup::_IupMessage('', "$_[0]"); #xxx stringification needed
+    return IUP::Internal::LibraryIup::_IupMessage('', "$_[0]"); #BEWARE: stringification necessary
   }
   elsif (scalar @_ == 2) {
-    return IUP::Internal::LibraryIup::_IupMessage("$_[0]", "$_[1]"); #xxx stringification needed
+    return IUP::Internal::LibraryIup::_IupMessage("$_[0]", "$_[1]"); #BEWARE: stringification necessary
   }
   carp('Warning: wrong params - IUP->Message($title, $msg)');
   return;
 }
 
-###
+#### keyboard related macros
+sub isXkey      { shift; return IUP::Internal::LibraryIup::_isXkey(@_); };
+sub isShiftXkey { shift; return IUP::Internal::LibraryIup::_isShiftXkey(@_); };
+sub isCtrlXkey  { shift; return IUP::Internal::LibraryIup::_isCtrlXkey(@_); };
+sub isAltXkey   { shift; return IUP::Internal::LibraryIup::_isAltXkey(@_); };
+sub isSysXkey   { shift; return IUP::Internal::LibraryIup::_isSysXkey(@_); };
+sub isPrintable { shift; return IUP::Internal::LibraryIup::_isPrintable(@_); };
+#xxx-consider-later
+#sub xCODE       { shift; return IUP::Internal::LibraryIup::_xCODE(@_); };
+#sub sxCODE      { shift; return IUP::Internal::LibraryIup::_sxCODE(@_); };
+#sub cxCODE      { shift; return IUP::Internal::LibraryIup::_cxCODE(@_); };
+#sub mxCODE      { shift; return IUP::Internal::LibraryIup::_mxCODE(@_); };
+#sub yxCODE      { shift; return IUP::Internal::LibraryIup::_yxCODE(@_); };
 
-=head1 NAME
+#### mouse related macros
+sub isShift     { shift; return IUP::Internal::LibraryIup::_isShift(@_); };
+sub isControl   { shift; return IUP::Internal::LibraryIup::_isControl(@_); };
+sub isButton1   { shift; return IUP::Internal::LibraryIup::_isButton1(@_); };
+sub isButton2   { shift; return IUP::Internal::LibraryIup::_isButton2(@_); };
+sub isButton3   { shift; return IUP::Internal::LibraryIup::_isButton3(@_); };
+sub isButton4   { shift; return IUP::Internal::LibraryIup::_isButton4(@_); };
+sub isButton5   { shift; return IUP::Internal::LibraryIup::_isButton5(@_); };
+sub isDouble    { shift; return IUP::Internal::LibraryIup::_isDouble(@_); };
+sub isAlt       { shift; return IUP::Internal::LibraryIup::_isAlt(@_); };
+sub isSys       { shift; return IUP::Internal::LibraryIup::_isSys(@_); };
 
-IUP - The great new IUP!
-
-=head1 VERSION
-
-Version 0.000_01
-
-=head1 SYNOPSIS
-
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
-
-    use IUP;
-
-    my $foo = IUP->new();
-    ...
-
-=head1 EXPORT
-
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
-
-=head1 SUBROUTINES/METHODS
-
-=head2 function1
-
-=head2 function2
-
-=head1 AUTHOR
-
-KMX, C<< <kmx at cpan.org> >>
-
-=head1 BUGS
-
-Please report any bugs or feature requests to C<bug-iup at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=IUP>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc IUP
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=IUP>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/IUP>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/IUP>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/IUP/>
-
-=back
-
-=head1 ACKNOWLEDGEMENTS
-
-xxx
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright 2010 KMX.
-
-This program is distributed under the MIT (X11) License:
-L<http://www.opensource.org/licenses/mit-license.php>
-
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
-
-=cut
-
-1; # End of IUP
+1;

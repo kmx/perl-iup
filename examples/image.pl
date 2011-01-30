@@ -2,7 +2,7 @@
 # Creates a button, a label, a toggle and a radio using an image.;
 # Uses an image for the cursor as well.;
 
-use IUP;
+use IUP ':all';
 
 # Defines an "X" image;
 my $img_x = IUP::Image->new( pixels=>

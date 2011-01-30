@@ -3,7 +3,7 @@
 # Creates four buttons. The first uses images, the second turns the first
 # on and off, the third exits the application and the last does nothing
 
-use IUP;
+use IUP ':all';
 
 # defines released button image;
 my $img_release = IUP::Image->new( pixels=>

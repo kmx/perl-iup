@@ -6,7 +6,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 # Creates a list and sets items, initial item and size;
 my $list = IUP::List->new( items=>["Gold", "Silver", "Bronze", "None"], VALUE=>4, SIZE=>"EIGHTHxEIGHTH" );

@@ -6,7 +6,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 # Creates frame 1;
 my $frm_1 = IUP::Frame->new( TITLE=>"ALIGNMENT=ALEFT, GAP=10", child=>

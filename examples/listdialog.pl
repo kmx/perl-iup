@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 IUP->SetLanguage("ENGLISH");
 my $marks = [0,0,0,0,1,1,0,0];

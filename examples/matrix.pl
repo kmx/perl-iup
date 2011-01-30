@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 my $mat = IUP::Matrix->new( NUMCOL=>5, NUMCOL_VISIBLE=>5, NUMLIN=>3, NUMLIN_VISIBLE=>3, WIDTHDEF=>60, RESIZEMATRIX=>"YES" );
 

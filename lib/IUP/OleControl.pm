@@ -4,6 +4,11 @@ use warnings;
 use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 
+sub BEGIN {
+  #warn "[DEBUG] IUP::OleControl::BEGIN() started\n";
+  #IUP::Internal::LibraryIup::_IupOleControlOpen();
+}
+
 # xxx TODO somehow handle that it is Windows specific
 # xxx TODO check integration with Win32::OLE
 

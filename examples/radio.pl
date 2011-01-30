@@ -5,7 +5,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 my $male = IUP::Toggle->new( TITLE=>"Male" );
 my $female = IUP::Toggle->new( TITLE=>"Female" );

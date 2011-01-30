@@ -4,7 +4,7 @@
 # The ALIGNMENT attribute is explored in all its possibilities to obtain
 # the given effect.
 
-use IUP;
+use IUP ':all';
 
 my $fr1 = IUP::Frame->new( TITLE=>"Alignment = ATOP", child=>
             IUP::Hbox->new( child=>[

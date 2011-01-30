@@ -4,7 +4,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 # xxx TODO.ASKIUP xxx iuplabel does not accept attribute TYPE
 my $lbl_v = IUP::Label->new( TITLE=>"VALUE=n.a.", SIZE=>70, TYPE=>"1" );

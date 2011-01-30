@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 my $progressbar = IUP::ProgressBar->new();
 

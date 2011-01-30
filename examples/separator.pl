@@ -4,7 +4,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 # Creates a text, sets its value and turns on text readonly mode
 my $text = IUP::Text->new( VALUE=>"This text is here only to compose", EXPAND=>"YES" );

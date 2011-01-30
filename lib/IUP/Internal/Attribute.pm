@@ -758,6 +758,7 @@ sub _get_attr_eval_code {
   my $pkg = shift;
   my $rv;
   for (_get_attr_list($pkg)) {
+    next if defined  *{"$pkg\::$_"};
     $rv .= "*$pkg\::$_ = sub { return (scalar(\@_)>1) ? \$_[0]->SetAttribute('$_', \$_[1]) : \$_[0]->GetAttribute('$_') };\n";
   }
   return $rv;

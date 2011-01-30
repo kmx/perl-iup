@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 use Data::Dumper;
 
 my $matrix = IUP::Matrix->new(

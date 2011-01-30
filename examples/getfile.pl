@@ -1,7 +1,7 @@
 # IupGetFile Example in IupLua;
 # Shows a typical file-selection dialog.;
 
-use IUP;
+use IUP ':all';
 
 IUP->SetLanguage("ENGLISH");
 my ($err, $f) = IUP->GetFile("*.txt");  # xxx TODO different retval order comparing to LUA

@@ -12,7 +12,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 my $img1 = IUP::Image->new( pixels=>
       [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],

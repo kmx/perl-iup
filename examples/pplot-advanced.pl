@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 my $MAXPLOT = 6;
 my @plot = ();        # PPlot controls
@@ -267,7 +267,7 @@ sub tabs_tabchange_cb {
   my $ii = 0;
 
   # xxx TODO xxx ugly hack - do this translation somewhere in Callback.pm
-  $new_tab = IUP->GetOrCreateByIhandle($new_tab) unless ref $new_tab;
+  $new_tab = IUP->GetByIhandle($new_tab) unless ref $new_tab;
 
   my $ss = $new_tab->GetAttribute("TABTITLE");
   $ss = substr($ss, 5); # Skip "Plot "

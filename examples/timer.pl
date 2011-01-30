@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 my $timer1 = IUP::Timer->new(TIME=>100);
 my $timer2 = IUP::Timer->new(TIME=>2000);

@@ -1,4 +1,4 @@
-use IUP;
+use IUP ':all';
 
 my $l = IUP::List->new(DROPDOWN=>"YES");
 

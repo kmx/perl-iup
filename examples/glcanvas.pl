@@ -6,7 +6,7 @@ use strict;
 
 #xxx TODO: glcanvas.gl regularly hangs up (seen on Win32 native GUI, restart helps)
 
-use IUP;
+use IUP ':all';
 use OpenGL qw(:all);
 
 my $cnv = IUP::GLCanvas->new( BUFFER=>"DOUBLE", RASTERSIZE=>"300x300" );
@@ -30,7 +30,7 @@ sub cb_cnv_action {
 
 sub cb_cnv_k_any {
   my ($self, $c) = @_;
-  if ( $c == IUP_K_q or $c == IUP_K_ESC ) {
+  if ( $c == K_q or $c == K_ESC ) {
     return IUP_CLOSE;
   }
   else {

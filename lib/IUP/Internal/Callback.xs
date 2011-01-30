@@ -3200,10 +3200,6 @@ internal_cb_TRAYCLICK_CB_iii (Ihandle* ih,int but,int pressed,int dclick)
 
 MODULE = IUP::Internal::Callback	PACKAGE = IUP::Internal::Callback
 
-BOOT:
-/* empty boot */
-
-
 void
 _init_cb_ACTION_(ih,action)
 		Ihandle* ih;

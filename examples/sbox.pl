@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 my $bt = IUP::Button->new( TITLE=>"Test", EXPAND=>"YES" );
 

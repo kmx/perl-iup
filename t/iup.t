@@ -4,7 +4,7 @@ use Test::More tests => 1;
 
 is( 1, 1 );
 
-use IUP;
+use IUP ':all';
 use Data::Dumper;
 
 my $imgRGB = [

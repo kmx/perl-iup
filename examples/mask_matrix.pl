@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use IUP;
+use IUP ':all';
 
 my $mat = IUP::Matrix->new( NUMLIN=>3, NUMCOL=>3 );
 $mat->Cell(1, 1, "Only numbers");
