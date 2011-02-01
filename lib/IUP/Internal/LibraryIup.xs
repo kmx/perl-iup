@@ -8,9 +8,12 @@
 #include <iup_pplot.h>
 #include <iupgl.h>
 #include <iupim.h>
-#include <iupole.h>
 #include <cd.h>
 #include <cdiup.h>
+
+#ifdef HASLIB_IUPOLE
+#include <iupole.h>
+#endif
 
 /* Used only by the Perl binding not in iup.h */
 int iupGetParamCount(const char *format, int *param_extra);
@@ -250,26 +253,6 @@ _IupRefreshChildren(ih)
 		Ihandle* ih;
 	CODE:
 		IupRefreshChildren(ih);
-
-#### Original C function from <iup.h>
-# char* IupMapFont (const char *iupfont);
-char*
-_IupMapFont(iupfont)
-		char* iupfont;
-	CODE:
-		RETVAL = IupMapFont(iupfont);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# char* IupUnMapFont (const char *driverfont);
-char*
-_IupUnMapFont(driverfont)
-		const char* driverfont;
-	CODE:
-		RETVAL = IupUnMapFont(driverfont);
-	OUTPUT:
-		RETVAL
 
 #### Original C function from <iup.h>
 # int IupHelp (const char* url);
@@ -543,17 +526,6 @@ _IupUnmap(ih)
 		IupUnmap(ih);
 
 #### Original C function from <iup.h>
-# void IupSetAttribute (Ihandle* ih, const char* name, const char* value);
-void
-_IupSetAttribute(ih,name,value)
-		Ihandle* ih;
-		char* name;
-		char* value;
-	CODE:
-		//xxx warn("#XS# ih='%p' name='%s' value='%s'", ih, name, value);
-		IupSetAttribute(ih,name,value);
-
-#### Original C function from <iup.h>
 # void IupStoreAttribute(Ihandle* ih, const char* name, const char* value);
 void
 _IupStoreAttribute(ih,name,value)
@@ -585,17 +557,6 @@ _IupStoreAttributeId2(ih,name,lin,col,value)
 		const char* value;
 	CODE:
 		IupStoreAttributeId2(ih,name,lin,col,value);
-
-#### Original C function from <iup.h>
-# Ihandle* IupSetAttributes (Ihandle* ih, const char *str);
-Ihandle*
-_IupSetAttributes(ih,str)
-		Ihandle* ih;
-		const char* str;
-	CODE:
-		RETVAL = IupSetAttributes(ih,str);
-	OUTPUT:
-		RETVAL
 
 #### Original C function from <iup.h>
 # char* IupGetAttribute (Ihandle* ih, const char* name);
@@ -643,72 +604,6 @@ _IupGetAttributeId2(ih,name,lin,col)
 		RETVAL
 
 #### Original C function from <iup.h>
-# char* IupGetAttributes (Ihandle* ih);
-char*
-_IupGetAttributes(ih)
-		Ihandle* ih;
-	CODE:
-		RETVAL = IupGetAttributes(ih);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# int IupGetInt (Ihandle* ih, const char* name);
-int
-_IupGetInt(ih,name)
-		Ihandle* ih;
-		const char* name;
-	CODE:
-		RETVAL = IupGetInt(ih,name);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# int IupGetInt2 (Ihandle* ih, const char* name);
-int
-_IupGetInt2(ih,name)
-		Ihandle* ih;
-		const char* name;
-	CODE:
-		RETVAL = IupGetInt2(ih,name);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# int IupGetIntInt (Ihandle *ih, const char* name, int *i1, int *i2);
-int
-_IupGetIntInt(ih,name,i1,i2)
-		Ihandle* ih;
-		const char* name;
-		int &i1;
-		int &i2;
-	CODE:
-		RETVAL = IupGetIntInt(ih,name,&i1,&i2);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# float IupGetFloat (Ihandle* ih, const char* name);
-float
-_IupGetFloat(ih,name)
-		Ihandle* ih;
-		const char* name;
-	CODE:
-		RETVAL = IupGetFloat(ih,name);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# void IupSetfAttribute (Ihandle* ih, const char* name, const char* format, ...);
-void
-_IupSetfAttribute(ih,name,format,...)
-		Ihandle* ih;
-		const char* name;
-		const char* format;
-	CODE:
-		IupSetfAttribute(ih,name,format); /* xxx TODO xxx not working */
-
-#### Original C function from <iup.h>
 # void IupResetAttribute(Ihandle *ih, const char* name);
 void
 _IupResetAttribute(ih,name)
@@ -716,27 +611,6 @@ _IupResetAttribute(ih,name)
 		const char* name;
 	CODE:
 		IupResetAttribute(ih,name);
-
-#### Original C function from <iup.h>
-# Ihandle* IupSetAtt(const char* handle_name, Ihandle* ih, const char* name, ...);
-Ihandle*
-_IupSetAtt(handle_name,ih,name,...)
-		const char* handle_name;
-		Ihandle* ih;
-		const char* name;
-	CODE:
-		RETVAL = IupSetAtt(handle_name,ih,name);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# void IupSetGlobal (const char* name, const char* value);
-void
-_IupSetGlobal(name,value)
-		char* name;
-		char* value;
-	CODE:
-		IupSetGlobal(name,value);
 
 #### Original C function from <iup.h>
 # void IupStoreGlobal (const char* name, const char* value);
@@ -793,62 +667,6 @@ _IupNextField(ih)
 		Ihandle* ih;
 	CODE:
 		RETVAL = IupNextField(ih);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# Icallback IupGetCallback(Ihandle* ih, const char *name);
-Icallback
-_IupGetCallback(ih,name)
-		Ihandle* ih;
-		const char* name;
-	CODE:
-		RETVAL = IupGetCallback(ih,name);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# Icallback IupSetCallback(Ihandle* ih, const char *name, Icallback func);
-Icallback
-_IupSetCallback(ih,name,func)
-		Ihandle* ih;
-		const char* name;
-		Icallback func;
-	CODE:
-		RETVAL = IupSetCallback(ih,name,func);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# Ihandle* IupSetCallbacks(Ihandle* ih, const char *name, Icallback func, ...);
-Ihandle*
-_IupSetCallbacks(ih,name,func,...)
-		Ihandle* ih;
-		const char* name;
-		Icallback func;
-	CODE:
-		RETVAL = IupSetCallbacks(ih,name,func);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# Icallback IupGetFunction (const char *name);
-Icallback
-_IupGetFunction(name)
-		const char* name;
-	CODE:
-		RETVAL = IupGetFunction(name);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# Icallback IupSetFunction (const char *name, Icallback func);
-Icallback
-_IupSetFunction(name,func)
-		const char* name;
-		Icallback func;
-	CODE:
-		RETVAL = IupSetFunction(name,func);
 	OUTPUT:
 		RETVAL
 
@@ -972,27 +790,6 @@ _IupSetClassDefaultAttribute(classname,name,value)
 		char* value;
 	CODE:
 		IupSetClassDefaultAttribute(classname,name,value);
-
-#### Original C function from <iup.h>
-# Ihandle* IupCreate (const char *classname);
-Ihandle*
-_IupCreate(classname)
-		const char* classname;
-	CODE:
-		RETVAL = IupCreate(classname);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# Ihandle* IupCreatep(const char *classname, void *first, ...);
-Ihandle*
-_IupCreatep(classname,first,...)
-		const char* classname;
-		void* first;
-	CODE:
-		RETVAL = IupCreatep(classname,first);
-	OUTPUT:
-		RETVAL
 
 #### Original C function from <iup.h>
 # Ihandle* IupFill (void);
@@ -1292,16 +1089,6 @@ _IupText(action)
 		const char* action;
 	CODE:
 		RETVAL = IupText(action);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# Ihandle* IupMultiLine (const char* action);
-Ihandle*
-_IupMultiLine(action)
-		const char* action;
-	CODE:
-		RETVAL = IupMultiLine(action);
 	OUTPUT:
 		RETVAL
 
@@ -1645,15 +1432,6 @@ _IupMessage(title,msg)
 		IupMessage(title,msg);
 
 #### Original C function from <iup.h>
-# void IupMessagef(const char *title, const char *format, ...);
-void
-_IupMessagef(title,format,...)
-		const char* title;
-		const char* format;
-	CODE:
-		IupMessagef(title,format);
-
-#### Original C function from <iup.h>
 # int IupAlarm(const char *title, const char *msg, const char *b1, const char *b2, const char *b3);
 int
 _IupAlarm(title,msg,b1,b2,b3)
@@ -1664,16 +1442,6 @@ _IupAlarm(title,msg,b1,b2,b3)
 		const char* b3;
 	CODE:
 		RETVAL = IupAlarm(title,msg,b1,b2,b3);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# int IupScanf(const char *format, ...);
-int
-_IupScanf(format,...)
-		const char* format;
-	CODE:
-		RETVAL = IupScanf(format);
 	OUTPUT:
 		RETVAL
 
@@ -2029,13 +1797,6 @@ _IupControlsOpen()
 		RETVAL
 
 #### Original C function from <iupcontrols.h>
-# void IupControlsClose(void); 
-void
-_IupControlsClose()
-	CODE:
-		IupControlsClose();
-
-#### Original C function from <iupcontrols.h>
 # Ihandle* IupColorbar(void);
 Ihandle*
 _IupColorbar()
@@ -2064,18 +1825,6 @@ _IupMatrix(action)
 		RETVAL
 
 #### Original C function from <iupcontrols.h>
-# void IupMatSetAttribute (Ihandle* ih, const char* name, int lin, int col, char* value);
-void
-_IupMatSetAttribute(ih,name,lin,col,value)
-		Ihandle* ih;
-		const char* name;
-		int lin;
-		int col;
-		char* value;
-	CODE:
-		IupMatSetAttribute(ih,name,lin,col,value);
-
-#### Original C function from <iupcontrols.h>
 # void IupMatStoreAttribute(Ihandle* ih, const char* name, int lin, int col, char* value);
 void
 _IupMatStoreAttribute(ih,name,lin,col,value)
@@ -2099,44 +1848,6 @@ _IupMatGetAttribute(ih,name,lin,col)
 		RETVAL = (char*)IupMatGetAttribute(ih,name,lin,col);
 	OUTPUT:
 		RETVAL
-
-#### Original C function from <iupcontrols.h>
-# int IupMatGetInt (Ihandle* ih, const char* name, int lin, int col);
-int
-_IupMatGetInt(ih,name,lin,col)
-		Ihandle* ih;
-		const char* name;
-		int lin;
-		int col;
-	CODE:
-		RETVAL = IupMatGetInt(ih,name,lin,col);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iupcontrols.h>
-# float IupMatGetFloat (Ihandle* ih, const char* name, int lin, int col);
-float
-_IupMatGetFloat(ih,name,lin,col)
-		Ihandle* ih;
-		const char* name;
-		int lin;
-		int col;
-	CODE:
-		RETVAL = IupMatGetFloat(ih,name,lin,col);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iupcontrols.h>
-# void IupMatSetfAttribute (Ihandle* ih, const char* name, int lin, int col, char* format, ...);
-void
-_IupMatSetfAttribute(ih,name,lin,col,format,...)
-		Ihandle* ih;
-		const char* name;
-		int lin;
-		int col;
-		char* format;
-	CODE:
-		IupMatSetfAttribute(ih,name,lin,col,format);
 
 ################################################################################ iup_pplot.h
 
@@ -2167,23 +1878,34 @@ _IupPPlotBegin(ih,strXdata)
 
 #### Original C function from <iup_pplot.h>
 # void IupPPlotAdd(Ihandle *ih, float x, float y);
+# void IupPPlotAddStr(Ihandle *ih, const char* x, float y);
 void
 _IupPPlotAdd(ih,x,y)
 		Ihandle* ih;
-		float x;
+		SV* x;
 		float y;
+	INIT:
+		char* cx;
+		float fx;
 	CODE:
-		IupPPlotAdd(ih,x,y);
-
-#### Original C function from <iup_pplot.h>
-# void IupPPlotAddStr(Ihandle *ih, const char* x, float y);
-void
-_IupPPlotAddStr(ih,x,y)
-		Ihandle* ih;
-		const char* x;
-		float y;
-	CODE:
-		IupPPlotAddStr(ih,x,y);
+		if SvOK(x) {
+		  if SvNOK(x) { /* float */		    
+		    fx = SvNV(x);
+		    IupPPlotAdd(ih,fx,y);
+		  }
+		  else if SvIOK(x) { /* integer */		    
+		    fx = (float)SvIV(x);
+		    IupPPlotAdd(ih,fx,y);
+		  }
+		  else if SvPOK(x) { /* string */		    
+		    cx = SvPV_nolen(x);
+		    /* cx = SvPVX(x); xxxTODO danger */
+		    IupPPlotAddStr(ih,cx,y);
+		  }
+		}
+		else {
+		  /* IupPPlotAddStr(ih,NULL,y); xxxTODO checkthis */
+		}
 
 #### Original C function from <iup_pplot.h>
 # int IupPPlotEnd(Ihandle *ih);
@@ -2243,46 +1965,6 @@ _IupPPlotPaintTo(ih,cnv)
 	CODE:
 		IupPPlotPaintTo(ih,cnv);
 
-################################################################################ cd.h
-
-# cdCanvas*   cdCreateCanvas(cdContext *context, void *data);
-cdCanvas*
-_cdCreateCanvas_CD_IUP(ih)
-		Ihandle* ih;
-	CODE:
-		RETVAL = cdCreateCanvas(CD_IUP, ih);
-		cdCanvasForeground(RETVAL, CD_GREEN);
-		cdCanvasClear(RETVAL);		
-	OUTPUT:
-		RETVAL
-
-# void cdCanvasLine(cdCanvas* canvas, int x1, int y1, int x2, int y2);
-void
-_cdCanvasLine(canvas,x1,y1,x2,y2)
-		cdCanvas* canvas;
-		int x1;
-		int y1;
-		int x2;
-		int y2;
-	CODE:
-		/* xxx hack xxx */
-		cdCanvasActivate(canvas);
-		cdCanvasForeground(canvas, CD_BLUE);
-		cdCanvasClear(canvas);
-		cdCanvasLine(canvas,x1,y1,x2,y2);
-
-# void cdCanvasMark(cdCanvas* canvas, int x, int y);
-void
-_cdCanvasMark(canvas,x,y)
-		cdCanvas* canvas;
-		int x;
-		int y;
-	CODE:
-		cdCanvasMark(canvas,x,y);
-
-# void        cdKillCanvas(cdCanvas* canvas);
-# xxx TODO
-
 ################################################################################ iupole.h 
 
 #### Original C function
@@ -2291,7 +1973,12 @@ Ihandle*
 _IupOleControl(progid)
 		const char* progid;
 	CODE:
+#ifdef HASLIB_IUPOLE
 		RETVAL = IupOleControl(progid);
+#else
+		warn("xxx not supported");
+		RETVAL = NULL;
+#endif
 	OUTPUT:
 		RETVAL
 
@@ -2571,3 +2258,76 @@ _isSys(s)
 		RETVAL = iup_issys(s);
 	OUTPUT:
 		RETVAL
+
+int
+_Testing(p)
+		SV* p;
+	CODE:
+		int r = 1000000;
+		if SvOK(p) {
+		  printf("SvOK - yes");
+		  if SvIOK(p) {
+		    printf("SvIOK - yes");
+		  }
+		  if SvNOK(p) {
+		    printf("SvNOK - yes");
+		  }
+		  if SvPOK(p) {
+		    printf("SvPOK - yes");
+		  }
+		  if SvROK(p) {
+		    printf("SvROK - yes");
+		    if (SvTYPE(SvRV(p)) == SVt_IV)   printf(" ref:IV");
+		    if (SvTYPE(SvRV(p)) == SVt_NV)   printf(" ref:NV");
+		    if (SvTYPE(SvRV(p)) == SVt_PV)   printf(" ref:PV");
+		    if (SvTYPE(SvRV(p)) == SVt_RV)   printf(" ref:RV");
+		    if (SvTYPE(SvRV(p)) == SVt_PVAV) printf(" ref:PVAV");
+		    if (SvTYPE(SvRV(p)) == SVt_PVHV) printf(" ref:PVHV");
+		    if (SvTYPE(SvRV(p)) == SVt_PVCV) printf(" ref:PVCV");
+		    if (SvTYPE(SvRV(p)) == SVt_PVGV) printf(" ref:PVGV");
+		    if (SvTYPE(SvRV(p)) == SVt_PVMG) printf(" ref:PVMG");
+		    printf(" obj:%d", sv_isobject(p));
+		    printf(" isa:%d", sv_isa(p,"IUP::Dialog"));
+		    printf(" element:%d", sv_derived_from(p,"IUP::Internal::Element"));
+		    printf(" canvas:%d", sv_derived_from(p,"IUP::Internal::Canvas"));
+		  }
+		  printf("\n");
+		}
+		else {
+		  printf("SvOK - no\n");
+		}
+		RETVAL = r;
+	OUTPUT:
+		RETVAL
+		
+#### Original C function from <iupcontrols.h>
+# void IupControlsClose(void); 
+# int IupMatGetInt (Ihandle* ih, const char* name, int lin, int col);
+# void IupMatSetAttribute (Ihandle* ih, const char* name, int lin, int col, char* value);
+# float IupMatGetFloat (Ihandle* ih, const char* name, int lin, int col);
+# void IupMatSetfAttribute (Ihandle* ih, const char* name, int lin, int col, char* format, ...);
+
+#### Original C function from <iup.h>
+# void IupSetAttribute (Ihandle* ih, const char* name, const char* value);
+# Ihandle* IupSetAttributes (Ihandle* ih, const char *str);
+# Icallback IupSetCallback(Ihandle* ih, const char *name, Icallback func);
+# Ihandle* IupSetCallbacks(Ihandle* ih, const char *name, Icallback func, ...);
+# Icallback IupGetFunction (const char *name);
+# Icallback IupSetFunction (const char *name, Icallback func);
+# Ihandle* IupCreate (const char *classname);
+# Ihandle* IupCreatep(const char *classname, void *first, ...);
+# char* IupGetAttributes (Ihandle* ih);
+# Icallback IupGetCallback(Ihandle* ih, const char *name);
+# int IupGetInt (Ihandle* ih, const char* name);
+# int IupGetInt2 (Ihandle* ih, const char* name);
+# int IupGetIntInt (Ihandle *ih, const char* name, int *i1, int *i2);
+# float IupGetFloat (Ihandle* ih, const char* name);
+# void IupSetfAttribute (Ihandle* ih, const char* name, const char* format, ...);
+# Ihandle* IupSetAtt(const char* handle_name, Ihandle* ih, const char* name, ...);
+# void IupSetGlobal (const char* name, const char* value);
+# char* IupMapFont (const char *iupfont);
+# char* IupUnMapFont (const char *driverfont);
+# void IupMessagef(const char *title, const char *format, ...);
+# int IupScanf(const char *format, ...);
+# Ihandle* IupMultiLine (const char* action);
+# Ihandle* IupGetAttributeHandle(Ihandle* ih, const char* name);

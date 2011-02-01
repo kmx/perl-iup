@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 
+use Test::More;
 use FindBin;
 use File::Slurp;
 use File::Spec;
@@ -32,10 +33,8 @@ my @pm_calls = grep(/^IUP::Internal::LibraryIup::/, (split "\n", $all_code));
 my @xs_funcs = grep(/^_/, read_file("$root/lib/IUP/Internal/LibraryIup.xs"));
 @xs_funcs = map { $1 if(/^(_[^\s\(]+)/) } @xs_funcs;
 
-
-
-#die Dumper(\@xs_funcs);
-#die Dumper(\@pm_calls);
+@xs_funcs = sort(@xs_funcs);
+@pm_calls = sort(@pm_calls);
 
 my ($data, $pm, $xs);
 $data->{$_}++ for @xs_funcs;

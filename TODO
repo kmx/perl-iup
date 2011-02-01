@@ -1,8 +1,30 @@
-######## IUP::Internal::Element
-- change: _create_element should set $self->ihandle value
+######## global
+- some ifdefs based on availabel libs - first use for iupole
 
-######## IUP::Matrix (same as with common attributes)
-- IupMatGetAttribute vs. IupMatGetInt vs. IupMatGetFloat
+######## tests
+- $ENV{RELEASE_TESTING} - 
+  plan skip_all => "\$ENV{RELEASE_TESTING} required fot testing", unless $ENV{RELEASE_TESTING};
+  eval "use Win32::Job ()";
+  plan skip_all => "Can't interrupt hung processes without Win32::Job" if $@;
+
+######## IUP::Tree
+- some unimplemented methods
+- most of the methods not tested at all
+ 
+######## IUP::GLCanvas
+- consider renaming to IUP::CanvasGL or IUP::Canvas::GL
+
+######## Examples
+- rewrite all examples from lua to perl
+- synchronize ratehr with C examples (they are more complete)
+
+######## IUP::Internal::Canvas
+- consider moving 'my %ch_register' from Internal::LibraryIup to Internal::Canvas
+
+(cosmetics)######## IUP::PPlot  
+- PPlotPaintTo - maybe not needed: Plots to the given CD canvas instead of the display canvas (does not make much sense)
+
+(cosmetics)######## IUP::Matrix (same as with common attributes)
 - try to implement:
   my $m = IUP::Matrix->new(...);
   $m->[12,44] = 'value';
@@ -10,23 +32,8 @@
   $m->{"BGCOLOR12:44"} = '12 12 12';
   (see SDLx::Surface + SDLx::Surface::TiedMatrix)
 
-######## IUP::Tree
-- some unimplemented methods
-- most of the methods not tested at all
-
-######## IUP::PPlot  
-- PPlotAddStr vs. PPlotAdd (maybe autodetection based on type of $x arg - float/string)
-- PPlotPaintTo - maybe remove (does not make much sense)
-  
-######## IUP::GLCanvas
-- consider renaming to IUP::CanvasGL or IUP::Canvas::GL
-
-######## IUP::Internal::Canvas
-- consider moving 'my %ch_register' from Internal::LibraryIup to Internal::Canvas
-
-######## Examples
-- rewrite all examples from lua to perl
-- synchronize ratehr with C examples (they are more complete)
+(cosmetics)######## global
+- cleanup unused funcs from LibraryIup.XS - cross-check-xs-func.pl
 
 (cosmetics)######## IUP (main module)
 - ??? better detection of initialized gui than (IUP->Open == IUP_OPENED)?
@@ -49,6 +56,10 @@
 - maybe some common helper function 
   _create_element_child_single($self, $args, $firstonly, \&fucname)
   _create_element_child_multi($self, $args, $firstonly, \&fucname)
+
+(cosmetics)######## IUP::Internal::Element
+- change: _create_element should set $self->ihandle value
+- Get/SetAttributeSV - via IupGet/SetAttributeHandle
 
 ######## Check impacts of:
 - return IUP::Internal::LibraryIup::_IupCopyClassAttributes($src->ihandle, $dst->ihandle);

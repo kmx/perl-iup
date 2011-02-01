@@ -25,15 +25,11 @@ sub PPlotBegin {
 sub PPlotAdd {
   #void IupPPlotAdd(Ihandle* ih, float x, float y); [in C]
   #iup.PPlotAdd(ih: ihandle, x, y: number) [in Lua]
-  my ($self, $x, $y) = @_;
-  return IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $x, $y);
-}
-
-sub PPlotAddStr {
   #void IupPPlotAddStr(Ihandle* ih, const char* x, float y); [in C]
   #iup.PPlotAddStr(ih: ihandle, x: string, y: number) [in Lua]
+  #NOTE: Add vs. AddStr autodetection based on $x type (float/string)  
   my ($self, $x, $y) = @_;
-  return IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, $x, $y);
+  return IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $x, $y);
 }
 
 sub PPlotEnd {
@@ -68,7 +64,7 @@ sub PPlotTransform {
 sub PPlotPaintTo {
   #void IupPPlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C]
   #iup.PPlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
-  ####maybe not needed: Plots to the given CD canvas instead of the display canvas.
+  #NOTE: maybe not needed: Plots to the given CD canvas instead of the display canvas.
   my ($self, $cnv) = @_;
   return IUP::Internal::LibraryIup::_IupPPlotPaintTo($self->ihandle, $cnv->cnvhandle);
 }
