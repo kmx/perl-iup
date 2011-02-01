@@ -9,7 +9,7 @@ use strict;
 use IUP ':all';
 use OpenGL qw(:all);
 
-my $cnv = IUP::GLCanvas->new( BUFFER=>"DOUBLE", RASTERSIZE=>"300x300" );
+my $cnv = IUP::CanvasGL->new( BUFFER=>"DOUBLE", RASTERSIZE=>"300x300" );
 
 sub cb_cnv_action {
   my ($self, $x, $y) = @_;

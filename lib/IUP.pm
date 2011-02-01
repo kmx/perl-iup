@@ -34,7 +34,7 @@ sub import {
      ':basic' => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg Dial Dialog FileDlg Fill FontDlg Frame
                      Hbox Image Item Label LayoutDialog List Menu MessageDlg Normalizer OleControl ProgressBar Radio 
                      Sbox Separator Spin Spinbox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox/],
-     ':extended' => [qw/Matrix Cells Canvas GLCanvas PPlot/],
+     ':extended' => [qw/Matrix Cells Canvas CanvasGL PPlot/],
      ':all' => [],
   );
   @{$tags{':all'}} = ( @{$tags{':basic'}}, @{$tags{':extended'}} );
@@ -177,7 +177,7 @@ sub GetByIhandle {
     fill         => "IUP::Fill",
     fontdlg      => "IUP::FontDlg",
     frame        => "IUP::Frame",
-    glcanvas     => "IUP::GLCanvas",
+    glcanvas     => "IUP::CanvasGL",
     hbox         => "IUP::Hbox",
     image        => "IUP::Image",
     imagergb     => "IUP::Image",

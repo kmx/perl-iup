@@ -53,6 +53,28 @@ my $attrib_table = {
     YMAX => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=no
     YMIN => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=no
   },
+  'IUP::CanvasGL' => {
+    ACCUM_ALPHA_SIZE => 'unknown',                            # src=no doc=yes
+    ACCUM_BLUE_SIZE => 'unknown',                             # src=no doc=yes
+    ACCUM_GREEN_SIZE => 'unknown',                            # src=no doc=yes
+    ACCUM_RED_SIZE => 'unknown',                              # src=no doc=yes
+    ALPHA_SIZE => 'unknown',                                  # src=no doc=yes
+    BLUE_SIZE => 'unknown',                                   # src=no doc=yes
+    BUFFER => 'DEFAULT',                                      # src=yes doc=yes
+    BUFFER_SIZE => 'unknown',                                 # src=no doc=yes
+    COLOR => 'DEFAULT',                                       # src=yes doc=yes
+    COLORMAP => 'READONLY|NO_STRING',                         # src=yes doc=yes
+    CONTEXT => 'READONLY|NO_STRING',                          # src=yes doc=yes
+    DEPTH_SIZE => 'unknown',                                  # src=no doc=yes
+    ERROR => 'unknown',                                       # src=no doc=yes
+    GREEN_SIZE => 'unknown',                                  # src=no doc=yes
+    RED_SIZE => 'unknown',                                    # src=no doc=yes
+    REFRESHCONTEXT => 'WRITEONLY|NO_INHERIT',                 # src=yes doc=yes
+    SHAREDCONTEXT => 'unknown',                               # src=no doc=yes
+    STENCIL_SIZE => 'unknown',                                # src=no doc=yes
+    STEREO => 'unknown',                                      # src=no doc=yes
+    VISUAL => 'READONLY|NO_STRING|NOT_MAPPED',                # src=yes doc=yes
+  },
   'IUP::Cells' => {
     BGCOLOR => 'NO_INHERIT',                                  # src=yes doc=yes
     BOXED => 'NOT_MAPPED',                                    # src=yes doc=yes
@@ -157,28 +179,6 @@ my $attrib_table = {
     FGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
     SUNKEN => 'NO_INHERIT',                                   # src=yes doc=yes
     TITLE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=yes
-  },
-  'IUP::GLCanvas' => {
-    ACCUM_ALPHA_SIZE => 'unknown',                            # src=no doc=yes
-    ACCUM_BLUE_SIZE => 'unknown',                             # src=no doc=yes
-    ACCUM_GREEN_SIZE => 'unknown',                            # src=no doc=yes
-    ACCUM_RED_SIZE => 'unknown',                              # src=no doc=yes
-    ALPHA_SIZE => 'unknown',                                  # src=no doc=yes
-    BLUE_SIZE => 'unknown',                                   # src=no doc=yes
-    BUFFER => 'DEFAULT',                                      # src=yes doc=yes
-    BUFFER_SIZE => 'unknown',                                 # src=no doc=yes
-    COLOR => 'DEFAULT',                                       # src=yes doc=yes
-    COLORMAP => 'READONLY|NO_STRING',                         # src=yes doc=yes
-    CONTEXT => 'READONLY|NO_STRING',                          # src=yes doc=yes
-    DEPTH_SIZE => 'unknown',                                  # src=no doc=yes
-    ERROR => 'unknown',                                       # src=no doc=yes
-    GREEN_SIZE => 'unknown',                                  # src=no doc=yes
-    RED_SIZE => 'unknown',                                    # src=no doc=yes
-    REFRESHCONTEXT => 'WRITEONLY|NO_INHERIT',                 # src=yes doc=yes
-    SHAREDCONTEXT => 'unknown',                               # src=no doc=yes
-    STENCIL_SIZE => 'unknown',                                # src=no doc=yes
-    STEREO => 'unknown',                                      # src=no doc=yes
-    VISUAL => 'READONLY|NO_STRING|NOT_MAPPED',                # src=yes doc=yes
   },
   'IUP::Gauge' => {
     BGCOLOR => 'NO_INHERIT',                                  # src=yes doc=yes

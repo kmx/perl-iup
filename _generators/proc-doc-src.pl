@@ -147,9 +147,9 @@ sub raw2pname {
   my %trans = (
     'IUP::Filedlg' => 'IUP::FileDlg',
     'IUP::Pplot' => 'IUP::PPlot',
-    'IUP::Glcanvas' => 'IUP::GLCanvas',
-    'IUP::Glcanvas_x' => 'IUP::GLCanvas',
-    'IUP::Glcanvas_win' => 'IUP::GLCanvas',
+    'IUP::Glcanvas' => 'IUP::CanvasGL',
+    'IUP::Glcanvas_x' => 'IUP::CanvasGL',
+    'IUP::Glcanvas_win' => 'IUP::CanvasGL',
     'IUP::Progressbar' => 'IUP::ProgressBar',
     'IUP::Colorbrowser' => 'IUP::ColorBrowser',
     'IUP::Colorbar' => 'IUP::ColorBar',
@@ -410,7 +410,7 @@ $a_list{'IUP::Classbase'}->{CY}->{type}='unknown';
 
 #ad hoc patching - callbacks
 $c_list{'IUP::Matrix'}->{EDITION_CB}->{type}='iiii';
-$c_list{'IUP::GLCanvas'}->{RESIZE_CB}->{type}='ii';
+$c_list{'IUP::CanvasGL'}->{RESIZE_CB}->{type}='ii';
 
 $c_list{'IUP::PPlot'}->{DELETEBEGIN_CB}->{par} = 'Ihandle *ih';
 $c_list{'IUP::PPlot'}->{DELETEBEGIN_CB}->{rv} = 'int';

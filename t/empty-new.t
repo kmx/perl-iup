@@ -21,7 +21,7 @@ isnt(IUP::FileDlg->new(),undef,'Testing IUP::FileDlg->new()');
 isnt(IUP::Fill->new(),undef,'Testing IUP::Fill->new()');
 isnt(IUP::FontDlg->new(),undef,'Testing IUP::FontDlg->new()');
 isnt(IUP::Frame->new(),undef,'Testing IUP::Frame->new()');
-isnt(IUP::GLCanvas->new(),undef,'Testing IUP::GLCanvas->new()');
+isnt(IUP::CanvasGL->new(),undef,'Testing IUP::CanvasGL->new()');
 isnt(IUP::Hbox->new(),undef,'Testing IUP::Hbox->new()');
 isnt(IUP::Image->new(WIDTH=>1, HEIGHT=>1, pixels=>[0]),undef,'Testing IUP::Image->new()');
 isnt(IUP::Image->new(WIDTH=>1, HEIGHT=>1, pixels=>[0,1,2]),undef,'Testing IUP::Image->new() - RGB');

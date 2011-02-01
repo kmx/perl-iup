@@ -1,11 +1,11 @@
-package IUP::GLCanvas;
+package IUP::CanvasGL;
 use strict;
 use warnings;
 use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 
 sub BEGIN {
-  #warn "[DEBUG] IUP::GLCanvas::BEGIN() started\n";
+  #warn "[DEBUG] IUP::CanvasGL::BEGIN() started\n";
   IUP::Internal::LibraryIup::_IupGLCanvasOpen();
 }
 

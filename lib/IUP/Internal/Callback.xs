@@ -74,6 +74,38 @@ internal_cb_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char
 } 
 
 int
+internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("RESIZE_CB", 9)));
+	XPUSHs(sv_2mortal(newSViv(width)));
+	XPUSHs(sv_2mortal(newSViv(height)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(RESIZE_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
 internal_cb_DRAW_CB_iiiiiiv (Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas)
 {
 	dSP;
@@ -738,38 +770,6 @@ internal_cb_FILE_CB_ss (Ihandle* ih,const char* file_name,const char* status)
 	SPAGAIN;
 
 	if (count != 1) croak("Error: _execute_cb(FILE_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("RESIZE_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(width)));
-	XPUSHs(sv_2mortal(newSViv(height)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(RESIZE_CB) has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -3200,6 +3200,10 @@ internal_cb_TRAYCLICK_CB_iii (Ihandle* ih,int but,int pressed,int dclick)
 
 MODULE = IUP::Internal::Callback	PACKAGE = IUP::Internal::Callback
 
+BOOT:
+/* empty boot */
+
+
 void
 _init_cb_ACTION_(ih,action)
 		Ihandle* ih;
@@ -3213,6 +3217,13 @@ _init_cb_BUTTON_CB_iiiis(ih,action)
 		char* action;
 	CODE:
 		IupSetCallback(ih, action, (Icallback)internal_cb_BUTTON_CB_iiiis);
+
+void
+_init_cb_RESIZE_CB_ii(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_RESIZE_CB_ii);
 
 void
 _init_cb_DRAW_CB_iiiiiiv(ih,action)
@@ -3360,13 +3371,6 @@ _init_cb_FILE_CB_ss(ih,action)
 		char* action;
 	CODE:
 		IupSetCallback(ih, action, (Icallback)internal_cb_FILE_CB_ss);
-
-void
-_init_cb_RESIZE_CB_ii(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_RESIZE_CB_ii);
 
 void
 _init_cb_HIGHLIGHT_CB_(ih,action)

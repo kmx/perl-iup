@@ -49,7 +49,7 @@ _dialog;RESIZE_CB;ii;int;Ihandle* ih,int width,int height;src=yes;doc=single;#;i
 _dialog;SHOW_CB;i;int;Ihandle* ih,int state;src=yes;doc=single;#;i;
 _dialog;TRAYCLICK_CB;iii;int;Ihandle* ih,int but,int pressed,int dclick;src=win+gtk only;doc=single;#;iii;
 IUP::FileDlg;FILE_CB;ss;int;Ihandle* ih,const char* file_name,const char* status;src=yes;doc=single;#;ss;
-IUP::GLCanvas;RESIZE_CB;ii;int;Ihandle* ih,int width,int height;#;doc=single;#;?;
+IUP::CanvasGL;RESIZE_CB;ii;int;Ihandle* ih,int width,int height;#;doc=single;#;?;
 IUP::Item;ACTION;;int;Ihandle* ih;src=yes;doc=single;#;?;
 IUP::Item;HIGHLIGHT_CB;;int;Ihandle* ih;src=yes;doc=single;#;?;
 IUP::List;ACTION;sii;int;Ihandle* ih,char* text,int pos,int state;src=yes;doc=single;#;sii;

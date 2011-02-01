@@ -16,6 +16,9 @@ my $cb_table = {
     ACTION => \&_init_cb_ACTION_,
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
   },
+  'IUP::CanvasGL' => {
+    RESIZE_CB => \&_init_cb_RESIZE_CB_ii,
+  },
   'IUP::Cells' => {
     DRAW_CB => \&_init_cb_DRAW_CB_iiiiiiv,
     HEIGHT_CB => \&_init_cb_HEIGHT_CB_i,
@@ -47,9 +50,6 @@ my $cb_table = {
   },
   'IUP::FileDlg' => {
     FILE_CB => \&_init_cb_FILE_CB_ss,
-  },
-  'IUP::GLCanvas' => {
-    RESIZE_CB => \&_init_cb_RESIZE_CB_ii,
   },
   'IUP::Item' => {
     ACTION => \&_init_cb_ACTION_,
@@ -269,7 +269,7 @@ sub _get_cb_init_function {
   my $p = $cb_table->{$pkg};
   my $f = $p->{$action} if $p;
   $f ||= $cb_table->{_dialog}->{$action} if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/;
-  $f ||= $cb_table->{_canvas}->{$action} if $pkg =~ /^IUP::(Canvas|GLCanvas)$/;
+  $f ||= $cb_table->{_canvas}->{$action} if $pkg =~ /^IUP::(Canvas|CanvasGL)$/;
   $f ||= $cb_table->{_base}->{$action};  
   return $f;
 }
@@ -284,7 +284,7 @@ sub _get_cb_list {
   my @list;
   push @list, keys(%{$cb_table->{$pkg}});
   push @list, keys(%{$cb_table->{_dialog}}) if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/;
-  push @list, keys(%{$cb_table->{_canvas}}) if $pkg =~ /^IUP::(Canvas|GLCanvas)$/;
+  push @list, keys(%{$cb_table->{_canvas}}) if $pkg =~ /^IUP::(Canvas|CanvasGL)$/;
   push @list, keys(%{$cb_table->{_base}});
   return keys %{{ map { $_ => 1 } @list }}; #return just uniq items
 }

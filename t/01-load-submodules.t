@@ -17,7 +17,7 @@ use_ok('IUP::FileDlg');
 use_ok('IUP::Fill');
 use_ok('IUP::FontDlg');
 use_ok('IUP::Frame');
-use_ok('IUP::GLCanvas');
+use_ok('IUP::CanvasGL');
 use_ok('IUP::Hbox');
 use_ok('IUP::Image');
 use_ok('IUP::Item');

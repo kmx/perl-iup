@@ -1,5 +1,5 @@
 ######## global
-- some ifdefs based on availabel libs - first use for iupole
+- some ifdefs based on availabel libs - first use for iupole, iupgl
 
 ######## tests
 - $ENV{RELEASE_TESTING} - 
@@ -11,9 +11,6 @@
 - some unimplemented methods
 - most of the methods not tested at all
  
-######## IUP::GLCanvas
-- consider renaming to IUP::CanvasGL or IUP::Canvas::GL
-
 ######## Examples
 - rewrite all examples from lua to perl
 - synchronize ratehr with C examples (they are more complete)
@@ -199,17 +196,17 @@ cd.KillImageRGB
 cd.KillImageRGBA
 cd.KillImageMap
 
-NOT NOW>>>######## IUP::OleControl (not a priority)
+(not now, maybe later)######## IUP::OleControl (not a priority)
 - missing -> add
 - conditionally only on Win32
 
-NOT NOW>>>######## IUP::LayoutDialog
+(not now, maybe later)######## IUP::LayoutDialog
 - somehow works but generaly not usable
 
-NOT NOW>>>######## Ideas from lua bindings:
+(not now, maybe later)######## Ideas from lua bindings:
 - global registers _IUPLUA_WIDGET_TABLE_REF
 
-NOT NOW>>>######## Ideas from ruby bindings:
+(not now, maybe later)######## Ideas from ruby bindings:
 - iup.* namespace
 - cd.* namespace (constants cd::BLUE, ...)
 - just one iup.image (RGB, RGBA - ??? perhaps not supported)
@@ -217,12 +214,12 @@ NOT NOW>>>######## Ideas from ruby bindings:
 - iupim just: IupLoadImage, IupSaveImage
 - GLCanvasOpen, GL... (global function, not methods of glcanvas class)
 
-NOT NOW>>>######## Linux - platform specific issues
+(not now, maybe later)######## Linux - platform specific issues
 - (<unknown>:4352): Pango-WARNING **: Error loading GSUB table 85
   before MainLoop
 - 'Quit' in main menu requires double click
 
-NOT NOW>>>######## Packaging (not a priority)
+(not now, maybe later)######## Packaging (not a priority)
 - RHEL 5 + FC 13,12,11
   - http://search.cpan.org/dist/cpan2rpm/
   - http://search.cpan.org/dist/Ovid/
@@ -238,10 +235,10 @@ NOT NOW>>>######## Packaging (not a priority)
   - http://chrysaor.info/?page=images&filter=Ubuntu
   - http://www.thoughtpolice.co.uk/vmware/
 
-NOT NOW>>>######## Callbacks generation (not a priority)
+(not now, maybe later)######## Callbacks generation (not a priority)
 - missing support for K_* callbacks (no hurry, lua does not implement them as well)
 
-NOT NOW>>>######## Consider splitting IUP::Internal::LibraryIup (not a priority)
+(not now, maybe later)######## Consider splitting IUP::Internal::LibraryIup (not a priority)
 into:
 - IUP::Internal::LibraryIup
 - IUP::Internal::LibraryIupControl
@@ -250,6 +247,6 @@ into:
 - IUP::Internal::LibraryImLib
 (postponed, the first try did not work as expected)
 
-NOT NOW>>>######## Build.PL (not a priority)
+(not now, maybe later)######## Build.PL (not a priority)
 - RHEL5 compatibility: create_makefile_pl => 'small'; (see Alien::wxWidgets) - probably not
 - using: release_testing automated_testing interactive

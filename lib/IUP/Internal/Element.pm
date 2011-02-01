@@ -226,6 +226,7 @@ sub HasValidClassName {
   # we are using IUP::Image for all - image, imagergb, imagergba
   $c = 'image' if $c eq 'imagergb';
   $c = 'image' if $c eq 'imagergba';
+  $c = 'canvasgl' if $c eq 'glcanvas';
   $p = 'iup::dialog' if ($p eq 'iup::layoutdialog') && ($c eq 'dialog'); #xxx-consider-later seems like a bug
   return lc($p) eq "iup::$c" ? 1 : 0;
 }

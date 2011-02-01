@@ -171,7 +171,7 @@ following calls to BUTTON_CB callback handler are made:
 [% h.at_affects %] L<IUP::Canvas|IUP::Canvas>,
 L<IUP::Button|IUP::Button>, L<IUP::Text|IUP::Text>,
 L<IUP::List|IUP::List>,
-L<IUP::GLCanvas|IUP::GLCanvas>
+L<IUP::CanvasGL|IUP::CanvasGL>
 
 =item B<CLOSE_CB>
 
@@ -245,7 +245,7 @@ interrupted.
 
 [% h.at_affects %] L<IUP::Dialog|IUP::Dialog>,
 L<IUP::Canvas|IUP::Canvas>,
-L<IUP::GLCanvas|IUP::GLCanvas>,
+L<IUP::CanvasGL|IUP::CanvasGL>,
 L<IUP::Text|IUP::Text>, L<IUP::List|IUP::List>
 
 =item B<ENTERWINDOW_CB>
@@ -541,7 +541,7 @@ moment the event was generated. The same macros used for
 L<BUTTON_CB|/"BUTTON_CB"> can be used for this status.
 
 [% h.at_affects %] L<IUP::Canvas|IUP::Canvas>,
-L<IUP::GLCanvas|IUP::GLCanvas>
+L<IUP::CanvasGL|IUP::CanvasGL>
 
 =item B<OPEN_CB>
 
@@ -583,7 +583,7 @@ This action is also generated when the dialog is mapped, after the map
 and before the show.
 
 [% h.at_affects %] L<IUP::Canvas|IUP::Canvas>,
-L<IUP::GLCanvas|IUP::GLCanvas>,
+L<IUP::CanvasGL|IUP::CanvasGL>,
 L<IUP::Dialog|IUP::Dialog>
 
 =item B<SCROLL_CB>
@@ -635,7 +635,7 @@ B<$posx>, B<posy:> the same as the B<ACTION> canvas callback
 IUP_SBDRAGH and IUP_SBDRAGV are not supported in GTK.
 
 [% h.at_affects %] L<IUP::Canvas|IUP::Canvas>,
-L<IUP::GLCanvas|IUP::GLCanvas>,
+L<IUP::CanvasGL|IUP::CanvasGL>,
 L<SCROLLBAR|[%m.at%]/SCROLLBAR>
 
 =item B<SHOW_CB>
@@ -722,7 +722,7 @@ wheels this increment can be changed.
 The wheel will only work if the focus is at the canvas.
 
 [% h.at_affects %] L<IUP::Canvas|IUP::Canvas>,
-L<IUP::GLCanvas|IUP::GLCanvas>
+L<IUP::CanvasGL|IUP::CanvasGL>
 
 =item B<WOM_CB>
 
@@ -756,6 +756,6 @@ I<dwCallback> parameter and set I<fdwOpen> to CALLBACK_WINDOW.
 
 [% h.at_affects %] L<IUP::Dialog|IUP::Dialog>,
 L<IUP::Canvas|IUP::Canvas>,
-L<IUP::GLCanvas|IUP::GLCanvas>
+L<IUP::CanvasGL|IUP::CanvasGL>
 
 =cut
