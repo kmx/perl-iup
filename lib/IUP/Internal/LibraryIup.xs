@@ -2259,7 +2259,7 @@ _isSys(s)
 	OUTPUT:
 		RETVAL
 
-int
+char*
 _Testing(p)
 		SV* p;
 	CODE:
@@ -2296,10 +2296,10 @@ _Testing(p)
 		else {
 		  printf("SvOK - no\n");
 		}
-		RETVAL = r;
+		RETVAL = NULL;
 	OUTPUT:
 		RETVAL
-		
+
 #### Original C function from <iupcontrols.h>
 # void IupControlsClose(void); 
 # int IupMatGetInt (Ihandle* ih, const char* name, int lin, int col);

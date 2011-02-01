@@ -1,6 +1,10 @@
 ######## global
 - some ifdefs based on availabel libs - first use for iupole, iupgl
 
+######## Examples
+- rewrite all examples from lua to perl
+- synchronize ratehr with C examples (they are more complete)
+
 ######## tests
 - $ENV{RELEASE_TESTING} - 
   plan skip_all => "\$ENV{RELEASE_TESTING} required fot testing", unless $ENV{RELEASE_TESTING};
@@ -10,12 +14,40 @@
 ######## IUP::Tree
 - some unimplemented methods
 - most of the methods not tested at all
- 
-######## Examples
-- rewrite all examples from lua to perl
-- synchronize ratehr with C examples (they are more complete)
+- examples:
+  http://www.wxpython.org/docs/api/wx.TreeCtrl-class.html
+  root = self.tree.AddRoot("Example")
+  items = [ "test1", "test2", "test3",]
+  self.AddTreeNodes(root, items) #not in a lib
+  self.tree.Expand(root)
+  tree.AppendItem(parentItem, item)
+  tree.GetItemText(item)   
+- examples Wx
+  Convert (Wx::TreeCtrl, HASHREF)
+  AddRoot ($text, $data) Add a root to the control. Returns root id.
+  AppendItem ($parent, $text, $data)   Add an item to the control as the last child of $parent. Returns item id.
+  AppendContainer ($parent, $text, $data)    Add a container to the control as the last child of $parent. This does the same as AppendItem() but marks the node as a container.
+  PrependItem ($parent, $text, $data)    Add an item to the control as the first child of $parent. Returns item id.
+  PrependContainer ($parent, $text, $data)    Add a container to the control as the first child of $parent.
+  InsertItem ($parent, $before | $previous, $text, $data)    Inserts an item after a given one (previous) or before one identified by its position (before).
+  InsertContainer ($parent, $before | $previous, $text, $data)    See InsertItem().
+  
+######## Global issues
+- check memory leaks - http://use.perl.org/~jozef/journal/40411
 
-######## IUP::Internal::Canvas
+######## DOC notes
+- pplot: # xxx TODO.DOC xxx note in doc that DS_ has to be set after ->PPlotEnd()
+- tree: # xxx TODO xxx note in doc that tree->SetAttribude has to go after dialog->Show
+
+(cosmetics)######## Check this:
+- consider return; vs. return undef;
+  return IUP::Internal::LibraryIup::_voidfunc; == return;
+  return IUP::Internal::LibraryIup::_nonvoidfunc; == return undef;
+  SUGGESTION: always call: return IUP::Internal::LibraryIup::_func; (even for void functions)
+- http://stackoverflow.com/questions/3435122/whats-the-difference-between-return-and-return-undef-in-perl
+- "Perl Best Practices" (and Perl::Critic) suggest not using return undef
+
+(cosmetics)######## IUP::Internal::Canvas
 - consider moving 'my %ch_register' from Internal::LibraryIup to Internal::Canvas
 
 (cosmetics)######## IUP::PPlot  
@@ -58,23 +90,7 @@
 - change: _create_element should set $self->ihandle value
 - Get/SetAttributeSV - via IupGet/SetAttributeHandle
 
-######## Check impacts of:
-- return IUP::Internal::LibraryIup::_IupCopyClassAttributes($src->ihandle, $dst->ihandle);
-  vs.
-  IUP::Internal::LibraryIup::_IupCopyClassAttributes($src->ihandle, $dst->ihandle);
-- http://stackoverflow.com/questions/3435122/whats-the-difference-between-return-and-return-undef-in-perl
-- what returns void function from XS?
-- "Perl Best Practices" (and Perl::Critic) suggest not using return undef
-
-######## Global issues
-- check memory leaks - http://use.perl.org/~jozef/journal/40411
-
-######## DOC notes
-- pplot.pl: # xxx TODO.DOC xxx note in doc that DS_ has to be set after ->PPlotEnd()
-- tree: # xxx TODO xxx note in doc that tree->SetAttribude has to go after dialog->Show
-
 !!Big Task!!######## IUP::Canvas (now works without Bitmap/Image/Palette/Pattern related functions)
-- somehow handle CD_xxx constants
 - implement missing XS methods to IUP::Internal::Canvas (see notes in Canvas.xs)
 
 1/ non-Bitmap (easier to implement)
@@ -195,6 +211,8 @@ deprecated kill/create
 cd.KillImageRGB
 cd.KillImageRGBA
 cd.KillImageMap
+
+###################################################################################################
 
 (not now, maybe later)######## IUP::OleControl (not a priority)
 - missing -> add

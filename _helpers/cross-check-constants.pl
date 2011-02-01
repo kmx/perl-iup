@@ -12,7 +12,7 @@ my $root = File::Spec->catdir($FindBin::Bin, '..');
 my @defined = grep(/^use\s+constant/, read_file("$root/lib/IUP/Constants.pm"));
 @defined = map { $1 if(/^use\s+constant\s+([^\s=]+)/) } @defined;
 
-my @exported = grep(/^\s*(IUP_|K_)/, read_file("$root/lib/IUP/Constants.pm"));
+my @exported = grep(/^\s*(IUP_|K_|CD_)/, read_file("$root/lib/IUP/Constants.pm"));
 @exported = map { $1 if(/^\s*([^\s=]+)/) } @exported;
 
 my ($data, $def, $exp);

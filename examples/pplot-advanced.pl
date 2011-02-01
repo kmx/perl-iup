@@ -182,7 +182,7 @@ sub InitPlots {
 
   $plot[3]->PPlotBegin(1);
   for (my $theI=0; $theI<12; $theI++) { 
-    $plot[3]->PPlotAddStr($kLables[$theI], $kData[$theI]);
+    $plot[3]->PPlotAdd($kLables[$theI], $kData[$theI]); #xxxcheckthis was AddStr 
   }
   $plot[3]->PPlotEnd();
   $plot[3]->SetAttribute("DS_COLOR", "100 100 200");
@@ -275,7 +275,8 @@ sub tabs_tabchange_cb {
 
   # autoscaling
   # X axis
-  if ($plot[$ii]->GetInt("AXS_XAUTOMIN") && $plot[$ii]->GetInt("AXS_XAUTOMAX")) {
+  #xxxif ($plot[$ii]->GetInt("AXS_XAUTOMIN") && $plot[$ii]->GetInt("AXS_XAUTOMAX")) {
+  if ($plot[$ii]->AXS_XAUTOMIN && $plot[$ii]->AXS_XAUTOMAX) {
     $tgg2->VALUE("ON");
     $dial2->ACTIVE("NO");
   }
@@ -593,7 +594,7 @@ $vboxl->SetAttribute( GAP=>"4", EXPAND=>"NO" );
 # right panel: tabs with plots
 for (my $ii=0; $ii<$MAXPLOT; $ii++) {
   $vboxr[$ii] = IUP::Vbox->new( child=>$plot[$ii] ); # each plot a tab
-  $vboxr[$ii]->SetfAttribute("TABTITLE", "Plot %d", $ii); # name each tab
+  $vboxr[$ii]->SetAttribute("TABTITLE", "Plot $ii"); # name each tab
 }
 
 $tabs = IUP::Tabs->new( child=>\@vboxr, TABCHANGE_CB=>\&tabs_tabchange_cb ); # create tabs

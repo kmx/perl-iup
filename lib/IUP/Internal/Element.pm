@@ -144,6 +144,7 @@ sub SetAttribute {
   #iup.SetAttribute(ih: iulua_tag, name: string, value: string) [in Lua]   
   #void IupStoreAttribute(Ihandle *ih, const char *name, const char *value); [in C]
   #iup.StoreAttribute(ih: iulua_tag, name: string, value: string) [in Lua] 
+  # xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
   my ($self, %args) = @_;  
   for (keys %args) {    
     my ($k, $v) = ($_, $args{$_});     
@@ -151,9 +152,8 @@ sub SetAttribute {
       #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
       IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
     }
-    else {
-      # xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
-      $v = "$v";
+    else {      
+      $v = "$v" if defined $v; #BEWARE: stringification necessary
       IUP::Internal::LibraryIup::_IupStoreAttribute($self->ihandle, $k, $v);
     }
   }
@@ -166,14 +166,16 @@ sub SetAttributeId {
   #iup.StoreAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua] 
   # xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
   my ($self, $name, $id, $v) = @_;  
-  IUP::Internal::LibraryIup::_IupStoreAttributeId($self->ihandle, $name, $id, "$v"); #BEWARE: stringification necessary
+  $v = "$v" if defined $v; #BEWARE: stringification necessary
+  IUP::Internal::LibraryIup::_IupStoreAttributeId($self->ihandle, $name, $id, $v);
 }
   
 sub SetAttributeId2 {
   #void  IupStoreAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* value);
   # xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
   my ($self, $name, $lin, $col, $v) = @_;  
-  IUP::Internal::LibraryIup::_IupStoreAttributeId2($self->ihandle, $name, $lin, $col, "$v"); #BEWARE: stringification necessary
+  $v = "$v" if defined $v; #BEWARE: stringification necessary
+  IUP::Internal::LibraryIup::_IupStoreAttributeId2($self->ihandle, $name, $lin, $col, $v);
 }
 
 sub GetAttribute {

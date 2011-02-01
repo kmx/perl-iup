@@ -21,7 +21,7 @@ my $cb_table = {
 [% END -%]
 };
 
-# xxx TODO xxx: maybe return something else then -1 in case of error
+#xxx-consider-later: maybe return something else then -1 in case of error
 
 sub _execute_cb { # convert just the first arg from ihandle to objref
   my ($ih, $action, @args) = @_;
@@ -77,9 +77,13 @@ sub _execute_cb_ih12 { #Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
 
 sub _execute_cb_cnv7 { #Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas
   my ($ih, $action, @args) = @_;
+  #ihandle
   my $ref = IUP->GetByIhandle($ih);
   return -1 unless ref($ref);
-  warn "### xxx TODO xxx _execute_cb_cnv7(): do not know how to convert canvas handle ($args[6])";
+  #cnvhandle - #xxx-consider-later IUP->GetByCnvhandle
+  $args[6] = IUP::Internal::LibraryIup::_translate_ch($args[6]) || IUP::Internal::Canvas->new_from_cnvhandle($args[6]);  
+  return -1 unless ref($args[6]);
+  #call func
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
   my $rv = &$func($ref, @args);
@@ -89,9 +93,13 @@ sub _execute_cb_cnv7 { #Ihandle* ih,int line,int column,int xmin,int xmax,int ym
 
 sub _execute_cb_cnv1 { #Ihandle* ih,cdCanvas* cnv
   my ($ih, $action, @args) = @_;
+  #ihandle
   my $ref = IUP->GetByIhandle($ih);
   return -1 unless ref($ref);
-  warn "### xxx TODO xxx _execute_cb_cnv1(): do not know how to convert canvas handle ($args[0])";
+  #cnvhandle - #xxx-consider-later IUP->GetByCnvhandle
+  $args[0] = IUP::Internal::LibraryIup::_translate_ch($args[6]) || IUP::Internal::Canvas->new_from_cnvhandle($args[0]);  
+  return -1 unless ref($args[0]);
+  #call func
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
   my $rv = &$func($ref, @args);
