@@ -5,7 +5,10 @@
 
 #include <iup.h>
 #include <cd.h>
+
+#ifdef HAVELIB_IUPCD
 #include <cdiup.h>
+#endif
 
 /* macros for processing args in fuctions with variable arg list, e.g. 'func(...)' */
 #define myST2IHN(a) (items>(a)) && (SvIOK(ST(a))) ? INT2PTR(Ihandle*, SvIVX(ST(a))) : NULL;
@@ -33,7 +36,12 @@ cdCanvas*
 _cdCreateCanvas_CD_IUP(ih)
 		Ihandle* ih;
 	CODE:
+#ifdef HAVELIB_IUPCD
 		RETVAL = cdCreateCanvas(CD_IUP, ih);
+#else
+		warn("cdCreateCanvas() not available");
+		RETVAL = NULL;
+#endif
 	OUTPUT:
 		RETVAL
 

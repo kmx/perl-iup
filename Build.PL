@@ -15,7 +15,18 @@ my $class = Module::Build->subclass(
           '}',
 );
 
-#my $builder = Module::Build->new(
+my $lflags = Alien::IUP->config('LIBS');
+my $cflags = Alien::IUP->config('INC');
+
+#xxxTODO
+$cflags .= ' -DHAVELIB_IUPCD'       if 1;
+$cflags .= ' -DHAVELIB_IUPIM'       if 1;
+$cflags .= ' -DHAVELIB_IUPGL'       if 1;
+$cflags .= ' -DHAVELIB_IUPOLE'      if 1;
+$cflags .= ' -DHAVELIB_IUPCONTROLS' if 1;
+$cflags .= ' -DHAVELIB_IUP_PPLOT'   if 1;
+$cflags .= ' -DHAVELIB_IUPIMGLIB'   if 1;
+
 my $builder = $class->new(
   module_name          => 'IUP',
   license              => 'mit',
@@ -39,8 +50,8 @@ my $builder = $class->new(
   },
   add_to_cleanup       => [ 'IUP-*' ],
   c_source             => 'src', # ppport.h
-  extra_compiler_flags => Alien::IUP->config('INC'),
-  extra_linker_flags   => Alien::IUP->config('LIBS'),
+  extra_linker_flags   => $lflags,
+  extra_compiler_flags => $cflags,  
   meta_merge => {
     keywords => [ qw[IUP portable toolkit graphical user interfaces tecgraf cross-platform GUI Windows GTK Motif X11] ],
     resources => {

@@ -20,8 +20,8 @@ BEWARE
 
 The module is still under development:
  * the API was not fixed yet and is still slightly changing
- * no documentation at the moment (look at examples)
- * very basic (incomplete) test suite
+ * incomplete documentation
+ * incomplete test suite
 
 INSTALLATION
 

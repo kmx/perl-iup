@@ -4,14 +4,24 @@
 #include "ppport.h"
 
 #include <iup.h>
-#include <iupcontrols.h>
-#include <iup_pplot.h>
-#include <iupgl.h>
-#include <iupim.h>
-#include <cd.h>
-#include <cdiup.h>
 
-#ifdef HASLIB_IUPOLE
+#ifdef HAVELIB_IUPCONTROLS
+#include <iupcontrols.h>
+#endif
+
+#ifdef HAVELIB_IUP_PPLOT
+#include <iup_pplot.h>
+#endif
+
+#ifdef HAVELIB_IUPGL
+#include <iupgl.h>
+#endif
+
+#ifdef HAVELIB_IUPIM
+#include <iupim.h>
+#endif
+
+#ifdef HAVELIB_IUPOLE
 #include <iupole.h>
 #endif
 
@@ -151,7 +161,9 @@ _IupOpen()
 void
 _IupImageLibOpen()
 	CODE:
+#ifdef HAVELIB_IUPIMGLIB
 		IupImageLibOpen();
+#endif
 
 #### Original C function from <iup.h>
 # int IupMainLoop (void);
@@ -1773,7 +1785,12 @@ _IupGetAllAttributes(ih,...)
 Ihandle*
 _IupColorBrowser()
 	CODE:
+#ifdef HAVELIB_IUPCONTROLS	
 		RETVAL = IupColorBrowser();
+#else
+		warn("IupOleControl() not available");
+		RETVAL = NULL;
+#endif
 	OUTPUT:
 		RETVAL
 
@@ -1783,7 +1800,12 @@ Ihandle*
 _IupDial(type)
 		char* type;
 	CODE:
+#ifdef HAVELIB_IUPCONTROLS
 		RETVAL = IupDial(type);
+#else
+		warn("IupOleControl() not available");
+		RETVAL = NULL;
+#endif
 	OUTPUT:
 		RETVAL
 
@@ -1792,7 +1814,11 @@ _IupDial(type)
 int
 _IupControlsOpen()
 	CODE:
+#ifdef HAVELIB_IUPCONTROLS
 		RETVAL = IupControlsOpen();
+#else
+		RETVAL = 0;
+#endif
 	OUTPUT:
 		RETVAL
 
@@ -1801,7 +1827,12 @@ _IupControlsOpen()
 Ihandle*
 _IupColorbar()
 	CODE:
+#ifdef HAVELIB_IUPCONTROLS
 		RETVAL = IupColorbar();
+#else
+		warn("IupColorbar() not available");
+		RETVAL = NULL;
+#endif
 	OUTPUT:
 		RETVAL
 
@@ -1810,7 +1841,12 @@ _IupColorbar()
 Ihandle*
 _IupCells()
 	CODE:
+#ifdef HAVELIB_IUPCONTROLS
 		RETVAL = IupCells();
+#else
+		warn("IupCells() not available");
+		RETVAL = NULL;
+#endif
 	OUTPUT:
 		RETVAL
 
@@ -1820,7 +1856,12 @@ Ihandle*
 _IupMatrix(action)
 		char* action;
 	CODE:
+#ifdef HAVELIB_IUPCONTROLS
 		RETVAL = IupMatrix(action);
+#else
+		warn("IupMatrix() not available");
+		RETVAL = NULL;
+#endif
 	OUTPUT:
 		RETVAL
 
@@ -1834,7 +1875,9 @@ _IupMatStoreAttribute(ih,name,lin,col,value)
 		int col;
 		char* value;
 	CODE:
+#ifdef HAVELIB_IUPCONTROLS
 		IupMatStoreAttribute(ih,name,lin,col,value);
+#endif
 
 #### Original C function from <iupcontrols.h>
 # char* IupMatGetAttribute (Ihandle* ih, const char* name, int lin, int col);
@@ -1845,7 +1888,11 @@ _IupMatGetAttribute(ih,name,lin,col)
 		int lin;
 		int col;
 	CODE:
+#ifdef HAVELIB_IUPCONTROLS
 		RETVAL = (char*)IupMatGetAttribute(ih,name,lin,col);
+#else
+		RETVAL = NULL;
+#endif
 	OUTPUT:
 		RETVAL
 
@@ -1856,14 +1903,21 @@ _IupMatGetAttribute(ih,name,lin,col)
 void
 _IupPPlotOpen()
 	CODE:
+#ifdef HAVELIB_IUP_PPLOT
 		IupPPlotOpen();
+#endif
 
 #### Original C function from <iup_pplot.h>
 # Ihandle* IupPPlot(void);
 Ihandle*
 _IupPPlot()
 	CODE:
+#ifdef HAVELIB_IUP_PPLOT
 		RETVAL = IupPPlot();
+#else
+		warn("IupPPlot() not available");
+		RETVAL = NULL;
+#endif
 	OUTPUT:
 		RETVAL
 
@@ -1874,7 +1928,9 @@ _IupPPlotBegin(ih,strXdata)
 		Ihandle* ih;
 		int strXdata;
 	CODE:
+#ifdef HAVELIB_IUP_PPLOT
 		IupPPlotBegin(ih,strXdata);
+#endif
 
 #### Original C function from <iup_pplot.h>
 # void IupPPlotAdd(Ihandle *ih, float x, float y);
@@ -1888,6 +1944,7 @@ _IupPPlotAdd(ih,x,y)
 		char* cx;
 		float fx;
 	CODE:
+#ifdef HAVELIB_IUP_PPLOT
 		if SvOK(x) {
 		  if SvNOK(x) { /* float */		    
 		    fx = SvNV(x);
@@ -1906,6 +1963,7 @@ _IupPPlotAdd(ih,x,y)
 		else {
 		  /* IupPPlotAddStr(ih,NULL,y); xxxTODO checkthis */
 		}
+#endif
 
 #### Original C function from <iup_pplot.h>
 # int IupPPlotEnd(Ihandle *ih);
@@ -1913,7 +1971,11 @@ int
 _IupPPlotEnd(ih)
 		Ihandle* ih;
 	CODE:
-		RETVAL=IupPPlotEnd(ih);
+#ifdef HAVELIB_IUP_PPLOT
+		RETVAL=IupPPlotEnd(ih);		
+#else
+		RETVAL=0;
+#endif
 	OUTPUT:
 		RETVAL
 
@@ -1927,7 +1989,9 @@ _IupPPlotInsertStr(ih,index,sample_index,x,y)
 		const char* x;
 		float y;
 	CODE:
+#ifdef HAVELIB_IUP_PPLOT
 		IupPPlotInsertStr(ih,index,sample_index,x,y);
+#endif
 
 #### Original C function from <iup_pplot.h>
 # void IupPPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y);
@@ -1939,7 +2003,9 @@ _IupPPlotInsert(ih,index,sample_index,x,y)
 		float x;
 		float y;
 	CODE:
+#ifdef HAVELIB_IUP_PPLOT
 		IupPPlotInsert(ih,index,sample_index,x,y);
+#endif
 
 #### Original C function from <iup_pplot.h>
 # void IupPPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy);
@@ -1952,9 +2018,11 @@ _IupPPlotTransform(ih,x,y);
 		int ix;
 		int iy;
 	PPCODE:
+#ifdef HAVELIB_IUP_PPLOT
 		IupPPlotTransform(ih,x,y,&ix,&iy);
 		XPUSHs(sv_2mortal(newSViv(ix)));
 		XPUSHs(sv_2mortal(newSViv(iy)));
+#endif
 
 #### Original C function from <iup_pplot.h>
 # void IupPPlotPaintTo(Ihandle *ih, void *cnv);
@@ -1963,7 +2031,9 @@ _IupPPlotPaintTo(ih,cnv)
 		Ihandle *ih;
 		void *cnv;
 	CODE:
+#ifdef HAVELIB_IUP_PPLOT
 		IupPPlotPaintTo(ih,cnv);
+#endif
 
 ################################################################################ iupole.h 
 
@@ -1973,10 +2043,10 @@ Ihandle*
 _IupOleControl(progid)
 		const char* progid;
 	CODE:
-#ifdef HASLIB_IUPOLE
+#ifdef HAVELIB_IUPOLE
 		RETVAL = IupOleControl(progid);
 #else
-		warn("xxx not supported");
+		warn("IupOleControl() not available");
 		RETVAL = NULL;
 #endif
 	OUTPUT:
@@ -1987,7 +2057,11 @@ _IupOleControl(progid)
 int
 _IupOleControlOpen()
 	CODE:
+#ifdef HAVELIB_IUPOLE
 		RETVAL = IupOleControlOpen();
+#else
+		RETVAL = 0;
+#endif
 	OUTPUT:
 		RETVAL
 
@@ -1998,7 +2072,9 @@ _IupOleControlOpen()
 void
 _IupGLCanvasOpen()
 	CODE:
+#ifdef HAVELIB_IUPGL
 		IupGLCanvasOpen();
+#endif
 
 #### Original C function from <.../iup/include/iupgl.h>
 # Ihandle *IupGLCanvas(const char *action);
@@ -2006,37 +2082,50 @@ Ihandle*
 _IupGLCanvas(action)
 		const char* action;
 	CODE:
+#ifdef HAVELIB_IUPGL
 		RETVAL = IupGLCanvas(action);
+#else
+		warn("IupGLCavnas() not available");
+		RETVAL = NULL;
+#endif
 	OUTPUT:
 		RETVAL
 
-#### Original C function from <.../iup/include/iupgl.h>
+#### Original C function
 # void IupGLMakeCurrent(Ihandle* ih);
 void
 _IupGLMakeCurrent(ih)
 		Ihandle* ih;
 	CODE:
+#ifdef HAVELIB_IUPGL
 		IupGLMakeCurrent(ih);
+#endif
 
-#### Original C function from <.../iup/include/iupgl.h>
+#### Original C function
 # int IupGLIsCurrent(Ihandle* ih);
 int
 _IupGLIsCurrent(ih)
 		Ihandle* ih;
 	CODE:
+#ifdef HAVELIB_IUPGL
 		RETVAL = IupGLIsCurrent(ih);
+#else
+		RETVAL = 0;
+#endif
 	OUTPUT:
 		RETVAL
 
-#### Original C function from <.../iup/include/iupgl.h>
+#### Original C function
 # void IupGLSwapBuffers(Ihandle* ih);
 void
 _IupGLSwapBuffers(ih)
 		Ihandle* ih;
 	CODE:
+#ifdef HAVELIB_IUPGL
 		IupGLSwapBuffers(ih);
+#endif
 
-#### Original C function from <.../iup/include/iupgl.h>
+#### Original C function
 # void IupGLPalette(Ihandle* ih, int index, float r, float g, float b);
 void
 _IupGLPalette(ih,index,r,g,b)
@@ -2046,9 +2135,11 @@ _IupGLPalette(ih,index,r,g,b)
 		float g;
 		float b;
 	CODE:
+#ifdef HAVELIB_IUPGL
 		IupGLPalette(ih,index,r,g,b);
+#endif
 
-#### Original C function from <.../iup/include/iupgl.h>
+#### Original C function
 # void IupGLUseFont(Ihandle* ih, int first, int count, int list_base);
 void
 _IupGLUseFont(ih,first,count,list_base)
@@ -2057,27 +2148,38 @@ _IupGLUseFont(ih,first,count,list_base)
 		int count;
 		int list_base;
 	CODE:
+#ifdef HAVELIB_IUPGL
 		IupGLUseFont(ih,first,count,list_base);
+#endif
 
-#### Original C function from <.../iup/include/iupgl.h>
+#### Original C function
 # void IupGLWait(int gl);
 void
 _IupGLWait(gl)
 		int gl;
 	CODE:
+#ifdef HAVELIB_IUPGL
 		IupGLWait(gl);
+#endif
 
-#### Original C function from <.../iup/include/iupim.h>
+################################################################################ iupim.h
+
+#### Original C function
 # Ihandle* IupLoadImage(const char* file_name);
 Ihandle*
 _IupLoadImage(file_name)
 		const char* file_name;
 	CODE:
+#ifdef HAVELIB_IUPIM
 		RETVAL = IupLoadImage(file_name);
+#else
+		warn("IupLoadImage() not available");
+		RETVAL = NULL;
+#endif
 	OUTPUT:
 		RETVAL
 
-#### Original C function from <.../iup/include/iupim.h>
+#### Original C function
 # int IupSaveImage(Ihandle* ih, const char* file_name, const char* format);
 int
 _IupSaveImage(ih,file_name,format)
@@ -2085,9 +2187,16 @@ _IupSaveImage(ih,file_name,format)
 		const char* file_name;
 		const char* format;
 	CODE:
+#ifdef HAVELIB_IUPIM
 		RETVAL = IupSaveImage(ih,file_name,format);
+#else
+		warn("IupSaveImage() not available");
+		RETVAL = 0;
+#endif
 	OUTPUT:
 		RETVAL
+
+################################################################################
 
 #### keyboard related macros
 int

@@ -1,15 +1,16 @@
+######## Build.PL
+- finish -DHAVELIB_xxx
+
 ######## global
-- some ifdefs based on availabel libs - first use for iupole, iupgl
+- somehow check memory leaks - http://use.perl.org/~jozef/journal/40411
+- somehow check memory consumption - Devel::Size, Devel::Peak, PerlBench 
+  - http://stackoverflow.com/questions/1359771/perl-memory-usage-profiling-and-leak-detection
+  - http://www252.pair.com/comdog/mastering_perl/Chapters/06.benchmarking.html
+- check speed - http://perldoc.perl.org/Benchmark.html (cmpthese, timethese)
 
 ######## Examples
 - rewrite all examples from lua to perl
 - synchronize ratehr with C examples (they are more complete)
-
-######## tests
-- $ENV{RELEASE_TESTING} - 
-  plan skip_all => "\$ENV{RELEASE_TESTING} required fot testing", unless $ENV{RELEASE_TESTING};
-  eval "use Win32::Job ()";
-  plan skip_all => "Can't interrupt hung processes without Win32::Job" if $@;
 
 ######## IUP::Tree
 - some unimplemented methods
@@ -31,64 +32,25 @@
   PrependContainer ($parent, $text, $data)    Add a container to the control as the first child of $parent.
   InsertItem ($parent, $before | $previous, $text, $data)    Inserts an item after a given one (previous) or before one identified by its position (before).
   InsertContainer ($parent, $before | $previous, $text, $data)    See InsertItem().
-  
-######## Global issues
-- check memory leaks - http://use.perl.org/~jozef/journal/40411
 
-######## DOC notes
-- pplot: # xxx TODO.DOC xxx note in doc that DS_ has to be set after ->PPlotEnd()
-- tree: # xxx TODO xxx note in doc that tree->SetAttribude has to go after dialog->Show
+!!Big Task!!######## doc
+- Cleanup first (in this order):
+  - IUP.pod
+  - I::M::Elements.pod
+  - I::M::Callbacks.pod
+  - I::M::Attributes.pod
+  - I::M::Introduction.pod
+- Notes:
+  - pplot: note in doc that DS_ has to be set after ->PPlotEnd()
+  - tree: note in doc that tree->SetAttribude has to go after dialog->Show
 
-(cosmetics)######## Check this:
-- consider return; vs. return undef;
-  return IUP::Internal::LibraryIup::_voidfunc; == return;
-  return IUP::Internal::LibraryIup::_nonvoidfunc; == return undef;
-  SUGGESTION: always call: return IUP::Internal::LibraryIup::_func; (even for void functions)
-- http://stackoverflow.com/questions/3435122/whats-the-difference-between-return-and-return-undef-in-perl
-- "Perl Best Practices" (and Perl::Critic) suggest not using return undef
-
-(cosmetics)######## IUP::Internal::Canvas
-- consider moving 'my %ch_register' from Internal::LibraryIup to Internal::Canvas
-
-(cosmetics)######## IUP::PPlot  
-- PPlotPaintTo - maybe not needed: Plots to the given CD canvas instead of the display canvas (does not make much sense)
-
-(cosmetics)######## IUP::Matrix (same as with common attributes)
-- try to implement:
-  my $m = IUP::Matrix->new(...);
-  $m->[12,44] = 'value';
-  $m->data->[12,44] = 'value';
-  $m->{"BGCOLOR12:44"} = '12 12 12';
-  (see SDLx::Surface + SDLx::Surface::TiedMatrix)
-
-(cosmetics)######## global
-- cleanup unused funcs from LibraryIup.XS - cross-check-xs-func.pl
-
-(cosmetics)######## IUP (main module)
-- ??? better detection of initialized gui than (IUP->Open == IUP_OPENED)?
-- ??? detection of codepage used in GUI
-
-(cosmetics)######## all XSs
-- consider IUP::Internal::AllInOneLib.xs
-
-(cosmetics)######## IUP::Submenu
-- consider using $firstonly param of new()
-
-(cosmetics)######## IUP::ProgressBar
-- FGCOLOR seems to be ignored
-
-(cosmetics)######## IUP::Split
-- maybe support new($child1, $child2) instead of new(child1=>$child1, child2=>$child2)
-
-(cosmetics)######## IUP::Frame
-- maybe duplicate its style to other IUP::*box*
-- maybe some common helper function 
-  _create_element_child_single($self, $args, $firstonly, \&fucname)
-  _create_element_child_multi($self, $args, $firstonly, \&fucname)
-
-(cosmetics)######## IUP::Internal::Element
-- change: _create_element should set $self->ihandle value
-- Get/SetAttributeSV - via IupGet/SetAttributeHandle
+!!Big Task!!######## tests
+- skip pattern
+  plan skip_all => "\$ENV{RELEASE_TESTING} required fot testing", unless $ENV{RELEASE_TESTING};
+  eval "use Win32::Job ()";
+  plan skip_all => "Can't interrupt hung processes without Win32::Job" if $@;
+  plan skip_all => "No GUI available, skipping" unless IUP->Open == IUP_OPENED;
+- consider moving cross-check-... into xt/*
 
 !!Big Task!!######## IUP::Canvas (now works without Bitmap/Image/Palette/Pattern related functions)
 - implement missing XS methods to IUP::Internal::Canvas (see notes in Canvas.xs)
@@ -214,6 +176,59 @@ cd.KillImageMap
 
 ###################################################################################################
 
+(cosmetics)######## Check this:
+- consider return; vs. return undef;
+  return IUP::Internal::LibraryIup::_voidfunc; == return;
+  return IUP::Internal::LibraryIup::_nonvoidfunc; == return undef;
+  SUGGESTION: always call: return IUP::Internal::LibraryIup::_func; (even for void functions)
+- http://stackoverflow.com/questions/3435122/whats-the-difference-between-return-and-return-undef-in-perl
+- "Perl Best Practices" (and Perl::Critic) suggest not using return undef
+
+(cosmetics)######## IUP::Internal::Canvas
+- consider moving 'my %ch_register' from Internal::LibraryIup to Internal::Canvas
+
+(cosmetics)######## IUP::PPlot  
+- PPlotPaintTo - maybe not needed: Plots to the given CD canvas instead of the display canvas (does not make much sense)
+
+(cosmetics)######## IUP::Matrix (same as with common attributes)
+- try to implement:
+  my $m = IUP::Matrix->new(...);
+  $m->[12,44] = 'value';
+  $m->data->[12,44] = 'value';
+  $m->{"BGCOLOR12:44"} = '12 12 12';
+  (see SDLx::Surface + SDLx::Surface::TiedMatrix)
+
+(cosmetics)######## global
+- cleanup unused funcs from LibraryIup.XS - cross-check-xs-func.pl
+
+(cosmetics)######## IUP (main module)
+- ??? better detection of initialized gui than (IUP->Open == IUP_OPENED)?
+- ??? detection of codepage used in GUI
+
+(cosmetics)######## all XSs
+- consider IUP::Internal::AllInOneLib.xs
+
+(cosmetics)######## IUP::Submenu
+- consider using $firstonly param of new()
+
+(cosmetics)######## IUP::ProgressBar
+- FGCOLOR seems to be ignored
+
+(cosmetics)######## IUP::Split
+- maybe support new($child1, $child2) instead of new(child1=>$child1, child2=>$child2)
+
+(cosmetics)######## IUP::Frame
+- maybe duplicate its style to other IUP::*box*
+- maybe some common helper function 
+  _create_element_child_single($self, $args, $firstonly, \&fucname)
+  _create_element_child_multi($self, $args, $firstonly, \&fucname)
+
+(cosmetics)######## IUP::Internal::Element
+- change: _create_element should set $self->ihandle value
+- Get/SetAttributeSV - via IupGet/SetAttributeHandle
+
+###################################################################################################
+
 (not now, maybe later)######## IUP::OleControl (not a priority)
 - missing -> add
 - conditionally only on Win32
@@ -255,16 +270,3 @@ cd.KillImageMap
 
 (not now, maybe later)######## Callbacks generation (not a priority)
 - missing support for K_* callbacks (no hurry, lua does not implement them as well)
-
-(not now, maybe later)######## Consider splitting IUP::Internal::LibraryIup (not a priority)
-into:
-- IUP::Internal::LibraryIup
-- IUP::Internal::LibraryIupControl
-- IUP::Internal::LibraryCd
-- IUP::Internal::LibraryIm
-- IUP::Internal::LibraryImLib
-(postponed, the first try did not work as expected)
-
-(not now, maybe later)######## Build.PL (not a priority)
-- RHEL5 compatibility: create_makefile_pl => 'small'; (see Alien::wxWidgets) - probably not
-- using: release_testing automated_testing interactive
