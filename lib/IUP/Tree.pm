@@ -62,23 +62,6 @@ sub TreeSetNodeAttributes {
   }
 }
 
-sub TreeSetState {
-  my ($self, $tnode, $id) = @_;
-  if ($tnode->{state}) {
-    $self->SetAttribute("STATE$id", $tnode->{state})
-  }
-}
-
-sub TreeSetNodeAttrib {  
-  my ($self, $tnode, $id) = @_;
-  $self->SetAttribute("COLOR$id", $tnode->{color})                           if $tnode->{color};
-  $self->SetAttribute("TITLEFONT$id", $tnode->{titlefont})                   if $tnode->{titlefont};
-  $self->SetAttribute("MARKED$id", $tnode->{marked})                         if $tnode->{marked};
-  $self->TreeSetAttributeHandle("IMAGE$id", $tnode->{image})                 if $tnode->{image};
-  $self->TreeSetAttributeHandle("IMAGEEXPANDED$id", $tnode->{imageexpanded}) if $tnode->{imageexpanded};
-  $self->TreeSetUserId($id, $tnode->{userid})                                if $tnode->{userid};
-}
-
 sub TreeAddNodes {
   #iup.TreeAddNodes(ih: ihandle, tree: table, [id: number]) [in Lua]
   my ($self, $t, $id) = @_;
@@ -92,6 +75,26 @@ sub TreeAddNodes {
   $self->TreeSetState($t, 0) if $id == 0;
 }
 
+#xxxmaybe private
+sub TreeSetState {
+  my ($self, $tnode, $id) = @_;
+  if ($tnode->{state}) {
+    $self->SetAttribute("STATE$id", $tnode->{state})
+  }
+}
+
+#xxxmaybe private
+sub TreeSetNodeAttrib {  
+  my ($self, $tnode, $id) = @_;
+  $self->SetAttribute("COLOR$id", $tnode->{color})                           if $tnode->{color};
+  $self->SetAttribute("TITLEFONT$id", $tnode->{titlefont})                   if $tnode->{titlefont};
+  $self->SetAttribute("MARKED$id", $tnode->{marked})                         if $tnode->{marked};
+  $self->TreeSetAttributeHandle("IMAGE$id", $tnode->{image})                 if $tnode->{image};
+  $self->TreeSetAttributeHandle("IMAGEEXPANDED$id", $tnode->{imageexpanded}) if $tnode->{imageexpanded};
+  $self->TreeSetUserId($id, $tnode->{userid})                                if $tnode->{userid};
+}
+
+#xxxmaybe private
 sub TreeAddNodesRec {
   my ($self, $t, $id) = @_;
   return unless defined $t;

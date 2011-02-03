@@ -1,6 +1,16 @@
+######## IUP::Internal::Element
+- tune up destroy() & co. (handle circular references)
+- 
+
 ######## IUP::Tree
-- some unimplemented methods
-- most of the methods not tested at all
+- C/Lua:
+  TreeGetUserId + TreeSetUserId + TreeGetId - somehow handle pointer to user data (check how Lua handles this - iup\srclua5\il_tree_aux.c)
+  perhaps something like perl reference registry will be necessary - e.g. $tree->{TREEREFTABLE}->{$id}
+- Lua only:
+  TreeAddNodes($newnodes, [$id])                #some draft is already in Tree.pm
+  TreeSetNodeAttributes($id, $attrs)            #some draft is already in Tree.pm
+  TreeSetAncestorsAttributes($startid, $attrs)	#some draft is already in Tree.pm
+  TreeSetDescentsAttributes($startid, $attrs)   #some draft is already in Tree.pm 
 - examples:
   http://www.wxpython.org/docs/api/wx.TreeCtrl-class.html
   root = self.tree.AddRoot("Example")
