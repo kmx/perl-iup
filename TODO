@@ -1,17 +1,3 @@
-######## Build.PL
-- finish -DHAVELIB_xxx
-
-######## global
-- somehow check memory leaks - http://use.perl.org/~jozef/journal/40411
-- somehow check memory consumption - Devel::Size, Devel::Peak, PerlBench 
-  - http://stackoverflow.com/questions/1359771/perl-memory-usage-profiling-and-leak-detection
-  - http://www252.pair.com/comdog/mastering_perl/Chapters/06.benchmarking.html
-- check speed - http://perldoc.perl.org/Benchmark.html (cmpthese, timethese)
-
-######## Examples
-- rewrite all examples from lua to perl
-- synchronize ratehr with C examples (they are more complete)
-
 ######## IUP::Tree
 - some unimplemented methods
 - most of the methods not tested at all
@@ -32,6 +18,17 @@
   PrependContainer ($parent, $text, $data)    Add a container to the control as the first child of $parent.
   InsertItem ($parent, $before | $previous, $text, $data)    Inserts an item after a given one (previous) or before one identified by its position (before).
   InsertContainer ($parent, $before | $previous, $text, $data)    See InsertItem().
+
+######## Examples
+- rewrite all examples from lua to perl
+- synchronize ratehr with C examples (they are more complete)
+
+######## global
+- somehow check memory leaks - http://use.perl.org/~jozef/journal/40411
+- somehow check memory consumption - Devel::Size, Devel::Peak, PerlBench 
+  - http://stackoverflow.com/questions/1359771/perl-memory-usage-profiling-and-leak-detection
+  - http://www252.pair.com/comdog/mastering_perl/Chapters/06.benchmarking.html
+- check speed - http://perldoc.perl.org/Benchmark.html (cmpthese, timethese)
 
 !!Big Task!!######## doc
 - Cleanup first (in this order):

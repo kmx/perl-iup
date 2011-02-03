@@ -18,14 +18,18 @@ my $class = Module::Build->subclass(
 my $lflags = Alien::IUP->config('LIBS');
 my $cflags = Alien::IUP->config('INC');
 
-#xxxTODO
-$cflags .= ' -DHAVELIB_IUPCD'       if 1;
-$cflags .= ' -DHAVELIB_IUPIM'       if 1;
-$cflags .= ' -DHAVELIB_IUPGL'       if 1;
-$cflags .= ' -DHAVELIB_IUPOLE'      if 1;
-$cflags .= ' -DHAVELIB_IUPCONTROLS' if 1;
-$cflags .= ' -DHAVELIB_IUP_PPLOT'   if 1;
-$cflags .= ' -DHAVELIB_IUPIMGLIB'   if 1;
+unless (Alien::IUP->havelib( qw/iup im cd/ )) {
+  warn "Some of the essential libraries - iup, im, cd - is missing!\nGonna quit!\n";
+  exit 0;
+}
+
+$cflags .= ' -DHAVELIB_IUPCD'       if Alien::IUP->havelib('iupcd');
+$cflags .= ' -DHAVELIB_IUPIM'       if Alien::IUP->havelib('iupim');
+$cflags .= ' -DHAVELIB_IUPGL'       if Alien::IUP->havelib('iupgl');
+$cflags .= ' -DHAVELIB_IUPOLE'      if Alien::IUP->havelib('iupole');
+$cflags .= ' -DHAVELIB_IUPCONTROLS' if Alien::IUP->havelib('iupcontrols');
+$cflags .= ' -DHAVELIB_IUP_PPLOT'   if Alien::IUP->havelib('iup_pplot');
+$cflags .= ' -DHAVELIB_IUPIMGLIB'   if Alien::IUP->havelib('iupimglib');
 
 my $builder = $class->new(
   module_name          => 'IUP',
@@ -39,7 +43,7 @@ my $builder = $class->new(
   },
   build_requires       => { # need to have for running: ./Build (install|test)
     'Module::Build'        => 0,
-    'Alien::IUP'           => 0,
+    'Alien::IUP'           => 0.115,
     'Test::More'           => 0,
     'Carp'                 => 0,
     'constant'             => 0,
