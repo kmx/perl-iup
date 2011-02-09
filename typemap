@@ -10,6 +10,7 @@ cdBitmap *		T_PTR_OR_NULL
 cdPattern *		T_PTR_OR_NULL
 cdStipple *		T_PTR_OR_NULL
 Icallback		T_PTR_OR_NULL
+void *			T_PTR_OR_NULL
 #xxx todo: maybe remove in the end
 cdState *		T_PTR_OR_NULL
 cdContext *		T_PTR_OR_NULL

@@ -33,10 +33,12 @@ sub import {
      #UPDATE when element list change
      ':basic' => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg Dial Dialog FileDlg Fill FontDlg Frame
                      Hbox Image Item Label LayoutDialog List Menu MessageDlg Normalizer OleControl ProgressBar Radio 
-                     Sbox Separator Spin Spinbox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox/],
+                     Sbox Separator Spin Spinbox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox OleControl/], 
+		     #xxx add OleControl conditionally
      ':extended' => [qw/Matrix Cells Canvas CanvasGL PPlot/],
+                     #xxx add CanvasGL conditionally
      ':all' => [],
-  );
+  );  
   @{$tags{':all'}} = ( @{$tags{':basic'}}, @{$tags{':extended'}} );
 
   my %valid = map { $_ => 1 } @{$tags{':all'}};
@@ -360,7 +362,7 @@ sub GetParam {
   require IUP::Dialog;
   my $dlg = IUP::Dialog->new_no_ihandle();
   # we do not have ihandle of the new dialog at this point
-  # we are gonna set ihandle doring the first callback invocation (see XS code)
+  # we are gonna set ihandle during the first callback invocation (see XS code)
   my ($status, @output_values) = IUP::Internal::LibraryIup::_IupGetParam($title, $action, $dlg, $format, @initial_values);
   return ($status, @output_values);
 }

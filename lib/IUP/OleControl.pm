@@ -3,20 +3,27 @@ use strict;
 use warnings;
 use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
+use Carp;
 
 sub BEGIN {
-  #warn "[DEBUG] IUP::OleControl::BEGIN() started\n";
-  #IUP::Internal::LibraryIup::_IupOleControlOpen();
+  IUP::Internal::LibraryIup::_IupOleControlOpen();
 }
 
-# xxx TODO somehow handle that it is Windows specific
-# xxx TODO check integration with Win32::OLE
+# xxx TODO we need some integration with Win32::OLE
 
 sub _create_element {
   my ($self, $args, $firstonly) = @_;
-  #my $ih = IUP::Internal::LibraryIup::_IupOleControl($args->{ProgID}); # xxx TODO fix '0'
-  #return $ih;
-  return;
+  my $ih;
+  if (defined $firstonly) {
+    $ih = IUP::Internal::LibraryIup::_IupOleControl($firstonly);
+  }
+  elsif (defined $args->{progid}) {
+    $ih = IUP::Internal::LibraryIup::_IupOleControl($args->{progid});
+  }
+  else {
+    carp "Warning: missing parameter 'progid'";
+  }
+  return $ih;
 }
 
 1;

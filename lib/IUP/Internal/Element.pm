@@ -8,7 +8,7 @@ use IUP::Internal::Callback;
 use IUP::Internal::Attribute;
 use IUP::Constants qw(IUP_CURRENT);
 use Carp;
-
+use Scalar::Util 'blessed';
 sub BEGIN {
   #warn "[DEBUG] IUP::Internal::Element::BEGIN() started\n";
   IUP::Internal::LibraryIup::_IupControlsOpen();
@@ -147,14 +147,20 @@ sub SetAttribute {
   # xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
   my ($self, %args) = @_;  
   for (keys %args) {    
-    my ($k, $v) = ($_, $args{$_});     
-    if (ref($v)) {
-      #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
-      IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
-    }
-    else {      
+    my ($k, $v) = ($_, $args{$_});         
+    if (!ref($v)) {      
       $v = "$v" if defined $v; #BEWARE: stringification necessary
       IUP::Internal::LibraryIup::_IupStoreAttribute($self->ihandle, $k, $v);
+    }
+    elsif (blessed($v) && $v->can('ihandle')) {
+      #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
+      IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
+      #xxx-just-idea
+      $self->{____att_ref}->{$k} = $v;
+    }
+    else {
+#xxxTODO tune up this
+      carp "[warning] cannot set attribute '$k' to '$v'";
     }
   }
 }
@@ -258,7 +264,10 @@ sub Destroy {
   #void IupDestroy(Ihandle *ih); [in C]
   #iup.Destroy(ih: ihandle) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupDestroy($self->ihandle);
+  my $ih = $self->ihandle;
+  $self->ihandle(undef);
+  IUP::Internal::LibraryIup::_unregister_ih($ih);
+  return IUP::Internal::LibraryIup::_IupDestroy($ih);
 }
 
 sub Detach {
@@ -529,10 +538,89 @@ sub NextField {
 }
 
 sub DESTROY {
-  # xxx TODO see http://perldoc.perl.org/perlobj.html
-  #warn "XXX Destroying " . ref($_[0]) . " [" . $_[0]->ihandle . "]";
-  IUP::Internal::LibraryIup::_unregister_ih($_[0]->ihandle);
-  $_[0]->Destroy;
+  #xxx TODO see http://perldoc.perl.org/perlobj.html
+  #warn "XXX DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";
+  $_[0]->Destroy; #handles also _unregister_ih
+}
+
+#helper funcs for handling child=>... params
+
+sub _store_child_ref {
+  my $self = shift;
+  for (@_) {
+    next unless blessed($_);
+    $self->{____child}->{$_->ihandle} = $_;
+  }
+}
+
+sub _proc_child_param {
+  my ($self, $func, $args, $firstonly) = @_;
+  my $ih;
+  if (defined $firstonly) {
+    if (ref($firstonly) eq 'ARRAY') {
+      #call func
+      $ih = &$func( map($_->ihandle, @$firstonly) );
+      $self->_store_child_ref(@$firstonly); #xxx-just-idea
+    }
+    else {
+      #call func
+      $ih = &$func($firstonly->ihandle);
+      $self->_store_child_ref($firstonly); #xxx-just-idea
+    }
+  }
+  elsif (defined $args && defined $args->{child}) {
+    if (ref($args->{child}) eq 'ARRAY') {
+      #call func
+      $ih = &$func( map($_->ihandle, @{$args->{child}}) );
+      $self->_store_child_ref(@{$args->{child}}); #xxx-just-idea
+    }
+    else {
+      #call func
+      $ih = &$func($args->{child}->ihandle);
+      $self->_store_child_ref($args->{child}); #xxx-just-idea
+    }
+    delete $args->{child};
+  }
+  else {
+    #call func
+    $ih = &$func();
+  }
+  return $ih;
+}
+
+sub _proc_child_param_single {
+  my ($self, $func, $args, $firstonly) = @_;
+  my $ih;
+  if (defined $firstonly) {
+    if (ref($firstonly) && $firstonly->can('ihandle')) {
+      #call func
+      $ih = &$func($firstonly->ihandle);
+      $self->_store_child_ref($firstonly); #xxx-just-idea
+    }
+    else {
+      #call func
+      $ih = &$func(undef);
+      carp "Warning: parameter has to be a reference to IUP element";
+    }
+  }
+  elsif (defined $args && defined $args->{child}) {
+    if (ref($args->{child}) && $args->{child}->can('ihandle')) {
+      #call func
+      $ih = &$func($args->{child}->ihandle);
+      $self->_store_child_ref($args->{child}); #xxx-just-idea
+    }
+    else {
+      carp "Warning: 'child' parameter has to be a reference to IUP element";
+      #call func
+      $ih = &$func(undef);
+    }
+    delete $args->{child};
+  }
+  else {
+    #call func
+    $ih = &$func(undef);
+  }  
+  return $ih;
 }
 
 1;

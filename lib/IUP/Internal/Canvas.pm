@@ -30,6 +30,10 @@ sub new_from_cnvhandle {
   return $self;
 }
 
+sub DESTROY {
+  #xxx todo
+}
+
 #Note: all canvas related methods implemented directly in XS
 
 1;

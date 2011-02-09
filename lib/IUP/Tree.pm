@@ -4,6 +4,9 @@ use warnings;
 use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
 
+use Scalar::Util 'refaddr'; # http://stackoverflow.com/questions/4064001/how-should-i-compare-perl-references
+use Carp;
+
 sub _create_element {
   #my ($self, $args, $firstonly) = @_;
   return IUP::Internal::LibraryIup::_IupTree();
@@ -11,20 +14,38 @@ sub _create_element {
 
 sub TreeSetUserId {
   #int IupTreeSetUserId(Ihandle *ih, int id, void *userid); [in C]
-  #iup.TreeSetUserId(ih: ihandle, id: number, userid: userdata/table) [in Lua]
-  # xxx TODO xxx somehow handle pointer to user data
+  #iup.TreeSetUserId(ih: ihandle, id: number, userid: userdata/table) [in Lua]  
+  my ($self, $id, $userdata) = @_;
+  my $pointer = IUP::Internal::LibraryIup::_IupTreeGetUserId($self->ihandle, $id);
+  if (!defined($userdata)) {
+    delete $self->{____treedata}->{$pointer} if $pointer; #delete the old data
+  }
+  elsif (ref($userdata)) {
+    delete $self->{____treedata}->{$pointer} if $pointer; #delete the old data
+    $pointer = refaddr($userdata);
+    $self->{____treedata}->{$pointer} = $userdata;
+    IUP::Internal::LibraryIup::_IupTreeSetUserId($self->ihandle, $id, $pointer);
+  }
+  else {
+    carp "[Warning] 'userdata' parameter must be a reference";
+  }
 }
 
 sub TreeGetUserId {
-  #void* IupTreeGetUserId(Ihandle *ih, int id); [in C] 
+  #int IupTreeGetId(Ihandle* ih, void *userid);
   #iup.TreeGetUserId(ih: ihandle, id: number) -> (ret: userdata/table) [in Lua]
-  # xxx TODO xxx somehow handle pointer to user data
+  my ($self, $id) = @_;
+  my $pointer = IUP::Internal::LibraryIup::_IupTreeGetUserId($self->ihandle, $id);  
+  return undef unless defined $self->{____treedata};
+  return $self->{____treedata}->{$pointer};
 }
 
 sub TreeGetId {
   #int IupTreeGetId(Ihandle *ih, void *userid); [in C] 
   #iup.TreeGetId(ih: ihandle, userid: userdata/table) -> (ret: number) [in Lua]
-  # xxx TODO xxx somehow handle pointer to user data
+  my ($self, $userdata) = @_;
+  my $pointer = refaddr($userdata);
+  return IUP::Internal::LibraryIup::_IupTreeGetId($self->ihandle, $pointer);
 }
 
 sub TreeSetAncestorsAttributes {
@@ -73,6 +94,15 @@ sub TreeAddNodes {
   }
   $self->TreeAddNodesRec($t, $id);
   $self->TreeSetState($t, 0) if $id == 0;
+}
+
+#xxxNo idea what is this good for xxx UNTESTED xxx
+sub TreeSetAttributeHandle {
+  my ($self, $name, $value) = @_;
+  if (IUP->GetClass($value) eq "iup handle") {
+    $value = IUP->SetHandleName($value);
+  }
+  $self->SetAttribute($name, $value);
 }
 
 #xxxmaybe private

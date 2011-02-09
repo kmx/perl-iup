@@ -1,16 +1,48 @@
-######## IUP::Internal::Element
-- tune up destroy() & co. (handle circular references)
-- 
+###1: use weaken (Scalar::Util) http://stackoverflow.com/questions/2223721/common-perl-memory-reference-leak-patterns
+###2: perl -d:TraceUse script vs. scandeps 
+
+######## Examples
+- rewrite all examples from lua to perl
+- synchronize ratehr with C examples (they are more complete)
+- GL example y:\IUP3.3\fltk\FLTK-0.532007\examples\gl.pl
+- Clipboard.pm ?
+- User.pm ?
+- ColorDlg.pm ?
+- FontDlg.pm ?
+
+(important - broken example)######## IUP::Label
+- $label->TITLE("IUP::Canvas - inside");   does not work
+- $label->TITLE("inside");   works
+
+(important - broken example)######## IUP.pm
+- ListDialog() API change
+  my $rv = IUP->ListDialog("Color selection", [ qw/red green blue/ ]);
+  my $rv = IUP->ListDialog("Color selection", [ qw/red green blue/ ], 20, 6);
+  my $rv = IUP->ListDialog("Color selection", [ qw/red green blue/ ], 20, 6, 1);
+  my $rv = IUP->ListDialog("Color selection", [ qw/red green blue/ ], 20, 6, [0, 1, 1]);
+
+######## OleControl.pm (big troubles)
+- $o->IUNKNOWN ... pointer created by CoCreateInstance Function http://msdn.microsoft.com/en-us/library/ms686615%28v=vs.85%29.aspx
+- perahps integrate with Win32::OLE like $o->ole->methodname(...)
+- Win32::OLE needs something like new_from_iunknown
+  IUnknown *punk = ... value from $olecontrol->IUNKNOWN;
+  HRESULT hr;
+  IDispatch *pDispatch = NULL;
+  hr = punk->QueryInterface(IID_IDispatch, (void**)&pDispatch);
+  punk->Release();
+  ST(0) = CreatePerlObject(aTHX_ stash, pDispatch, destroy);
+
+######## Attributes/Callbacks
+- chek changes between 3.2-3.3
+- IUP::Frame: #xxx TODO missing accessor $frame->MARGIN("10x10");
 
 ######## IUP::Tree
-- C/Lua:
-  TreeGetUserId + TreeSetUserId + TreeGetId - somehow handle pointer to user data (check how Lua handles this - iup\srclua5\il_tree_aux.c)
-  perhaps something like perl reference registry will be necessary - e.g. $tree->{TREEREFTABLE}->{$id}
-- Lua only:
+- Convert Lua interface into Perl:
   TreeAddNodes($newnodes, [$id])                #some draft is already in Tree.pm
   TreeSetNodeAttributes($id, $attrs)            #some draft is already in Tree.pm
   TreeSetAncestorsAttributes($startid, $attrs)	#some draft is already in Tree.pm
   TreeSetDescentsAttributes($startid, $attrs)   #some draft is already in Tree.pm 
+  TreeSetAttributeHandle($name, $value)         #some draft is already in Tree.pm 
 - examples:
   http://www.wxpython.org/docs/api/wx.TreeCtrl-class.html
   root = self.tree.AddRoot("Example")
@@ -29,17 +61,6 @@
   InsertItem ($parent, $before | $previous, $text, $data)    Inserts an item after a given one (previous) or before one identified by its position (before).
   InsertContainer ($parent, $before | $previous, $text, $data)    See InsertItem().
 
-######## Examples
-- rewrite all examples from lua to perl
-- synchronize ratehr with C examples (they are more complete)
-
-######## global
-- somehow check memory leaks - http://use.perl.org/~jozef/journal/40411
-- somehow check memory consumption - Devel::Size, Devel::Peak, PerlBench 
-  - http://stackoverflow.com/questions/1359771/perl-memory-usage-profiling-and-leak-detection
-  - http://www252.pair.com/comdog/mastering_perl/Chapters/06.benchmarking.html
-- check speed - http://perldoc.perl.org/Benchmark.html (cmpthese, timethese)
-
 !!Big Task!!######## doc
 - Cleanup first (in this order):
   - IUP.pod
@@ -52,12 +73,15 @@
   - tree: note in doc that tree->SetAttribude has to go after dialog->Show
 
 !!Big Task!!######## tests
+- CHECK Test::NeedsDisplay
 - skip pattern
   plan skip_all => "\$ENV{RELEASE_TESTING} required fot testing", unless $ENV{RELEASE_TESTING};
   eval "use Win32::Job ()";
   plan skip_all => "Can't interrupt hung processes without Win32::Job" if $@;
   plan skip_all => "No GUI available, skipping" unless IUP->Open == IUP_OPENED;
+  use Test::NeedsDisplay ':skip_all';
 - consider moving cross-check-... into xt/*
+- maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
 
 !!Big Task!!######## IUP::Canvas (now works without Bitmap/Image/Palette/Pattern related functions)
 - implement missing XS methods to IUP::Internal::Canvas (see notes in Canvas.xs)
@@ -182,6 +206,26 @@ cd.KillImageRGBA
 cd.KillImageMap
 
 ###################################################################################################
+
+(info)######## XS hint
+- ST(0) = &PL_sv_undef;
+
+(cosmetics)######## IUP::Canvas
+- XS autodetection cdCanvasLine vs. cdfCanvasLine
+
+(cosmetics)######## Global
+- icon - see y:\IUP3.3\fltk\FLTK-0.532007\inc\MBX\FLTK.pm  (ACTION_code)
+- Build.PL: no_index => {directory => [qw[examples inc t]], files => [qw[xs/include/ppport.h]]
+
+(cosmetics)######## global
+- somehow check memory leaks - http://use.perl.org/~jozef/journal/40411
+- somehow check memory consumption - Devel::Size, Devel::Peak, PerlBench 
+  - http://stackoverflow.com/questions/1359771/perl-memory-usage-profiling-and-leak-detection
+  - http://www252.pair.com/comdog/mastering_perl/Chapters/06.benchmarking.html
+- check speed - http://perldoc.perl.org/Benchmark.html (cmpthese, timethese)
+
+(cosmetics)######## IUP::Internal::Element
+- tune up destroy() & co. (handle circular references) - check refaddr() trick in LibraryIup.pm
 
 (cosmetics)######## Check this:
 - consider return; vs. return undef;

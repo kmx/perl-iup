@@ -687,11 +687,11 @@ use constant IUP_TOP           => 0xFFFE; # = IUP_LEFT
 use constant IUP_BOTTOM        => 0xFFFD; # = IUP_RIGHT
 
 # BUTTON_CB
-use constant IUP_BUTTON1       => 1;
-use constant IUP_BUTTON2       => 2;
-use constant IUP_BUTTON3       => 3;
-use constant IUP_BUTTON4       => 4;
-use constant IUP_BUTTON5       => 5;
+use constant IUP_BUTTON1       => 49; # char '1'
+use constant IUP_BUTTON2       => 50; # char '2'
+use constant IUP_BUTTON3       => 51; # char '3'
+use constant IUP_BUTTON4       => 52; # char '4'
+use constant IUP_BUTTON5       => 53; # char '5'
 
 # Callback return values
 use constant IUP_IGNORE        => -1;

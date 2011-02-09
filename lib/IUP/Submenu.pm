@@ -15,6 +15,7 @@ sub _create_element {
 
     if (defined $args->{child}) {
       $m = $args->{child}->ihandle;
+      $self->_store_child_ref($args->{child}); #xxx-just-idea
       delete $args->{child};
     }
 

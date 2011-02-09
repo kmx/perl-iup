@@ -1258,31 +1258,33 @@ int
 _IupTreeSetUserId(ih,id,userid)
 		Ihandle* ih;
 		int id;
-		void* userid;
+		SV* userid;
 	CODE:
-		RETVAL = IupTreeSetUserId(ih,id,userid);
+		RETVAL = IupTreeSetUserId(ih,id,INT2PTR(void*, SvIVX(userid)));
 	OUTPUT:
 		RETVAL
 
 #### Original C function from <iup.h>
 # void* IupTreeGetUserId(Ihandle* ih, int id);
-void*
+void
 _IupTreeGetUserId(ih,id)
 		Ihandle* ih;
 		int id;
-	CODE:
-		RETVAL = IupTreeGetUserId(ih,id);
-	OUTPUT:
-		RETVAL
+	INIT:
+		void* ptr;
+	PPCODE:
+		ptr = IupTreeGetUserId(ih,id);
+		if (ptr==NULL) XPUSHs(sv_2mortal(newSVpv(NULL,0))); /* undef xxxcheckthis */ 
+		else XPUSHs(sv_2mortal(newSViv(PTR2IV(ptr))));
 
 #### Original C function from <iup.h>
 # int IupTreeGetId(Ihandle* ih, void *userid);
 int
 _IupTreeGetId(ih,userid)
 		Ihandle* ih;
-		void* userid;
+		SV* userid;
 	CODE:
-		RETVAL = IupTreeGetId(ih,userid);
+		RETVAL = IupTreeGetId(ih,INT2PTR(void*, SvIVX(userid)));
 	OUTPUT:
 		RETVAL
 
@@ -1653,6 +1655,8 @@ _IupListDialog(type,title,list,op,max_col,max_lin,marks)
 		/* create i_list array */
 		for(i=0; i<items; i++) i_list[i] = SvPV(*av_fetch((AV *)SvRV(list), i, 0), l);
 		
+		/* xxx hack */
+		if (op>=0) op++;
 		/* call IUP function */
 		rv = IupListDialog(type,title,items,i_list,op,max_col,max_lin,i_marks);
 		
@@ -2368,6 +2372,19 @@ _isSys(s)
 	OUTPUT:
 		RETVAL
 
+
+void
+_SV2ptrvalue(param)
+		SV* param;
+	INIT:
+		int rv;
+	PPCODE:
+		fprintf(stderr,"sv2ptr p=%p\n",param);
+		if (SvOK(param))
+		  XPUSHs(sv_2mortal(newSViv(PTR2IV(param))));
+		else
+		  XPUSHs(sv_2mortal(newSVpv(NULL,0))); /* undef */
+		
 char*
 _Testing(p)
 		SV* p;
