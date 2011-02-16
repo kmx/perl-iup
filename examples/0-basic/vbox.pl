@@ -1,8 +1,10 @@
-# IupVbox Example
+# IUP::Vbox example
+#
 # Creates a dialog with buttons placed one above the other, showing
 # the organization possibilities of the elements inside a vbox.
 # The ALIGNMENT attribute is explored in all its possibilities to obtain
 # the effects. The attributes GAP, MARGIN and SIZE are also tested.
+
 use strict;
 use warnings;
 
@@ -47,11 +49,9 @@ my $frm_3 = IUP::Frame->new( TITLE=>"ALIGNMENT=ARIGHT", child=>
 	      ] )
             );
 
-my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new( child=>[$frm_1, $frm_2, $frm_3] ), TITLE=>"IupVbox Example", SIZE=>"QUARTER" );
+my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new( child=>[$frm_1, $frm_2, $frm_3] ), TITLE=>"IUP::Vbox Example", SIZE=>"250x" );
 
-# Shows dialog in the center of the screen;
+# Shows dialog in the center of the screen
 $dlg->ShowXY (IUP_CENTER, IUP_CENTER);
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

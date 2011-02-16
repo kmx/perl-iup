@@ -1,6 +1,8 @@
-# IupVal Example
+# IUP::Val example
+#
 # Creates two Valuator controls, exemplifying the two possible types.
 # When manipulating the Valuator, the label's value changes.
+
 use strict;
 use warnings;
 
@@ -60,6 +62,4 @@ my $dlg_val = IUP::Dialog->new( TITLE=>"Valuator Test", child=>
 
 $dlg_val->Show();
 
-if ( (IUP->MainLoopLevel == 0) ) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

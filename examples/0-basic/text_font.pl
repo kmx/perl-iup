@@ -1,5 +1,8 @@
+# IUP::Text (font) example
+
 use strict;
 use warnings;
+
 use IUP ':all';
 
 my $l = IUP::List->new(
@@ -53,24 +56,13 @@ $l->ACTION( sub {
   $dg2->Hide if ($dg2);
 
   if ($v == 1) {
-    my $ml = IUP::Text->new(
-      MULTILINE=>'Yes' 
-    );
-    #xxx TODO $ml->SIZE("200x200");
-    $ml->VALUE("1234\nmmmmm\niiiii");
-    #xxx TODO $ml->FONT($t);
-    $ml->SetAttribute("SIZE", "200x200");
-    #$ml->SetAttribute("VALUE", "200x200");
-    $ml->SetAttribute("FONT", $t);
-    $dg2 = IUP::Dialog->new( child=>$ml );
-    $dg2->TITLE($t);
+    my $ml = IUP::Text->new( MULTILINE=>'Yes', SIZE=>"200x200", VALUE=>"1234\nmmmmm\niiiii", FONT=>$t );
+    $dg2 = IUP::Dialog->new( child=>$ml, TITLE=>$t );
     $dg2->Show();
-    $l->SetFocus();
+    $self->SetFocus();
   }
 } );
 
 $dg->Show();
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

@@ -1,6 +1,10 @@
-# IupMessage Example in IupLua;
-# Shows a dialog with the $message-> “Click the button”.;
+# IUP->Message example
+
+use strict;
+use warnings;
 
 use IUP ':all';
 
-IUP->Message("IupMessage", "Press the button the button");
+IUP->Message("IUP::Message", "Press the button the button");
+
+IUP->Message("Press the button the button again (dialog without title)");

@@ -61,6 +61,9 @@ my @ex_basic = qw(
   IUP_BLACK
   IUP_WHITE
   IUP_YELLOW
+
+  IUP_PRIMARY
+  IUP_SECONDARY
 );
 
 my @ex_keys = qw(
@@ -734,6 +737,10 @@ use constant IUP_BLUE          => "0 0 255";
 use constant IUP_BLACK         => "0 0 0";
 use constant IUP_WHITE         => "1 1 1";
 use constant IUP_YELLOW        => "1 1 0";
+
+# Used by IupColorbar
+use constant IUP_PRIMARY   => -1;
+use constant IUP_SECONDARY => -2;
 
 ##TAG: keys ##
 

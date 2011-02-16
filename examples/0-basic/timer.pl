@@ -1,14 +1,16 @@
-# IupTimer Example
+# IUP::Timer example
+#
+# Two timers:
+# 1/ each 0.5s prints a message
+# 2/ after 3s prints a message + quits the program
 
 use strict;
 use warnings;
 
 use IUP ':all';
 
-my $timer1 = IUP::Timer->new(TIME=>100);
-my $timer2 = IUP::Timer->new(TIME=>2000);
-
-# xxx TODO.ASKIUP why iuptimer has ACTION_CB not ACTION
+my $timer1 = IUP::Timer->new(TIME=>500);
+my $timer2 = IUP::Timer->new(TIME=>3000);
 
 $timer1->ACTION_CB( sub {
   print("timer 1 called\n");
@@ -28,6 +30,4 @@ $timer2->RUN("YES");
 my $dg = IUP::Dialog->new( child=>IUP::Label->new( TITLE=>"Wait..." ), TITLE=>"Timer example", SIZE=>"QUARTER" );
 $dg->Show();
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

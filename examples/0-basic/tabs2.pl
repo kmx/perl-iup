@@ -1,9 +1,16 @@
-require "iupx"
-require "iupluacontrols"
+# IUP::Tabs example
 
-edit1 = iup.multiline{expand="YES",value="Number 1",tabtitle="First"}
-edit2 = iup.multiline{expand="YES",value="Number 2?",tabtitle="Second"}
+use strict;
+use warnings;
 
-tabs = iup.tabs{edit1,edit2,expand='YES'}
+use IUP ':all';
 
-iupx.show_dialog {tabs; title="Tabs!", size="QUARTERxQUARTER"}
+my $edit1 = IUP::Text->new( MULTILINE=>"YES", EXPAND=>"YES", VALUE=>"Number 1", TABTITLE=>"First" );
+my $edit2 = IUP::Text->new( MULTILINE=>"YES", EXPAND=>"YES", VALUE=>"Number 2", TABTITLE=>"Second" );
+
+my $tabs = IUP::Tabs->new( child=>[$edit1,$edit2], EXPAND=>'YES' );
+
+my $dlg = IUP::Dialog->new( child=>$tabs, TITLE=>'Tabs!', SIZE=>"QUARTERxQUARTER" );
+
+$dlg->Show;
+IUP->MainLoop;

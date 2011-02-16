@@ -25,7 +25,8 @@ my ($self, $index, $sample_index, $x, $y, $select) = @_;
 
 sub edit_cb {
   #(Ihandle* ih, int index, int sample_index, float x, float y, float *new_x, float *new_y)
-  # xxx TODO references
+  # xxx TODO: references
+  # perhaps - return (IUP_DEFAULT, $new_x, $new_y);
   my ($self, $index, $sample_index, $x, $y, $new_x, $new_y) = @_;
   printf("EDIT_CB(%d, %d, %g, %g, %g, %g)\n", $index, $sample_index, $x, $y, $new_x, $new_y);
   return IUP_DEFAULT;
@@ -37,7 +38,7 @@ sub postdraw_cb {
   my ($ix, $iy) = $self->PPlotTransform(0.003, 0.02);  
   $cnv->cdFont(undef, CD_BOLD, 10);
   $cnv->cdTextAlignment(CD_SOUTH);
-  $cnv->cdText($ix, $iy, "xxxMy Inline Legend xxx");
+  $cnv->cdText($ix, $iy, "My Inline Legend");
   return IUP_DEFAULT;
 }
 
@@ -180,7 +181,7 @@ sub InitPlots {
 
   $plot[3]->PPlotBegin(1);
   for (my $theI=0; $theI<12; $theI++) { 
-    $plot[3]->PPlotAdd($kLables[$theI], $kData[$theI]); #xxxcheckthis was AddStr 
+    $plot[3]->PPlotAdd($kLables[$theI], $kData[$theI]);
   }
   $plot[3]->PPlotEnd();
   $plot[3]->SetAttribute("DS_COLOR", "100 100 200");
@@ -253,7 +254,6 @@ sub tabs_get_index {
   my $curr_tab = IUP->GetByName($tabs->GetAttribute("VALUE"));
   my $ss = $curr_tab->GetAttribute("TABTITLE");
   $ss = int(substr($ss, 5)); # Skip "Plot "
-  die "##### xxx DEBUG: invalid value ss=$ss" if $ss>=$MAXPLOT || $ss<0;
   return $ss;
 }
 
@@ -264,17 +264,13 @@ sub tabs_tabchange_cb {
   my ($self, $new_tab) = @_;
   my $ii = 0;
 
-  # xxx TODO xxx ugly hack - do this translation somewhere in Callback.pm
-  $new_tab = IUP->GetByIhandle($new_tab) unless ref $new_tab;
-
   my $ss = $new_tab->GetAttribute("TABTITLE");
   $ss = substr($ss, 5); # Skip "Plot "
   $ii = int($ss);  
 
   # autoscaling
   # X axis
-  #xxxif ($plot[$ii]->GetAttribute("AXS_XAUTOMIN") && $plot[$ii]->GetAttribute("AXS_XAUTOMAX")) {
-  if ($plot[$ii]->GetAttribute("AXS_XAUTOMIN") && $plot[$ii]->GetAttribute("AXS_XAUTOMAX")) {  #xxxcheckthis was ->GetAttribute()
+  if ($plot[$ii]->GetAttribute("AXS_XAUTOMIN") && $plot[$ii]->GetAttribute("AXS_XAUTOMAX")) {
     $tgg2->VALUE("ON");
     $dial2->ACTIVE("NO");
   }
@@ -283,7 +279,7 @@ sub tabs_tabchange_cb {
     $dial2->ACTIVE("YES");
   }
   # Y axis
-  if ($plot[$ii]->GetAttribute("AXS_YAUTOMIN") && $plot[$ii]->GetAttribute("AXS_YAUTOMAX")) { #xxxcheckthis was ->GetAttribute()
+  if ($plot[$ii]->GetAttribute("AXS_YAUTOMIN") && $plot[$ii]->GetAttribute("AXS_YAUTOMAX")) {
     $tgg1->VALUE("ON");
     $dial1->ACTIVE("NO");
   }
@@ -293,8 +289,7 @@ sub tabs_tabchange_cb {
   }
 
   # grid
-  if ($plot[$ii]->GetAttribute("GRID")) #xxxcheckthis was ->GetAttribute()
-  {
+  if ($plot[$ii]->GetAttribute("GRID")) {
     $tgg3->VALUE("ON");
     $tgg4->VALUE("ON");
   }
@@ -317,7 +312,7 @@ sub tabs_tabchange_cb {
   }
 
   # legend
-  if ($plot[$ii]->GetAttribute("LEGENDSHOW")) { #xxxcheckthis was ->GetAttribute()
+  if ($plot[$ii]->GetAttribute("LEGENDSHOW")) {
     $tgg5->VALUE("ON");
   }
   else {
@@ -532,10 +527,21 @@ sub dial2_btnup_cb {
 
 sub bt1_cb {
   my $self = shift;
-  #my $ii = tabs_get_index();
-  #my $cnv = cdCreateCanvas(CD_PDF, "pplot.pdf -o");
-  #$plot[$ii]->PPlotPaintTo($cnv);
-  #$cdKillCanvas($cnv);
+  my $filename = "testfile"; #BEWARE: no spaces
+  my $ii = tabs_get_index();
+
+  #xxxTODO - something like IUP::Canvas::EMF / SVG / DXF / ...
+  #xxx my $cnv IUP::Canvas::EMF->new( filename=>'x.emf', resolution=>4, ...);
+  
+  use IUP::Internal::Canvas;
+  #my $cnv = IUP::Internal::Canvas->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_FILE("SVG", "$filename.svg 300x200 4"));
+  #my $cnv = IUP::Internal::Canvas->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_FILE("PS", "$filename.ps"));
+  #my $cnv = IUP::Internal::Canvas->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_FILE("DXF", "$filename.dxf 300x200"));
+  my $cnv = IUP::Internal::Canvas->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_FILE("EMF", "$filename.emf 800x600"));
+  $plot[$ii]->PPlotPaintTo($cnv);
+  $cnv->cdKillCanvas();
+  
+  IUP->Message("Warning", "Exported to '$filename.emf'!");
   return IUP_DEFAULT;
 }
 
@@ -585,7 +591,7 @@ $lbl2 = IUP::Label->new( TITLE=>"", SEPARATOR=>"HORIZONTAL" );
 $tgg5 = IUP::Toggle->new( TITLE=>"Legend", ACTION=>\&tgg5_cb );
 $lbl3 = IUP::Label->new( TITLE=>"", SEPARATOR=>"HORIZONTAL" );
 
-$bt1 = IUP::Button->new( TITLE=>"Export PDF", ACTION=>\&bt1_cb );
+$bt1 = IUP::Button->new( TITLE=>"Export EMF", ACTION=>\&bt1_cb );
 $vboxl = IUP::Vbox->new( child=>[$f1, $f2, $lbl1, $tgg3, $tgg4, $lbl2, $tgg5, $lbl3, $bt1] );
 $vboxl->SetAttribute( GAP=>"4", EXPAND=>"NO" );
 

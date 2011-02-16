@@ -1,3 +1,5 @@
+# IUP::Matrix (callback mode) example
+
 use strict;
 use warnings;
 
@@ -7,9 +9,9 @@ use Data::Dumper;
 my $matrix = IUP::Matrix->new(
     NUMLIN=>3,
     NUMCOL=>3,
-    NUMCOL_VISIBLE=>3,
     NUMLIN_VISIBLE=>3,
-    HEIGHT0=>10,
+    NUMCOL_VISIBLE=>3,
+    HEIGHT0=>10, #IMPORTANT: this tells IUP::Matrix that we are gonna have column titles at line 0
     WIDTHDEF=>30,
     SCROLLBAR=>"NO",
 );
@@ -22,13 +24,11 @@ my $data = [
    [ 3.1, 3.2, 3.3 ],
  ];
 
-# xxx TODO xxx how to define line titles
- 
 $matrix->VALUE_CB( sub {
   my ($self, $l, $c) = @_;
-  warn "XXXX xxx cb1: $l, $c";
+  #warn "VALUE_CB: l=$l, c=$c\n";
   if ($l>0 && $c>0) {
-    return $data->[$l-1]->[$c-1];
+    return $data->[$l-1]->[$c-1]; #BEWARE: data starts at index $l==1,$c==1
   }
   elsif ($l==0 && $c>0) {
     # column title
@@ -39,17 +39,11 @@ $matrix->VALUE_CB( sub {
 
 $matrix->VALUE_EDIT_CB( sub {
   my ($self, $l, $c, $newvalue) = @_;
-  warn "XXXX xxx cb2: $l, $c";
+  #warn "VALUE_EDIT_CB: l=$l, c=$c, newvalue=$newvalue\n";
   $data->[$l-1]->[$c-1] = $newvalue;
 } );
 
-my $dlg = IUP::Dialog->new( child=>$matrix, TITLE=>"IupMatrix in Callback Mode" );
+my $dlg = IUP::Dialog->new( child=>$matrix, TITLE=>"IUP::Matrix in Callback Mode" );
 $dlg->Show();
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
-
-# xxx TODO xxx - argument isnt numeric value - 
-# xxx print STDERR Dumper($data);
-
+IUP->MainLoop;

@@ -5,6 +5,10 @@
 
 #include <iup.h>
 #include <cd.h>
+#include <cdsvg.h>
+#include <cdps.h>
+#include <cdemf.h>
+#include <cddxf.h>
 
 #ifdef HAVELIB_IUPCD
 #include <cdiup.h>
@@ -31,7 +35,8 @@ MODULE = IUP::Internal::Canvas	PACKAGE = IUP::Internal::Canvas
 # http://perldoc.perl.org/perlxs.html
 # http://perldoc.perl.org/perlxstut.html
 
-# special internal function
+### special internal functions ###
+
 cdCanvas*
 _cdCreateCanvas_CD_IUP(ih)
 		Ihandle* ih;
@@ -42,6 +47,28 @@ _cdCreateCanvas_CD_IUP(ih)
 		warn("cdCreateCanvas() not available");
 		RETVAL = NULL;
 #endif
+	OUTPUT:
+		RETVAL
+
+cdCanvas*
+_cdCreateCanvas_FILE(format, params)
+		char* format;
+		char* params;
+	CODE:
+		if      (strcmp(format,"SVG") == 0) RETVAL = cdCreateCanvas(CD_SVG, params);
+		else if (strcmp(format,"PS" ) == 0) RETVAL = cdCreateCanvas(CD_PS, params);
+		else if (strcmp(format,"EMF") == 0) RETVAL = cdCreateCanvas(CD_EMF, params);
+		else if (strcmp(format,"DXF") == 0) RETVAL = cdCreateCanvas(CD_DXF, params);
+		/* xxx TODO add all file formats */
+		/* WMF */
+		/* DGN */
+		/* CGM */
+		/* METAFILE */
+		/* DEBUG */
+		/* PICTURE? */
+		/* PRINTER? */
+		/* CLIPBOARD? */
+		else RETVAL = NULL;
 	OUTPUT:
 		RETVAL
 
@@ -1792,12 +1819,14 @@ cdBitmapRGB2Map(bitmap_rgb,bitmap_map)
 
 #### Original C function from <.../cd/include/cd.h>
 # long cdEncodeColor(unsigned char red, unsigned char green, unsigned char blue);
+#xxxcheckthis
 long
-cdEncodeColor(red,green,blue)
+cdEncodeColor(canvas,red,green,blue)
+		SV* canvas;
 		unsigned char red;
 		unsigned char green;
 		unsigned char blue;
-	CODE:
+	CODE:		
 		RETVAL = cdEncodeColor(red,green,blue);
 	OUTPUT:
 		RETVAL

@@ -1,8 +1,10 @@
-# IupTree Example
+# IUP::Tree example (figures) - using attribute only interface
+#
 # Creates a tree with some branches and leaves.
-# Two callbacks are $registered-> one deletes marked nodes when the Del key
+# Two callbacks are registered: one deletes marked nodes when the Del key
 # is pressed, and the other, called when the right mouse button is pressed,
 # opens a menu with options.
+
 use strict;
 use warnings;
 
@@ -19,6 +21,8 @@ $tree->K_ANY( sub {
   $tree->SetAttribute("DELNODE", "MARKED") if ( $c == K_DEL );
 } );
 
+#xxx TODO check tree.c example + tree1.wlua
+
 sub init_tree_nodes {
   $tree->SetAttribute( "TITLE", "Figures" ); 
   $tree->SetAttribute( "ADDBRANCH0", "3D" );
@@ -34,13 +38,11 @@ sub init_tree_nodes {
   $tree->SetAttribute( "VALUE", "6" ); 
 }
 
-my $dlg = IUP::Dialog->new( child=>$tree, TITLE=>"IupTree", SIZE=>"QUARTERxTHIRD" );
-$tree->SetAttribute( FONT=>"COURIER_NORMAL_10", MARKMODE=>"MULTIPLE", ADDEXPANDED=>"NO", SHOWRENAME=>"YES" );
+my $dlg = IUP::Dialog->new( child=>$tree, TITLE=>"IUP::Tree Figures", SIZE=>"QUARTERxTHIRD" );
+$tree->SetAttribute( MARKMODE=>"MULTIPLE", ADDEXPANDED=>"NO", SHOWRENAME=>"YES" );
 $dlg->ShowXY(IUP_CENTER,IUP_CENTER);
 
-# note: tree->SetAttribute(...) has to go after dialog->Show()
+#NOTE: all tree->SetAttribute(...) has to go after dialog->Show() xxx why?
 init_tree_nodes();
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

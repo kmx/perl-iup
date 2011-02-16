@@ -1,5 +1,9 @@
-# IupFileDlg Example
-# Shows a typical file-saving dialog.
+# IUP::FileDlg example
+#
+# Shows a typical file-saving dialog
+
+use strict;
+use warnings;
 
 use IUP ':all';
 
@@ -21,5 +25,5 @@ elsif ( $status == "0" ) {
   IUP->Message("File already exists", $filedlg->VALUE);
 }
 elsif ( $status == "-1" ) {
-  IUP->Message("IupFileDlg", "Operation canceled");
+  IUP->Message("IUP::FileDlg", "Operation canceled");
 }

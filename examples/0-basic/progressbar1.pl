@@ -1,3 +1,5 @@
+# IUP::Progressbar example
+
 use strict;
 use warnings;
 
@@ -17,14 +19,11 @@ sub idle_cb {
   return IUP_DEFAULT;
 }
 
-my $dlg = IUP::Dialog->new( child=>$progressbar, TITLE=>"IupProgressBar");
-# xxx $dlg->SIZE("QUARTERxEIGHTH");
+my $dlg = IUP::Dialog->new( child=>$progressbar, TITLE=>"IUP::ProgressBar");
 
 # Registers idle callback;
 IUP->SetIdle(\&idle_cb);
 
 $dlg->ShowXY(IUP_CENTER, IUP_CENTER);
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

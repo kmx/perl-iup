@@ -1,6 +1,8 @@
-# IupSeparator Example
+# IUP::Separator example
+#
 # Creates a dialog with a menu and some items
 # A IupSeparator was used to separate the menu items
+
 use strict;
 use warnings;
 
@@ -21,7 +23,6 @@ my $item_exit = IUP::Item->new( TITLE=>"Exit", ACTION=>sub { return IUP_CLOSE } 
 my $menu_file = IUP::Menu->new( child=>[$item_new, $item_open, $item_close, IUP::Separator->new(), $item_pagesetup, $item_print, IUP::Separator->new(), $item_exit] );
 
 # Creates file submenus;
-# xxx TODO xxx Submenu: maybe child instead of menu
 my $submenu_file = IUP::Submenu->new( child=>$menu_file, TITLE=>"File");
 
 # Creates main menu with file submenu;
@@ -36,6 +37,4 @@ my $dlg = IUP::Dialog->new( child=>$text,
 # Shows dialog in the center of the screen;
 $dlg->ShowXY(IUP_CENTER,IUP_CENTER);
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

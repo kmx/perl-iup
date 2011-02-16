@@ -1,5 +1,5 @@
-# IupText Example
-# Allows the user to execute a Lua command
+# IUP::Text (single line) example
+
 use strict;
 use warnings;
 
@@ -15,12 +15,10 @@ my $text = IUP::Text->new( VALUE=>"Write a text, press Ctrl-Q to exit",
                            EXPAND=>"HORIZONTAL",
                            K_ANY=>\&cb_text_k_any );
 
-my $dlg = IUP::Dialog->new( child=>$text, TITLE=>"IupText", SIZE=>"QUARTERxQUARTER" );
+my $dlg = IUP::Dialog->new( child=>$text, TITLE=>"IUP::Text", SIZE=>"QUARTERxQUARTER" );
 
 $dlg->ShowXY(IUP_CENTER, IUP_CENTER);
-#xxx TODO xxx consider adding IUP->SetFocus($text)
+
 $text->SetFocus();
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

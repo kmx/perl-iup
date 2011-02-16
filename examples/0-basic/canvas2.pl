@@ -68,13 +68,11 @@ sub leave_cb {
 
 my $cv = IUP::Canvas->new( CURSOR=>"CROSS", RASTERSIZE=>"320x200",
                            EXPAND=>"NO", SCROLLBAR=>"YES",
-                           DX=>0.5, DY=>0.5,
-                           ACTION=>\&redraw_cb,
-                           BUTTON_CB=>\&button_cb,
-                           SCROLL_CB=>\&scroll_cb,
-                           MOTION_CB=>\&motion_cb,
-                           ENTERWINDOW_CB=>\&enter_cb,
-                           LEAVEWINDOW_CB=>\&leave_cb );
+                           DX=>0.5, DY=>0.5 );
+
+$cv->SetCallback( ACTION=>\&redraw_cb, BUTTON_CB=>\&button_cb,
+                  SCROLL_CB=>\&scroll_cb, MOTION_CB=>\&motion_cb,
+                  ENTERWINDOW_CB=>\&enter_cb, LEAVEWINDOW_CB=>\&leave_cb );
 
 my $dg = IUP::Dialog->new( child=>IUP::Vbox->new([
                              $cv, 

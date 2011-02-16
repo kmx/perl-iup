@@ -1,4 +1,4 @@
-# IUP::Hbox Example
+# IUP::Hbox example
 #
 # Creates a dialog with buttons placed side by side, with the purpose
 # of showing the organization possibilities of elements inside an IUP::Hbox.

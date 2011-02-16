@@ -10,12 +10,15 @@ sub _create_element {
   my ($self, $args, $firstonly) = @_;
   my $c = $args->{child};
   my $ih;
-  if (defined($c) && blessed($c) && $c->can('ihandle')) {
+  if (defined $c && blessed $c && $c->can('ihandle')) {
     $ih = IUP::Internal::LibraryIup::_IupDialog($c->ihandle);
     $self->_store_child_ref($c); #xxx-just-idea
   }
-  else {
+  elsif (defined $c) {
     carp "Warning: parameter 'child' has to be a reference to IUP element";
+  }
+  else {
+    $ih = IUP::Internal::LibraryIup::_IupDialog(undef);
   }
   
   delete $args->{child};

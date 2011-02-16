@@ -1,3 +1,5 @@
+# IUP::PPlot example
+
 use strict;
 use warnings;
 
@@ -23,9 +25,7 @@ $plot->PPlotEnd();
 $plot->DS_LEGEND("test line");
 $plot->DS_LINEWIDTH(2);
 
-my $d = IUP::Dialog->new( child=>$plot, SIZE=>"300x200", TITLE=>"PPlot" );
+my $d = IUP::Dialog->new( child=>$plot, SIZE=>"300x200", TITLE=>"IUP::PPlot" );
 $d->Show();
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

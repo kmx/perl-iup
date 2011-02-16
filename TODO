@@ -1,14 +1,46 @@
 ###1: use weaken (Scalar::Util) http://stackoverflow.com/questions/2223721/common-perl-memory-reference-leak-patterns
 ###2: perl -d:TraceUse script vs. scandeps 
 
+http://search.cpan.org/~mdootson/Wx-ActiveX-0.15/lib/Wx/ActiveX.pm
+
+######## registers
+- register classes created in GetByIhandle (similarly fo canvas)
+- or register in: new_from_cnvhandle new_from_ihandle
+
 ######## Examples
-- rewrite all examples from lua to perl
-- synchronize ratehr with C examples (they are more complete)
-- GL example y:\IUP3.3\fltk\FLTK-0.532007\examples\gl.pl
-- Clipboard.pm ?
-- User.pm ?
-- ColorDlg.pm ?
-- FontDlg.pm ?
+- no example for: Clipboard.pm ?
+- no example for: User.pm ?
+- no example for: ColorDlg.pm ?
+- no example for: FontDlg.pm ?
+- notepad.wlua? olecontrol_browser.wlua?
+#IUP::FileDlg - filedlg.pl: *.c example open My Document directory (how?)
+#IUP::PPlot - xxx TODO maybe add AddSeries to IUP::PPlot # see iupx.lua + iupxpplot.lua
+#IUP::PPlot - xxx TODO maybe add AxsBounds to IUP::PPlot # see iupx.lua + iupxpplot.lua
+#IUP::PPlot - EDIT_CB handler should return (IUP_DEFAULT, $new_x, $new_y)
+#IUP - IUP->SetIdle vs. IUP->GetIdle? #xxx how to check existing idle handler?
+#IUP - add IUP->GetClassName[FromIh] IUP::Internal::LibraryIup::_IupGetClassName
+#IUP - Idle? #xxxsomething causes progressbar3.pl to hangup/crash (after pressing accel/decel)
+#IUP::Canvas - add something like IUP::Canvas::EMF / SVG / DXF / ... my $cnv IUP::Canvas::EMF->new( filename=>'x.emf', resolution=>4, ...);
+#IUP::Internal::Element - list2.pl: original examples uses inheritable IUP attribute _LABEL for storing pointers for iup elements 
+                           (do we want to support this in perl?)
+#consider checking arg count SetAttributeId($$$) SetAttributeId2($$$$)
+#IUP::Internal::Element - passing undef to child=> ... Can't call method "ihandle" on an undefined value at Y:\@repos\perl-iup\blib\lib/IUP/Internal/Element.pm line 574. (better error message)
+#IUP::Internal::Element - Discard() = destroy perl object without destroying iup element
+#IUP::LayoutDialog - maybe support named new params e.g. dialog=>... 
+#IUP::Tree - #NOTE: tree->TreeAddNodes(...) has to go after dialog->Show() + tree->SetAttribute(...) has to go after dialog->Show() xxx why?
+
+#setting callback should avoid an automatic destruction
+#Destroy() should unset all registered callbacks
+
+(important - broken example)######## IUP::Cell
+- DRAW_CB - for some reason $canvas->... does not work
+- cd methods vs functions: cdEncodeColor vs. $cnv->cdEncodeColor
+
+(important - broken example)######## Ask Scuri
+val  # xxx TODO.ASKIUP iuplabel does not accept attribute TYPE
+
+(important - broken example)######## IUP::List
+- IUP::List->new( items 0-based or 1-based index(important - broken example)######## IUP::Label
 
 (important - broken example)######## IUP::Label
 - $label->TITLE("IUP::Canvas - inside");   does not work

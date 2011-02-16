@@ -440,8 +440,15 @@ sub ShowXY {
 sub GetNextChild {
   #Ihandle *IupGetNextChild(Ihandle* ih, Ihandle* child); [in C]
   #iup.GetNextChild(ih, child: ihandle) -> next_child: ihandle [in Lua]
-  my ($self, $child) = @_;
-  my $ih = IUP::Internal::LibraryIup::_IupGetNextChild($self->ihandle, $child);
+  my ($self, $child) = @_; 
+  my $ih;  
+  #xxxTODO check this - kind of a hack
+  if (defined $child) {
+    $ih = IUP::Internal::LibraryIup::_IupGetNextChild($self->ihandle, $child->ihandle);
+  }
+  else {
+    $ih = IUP::Internal::LibraryIup::_IupGetNextChild($self->ihandle, undef);
+  }
   return IUP->GetByIhandle($ih);
 }
 

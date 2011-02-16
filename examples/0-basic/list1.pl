@@ -1,4 +1,5 @@
-# IupList Example
+# IUP::List example
+#
 # Creates a dialog with three frames, each one containing a list.
 # The first is a simple list, the second one is a multiple list and the last one is a drop-down list.
 # The second list has a callback associated.
@@ -29,7 +30,7 @@ my $list_dropdown = IUP::List->new( items=>['Less than US$ 1000', 'US$ 2000', 'U
 my $frm_prize = IUP::Frame->new( child=>$list_dropdown, TITLE=>'Prizes won' );
 
 # Creates a dialog with the the frames with three lists and sets its title;
-my $dlg = IUP::Dialog->new( child=>IUP::Hbox->new( [$frm_medal, $frm_sport, $frm_prize] ), TITLE=>'IupList Example' );
+my $dlg = IUP::Dialog->new( child=>IUP::Hbox->new( [$frm_medal, $frm_sport, $frm_prize] ), TITLE=>'IUP::List Example' );
 
 # Shows dialog in the center of the screen;
 $dlg->ShowXY(IUP_CENTER, IUP_CENTER);
@@ -37,17 +38,15 @@ $dlg->ShowXY(IUP_CENTER, IUP_CENTER);
 sub cb_list_multiple {
   my ($self, $t, $i, $v) = @_;
   if ( $v == 0 ) {
-    $self->{xxxSTATE}='deselected'; # xxx TODO some best practice about strong user data into IUP object
+    $self->{_STATE}='deselected'; # xxx TODO some best practice about strong user data into IUP object
   }
   else {
-    $self->{xxxSTATE}='selected';
+    $self->{_STATE}='selected';
   }
-  IUP->Message('Competed in', "Item $i - $t - " . $self->{xxxSTATE});
+  IUP->Message('Competed in', "Item $i - $t - " . $self->{_STATE});
   return IUP_DEFAULT;
 }
 
 $list_multiple->ACTION(\&cb_list_multiple);
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

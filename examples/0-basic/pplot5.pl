@@ -1,39 +1,87 @@
-require "iuplua"
-require "iupx" 
+# IUP::PPlot example
 
-function least_squares (xx,yy)
-    local xsum = 0.0
-    local ysum = 0.0
-    local xxsum = 0.0
-    local yysum = 0.0
-    local xysum = 0.0
-    local n = #xx
-    for i = 1,n do
-        local x,y = xx[i], yy[i]
-        xsum = xsum + x
-        ysum = ysum + y
-        xxsum = xxsum + x*x
-        yysum = yysum + y*y
-        xysum = xysum + x*y
-    end
-    local m = (xsum*ysum/n - xysum )/(xsum*xsum/n - xxsum)
-    local c = (ysum - m*xsum)/n
-    return m,c
-end
+use strict;
+use warnings;
 
-local xx = {0,2,5,10}
-local yy = {1,1.5,6,8}
-local m,c = least_squares(xx,yy)
+use IUP ':all';
+use Scalar::Util 'looks_like_number';
 
-function eval (x) return m*x + c end
+#xxx TODO maybe add AxsBounds to IUP::PPlot
+sub AxsBounds {
+  my ($self, $axs_xmin, $axs_xmax, $axs_ymin, $axs_ymax) = @_;
+  if (defined $axs_xmin) {
+    $self->AXS_XMIN($axs_xmin);
+    $self->AXS_XAUTOMIN('NO');
+  }
+  if (defined $axs_xmax) {
+    $self->AXS_XMAX($axs_xmax);
+    $self->AXS_XAUTOMAX('NO');
+  }
+  if (defined $axs_ymin) {
+    $self->AXS_YMIN($axs_ymin);
+    $self->AXS_YAUTOMIN('NO');
+  }
+  if (defined $axs_ymax) {
+    $self->AXS_YMAX($axs_ymax);
+    $self->AXS_YAUTOMAX('NO');
+  }
+}
 
-local plot = iupx.pplot {TITLE = "Simple Data",AXS_YMIN=0,GRID="YES"}
+#xxx TODO add_series vs. AddSeries
+sub add_series {
+  my ($plot, $xvalues, $yvalues, $options) = @_;
+  # are we given strings for the x values?
+  $plot->PPlotBegin(looks_like_number($xvalues->[1]) ? 0 : 1);
+  $plot->PPlotAdd($xvalues->[$_],$yvalues->[$_]) for (0..scalar(@$xvalues)-1);
+  $plot->PPlotEnd();
+  # set any series-specific plot attributes
+  if ($options) {
+    # mode must be set before any other attributes!
+    if ($options->{DS_MODE}) {
+      $plot->DS_MODE($options->{DS_MODE});
+      delete $options->{DS_MODE};
+    }
+    $plot->SetAttribute(%$options);
+  }
+}
 
--- the original data
-plot:AddSeries(xx,yy,{DS_MODE="MARK",DS_MARKSTYLE="CIRCLE"})
--- the least squares fit
-local xmin,xmax = xx[1],xx[#xx]
-plot:AddSeries({xmin,xmax},{eval(xmin),eval(xmax)})
+sub least_squares {
+  my ($xx, $yy) = @_;
+  my $xsum = 0.0;
+  my $ysum = 0.0;
+  my $xxsum = 0.0;
+  my $yysum = 0.0;
+  my $xysum = 0.0;
+  my $n = scalar(@$xx);
+  for my $i (0..$n-1) {
+    my ($x, $y) = ($xx->[$i], $yy->[$i]);
+    $xsum += $x;
+    $ysum += $y;
+    $xxsum += $x*$x;
+    $yysum += $y*$y;
+    $xysum += $x*$y;
+  }
+  my $m = ($xsum*$ysum/$n - $xysum )/($xsum*$xsum/$n - $xxsum);
+  my $c = ($ysum - $m*$xsum)/$n;
+  return ($m, $c);
+}
 
-iupx.show_dialog{plot; title="Easy Plotting",size="QUARTERxQUARTER"}
+my $xx = [0.0, 2.0, 5.0, 10.0];
+my $yy = [1.0, 1.5, 6.0,  8.0];
+my ($m, $c) = least_squares($xx, $yy);
 
+sub ev {
+  my $x = shift;
+  return $m*$x + $c;
+}
+
+my $plot = IUP::PPlot->new( TITLE=>"Simple Data", MARGINBOTTOM=>30, MARGINLEFT=>30, GRID=>"YES" );
+AxsBounds($plot, undef, undef, 0, undef);
+add_series($plot, $xx, $yy, {DS_MODE=>"MARK",DS_MARKSTYLE=>"CIRCLE"} );
+my ($xmin, $xmax) = ($xx->[0], $xx->[scalar(@$xx)-1]);  # the least squares fit
+add_series($plot, [$xmin,$xmax],[ev($xmin),ev($xmax)] );
+
+my $d = IUP::Dialog->new( TITLE=>"Easy Plotting", SIZE=>"QUARTERxQUARTER", child=>$plot );
+$d->Show();
+
+IUP->MainLoop();

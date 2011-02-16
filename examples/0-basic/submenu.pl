@@ -1,5 +1,8 @@
-# IupSubmenu Example
-# Creates a dialog with a menu with three submenus. One of the submenus has a submenu, which has another submenu.
+# IUP::Submenu example
+#
+# Creates a dialog with a menu with three submenus. One of the submenus
+# has a submenu, which has another submenu.
+
 use strict;
 use warnings;
 
@@ -57,7 +60,7 @@ my $menu = IUP::Menu->new( child=>[$submenu_file, $submenu_edit, $submenu_help] 
 
 # Creates dialog with a text, sets its title and associates a menu to it
 my $dlg = IUP::Dialog->new( child=>$text,
-                            TITLE=>"IupSubmenu Example",
+                            TITLE=>"IUP::Submenu Example",
 			    MENU=>$menu,
 			    SIZE=>"QUARTERxEIGHTH" );
 
@@ -73,6 +76,4 @@ $item_exit->ACTION( sub {
   return IUP_CLOSE;  
 } );
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

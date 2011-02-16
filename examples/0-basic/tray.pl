@@ -1,3 +1,5 @@
+# IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
+
 use strict;
 use warnings;
 
@@ -79,6 +81,4 @@ $dg->TRAYCLICK_CB( sub {
   return IUP_DEFAULT;
 } );
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

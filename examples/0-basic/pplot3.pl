@@ -1,43 +1,40 @@
-require( "iuplua" )
-require( "iupluacontrols" )
-require( "iuplua_pplot"  )
+# IUP::PPlot example
 
---MARGINBOTTOM="20"
+use strict;
+use warnings;
 
-plot = iup.pplot{TITLE = "Sine and Cosine",
-                    MARGINBOTTOM="35",
-                    MARGINLEFT="35",
-                    AXS_XLABEL="X",
-                    AXS_YLABEL="Y",
-                    --AXS_YMIN = -1.1,AXS_YAUTOMIN="NO",
-                    LEGENDSHOW="YES"
-                    }
+use IUP ':all';
 
-iup.PPlotBegin(plot,0)
-for x = -2,2,0.01 do
-    iup.PPlotAdd(plot,x,math.sin(x))
-end
-iup.PPlotEnd(plot)
+my $plot = IUP::PPlot->new(
+             TITLE        => "Sine and Cosine",
+             MARGINBOTTOM => 40,
+             MARGINLEFT   => 40,
+             LEGENDSHOW   => "YES",
+             AXS_XLABEL   => "X",
+             AXS_YLABEL   => "Y",
+             AXS_YMIN     => -1.1,
+	     AXS_YAUTOMIN => "NO",
+             AXS_YMAX     => 1.1,
+	     AXS_YAUTOMAX => "NO",
+);
 
-iup.PPlotBegin(plot,0)
-for x = -2,2,0.01 do
-    iup.PPlotAdd(plot,x,math.cos(x))
-end
-iup.PPlotEnd(plot)
-plot.DS_LINEWIDTH = 3
+$plot->PPlotBegin(0);
+for (my $x=-2; $x<=2; $x+=0.01) {
+  $plot->PPlotAdd($x, sin($x))
+}
+$plot->PPlotEnd();
 
---~ plot.REDRAW="YES"
+$plot->PPlotBegin(0);
+for (my $x=-2; $x<=2; $x+=0.01) {
+  $plot->PPlotAdd($x, cos($x))
+}
+$plot->PPlotEnd();
 
---~ plot["USE_GDI+"] = "YES" ??
+$plot->DS_LINEWIDTH(3);
+#$plot->REDRAW("YES");
+$plot->PREDRAW_CB( sub { print("AXS_YMIN=", $plot->AXS_YMIN, "\n") } );
 
-function plot:predraw_cb ()
-    print(plot.AXS_YMIN)
---~     plot.AXS_YAUTOMIN = "NO"
---~     plot.AXS_YMIN = plot.AXS_YMIN - 0.1
-end
+my $dlg = IUP::Dialog->new( child=>$plot, TITLE=>"Two Series", SIZE=>"QUARTERxQUARTER" );
+$dlg->Show();
 
-dlg = iup.dialog{plot; title="Two Series",size="QUARTERxQUARTER"}
-
-dlg:show()
-
-iup.MainLoop()
+IUP->MainLoop();

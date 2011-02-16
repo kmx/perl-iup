@@ -1,6 +1,10 @@
-# IupLabel Example
+# IUP::Label example
+#
 # Creates three labels, one using all attributes except for image, other
 # with normal text and the last one with an image.
+
+use strict;
+use warnings;
 
 use IUP ':all';
 
@@ -20,7 +24,7 @@ my $img_star = IUP::Image->new( pixels=>
    [ 1,2,2,1,1,1,1,1,1,1,2,2,1 ],
    [ 2,2,1,1,1,1,1,1,1,1,1,2,2 ],
   ], 
-  1=>"0 0 0", 2=>"0 198 0" #colors]
+  1=>"0 0 0", 2=>"0 198 0" #colors
 );
 
 # Creates a label and sets all the attributes of label lbl, except for image;
@@ -37,12 +41,10 @@ my $lbl_explain = IUP::Label->new( TITLE=>"The label on the right has the image 
 my $lbl_star = IUP::Label->new( TITLE=>"Does not matter", IMAGE=>$img_star );
 
 # Creates dialog with these three labels;
-my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new( child=>[ $lbl, IUP::Hbox->new( child=>[$lbl_explain, $lbl_star], MARGIN=>"10x10") ]),
-                            TITLE=>"IupLabel Example" );
+my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new( MARGIN=>"10x10", child=>[ $lbl, IUP::Hbox->new( child=>[$lbl_explain, $lbl_star] ) ]),
+                            GAP=>3, TITLE=>"IupLabel Example" );
 
 # Shows dialog in the center of the screen;
 $dlg->ShowXY ( IUP_CENTER, IUP_CENTER );
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

@@ -1,21 +1,25 @@
+# IUP::Sbox example
+
 use strict;
 use warnings;
 
 use IUP ':all';
 
-my $bt = IUP::Button->new( TITLE=>"Test", EXPAND=>"YES" );
+my $bt = IUP::Button->new( TITLE=>"Button", EXPAND=>"YES");
 
-my $box = IUP::Sbox->new( child=>$bt, DIRECTION=>"SOUTH", COLOR=>"0 255 0" );
+my $bx = IUP::Sbox->new( child=>$bt, DIRECTION=>"SOUTH", COLOR=>"0 255 0" );
 
-my $ml = IUP::Text->new( MULTILINE=>"YES", EXPAND=>"YES" );
+my $ml = IUP::Text->new( MULTILINE=>"YES", EXPAND=>"YES", VISIBLELINES=>5 );
 
-my $vbox = IUP::Vbox->new( child=>[$box, $ml] );
+my $vb = IUP::Vbox->new( child=>[$bx, $ml] );
 
-my $lb = IUP::Label->new( TITLE=>"Label", EXPAND=>"YES" );
+my $lb = IUP::Label->new( TITLE=>"Label", EXPAND=>"VERTICAL" );
 
-my $dg = IUP::Dialog->new( child=>IUP::Hbox->new( child=>[$vbox, $lb] ), SIZE=>"QUARTERxQUARTER" );
+my $dg = IUP::Dialog->new( child=>IUP::Hbox->new( child=>[$vb, $lb] ), 
+                           TITLE=>"IUP::Sbox Example", 
+			   MARGIN=>"10x10", 
+			   GAP=>10 );
 $dg->Show();
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop();
+

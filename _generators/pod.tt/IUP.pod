@@ -813,7 +813,7 @@ B<$r, $g, $b:>Initialization values defining the color being selected when
 the dialog is shown.
 
 B<Returns:> List of three (R, G, B) values are returned if the OK button
-is pressedor C<undef> otherwise.
+is pressed or three C<undef> otherwise. xxxcheckthis is 3x udef necessary?
 
 [% h.at_notes %]
 

@@ -64,7 +64,6 @@ sub PPlotTransform {
 sub PPlotPaintTo {
   #void IupPPlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C]
   #iup.PPlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
-  #NOTE: maybe not needed: Plots to the given CD canvas instead of the display canvas.
   my ($self, $cnv) = @_;
   return IUP::Internal::LibraryIup::_IupPPlotPaintTo($self->ihandle, $cnv->cnvhandle);
 }

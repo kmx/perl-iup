@@ -1,6 +1,10 @@
-# Creates a IupColorBrowser control and updates, through;
-# callbacks, the values of texts representing the R, G and B;
-# components of the selected color.;
+# IUP::ColorBrowser example
+#
+# Creates a IupColorBrowser control and updates, through callbacks, the values
+# of texts representing the R, G and B components of the selected color.
+
+use strict;
+use warnings;
 
 use IUP ':all';
 
@@ -30,9 +34,8 @@ my $vbox = IUP::Vbox->new( child=>[
                  IUP::Fill->new(),
                ] );
 
-my $dlg = IUP::Dialog->new( child=>IUP::Hbox->new( child=>[$cb, IUP::Fill->new(), $vbox] ), TITLE=>"ColorBrowser" );
+my $dlg = IUP::Dialog->new( child=>IUP::Hbox->new( child=>[$cb, IUP::Fill->new(), $vbox] ), TITLE=>"IUP::ColorBrowser" );
+
 $dlg->ShowXY(IUP_CENTER, IUP_CENTER);
 
-if (IUP->MainLoopLevel == 0) {
-  IUP->MainLoop;
-}
+IUP->MainLoop;

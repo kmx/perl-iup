@@ -215,10 +215,10 @@ sub GetByIhandle {
   my $e = IUP::Internal::LibraryIup::_translate_ih($ih);
   return $e if defined $e;
   if ($flag == 1) {
-    my $c = IUP->GetClassName($ih);
+    my $c = IUP::Internal::LibraryIup::_IupGetClassName($ih);
     return unless $c;
     my $p = $mapping->{$c};
-    require $p;
+    eval { require $p};
     return unless $p;
     return $p->new_from_ihandle($ih);
   }

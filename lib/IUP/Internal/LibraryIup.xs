@@ -417,7 +417,7 @@ Ihandle*
 _IupGetNextChild(ih,child)
 		Ihandle* ih;
 		Ihandle* child;
-	CODE:
+	CODE:		
 		RETVAL = IupGetNextChild(ih,child);
 	OUTPUT:
 		RETVAL
@@ -1491,11 +1491,19 @@ _IupGetColor(x,y,r,g,b)
 		unsigned char newb = b;
 	PPCODE:
 		rv = IupGetColor(x,y,&newr,&newg,&newb);
-		/* gonna return array: (retval, newr, newg, newb) */
-		XPUSHs(sv_2mortal(newSViv(rv)));
-		XPUSHs(sv_2mortal(newSViv(newr)));
-		XPUSHs(sv_2mortal(newSViv(newg)));
-		XPUSHs(sv_2mortal(newSViv(newb)));
+		if (rv == 1) {
+		  /* gonna return array: (newr, newg, newb) */
+		  XPUSHs(sv_2mortal(newSViv(newr)));
+		  XPUSHs(sv_2mortal(newSViv(newg)));
+		  XPUSHs(sv_2mortal(newSViv(newb)));
+		}
+		else {
+		  /* gonna return array: (undef, undef, undef) */
+		  /* xxxcheckthis is 3x udef necessary? */
+		  XPUSHs(&PL_sv_undef);
+		  XPUSHs(&PL_sv_undef);
+		  XPUSHs(&PL_sv_undef);
+		}
 
 #### Original C function from <iup.h>
 # int IupGetParam(const char* title, Iparamcb action, void* user_data, const char* format,...);
