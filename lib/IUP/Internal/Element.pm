@@ -145,9 +145,13 @@ sub SetAttribute {
   #void IupStoreAttribute(Ihandle *ih, const char *name, const char *value); [in C]
   #iup.StoreAttribute(ih: iulua_tag, name: string, value: string) [in Lua] 
   # xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
-  my ($self, %args) = @_;  
-  for (keys %args) {    
-    my ($k, $v) = ($_, $args{$_});         
+  my $self = shift;
+
+  #BEWARE: we need to keep the order of attribute assignment - thus cannot use for (keys %args) {...}
+  while(1) {    
+    my $k = shift;    
+    last unless defined $k;
+    my $v = shift;
     if (!ref($v)) {      
       $v = "$v" if defined $v; #BEWARE: stringification necessary
       IUP::Internal::LibraryIup::_IupStoreAttribute($self->ihandle, $k, $v);

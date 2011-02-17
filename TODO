@@ -28,6 +28,8 @@ http://search.cpan.org/~mdootson/Wx-ActiveX-0.15/lib/Wx/ActiveX.pm
 #IUP::Internal::Element - Discard() = destroy perl object without destroying iup element
 #IUP::LayoutDialog - maybe support named new params e.g. dialog=>... 
 #IUP::Tree - #NOTE: tree->TreeAddNodes(...) has to go after dialog->Show() + tree->SetAttribute(...) has to go after dialog->Show() xxx why?
+#IUP::Tree - should it be maped before show as canvas?
+# original sbox.c example boken - xxxTODO report
 
 #setting callback should avoid an automatic destruction
 #Destroy() should unset all registered callbacks
