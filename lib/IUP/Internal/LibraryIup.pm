@@ -22,12 +22,14 @@ sub _unregister_ih {
   #params: ih
   delete $ih_register{$_[0]} if $_[0];
 }
+
 sub _register_ih {
   #params: ih, objref
   if ($_[0]) {
     $ih_register{$_[0]} = $_[1];
     #BEWARE: circular references
-    weaken $ih_register{$_[0]}; #xxxTODO check this (should work now)
+    #xxxFIXME weaken $ih_register{$_[0]}; #xxxTODO check this (should work now)
+    $ih_register{$_[0]};
   }
 }
 

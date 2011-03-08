@@ -144,7 +144,7 @@ sub SetAttribute {
   #iup.SetAttribute(ih: iulua_tag, name: string, value: string) [in Lua]   
   #void IupStoreAttribute(Ihandle *ih, const char *name, const char *value); [in C]
   #iup.StoreAttribute(ih: iulua_tag, name: string, value: string) [in Lua] 
-  # xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
+  #xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
   my $self = shift;
 
   #BEWARE: we need to keep the order of attribute assignment - thus cannot use for (keys %args) {...}
@@ -219,7 +219,7 @@ sub SetCallback {
     my ($action, $func) = ($_, $args{$_});    
     my $cb_init_func = IUP::Internal::Callback::_get_cb_init_function(ref($self), $action);
     if (ref($cb_init_func) eq 'CODE') {
-      $self->{$action} = $func;
+      $self->{$action} = $func; #xxxFIXME maybe $self->{___callbacks}->{$action} = $func;
       &$cb_init_func($self->ihandle,$action);
     }
     else {
@@ -269,6 +269,7 @@ sub Destroy {
   #iup.Destroy(ih: ihandle) [in Lua]
   my $self = shift;
   my $ih = $self->ihandle;
+  #xxxFIXME what to do with callbacks?
   $self->ihandle(undef);
   IUP::Internal::LibraryIup::_unregister_ih($ih);
   return IUP::Internal::LibraryIup::_IupDestroy($ih);
@@ -481,7 +482,6 @@ sub GetDialog {
 }
 
 sub GetDialogChild {
-  # xxx TODO maybe Dialog only
   #Ihandle* IupGetDialogChild(Ihandle *ih, const char* name); [in C]
   #iup.GetDialogChild(ih: ihandle, name: string) -> (ih: ihandle) [in Lua]
   my ($self, $name) = @_;
@@ -490,7 +490,6 @@ sub GetDialogChild {
 }
 
 sub GetParamParam {
-  # xxx TODO maybe Dialog only
   #iup.GetParamParam(dialog: ihandle, param_index: number)-> (param: ihandle) [in Lua]
   my ($self, $param_index) = @_;
   my $param_str = sprintf("PARAM%d", $param_index);
@@ -551,7 +550,9 @@ sub NextField {
 sub DESTROY {
   #xxx TODO see http://perldoc.perl.org/perlobj.html
   #warn "XXX DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";
-  $_[0]->Destroy; #handles also _unregister_ih
+  
+  #xxxFIXME not a good idea
+  #$_[0]->Destroy; #handles also _unregister_ih
 }
 
 #helper funcs for handling child=>... params

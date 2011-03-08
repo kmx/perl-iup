@@ -1,6 +1,12 @@
+################ the last time working on ################ 
+- examples: __text_format.pl + _app-mdi.pl 
+- weaken/non-weaken questions
+##########################################################
+
 ###1: use weaken (Scalar::Util) http://stackoverflow.com/questions/2223721/common-perl-memory-reference-leak-patterns
 ###2: perl -d:TraceUse script vs. scandeps 
 
+######## OLE/ActiveX
 http://search.cpan.org/~mdootson/Wx-ActiveX-0.15/lib/Wx/ActiveX.pm
 
 ######## registers
@@ -13,8 +19,8 @@ http://search.cpan.org/~mdootson/Wx-ActiveX-0.15/lib/Wx/ActiveX.pm
 - no example for: ColorDlg.pm ?
 - no example for: FontDlg.pm ?
 - notepad.wlua? olecontrol_browser.wlua?
-#IUP::FileDlg - filedlg.pl: *.c example open My Document directory (how?)
-#IUP::PPlot - xxx TODO maybe add AddSeries to IUP::PPlot # see iupx.lua + iupxpplot.lua
+#IUP::FileDlg - filedlg.pl: *.c example open My Document directory (how?) - Windows specific path is not good
+#IUP::PPlot - xxx TODO maybe add AddSeries to IUP::PPlot # see iupx.lua + iupxpplot.lua (see 3.4)
 #IUP::PPlot - xxx TODO maybe add AxsBounds to IUP::PPlot # see iupx.lua + iupxpplot.lua
 #IUP::PPlot - EDIT_CB handler should return (IUP_DEFAULT, $new_x, $new_y)
 #IUP - IUP->SetIdle vs. IUP->GetIdle? #xxx how to check existing idle handler?
@@ -31,8 +37,18 @@ http://search.cpan.org/~mdootson/Wx-ActiveX-0.15/lib/Wx/ActiveX.pm
 #IUP::Tree - should it be maped before show as canvas?
 # original sbox.c example boken - xxxTODO report
 
+GetDialogChild(ih, "mltline");
+GetByName
+- both destroys element when going off scope
+
+#consider adding iupKeyCodeToName
+#consider adding iupKeyNameToCode
+
+
 #setting callback should avoid an automatic destruction
 #Destroy() should unset all registered callbacks
+
+IUP::ProgressBar - MARQUEE not working
 
 (important - broken example)######## IUP::Cell
 - DRAW_CB - for some reason $canvas->... does not work
@@ -240,6 +256,9 @@ cd.KillImageRGBA
 cd.KillImageMap
 
 ###################################################################################################
+
+(info)######## threads+Wx
+http://use.perl.org/~Alias/journal/40377
 
 (info)######## XS hint
 - ST(0) = &PL_sv_undef;

@@ -1,156 +1,174 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <iup.h>
-#include <iupkey.h>
+# IUP::Text (formating) example
 
-static void text2multiline (Ihandle* ih, char* attribute)
-{
-  Ihandle *mltline = IupGetDialogChild(ih, "mltline");
-  Ihandle *text = IupGetDialogChild(ih, "text");
-  IupSetAttribute (mltline, attribute, IupGetAttribute (text, "VALUE"));
+use strict;
+use warnings;
+
+use IUP ':all';
+
+sub text2multiline {
+  my ($self, $attribute) = @_;
+  my $mltline = $self->GetDialogChild("mltline");
+  my $text = $self->GetDialogChild("text");
+  $mltline->SetAttribute($attribute, $text->VALUE);
 }
 
-static void multiline2text (Ihandle* ih, char* attribute)
-{
-  Ihandle *mltline = IupGetDialogChild(ih, "mltline");
-  Ihandle *text = IupGetDialogChild(ih, "text");
-  IupSetAttribute (text, "VALUE", IupGetAttribute(mltline, attribute));
+sub multiline2text {
+  my ($self, $attribute) = @_;
+  my $mltline = $self->GetDialogChild("mltline");
+  my $text = $self->GetDialogChild("text");
+  $text->VALUE($mltline->GetAttribute($attribute));
 }
 
-static int btn_append_cb (Ihandle* ih)
-{
-  text2multiline(ih, "APPEND"); 
+sub btn_append_cb {
+  my $self = shift;
+  text2multiline($self, "APPEND"); 
   return IUP_DEFAULT;
 }
 
-static int btn_insert_cb (Ihandle* ih)
-{
-  text2multiline(ih, "INSERT"); 
+sub btn_insert_cb {
+  my $self = shift;
+  text2multiline($self, "INSERT"); 
   return IUP_DEFAULT;
 }
 
-static int btn_clip_cb (Ihandle* ih)
-{
-  text2multiline(ih, "CLIPBOARD"); 
+sub btn_clip_cb {
+  my $self = shift;
+  text2multiline($self, "CLIPBOARD"); 
   return IUP_DEFAULT;
 }
 
 int iupKeyNameToCode(const char *name);
 
-static int btn_key_cb (Ihandle* ih)
-{
-  Ihandle *mltline = IupGetDialogChild(ih, "mltline");
-  Ihandle *text = IupGetDialogChild(ih, "text");
-  IupSetFocus(mltline);
-  IupFlush();
+sub btn_key_cb {
+  my $self = shift;
+  my $mltline = IupGetDialogChild(ih, "mltline");
+  my $text = IupGetDialogChild(ih, "text");
+  $mltline->SetFocus();
+  IUP->Flush();
   IupSetfAttribute(NULL, "KEY", "%d", iupKeyNameToCode(IupGetAttribute(text, "VALUE")));
   return IUP_DEFAULT;
 }
 
-static int btn_caret_cb (Ihandle* ih)
-{
-  Ihandle *opt = IupGetHandle("text2multi");
-  if (IupGetInt(opt, "VALUE")) 
-    text2multiline(ih, "CARET"); 
-  else 
-    multiline2text(ih, "CARET");
+sub btn_caret_cb {
+  my $self = shift;
+  my $opt = IUP->GetByName("text2multi");
+  if ($opt->VALUE) {
+    text2multiline($self, "CARET"); 
+  }
+  else {
+    multiline2text($self, "CARET");
+  }
   return IUP_DEFAULT;
 }
 
-static int btn_readonly_cb (Ihandle* ih)
-{
-  Ihandle *opt = IupGetHandle("text2multi");
-  if (IupGetInt(opt, "VALUE")) 
-    text2multiline(ih, "READONLY"); 
-  else 
-    multiline2text(ih, "READONLY");
+sub btn_readonly_cb {
+  my $self = shift;
+  my $opt = IUP->GetByName("text2multi");
+  if ($opt->VALUE) {
+    text2multiline($self, "READONLY"); 
+  }
+  else {
+    multiline2text($self, "READONLY");
+  }
   return IUP_DEFAULT;
 }
 
-static int btn_selection_cb (Ihandle* ih)
-{
-  Ihandle *opt = IupGetHandle ("text2multi");
-  if (IupGetInt (opt, "VALUE")) 
-    text2multiline (ih, "SELECTION"); 
-  else 
-    multiline2text (ih, "SELECTION");
+sub btn_selection_cb {
+  my $self = shift;
+  my $opt = IUP->GetByName("text2multi");
+  if ($opt->VALUE) {
+    text2multiline($self, "SELECTION"); 
+  }
+  else {
+    multiline2text($self, "SELECTION");
+  }
   return IUP_DEFAULT;
 }
 
-static int btn_selectedtext_cb (Ihandle* ih)
-{
-  Ihandle *opt = IupGetHandle ("text2multi");
-  if (IupGetInt (opt, "VALUE")) 
-    text2multiline (ih, "SELECTEDTEXT"); 
-  else 
-    multiline2text (ih, "SELECTEDTEXT");
+sub btn_selectedtext_cb {
+  my $self = shift;
+  my $opt = IUP->GetByName("text2multi");
+  if ($opt->VALUE) {
+    text2multiline($self, "SELECTEDTEXT"); 
+  }
+  else {
+    multiline2text($self, "SELECTEDTEXT");
+  }
   return IUP_DEFAULT;
 }
 
-static int btn_overwrite_cb (Ihandle* ih)
-{
-  Ihandle *opt = IupGetHandle ("text2multi");
-  if (IupGetInt (opt, "VALUE")) 
-    text2multiline (ih, "OVERWRITE"); 
-  else 
-    multiline2text (ih, "OVERWRITE");
+sub btn_overwrite_cb {
+  my $self = shift;
+  my $opt = IUP->GetByName("text2multi");
+  if ($opt->VALUE) {
+    text2multiline($self, "OVERWRITE"); 
+  }
+  else {
+    multiline2text($self, "OVERWRITE");
+  }
   return IUP_DEFAULT;
 }
 
-static int btn_active_cb(Ihandle *ih)
-{
-  Ihandle *opt = IupGetHandle ("text2multi");
-  if (IupGetInt (opt, "VALUE")) 
-    text2multiline (ih, "ACTIVE"); 
-  else 
-    multiline2text (ih, "ACTIVE");
+sub btn_active_cb {
+  my $self = shift;
+  my $opt = IUP->GetByName("text2multi");
+  if ($opt->VALUE) {
+    text2multiline($self, "ACTIVE"); 
+  }
+  else {
+    multiline2text($self, "ACTIVE");
+  }
   return IUP_DEFAULT;
 }
 
-static int btn_remformat_cb(Ihandle *ih)
-{
-  text2multiline (ih, "REMOVEFORMATTING"); 
+sub btn_remformat_cb {
+  my $self = shift;
+  text2multiline($self, "REMOVEFORMATTING"); 
   return IUP_DEFAULT;
 }
 
-static int btn_nc_cb (Ihandle* ih)
-{
-  Ihandle *opt = IupGetHandle ("text2multi");
-  if (IupGetInt (opt, "VALUE")) 
-    text2multiline (ih, "NC"); 
-  else 
-    multiline2text (ih, "NC");
+sub btn_nc_cb {
+  my $self = shift;
+  my $opt = IUP->GetByName("text2multi");
+  if ($opt->VALUE) {
+    text2multiline($self, "NC"); 
+  }
+  else {
+    multiline2text($self, "NC");
+  }
   return IUP_DEFAULT;
 }
 
-static int btn_value_cb (Ihandle* ih)
-{
-  Ihandle *opt = IupGetHandle ("text2multi");
-  if (IupGetInt (opt, "VALUE")) 
-    text2multiline (ih, "VALUE"); 
-  else 
-    multiline2text (ih, "VALUE");
+sub btn_value_cb {
+  my $self = shift;
+  my $opt = IUP->GetByName("text2multi");
+  if ($opt->VALUE) {
+    text2multiline($self, "VALUE"); 
+  }
+  else {
+    multiline2text($self, "VALUE");
+  }
   return IUP_DEFAULT;
 }
 
-static int btn_tabsize_cb (Ihandle* ih)
-{
-  Ihandle *opt = IupGetHandle ("text2multi");
-  if (IupGetInt (opt, "VALUE")) 
-    text2multiline (ih, "TABSIZE"); 
-  else 
-    multiline2text (ih, "TABSIZE");
+sub btn_tabsize_cb {
+  my $self = shift;
+  my $opt = IUP->GetByName("text2multi");
+  if ($opt->VALUE) {
+    text2multiline($self, "TABSIZE"); 
+  }
+  else {
+    multiline2text($self, "TABSIZE");
+  }
   return IUP_DEFAULT;
 }
 
-static int k_f2(void)
-{
+static int k_f2 {
   printf("K_F2\n");
   return IUP_DEFAULT;
 }
 
-static int file_open(void)
-{
+static int file_open {
   char filename[100] = "";
   IupGetFile(filename);  // test key after dlg in multiline
   printf(filename);
@@ -191,62 +209,56 @@ static int action(Ihandle *ih, int c, char* after)
   return IUP_DEFAULT;
 }
 
-static int caret_cb(Ihandle *ih, int lin, int col, int pos)
+static int caret_cb {
+  my ($self, $lin, $col, $pos) = @_;
 {
-  printf("CARET_CB(%d, %d - %d)\n", lin, col, pos);
-  printf("  CARET(%s - %s)\n", IupGetAttribute(ih, "CARET"), IupGetAttribute(ih, "CARETPOS"));
+  printf "CARET_CB(%d, %d - %d)\n", $lin, $col, $pos;
+  printf "  CARET(%s - %s)\n", $self->CARET, $self->CARETPOS;
   return IUP_DEFAULT;
 }
 
-static int getfocus_cb(void)
-{
-  printf("GETFOCUS_CB()\n");
+static int getfocus_cb {
+  print "GETFOCUS_CB()\n";
   return IUP_DEFAULT;
 }
 
-static int help_cb(void)
-{
-  printf("HELP_CB()\n");
+static int help_cb {
+  print "HELP_CB()\n";
   return IUP_DEFAULT;
 }
      
-static int killfocus_cb(void)
-{
-  printf("KILLFOCUS_CB()\n");
+static int killfocus_cb {
+  print "KILLFOCUS_CB()\n";
   return IUP_DEFAULT;
 }
 
-static int leavewindow_cb(void)
-{
-  printf("LEAVEWINDOW_CB()\n");
+static int leavewindow_cb {
+  print "LEAVEWINDOW_CB()\n";
   return IUP_DEFAULT;
 }
 
-static int enterwindow_cb(void)
-{
-  printf("ENTERWINDOW_CB()\n");
+static int enterwindow_cb {
+  print "ENTERWINDOW_CB()\n";
   return IUP_DEFAULT;
 }
 
-static int btn_def_esc_cb(void)
-{
-  printf("DEFAULTESC\n");
+sub btn_def_esc_cb {
+  print "DEFAULTESC\n";
   return IUP_DEFAULT;
 }
 
-static int btn_def_enter_cb(void)
-{
-  printf("DEFAULTENTER\n");
+sub btn_def_enter_cb {
+  print "DEFAULTENTER\n";
   return IUP_DEFAULT;
 }
 
-static int dropfiles_cb(Ihandle *ih, const char* filename, int num, int x, int y)
-{
-  printf("DROPFILES_CB(%s, %d, x=%d, y=%d)\n", filename, num, x, y);
+sub dropfiles_cb {
+  my ($self, $filename, $num, $x, $y) = @_;
+  printf "DROPFILES_CB(%s, %d, x=%d, y=%d)\n", $filename, $num, $x, $y;
   return IUP_DEFAULT;
 }
 
-static int button_cb(Ihandle *ih,int but,int pressed,int x,int y,char* status)
+sub button_cb(Ihandle *ih,int but,int pressed,int x,int y,char* status)
 {
   int lin, col, pos;
   printf("BUTTON_CB(but=%c (%d), x=%d, y=%d [%s])\n",(char)but,pressed,x,y, status);
@@ -256,7 +268,7 @@ static int button_cb(Ihandle *ih,int but,int pressed,int x,int y,char* status)
   return IUP_DEFAULT;
 }
 
-static int motion_cb(Ihandle *ih,int x,int y,char* status)
+sub motion_cb(Ihandle *ih,int x,int y,char* status)
 {
   int lin, col, pos;
   printf("MOTION_CB(x=%d, y=%d [%s])\n",x,y, status);

@@ -190,7 +190,7 @@ my $cb_table = {
 
 sub _execute_cb { # convert just the first arg from ihandle to objref
   my ($ih, $action, @args) = @_;
-  my $ref = IUP->GetByIhandle($ih);
+  my $ref = IUP->GetByIhandle($ih); #xxx optimize
   return -1 unless ref($ref);
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');

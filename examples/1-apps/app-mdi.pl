@@ -89,21 +89,28 @@ my $id = 1;
 
 sub getfocus_cb {
   my $self = shift;
-  printf STDERR "$line-getfocus(%s#%s)\n", $self->GetClassName(), $self->GetAttribute("CINDEX");
+  printf STDERR "$line-getfocus(%s#%s)\n",
+         $self->GetClassName(), 
+	 ($self->GetAttribute("CINDEX") || 'n.a.');
   $line++;
   return IUP_DEFAULT;
 }
 
 sub killfocus_cb {
   my $self = shift;
-  printf STDERR "$line-killfocus(%s#%s)\n", $self->GetClassName(), $self->GetAttribute("CINDEX");
+  printf STDERR "$line-killfocus(%s#%s)\n",
+         $self->GetClassName(), 
+	 ($self->GetAttribute("CINDEX") || 'n.a.');	 
   $line++;
   return IUP_DEFAULT;
 }
 
 sub action {
   my $self = shift;
-  printf STDERR "$line-action(%s#%s) Value=%s\n", $self->GetClassName(), $self->GetAttribute("CINDEX"), $self->GetAttribute("VALUE");
+  printf STDERR "$line-action(%s#%s) Value=%s\n", 
+         $self->GetClassName(), 
+	 ($self->GetAttribute("CINDEX") || 'n.a.'),
+	 ($self->GetAttribute("VALUE") || 'n.a.');
   $line++;
   return IUP_DEFAULT;
 }
@@ -112,10 +119,11 @@ sub set_callbacks {
   my $ctrl = shift;
   $ctrl->SetCallback("GETFOCUS_CB", \&getfocus_cb);
   $ctrl->SetCallback("KILLFOCUS_CB", \&killfocus_cb);
-  $ctrl->SetCallback("ACTION", \&action);  
+  $ctrl->SetCallback("ACTION", \&action);  #xxx thows some warnings as not all elements support ACTION
   
   my $child = undef; #passing undef to GetNextChild gives the first child 
   while($child = $ctrl->GetNextChild($child)) {
+#xxx destroy issue
 #    push @elements, $child;
     set_callbacks($child);  
   }
@@ -246,8 +254,8 @@ sub createDialog {
 #          OPACITY=>192 );
   
   warn "xxx:createdlg\n";
-  $dlg->Map(); #xxx why is this necessary?
-  $dlg->SIZE(undef);
+  #$dlg->Map(); #xxx why is this necessary?
+  #$dlg->SIZE(undef);
 
   return $dlg;
 }
@@ -304,13 +312,12 @@ sub mdi_activate {
 sub mdi_new {
   my $self = shift;
   my $dlg = createDialog();
-  $dlg->MDICHILD("YES");
-  $dlg->PARENTDIALOG($mdiFrame);
-  $dlg->MDIACTIVATE_CB(\&mdi_activate);
+  $dlg->SetAttribute( MDICHILD=>"YES", PARENTDIALOG=>$mdiFrame);
+  $dlg->SetCallback( MDIACTIVATE_CB=>\&mdi_activate );
   #$dlg->PLACEMENT("MAXIMIZED");
   $dlg->Show();
   #xxx do not destroy
-  push @elements, $dlg;
+  #push @elements, $dlg;
   return IUP_DEFAULT;
 }
 
@@ -341,7 +348,9 @@ sub createFrame {
   my $menu = shift;
   my $mdiMenu = IUP->GetByName("winmenu");
   my $cnv = IUP::Canvas->new( MDICLIENT=>"YES", MDIMENU=>$mdiMenu );
-  my $dlg = IUP::Dialog->new( name=>"mdiFrame", child=>$cnv, MENU=>$menu, TITLE=>"MDI Frame", MDIFRAME=>"YES", RASTERSIZE=>"800x600");
+  my $dlg = IUP::Dialog->new( name=>"mdiFrame", child=>$cnv, 
+                              MENU=>$menu, TITLE=>"MDI Frame", 
+			      MDIFRAME=>"YES", RASTERSIZE=>"800x600" );
   return $dlg;
 }
 
@@ -349,4 +358,6 @@ $mdiFrame = createFrame( createMenu() );
 #$mdiFrame->PLACEMENT("MAXIMIZED");
 
 $mdiFrame->ShowXY(IUP_CENTER, IUP_CENTER);
+
+IUP->Message('BEWARE: MDI demo app is still broken!');
 IUP->MainLoop();
