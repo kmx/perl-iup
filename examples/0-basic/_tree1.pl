@@ -5,6 +5,8 @@
 use strict;
 use warnings;
 
+IUP->Message("This example is slightly broken!"); #XXX-FIXME
+
 use IUP ':all';
 
 #xxx TODO xxx decide about TreeAddNodes syntax

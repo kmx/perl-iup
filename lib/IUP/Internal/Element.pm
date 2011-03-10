@@ -159,8 +159,7 @@ sub SetAttribute {
     elsif (blessed($v) && $v->can('ihandle')) {
       #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
       IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
-      #xxx-just-idea
-      $self->{____att_ref}->{$k} = $v;
+      #$self->{____att_ref}->{$k} = $v; #xxx-just-idea
     }
     else {
 #xxxTODO tune up this
@@ -558,6 +557,7 @@ sub DESTROY {
 #helper funcs for handling child=>... params
 
 sub _store_child_ref {
+  #xxx-just-idea
   my $self = shift;
   for (@_) {
     next unless blessed($_);
@@ -572,24 +572,24 @@ sub _proc_child_param {
     if (ref($firstonly) eq 'ARRAY') {
       #call func
       $ih = &$func( map($_->ihandle, @$firstonly) );
-      $self->_store_child_ref(@$firstonly); #xxx-just-idea
+      #$self->_store_child_ref(@$firstonly); #xxx-just-idea
     }
     else {
       #call func
       $ih = &$func($firstonly->ihandle);
-      $self->_store_child_ref($firstonly); #xxx-just-idea
+      #$self->_store_child_ref($firstonly); #xxx-just-idea
     }
   }
   elsif (defined $args && defined $args->{child}) {
     if (ref($args->{child}) eq 'ARRAY') {
       #call func
       $ih = &$func( map($_->ihandle, @{$args->{child}}) );
-      $self->_store_child_ref(@{$args->{child}}); #xxx-just-idea
+      #$self->_store_child_ref(@{$args->{child}}); #xxx-just-idea
     }
     else {
       #call func
       $ih = &$func($args->{child}->ihandle);
-      $self->_store_child_ref($args->{child}); #xxx-just-idea
+      #$self->_store_child_ref($args->{child}); #xxx-just-idea
     }
     delete $args->{child};
   }
@@ -607,7 +607,7 @@ sub _proc_child_param_single {
     if (ref($firstonly) && $firstonly->can('ihandle')) {
       #call func
       $ih = &$func($firstonly->ihandle);
-      $self->_store_child_ref($firstonly); #xxx-just-idea
+      #$self->_store_child_ref($firstonly); #xxx-just-idea
     }
     else {
       #call func
@@ -619,7 +619,7 @@ sub _proc_child_param_single {
     if (ref($args->{child}) && $args->{child}->can('ihandle')) {
       #call func
       $ih = &$func($args->{child}->ihandle);
-      $self->_store_child_ref($args->{child}); #xxx-just-idea
+      #$self->_store_child_ref($args->{child}); #xxx-just-idea
     }
     else {
       carp "Warning: 'child' parameter has to be a reference to IUP element";

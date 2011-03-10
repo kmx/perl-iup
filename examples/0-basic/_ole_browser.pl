@@ -5,6 +5,8 @@
 use strict;
 use warnings;
 
+IUP->Message("This example is slightly broken!"); #XXX-FIXME
+
 use IUP ':all';
 
 # create the WebBrowser based on its ProgID

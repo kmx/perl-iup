@@ -3,6 +3,8 @@
 
 use IUP ':all';
 
+IUP->Message("This example is slightly broken!"); #XXX-FIXME
+
 IUP->SetLanguage("ENGLISH");
 
 sub param_action {

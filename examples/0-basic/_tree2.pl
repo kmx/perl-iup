@@ -8,6 +8,8 @@
 use strict;
 use warnings;
 
+IUP->Message("This example is slightly broken!"); #XXX-FIXME
+
 use IUP ':all';
 
 my $tree = IUP::Tree->new();

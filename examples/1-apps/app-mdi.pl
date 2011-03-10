@@ -1,7 +1,5 @@
 # IUP app example
 
-#XXXTODO stiil does not work
-
 use strict;
 use warnings;
 
@@ -118,13 +116,10 @@ sub action {
 sub set_callbacks {
   my $ctrl = shift;
   $ctrl->SetCallback("GETFOCUS_CB", \&getfocus_cb);
-  $ctrl->SetCallback("KILLFOCUS_CB", \&killfocus_cb);
-  $ctrl->SetCallback("ACTION", \&action);  #xxx thows some warnings as not all elements support ACTION
-  
-  my $child = undef; #passing undef to GetNextChild gives the first child 
+  $ctrl->SetCallback("KILLFOCUS_CB", \&killfocus_cb);  
+  $ctrl->SetCallback("ACTION", \&action) if $ctrl->IsValidCallbackName('ACTION');  
+  my $child; #passing undef to GetNextChild gives the first child 
   while($child = $ctrl->GetNextChild($child)) {
-#xxx destroy issue
-#    push @elements, $child;
     set_callbacks($child);  
   }
 }
@@ -253,52 +248,48 @@ sub createDialog {
 #          COMPOSITED=>"YES",
 #          OPACITY=>192 );
   
-  warn "xxx:createdlg\n";
-  #$dlg->Map(); #xxx why is this necessary?
-  #$dlg->SIZE(undef);
-
   return $dlg;
 }
 
 sub mdi_tilehoriz {
   my $self = shift;
-  $self->GetDialog()->MDIARRANGE("TILEHORIZONTAL");
+  $self->GetDialog->MDIARRANGE("TILEHORIZONTAL");
   return IUP_DEFAULT;
 }
 
 sub mdi_tilevert {
   my $self = shift;
-  $self->GetDialog()->MDIARRANGE("TILEVERTICAL");
+  $self->GetDialog->MDIARRANGE("TILEVERTICAL");
   return IUP_DEFAULT;
 }
 
 sub mdi_cascade {
   my $self = shift;
-  $self->GetDialog()->MDIARRANGE("CASCADE");
+  $self->GetDialog->MDIARRANGE("CASCADE");
   return IUP_DEFAULT;
 }
 
 sub mdi_icon {
   my $self = shift;
-  $self->GetDialog()->MDIARRANGE("ICON");
+  $self->GetDialog->MDIARRANGE("ICON");
   return IUP_DEFAULT;
 }
 
 sub mdi_next {
   my $self = shift;
-  $self->GetDialog()->MDIACTIVATE("NEXT");
+  $self->GetDialog->MDIACTIVATE("NEXT");
   return IUP_DEFAULT;
 }
 
 sub mdi_previous {
   my $self = shift;
-  $self->GetDialog()->MDIACTIVATE("PREVIOUS");
+  $self->GetDialog->MDIACTIVATE("PREVIOUS");
   return IUP_DEFAULT;
 }
 
 sub mdi_closeall {
   my $self = shift;
-  $self->GetDialog()->MDICLOSEALL(undef);
+  $self->GetDialog->MDICLOSEALL(undef);
   return IUP_DEFAULT;
 }
 
@@ -316,8 +307,6 @@ sub mdi_new {
   $dlg->SetCallback( MDIACTIVATE_CB=>\&mdi_activate );
   #$dlg->PLACEMENT("MAXIMIZED");
   $dlg->Show();
-  #xxx do not destroy
-  #push @elements, $dlg;
   return IUP_DEFAULT;
 }
 
@@ -354,10 +343,14 @@ sub createFrame {
   return $dlg;
 }
 
-$mdiFrame = createFrame( createMenu() );
-#$mdiFrame->PLACEMENT("MAXIMIZED");
+### main ###
 
-$mdiFrame->ShowXY(IUP_CENTER, IUP_CENTER);
-
-IUP->Message('BEWARE: MDI demo app is still broken!');
-IUP->MainLoop();
+if (IUP->GetGlobal('DRIVER') ne 'Win32') {
+  IUP->Message('BEWARE: MDI demo app works just with MS Windows GUI driver!');
+}
+else {
+  $mdiFrame = createFrame( createMenu() );
+  #$mdiFrame->PLACEMENT("MAXIMIZED");
+  $mdiFrame->ShowXY(IUP_CENTER, IUP_CENTER);
+  IUP->MainLoop();
+}

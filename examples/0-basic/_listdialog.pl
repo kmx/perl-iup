@@ -5,6 +5,8 @@ use warnings;
 
 use IUP ':all';
 
+IUP->Message("This example is slightly broken!"); #XXX-FIXME
+
 IUP->SetLanguage("ENGLISH");
 my $marks = [0,0,0,0,1,1,0,0];
 my $options = ["Blue", "Red", "Green", "Yellow", "Black", "White", "Gray", "Brown"];
