@@ -499,12 +499,14 @@ sub GetParamParam {
   #return IUP->GetByIhandle($ct);
 }
 
-sub GetParamVal {
+#xxx not in standard iup, extra function
+sub GetParamValue {
   my ($self, $param_index, $newval) = @_;
   my $param_str = sprintf("PARAM%d", $param_index);
   my $ih = IUP::Internal::LibraryIup::_IupGetAttributeIH($self->ihandle, $param_str);  
   if (defined $newval) {
-    my $ct = IUP::Internal::LibraryIup::_IupGetAttributeIH($ih, "CONTROL");
+    $newval = "$newval"; #BEWARE: stringification necessary
+    my $ct = IUP::Internal::LibraryIup::_IupGetAttributeIH($ih, "CONTROL");    
     IUP::Internal::LibraryIup::_IupStoreAttribute($ih, "VALUE", $newval);
     IUP::Internal::LibraryIup::_IupStoreAttribute($ct, "VALUE", $newval);    
   }

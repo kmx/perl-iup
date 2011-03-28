@@ -367,12 +367,17 @@ sub GetParam {
   return ($status, @output_values);
 }
 
-sub ListDialog {
-  #int IupListDialog(int type, const char *title, int size, const char** list, int op, int max_col, int max_lin, int* marks); [in C]
-  #iup.ListDialog(type: number, title: string, size: number, list: table of strings, op: number, max_col: number, max_lin: number, marks: table of numbers) -> status: number [in Lua]
-  my ($pkg, $type, $title, $list, $op, $max_col, $max_lin, $marks) = @_;
-  # perl function does not require 'size' param which is calculater from the size of 'list' array
-  return IUP::Internal::LibraryIup::_IupListDialog($type, $title, $list, $op, $max_col, $max_lin, $marks);
+sub ListDialog {  
+  my ($pkg, $title, $list, $initial_selection, $max_lin, $max_col) = @_;
+  if (defined $initial_selection && 'ARRAY' eq ref($initial_selection)) {
+    #multiselect
+    return IUP::Internal::LibraryIup::_IupListDialog_multi($title, $list, $initial_selection, $max_lin, $max_col);
+  }
+  else {
+    #singleselect
+    return IUP::Internal::LibraryIup::_IupListDialog_single($title, $list, $initial_selection, $max_lin, $max_col);
+  }
+  die;
 }
 
 sub GetText {

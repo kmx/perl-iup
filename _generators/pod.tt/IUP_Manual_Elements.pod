@@ -666,11 +666,13 @@ you must use the following function:
 
 =back
 
-=head3 GetParamVal()
+=head3 GetParamValue()
 
 =over
 
-xxxhack related to GetParamParam
+xxx hack related to GetParamParam, nicer way for getting item values than calling GetParamParam()
+
+xxx GetParamValue is also a setter - $self->GetParamValue($index, $value)
 
 =back
 

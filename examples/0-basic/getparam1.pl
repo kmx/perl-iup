@@ -3,36 +3,27 @@
 
 use IUP ':all';
 
-IUP->Message("This example is slightly broken!"); #XXX-FIXME
-
 IUP->SetLanguage("ENGLISH");
 
 sub param_action {
   my ($self, $param_index) = @_;
   if ($param_index == -1) {
-    print STDERR "OK\n";
+    warn "OK\n";
   }
   elsif ($param_index == -2) {
-    print STDERR "Map\n";
+    warn "Map\n";
   }
   elsif ($param_index == -3) {
-    print STDERR "Cancel\n";
+    warn "Cancel\n";
   }
   else {
-    # xxx TODO xxx missing VALUE accessor on IUP::User class
-    # xxx check also IupGetFloat and IupGetInt
-    #my $param = $self->GetParamParam($param_index);
-    #print "PARAM[$param_index] = " . $param->GetAttribute("VALUE") . "\n";   
-    # xxx TODO xxx setattrib should work
-    print "PARAM[$param_index] = " . $self->GetParamVal($param_index) . "\n";   
-    #$self->GetParamVal($param_index, "666");
-    
+    print "PARAM[$param_index] = ", $self->GetParamValue($param_index), "\n";
   }
   return 1;
 }
 
-# set initial values;
 my $ret;
+# set initial values;
 my $pboolean = 1;
 my $pinteger = 3456;
 my $preal = 3.543;
@@ -43,7 +34,7 @@ my $pstring = "string text";
 my $plist = 1;
 my $pfile_name = "test.jpg";
 my $pcolor = "255 0 128";
-my $pstring2 = "second text\nsecond line";
+my $pstring2 = "first line\nsecond line";
 
 ($ret, $pboolean, $pinteger, $preal, $pinteger2, $preal2, $pangle, $pstring, $plist, $pfile_name, $pcolor, $pstring2) =
     IUP->GetParam("Title", \&param_action,
@@ -75,8 +66,3 @@ IUP->Message("IupGetParam",
         "File-> ".$pfile_name."\n".
         "Color-> ".$pcolor."\n".
         "String-> ".$pstring2) if ($ret != 0);
-
-# xxx TODO useless loop
-#if (IUP->MainLoopLevel == 0) {
-#  IUP->MainLoop;
-#}

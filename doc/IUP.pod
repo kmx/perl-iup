@@ -893,7 +893,7 @@ B<$r, $g, $b:>Initialization values defining the color being selected when
 the dialog is shown.
 
 B<Returns:> List of three (R, G, B) values are returned if the OK button
-is pressedor C<undef> otherwise.
+is pressed or three C<undef> otherwise. xxxcheckthis is 3x udef necessary?
 
 B<Notes:>
 
@@ -1025,15 +1025,13 @@ B<< <x> >> is the type of the parameter (always a single character). The valid o
 
 =item * B<a> = angle in degrees (shows a real number filtered text box and a dial)
 
-=item * B<s> = string (shows a text box)
+=item * B<s> = string (shows a text box, xxxsize of string limitation)
 
-=item * B<m> = multiline string (shows a multiline text box)
+=item * B<m> = multiline string (shows a multiline text box, xxxsize of string limitation)
 
-=item * B<l> = list (shows a dropdown list box, use xxxcheckthis for the zero
-based item index selected)
+=item * B<l> = list (shows a dropdown list box)
 
-=item * B<o> = list (shows a list of toggles inside a radio, use xxxcheckthis
-for the zero based item index selected)
+=item * B<o> = list (shows a list of toggles inside a radio)
 
 =item * B<t> = separator (shows a horizontal line separator label, in this case
 text can be an empty string, not included in parameter count)
@@ -1076,7 +1074,7 @@ with the specified mask.
 =item * B<|item0|item1|item2,...|> are the items of the B<list>. At least one item
 must exist. Again the brackets are not used to increase the
 possibilities for the strings, instead you must use 'B<|>'. Items index
-are zero based start.
+is zero based.
 
 =item * B<[dialogtype|filter|directory|nochangedir|nooverwriteprompt]> are the
 respective attribute values passed to the L<IUP::FileDlg|IUP::FileDlg>

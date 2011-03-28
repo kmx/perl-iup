@@ -28,7 +28,7 @@ is(IUP->GetLanguage, $l, 'IUP->GetLanguage (3)');
 sub aaa {
   $self = shift;
   $self->TITLE('XXXXXXXXXX');
-  warn "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" . Dumper(\@_); 
+  #warn "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" . Dumper(\@_); 
 }
 
 #my ($rv5, $pboolean0, $pinteger1, $preal2, $pinteger3, $preal4, $pangle5, $pstring6, $plist7, $pfile_name8, $pcolor9, $pstring10)= IUP->GetParam("Title", \&aaa,
@@ -66,9 +66,9 @@ my $d = IUP::Dialog->new(name=>'xxx', TITLE=>'aa,s=s,t"x"', BGCOLOR=>'0 0 0');
 #diag "RV=".Dumper(\@rv9);
 
 my $rv10 = $d->GetAttributes();
-diag "RV=".Dumper($rv10);
+#diag "RV=".Dumper($rv10);
 
 my $i = -1;
 $i=IUP->GetByName('xxx')->ihandle;
-diag "IH=$i";
-diag "CL=".Dumper(IUP->GetByIhandle($i));
+#diag "IH=$i";
+#diag "CL=".Dumper(IUP->GetByIhandle($i));

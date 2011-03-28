@@ -1621,21 +1621,65 @@ _IupGetParam(title,action,action_data,format,...)
 #### Original C function from <iup.h>
 # int IupListDialog(int type, const char *title, int size, const char** list, int op, int max_col, int max_lin, int* marks);
 void
-_IupListDialog(type,title,list,op,max_col,max_lin,marks)
-		int type;
+_IupListDialog_single(title,list,SV_op,SV_max_lin,SV_max_col)
 		char *title;
 		SV* list;
-		int op;
-		int max_col;
-		int max_lin;
-		SV* marks;
+		SV* SV_op;
+		SV* SV_max_lin;
+		SV* SV_max_col;
 	INIT:
-		int i, rv;
+		int i, rv, op, max_col, max_lin;
+		int items = -1;
+		const char** i_list = NULL;		  
+		STRLEN l;
+	PPCODE:
+		/* convert undef to 0 */
+		op = (SvIOK(SV_op)) ? SvIVX(SV_op) : 0;
+		/* convert undef to -1 */
+		max_col = (SvIOK(SV_max_col)) ? SvIVX(SV_max_col) : -1;
+		max_lin = (SvIOK(SV_max_lin)) ? SvIVX(SV_max_lin) : -1;
+		
+		if ((!SvROK(list)) || (SvTYPE(SvRV(list)) != SVt_PVAV) || ((items = av_len((AV *)SvRV(list))) < 0)) {
+		  warn("Warning: invalid 'list' argument of ListDialog()");
+		  XSRETURN_UNDEF;
+		}		
+		items++;
+		i_list = malloc( (items) * sizeof(void*) );		  
+		
+		/* create i_list array */
+		for(i=0; i<items; i++) i_list[i] = SvPV(*av_fetch((AV *)SvRV(list), i, 0), l);
+		
+		/* xxx hack: converting perl's 0-based index to iup's 1-based index*/
+		if (op>=0) op++;
+
+		/* call IUP function */
+		rv = IupListDialog(1,title,items,i_list,op,max_col,max_lin,NULL);
+		
+		/* arrange return values */
+		XPUSHs(sv_2mortal(newSViv(rv)));
+		if (i_list != NULL) free(i_list);
+
+#### Original C function from <iup.h>
+# int IupListDialog(int type, const char *title, int size, const char** list, int op, int max_col, int max_lin, int* marks);
+void
+_IupListDialog_multi(title,list,marks,SV_max_lin,SV_max_col)
+		char *title;
+		SV* list;
+		SV* marks;
+		SV* SV_max_lin;
+		SV* SV_max_col;
+	INIT:
+		int i, rv, max_col, max_lin;
 		int items1 = -1, items2 = -1, items = -1;
 		const char** i_list = NULL;		  
 		int* i_marks = NULL;
 		STRLEN l;
+		AV* retmarks;
 	PPCODE:
+		/* convert undef to -1 */
+		max_col = (SvIOK(SV_max_col)) ? SvIVX(SV_max_col) : -1;
+		max_lin = (SvIOK(SV_max_lin)) ? SvIVX(SV_max_lin) : -1;
+
 		if ((!SvROK(list)) || (SvTYPE(SvRV(list)) != SVt_PVAV) || ((items1 = av_len((AV *)SvRV(list))) < 0)) {
 		  warn("Warning: invalid 'list' argument of ListDialog()");
 		  XSRETURN_UNDEF;
@@ -1663,18 +1707,25 @@ _IupListDialog(type,title,list,op,max_col,max_lin,marks)
 		/* create i_list array */
 		for(i=0; i<items; i++) i_list[i] = SvPV(*av_fetch((AV *)SvRV(list), i, 0), l);
 		
-		/* xxx hack */
-		if (op>=0) op++;
 		/* call IUP function */
-		rv = IupListDialog(type,title,items,i_list,op,max_col,max_lin,i_marks);
+		rv = IupListDialog(2,title,items,i_list,-1,max_col,max_lin,i_marks);		
 		
-		/* arrange return values */
-		for(i=0; i<items; i++) av_store((AV*)SvRV(marks), i, newSViv(i_marks[i]));
-		XPUSHs(sv_2mortal(newSViv(rv)));
-		if(GIMME_V == G_ARRAY)
-		  for(i=0; i<items; i++)
-		    if(i_marks[i])
-		      XPUSHs(sv_2mortal(newSVpv(i_list[i],0)));
+		//xxx /* return error code */
+		//xxx XPUSHs(sv_2mortal(newSViv(rv)));
+	
+		/* arrange return values - returning array */
+		if (rv < 0) { /* cancel */
+		  for(i=0; i<items; i++) XPUSHs(sv_2mortal(newSViv(rv)));
+		}
+		else {
+		  for(i=0; i<items; i++) XPUSHs(sv_2mortal(newSViv(i_marks[i])));
+		}
+		
+		/* arrange return values - returning array ref*/
+		//xxx retmarks = newAV();
+		//xxx for(i=0; i<items; i++) av_store(retmarks, i, newSViv(i_marks[i]));		  
+		//xxx XPUSHs(sv_2mortal(retmarks);
+		
 		if (i_list != NULL) free(i_list);
 		if (i_marks != NULL) free(i_marks);
 

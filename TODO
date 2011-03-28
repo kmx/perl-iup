@@ -3,90 +3,50 @@
 - weaken/non-weaken questions
 ##########################################################
 
-###1: use weaken (Scalar::Util) http://stackoverflow.com/questions/2223721/common-perl-memory-reference-leak-patterns
-###2: perl -d:TraceUse script vs. scandeps 
-
-######## OLE/ActiveX
-http://search.cpan.org/~mdootson/Wx-ActiveX-0.15/lib/Wx/ActiveX.pm
-
-######## registers
+######## weaken refs in global tables - element destruction issues
+GetDialogChild(ih, "mltline") + GetByName - both destroys element when going off scope
+setting callback should avoid an automatic destruction
+Destroy() should unset all registered callbacks
+info:
+- 1: use weaken (Scalar::Util) http://stackoverflow.com/questions/2223721/common-perl-memory-reference-leak-patterns
+- 2: perl -d:TraceUse script vs. scandeps 
+global registers:
 - register classes created in GetByIhandle (similarly fo canvas)
 - or register in: new_from_cnvhandle new_from_ihandle
 
-######## Examples
-- no example for: Clipboard.pm ?
-- no example for: User.pm ?
-- no example for: ColorDlg.pm ?
-- no example for: FontDlg.pm ?
-- notepad.wlua? olecontrol_browser.wlua?
-#IUP::FileDlg - filedlg.pl: *.c example open My Document directory (how?) - Windows specific path is not good
+######## misc issues
 #IUP::PPlot - xxx TODO maybe add AddSeries to IUP::PPlot # see iupx.lua + iupxpplot.lua (see 3.4)
 #IUP::PPlot - xxx TODO maybe add AxsBounds to IUP::PPlot # see iupx.lua + iupxpplot.lua
 #IUP::PPlot - EDIT_CB handler should return (IUP_DEFAULT, $new_x, $new_y)
 #IUP - IUP->SetIdle vs. IUP->GetIdle? #xxx how to check existing idle handler?
-#IUP - add IUP->GetClassName[FromIh] IUP::Internal::LibraryIup::_IupGetClassName
 #IUP - Idle? #xxxsomething causes progressbar3.pl to hangup/crash (after pressing accel/decel)
+#IUP - add IUP->GetClassName[FromIh] IUP::Internal::LibraryIup::_IupGetClassName
+#IUP - consider adding iupKeyCodeToName
+#IUP - consider adding iupKeyNameToCode
+#IUP - ListDialog() decide whether multiselect API (returning array, not arrayref) is OK
+#IUP::Canvas - cd methods vs functions: cdEncodeColor vs. $cnv->cdEncodeColor
 #IUP::Canvas - add something like IUP::Canvas::EMF / SVG / DXF / ... my $cnv IUP::Canvas::EMF->new( filename=>'x.emf', resolution=>4, ...);
-#IUP::Internal::Element - list2.pl: original examples uses inheritable IUP attribute _LABEL for storing pointers for iup elements 
-                           (do we want to support this in perl?)
-#consider checking arg count SetAttributeId($$$) SetAttributeId2($$$$)
+#IUP::Internal::Element - list2.pl: original examples uses inheritable IUP attribute _LABEL for storing pointers for iup elements (do we want to support this in perl?)
+#IUP::Internal::Element - consider checking arg count SetAttributeId($$$) SetAttributeId2($$$$)
 #IUP::Internal::Element - passing undef to child=> ... Can't call method "ihandle" on an undefined value at Y:\@repos\perl-iup\blib\lib/IUP/Internal/Element.pm line 574. (better error message)
 #IUP::Internal::Element - Discard() = destroy perl object without destroying iup element
 #IUP::LayoutDialog - maybe support named new params e.g. dialog=>... 
-#IUP::Tree - #NOTE: tree->TreeAddNodes(...) has to go after dialog->Show() + tree->SetAttribute(...) has to go after dialog->Show() xxx why?
-#IUP::Tree - should it be maped before show as canvas?
-# original sbox.c example boken - xxxTODO report
+#IUP::ProgressBar - MARQUEE not working
+#IUP::Frame - missing accessor $frame->MARGIN("10x10");
+#IUP::List - IUP::List->new( items 0-based or 1-based index(important - broken example)
 
-GetDialogChild(ih, "mltline");
-GetByName
-- both destroys element when going off scope
+######## update Attributes/Callbacks according the latest iup version
+- check changes between 3.2-3.3-3.4
 
-#consider adding iupKeyCodeToName
-#consider adding iupKeyNameToCode
-
-
-#setting callback should avoid an automatic destruction
-#Destroy() should unset all registered callbacks
-
-IUP::ProgressBar - MARQUEE not working
-
-(important - broken example)######## IUP::Cell
-- DRAW_CB - for some reason $canvas->... does not work
-- cd methods vs functions: cdEncodeColor vs. $cnv->cdEncodeColor
-
-(important - broken example)######## Ask Scuri
-val  # xxx TODO.ASKIUP iuplabel does not accept attribute TYPE
-
-(important - broken example)######## IUP::List
-- IUP::List->new( items 0-based or 1-based index(important - broken example)######## IUP::Label
-
-(important - broken example)######## IUP::Label
-- $label->TITLE("IUP::Canvas - inside");   does not work
-- $label->TITLE("inside");   works
-
-(important - broken example)######## IUP.pm
-- ListDialog() API change
-  my $rv = IUP->ListDialog("Color selection", [ qw/red green blue/ ]);
-  my $rv = IUP->ListDialog("Color selection", [ qw/red green blue/ ], 20, 6);
-  my $rv = IUP->ListDialog("Color selection", [ qw/red green blue/ ], 20, 6, 1);
-  my $rv = IUP->ListDialog("Color selection", [ qw/red green blue/ ], 20, 6, [0, 1, 1]);
-
-######## OleControl.pm (big troubles)
-- $o->IUNKNOWN ... pointer created by CoCreateInstance Function http://msdn.microsoft.com/en-us/library/ms686615%28v=vs.85%29.aspx
-- perahps integrate with Win32::OLE like $o->ole->methodname(...)
-- Win32::OLE needs something like new_from_iunknown
-  IUnknown *punk = ... value from $olecontrol->IUNKNOWN;
-  HRESULT hr;
-  IDispatch *pDispatch = NULL;
-  hr = punk->QueryInterface(IID_IDispatch, (void**)&pDispatch);
-  punk->Release();
-  ST(0) = CreatePerlObject(aTHX_ stash, pDispatch, destroy);
-
-######## Attributes/Callbacks
-- chek changes between 3.2-3.3
-- IUP::Frame: #xxx TODO missing accessor $frame->MARGIN("10x10");
+######## missing examples
+- no example for: Clipboard.pm ?
+- no example for: User.pm ?
+- no example for: ColorDlg.pm ?
+- no example for: FontDlg.pm ?
 
 ######## IUP::Tree
+#IUP::Tree - #NOTE: tree->TreeAddNodes(...) has to go after dialog->Show() + tree->SetAttribute(...) has to go after dialog->Show() xxx why?
+#IUP::Tree - should it be maped before show as canvas?
 - Convert Lua interface into Perl:
   TreeAddNodes($newnodes, [$id])                #some draft is already in Tree.pm
   TreeSetNodeAttributes($id, $attrs)            #some draft is already in Tree.pm
@@ -110,6 +70,22 @@ val  # xxx TODO.ASKIUP iuplabel does not accept attribute TYPE
   PrependContainer ($parent, $text, $data)    Add a container to the control as the first child of $parent.
   InsertItem ($parent, $before | $previous, $text, $data)    Inserts an item after a given one (previous) or before one identified by its position (before).
   InsertContainer ($parent, $before | $previous, $text, $data)    See InsertItem().
+
+######## bugs to be reported to scuri
+- original sbox.c example boken
+
+######## OleControl.pm (big troubles)
+- $o->IUNKNOWN ... pointer created by CoCreateInstance Function http://msdn.microsoft.com/en-us/library/ms686615%28v=vs.85%29.aspx
+- perahps integrate with Win32::OLE like $o->ole->methodname(...)
+- Win32::OLE needs something like new_from_iunknown
+  IUnknown *punk = ... value from $olecontrol->IUNKNOWN;
+  HRESULT hr;
+  IDispatch *pDispatch = NULL;
+  hr = punk->QueryInterface(IID_IDispatch, (void**)&pDispatch);
+  punk->Release();
+  ST(0) = CreatePerlObject(aTHX_ stash, pDispatch, destroy);
+- see Wx+OLE/ActiveX integration http://search.cpan.org/~mdootson/Wx-ActiveX-0.15/lib/Wx/ActiveX.pm
+- missing example: notepad.wlua? olecontrol_browser.wlua?
 
 !!Big Task!!######## doc
 - Cleanup first (in this order):
@@ -363,6 +339,7 @@ http://use.perl.org/~Alias/journal/40377
 - Db 4,5 (Ubuntu?)
   - http://search.cpan.org/dist/Debian-Apt-PM/
   - http://www.debian-administration.org/articles/78
+    http://www.opensourcery.com/blog/hans-dieter-pearcey/packaging-cpan-modules-debian
 - Linux distro info
   - http://distrowatch.com/table.php?distribution=ubuntu (10.04/LTS,9.10,8.04/LTS)
   - http://distrowatch.com/table.php?distribution=debian (5,4)
