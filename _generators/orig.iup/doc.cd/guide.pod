@@ -1,0 +1,205 @@
+=head1 Guide
+
+=head2 X<start>Getting Started
+
+The CD library is a basic graphic library (GL). In a GL paradigm you
+use B<primitives>, which have B<attributes>, to draw on a B<canvas>.
+All the library functions reflect this paradigm.
+
+The B<canvas> is the basic element. It can have several forms: a paper,
+a video monitor, a graphic file format, etc. The virtual drawing
+surface where the canvas exists is represented by a B<driver>. Only the
+driver knows how to draw on its surface. The user does not use the
+driver directly, but only the canvas.
+
+To make the library simple we use the concept of an active canvas, over
+which all the primitives are drawn. This also allows the use of an
+expansion mechanism using function tables. Unfortunately if a function
+is called without an active canvas a memory invasion will occur. On the
+other hand, the mechanism allows the library to be expanded with new
+drivers without limits.
+
+The B<attributes> are also separated from the primitives. They reside
+in the canvas in a state mechanism. If you change the attribute's state
+in the canvas all the primitives drawn after that canvas and that
+depend on the attribute will be drawn in a different way.
+
+The set of B<primitives> is very small but complete enough to compose a
+GL. Some primitives are system dependent for performance reasons. Some
+drivers (window and device based) use system functions to optimally
+implement the primitives. Sometimes this implies in a in small
+different behavior of some functions. Also some primitives do not make
+sense in some drivers, like server images in file-based drivers.
+
+The set of available functions is such that it can be implemented in
+most drivers. Some drivers have sophisticated resources, which cannot
+be implemented in other drivers but can be made available using a
+generic attribute mecanism.
+
+=head2 X<buildapp>Building Applications
+
+All the CD functions are declared in the C<cd.h> header file; World
+Coordinate functions are declared in the C<wd.h> header file; and each
+driver has a correspondent header file that must be included to create
+a canvas. It is important to include each driver header after the
+inclusion of the C<cd.h> header file.
+
+To link the application you must add the B<cd.lib/libcd.a/libcd.so> and
+B< freetype6.lib/libfreetype.a/libfreetype.so > libraries to the linker
+options. If you use an IUP Canvas then you must also link with the
+B<iupcd.lib/libiupcd.a/libiupcd.so> library available in the IUP
+distribution.
+
+In UNIX, CD uses the Xlib (X11) libraries. To link an application in
+UNIX, add also the "-lX11" option in the linker call.
+
+The download files list includes the L<TecgrafE<47>PUC-Rio Library
+Download Tips|download_tips.html> document, with a description of all
+the available binaries.
+
+=head2 X<buildlib>Building the Library
+
+In the Downloads you will ne able to find pre-compiled binaries for
+many platforms, all those binaries were built using Tecmake. Tecmake is
+a command line multi compiler build tool based on GNU make, available
+at
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>tecmake|http://www.tecgraf.puc-rio.br/tecmake>.
+Tecmake is used by all the Tecgraf libraries and many applications.
+
+In UNIX, you do not need to install Tecmake, a compact version of
+Tecmake for UNIX is already included in the source code package. Just
+type "make" in the command line on the "src" folder and all libraries
+and executables will be build. Set the TECTOOLS_HOME environment
+variable to the folder were the IM and Lua libraries are installed, by
+default it will assume "TECTOOLS_HOME=../..".
+
+In Windows, the easiest way to build everything is to install the
+Tecmake tool into your system. It is easy and helps a lot. The Tecmake
+configuration files (*.mak) available at the "src" folder are very easy
+to understand also. Also there are files named I<make_uname.bat> that
+build the libraries using B<Tecmake>. To build for Windows using Visual
+C 7.0 (2005) for example, just execute I<"make_uname vc7"> , or the
+DLLs with Visual C++ 9 (2008) type I<"make_uname dll9">. The Visual
+Studio workspaces with the respective projects available in the source
+package is for debugging purposes only.
+
+Make sure you have all the dependencies for the library you want
+installed, see the documentation bellow.
+
+If you are going to build all the libraries, the makefiles and projects
+expect the following directory tree:
+
+ \mylibs\
+         cd\
+         im\
+         lua5.1\
+
+=head2 Libraries Dependencies
+
+ cd -> FreeType (included as separate library)
+    cdwin* -> gdi32 user32 comdlg32 (system - Windows)
+    cdx11* -> X11 (system - UNIX)
+    cdgdk* -> gdk-win32-2.0 pangowin32-1.0(system - Windows)
+           -> gdk-x11-2.0 pangox-1.0 (system - UNIX)
+           -> cairo-2 gdk_pixbuf-2.0 pango-1.0 gobject-2.0 gmodule-2.0 glib-2.0 (system - Windows/UNIX)
+ cdgdiplus* -> cd
+           -> gdiplus (system - Windows)
+ cdxrender* -> cd
+           -> Xrender Xft (system - UNIX)
+ cdcairo* -> cairo-2 (system - Windows/UNIX)
+ cdpdf    -> pdflib (included as separate library)
+ cdgl     -> opengl32 (system - Windows)
+          -> GL (system - UNIX)
+          -> ftgl (included as separate library)
+ cdlua51  -> cd
+          -> lua5.1
+ cdluaim51 -> cdlua51
+           -> imlua51 
+ cdluapdf51 -> cdlua51
+            -> cdpdf
+ cdluagl51 -> cdlua51
+           -> cdgl
+ 
+ (*) In Windows, "cdwin" is called "cd". 
+     In Linux and BSD "cdgdk" is called "cd". 
+     In IRIX, AIX and SunOS "cdx11" is called "cd".
+
+As a general rule (excluding system dependencies and included third
+party libraries): CD has NO external dependencies, and CDLua depends on
+Lua and IMLua. Just notice that not all CDLua libraries depend on
+IMLua.
+
+The Lua bindings for IUP, CD and IM (Makfiles and Pre-compiled
+binaries) depend on the L<LuaBinaries|http://luabinaries.luaforge.net/>
+distribution. So if you are going to build all use the B<LuaBinaries>
+source package also, not the B<Lua.org> original source package. If you
+like to use another location for the Lua files overwrite the LUAINC,
+LUALIB and LUABINDIR definitions before using Tecmake or Tecmake
+Compact.
+
+In Ubuntu you will need to install the following packages:
+
+ libx11-dev
+ libxpm-dev
+ libxmu-dev
+ libxft-dev (for the XRender driver)
+ libgtk2.0-dev (for the GDK driver)
+
+=head2 X<Environment>Environment Variables
+
+B<CDDIR> - This environment variable is used by some drivers to locate
+useful data files, such as font definition files. It contains the
+directory path without the final slash.
+
+B<CD_QUIET> - In UNIX, if this variable is defined, it does not show
+the library's version info on I<sdtout>.
+
+B<CD_>B<XERROR> - In UNIX, if this variable is defined, it will show
+the X-Windows error messages on I<sdterr>.
+
+=head2 X<NewDriver>Implementing a Driver
+
+The best way to implement a new driver is based on an existing one. For
+this reason, we provide a code of the simplest driver possible, see
+L<CDXX.H|../download/cdxx.h> and L<CDXX.C|../download/cdxx.c>. But
+first you should read the L<Internal Architecture|internal.html>.
+
+=head2 X<Play>Intercepting Primitives
+
+To fill data structures of library primitives during a cdPlay call you
+must implement a driver and activate it before calling cdPlay. Inside
+your driver primitives you can fill your data structure with the
+information interpreted by the cdPlay function.
+
+=head2 X<IUP>IUP Compatibility
+
+The B<IupCanvas> element of the
+L<IUP|http://www.tecgraf.puc-rio.br/iup/> interface toolkit can be used
+as a visualization surface for a CD canvas. There are two moments in
+which one must be careful when an application is using both libraries:
+when creating the CD canvas, and when changing the size of the IUP
+canvas.
+
+=head2 Creating the CD Canvas
+
+The CD_IUP driver parameter needs only the Ihandle* of the B<
+IupCanvas>. But B<cdCreateCanvas> must be called after the B<IupCanvas>
+element has been mapped into the native system.
+
+But a call to B<IupShow> generates an ACTION callback. And a direct
+call to B<IupMap> can generate a RESIZE_CB callback.
+
+So the best way to create a CD canvas for a IUP canvas is to use the
+B<IupCanvas> MAP_CB callback. This callback will be always called
+before any other callback.
+
+The application must be linked with the B<iupcd> library that it is
+available in the IUP package.
+
+=head2 Resizing the IUP Canvas
+
+When a IupCanvas is resized the CD canvas must be notified of the size
+change. To do that simply call B<cdCanvasActivate> in the RESIZE_CB
+callback.
+
+=cut

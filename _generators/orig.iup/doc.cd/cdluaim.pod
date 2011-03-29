@@ -1,0 +1,65 @@
+=head1 CDLua+IMLua
+
+When CD is used togheter with the IM library in Lua, the CD bitmap and
+the IM image objects in Lua have a few more methods. These methods
+allow to map the imImage structure to the cdBitmap structure and add
+some facilities to draw on an imImage using a CD canvas. See also the
+L<IM documentation|http://www.tecgraf.puc-rio.br/im>.
+
+Color values and palettes can be created and used transparently in both
+libraries. Palettes and color values are 100% compatible between CD and
+IM.
+
+You must link the application with the "cdluaim51" library.
+
+See also the L<IM documentation|http://www.tecgraf.puc-rio.br/im>.
+
+ int cdluaim_open(lua_State* L); [in C] [for Lua 5]
+
+Must be called to enable the additional methods. Can be called only
+after CDLua and IMLua were initialized. require"cdluaim" can also be
+used.
+
+Returns 0 (leaves nothing on the top of the stack).
+
+----
+
+=head2 Available methods
+
+ bitmap:imImageCreate() -> image: imImage [in Lua] 
+
+Creates an imImage from a cdBitmap.
+
+ image:cdCreateBitmap() -> bitmap: cdBitmap [in Lua]
+
+Creates a cdBitmap from an imImage. The imImage must be a bitmap image,
+see "image:B<IsBitmap>".
+
+ image:cdInitBitmap() -> bitmap: cdBitmap [in Lua]
+
+Creates a cdBitmap from an imImage, but reuses image data. When the
+cdBitmap is destroyed, the data is preserved.
+
+ image:cdCanvasPutImageRect(canvas: cdCanvas, x: number, y: number, w: number, h: number, xmin: number, xmax: number, ymin: number, ymax: number) [in Lua] 
+
+Draws the imImage into the given cdCanvas. The imImage must be a bitmap
+image, see B<imImageIsBitmap> in IM documentation.
+
+ image:wdCanvasPutImageRect(canvas: cdCanvas, x: number, y: number, w: number, h: number, xmin: number, xmax: number, ymin: number, ymax: number) [in Lua]     
+
+Draws the imImage into the given cdCanvas using world coordinates. The
+imImage must be a bitmap image, see B<imImageIsBitmap> in IM
+documentation.
+
+ image:cdCanvasGetImage(canvas: cdCanvas, x: number, y: number) [in Lua]     
+
+Retrieve the imImage data from the given cdCanvas. The imImage must be
+a IM_RGB/IM_BYTE image.
+
+ image:cdCreateCanvas([res: number]) -> canvas: cdCanvas [in Lua]    
+
+Creates a cdCanvas using the L<CD_IMAGERGB|drv/irgb.html> driver.
+Resolution is optional, default is 3.8 pixels per milimiter (96.52
+DPI). The imImage must be a IM_RGB/IM_BYTE image.
+
+=cut

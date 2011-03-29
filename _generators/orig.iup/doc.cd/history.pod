@@ -1,0 +1,1604 @@
+=head1 History of Changes
+
+=head2 L<Version
+5.4|http://sourceforge.net/projects/canvasdraw/files/5.4/>
+(24/June/2010)
+
+=over
+
+=item * New: context plus driver L<Cairo|drv/cairo.html>.
+
+=item * New: OpenGL driver L< CD_GL|drv/gl.html>.
+
+=item * New: "CMD", "OPACITY" and "HATCHBOXSIZE" attributes in the SVG
+driver.
+
+=item * New: L<CD_PATH|func/polygon.html#cdBegin> B<cdCanvasBegin> mode
+to create a path composed of several primitives that can be line draw,
+filled or used as clipping. New function B<
+L<cdCanvasPathSet|func/polygon.html#cdPathSet>> to configure the action
+between sequences of B<cdCanvasVertex>.
+
+=item * New: screenshots page in the documentation.
+
+=item * Changed: CD_DXF now supports solid filled primitives for
+polygons and rectangles.
+
+=item * Changed: GDI+ base driver now supports floating point
+primitives. ATTENTION: check for alignment and size problems in the
+application. Please report if anything changed.
+
+=item * Changed: removed compatibility with require"cdlua51", now
+LuaBinaries must be used or LUA_CPATH must be set.
+
+=item * Changed: added compatibility with Lua 5.2.
+
+=item * Changed: B< IMPORTANT> - the main library in Linux and BSD is
+now the GDK base driver. The X11 base driver library was renamed to
+B<cdx11> on those systems.
+
+=item * Fixed: PDF driver documentation, B<CanvasBackOpacity> and
+B<CanvasBackground> are supported.
+
+=item * Fixed: SVG driver support for B<BackOpacity>=OPAQUE in Hatch.
+Transform and Clipping conflict. B<InteriorStyle> initialization.
+Pattern orientation was upside down.
+
+=item * Fixed: alpha transparency in B< CanvasArc> and Bezier polygon
+in the IMAGERGB driver.
+
+=item * Fixed: missed implementation for CD_DEBUG, CD_PICTURE and
+CD_DBUFFERRGB in Lua.
+
+=item * Fixed: Chord in PDF driver.
+
+=item * Fixed: custom line style sizes in CD_PDF and CD_PS drivers to
+match behavior of other drivers.
+
+=item * Fixed: cd.B<GetTextBounds> and cd.B<wGetTextBounds> to return
+the correct values and in a table in Lua.
+
+=back
+
+=head2 L<Version
+5.3|http://sourceforge.net/projects/canvasdraw/files/5.3/>
+(26/Jan/2010)
+
+=over
+
+=item * New: driver SVG.
+
+=item * New: base driver GDK.
+
+=item * New: function B< CanvasYAxisMode> to control the Y axis
+orientation.
+
+=item * New: functions B< wdCanvasSetTransform>,
+B<wdCanvasGetTransform>, B<wdCanvasTranslate> and B<wdCanvasScale>, to
+better control the WD transformation.
+
+=item * New: "PDFLIBVERSION",
+"SUBJECT","TITLE","CREATOR","AUTHOR","KEYWORDS" attributes for the PDF
+driver.
+
+=item * New: "FREETYPEVERSION" attribute for the Simulation base
+driver.
+
+=item * New: "PRINTERNAME" attribute for the CD_PRINTER base driver.
+
+=item * Changed: Freetype updated to version 2.3.11.
+
+=item * Changed: PDFLib Lite updated to version 7.0.4p4.
+
+=item * Changed: return value to boolean of B<CanvasIsPointInRegion>
+and B<cd.UseContextPlus> in Lua.
+
+=item * Changed: added missing support for alpha channel in
+image:B<cdCreateCanvas>, B<cd:imImageCreate>, imageB<:cdCreateBitmap>
+and imageB<:cdInitBitmap> in cdluaim binding.
+
+=item * Changed: ANTIALIAS attribute is now respected also by
+B<CanvasText> in the IMAGERGB driver.
+
+=item * Changed: WriteMode=XOR is ignored if alpha transparency is used
+in the IMAGERGB driver.
+
+=item * Fixed: indexing of B< cdImageRGB>, B<cdImageRGBA> and
+B<cdBitmap> objects in Lua.
+
+=item * Fixed: B<CanvasText> for WD when using text with multiple
+lines.
+
+=item * Fixed: compositing in the IMAGERGB driver when canvas has a
+semi-transparent alpha channel and a color with semi transparent alpha
+are used.
+
+=item * Fixed: polygon filling in the IMAGERGB driver when the segments
+contain horizontal lines.
+
+=item * Fixed: line style background not transparent in the IMAGERGB
+driver.
+
+=item * Fixed: B<CanvasClear> method was affected by B<CanvasWriteMode>
+in the X11 base driver.
+
+=item * Fixed: invalid memory access at B<CanvasFont> in the PICTURE
+driver.
+
+=item * Fixed: improved support for line endings at B<cdPlay> in the
+METAFILE driver.
+
+=item * Fixed: text alignment in the Windows base driver when
+WriteMode=XOR.
+
+=back
+
+=head2 L<Version
+5.2|http://sourceforge.net/projects/canvasdraw/files/5.2/>
+(26/Jun/2009)
+
+=over
+
+=item * New: functions B< CanvasGetVectorTextBox,
+CanvasGetVectorFontSize> and B< CanvasVectorFontSize>.
+
+=item * Changed: the functions B<CanvasVectorText>, B<CanvasText> and
+B<CanvasGetTextSize> now supports line breaks using '\n'.
+B<CanvasMultiLineVectorText> is now deprecated but kept for
+compatibility. B< IMPORTANT> - VectorTextSize now uses the full line
+size.
+
+=item * Changed: CD_DBUFFER now activates the buffered canvas before
+creating the image canvas. If size is 0 then uses 1 and avoid to fail
+during creation.
+
+=item * Changed: removed "lua5.1.so" dependency in UNIX.
+
+=item * Fixed: B<CanvasText> for CD_IMAGERGB driver when the foreground
+color has alpha.
+
+=back
+
+=head2 L<Version
+5.1.1|http://sourceforge.net/projects/canvasdraw/files/5.1.1/>
+(15/Dec/2008)
+
+=over
+
+=item * Fixed: CDLua binding functions canvas:foreground,
+canvas:setforeground, canvas:background and canvas:setbackground. Color
+was being checked from the wrong position in the stack. They were
+reporting and invalid color when being used.
+
+=item * Fixed: CDLua binding functions canvas:foreground and
+canvas:background when using cd.QUERY are value.
+
+=back
+
+=head2 L<Version
+5.1|http://sourceforge.net/projects/canvasdraw/files/5.1/>
+(14/Oct/2008)
+
+=over
+
+=item * New: CD_DEBUG driver.
+
+=item * New: the "imlua_cd" library moved from IM to CD under the name
+"cdluaim". Only the initialization function name is changed.
+
+=item * New: cdluacontextplus library so the "ContextPlus" base drivers
+(GDI+ and XRender) can be dinamically loaded using require.
+
+=item * Changed: B< IMPORTANT> - the "cdiup" and "cdluaiup" libraries
+moved from CD to IUP under the name "iupcd" and "iupluacd". But headers
+and documentation remains on the CD package. Function names were NOT
+changed. This change eliminates a cross-dependency that IUP and CD had,
+now only IUP depends on CD.
+
+=item * Changed: B< IMPORTANT> - renamed "cdgliplus" and "cdxrender"
+libraries to "cdcontextplus".
+
+=item * Changed: B< IMPORTANT> - removed the FreeType library files
+from the main library. They now are available as an additional library
+that can be replaced by other FreeType distributions. You should now
+link with the "freetype6" library in Windows and with the "freetype"
+library in UNIX (if not using GTK, freetype is already included in
+GTK). This change will avoid conflicts when using CD and GTK.
+
+=item * Changed: B< IMPORTANT> - removed the PDFLib library files from
+the cdpdf library. They now are available as an additional library that
+can be replaced by other PDFLib distributions. You should now link with
+the "pdflib" library.
+
+=item * Changed: B< IMPORTANT> - the support services (Downloads,
+Mailing List and CVS) moved from LuaForge to SourceForge.
+
+=item * Changed: Makefiles for UNIX now uses a compact version of
+Tecmake that does not need any installation, just type "make".
+
+=item * Changed: All dll8 and dll9 DLLs now have a Manifest file that
+specifies the correct MSVCR*.DLL.
+
+=item * Changed: improved CDLua parameter checking and error report.
+
+=item * Changed: improved compatibility for font names in X and Win32.
+
+=item * Changed: Copyright notice modified to reflect the registration
+at INPI (National Institute of Intellectual Property in Brazil).
+License continues under the same terms.
+
+=item * Changed: improved pattern and stipple resize in
+B<wdCanvasPattern> and B<wdCanvasStipple>.
+
+=item * Changed: pattern creation in Win32 to a more faster method.
+
+=item * Changed: optimized font search in X-Windows base driver for
+size variations.
+
+=item * Changed: the number of bits per pixel returned by the
+CD_PRINTER driver when the printer is a PDF Writer was 1, now we add a
+workaround to return 24.
+
+=item * Changed: improved the color convertion when drawing a RGB image
+in a CD_PRINTER canvas with 1 bpp (usually a laser printer).
+
+=item * Changed: (UNDONE from 5.0) in Lua canvases are NOT garbage
+collected anymore. Since there can be different Lua canvases pointing
+to the same canvas.
+
+=item * Changed: font map in simulation driver is not case sensitive
+anymore.
+
+=item * Changed: premake files are used now only internally and were
+removed from the distribution.
+
+=item * Fixed: added missing CD_NO_OLD_INTERFACE definition on Linux
+makefiles.
+
+=item * Fixed: attributes not being preserved after changing clipping
+or adding a new page in CD_PDF.
+
+=item * Fixed: polygon clipping in CD_IMAGERGB driver when polygon is
+larger than the canvas.
+
+=item * Fixed: B<cdCanvasVertex> when adding two reference points with
+the same coordinates in a bezier.
+
+=item * Fixed: client image zoom in CD_IMAGERGB driver.
+
+=item * Fixed: text draw position and gettextsize in Xrender base
+driver.
+
+=item * Fixed: double buffer driver invalid memory access when using
+the Xrender base driver.
+
+=back
+
+=head2 Version 5.0 (26/Nov/2007)
+
+=over
+
+=item * New: attributes "OPACITY", "PATTERN" and "PDF" in the CD_PDF
+driver.
+
+=item * New: XRender base driver.
+
+=item * Changed: PDF Lite library updated to version "7.0.2".
+
+=item * Changed: FreeType library updated to version "2.3.5".
+
+=item * Changed: now using "(char*)CD_QUERY" as the parameter in
+B<cdCanvasNativeFont>, it returns the current selected font in the
+common format definition.
+
+=item * Changed: avoid setting X-Windows color background when calling
+B<cdCanvasClear> for NativeWindow driver. Now all X-Windows drivers
+will use only XFillRectangle.
+
+=item * Changed: in Lua canvases are now garbage collected.
+
+=item * Changed: metatable names in Lua are now the same as the C
+struct names.
+
+=item * Fixed: function cdlua_checkcanvas that affects the creation of
+the cd.DBUFFER canvas. Thanks to Martin Saerbeck.
+
+=item * Fixed: vertical text alignment in PDF and PS drivers.
+
+=item * Fixed: ascent and descent font dimensions in PDF driver.
+
+=item * Fixed: check for mark size and font size when given size is 0.
+
+=back
+
+=head2 Version 5.0 RC2 (09/Apr/2007)
+
+=over
+
+=item * New: function B<cdCanvasInvertYAxis> that will invert the given
+y coordinate even if the canvas is not internally inverted.
+
+=item * Changed: PDF Lite library updated to version "7.0.0p3".
+
+=item * Changed: FreeType library updated to version "2.2.1".
+
+=item * Changed: In the new API B< cdCanvasFont> you can specify
+partial parameters using NULL, -1 and 0 for typeface, style and size.
+When these parameters are specified the current font parameter is used.
+For example, B<cdCanvasFont(NULL, -1, 10)> will only change the font
+size.
+
+=back
+
+=head2 Version 5.0 RC1 (08/Mar/2007)
+
+=over
+
+=item * New: attribute HATCHBOXSIZE in CD_PDF driver, to control the
+hatch spacing.
+
+=item * New: attribute ADDFONTMAP in simulation base driver to accept a
+map between a font name and a font file name.
+
+=item * New: Pango Font Description string is now accepted in
+B<NativeFont> and replace the previous CD format is most drivers.
+
+B<INCOMPATIBILITY -> If style is not used, most drivers had a format
+compatible with the new format. But please check your B<NativeFont>
+usage. The IUP format is still supported.
+
+=item * New: API using canvas as a parameter. Old API still exists.
+Library is backward compatible with previous versions, but the
+documentation shows only the new names. The new functions add a
+"Canvas" to the function prefix, for ex: the B< cdLine> equivalent is
+B<cdCanvasLine>. For these functions B<cdActivate> is not required. But
+B< cdCanvasActivate> exists for special cases where the canvas must be
+updated if an external factor was changed, like a window resize. To
+facilitate the migration to the new API use the definition
+CD_NO_OLD_INTERFACE to exclude the old API definitions and check if you
+are using only the new functions.
+
+=item * New: support for primitives using "double" floating point
+precision and not related to WC functions.
+
+=item * New: "cd_canvas.hpp" header file which defines a C++ class
+cdCanvasC that wraps the cdCanvas structure API.
+
+=item * New: ROTATE attribute in CD_PDF driver.
+
+=item * New: binding Lua of the CD_PDF driver.
+
+=item * New: support for alpha channel in CD_IMAGERGB driver. Also
+support for alpha in color coding in the CD_IMAGERGB driver primitives.
+
+=item * New: attribute ANTIALIAS in the CD_IMAGERGB driver. Text is
+always antialiased as before.
+
+=item * New: implemented B<Chord> primitive in simulation base driver.
+
+=item * New: implemented CD_WINDING fill mode in the simulation base
+driver.
+
+=item * New: implemented complex clipping regions in CD_IMAGERGB
+driver. Fixed polygon clipping and other clipping errors in the
+CD_IMAGERGB driver.
+
+=item * New: driver CD_DBUFFERRGB that uses the CD_IMAGERGB driver for
+double buffer, and can be a double buffer for any other driver
+(CD_DBUFFER works only for Window based drivers).
+
+=item * New: CD_PICTURE driver to store primitives and attributes in
+memory that can be played and resized in any other driver.
+
+=item * New: functions to set color foreground and background without
+query support (cdCanvasSetForeground and cdCanvasSetBackground).
+CD_QUERY conflicts with color RGBA=(255,255,255,255) (full transparent
+white).
+
+=item * New: support for generic canvas transformations using
+B<Transform>, B<TransformTranslate>, B<TransformRotate> and
+B<TransformScale> functions.
+
+=item * New: attribute "GDI+" for all GDI+ based drivers that returns
+"1". So it can be detected if the driver uses the GDI+ base driver.
+
+=item * Changed: B< INCOMPATIBILITY> - removed clipping simulation from
+the simulation base driver. It is not possible anymore to simulate
+clipping, only primitives can be simulated.
+
+=item * Changed: canvas internal pointer allocation so it can be
+checked for valid canvas in all external API function calls.
+
+=item * Changed: B<NativeFont>("-d") to set also the foreground color
+from the color in the dialog, and initialize the font in the dialog
+with the current selected font.
+
+=item * Changed: In the new API B< cdCanvasFont> changed the typeface
+parameter type from a small set of integer values to a more flexible
+string.
+
+=item * Changed: all accented characters are now available in the
+default vector text font.
+
+=item * Changed: all functions in the API now use "const" when
+applicable.
+
+=item * Changed: server image defintion from "void*" to "cdImage*".
+This will affect C++ applications that must update their code.
+
+=item * Changed: removed B<cdGetClipPoly> and B<wdGetClipPoly>
+functions.
+
+=item * Changed: B<UpdateYAxis> now also returns the changed value.
+
+=item * Changed: B< INCOMPATIBILITY - cdCallback> definition used in
+B<RegisterCallback>, called from B<Play>. Replaced the "cdContext*" by
+a "cdCanvas*". If you do not use the pointer it can be simply ignored.
+
+=item * Changed: WC functions now are only client functions of the CD
+API.
+
+=item * Changed: removed old support for Windows 9x.
+
+=item * Changed: removed the B<cdInitGdiPlusIUP> function and the
+"B<cdiupgdiplus>" library. They are not necessary anymore. Althougth
+the CD_IUP driver still works with GDI+ support.
+
+=item * Changed: improved speed and precision of the bezier polygon of
+the simulation base driver.
+
+=item * Changed: renamed distribution folder name from "cd/data" to
+"cd/etc".
+
+=item * Changed: CD Lua for Lua 3 library name changed to include "3"
+as a suffix.
+
+=item * Fixed: conversion from ANSI to ASCII in vector text fonts.
+
+=item * Fixed: Sector primitive in simulation base driver.
+
+=item * Fixed: deactivation of internal canvas in Double Buffer driver
+over a Native Windows driver for Win32.
+
+=item * Fixed: EPS compatibility in PostScript driver.
+
+=item * Fixed: the default values in B<cdCreateCanvas> for CD_DGN,
+CD_DXF and CD_CGM.
+
+=item * Fixed: B<Play> for CD_EMF when data contains poly-polygons or
+poly-polylines.
+
+=item * Fixed: B<LineWidth> in WC when updating the size in pixels.
+
+=item * Fixed: B<TextSize> and B<FontDim> in driver DXF.
+
+=item * Fixed: B<Font> in the X-Windows base driver, size parameter was
+incorrectly passed to the X-Windows. B<WARNING>: the result font will
+have a size different than previous CD versions in X-Windows.
+
+=item * Fixed: B<Flush> in CD_DBUFFER driver, it was affected by the
+write mode state of the buffered canvas.
+
+=item * Fixed: WC tranformation update when the Window is invalid.
+Thanks to Marian Trifon.
+
+=item * Fixed: polygon filling in simulation base driver.
+
+=item * Fixed: invalid resample in B< PutImageRect>* in GDI+ base
+driver cause a band with a mix of the background color appear on right
+and bottom when image is zoomed in (larger than original size).
+
+=back
+
+=head2 Version 4.4 (12/Dec/2005)
+
+=over
+
+=item * New: CDLua for Lua 5. The CDLua for Lua 3 is now also totally
+compatible with the "cd." name space used in the CDLUA for Lua 5. So
+the documentation now reflects only the new nomenclature although the
+old CDLua 3 names are still valid.
+
+=item * New: attribute "WINDOWRGN" for the Native Windows and IUP
+drivers to set the shape of a window to the current complex clipping
+region.
+
+=item * New: B<cdlua_close> function to release the memory allocated by
+the B< cdlua_open>.
+
+=item * New: "ROTATE" attribute for PS driver, GDI+ base driver and GDI
+base driver.
+
+=item * New: CD_FILLSPLINE and CD_SPLINE parameters for cdBegin in GDI+
+base driver.
+
+=item * New: support for complex regions for clipping using: B<cdBox>,
+B< cdSector>, B<Polygons> and B< cdText>. New: parameter CD_REGION for
+B< cdBegin> to create the region, new parameter CD_CLIPREGION for
+B<cdClip> to select the region for clipping. New: funtions to control
+regions: B<cdPointInRegion>, B<cdOffsetRegion>, B< cdRegionBox> and
+B<cdRegionCombineMode>. Valid only for the Windows GDI, GDI+ and
+X-Windows base drivers and their derived drives.
+
+=item * New: mode for B<cdBegin>, CD_BEZIER.
+
+=item * New: filled primitive B<cdChord>.
+
+=item * New: polygon fill rule control using B<cdFillMode> with
+CD_EVENODD (the default) and CD_WINDING parameters.
+
+=item * New: line cap and line join styles using B<cdLineCap> and B<
+cdLineJoin>.
+
+=item * New: typeface CD_NATIVE to indicate that a native font has been
+selected.
+
+=item * New: custom line style using B<cdLineStyleDashes> and B<
+cdLineStyle>(CD_CUSTOM). This replaces the attribute "USERLINESTYLE".
+
+(All New:, when not specified the divers, are valid for all the
+drivers, except DXF, DGN e CGM.)
+
+=item * New: text utility function B<cdTextBounds> that returns the
+oriented bounding rectangle.
+
+=item * New: "IMAGEFORMAT" and "IMAGEALPHA" attributes for the Windows
+base driver.
+
+=item * New: In GDI+, the CD_CLIPBOARD driver supports EMF and BMP
+formats.
+
+=item * New: function B<cdReleaseState> to release the memory allocated
+by a state. The B<cdRestoreState> does not release the memory anymore
+so it can be used several times for the same state.
+
+=item * Fixed: Invalid cdKillImage in X-Windows when active canvas is
+not the canvas where the image was created.
+
+=item * Fixed: Text clipping for CD_IMAGERGB driver.
+
+=item * Fixed: fixed size in milimeter of B<cdGetScreenSize> in Win32.
+
+=item * Fixed: fixed size of the EMF picture.
+
+=item * Fixed: fixed the parse of filenames with spaces for all file
+based drivers. The filename must be inside double quotes (") if it has
+spaces.
+
+=item * Fixed: B<cdSetAttribute> in Lua now can set nil values.
+
+=item * Fixed: fixed B<cdSector> when interior style is CD_HOLLOW, to
+include two lines connecting to the center point.
+
+=item * Fixed: In GDI+, the NATIVEWINDOW driver ignored other data
+pointer configurations in B< cdCreateCanvas>.
+
+=item * Fixed: In GDI+, B<cdStipple> was not updated when the
+foreground or background colors where changed.
+
+=item * Fixed: In GDI+, B<cdSector> and B<cdArc> have incorrect angles.
+
+=item * Fixed: "simple.c" and "simple.zip" were outdated. Now new
+makefiles were added.
+
+=item * Fixed: in Windows base driver small incompatibility in
+cdNativeFont with the IUP FONT attribute.
+
+=item * Changed: Optimization flags now are ON when building the
+library in all platforms.
+
+=item * Changed: Upgraded Freetype to version 2.1.10. The CD library
+file size increased because of this. But we gain a better text
+rendering for images.
+
+=item * Changed: Better organization of the documentation.
+
+=item * Changed: In Windows the NATIVEWINDOW driver now accepts a NULL
+pointer to draw in the entire screen.
+
+=item * Changed: Optimized B<cdPutImageRGBARect> in Windows base
+driver.
+
+=item * Changed: Now by default CD will not print X-Windows messages.
+To enable you must set the CD_XERROR environment variable.
+
+=item * Changed: The default fill rule for polygons in CD_PS is now the
+Even-Odd rule. Matching the other drivers.
+
+=item * Changed: Line Styles in GDI+ was corrected again to match GDI
+line styles when line width is not 1.
+
+=item * Changed: The native WC support in GDI+ was removed because of
+alignment and size problems, simulation will be used.
+
+=item * Changed: the EMF drivers now ignore the resolution parameter.
+For EMFs, the resolution is always the screen resolution.
+
+=item * Changed: the value of following attributes were changed to
+strings "IMAGEMASK", "IMAGEPOINTS", "ROTATE", "GRADIENTCOLOR",
+"IMAGETRANSP" and "IMAGEFORMAT".
+
+=item * Changed: in GDI+ base driver, the B<cdBegin> modes CD_IMAGEWARP
+and CD_GRADIENT were moved to attributes "IMAGEPOINTS" and
+"LINEGRADIENT". Mode CD_PATHGRADIENT was renamed to CD_FILLGRADIENT,
+and "PATHGRADIENT" attribute was renamed to "GRADIENTCOLOR". Their
+definition was also changed.
+
+=item * Changed: B<cdImageEx> was renamed to B<cdBitmap>, and now
+supports only client images. This will cause a conflict with a macro
+definition in "im_image.h" header of the IM toolkit. Include this
+header before "cd.h" and inbetween set "#undef cdPutBitmap". The IM
+macro will be changed in the next IM version.
+
+=item * Changed: B<cdText> is not dependent on the B< cdBackOpacity>
+anymore. Text now is always transparent. If you need a box under the
+text use B< cdTextBox> to calculate the dimensions for B<cdBox>.
+
+=back
+
+=head2 Version 4.3.3 (25/Aug/2004)
+
+=over
+
+=item * New: "USERLINESTYLE" attribute for the base GDI and X11
+drivers.
+
+=item * New: "GC" attribute for the base X11 driver.
+
+=item * Changed: in the Native Window driver for the Windows system,
+the creation using a HDC can have an addicional parameter for the
+canvas size.
+
+=item * Changed: in cdTextSize for the GDI+ base driver we now
+compensates the height in -10% to match the GDI height.
+
+=item * Changed: The GDI+ printer driver now returns the HDC attribute.
+
+=item * Fixed: fixed a bug in B<cdNativeFont> for the GDI+ base driver.
+
+=item * Fixed: again fixed a rounding error in B<cdPutImage*> for big
+zooms.
+
+=back
+
+=head2 Version 4.3.2 (14/Apr/2004)
+
+=over
+
+=item * Fixed: in the Win32 and X-Win drivers the B<cdPutImageRGB> and
+B<cdPutImageMap> functions when zooming bigger then the canvas where
+incorrectly positioning the image by some pixels because of round
+errors.
+
+=back
+
+=head2 Version 4.3.1 (07/Nov/2003)
+
+=over
+
+=item * Fixed: in the Win32 driver the clipping of B<cdPutImage*>
+functions when zooming was wrong. In the DoubleBuffer driver the main
+canvas B<cdOrigin> can be used to move the image in the swap operation
+(B<cdFlush>). In the GDI+ DoubleBuffer driver there was an error in the
+B<cdFlush> when some primitive used world coordinates directly in the
+main canvas.
+
+=back
+
+=head2 Version 4.3 (06/Mar/2003)
+
+=over
+
+=item * New: the function B<cdlua_getcanvas> retreives the pointer of a
+canvas created in Lua.
+
+=item * New: in Win32 the function B<cdUseContextPlus> change the
+behavior of the Windows drivers NativeWindow, IUP, Image, Printer, EMF
+and Double Buffer to make them use the GDI+ for drawing. GDI+ does not
+have support for XOR Write Mode, but it has other resources like:
+transparency, anti-aliasing, gradient filling, bezier lines and filled
+cardinal splines. WC functions are directly implemented in the base
+driver. Two new functions were created to support transparency in the
+CD color coding: B<cdEncodeAlpha> and B<cdDecodeAlpha.>Check the
+documentation for more information.
+
+=item * Changed: the Lua binding is now distributed in the same
+package. There is only one version number.
+
+=item * Fixed: the PS header had same flaws, the character ":" was
+missing in some DCS attributes.
+
+=item * Fixed: screen resolution was wrong in the Win32 driver, this
+afects the size of the canvas in milimeters.
+
+=item * Fixed: in the Win32 driver the creation of a polygon for
+clipping does not activate the clipping.
+
+=item * Fixed: in the Win32 driver the function B<cdNativeFont> using
+"-d" parameter need some ajusts. Also the returned string does not
+contains all the used parameters.
+
+=item * Fixed: in the Win32 driver the function B<cdPutImageRectRGBA>
+had a positioning error.
+
+=back
+
+=head2 Version 4.2 (20/July/2001)
+
+=over
+
+=item * Changed: in driver Win32, B<cdNativeFont> accepts parameter
+"-d" on the font name to show the font-selection dialog.
+
+=item * Changed: the whole code can now be compiled as C++.
+
+=item * Changed: functions B<wdPattern> and B<wdStipple> were changed
+to make pattern deformation more uniform.
+
+=item * Fixed: in the Clipboard driver on Win32, when parameter "-b"
+was used the image was not correctly copied.
+
+=item * Fixed: in certain moments, color vectors were being allocated
+with size 4 and should be "sizeof(long)". This was done to improve the
+compatibility with 64-bit systems.
+
+=item * Fixed: B<cdPutImageRectRGB> in driver ImageRGB had a
+memory-invasion error in some cases when the image was placed in a
+negative coordinate.
+
+=back
+
+=head2 Version 4.1.10 (04/May/2000)
+
+=over
+
+=item * Changed: the driver Native Windows in Win32 now also accepts an
+already created HDC handle as a parameter.
+
+=item * Changed: in the B<cdPutImageMap>* functions, in case the color
+vector is null, a vector with 256 gray shades in assumed.
+
+=item * Fixed: B<cdRegisterAttribute> was not verifying whether the
+attribute had already been registered.
+
+=item * Fixed: function B<cdArc> in the simulation driver (includes B<
+ImageRGB>) was returning without drawing anything in an incorrect test.
+
+=item * Fixed: function B<cdTextBox> was returning incorrect values
+when the text had an orientation different from the default one in some
+alignment instances.
+
+=item * Fixed: in function B<cdRGB2Map> there was a memory invasion.
+
+=item * Fixed: the vector text simulation was not freeing the memory
+used for fonts loaded from files.
+
+=item * Fixed: in the Doubled Buffer driver in X-Windows there was an
+invalid memory liberation.
+
+=item * Fixed: in the Lua binding, in several functions receiving or
+returning tables, the first index was being considered as 0, but in Lua
+they must be 1. This correction includes B< cdVectorTextTransform>,
+B<cdGetVectorTextBounds>, B<wdGetVectorTextBounds>, B<cdGetClipPoly>
+and B<wdGetClipPoly>.
+
+=item * Fixed: when the PS driver generated EPS, it did not correctly
+add the description of the bounding box (a line break was missing).
+
+=item * Fixed: the vector text drawing functions did not take into
+account the fact that the default font and the GKS fonts were in ASCII
+standard. Now a conversion from ANSI to ASCII is made before these
+fonts are used for drawing.
+
+=item * Fixed: in the X-Win driver, an error in the X-Vertex library
+caused the texts in 90/270 degrees to be drawn incorrectly.
+
+=item * Fixed: in the X-Win driver, the B<cdPutImageMap> functions were
+generating a memory invasion when the X was in 16 bits.
+
+=item * Fixed: in the Win32 driver, very large non-filled polygons were
+not being drawn in Windows 9x. To correct that, they were divided into
+smaller polygons.
+
+=back
+
+=head2 Version 4.1 (24/Nov/99)
+
+=over
+
+=item * New: new basic Windows driver attributes that allow controling
+the internal simulation of pattern/stipple, XOR text, and filled
+polygon ("SIMXORTEXT", "SIMPATTERN8X8", "PENFILLPOLY"). New: attribute
+for returning the HDC of the Windows canvas.
+
+=item * New: the PS driver accepts landscape orientation as a
+parameter. New: "POLYHOLE" attribute allows controling the number of
+holes in a closed polygon. New: "-1" parameter forces a level 1
+Postscript. New: "-g" parameter adds comments to the PS file in order
+to better explain what is done. New: "CMD" attribute saves a string to
+the file.
+
+=item * New: new environment variable, CD_QUIET, does not display in
+I<stdout> the library's version information.
+
+=item * New: two new exclusive functions for the Native Window driver:
+B<cdGetScreenColorPlanes> and B<cdGetScreenSize>.
+
+=item * New: new CD_DBUFFER driver implements a I<double buffer> using
+a server image.
+
+=item * New: new attributes in the ImageRGB driver: "REDIMAGE",
+"GREENIMAGE" and "BLUEIMAGE".
+
+=item * New: new functions B<wdGetVectorTextBounds> and B<
+cdGetVectorTextBounds> to obtain the bounding box of the vector text.
+
+=item * New: new B<wdGetFont> function. It is equivalent to
+B<cdGetFont>, but the returned size is in millimeters.
+
+=item * Fixed: the management of WD functions was incomplete for
+functions B<cdPixel>, B<cdVertex> and B<cdPutImage>*. This resulted in
+a wrong or out of the canvas positioning. It only affects drivers PS
+and METAFILE.
+
+=item * Fixed: function B<cdActivate> in Lua was not returning the
+correct values.
+
+=item * Fixed: when the image was partially out of the window, above or
+below, functions B<cdPutImageMap> and B<RGB> were drawing a wrong
+portion of the image.
+
+=item * Fixed: in the CGM driver, after opening the file of the
+B<cdPlay> function, the check to see if the opening had been successful
+was not being done.
+
+=item * Fixed: when the active canvas was already NULL, the activation
+of a NULL canvas was generating a memory invasion.
+
+=item * Fixed: in the creation of EPS, the PS driver was adding a wrong
+call to setpagedevice. The B<cdPutImageMap> function was modifying the
+wrong PS parameter in the file. The margin clipping was not saved when
+the drawing's clipping area was changed. The clipping area, when
+drawing in WD, was being incorrectly modified.
+
+=item * Fixed: in the IMAGERGB driver, functions B<cdRedImage>,
+B<cdBlueImage> and B<cdGreenImage> were returning invalid pointers.
+
+=item * Fixed: when initializing text simulation functions, the opened
+font file was not being closed. This affected all CD drivers, but was
+only apparent in the application that opened and closed many drivers.
+
+=item * Fixed: the approximate computation of the text size was not
+accepting sizes in pixels.
+
+=item * Fixed: the creation of the IMAGERGB driver in Lua was incorrect
+when the resolution parameter (which is optional) was not specified.
+
+=item * Fixed: functions B<cdGetClipPoly> and B< wdGetClipPoly> in Lua
+were causing memory invasion.
+
+=item * Changed: in the PS driver, when the Map image is actually a
+grayscale, function B<cdPutImageMap> uses an 8 bit image, thus saving
+memory. Level 2 Postscript functions rectfill, rectstroke and rectclip
+are now used. The comments in DCS were updated to DCS version 3 and
+were increased to improve the document's portability.
+
+=item * Changed: in driver X-Windows, the text drawing attribute was
+implemented with any orientation.
+
+=item * Changed: function B<cdVersion> in Lua now behaves just like in
+C. A global Lua variable, B<CDLUA_VERSION>, was created containing the
+version of the Lua binding library - for example: "CDLua 1.3.0".
+
+=item * Changed: function B<cdVectorTextTransform> now returns the
+previsous transformation matrix.
+
+=back
+
+=head2 Version 4.0.1 (05/Mar/99)
+
+=over
+
+=item * Fixed: in the Windows driver, the polygon simulation with
+pattern was corrected to polygons with repeated points.
+
+=item * Fixed: in the Windows driver, function B<cdNativeFont> was
+corrected for IUP fonts. It was affecting the Matrix's visualization.
+
+=item * Fixed: function B<cdNativeFont> was wrongly testing its input
+parameter and always returning.
+
+=item * Fixed: in the drivers IUP and Native Window, the
+B<cdGetCanvasSize> function was corrected. When the window size was
+changed, the values in millimeters were not updated to B<cdActivate>.
+
+=item * Fixed: in the CGM driver, function B<cdPlay> was generating
+problems in reading and displaying cell arrays. When the
+B<cdCreateCanvas> function used the default values for dimensions and
+resolution, it generated files with errors.
+
+=item * Changed: in the X-Windows driver, function B<cdPixel> was
+optimized. It now compares the color to the foreground color and reuses
+the value.
+
+=back
+
+=head2 Version 4.0 (18/Feb/99)
+
+=over
+
+=item * B<Summary>: (necessary due to the great number of changes).
+
+- Update of the Lua binding.
+
+- Several changes in the internal structure (most bringing benefits
+only to the driver developer).
+
+- Countless corrections.
+
+- Small changes in the functions B<cdHatch>, B<cdScrollImage>,
+B<cdFont> and B<cdPlay>.
+
+- Optimization of functions B<wdVectorFont> and B< cdMark>.
+
+- New: functions:
+
+B<cdCreateCanvasf, cdGetContext,> B<cdContextCaps>, B< cdSaveState,
+cdRestoreState>, B< cdSetAttribute, cdGetAttribute>
+
+B<cdOrigin, cdRect, wdRect, cdGetFont,> B<cdGetStipple>,
+B<cdGetPattern>, B< cdTextBox>
+
+B<cdPutImageRectRGB>, B<cdPutImageRectRGBA>, B<cdPutImageRectMap,>
+
+B<cdCreateImageEx>, B<cdKillImageEx>, B<cdPutImageEx>, B<cdGetImageEx>.
+
+- New: WD functions: B<wdHardcopy, wdPattern, wdStipple, wdPixel,
+wdPutImageRect, wdPutImageRectRGB>, B<wdPutImageRectRGBA> and
+B<wdPutImageRectMap>.
+
+- New: vector text functions: B<cdVectorFont, cdVectorTextDirection,
+cdVectorTextTransform, cdVectorTextSize, cdGetVectorTextSize,
+cdVectorCharSize, cdVectorText >andB< cdMultiLineVectorText>.
+
+- B<wdActivate> is no longer necessary.
+
+B<-> Driver IMAGERGB complete.
+
+- Driver SIMULATE no longer exists; now function B<cdSimulate> must be
+used.
+
+- New: driver DIRECTDRAW.
+
+- Policy change of B<cdPalette> in the X-Windows driver
+
+- IUP driver is now in a separate library.
+
+=back
+
+IMPORTANT NOTE: This version is not totally compatible to the previous
+one. The applications using the driver IUP must be relinked, as this
+driver is now in a separate library, "B<cdiup>". The Lua applications
+must also be modified to include a call to function B<cdluaiup_open>
+after B<cdlua_open>, and must be linked with the "B<cdluaiup>" library.
+The SIMULATE driver no longer exists, therefore the applications that
+used it must be modified to use the new function, B<cdSimulate>,
+without the need for creating a new driver.
+
+=over
+
+=item * Changed: the internal structure of the library was changed once
+again. One of the purposes is to make the drivers become independent
+from the function table. With this change, adding a new function to the
+function table does not imply editing the old drivers. We also allowed
+the drivers not to implement functions that do not make sense in their
+context. Another modification simplifying the work in the drivers was
+to bring the attribute query mechanism to the library's control part,
+freeing the drivers from this obligation. Taking the chance, we
+determined that a change in an attribute to a value equal to the
+current one will not be effective, thus saving calls to the driver.
+Now, the value of an attribute is changed even if the driver function
+is not implemented, as the driver can query this attribute later on.
+The management of default values of the attributes is also done by the
+library's control part. All these changes prepare the library to a new
+philosophy: before, if a driver did not contain a certain feature, it
+simply did nothing. The new philosophy will be: if a driver does not
+contain a certain feature, then the simulation of this feature will be
+activated.
+
+=item * Changed: when a canvas which is already active is activated
+again, an internal driver function is now called, notifying an update
+instead of an activation.
+
+=item * Changed: the use of the CD canvas with a IUP canvas is better
+described in the manual, showing the various ways of treating the
+canvas creation prooblem.
+
+=item * Changed: all functions in the control module now have ASSERT
+directives. Thus, using the library with depuration information, one
+can better detect simple errors.
+
+=item * Changed: in order to use the IUP driver, it must be linked with
+the "B<cdiup>" library, apart from the "B<cd>" library (cdiup.lib in
+Windows, cdiuplib.a in UNIX).
+
+=item * Changed: the IMAGERGB driver is now implemented using the
+simulation functions.
+
+=item * Changed: the B<cdMark> function is back to the function table,
+so that the drivers in which the primitive can be implemented can
+profit from it.
+
+=item * Changed: in order to assure that the use of server images is
+done only between canvases of the same driver, or of the same basic
+driver, an internal structure was defined for the server image
+containing the functions of the driver from which the image was
+created. Thus, if the B<cdKillImage> function is called with an active
+canvas of a different kind from that in which the image was created,
+the B<KillImage> function of the correct driver will be called.
+
+=item * Changed: in the X-Windows driver, the XV code was used to
+optimize functions B< cdPutImageRectRGB> and B<cdPutImageRectMap>.
+
+=item * Changed: the Lua binding was updated. Now the user guide
+contains Lua function together with C functions.
+
+=item * Changed: in the X-Windows driver, B<cdPalette>'s policy was
+changed to fulfill the requirements of some applications, which wanted
+to force a palette. Please see the function's documentation in the
+driver.
+
+=item * Changed: the CGM driver used to always store the
+B<cdForeground> attribute before drawing a primitive; now it stores the
+attribute only when it is changed. The B<cdBackOpacity> function was
+not implemented. The B<cdFlush> function was not preserving the canvas
+attributes. Now when the canvas size is not specified in the
+B<cdCreateCanvas> function, the VDC Extension saved to the file is the
+figure's bounding rectangle. The patterns and/or stipples selected were
+being stored in a way so that only the first one was valid.
+
+=item * Changed: the documentation of the old DOS driver was removed
+from the user guide.
+
+=item * Changed: the default resolution for drivers DGN, DXF, METAFILE,
+CGM and ImageRGB is no longer 1 but 3.8 points per mm (96 DPI).
+
+=item * Changed: in the B<cdInteriorStyle> function, if stipple or
+pattern are not defined, the state of the attribute is not modified.
+There is no longer a default 32x32 pattern or stipple.
+
+=item * Changed: in functions B<cdFontDim> and B<cdTextSize>, if the
+driver does not support this kind of query, the values are estimated.
+
+=item * Changed: function B<cdHatch> now returns the previous value.
+
+=item * Changed: function B<cdScrollImage> is now called B<
+cdScrollArea>, better reflecting its functionality, since it does not
+require any explicitly defined image to be performed. The old function
+is maintained to assure compatibility with old applications.
+
+=item * Changed: the B<cdPlay> function now accepts all window
+parameters null. In this case, the primitives in the file are
+interpreted without scaling.
+
+=item * Changed: B<cdFont>now accepts font sizes in pixels when
+negative values are used as a parameter.
+
+=item * Changed: the WD functions were included in the library's
+function table, so that the drivers can use floating point precision
+when storing primitives. Presently, only the drivers PS and METAFILE
+have this resource directly implemented. With this change, the
+B<wdActivate> function became obsolete and is no longer necessary. For
+purposes of compatibility with other applications, it was maintained
+only as a call to function B<cdActivate>.
+
+=item * Changed: drivers EMF and WMF now accept the resolution as a
+parameter.
+
+=item * New: internal modification of the Windows driver to allow the
+creation of the DirectDraw driver.
+
+=item * New: DirectDraw driver to accelerate video access to
+high-performance applications.
+
+=item * New: function B<cdInteriorStyle> now accepts style CD_HOLLOW.
+When this style is defined, the B<cdBox> and B<cdSector> functions
+behave like their equivalents B< cdRect> and B<cdArc>, and the polygons
+with the CD_FILL style behave like CD_CLOSED_LINES.
+
+=item * New: new functions:
+
+- B<cdCreateCanvasf> accepts parameters equivalent to B< sprintf>,
+helping in the creation of some canvases.
+
+- B<cdOrigin> allows translating the origin - for instance, to the
+center of the canvas.
+
+- B<cdGetContext> returns the context of a given canvas; it can be
+compared with predefined contexts, such as "CD_PS".
+
+- B<cdSaveState >andB< cdRestoreState> allow saving and restoring the
+state of attributes of the active canvas.
+
+B<- cdSetAttribute >andB< cdGetAttribute> allow passing customized
+attributes to the driver, which are ignored if the driver does not have
+the attribute defined.
+
+- B<cdContextCaps> returns a combination of several flags informing the
+available resources of the canvas in that context.
+
+- Driver SIMULATE no longer exists. Now function B<cdSimulate> must be
+used. The simulation can be activated and deactivated at any moment.
+
+- B<cdRect> and B<wdRect> allow drawing a box with no filling.
+
+- B<cdGetFont> returns the values of the font modified by function
+B<cdFont> and ignores those modified by B<cdNativeFont>.
+
+- B<cdTextBox> returns the horizontal bounding rectangle of the text
+box, even if it is bended.
+
+- B<cdGetStipple> and B<cdGetPattern> return current stipple and
+pattern. With these functions and with function B<cdGetFont>, one can
+now totally change and restore the attributes of a given canvas.
+
+- B<wdPattern> and B<wdStipple> allow specifying the style in world
+coordinates. The size of the image is modified to the specified size in
+millimeters.
+
+- functions B<cdPutImageRectRGB>, B<cdPutImageRectRGBA> and B<
+cdPutImageRectMap> allow specifying a rectangle in the image to be used
+for the drawing instead of the whole image.
+
+- B<wdPixel, wdPutImageRect>,B< wdPutImageRectRGB>,
+B<wdPutImageRectRGBA> and B<wdPutImageRectMap> are equivalent to
+B<cdPixel>,B< cdPutImageRect>,B< cdPutImageRectRGB>,
+B<cdPutImageRectRGBA> and B< cdPutImageRectMap>, respectively, but the
+target coordinates are specified in world coordinates.
+
+- New: vector text functions: B<cdVectorFont>,B<
+cdVectorTextDirection>,B< cdVectorTextTransform>,B<
+cdVectorTextSize>,B< cdGetVectorTextSize>,B< cdVectorCharSize>,B<
+cdVectorText>,B< cdMultiLineVectorText>. The vector text can now be
+used without the need of world coordinates. Functions B<wdVectorFont
+>andB< wdVectorTextTransform> have become obsolete, though they still
+exist for compatibility reasons.
+
+- B<wdHarcopy> helps drawing WD primitives in devices, adjusting Window
+and Viewport.
+
+- Auxiliary functions were created to manipulate all sorts of images in
+a single way, being either client, RGB, RGBA, MAP, or server images:
+B<cdCreateImageEx>, B<cdKillImageEx>, B<cdPutImageEx>, B<
+cdGetImageEx>, etc.
+
+=back
+
+=over
+
+=item * Fixed: the documentation of function B<cdFont> was confusing,
+causing errors in the conversion from pixels to points.
+
+=item * Fixed: function B<wdFont> was making a wrong conversion of the
+font size parameter from millimeters to points.
+
+=item * Fixed: functions B<wdVectorText> and B< wdMultiLineVectorText>
+were generating an extra polygon when the text contained blank spaces
+in certain positions.
+
+=item * Fixed: the PS driver was not prepared for marked texts.
+Function B<cdFlush> did not preserve current attributes. The interior
+style was affecting line drawing. The text alignment now takes into
+account an estimation for the baseline. Function B<cdTextOrientation>
+was implemented. The world coordinate functions were implemented
+directly in the driver. Hatch and stipple interior styles were
+implemented, but they are still only opaque.
+
+=item * Fixed: in the X-Windows driver, function B<cdGetColorPlanes>
+was returning 8 bpp even if the canvas was 24 bbp when the default
+visualization was different from the canvas' visualization in that X
+server. Text position on the screen was above the one entered. Function
+B<cdFont> was looping in certain conditions. Function B< cdEnd> in the
+X-Windows driver in the AIX system was generating an error and aborting
+the program if only one point of the polygon was specified. Dashed
+lines were always opaque, ignoring the B<cdBackOpacity> attribute.
+
+=item * Fixed: in the Clipboard driver for X-Windows, a parameter was
+missing which prevented it from working properly. Before the update, it
+used that of the IUP/Native Window active canvas.
+
+=item * Fixed: in the Windows driver, the text position on the screen
+was above the position provided. Filled polygons had a one pixel error
+to the right and below due to the small NULL used. Fillings with hatch,
+pattern and stipple still contain errors. The internal simulation of
+polygons filled with pattern and stipple was also corrected; they had
+one additional pixel to the right and below. Text alignment treatment
+was improved.
+
+=item * Fixed: driver WMF now has text alignment.
+
+=item * Fixed: in the PRINTER (Windows) driver, functionB< cdFlush> was
+not preserving current attributes.
+
+=item * Fixed: in the CGM driver, the text align interpretation was
+corrected. The B< cdMark> function is implemented directly in the
+driver. Function B< cdBackOpacity> was implemented. Mark interpretation
+was also corrected.
+
+=item * OPTIMIZATION: function B<wdVectorFont> only loads the new font
+if it is different from the current one.
+
+=item * OPTIMIZATION: function B<cdMark> now modifies fill and line
+attributes only if they are different from the one needed to draw the
+mark.
+
+=back
+
+=head2 Version 3.6 (05/May/98)
+
+=over
+
+=item * Fixed: / Win32: every time the clipping region changed the old
+region was not deleted.
+
+=item * New: new function B<cdRGB2Map>, which converts an RGB image
+into a 256 indexed-colors image. It is the same algorithm used in the
+IM library - in fact, it is the same code.
+
+=item * Changed: the B<cdMark> function now uses the B< cdPixel>
+function when drawing a mark of 1 pixel size.
+
+=item * Changed: / Win32: the B<cdPixel> function now uses the B<
+SetPixelV> function when not under Win32s. This function is faster than
+the B<SetPixel> function because it does not return the old value.
+
+=item * Changed: / Win32: the polygon used for clipping is now
+optimized to not include 3 points that are in the same horizontal or
+vertical line.
+
+=item * Fixed: / WD: the B<wdVectorText> function was not drawing
+correctly when extended characters (E<gt>128) were used.
+
+=item * Fixed: / X: the B<cdPalette> function and the color management
+for canvases with only 256 colors were wrong. Each canvas had its own
+management, now all canvases in the same aplication use the same
+management.
+
+=item * Fixed: / X: several resource and memory leaks were corrected.
+
+=item * Fixed: / IMAGERGB: functions B<cdRedImage>, B<cdGreenImage> and
+B<cdBlueImage> were not returning the correct pointer.
+
+=item * Fixed: / SunOS: drivers IMAGERGB, SIMULATE and NATIVEWINDOW use
+the "%p" format string, but in the SunOS they use "%d" because of an
+internal bug of the run time library of this OS.
+
+=item * Changed: / IUP: driver IUP sets the B<cdCanvas> function as an
+attribute of the B<IupCanvas> passed as a parameter using the name
+"_CD_CANVAS".
+
+=item * MANUAL: the manual appearance was changed to match the new
+Tecgraf standard.
+
+=back
+
+=head2 Version 3.5 (07/Jan/98)
+
+=over
+
+=item * New: the B<cdTextDirection> function allows raster text to be
+drawn in any direction. Up to now it is implemented only in the basic
+Win32 driver.
+
+=item * Fixed: / X / NativeWindow: the canvas was not created if the
+screen was 0.
+
+=item * Fixed: / Win32 / NativeWindow: now the driver considers the
+existence of non owner-draw device contexts.
+
+=item * Fixed: / Win32: function B<cdClipArea> was not including xmax
+and xmin in the clipping area.
+
+=item * Changed: the B<cdCallback> typedef was defined, being useful
+for type casting when calling the B<cdRegisterCallback> function.
+
+=item * Fixed: / Win32: a compatibility problem with the
+B<cdNativeFont> string and the WINFONT IUP attribute was corrected.
+
+=item * Changed: / Win32: the B<cdPutImageRGB> and B<cdPutImageMap>
+functions use a cache memory for best performance.
+
+=item * Fixed: text size estimation for the CGM and PS drivers now uses
+Courier New: as the "System" font. As it was, it was causing a memory
+invasion.
+
+=back
+
+=head2 Version 3.4 (12/Nov/97)
+
+=over
+
+=item * Changed: / X: memory use of the B<cdPutImageRGB>,
+B<cdPutImageRGBA> and B<cdPutImageMap> functions was optimized, as well
+as the performance of the B<cdPutImageMap> function.
+
+=item * Changed: / X and Win32: when the canvas has bpp E<lt>= 8,
+function B<cdPutImageRGB >converts the image into Map before displaying
+it.
+
+=item * Changed: / X and Win32: if a font's parameters are the same as
+the current parameters, the B<cdFont> function does nothing.
+
+=item * DOC / PS: the "-d" parameter for the EPS option was not
+documented.
+
+=item * Fixed: / PS: parameters "-w" and "-h" were incorrectly
+interpreted.
+
+=item * Fixed: / X: the internal function names were generating an
+error in the VMS plataform.
+
+=item * Fixed: / X: the B<cdKillCanvas> function was freeing some
+pointers of the active canvas.
+
+=item * Changed: / Win32: the B<cdVertex> function now ignores
+duplicate points.
+
+=item * Changed: / Win32: the B<cdNativeFont> function also accepts the
+font string of the WINFONT IUP attribute.
+
+=item * Fixed: / DXF: corrections in color conversion and in the
+B<cdArc> function for small radius were made, and an unnecessary
+identation was removed.
+
+=back
+
+=head2 Version 3.3 (19/Sep/97)
+
+=over
+
+=item * Changed: / X: the B<cdFont> function now has a better heuristic
+to find a closer font if the requested font does not match an available
+one.
+
+=item * Changed: / X: the B<cdPattern> and B< cdStipple> functions now
+use a bitmap cache to store the I<pixmap> and do not recreate it if the
+size is not changed.
+
+=item * Fixed: / X and Win32: the B<cdPutImageRect> function was
+placing the bitmap in a wrong position.
+
+=item * Fixed: / Win32: the B<cdCreateImage> function did not return
+NULL when the creating failed.
+
+=item * Changed: / Win32: the B<cdPutImageRGB>, B<cdPutImageRGBA> and
+B<cdPutImageMap> functions were largely optimized when the picture
+displayed is larger than the screen.
+
+=item * Changed: / WMF: using the B<cdPlay> function we discovered that
+the size of the picture was incorrect in the header file, so we first
+had to calculate the bounding box and then interpret the picture.
+
+=item * Changed: / PS and CGM: now the B<cdFontDim> and B<cdTextSize>
+functions return approximate dimensions, instead of nothing.
+
+=item * Fixed: / PS: the default font was not being set when the canvas
+was created.
+
+=item * Fixed: / PS: text alignment was incorrect in the vertical
+direction.
+
+=item * Fixed: / SIM: the clipping algorithm of the B<cdPixel> function
+of the Simulation driver was corrected.
+
+=item * Fixed: / CD: now you can activate a NULL canvas. When you get
+the active canvas and restore it, if it was NULL the B<cdActivate>
+function was accessing an invalid pointer.
+
+=item * MANUAL: several changes were made on the online manual
+structure, and were added to the CDLua page.
+
+=back
+
+=head2 Version 3.2
+
+=over
+
+=item * A problem in the B<cdFlush> function in the Postscript driver
+was corrected. It was not setting the scale.
+
+=item * Functions B<wdFontDim> and B< wdTextSize> now check if the
+return pointers are not NULL.
+
+=item * An internal function in the DGN driver was drawing an ellipse
+with two times the axis size.
+
+=item * The B<cdFont> function was corrected to store the font names in
+the CGM driver.
+
+=back
+
+=head2 Version 3.1
+
+=over
+
+=item * Several minor bugs in the Win32 Printer driver and in the
+Postscript driver were corrected. The EPS mode of the PS driver now
+generates a "showpage" PS function so it can be printed.
+
+=item * The Clipboard driver was implemented in Motif. The B<cdPlay>
+function was implemented in the Motif and Win32 Clipboard drivers.
+
+=item * The B<cdRegisterCallback> function was added to allow the
+customization of the B<cdPlay> function's behavior.
+
+=item * The B<wdVectorTextTransform> function allows a 2D
+transformation applied to any vector text.
+
+=item * Now the Simulation driver has several levels of simulation, and
+the simulation was improved with pattern and clipping simulation.
+
+=back
+
+=head2 Version 3.0
+
+=over
+
+=item * The library's architecture underwent several changes. The
+function tables are no longer public, only the drivers know its
+structure. This means that we have eliminated the need to recompile
+applications that use the dynamic library when we change something in
+the function table. There are some other benefits, like the fact that
+the Windows DLL can now be implemented and that it is more simple to
+explain the library to new users, so they will not be confused by the
+cdprivat.h header.
+
+=item * Corrections to the text alignment of the B<wdVectortext>
+function were made.
+
+=item * Memory allocation of the B<cdPattern> and B<cdStipple>
+functions in the basic Windows driver was corrected.
+
+=item * Memory release of the B<cdKillCanvas> function in the basic
+Windows driver was corrected.
+
+=item * The B<cdPattern> function was implemented in the Postscript
+driver, and the B<cdPutImageRGB> and B< cdPutImageMap> functions now
+write color images.
+
+=item * The B<cdPattern> function was corrected in the basic X-Windows
+driver for use with clipping.
+
+=item * The compiler directive #includeE<lt>B<malloc.h>E<gt> was
+changed to #includeE<lt>B<stdlib.h>E<gt> in several modules for better
+compatibility with other compilers.
+
+=item * The B<cdPlay> function now accepts the viewport rectangle where
+the drawing will be rendered.
+
+=item * Several navigation changes were made to the user guide pages.
+
+=item * A B<new> CD_SIMULATE driver was created. Use it to replace some
+primitives and to handle attributes of another driver. It can be used
+with any other driver. Basically, it substitutes the interior style of
+dependent primitives: box, sector and filled polygons. It also
+substitutes the clipping methods of these primitives.
+
+=item * The Windows DLL version of the library was created.
+
+=back
+
+=head2 Version 2.2.1
+
+=over
+
+=item * Interrnal macros that affect B<wdArc> and B<wdSector> were
+corrected.
+
+=item * The CGM driver now supports some client image functions.
+
+=item * Hatch styles in the Image RGB driver were corrected.
+
+=back
+
+=head2 Version 2.2.0
+
+B<New: Functions:>
+
+B<cdVersion> - returns the current library version.
+
+B<cdNativeFont> - sets a native font.
+
+B<cdPutImageRect> - same as B< cdPutImage> but you may specify a part
+of the image.
+
+B<cdPutImageRGBA> - B<cdPutImageRGB> with transparency.
+
+B<wdFont> - B<cdFont> for the WD client, the size parameter is in
+millimeters.
+
+B<New: Drivers:>
+
+B<NativeWindow> - now the library can work with other Interface
+libraries.
+
+B<DGN> - MicroStation Design File.
+
+B<EMF> - Windows Enhanced Metafile.
+
+B<CD Metafile> - our own metafile.
+
+B<Client Image RGB> - now you can write in an RGB image.
+
+=over
+
+=item * B<DGN>, B<CGM> and B<DXF> file-based drivers now have a default
+size in pixels (B<INT_MAX> = 2.147.483.647) and are optional. In fact
+the size is irrelevant in these file formats. The B<cdCreateCanvas>
+data string may contain the size in millimeters and the resolution in
+pixels per millimeters. Both are real values. The default resolution is
+1.
+
+=item * The B<cdPlay> function now works on the CGM and on the CD
+Metafile drivers.
+
+=item * The interior style attributes were implemented in the B<CGM>
+driver.
+
+=item * On the Clipboard driver: limitations are considered if creating
+a WMF under Win32s.
+
+=item * Now the Printer Driver shows the Printer's Dialog Box (Win32 &
+Mac) if the parameter "-d" is specified.
+
+=item * On the PS driver: all the dimensions in the Data parameter
+string are now in millimeters.
+
+=item * On the WMF driver: several functions were disabled because of
+WMF limitations. Picture size was corrected.
+
+=item * On the basic X-Windows driver: B<cdLineWidth>(1) uses width 0
+for better performance. Stipple was being incorrectly interpreted.
+B<cdGetImageRGB> was swapping red and blue channels on true color
+canvas.
+
+=item * The clipping region now can be a polygon on some
+systems/drivers (Win32, Mac, X-Win and PS). Use
+B<cdClip>(CD_CLIPPOLYGON) to use the polygon defined by a
+B<cdBegin>(CD_CLIP), B<cdVertex>(...), B<cdEnd>() sequence.
+
+=item * The functions B<wdMM2Pixel> and B< wdPixel2MM> became
+B<cdMM2Pixel> and B<cdPixel2MM>, respectively.
+
+=item * Minor bugs in the B<wdFontDim>, B< wdLineWidth> and
+B<wdMarkSize> functions were corrected.
+
+=item * B<wdVectorCharSize> now returns the previous value.
+
+=back
+
+=head2 Up to Version 2.1
+
+=over
+
+=item * The B<cdActiveCanvas>, B<cdPlay> and the B<wdVectorFont>
+functions were added, and the B<cdKillCanvas> function was corrected
+when destroying the current canvas.
+
+=item * The B<cdMark> function no longer depends on line style, line
+width and interior style attributes, and it is the same for all drivers
+because it is implemented only with CD functions.
+
+=item * The B<wdLineWidth> and B<wdMarkSize> functions now use
+millimeters.
+
+=item * The functions B<cdEncodeColor> and B< cdDecodeColor> now can be
+called without an active canvas. The DXF driver was added.
+
+=item * WD can now access files with vector font definitions.
+
+=item * Minor bugs in the B<wdTextSize> function were corrected.
+
+=back
+
+=cut

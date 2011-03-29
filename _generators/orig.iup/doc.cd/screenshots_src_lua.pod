@@ -1,0 +1,462 @@
+=head1 Screenshots Lua Source Code
+
+Get the source code here: L<simpledraw.lua|../examples/simpledraw.lua>.
+
+function SimpleDrawB<(>)
+
+-- Get size in pixels to be used for computing coordinates.
+
+wB<,> h = canvas:GetSizeB<()>
+
+-- Clear the background to be white
+
+canvas:BackgroundB<(>cd.WHITEB<)>
+
+canvas:ClearB<()>
+
+-- Draw a reactangle and a polyline at the bottom-left area,
+
+-- using a thick line with transparency.
+
+-- Notice that transparency is only supported in a few drivers,
+
+-- and line join is not supported in the IMAGERGB driver.
+
+canvas:LineWidthB<(>3B<)>
+
+canvas:LineStyleB<(>cd.CONTINUOUSB<)>
+
+canvas:ForegroundB<(>cd.EncodeAlphaB<(>cd.DARK_MAGENTAB<,> 128B<))>
+
+canvas:RectB<(>100B<,> 200B<,> 100B<,> 200B<)>
+
+canvas:BeginB<(>cd.OPEN_LINESB<)>
+
+canvas:VertexB<(>300B<,> 250B<)>
+
+canvas:VertexB<(>320B<,> 270B<)>
+
+canvas:VertexB<(>350B<,> 260B<)>
+
+canvas:VertexB<(>340B<,> 200B<)>
+
+canvas:VertexB<(>310B<,> 210B<)>
+
+canvas:EndB<()>
+
+-- Draw the red diagonal line with a custom line style.
+
+-- Notice that line styles are not supported in the IMAGERGB driver.
+
+canvas:ForegroundB<(>cd.REDB<)>
+
+canvas:LineWidthB<(>3B<)>
+
+dashes B<=> B<{>20B<,> 15B<,> 5B<,> 5B<}>
+
+canvas:LineStyleDashesB<(>dashesB<,> 4B<)>
+
+canvas:LineStyleB<(>cd.CUSTOMB<)>
+
+canvas:LineB<(>0B<,> 0B<,> wB<->1B<,> hB<->1B<)>
+
+-- Draw the blue diagonal line with a pre-defined line style.
+
+-- Notice that the pre-defined line style is dependent on the driver.
+
+canvas:ForegroundB<(>cd.BLUEB<)>
+
+canvas:LineWidthB<(>10B<)>
+
+canvas:LineStyleB<(>cd.DOTTEDB<)>
+
+canvas:LineB<(>0B<,> hB<->1B<,> wB<->1B<,> 0B<)>
+
+-- Reset line style and width
+
+canvas:LineStyleB<(>cd.CONTINUOUSB<)>
+
+canvas:LineWidthB<(>1B<)>
+
+-- Draw an arc at bottom-left, and a sector at bottom-right.
+
+-- Notice that counter-clockwise orientation of both.
+
+canvas:InteriorStyleB<(>cd.SOLIDB<)>
+
+canvas:ForegroundB<(>cd.MAGENTAB<)>
+
+canvas:SectorB<(>wB<->100B<,> 100B<,> 100B<,> 100B<,> 50B<,> 180B<)>
+
+canvas:ForegroundB<(>cd.REDB<)>
+
+canvas:ArcB<(>100B<,> 100B<,> 100B<,> 100B<,> 50B<,> 180B<)>
+
+-- Draw a solid filled rectangle at center.
+
+canvas:ForegroundB<(>cd.YELLOWB<)>
+
+canvas:BoxB<(>wB</>2 B<-> 100B<,> wB</>2 B<+> 100B<,> hB</>2 B<->
+100B<,> hB</>2 B<+> 100B<)>
+
+-- Prepare font for text.
+
+canvas:TextAlignmentB<(>cd.CENTERB<)>
+
+canvas:TextOrientationB<(>70B<)>
+
+canvas:FontB<(>"Times"B<,> cd.BOLDB<,> 24B<)>
+
+-- Draw text at center, with orientation,
+
+-- and draw its bounding box.
+
+-- Notice that in some drivers the bounding box is not precise.
+
+irect = canvas:GetTextBoundsB<(>wB</>2B<,> hB</>2B<,> "cdMin Draw
+()"B<)>
+
+canvas:ForegroundB<(>cd.REDB<)>
+
+canvas:BeginB<(>cd.CLOSED_LINESB<)>
+
+canvas:VertexB<(>irectB<[>1B<],> irectB<[>2B<])>
+
+canvas:VertexB<(>irectB<[>3B<],> irectB<[>4B<])>
+
+canvas:VertexB<(>irectB<[>5B<],> irectB<[>6B<])>
+
+canvas:VertexB<(>irectB<[>7B<],> irectB<[>8B<])>
+
+canvas:EndB<()>
+
+canvas:ForegroundB<(>cd.BLUEB<)>
+
+canvas:TextB<(>wB</>2B<,> hB</>2B<,> "cdMin Draw ()"B<)>
+
+-- Prepare World Coordinates
+
+canvas:wViewportB<(>0B<,>wB<->1B<,>0B<,>hB<->1B<)>
+
+if B<(>wB<E<gt>>hB<)> then
+
+canvas:wWindowB<(>0B<,>wB</>hB<,>0B<,>1B<)>
+
+else
+
+canvas:wWindowB<(>0B<,>1B<,>0B<,>hB</>wB<)>
+
+end
+
+-- Draw a filled blue rectangle in WC
+
+canvas:wBoxB<(>0.20B<,> 0.30B<,> 0.40B<,> 0.50B<)>
+
+canvas:ForegroundB<(>cd.REDB<)>
+
+-- Draw the diagonal of that rectangle in WC
+
+canvas:wLineB<(>0.20B<,> 0.40B<,> 0.30B<,> 0.50B<)>
+
+-- Prepare Vector Text in WC.
+
+canvas:wVectorCharSizeB<(>0.07B<)>
+
+-- Draw vector text, and draw its bounding box.
+
+-- We also use this text to show when we are using a contextplus
+driver.
+
+canvas:ForegroundB<(>cd.REDB<)>
+
+if B<(>contextplusB<)> then
+
+drect = canvas:wGetVectorTextBoundsB<(>"WDj-Plus"B<,> 0.25B<,>
+0.35B<)>
+
+else
+
+drect = canvas:wGetVectorTextBoundsB<(>"WDj"B<,> 0.25B<,> 0.35B<)>
+
+end
+
+canvas:BeginB<(>cd.CLOSED_LINESB<)>
+
+canvas:wVertexB<(>drectB<[>1B<],> drectB<[>2B<])>
+
+canvas:wVertexB<(>drectB<[>3B<],> drectB<[>4B<])>
+
+canvas:wVertexB<(>drectB<[>5B<],> drectB<[>6B<])>
+
+canvas:wVertexB<(>drectB<[>7B<],> drectB<[>8B<])>
+
+canvas:EndB<()>
+
+canvas:LineWidthB<(>2B<)>
+
+canvas:LineStyleB<(>cd.CONTINUOUSB<)>
+
+if B<(>contextplusB<)> then
+
+canvas:wVectorTextB<(>0.25B<,> 0.35B<,> "WDj-Plus"B<)>
+
+else
+
+canvas:wVectorTextB<(>0.25B<,> 0.35B<,> "WDj"B<)>
+
+end
+
+-- Reset line width
+
+canvas:LineWidthB<(>1B<)>
+
+-- Draw a filled path at center-right (looks like a weird fish).
+
+-- Notice that in PDF the arc is necessarily a circle arc, and not an
+ellipse.
+
+canvas:ForegroundB<(>cd.GREENB<)>
+
+canvas:BeginB<(>cd.PATHB<)>
+
+canvas:PathSetB<(>cd.PATH_MOVETOB<)>
+
+canvas:VertexB<(>wB</>2 B<+> 200B<,> hB</>2B<)>
+
+canvas:PathSetB<(>cd.PATH_LINETOB<)>
+
+canvas:VertexB<(>wB</>2 B<+> 230B<,> hB</>2 B<+> 50B<)>
+
+canvas:PathSetB<(>cd.PATH_LINETOB<)>
+
+canvas:VertexB<(>wB</>2 B<+> 250B<,> hB</>2 B<+> 50B<)>
+
+canvas:PathSetB<(>cd.PATH_CURVETOB<)>
+
+canvas:VertexB<(>wB</>2B<+>150B<+>150B<,> hB</>2B<+>200B<->50B<)> --
+control point for start
+
+canvas:VertexB<(>wB</>2B<+>150B<+>180B<,> hB</>2B<+>250B<->50B<)> --
+control point for end
+
+canvas:VertexB<(>wB</>2B<+>150B<+>180B<,> hB</>2B<+>200B<->50B<)> --
+end point
+
+canvas:PathSetB<(>cd.PATH_CURVETOB<)>
+
+canvas:VertexB<(>wB</>2B<+>150B<+>180B<,> hB</>2B<+>150B<->50B<)>
+
+canvas:VertexB<(>wB</>2B<+>150B<+>150B<,> hB</>2B<+>100B<->50B<)>
+
+canvas:VertexB<(>wB</>2B<+>150B<+>300B<,> hB</>2B<+>100B<->50B<)>
+
+canvas:PathSetB<(>cd.PATH_LINETOB<)>
+
+canvas:VertexB<(>wB</>2B<+>150B<+>300B<,> hB</>2B<->50B<)>
+
+canvas:PathSetB<(>cd.PATH_ARCB<)>
+
+canvas:VertexB<(>wB</>2B<+>300B<,> hB</>2B<)> -- center
+
+canvas:VertexB<(>200B<,> 100B<)> -- width, height
+
+canvas:VertexB<(>B<->30B<*>1000B<,> B<->170B<*>1000B<)> -- start
+angle, end angle (degrees / 1000)
+
+canvas:PathSetB<(>cd.PATH_FILLB<)>
+
+canvas:EndB<()>
+
+-- Draw 3 pixels at center left.
+
+canvas:PixelB<(>10B<,> hB</>2B<+>0B<,> cd.REDB<)>
+
+canvas:PixelB<(>11B<,> hB</>2B<+>1B<,> cd.GREENB<)>
+
+canvas:PixelB<(>12B<,> hB</>2B<+>2B<,> cd.BLUEB<)>
+
+-- Draw 4 mark types, distributed near each corner.
+
+canvas:ForegroundB<(>cd.REDB<)>
+
+canvas:MarkSizeB<(>30B<)>
+
+canvas:MarkTypeB<(>cd.PLUSB<)>
+
+canvas:MarkB<(>200B<,> 200B<)>
+
+canvas:MarkTypeB<(>cd.CIRCLEB<)>
+
+canvas:MarkB<(>w B<-> 200B<,> 200B<)>
+
+canvas:MarkTypeB<(>cd.HOLLOW_CIRCLEB<)>
+
+canvas:MarkB<(>200B<,> h B<-> 200B<)>
+
+canvas:MarkTypeB<(>cd.DIAMONDB<)>
+
+canvas:MarkB<(>w B<-> 200B<,> h B<-> 200B<)>
+
+-- Draw all the line style possibilities at bottom.
+
+-- Notice that they have some small differences between drivers.
+
+canvas:LineWidthB<(>1B<)>
+
+canvas:LineStyleB<(>cd.CONTINUOUSB<)>
+
+canvas:LineB<(>0B<,> 10B<,> wB<,> 10B<)>
+
+canvas:LineStyleB<(>cd.DASHEDB<)>
+
+canvas:LineB<(>0B<,> 20B<,> wB<,> 20B<)>
+
+canvas:LineStyleB<(>cd.DOTTEDB<)>
+
+canvas:LineB<(>0B<,> 30B<,> wB<,> 30B<)>
+
+canvas:LineStyleB<(>cd.DASH_DOTB<)>
+
+canvas:LineB<(>0B<,> 40B<,> wB<,> 40B<)>
+
+canvas:LineStyleB<(>cd.DASH_DOT_DOTB<)>
+
+canvas:LineB<(>0B<,> 50B<,> wB<,> 50B<)>
+
+-- Draw all the hatch style possibilities in the top-left corner.
+
+-- Notice that they have some small differences between drivers.
+
+canvas:HatchB<(>cd.VERTICALB<)>
+
+canvas:BoxB<(>0B<,> 50B<,> h B<-> 60B<,> hB<)>
+
+canvas:HatchB<(>cd.FDIAGONALB<)>
+
+canvas:BoxB<(>50B<,> 100B<,> h B<-> 60B<,> hB<)>
+
+canvas:HatchB<(>cd.BDIAGONALB<)>
+
+canvas:BoxB<(>100B<,> 150B<,> h B<-> 60B<,> hB<)>
+
+canvas:HatchB<(>cd.CROSSB<)>
+
+canvas:BoxB<(>150B<,> 200B<,> h B<-> 60B<,> hB<)>
+
+canvas:HatchB<(>cd.HORIZONTALB<)>
+
+canvas:BoxB<(>200B<,> 250B<,> h B<-> 60B<,> hB<)>
+
+canvas:HatchB<(>cd.DIAGCROSSB<)>
+
+canvas:BoxB<(>250B<,> 300B<,> h B<-> 60B<,> hB<)>
+
+-- Draw 4 regions, in diamond shape,
+
+-- at top, bottom, left, right,
+
+-- using different interior styles.
+
+-- At top, not filled polygon, notice that the last line style is used.
+
+canvas:BeginB<(>cd.CLOSED_LINESB<)>
+
+canvas:VertexB<(>wB</>2B<,> h B<-> 100B<)>
+
+canvas:VertexB<(>wB</>2 B<+> 50B<,> h B<-> 150B<)>
+
+canvas:VertexB<(>wB</>2B<,> h B<-> 200B<)>
+
+canvas:VertexB<(>wB</>2 B<-> 50B<,> h B<-> 150B<)>
+
+canvas:EndB<()>
+
+-- At left, hatch filled polygon
+
+canvas:HatchB<(>cd.DIAGCROSSB<)>
+
+canvas:BeginB<(>cd.FILLB<)>
+
+canvas:VertexB<(>100B<,> hB</>2B<)>
+
+canvas:VertexB<(>150B<,> hB</>2 B<+> 50B<)>
+
+canvas:VertexB<(>200B<,> hB</>2B<)>
+
+canvas:VertexB<(>150B<,> hB</>2 B<-> 50B<)>
+
+canvas:EndB<()>
+
+-- At right, pattern filled polygon
+
+canvas:PatternB<(>patternB<)>
+
+canvas:BeginB<(>cd.FILLB<)>
+
+canvas:VertexB<(>w B<-> 100B<,> hB</>2B<)>
+
+canvas:VertexB<(>w B<-> 150B<,> hB</>2 B<+> 50B<)>
+
+canvas:VertexB<(>w B<-> 200B<,> hB</>2B<)>
+
+canvas:VertexB<(>w B<-> 150B<,> hB</>2 B<-> 50B<)>
+
+canvas:EndB<()>
+
+-- At bottom, stipple filled polygon
+
+canvas:StippleB<(>stippleB<)>
+
+canvas:BeginB<(>cd.FILLB<)>
+
+canvas:VertexB<(>wB</>2B<,> 100B<)>
+
+canvas:VertexB<(>wB</>2 B<+> 50B<,> 150B<)>
+
+canvas:VertexB<(>wB</>2B<,> 200B<)>
+
+canvas:VertexB<(>wB</>2 B<-> 50B<,> 150B<)>
+
+canvas:EndB<()>
+
+-- Draw two beziers at bottom-left
+
+canvas:BeginB<(>cd.BEZIERB<)>
+
+canvas:VertexB<(>100B<,> 100B<)>
+
+canvas:VertexB<(>150B<,> 200B<)>
+
+canvas:VertexB<(>180B<,> 250B<)>
+
+canvas:VertexB<(>180B<,> 200B<)>
+
+canvas:VertexB<(>180B<,> 150B<)>
+
+canvas:VertexB<(>150B<,> 100B<)>
+
+canvas:VertexB<(>300B<,> 100B<)>
+
+canvas:EndB<()>
+
+-- Draw the image on the top-right corner but increasing its actual
+size,
+
+-- and uses the complete image
+
+canvas:PutImageRectRGBAB<(>imagergbaB<,> w B<-> 400B<,> h B<->
+310B<,> 3B<*>IMAGE_SIZEB<,> 3B<*>IMAGE_SIZEB<,> 0B<,> 0B<,> 0B<,> 0B<)>
+
+-- Adds a new page, or
+
+-- flushes the file, or
+
+-- flushes the screen, or
+
+-- swap the double buffer.
+
+canvas:FlushB<()>
+
+end
+
+=cut

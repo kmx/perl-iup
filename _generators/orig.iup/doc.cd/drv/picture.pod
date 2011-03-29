@@ -1,0 +1,92 @@
+=head1 CD_PICTURE - CD Picture (cdpicture.h)
+
+This driver allows the creation of a CD Picture. It store primitives
+and attributes in memory that can be played and resized in any other
+driver. It does not includes clipping and WriteMode.
+
+=head2 Use
+
+The file is created by calling function
+L<B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_PICTURE,
+Data). The Data parameter is a string that can contain the resolution
+in the following format:
+
+ "[resolution]" or in C use "%lg"
+
+Resolution is the number of pixels per millimeter; its default value is
+"3.78 pixels/mm" (96 DPI).
+
+The canvas size is automatically calculated to be the bounding box of
+all the primitives inside the picture.
+
+Any amount of such canvases may exist simultaneously. It is important
+to note that a call to function L<B<
+cdKillCanvas>|../func/init.html#cdKillCanvas> is required to release
+the picture memory.
+
+=head2 Behavior of Functions
+
+=head2 Coordinate System and Clipping
+
+=over
+
+=item * L< B<Play>|../func/other.html#cdPlay>: implemented.
+
+=item * L< B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: does
+nothing.
+
+=item * B<B<Clipping>:> not supported.
+
+=item * B<Transformation Matrix>: not supported.
+
+=item * L<cdGetCanvasSize|../func/coordinates.html#cdGetCanvasSize>:
+returns the size of the bounding box that includes all primitives
+inside the picture.
+
+=back
+
+=head2 Attributes
+
+L<B< WriteMode>|../func/attributes.html#cdWriteMode>: does nothing.
+
+L<B<FontDim>|../func/text.html#cdFontDim>: uses a size estimator,
+returning approximate values.
+
+L<B<TextSize>|../func/text.html#cdTextSize>: uses a size estimator,
+returning approximate values.
+
+=head2 Colors
+
+=over
+
+=item * L< B< GetColorPlanes>|../func/color.html#cdGetColorPlanes>:
+always returns 24.
+
+=back
+
+=head2 Primitives
+
+=over
+
+=item * Floating point primitives are supported.
+
+=back
+
+=head2 Client Images
+
+=over
+
+=item * L<B< GetImageRGB>|../func/client.html#cdGetImageRGB>: does
+nothing.
+
+=back
+
+=head2 Server Images
+
+=over
+
+=item * All functions do nothing.
+
+=back
+
+=cut

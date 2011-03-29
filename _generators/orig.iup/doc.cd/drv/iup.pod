@@ -1,0 +1,65 @@
+=head1 CD_IUP - IUP Driver (cdiup.h)
+
+This driver provides access to an interface element of a IUP canvas.
+IUP is a portable user-interface library used to create portable
+user-interface applications. See L<IUP
+documentation|http://www.tecgraf.puc-rio.br/iup>.
+
+=head2 Use
+
+The canvas is created by means of a call to the function
+L<B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_IUP, Data),
+after which other CD functions can be called as usual. This function
+creates a CD canvas based on the existing IUP canvas. The parameter
+Data is a pointer to a handle of the IUP canvas (Ihandle*). For use
+with CDLUA, a canvas created with IUPLUA must necessarily be passed as
+parameter.
+
+Any amount of such canvases may exist simultaneously, but they should
+not use the same IUP canvas. It is important to note that a call to
+function L< B<cdKillCanvas>|../func/init.html#cdKillCanvas> is required
+to B<close> the file properly.
+
+The CD canvas is automatically stored in the IUP canvas as the
+B<"_CD_CANVAS"> attribute.
+
+To use this driver, it must be linked with the "B<iupcd>" library
+available in the IUP distribution.
+
+In Lua, it is necessary to call function B<cdluaiup_open() >after a
+call to function B<cdlua_open()>, apart from linking with the
+"B<iupluacd>" library. To use with require must be require"iupluacd" or
+require"iupluacd51".
+
+To use this driver in Windows using GDI+ is necessary to call B<
+cdUseContextPlus>B<(1)> before creating the canvas.
+
+=head2 Behavior of Functions
+
+This driver is greatly platform-dependent, but little dependent on the
+IUP library. For further detail, see the B< Behavior of Functions> in
+each platform: L<Microsoft Windows (GDI)|win32.html>, L< Windows Using
+GDI+|gdiplus.html>, L<X-Windows (XLIB)|xwin.html>. However, it should
+be noted that some functions behave differently from the basic
+functions of each platform.
+
+=head2 Control
+
+=over
+
+=item * L<B< cdCanvasActivate>|../func/init.html#cdActivate>: updates
+the canvas size; the IUP canvas might have been resized.
+
+=back
+
+=head2 Exclusive Attributes
+
+=over
+
+=item * "B<WINDOWRGN>": set the shape of a window to the current
+complex clipping region (set only). If data is NULL the region is
+reset.
+
+=back
+
+=cut

@@ -1,0 +1,44 @@
+=head1 Canvas
+
+The canvas represents the drawing surface. It could be anything: a
+file, a client area inside a window in a Window System, a paper used by
+a printer, etc. Each canvas has its own attributes.
+
+=head2 Initialization
+
+You must call B<cdCreateCanvas> to create a canvas, and B<cdKillCanvas>
+when you do not need the canvas anymore. It is not necessary to
+activate a canvas using B<cdCanvasActivate>, but some drivers may
+require that call.
+
+To know if a feature is supported by a driver, use function
+B<cdContextCaps> or see the driver's documentation.
+
+=head2 Control
+
+Some canvases are buffered and need to be flushed; for that, use the
+B<cdCanvasFlush> function. In some drivers, this function can also be
+used to change to another page, as in drivers B<CD_PRINTER> and
+B<CD_PS>.
+
+You can clear the drawing surface with the B<cdCanvasClear> function,
+but in some drivers the function may just draw a rectangle using the
+background color.
+
+=head2 Coordinate System
+
+You may retrieve the original canvas size using the B<cdCanvasGetSize>
+function. The canvas' origin is at the bottom left corner of the
+canvas, but an origin change can be simulated with function
+B<cdCanvasOrigin>. Usually user interface libraries have their origin
+at the upper right corner, oriented top down. In this case, the
+function B<cd>B<Canvas>B<UpdateYAxis> converts the Y coordinate from
+this orientation to CD's orientation and vice-versa.
+
+=head2 Other
+
+Some canvas contents can be interpreted; the B<cdCanvasPlay> function
+interprets the contents of a canvas and calls library functions for the
+contents to be displayed in the active canvas.
+
+=cut

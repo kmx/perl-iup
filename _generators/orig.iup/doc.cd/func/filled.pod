@@ -1,0 +1,274 @@
+=head1 Filled Areas
+
+It is an area filled with the foreground color, but it depends on the
+current interior style. The SOLID style depends only on the foreground
+color. The HATCH and STIPPLE style depend on the foreground color,
+background color and on the back opacity attribute. The hatch lines
+drawn with this style do not depend on the other line attributes. The
+PATTERN style depends only on global canvas attributes.
+
+The filled area includes the line at the edge of the area. So if you
+draw a filled rectangle, sector or polygon on top of a non filled one
+using the same coordinates, no style and 1 pixel width, the non filled
+primitive should be obscured by the filled primitive. But depending on
+the driver implementation some pixels at the edges may be not included.
+IMPORTANT: In the Postscript and PDF drivers the line at the edge is
+not included at all.
+
+If either the background or the foreground color are modified, the
+hatched and monochromatic fillings must be modified again in order to
+be updated.
+
+Note that when a Filling Attribute is modified, the active filling
+style is now that of the modified attribute (hatch, stipple or
+pattern). Notice that this is not true for the clipping area. When the
+clipping area is modified, the clipping is only affected if it is
+active.
+
+----
+
+=head2 Filled X<Polygons>Polygons
+
+Filled polygons can be created using
+B<cdBegin(>CD_FILLB<)/cdVertex(x,y)/.../cdEnd()>.
+
+See the documentation of
+L<cdBeginE<47>cdVertexE<47>cdEnd|polygon.html>.
+
+ void cdCanvasBox(cdCanvas* canvas, int xmin, int xmax, int ymin, int ymax); [in C]
+ void cdfCanvasBox(cdCanvas* canvas, double xmin, double xmax, double ymin, double ymax); [in C]
+ void wdCanvasBox(cdCanvas* canvas, double xmin, double xmax, double ymin, double ymax); (WC) [in C]
+ 
+ canvas:Box(xmin, xmax, ymin, ymax: number) [in Lua]
+ canvas:fBox(xmin, xmax, ymin, ymax: number) [in Lua]
+ canvas:wBox(xmin, xmax, ymin, ymax: number) (WC) [in Lua]
+
+Fills a rectangle according to the current interior style. All points
+in the interval B<x_minE<lt>=xE<lt>=x_max, y_minE<lt>=yE<lt>=y_max>
+will be painted. When the interior style CD_HOLLOW is defined, the
+function behaves like its equivalent B< cdRect.>
+
+ void cdCanvasSector(cdCanvas* canvas, int xc, int yc, int w, int h, double angle1, double angle2); [in C]
+ void cdfCanvasSector(cdCanvas* canvas, double xc, double yc, double w, double h, double angle1, double angle2); [in C]
+ void wdCanvasSector(cdCanvas* canvas, double xc, double yc, double w, double h, double angle1, double angle2); (WC) [in C]
+ 
+ canvas:Sector(xc, yc, w, h, angle1, angle2: number) [in Lua]
+ canvas:fSector(xc, yc, w, h, angle1, angle2: number) [in Lua]
+ canvas:wSector(xc, yc, w, h, angle1, angle2: number) (WC) [in Lua]
+
+Fills the arc of an ellipse aligned with the axis, according to the
+current interior style, in the shape of a pie.
+
+The coordinate B<(xc,yc)> defines the center of the ellipse. Dimensions
+B<w> and B<h> define the elliptic axes X and Y, respectively.
+
+Angles B<angle1> and B<angle2> are in degrees and oriented
+counter-clockwise. They define the arc start and end, but they are not
+the angle relative to the center, except when w==h and the ellipse is
+reduced to a circle. The arc starts at the point
+B<(xc+(w/2)*cos(angle1), yc+(h/2)*sin(angle1))> and ends at
+B<(xc+(w/2)*cos(angle2), yc+(h/2)*sin(angle2))>. A complete ellipse can
+be drawn using 0 and 360 as the angles. If B<angle2> is less than
+B<angle1> it will be increased by 360 until it is greater than
+B<angle1>.
+
+The angles are specified so if the size of the ellipse (w x h) is
+changed, its shape is preserved. So the angles relative to the center
+are dependent from the ellipse size. The actual angle can be obtained
+using B<rangle = atan2((h/2)*sin(angle), (w/2)*cos(angle))>.
+
+To specify the angle in radians, you can use the definition
+B<CD_RAD2DEG> to multiply the value in radians before passing the angle
+to CD.
+
+When the interior style B<CD_HOLLOW> is defined, the function behaves
+like its equivalent B<cdCanvasArc>, plus two lines connecting to the
+center.
+
+Sector Parameters
+
+[IMAGE]
+
+ void cdCanvasChord(cdCanvas* canvas, int xc, int yc, int w, int h, double angle1, double angle2); [in C]
+ void cdfCanvasChord(cdCanvas* canvas, double xc, double yc, double w, double h, double angle1, double angle2); [in C]
+ void wdCanvasChord(cdCanvas* canvas, double xc, double yc, double w, double h, double angle1, double angle2); (WC) [in C]
+ 
+ canvas:Chord(xc, yc, w, h, angle1, angle2: number) [in Lua]
+ canvas:fChord(xc, yc, w, h, angle1, angle2: number) [in Lua]
+ canvas:wChord(xc, yc, w, h, angle1, angle2: number) (WC) [in Lua]
+
+Fills the arc of an ellipse aligned with the axis, according to the
+current interior style, the start and end points of the arc are
+connected. The parameters are the same as the B<cdSector>.
+
+When the interior style B<CD_HOLLOW> is defined, the function behaves
+like its equivalent B<cdArc>, plus a line connecting the arc start and
+end points.
+
+Chord Parameters
+
+[IMAGE]
+
+=head2 Attributes
+
+ int cdCanvasBackOpacity(cdCanvas* canvas, int opacity); [in C]
+ 
+ canvas:BackOpacity(opacity: number) -> (old_opacity: number) [in Lua]
+
+Configures the background opacity to filling primitives based on the
+foreground and background colors. Values: B< CD_TRANSPARENT> or
+B<CD_OPAQUE>. If it is opaque the primitive will erase whatever is in
+background with the background color. If it is transparent, only the
+foreground color is painted. It returns the previous value. Default
+value: B< CD_TRANSPARENT>. Value B<B<CD_QUERY> >simply returns the
+current value. In some drivers is always opaque.
+
+Back Opacity Attribute
+
+[IMAGE]
+
+ int cdCanvasFillMode(cdCanvas* canvas, int mode); [in C]
+ 
+ canvas:FillMode(mode: number) -> (old_mode: number) [in Lua]
+
+Selects a predefined polygon fill rule (B<CD_EVENODD> or
+B<CD_WINDING>). Returns the previous value. Default value: B<
+CD_EVENODD>. Value B<B<CD_QUERY> >simply returns the current value.
+
+Fill Modes
+
+[IMAGE]
+
+ int cdCanvasInteriorStyle(cdCanvas* canvas, int style); [in C]
+ 
+ canvas:InteriorStyle(style: number) -> (old_style: number) [in Lua]
+
+Configures the current style for the area filling primitives: B<
+CD_SOLID>, B<B<CD_HOLLOW>>, B<CD_HATCH>, B<CD_STIPPLE> or
+B<CD_PATTERN>. Note that B< CD_HATCH> and B<CD_STIPPLE> are affected by
+the backopacity. It returns the previous value. Default value:
+B<CD_SOLID>. Value B<B<CD_QUERY> >simply returns the current value.
+
+If I<a stipple> or I<a pattern> were not defined, when they are
+selected the state of the attribute is not changed.
+
+When the style B<CD_HOLLOW> is defined, functions B<cdBox> and
+B<cdSector> behave as their equivalent B<cdRect> and B<cdArc+Lines>,
+and the polygons with style B<CD_FILL> behave like B<CD_CLOSED_LINES>.
+
+ int cdCanvasHatch(cdCanvas* canvas, int style); [in C]
+ 
+ canvas:Hatch(style: number) -> (old_style: number) [in Lua]
+
+Selects a predefined I<hatch> style (B<CD_HORIZONTAL>, B<CD_VERTICAL>,
+B<CD_FDIAGONAL>, B<CD_BDIAGONAL>, B<CD_CROSS> or B<CD_DIAGCROSS>) and
+sets the interior style to B<CD_HATCH>. The lines are drawn with the
+foreground color, and the background is drawn with the background color
+if back opacity is opaque. Returns the previous value. Default value:
+B<CD_HORIZONTAL>. Value B<B<CD_QUERY> > simply returns the current
+value. The foreground and background colors must be set before setting
+the style. In some drivers is always opaque.
+
+Hatch Styles
+
+[IMAGE]
+
+ void cdCanvasStipple(cdCanvas* canvas, int w, int h, const unsigned char *fgbg) [in C]
+ 
+ canvas:Stipple(stipple: cdStipple) [in Lua]
+
+Defines a B<B<wxh> >matrix of zeros (0) and ones (1). The zeros are
+mapped to the background color or are transparent, according to the
+background opacity attribute. The ones are mapped to the foreground
+color. The function sets the interior style to B<CD_STIPPLE>. To avoid
+having to deal with matrices in C, the element B<(i,j)> of B<fgbg> is
+stored as B<fgbg[j*w+i]>. The origin is the left bottom corner of the
+image. It does not need to be stored by the application, as it is
+internally replicated by the library. In some drivers is always opaque.
+The foreground and background colors must be set before setting the
+style.
+
+ void wdCanvasStipple(cdCanvas* canvas, int w, int h, const unsigned char *fgbg, double w_mm, double h_mm); [in C]
+ 
+ canvas:wStipple(stipple: cdStipple, w_mm, h_mm: number) [in Lua]
+
+Allows specifying the stipple in world coordinates. Another stipple
+will be created with the size in pixels corresponding to the specified
+size in millimeters. The new size in pixels will be an integer factor
+of the original size that is closets to the size in millimeters. The
+use of this function may produce very large or very small stipples.
+
+ unsigned char* cdCanvasGetStipple(cdCanvas* canvas, int* w, int* h); [in C]
+ 
+ canvas:GetStipple() - > (stipple: cdStipple) [in Lua]
+
+Returns the current I<stipple> and its dimensions. Returns NULL if no
+I<stipple> was defined.
+
+ void cdCanvasPattern(cdCanvas* canvas, int w, int h, const long int *color); [in C]
+ 
+ canvas:Pattern(pattern: cdPattern) [in Lua]
+
+Defines a new B<B<wxh> >color matrix and sets the interior style to
+B<CD_PATTERN>. To avoid having to deal with matrices in C, the color
+element B<(i,j)> is stored as B<color[j*w+i]>. The origin is the left
+bottom corner of the image. It does not need to be stored by the
+application, as it is internally replicated by the library.
+
+ void wdCanvasPattern(cdCanvas* canvas, int w, int h, const long int *color, double w_mm, double h_mm); [in C]
+ 
+ canvas:wPattern(pattern: cdPattern, w_mm, h_mm: number) [in Lua]
+
+Allows specifying the pattern in world coordinates. Another pattern
+will be created with the size in pixels corresponding to the specified
+size in millimeters. The new size in pixels will be an integer factor
+of the original size that is closets to the size in millimeters. The
+use of this function may produce very large or very small patterns.
+
+ long int* cdCanvasGetPattern(cdCanvas* canvas, int* w, int* h); [in C]
+ 
+ canvas:GetPattern() - > (pattern: cdPattern) [in Lua]
+
+Returns the current I<pattern> and its dimensions. Returns NULL if no
+I<pattern> was defined.
+
+=head2 Extras in Lua
+
+ cd.CreatePattern(width, height: number) -> (pattern: cdPattern)
+
+Creates a pattern in Lua.
+
+ cd.KillPattern(pattern: cdPattern)
+
+Destroys the created pattern and liberates allocated memory. If this
+function is not called in Lua, the garbage collector will call it.
+
+ cd.CreateStipple(width, height: number) -> (stipple: cdStipple)
+
+Creates a stipple in Lua.
+
+ cd.KillStipple(stipple: cdStipple)
+
+Destroys the created stipple and liberates allocated memory. If this
+function is not called in Lua, the garbage collector will call it.
+
+=head2 X<DataAccess>Data Access
+
+Data access in Lua is done directly using the operator "[y*width + x]".
+
+All new types can have their values checked or changed directly as if
+they were Lua tables:
+
+ pattern[y*16 + x] = cd.EncodeColor(r, g, b)
+ ...
+ color = pattern[y*16 + x]
+ r, g, b = cd.DecodeColor(color)
+ ...
+ cd.Pattern(pattern)
+
+Notice that the type of value returned or received by pattern[i] is a
+lightuserdata, the same type used with functions B< cdEncodeColor>, B<
+cdDecodeColor>, B< cdPixel>, B< cdForeground> and B< cdBackground>. The
+value returned or received by stipple[i] is a number.
+
+=cut

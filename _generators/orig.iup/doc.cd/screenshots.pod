@@ -1,0 +1,143 @@
+=head1 Screenshots
+
+All the screenshots here were generated with the same L<C source
+code|screenshots_src_c.html>. The same example is available in L<Lua
+source code|screenshots_src_lua.html>. The code contains only the
+primitives and attributes, the canvas initialization is simply:
+
+ cdCanvas* canvas = cdCreateCanvas(ctx, data);
+ 
+ SimpleDraw(canvas);
+ 
+ /* Destroys the canvas and releases internal memory, 
+    important for file based drivers to close the file. */
+ cdKillCanvas(canvas);
+
+=head2 L<CD_NATIVEWINDOW|drv/native.html> or L< CD_IUP|drv/iup.html>
+
+ Ihandle* cnv = IupCanvas(NULL);
+ cdInitContextPlus();
+ ...
+ if (contextplus) cdUseContextPlus(1);
+ canvas = cdCreateCanvas(CD_IUP, cnv);
+ if (contextplus) cdUseContextPlus(0);
+
+L<Win32|drv/win32.html>
+
+L<GDI+|drv/gdiplus.html>
+
+L<[IMAGE]|../screenshots/cd_nativewindow_win32.png>
+
+L<[IMAGE]|../screenshots/cd_nativewindow_gdiplus.png>
+
+L<X11|drv/xwin.html>
+
+L<XRender|drv/xrender.html>
+
+L<[IMAGE]|../screenshots/cd_nativewindow_x11.png>
+
+L<[IMAGE]|../screenshots/cd_nativewindow_xrender.png>
+
+L<GDK|drv/gdiplus.html>
+
+L<Cairo|drv/xrender.html>
+
+L<[IMAGE]|../screenshots/cd_nativewindow_gdk.png>
+
+L<[IMAGE]|../screenshots/cd_nativewindow_cairo.png>
+
+=head2 L<CD_IMAGERGB|drv/irgb.html>
+
+ canvas = cdCreateCanvas(CD_IMAGERGB, "1280x938");
+
+L<[IMAGE]|../screenshots/cd_imagergb.png>
+
+=head2 L<CD_PDF|drv/pdf.html>
+
+ canvas = cdCreateCanvas(CD_PDF, "cd_pdf.pdf -w270.933 -h198.543 -s120");
+
+As Seen in Acrobat Reader
+
+L<[IMAGE]|../screenshots/cd_pdf_acrobatreader.png>
+
+L<cd_pdf.pdf|../screenshots/cd_pdf.pdf>
+
+=head2 L<CD_PS|drv/ps.html>
+
+ canvas = cdCreateCanvas(CD_PS, "cd_ps.ps -l0 -r0 -t0 -b0 -w270.933 -h198.543 -s120");
+ canvas = cdCreateCanvas(CD_PS, "cd_ps.eps -e -w270.933 -h198.543 -s120");
+
+As Seen in Ghostscript/GSView
+
+L<[IMAGE]|../screenshots/cd_ps_ghostscript.png>
+
+L<cd_ps.ps|../screenshots/cd_ps.ps>
+
+L<cd_ps.eps|../screenshots/cd_ps.eps>
+
+=head2 L<CD_SVG|drv/svg.html>
+
+ canvas = cdCreateCanvas(CD_SVG, "cd_svg.svg 270.933x198.543 4.72441");
+
+As Seen in Firefox
+
+L<[IMAGE]|../screenshots/cd_svg_firefox.png>
+
+L<cd_svg.svg|../screenshots/cd_svg.svg>
+
+=head2 L<CD_EMF|drv/emf.html>
+
+ canvas = cdCreateCanvas(CD_EMF, "cd_emf.emf 1280x938");
+
+As Seen in Powerpoint
+
+Win32
+
+GDI+
+
+L<[IMAGE]|../screenshots/cd_emf_win32_powerpoint.png>
+
+L<[IMAGE]|../screenshots/cd_emf_gdiplus_powerpoint.png>
+
+L<cd_emf_win32.emf|../screenshots/cd_emf_win32.emf>
+
+L<cd_emf_gdiplus.emf|../screenshots/cd_emf_gdiplus.emf>
+
+=head2 Other Metafiles
+
+=over
+
+L<CD_METAFILE|drv/mf.html> -
+L<cd_metafile.mf|../screenshots/cd_metafile.mf>
+
+ canvas = cdCreateCanvas(CD_METAFILE, "cd_wmf.mf 270.933x198.543 4.72441");
+
+L<CD_DEBUG|drv/debug.html> - L<
+cd_debug.txt|../screenshots/cd_debug.txt>
+
+ canvas = cdCreateCanvas(CD_DEBUG, "cd_debug.txt 270.933x198.543 4.72441");
+
+L<CD_WMF|drv/wmf.html> - L< cd_wmf.wmf|../screenshots/cd_wmf.wmf>
+
+ canvas = cdCreateCanvas(CD_WMF, "cd_wmf.wmf 1280x938");
+
+L<CD_CGM|drv/cgm.html> - L< cd_cgm.cgm|../screenshots/cd_cgm.cgm>
+
+ canvas = cdCreateCanvas(CD_CGM, "cd_cgm.cgm 270.933x198.543 4.72441");
+
+L<CD_CGM|drv/cgm.html> - L< cd_cgm_t.cgm|../screenshots/cd_cgm_t.cgm>
+(text mode)
+
+ canvas = cdCreateCanvas(CD_CGM, "cd_cgm_t.cgm -t 270.933x198.543 4.72441");
+
+L<CD_DGN|drv/dgn.html> - L< cd_dgn.dgn|../screenshots/cd_dgn.dgn>
+
+ canvas = cdCreateCanvas(CD_DGN, "cd_dgn.dgn 270.933x198.543 4.72441");
+
+L<CD_DXF|drv/dxf.html> - L< cd_dxf.dxf|../screenshots/cd_dxf.dxf>
+
+ canvas = cdCreateCanvas(CD_DXF, "cd_dxf.dxf 270.933x198.543 4.72441");
+
+=back
+
+=cut

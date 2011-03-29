@@ -1,0 +1,142 @@
+=head1 CD_IMAGERGB - RGB Client Image Driver (cdirgb.h)
+
+This driver allows access to a Client Image, an imaged based in RGB
+colors with 24 or 32 bits per pixel (8 per channel). It is used to
+implement high-quality off-screen drawings, but is slower than the
+Server Image version. In fact, it is a rasterizer, that is, it converts
+vector primitives into a raster representation. All primitives are
+implemented by the library and are not system-dependent (the primitives
+of the Server Image version are system-dependent).
+
+=head2 Use
+
+The canvas is created by means of a call to the function
+L<B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_IMAGERGB,
+Data), after which other functions in the CD library can be called as
+usual. The function creates an RGB image, and then a CD canvas. The
+Data parameter string has the following format:
+
+ "widthxheight [r g b] -r[resolution]"      in C "%dx%d %p %p %p -r%g"
+ or
+ "widthxheight [r g b a] -r[resolution] -a"    in C "%dx%d %p %p %p %p -r%g -a"
+
+It must include the canvas' dimensions. Width and height are provided
+in pixels (note the lowercase "x" between them). As an option, you can
+specify the buffers to be used by the driver, so that you can draw over
+an existing image, [r g b] or [r g b a] are pointers to the component
+buffer, just like PutImageRectRGB/A. The resolution can be defined with
+parameter -r; its default value is "3.78 pixels/mm" (96 DPI).
+
+When the parameter -a is specified an alpha channel will be added to
+the canvas underlying image. All primitives will be composed using an
+over operator if the foreground or background colors have alpha
+components. This channel is initialized with transparent (0). The other
+channels are initialized with white (255, 255, 255). After drawing in
+the RGBA image the resulting alpha channel can be used to compose the
+image in another canvas.
+
+All channels are initialized only when allocated internally by the
+driver. They are not initialized when allocated by the application.
+
+Any amount of such canvases may exist simultaneously. It is important
+to note that a call to function
+L<B<cdKillCanvas>|../func/init.html#cdKillCanvas> is required to
+release internal allocated memory.
+
+In Lua, the canvas can be created in two ways: with an already defined
+image or without it. With an image, an RGB image must be passed as
+parameter instead of the string, created by functions B<
+L<cd.CreateImageRGB|../func/client.html#cdCreateImageRGB>,>
+B<L<cd.CreateImageRGBA|../func/client.html#cdCreateImageRGBA>> or B<
+L<cd.CreateBitmap|../func/client.html#cdCreateBitmap>> in Lua. The
+resolution must be passed in a second parameter after the image.
+
+=head2 Exclusive Functions
+
+=head2 cd.ImageRGB(canvas: cdCanvas) -E<gt> (imagergb: cdImageRGB or
+cdImageRGBA) [in Lua]
+
+cd.ImageRGBBitmap(canvas: cdCanvas) -E<gt> (bitmap: cdBitmap) [in Lua]
+
+Returns the canvas' internal image.
+
+=head2 Behavior of Functions
+
+All primitives are from the Simulation driver, see the
+L<Simulation|sim.html> driver documentation for further information.
+
+=head2 Control
+
+=over
+
+=item * L<B<Flush>|../func/control.html#cdFlush>: does nothing.
+
+=item * L<B<Play>|../func/other.html#cdPlay>: does nothing, returns
+CD_ERROR.
+
+=back
+
+=head2 Coordinate System and Clipping
+
+=over
+
+=item * L< B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: does
+nothing. The axis orientation is the same as the CD library's.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L< B< WriteMode>|../func/attributes.html#cdWriteMode>: if alpha
+transparency is used in colors or images, then XOR or NOT_XOR behave as
+REPLACE.
+
+=back
+
+=head2 Colors
+
+=over
+
+=item * L< B< GetColorPlanes>|../func/color.html#cdGetColorPlanes>:
+returns 24 if no alpha, returns 32 if exists an alpha channel.
+
+=item * L<B<Palette>|../func/color.html#cdPalette>: does nothing.
+
+=item * L< B< Foreground>|../func/attributes.html#cdForeground> & L<
+B<Background>|../func/attributes.html#cdBackground>: accepts the
+transparency information encoded in the color.
+
+=back
+
+=head2 Exclusive Attributes
+
+=over
+
+=item * "B<REDIMAGE>", "B<GREENIMAGE>", "B<BLUEIMAGE>",
+"B<ALPHA>B<IMAGE>": return the respective pointers of the canvas image
+(read-only). Not accessible in Lua.
+
+=back
+
+=over
+
+=item * "B<ANTIALIAS>": controls the use of anti-aliasing for line
+primitives. Assumes values "1" (active) and "0" (inactive). Default
+value: "1".
+
+=back
+
+=over
+
+=item * "B<ROTATE>": allows the usage of 1 angle and 1 coordinate (x,
+y), that define a global rotation transformation centered in the
+specified coordinate. Use 1 real and 2 integer values inside a string
+("%g %d %d" = angle x y). In this driver will change the current
+transformation matrix, if removed will reset the current transformation
+matrix.
+
+=back
+
+=cut

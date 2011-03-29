@@ -1,0 +1,33 @@
+=pod
+
+CD
+
+Canvas Draw, A 2D Graphics Library
+
+Version 5.4
+
+----
+
+B<CD> (Canvas Draw) is a platform-independent graphics library. It is
+implemented in several platforms using native graphics libraries:
+Microsoft Windows (GDI) and X-Windows (XLIB).
+
+The library contains functions to support both vector and image
+applications, and the visualization surface can be either a window or a
+more abstract surface, such as Image, Clipboard, Metafile, PS, and so
+on.
+
+This work was developed at Tecgraf/PUC-Rio by means of the partnership
+with PETROBRAS/CENPES.
+
+=head1 Project Management:
+
+Antonio Escao Scuri
+
+Tecgraf - Computer Graphics Technology Group, PUC-Rio, Brazil
+
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>cd|http://www.tecgraf.puc-rio.br/cd>
+
+L<SourceForge.net Logo|http://sourceforge.net>
+
+=cut

@@ -1,0 +1,229 @@
+=head1 CD_CGM - I<Computer Graphics Metafile Driver >(cdcgm.h)
+
+This driver allows generating a Computer Graphics Metafile, which is an
+ANSI standard for the persistent storage of graphics primitives. The
+file usually has an extension .CGM.
+
+=head2 Use
+
+The file file is created by means of a call to the function
+L<B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_CGM, Data),
+which B<opens> the file and writes its header. Then, other functions in
+the CD library can be called as usual. The Data parameter string has
+the following format:
+
+ "filename [widthxheight] [resolution] [-t] -p[precision]" or in C style "%s %gx%g %g %s"
+
+Only the parameter filename is required. The filename must be inside
+double quotes (") if it has spaces. Width and height are provided in
+millimeters (note the lowercase "x" between them), and their default
+value in pixels is INT_MAX for both dimensions. When the canvas' size
+is not specified, the VDC Extension saved to the file is the image's
+bounding rectangle. The resolution is the number of pixels per
+millimeter; its default value is "3.78 pixels/mm" (96 DPI). Width,
+height and resolution are real values. Width, height and resolution are
+used only by B<cdGetCanvasSize >and in pixel-millimeter conversion.
+Parameter -t modifies the codification. Parameter -p specifies the
+precision of integers, which can be 16 (default) or 32.
+
+Any amount of such canvases may exist simultaneously. It is important
+to note that a call to function L<B<
+cdKillCanvas>|../func/init.html#cdKillCanvas> is required to B<close>
+the file properly.
+
+B<Coding -> The CGM format supports binary and text coding. If you are
+not sure what to do, use binary coding, which is the default. Should
+you prefer text coding, add a "-t" string to the Data parameter.
+
+B<Precision of Coordinates -> The primitives can use coordinates in
+real numbers. However, for compatibility reasons, we use coordinates in
+integers.
+
+=head2 Behavior of Functions
+
+=head2 Control
+
+=over
+
+=item * L<B<Clear>|../func/control.html#cdClear>: does nothing.
+
+=item * L<B<Flush>|../func/control.html#cdFlush>: creates a new image,
+preserving the previous one. The CGM format supports multiple images in
+a file.
+
+=item * L<B<Play>|../func/other.html#cdPlay>: works with files created
+with text or binary coding. There are several callbacks for this
+driver. If one of the callbacks returns a value different from zero,
+cdPlay's processing is interrupted. The driver implements the callback
+C<B<CD_SIZECB >>and other callbacks associated to CGM:
+
+C<B<CD_COUNTERCB> - int(*cdcgmcountercb)(cdContext *driver, double
+percent) - >Executed for each header of CGM commands; returns the
+percentage (0-100%) of headers read.
+
+C<B<CD_SCLMDECB>>C< - int(*cdcgmsclmdecb)(cdContext *driver, short
+scl_mde, short *drw_mode, double *factor)> - Executed for the command
+CGM SCALE MODE. Returns the current CGM scale mode and allows the
+callback to modify the scale mode used by the cdPlay function
+(ABSTRACT=0, METRIC=1). Should you choose the METRIC or ABSTRACT scale
+mode but the original scale mode is METRIC, you must provide the
+conversion factor in mm per pixel.
+
+C<B<CD_VDCEXTCB>>C< - int(*cdcgmvdcextcb)(cdContext *driver, short
+type, void *xmn, void *ymn, void *xmx, void *ymx)> - Executed for the
+CGM command CGM VDC EXTENT, returns the VDC SPACE.
+
+C<B<CD_BEGPICTCB>>C< - int(*cdcgmbegpictcb)(cdContext *driver, char
+*pict)> - Executed for the command BEGIN PICTURE, returns the string
+that describes the image.
+
+C<B<CD_BEGPICTBCB>>C< - int(*cdcgmbegpictbcb)(cdContext *driver)> -
+Executed for the command BEGIN PICTURE BODY.
+
+C<B<CD_CGMBEGMTFCB>> - C< int (*cdcgmbegmtfcb)(cdContext *driver, int
+*xmin, int *ymin, int *xmax, int *ymax)> - Executed for the command
+BEGIN METAFILE, provides the drawing limits of the image in the file.
+
+=back
+
+=head2 Coordinate System and Clipping
+
+=over
+
+=item * L< B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: does
+nothing. The axis orientation is the same as the CD library.
+
+=item * B<Complex Regions>: not supported.
+
+=item * B<Transformation Matrix>: not supported.
+
+=back
+
+=head2 Primitives
+
+=over
+
+=item * L<B<Begin>|../func/lines.html#cdBegin>: if parameter
+B<C<CD_CLIP>> is specified, does nothing.B<C< CD_BEZIER>> and
+B<C<CD_PATH>> are simulated with lines.
+
+=item * B<L<Pixel|../func/marks.html#cdPixel>>: does not exist in CGM,
+is simulated using a mark with size 1.
+
+=item * B<L<Chord|../func/filled.html#cdChord>>: does nothing.
+
+=item * Floating point primitives are supported.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L< B< WriteMode>|../func/attributes.html#cdWriteMode>: does
+nothing, returns CD_REPLACE.
+
+=item * L<B<FontDim>|../func/text.html#cdFontDim>: is simulated.
+
+=item * L<B< FillMode>|../func/filled.html#cdFillMode>: does nothing.
+
+=item * L<B< LineCap>|../func/filled.html#cdLineCap>: does nothing.
+
+=item * L<B< LineJoin>|../func/filled.html#cdLineJoin>: does nothing.
+
+=item * L<B< TextSize>|../func/text.html#cdTextSize>: is simulated.
+
+=item * L< B< TextOrientation>|../func/text.html#cdTextOrientation>:
+does nothing.
+
+=item * L<B<Font>|../func/text.html#cdFont>: see the table bellow for
+the generated font names. No other fonts are supported.
+
+=back
+
+Font Mapping
+
+CD Fonts
+
+Generated Font Names
+
+CD_PLAIN
+
+CD_BOLD
+
+CD_ITALIC
+
+CD_BOLD|CD_ITALIC
+
+"System"
+
+"SYSTEM"
+
+"SYSTEM_BOLD"
+
+"SYSTEM_ITALIC"
+
+"SYSTEM_BOLDITALIC"
+
+"Courier"
+
+"COURIER"
+
+"COURIER_BOLD"
+
+"COURIER_ITALIC"
+
+"COURIER_BOLDITALIC"
+
+"Times"
+
+"TIMES_ROMAN"
+
+"TIMES_ROMAN_BOLD"
+
+"TIMES_ROMAN_ITALIC"
+
+"TIMES_ROMAN_BOLDITALIC"
+
+"Helvetica"
+
+"HELVETICA"
+
+"HELVETICA_BOLD"
+
+"HELVETICA_ITALIC"
+
+"HELVETICA_BOLDITALIC"
+
+=head2 Colors
+
+=over
+
+=item * L< B< GetColorPlanes>|../func/color.html#cdGetColorPlanes>:
+returns 24.
+
+=item * L<B<Palette>|../func/color.html#cdPalette>: does nothing.
+
+=back
+
+=head2 Client Images
+
+=over
+
+=item * L<B< GetImageRGB>|../func/client.html#cdGetImageRGB>: does
+nothing.
+
+=item * L<B< PutImageRGBA>|../func/client.html#cdPutImageRGBA>: alpha
+is ignored.
+
+=back
+
+=head2 Server Images
+
+=over
+
+=item * All functions do nothing.
+
+=back
+
+=cut

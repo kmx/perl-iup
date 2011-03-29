@@ -1,0 +1,104 @@
+=head1 CD_PRINTER - Printer Driver (cdprint.h)
+
+This driver provides access to a System Default Printer.
+
+Currently, it works only in Microsoft Windows platforms, but it is
+possible to use it in other platforms without the risk of compilation
+error. If you attempt to create a canvas in another platform, the
+function L< B<cdCreateCanvas>|../func/init.html#cdCreateCanvas> will
+return NULL.
+
+=head2 Use
+
+The canvas is created by calling function L<
+B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_PRINTER, Data),
+after which other CD functions can be called as usual. The Data string
+has the following format:
+
+ "name [-d]"    or in C style "%s -d"
+
+name is an optional document name that will appear in the printer
+queue. Optionally, -d displays the System Printer dialogue box before
+starting to print, allowing you to configure the printer's parameters.
+When using this parameter and the return canvas is NULL, one must
+assume that the print was canceled by the user.
+
+Any amount of such canvases may exist simultaneously. It is important
+to note that a call to function L<
+B<cdKillCanvas>|../func/init.html#cdKillCanvas> is required to properly
+send the data to the printer.
+
+B<Pages -> Use L< B<Flush>|../func/control.html#cdFlush> to change to a
+new page. You can draw first on page 1, then on page 2 and so forth.
+
+To use this driver in Windows using GDI+ is necessary to call B<
+cdUseContextPlus>B<(1)> before creating the canvas.
+
+=head2 Behavior of Functions
+
+This driver is greatly platform-dependent. For further detail, see the
+B< Behavior of Functions> in each platform: L<Microsoft Windows
+(GDI)|win32.html>, L<Windows Using GDI+|gdiplus.html>, and
+L<Cairo|cairo.html> (over GDK). However, it should be noted that some
+functions behave differently from the basic functions of each platform.
+
+A printer created in Win32s has the same limitations as the L<WMF
+driver|wmf.html>. In Windows 95 or NT, it has the same limitations as
+the L<EMF driver|emf.html>.
+
+=head2 Control
+
+=over
+
+=item * L< B<Flush>|../func/control.html#cdFlush>: changes to a new
+page, preserving the previous one. In the Win32 base driver, after the
+first page, function B<cdText> draws the text below its correct
+position - we do not know why this happens.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L< B<Hatch>|../func/filled.html#cdHatch>: opaque in Win32 base
+driver (GDI).
+
+=back
+
+=head2 Exclusive Attributes
+
+=over
+
+=item * B<"PRINTERNAME">: Returns the name of the selected printer.
+
+=back
+
+=head2 Notes
+
+=head2 Patterns
+
+Usually when printing regions filled with patterns you have to
+compensate for the printer high resolution or the pattern will come out
+very small. If you don't want to create a high resolution version of
+your pattern, then the simplest way is to use B<wdCanvasPattern> to
+resize the pattern to an expected millimeter size. This will increase
+the pattern raster size so it will be more visible in the printer.
+
+But on some printers the result were not what we expect:
+
+=over
+
+=item * Laser printers automatically increase the real size of the
+pattern, so it seems that B<wdCanvasPattern> is not necessary on those
+printers.
+
+=item * PDF and Postscript based printer drivers (like Adobe PDF
+Creator and CutePDF Writer) need that the pattern has a width multiple
+of 8, if not they will appear distorted with an increasing horizontal
+shift on every line. This does NOT applies to the CD_PDF or CD_PS
+drivers.
+
+=back
+
+=cut

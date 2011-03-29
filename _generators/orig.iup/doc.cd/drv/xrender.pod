@@ -1,0 +1,183 @@
+=head1 XRender Base Driver
+
+This driver represents a basic driver for all system-dependent drivers
+implemented in the X-Windows system using the XRender extension. The
+implementation uses the XRender and Xft API functions.
+
+The main motivation for the use of XRender was transparency for all the
+primitives. Beyond that we got other features like anti-aliasing,
+gradient filling and transformations.
+
+This driver still does not completely replace the X-Windows base
+driver, because XRender does not have support for XOR and for line
+styles.
+
+So we let the programmer to choose what to use. We created the function
+B< cdUseContextPlus> that allows to activate or to deactivate the use
+of X-Render for the available X-Windows based drivers. This function
+affects only the B<cdCreateCanvas> function call, once created the
+canvas will be always a XRender canvas. In fact the function affects
+primary the definitions B<CD_NATIVEWINDOW>, B<CD_IMAGE> and B<
+CD_DBUFFER>, because they are function calls and not static defines.
+
+Using XRender it is allowed to create more that one canvas at the same
+time for the same Window. And they can co-exist with a standard
+X-Windows canvas.
+
+To enable the use of XRender based drivers you must call the
+initialization function B< cdInitContextPlus()> once and link to the
+libraries "B<cdcontextplus>", "B<Xrender>" and "B<Xft>". Also the
+libraries "B<Xrender>" and "B<Xft>" must be installed in your system.
+The XRender extension must be available in the X-Windows server for the
+driver to work.
+
+Currently, pre-compiled binaries are available for Linux and BSD. It is
+not available for the systems we have with AIX, SunOS and IRIX.
+
+In CDLua it is not necessary any additional initialization, but the
+application must still be linked with the B<cdcontextplus.lib> library
+or a B<require"cdluacontextplus"> can be used when using dynamic
+libraries.
+
+=head2 Behavior of Functions
+
+=head2 Control
+
+=over
+
+=item * L< B<Play>|../func/other.html#cdPlay>: does nothing, returns
+CD_ERROR.
+
+=back
+
+=head2 Coordinate System and Clipping
+
+=over
+
+=item * L< B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: the
+orientation of axis Y is the opposite to its orientation in the CD
+library. Except when using transformations.
+
+=back
+
+=head2 Primitives
+
+=over
+
+=item * L<B<Line>|../func/lines.html#cdLine>: simulated using the
+client's B<Poly>.
+
+=item * L<B<Text>|../func/text.html#cdText>: Generic transformation
+matrix affects only the position of the text. Complex clipping regions
+can not contain text regions.
+
+=item * L< B<Begin>|../func/lines.html#cdBegin>: B<C< CD_BEZIER>> and
+B<C<CD_PATH>> are simulated with lines.
+
+=item * B<L<Rect|../func/lines.html#cdRect>>: simulated using the
+client's B<Line>.
+
+=item * L<B<Arc>|../func/lines.html#cdArc>: simulated using the
+client's B<Line>.
+
+=item * L<B<Sector>|../func/filled.html#cdSector>: simulated using the
+client's B<Poly>.
+
+=item * B<L<Chord|../func/filled.html#cdChord>>: simulated using the
+client's B<Poly>
+
+=item * L<B<Box>|../func/filled.html#cdBox>: simulated using the
+client's B<Poly>.
+
+=item * Floating point primitives are supported.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L< B<LineWidth>|../func/lines.html#cdLineWidth>: the driver
+will use a polygon that fits to the line extents, even when
+linewidth==1.
+
+=item * L< B<LineStyle>|../func/lines.html#cdLineStyle>: NOT supported.
+
+=item * L<B< Pattern>|../func/filled.html#cdPattern>: each pixel can
+contain transparency information.
+
+=item * L< B<NativeFont>|../func/text.html#cdNativeFont>: also accepts
+the X-Windows font string format. You can use program B<xfontsel> to
+select a font and obtain the string. For ex:
+"-*-times-bold-r-*-*-24-*-*-*-*-*-*-*" (equivalent of B<Font>("Times",
+CD_BOLD, -24).
+
+=item * L< B<Font>|../func/text.html#cdFont>: font support is
+implemented using the Xft library. Internally the Xft library uses the
+Freetype library.
+
+=back
+
+=head2 Colors
+
+=over
+
+=item * Use the X-Windows base driver support for colors.
+
+=back
+
+=head2 Client and Server Images
+
+=over
+
+=item * All functions use the X-Windows base driver functions.
+
+=back
+
+=head2 Exclusive Attributes
+
+=over
+
+=item * "B<GC>": returns the X11 graphics context (get only). In Lua is
+returned as a user data.
+
+=back
+
+=over
+
+=item * "B<ROTATE>": allows the usage of 1 angle and 1 coordinate (x,
+y), that define a global rotation transformation centered in the
+specified coordinate. Use 1 real and 2 integer values inside a string
+("%g %d %d" = angle x y). In this driver will change the current
+transformation matrix, if removed will reset the current transformation
+matrix.
+
+=back
+
+=over
+
+=item * "B<ANTIALIAS>": controls the use of anti-aliasing for the text,
+image zoom and line drawing primitives. Assumes values "1" (active) and
+"0" (inactive). Default value: "1".
+
+=back
+
+=over
+
+=item * B<"LINEGRADIENT": >defines a filled interior style that uses a
+line gradient between two colors. It uses 2 points ("%d %d %d %d" = x1
+y1 x2 y2), one for the starting point using (using the foreground
+color), and another one for the end point (using the background color).
+(available only if Xrender version E<gt>= 0.10)
+
+=back
+
+=over
+
+=item * B<"XRENDERVERSION": >returns a string with the XRender version
+number. It is empty if the XRender extension is not available in the
+X-Windows server.
+
+=back
+
+=cut

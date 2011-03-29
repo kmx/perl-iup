@@ -1,0 +1,95 @@
+=head1 CD_METAFILE - CD Metafile Driver (cdmf.h)
+
+This driver allows the generation of a CD Metafile, a very simple
+format that includes calls to functions of the CD library and provides
+persistence to its primitives.
+
+=head2 Use
+
+The file is created by calling function
+L<B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_METAFILE,
+Data). The Data parameter is a string that must contain the filename
+and the canvas dimensions, in the following format:
+
+ "filename [widthxheight resolution]" or in C use "%s %gx%g %g"
+
+Only the parameter filename is required. The filename must be inside
+double quotes (") if it has spaces. Width and height are provided in
+millimeters (note the lowercase "x" between them), and their default
+value in pixels is INT_MAX for both dimensions. Resolution is the
+number of pixels per millimeter; its default value is "3.78 pixels/mm"
+(96 DPI). Width, height and resolution are real values.
+
+Any amount of such canvases may exist simultaneously. It is important
+to note that a call to function L<B<
+cdKillCanvas>|../func/init.html#cdKillCanvas> is required to B<close>
+the file properly.
+
+B<Images - >Be careful when saving images in the file, because it uses
+a text format to store all numbers and texts of primitives, including
+images, which significantly increases its size.
+
+B<Extension -> Although this is not required, we recommend the
+extension used for the file to be ".MF".
+
+=head2 Behavior of Functions
+
+=head2 Coordinate System and Clipping
+
+=over
+
+=item * L< B<Play>|../func/other.html#cdPlay>: implemented.
+
+=item * L< B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: does
+nothing.
+
+=item * B<Complex Regions>: not supported.
+
+=item * L<B<Clear>|../func/control.html#cdClear>: removes all
+primitives from the picture.
+
+=back
+
+=head2 Attributes
+
+L<B<FontDim>|../func/text.html#cdFontDim>: uses a size estimator,
+returning approximate values.
+
+L<B<TextSize>|../func/text.html#cdTextSize>: uses a size estimator,
+returning approximate values.
+
+=head2 Colors
+
+=over
+
+=item * L< B< GetColorPlanes>|../func/color.html#cdGetColorPlanes>:
+always returns 24.
+
+=back
+
+=head2 Primitives
+
+=over
+
+=item * Floating point primitives are supported.
+
+=back
+
+=head2 Client Images
+
+=over
+
+=item * L<B< GetImageRGB>|../func/client.html#cdGetImageRGB>: does
+nothing.
+
+=back
+
+=head2 Server Images
+
+=over
+
+=item * All functions do nothing.
+
+=back
+
+=cut

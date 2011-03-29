@@ -1,0 +1,201 @@
+=head1 CD_DXF - AutoCAD Image Exchange File Driver (cddxf.h)
+
+This driver allows generating an AutoCAD image exchange file. The file
+name usually has an extension .DXF. This driver supports only AutoCAD
+version 10.0 or later. The format's copyrights are property of
+L<Autodesk|http://www.autodesk.com>.
+
+=head2 Use
+
+The file is created and opened by calling function
+L<B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_DXF, Data), in
+which Data contains the file name and canvas dimensions. This function
+opens the file and writes its header. Then, other functions in the CD
+library can be called as usual. The Data parameter string has the
+following format:
+
+ "filename [widthxheight] [resolution]"    or in C "%s %gx%g %g"
+
+Only the parameter filename is required. The filename must be inside
+double quotes (") if it has spaces. Width and height are provided in
+millimeters (note the lowercase "x" between them), and their default
+value in pixels is INT_MAX for both dimensions. Resolution is the
+number of pixels per millimeter; its default value is "3.78 pixels/mm"
+(96 DPI). Width, height and resolution are given in real values and are
+used only by L<B<
+cdCanvasGetSize>|../func/coordinates.html#cdGetCanvasSize> and in
+pixel-millimeter conversion.
+
+Any amount of such canvases may exist simultaneously. It is important
+to note that a call to function L<B<
+cdKillCanvas>|../func/init.html#cdKillCanvas> is required to close the
+DXF file properly.
+
+B<Images >- The DXF format does not support client or server images and
+works with an indexed-color format (color quality is limited to 256
+fixed colors).
+
+B<Precision of Coordinates -> The primitives use coordinates in real
+numbers.
+
+B<Layers -> The format can work with several layers. It is necessary to
+draw the primitives of layer '0' first, then layer '1' and so on. Use
+functions L<B<Flush>|../func/control.html#cdFlush> to change the
+current layer.
+
+=head2 Behavior of Functions
+
+=head2 Control
+
+=over
+
+=item * L<B<Flush>|../func/control.html#cdFlush>: changes the current
+layer (the initial layer is '0', followed by '1' and so on).
+
+=item * L<B<Clear>|../func/control.html#cdClear>: does nothing.
+
+=item * L<B<Play>|../func/other.html#cdPlay>: does nothing, returns
+CD_ERROR.
+
+=back
+
+=head2 Coordinate System and Clipping
+
+=over
+
+=item * L<B<Clip>|../func/clipping.html#cdClip>: does nothing (no
+clipping function is supported), returns CD_CLIPOFF.
+
+=item * L< B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: does
+nothing. Axis orientation is the same as in the CD library.
+
+=item * B<Transformation Matrix>: not supported.
+
+=back
+
+=head2 Primitives
+
+=over
+
+=item * L<B<Sector>|../func/filled.html#cdSector>: draws a "hollow"
+sector, that is, only its borders.
+
+=item * L<B<Begin>|../func/lines.html#cdBegin>: if parameter
+B<C<CD_CLIP>> is specified, does nothing. B<C< CD_BEZIER>> and
+B<C<CD_PATH>> are simulated with lines.
+
+=item * B<L<Chord|../func/filled.html#cdChord>>: does nothing.
+
+=item * Floating point primitives are supported.
+
+=item * Solid filled primitives are supported only for polygons and
+rectangles.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L<B< BackOpacity>|../func/filled.html#cdBackOpacity>: does
+nothing, returns CD_TRANSPARENT.
+
+=item * L< B< WriteMode>|../func/attributes.html#cdWriteMode>: does
+nothing, returns CD_REPLACE.
+
+=item * L<B<Hatch>|../func/filled.html#cdHatch>: does nothing.
+
+=item * L<B< FillMode>|../func/filled.html#cdFillMode>: does nothing.
+
+=item * L<B< LineCap>|../func/filled.html#cdLineCap>: does nothing.
+
+=item * L<B< LineJoin>|../func/filled.html#cdLineJoin>: does nothing.
+
+=item * L<B< Stipple>|../func/filled.html#cdStipple>: does nothing.
+
+=item * L<B< Pattern>|../func/filled.html#cdPattern>: does nothing.
+
+=item * L<B< TextSize>|../func/text.html#cdTextSize>: returns a
+bounding box usually larger than the text (the computation is based on
+the widest character).
+
+=item * L< B< TextOrientation>|../func/text.html#cdTextOrientation>:
+does nothing.
+
+=item * L<B<Font>|../func/text.html#cdFont>: italic styles correspond
+to the basic styles with an inclination of 15o. See the font mapping
+table for the equivalence used to map fonts of the CD library into
+AutoCAD fonts. No other fonts are supported.
+
+=back
+
+Font Mapping
+
+CD Fonts
+
+AutoCAD Fonts
+
+System
+
+STANDARD (sem arquivo)
+
+Courier
+
+ROMAN (romanc.shx)
+
+Courier + CD_BOLD
+
+ROMAN_BOLD (romant.shx)
+
+Times
+
+ROMANTIC (rom_____.pfb)
+
+Times + CD_BOLD
+
+ROMANTIC_BOLD (romb_____.pfb)
+
+Helvetica
+
+SANSSERIF (sas_____.pfb)
+
+Helvetica + CD_BOLD
+
+SANSSERIF_BOLD (sasb____.pfb)
+
+=head2 Colors
+
+=over
+
+=item * L< B< Foreground>|../func/attributes.html#cdForeground>:
+indexes long int *color in the fixed palette (AutoCAD uses a 256-color
+palette - for further detail, see AutoCAD's Reference Manual).
+
+=item * L< B< Background>|../func/attributes.html#cdBackground>: does
+nothing, returns CD_WHITE.
+
+=item * L< B< GetColorPlanes>|../func/color.html#cdGetColorPlanes>:
+returns 8.
+
+=item * L<B<Palette>|../func/color.html#cdPalette>: does nothing (the
+palette is fixed).
+
+=back
+
+=head2 Client Images
+
+=over
+
+=item * All functions do nothing.
+
+=back
+
+=head2 Server Images
+
+=over
+
+=item * All functions do nothing.
+
+=back
+
+=cut

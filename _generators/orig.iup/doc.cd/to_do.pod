@@ -1,0 +1,126 @@
+=head2 To Do
+
+=head2 CD
+
+=over
+
+=item * libEMF in UNIX.
+
+=back
+
+=head2 MAC
+
+=over
+
+=item * Build a native Mac OS X driver using Quartz 2D.
+
+=item * Macintosh Picture (PICT) file.
+
+=back
+
+=head2 X-WIN
+
+=over
+
+=item * Xp: X Printer Extension driver
+
+=item * XShm: Double Buffering and MIT-Shared Memory extensions for
+server images ?
+
+=item * XIE: X Imaging Extensions ?
+
+=item * Shape Extension and XShapeCombineMask to implement "WINDOWRGN"
+attribute (non rectangular windows from regions)
+
+=back
+
+=head2 OpenGL
+
+=over
+
+=item * Use textures to improve image drawing with transformation and
+patter+stipple support.
+
+=item * Use tesselation to support fillmode and non convex polygons.
+
+=back
+
+=head2 Simulation
+
+=over
+
+=item * Implement line styles, line cap and line join for line with
+E<gt> 1.
+
+=back
+
+=head2 PS
+
+=over
+
+=item * Allow functions B<cdPutImageMap...> to be implemented using
+I<indexed color space>.
+
+=item * Check the possibility of B<cdHatch> and B<cdStipple>, which are
+always opaque, having transparency, using I<shading >from PS Version 3
+or I<mask images>. Same for B<cdPutImageRGBA>.
+
+=back
+
+----
+
+=head1 Not likely to be updated anymore, although they are still
+supported.
+
+=head2 DXF
+
+=over
+
+=item * Implement Arch and Sector functions as DXF primitives, and not
+as polygons. Update all other primitives according to the new DXF
+manual, as there are several limitations in the current implementation.
+
+=back
+
+=head2 CGM
+
+=over
+
+=item * Make B<cdPlay> treat the possibility of xmax and ymax being 0.
+
+=item * Check the possibility of implementing function
+B<cdTextOrientation>.
+
+=item * Implement World Coordinate functions directly in the driver.
+
+=item * Correct the B<cdPlay> function, which is generating several
+extra lines.
+
+=item * Correct the B<cdPlay> function, which should not preserve the
+aspect ratio.
+
+=item * Allow B<cdPutImageRGBA> to be partially implemented using I<
+transparent cell color>.
+
+=back
+
+=head2 DGN
+
+=over
+
+=item * Improve the driver using the DGNlib third party library.
+
+=item * Implement the interior style attributes: I<hatch>, I<stipple>
+andI< pattern>. They depend on the new DGN specification, which we do
+not have yet.
+
+=item * Check the possibility of implementing functions
+B<cdTextOrientation> and B<cdRect>.
+
+=item * Correct function B<cdKillCanvas>, which generates "I<assertion
+failed>" when the library is used with debug information and the Seed
+file is not included.
+
+=back
+
+=cut

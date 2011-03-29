@@ -1,0 +1,38 @@
+=head1 CD_IMAGE - Server Image Driver (cdimage.h)
+
+This driver provides access to a Server Image, a memory-based
+high-performance image that corresponds to the attributes of the
+system's devices. It is used for offscreen drawings.
+
+=head2 Use
+
+The canvas is created by means of a call to function L<
+B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_IMAGE, Data),
+after which other functions in the CD library can be called as usual.
+The function creates a CD canvas based on an existing Server Image. The
+Data parameter must be a pointer to an image created with function L<
+B<cdCreateImage>|../func/server.html#cdCreateImage>.
+
+Any amount of such canvases may exist simultaneously. It is important
+to note that a call to function L<
+B<cdKillCanvas>|../func/init.html#cdKillCanvas> is required to properly
+B<end> the driver. You can call function L<
+B<cdKillImage>|../func/server.html#cdKillImage> only after calling
+B<cdKillCanvas>.
+
+For use with CDLUA, the Server Image passed as parameter must have been
+created with function B<cd.CreateImage> in Lua.
+
+To use this driver in Windows using GDI+ is necessary to call B<
+cdUseContextPlus>B<(1)> before creating the canvas.
+
+=head2 Behavior of Functions
+
+This driver is greatly platform-dependent. For further detail, see the
+B< Behavior of Functions> in each platform: L<Microsoft Windows
+(GDI)|win32.html>, L<Windows Using GDI+|gdiplus.html>, L<X-Windows
+(XLIB)|xwin.html>, L<GDK|gdk.html>. However, it should be noted that
+some functions behave differently from the basic functions of each
+platform.
+
+=cut

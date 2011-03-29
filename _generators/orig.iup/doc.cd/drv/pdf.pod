@@ -1,0 +1,292 @@
+=head1 CD_PDF - PDF Driver (cdpdf.h)
+
+This drivers allows generating a PDF file. This format developed for
+representing documents in a manner that is independent of the original
+application software, hardware, and operating system used to create
+those documents. The format's copyrights are property of L<Adobe
+Systems|http://www.adobe.com>.
+
+This driver is very similar to the PS driver but it uses the PDFlib
+library to generate the PDF
+(L<http:E<47>E<47>www.pdflib.comE<47>|http://www.pdflib.com/>). There
+are two PDFlib licenses available, one commercial and one free with a
+flexible license, see L<PDFlib Lite
+License|http://www.pdflib.com/products/pdflib-family/pdflib-lite/pdflib-lite-licensing/>.
+The CD_PDF driver works with both versions.
+
+By default the pre-compiled library in the distribution uses the PDF
+Lite version code. The configuration of the PDF Lite code included does
+not supports image file formats. The current PDF Lite version is
+7.0.4p4.
+
+PDFlib Copyright (c) 1997-2009 Thomas Merz and PDFlib GmbH. All rights
+reserved. Applications that use this driver are subject to the L<PDFlib
+GmbH License Agreement|../../download/PDFlib-Lite-license.pdf>.
+
+=head2 Use
+
+The file is created and opened by calling function
+L<B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_PDF, Data), in
+which Data contains the filename and canvas dimensions. This function
+opens the file and writes its header. Then, other functions in the CD
+library can be called as usual. The Data parameter string has the
+following format:
+
+ "filename -p[paper] -w[width] -h[height] -s[resolution] [-o]"
+ or in C
+ "%s -p%d -w%g -h%g -s%d -o"
+
+The filename must be inside double quotes (") if it has spaces. Any
+amount of such canvases may exist simultaneously. It is important to
+note that a call to function L<B<
+cdKillCanvas>|../func/init.html#cdKillCanvas> is required to B<close>
+the file properly.
+
+To use this driver, the application must be linked with the "B<cdpdf>"
+and "B<pdflib>" libraries.
+
+In Lua, it is necessary to call function B<cdluapdf_open() > after a
+call to function B<cdlua_open()>, apart from linkediting with the
+"B<cdluapdf>" library. This is not necessary if you do
+require"cdluapdf".
+
+B<Paper Size - >The default paper size is A4. It is possible to change
+it by using one of the predefined sizes - B<C<CD_A0>>, B<C<CD_A1>>,
+B<C<CD_A2>>, B<C<CD_A3>>, B<C<CD_A4>>, B<C<CD_A5>>, B<C<CD_LETTER>> and
+B<C< CD_LEGAL>> - with parameter "-p". It is also possible to define a
+paper in a particular size by using parameters "-w" e "-h". Values are
+provided in millimeters.
+
+Default Paper Sizes
+
+Width (mm)
+
+Length (mm)
+
+B<A0>
+
+841
+
+1187
+
+B<A1>
+
+594
+
+841
+
+B<A2>
+
+420
+
+594
+
+B<A3>
+
+297
+
+420
+
+B<A4>
+
+210
+
+297
+
+B<A5>
+
+148
+
+210
+
+B<Letter>
+
+216
+
+279
+
+B<Legal>
+
+216
+
+356
+
+B<Resolution -> Resolution is used to convert values from millimeters
+to pixels (the same as points, but the number of points is per inch -
+DPI). Use parameter "-s" to configure the resolution. The default value
+is 300 DPI.
+
+B<Orientation -> The page can be oriented as portrait or landscape. The
+default value is portrait, but when the parameter "-o" is used, the
+horizontal and vertical values are switched.
+
+=head2 Behavior of Functions
+
+=head2 Control
+
+=over
+
+=item * L<B<Play>|../func/other.html#cdPlay>: does nothing, returns
+CD_ERROR.
+
+=item * L<B<Flush>|../func/control.html#cdFlush>: changes to a new
+page, preserving the previous one.
+
+=item * L<B<Clear>|../func/control.html#cdClear>: does nothing.
+
+=back
+
+=head2 Coordinate System & Clipping
+
+=over
+
+=item * L< B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: does
+nothing.
+
+=item * B<Complex Regions>: not supported.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L< B< WriteMode>|../func/attributes.html#cdWriteMode>: does
+nothing, returns CD_REPLACE.
+
+=item * L<B<Font>|../func/text.html#cdFont>: the old "System" font is
+mapped to the "Courier" font. For the PDF core fonts styles are added
+to the font name, for other fonts styles are simulated by PDFlib.
+Underline and Strikeout are supported. Following is the core fonts:
+
+=back
+
+ Courier, Courier-Bold, Courier-Oblique, Courier-BoldOblique,
+ Helvetica, Helvetica-Bold, Helvetica-Oblique, Helvetica-BoldOblique,
+ Times-Roman, Times-Bold, Times-Italic, Times-BoldItalic,
+ Symbol, 
+ ZapfDingbats
+
+=head2 Colors
+
+=over
+
+=item * L< B< GetColorPlanes>|../func/color.html#cdGetColorPlanes>:
+returns 24.
+
+=item * L<B<Palette>|../func/color.html#cdPalette>: does nothing.
+
+=back
+
+=head2 Client Images
+
+=over
+
+=item * L<B< GetImageRGB>|../func/client.html#cdGetImageRGB>: does
+nothing.
+
+=item * B<L< PutImageMap|../func/client.html#cdPutImageMap>>: stores an
+RGB image.
+
+=back
+
+=head2 Primitives
+
+=over
+
+=item * B<L<Pixel|../func/marks.html#cdPixel>>: does not exist in PDF,
+is simulated using a circle with radius=1.
+
+=item * Floating point primitives are supported.
+
+=item * Filled primitives do not include the line at the edges of the
+filled area.
+
+=item * When constructing a PATH the CD_PATH_ARC can add only a
+circular arc. The largest dimension will be used.
+
+=back
+
+=head2 Server Images
+
+=over
+
+=item * All functions do nothing.
+
+=back
+
+=head2 Exclusive Attributes
+
+=over
+
+=item * B<"POLYHOLE">: defines the index of the vertex where there is a
+hole in a closed polygon. It will affect the next B<cdEnd>. Can be
+called several times between B<cdBegin> and B<cdEnd> to define holes.
+The value passed must be a string containing an integer ("%d"). If the
+value of the attribute passed is NULL, all holes will no longer be
+considered. When consulted returns the current number of holes ("%d").
+It can have a maximum of 500 holes. Default: NULL.
+
+=back
+
+=over
+
+=item * B<"HATCHBOXSIZE">: defines the size of smallest hatch box
+pattern. This affects the spacing between the hatch lines. The value
+passed must be a string containing an integer ("%d"). If the value of
+the attribute passed is NULL, the value is rest to the default. When
+consulted returns the current value ("%d"). Default: "8".
+
+=back
+
+=over
+
+=item * "B<ROTATE>": allows the usage of 1 angle and 1 coordinate (x,
+y), that define a global rotation transformation centered in the
+specified coordinate. Use 1 real and 2 integer values inside a string
+("%g %d %d" = angle x y). Can not be set if a transformation is already
+set.
+
+=back
+
+=over
+
+=item * "B<OPACITY>": allows the usage of a global opacity value. The
+value passed must be a string containing an integer ("%d") [0=full
+transparent, 255=full opaque]. Use NULL to reset to the default.
+Default: 255.
+
+=back
+
+=over
+
+=item * "B<PATTERN>": creates a pattern with regular primitives (except
+images). The value passed must be a string containing two integeres
+with the pattern size ("%dx%d") [widthxheight]. Just call regular
+primitives. Use NULL to end the pattern creation and set the interior
+style.
+
+=back
+
+=over
+
+=item * "B<PDF>": Returns the "PDF*" handle of the PDFLib.
+
+=back
+
+=over
+
+=item * "B<PDFLIBVERSION>": Returns the full PDFlib version string in
+the format E<lt>majorE<gt>.E<lt>minorE<gt>.E<lt>revisionE<gt>.
+
+=back
+
+=over
+
+=item * B<"SUBJECT","TITLE","CREATOR","AUTHOR","KEYWORDS">: write only
+attributes that allows to set a description string for the respective
+document information field.
+
+=back
+
+=cut

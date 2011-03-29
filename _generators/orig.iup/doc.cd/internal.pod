@@ -1,0 +1,194 @@
+=head1 Internal Architecture
+
+=head2 Modularity
+
+Apart from the several drivers, the CD library is composed of a few
+modules, the public header files B<cd.h> and B<wd.h>, those which
+implement the functions independently from drivers,B< cd*.c> and
+B<wd.c>, and the header file B<cd_private.h>, apart from some other
+modules which implement non-exported specific functions. Such modules
+are totally independent from the implemented drivers, as well as every
+driver independs from one another, unless there is an intentional
+dependency.
+
+=head2 Linking
+
+Since the drivers independ from one another, we could create a library
+for each of them. For the drivers provided with CD it was easy to
+include them in their own library, thus simplifying the application's
+linking process. Note: Internally, the drivers are called "context".
+
+In order to establish this dependency, when creating a canvas in a
+given driver the user must specify the driver to be used. This
+specification is done by means of a macro which is actually a function
+with no parameter, which passes the function table from that driver to
+the canvas creation function. For instance:
+
+ CD_PS (is in fact) cdContextPS()
+ cdCreateCanvas(CD_PS, "teste.ps"); (will do) canvas->Line = context->Line
+
+If the context function is not invoqued then that driver does not need
+to be linked with the application. This is usefull if the application
+uses a custom build of the CD library and usefull for additional
+drivers not included in the main library, like IUP and PDF, that have
+external dependencies.
+
+=head2 Structures
+
+The core implementation defines the structures declared in the cd.h
+header. But declares an undefined structure called cdCtxCanvas. This
+structure is defined in each driver according to their needs. But the
+first member of this structure must be a pointer to the cdCanvas
+structure.
+
+The drivers need not to implement all functions from the function
+table, only a few are required.
+
+Here is the definition of the cdContext and cdCanvas structures:
+
+ struct _cdContext
+ {
+   unsigned long caps;
+ 
+   /* can NOT be NULL */
+   void (*CreateCanvas)(cdCanvas* canvas, void *data);
+   void (*InitTable)(cdCanvas* canvas);
+ 
+   /* can be NULL */
+   int (*Play)(cdCanvas* canvas, int xmin, int xmax, int ymin, int ymax, void *data); 
+   int (*RegisterCallback)(int cb, cdCallback func);
+ };
+
+ struct _cdCanvas
+ {
+   ...
+   void (*Line)(cdCtxCanvas* ctxcanvas, int x1, int y1, int x2, int y2);
+   void (*Rect)(cdCtxCanvas* ctxcanvas, int xmin, int xmax, int ymin, int ymax);
+   void (*Box)(cdCtxCanvas* ctxcanvas, int xmin, int xmax, int ymin, int ymax);
+   ...
+ 
+   ...
+   int mark_type, mark_size;
+   int line_style, line_width;
+   int interior_style, hatch_style;
+   ...
+ 
+   cdVectorFont* vector_font;
+   cdSimulation* simulation;
+   cdCtxCanvas* ctxcanvas;     // context dependent defintion
+   cdContext* context;
+ };
+
+Internally each driver defines its cdCtxCanvas strcuture:
+
+ struct _cdCtxCanvas 
+ {
+   cdCanvas* canvas;
+ 
+   char* filename; 
+ 
+   int last_line_style;
+   int last_fill_mode;
+   FILE* file;
+ };
+
+Then it must implement the cdcreatecanvas and cdinittable functions:
+
+ /* In the driver implementation file */
+ 
+ static void cdcreatecanvas(cdCanvas *canvas, void *data)
+ {
+   cdCtxCanvas* ctxcanvas = (cdCtxCanvas *)malloc(sizeof(cdCtxCanvas));
+ 
+   // parse data parameters
+   ...
+ 
+   ctxcanvas->canvas = canvas;
+   canvas->ctxcanvas = ctxcanvas;
+ 
+   /* update canvas context */
+   canvas->w = (int)(w_mm * res);
+   canvas->h = (int)(h_mm * res);
+   canvas->w_mm = w_mm;
+   canvas->h_mm = h_mm;
+   canvas->bpp = 24;
+   canvas->xres = res;
+   canvas->yres = res;
+ }
+ 
+ static void cdinittable(cdCanvas* canvas)
+ {
+   canvas->Flush = cdflush;
+   canvas->Clear = cdclear;
+   canvas->Pixel = cdpixel;
+   canvas->Line = cdline;
+   canvas->Poly = cdpoly;
+   ...
+  }
+ 
+ static cdContext cdMetafileContext =
+ {
+   CD_CAP_ALL & ~(CD_CAP_GETIMAGERGB|CD_CAP_IMAGESRV|CD_CAP_REGION|CD_CAP_FONTDIM|CD_CAP_TEXTSIZE),
+   cdcreatecanvas,
+   cdinittable,
+   cdplay,
+   cdregistercallback,
+ };
+ 
+ cdContext* cdContextMetafile(void)
+ {
+   return &cdMetafileContext;
+ }
+
+To simplify driver administration, the context structure's linking is
+done as follows:
+
+ /* In the header file */
+ #define CD_METAFILE cdContextMetafile()
+ cdContext* cdContextMetafile(void)
+
+=head2 Attributes
+
+The query mechanism of an attribute is done in the core and does not
+depends on the driver. Due to this fact, the attributes which are
+modified several times for the same value are not updated in the
+drivers, thus saving processing. Similarly, if an attribute
+modification in a driver was not successful, its value is not updated.
+Nevertheless, the fact that a driver does not implement the attribute's
+modification function does not mean that it rejects that attribute -
+the driver just does not need to do anything with this attribute on
+that moment and will query it later, before drawing the primitive.
+
+The creation of customized attributes for each driver is made
+generically, using string-like attributes. A structure with the
+attribute's name and its I<set> and I<get> functions must be declared,
+as in the example below:
+
+ static void set_fill_attrib(cdCtxCanvas* ctxcanvas, char* data)
+ {
+   ctxcanvas->fill_attrib[0] = data[0];
+ }
+ 
+ static char* get_fill_attrib(cdCtxCanvas* ctxcanvas)
+ {
+   return ctxcanvas->fill_attrib;
+ }
+ 
+ static cdAttribute fill_attrib =
+ {
+   "SIMPENFILLPOLY",
+   set_fill_attrib,
+   get_fill_attrib
+ }; 
+
+At I<createcanvas> in the driver:
+
+ ctxcanvas->fill_attrib[0] = '1';
+ ctxcanvas->fill_attrib[1] = 0;
+ 
+ cdRegisterAttribute(canvas, &fill_attrib);
+
+, for instance, must exist, thus initializing the attribute and
+registering it in the canvas' attribute list.
+
+=cut

@@ -1,0 +1,129 @@
+=head1 World Coordinates
+
+Allows the use of a World Coordinate System. In this system you can
+attribute coordinates to any unit you want. After you define a window
+(rectangular region) in your world, each given coordinate is then
+mapped to canvas coordinates to draw the primitives. You can define a
+viewport in your canvas to change the coordinate mapping from world to
+canvas. The image below shows the relation between Window and Viewport.
+
+Window x Viewport
+
+[IMAGE]
+
+If you want to map coordinates from one system to another, use the
+B<wdWorld2Canvas> e B<wdCanvas2World> functions.
+
+The quality of the picture depends on the conversion from World to
+Canvas, so if the canvas has a small size the picture quality will be
+poor. To increase picture quality create a canvas with a larger size,
+if possible.
+
+All World Coordinate drawing in all drivers are simulated using other
+CD primitives and do NOT depend or use the B<cdCanvasTransform>
+transformation matrix.
+
+----
+
+ void wdCanvasWindow(cdCanvas* canvas, double xmin, double xmax, double ymin, double ymax); [in C]
+     
+ canvas:wWindow(xmin, xmax, ymin, ymax: number) [in Lua]
+
+Configures a window in the world coordinate system to be used to
+convert world coordinates (with values in real numbers) into canvas
+coordinates (with values in integers). The default window is the size
+in millimeters of the whole canvas.
+
+ void wdCanvasGetWindow(cdCanvas* canvas, double *xmin, double *xmax, double *ymin, double *ymax); [in C]
+ 
+ canvas:wGetWindow() -> (xmin, xmax, ymin, ymax: number) [in Lua]
+
+Queries the current window in the world coordinate system being used to
+convert world coordinates into canvas coordinates (and the other way
+round). It is not necessary to provide all return pointers, you can
+provide only the desired values.
+
+ void wdCanvasViewport(cdCanvas* canvas, int xmin, int xmax, int ymin, int ymax); [in C]
+ 
+ canvas:wViewport(xmin, xmax, ymin, ymax: number) [in Lua]
+
+Configures a viewport in the canvas coordinate system to be used to
+convert world coordinates (with values in real numbers) into canvas
+coordinates (with values in integers). The default viewport is the
+whole canvas (0,w-1,0,h-1). If the canvas size is changed, the viewport
+will not be automatically updated.
+
+ void wdCanvasGetViewport(cdCanvas* canvas, int *xmin, int *xmax, int *ymin, int *ymax); [in C]
+ 
+ canvas:wGetViewport() -> (xmin, xmax, ymin, ymax: number) [in Lua]
+
+Queries the current viewport in the world coordinate system being used
+to convert world coordinates into canvas coordinates (and the other way
+round). It is not necessary to provide all return pointers, you can
+provide only the desired values and NULL for the others.
+
+ void wdCanvasWorld2Canvas(cdCanvas* canvas, double xw, double yw, int *xv, int *yv); [in C]
+ 
+ canvas:wWorld2Canvas(xw, yw: number) -> (xv, yv: number) [in Lua]
+
+Converts world coordinates into canvas coordinates. It is not necessary
+to provide all return pointers, you can provide only the desired values
+and NULL for the others.
+
+ void wdCanvasCanvas2World(cdCanvas* canvas, int xv, int yv, double *xw, double *yw); [in C]
+ 
+ canvas:wCanvas2World(xv, yv: number) -> (xw, yw: number) [in Lua]
+
+Converts canvas coordinates into world coordinates. It is not necessary
+to provide all return pointers, you can provide only the desired values
+and NULL for the others.
+
+ void wdCanvasSetTransform(cdCanvas* canvas, double sx, double sy, double tx, double ty); [in C]
+     
+ canvas:wSetTransform(sx, sy, tx, ty: number) [in Lua]
+
+Configures the world coordinate system transformation to be used to
+convert world coordinates (with values in real numbers) into canvas
+coordinates (with values in integers). The transformation is
+automatically set by B<wdCanvasWindow> and B<wdCanvasViewport>. This
+has NO relation with B<cdCanvasTransform>.
+
+ void wdCanvasGetTransform(cdCanvas* canvas, double *sx, double *sy, double *tx, double *ty); [in C]
+ 
+ canvas:wGetTransform() -> (sx, sy, tx, ty: number) [in Lua]
+
+Queries the current transformation being used to convert world
+coordinates into canvas coordinates (and the other way round). It is
+not necessary to provide all return pointers, you can provide only the
+desired values.
+
+ void wdCanvasTranslate(cdCanvas* canvas, double dtx, double dty); [in C]
+     
+ canvas:wTranslate(dtx, dty: number) [in Lua]
+
+Translates the transformation by a delta, by adding the given values to
+the current tx and ty values.
+
+ void wdCanvasScale(cdCanvas* canvas, double dsx, double dsy); [in C]
+     
+ canvas:wScale(dsx, dsy: number) [in Lua]
+
+Scales the transformation by a delta, by multiplying the given values
+by the current sx and sy values.
+
+=head2 Extra
+
+ void wdCanvasHardcopy(cdCanvas *canvas, cdContext* ctx, void *data, void(*draw_func)(cdCanvas *canvas_copy)); [in C]
+ 
+ canvas:wCanvasHardcopy(ctx: number, data: string or userdata, draw_func: function) [in Lua]
+
+Creates a new canvas, prepares Window and Viewport according to the
+provided canvas, maintaining the aspect ratio and making the drawing
+occupy the largest possible area of the new canvas, calls the drawing
+function (which must use routines in WC) and, finally, removes the new
+canvas.
+
+It is usually used for "hard copies" of drawings (print equivalent
+copy). The most common used contexts are Printer, PS and PDF.
+
+=cut

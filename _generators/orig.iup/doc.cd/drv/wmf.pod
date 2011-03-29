@@ -1,0 +1,110 @@
+=head1 CD_WMF - Windows Metafile Driver (cdwmf.h)
+
+This driver allows creating a Microsoft Windows Metafile, the format
+used by 16-bit Windows systems to store graphics primitives. Usually,
+the filename has an extension "*.wmf".
+
+The driver works only in the Microsoft Windows platform, but you can
+use it in other platforms without the risk of compilation error. If you
+attempt to create a canvas in another platform, function B<
+cdCreateCanvas> will return NULL.
+
+B<It is recomended to use EMF instead of WMF whenever is possible.>
+
+=head2 Use
+
+The canvas is created by means of a call to the function L<
+B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_WMF, Data),
+after which other functions in the CD library can be called as usual.
+The Data parameter string has the following format:
+
+ "filename widthxheight [resolution]"     or in C "%s 
+     %dx%d %g"
+
+The file's name and dimensions are required. Width and height are
+provided in pixels (note the lowercase "x" between them). Resolution is
+the number of pixels per millimeter; its default value is the screen
+resolution.
+
+Any amount of such canvases may exist simultaneously. Function
+B<cdCreateCanvas> creates a memory-based metafile, and a call to
+function L< B<cdKillCanvas>|../func/init.html#cdKillCanvas> is required
+to B<close> the file properly.
+
+In fact the driver uses a slightly different format, called Aldus
+Placeable Metafile (APM). It attaches a small header to the beginning
+of the file, allowing other applications to import better the metafile
+contents.
+
+This driver is NOT available for the GDI+ base driver.
+
+=head2 Behavior of Functions
+
+This driver is greatly platform-dependent. For further detail, see the
+B< Behavior of Functions> of the L<Microsoft Windows
+(GDI)|drv/win32.html> platform. However, it should be noted that some
+functions behave differently from the basic functions of each platform.
+
+=head2 Control
+
+=over
+
+=item * L< B<Play>|../func/other.html#cdPlay>: different from the basic
+driver, is implemented.
+
+=item * L< B<Clear>|../func/control.html#cdClear>: different from the
+basic driver, does nothing.
+
+=back
+
+=head2 Coordinate System and Clipping
+
+=over
+
+=item * L< B<Clip>|../func/clipping.html#cdClip>: does nothing, returns
+CD_CLIPOFF.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L< B<Stipple>|../func/filled.html#cdStipple>: is always opaque
+and smaller than 8x8 pixels.
+
+=item * L< B<Pattern>|../func/filled.html#cdPattern>: does nothing.
+
+=item * L< B<LineWidth>|../func/lines.html#cdLineWidth>: is always 1.
+
+=item * L< B<TextAlignment>|../func/text.html#cdTextAlignment>:
+CD_CENTER/CD_WEST/CD_EAST is saved as
+CD_BASE_CENTER/CD_BASE_LEFT/CD_BASE_RIGHT, but the position error is
+compensated.
+
+=item * L< B<TextOrientation>|../func/text.html#cdTextOrientation>:
+does nothing
+
+=back
+
+=head2 Client Images
+
+=over
+
+=item * L< B<GetImageRGB>|../func/client.html#cdGetImageRGB>: does
+nothing.
+
+=item * L< B<PutImageRGBA>|../func/client.html#cdPutImageRGBA>: the
+alpha component is ignored.
+
+=back
+
+=head2 Server Images
+
+=over
+
+=item * All functions do nothing.
+
+=back
+
+=cut

@@ -1,0 +1,98 @@
+=head1 CD_NATIVEWINDOW - Native Window Driver (cdnative.h)
+
+This driver provides access to an existing Native Window, a basic
+element of the user-interface system. It also provides access to other
+native handles like HDC handles in Windows.
+
+=head2 Use
+
+The canvas is created by means of a call to the function
+L<B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_NATIVEWINDOW,
+Data), after which other functions in the CD library can be called as
+usual. This function B<creates> a CD canvas based on an existing system
+canvas. The parameter Data is a pointer to a handle of the canvas. It
+is system-dependent, having a different meaning in each platform:
+
+B<Microsoft Windows>: can be the handle of the Windows window (HWND),
+or the handle of a previously created Device Context (HDC), or can be a
+string in the format "hdc width height" or, in C, "%p %d %d". To get
+the entire screen use a NULL data.
+
+B<X-Windows>: It is a string in the format "display window" or, in C,
+"C<%p %lu>" (uses the default screen).
+
+The given parameters must exists until B<cdKillCanvas> is called. The
+HDC is released only if created inside B<cdCreateCanvas> from an HWND
+or when data is NULL.
+
+Any amount of such canvases may exist simultaneously, but they should
+not use the same window, except if you are using a GDI canvas and a
+GDI+ canvas at the same time for the same window.
+
+In CDLUA, the creation parameter must be a string in X-Windows and a
+userdata in Microsoft Windows.
+
+To use this driver in Windows using GDI+ is necessary to call B<
+cdUseContextPlus>B<(1)> before creating the canvas.
+
+=head2 Exclusive Functions
+
+=head2 void cdGetScreenSize(int *width, int *height, double *width_mm,
+double *height_mm); [in C]
+
+cd.GetScreenSize() -E<gt> (width, heigth, mm_width, mm_height:
+I<number>) [in Lua]
+
+Equivalent to function L<
+B<cdCanvasGetSize>|../func/coordinates.html#cdGetCanvasSize>, but
+returns the values relative to the main screen of the window system. It
+is not necessary to have an active canvas to call this function.
+
+=head2 int cdGetScreenColorPlanes(void); [in C]
+
+cd.GetScreenColorPlanes() -E<gt> (bpp: I<number>) [in Lua]
+
+Equivalent to function L<
+B<cdCanvasGetColorPlanes>|../func/color.html#cdGetColorPlanes>, but
+returns the value relative to the main screen of the window system. It
+is not necessary to have an active canvas to call this function.
+
+=head2 Behavior of Functions
+
+This driver is greatly platform-dependent. For further detail, see the
+B<Behavior of Functions> in each platform: L<Microsoft Windows
+(GDI)|win32.html>, L<Windows Using GDI+|gdiplus.html>, L<X-Windows
+(XLIB)|xwin.html>, L<GDK|gdk.html>. However, it should be noted that
+some functions behave differently from the basic functions of each
+platform.
+
+=head2 Control
+
+=over
+
+=item * L<B< cdCanvasActivate>|../func/init.html#cdActivate>: updates
+the canvas size; the window might have been resized. If the canvas was
+created using a HDC, the size will not be updated.
+
+B<IMPORTANT>: For the standard Win32 base driver (not GDI+) if your
+Windows does not have one of the styles CS_OWNDC or CS_CLASSDC, then a
+temporary HDC will be created everytime a B<cdCanvasActivate> is
+called. To release this HDC call B<cdCanvasDeactivate> after drawing.
+The IupCanvas control of the IUP library in the Win32 driver have the
+style, so this should be ignored. But the IupCanvas in the GTK driver
+running in Win32 does not have this style so B<cdCanvasDeactivate>
+should be used.
+
+=back
+
+=head2 Exclusive Attributes
+
+=over
+
+=item * "B<WINDOWRGN>": set the shape of a window to the current
+complex clipping region (set only). If data is NULL the region is
+reset.
+
+=back
+
+=cut

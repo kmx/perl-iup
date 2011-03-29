@@ -1,0 +1,483 @@
+=head1 Screenshots C Source Code
+
+Get the source code here: L<simple.zip|../download/simple.zip>.
+
+void SimpleDrawB<(>cdCanvasB<*> canvasB<)>
+
+{
+
+int wB<,> hB<;>
+
+int B<*>dashesB<;>
+
+int irectB<[>8B<];>
+
+double drectB<[>8B<];>
+
+/* Get size in pixels to be used for computing coordinates. */
+
+cdCanvasGetSizeB<(>canvasB<,> B<&>wB<,> B<&>hB<,> NULLB<,> NULLB<);>
+
+/* Clear the background to be white */
+
+cdCanvasBackgroundB<(>canvasB<,> CD_WHITEB<);>
+
+cdCanvasClearB<(>canvasB<);>
+
+/* Draw a reactangle and a polyline at the bottom-left area,
+
+using a thick line with transparency.
+
+Notice that transparency is only supported in a few drivers,
+
+and line join is not supported in the IMAGERGB driver. */
+
+cdCanvasLineWidthB<(>canvasB<,> 3B<);>
+
+cdCanvasLineStyleB<(>canvasB<,> CD_CONTINUOUSB<);>
+
+cdCanvasForegroundB<(>canvasB<,> cdEncodeAlphaB<(>CD_DARK_MAGENTAB<,>
+128B<));>
+
+cdCanvasRectB<(>canvasB<,> 100B<,> 200B<,> 100B<,> 200B<);>
+
+cdCanvasBeginB<(>canvasB<,> CD_OPEN_LINESB<);>
+
+cdCanvasVertexB<(>canvasB<,> 300B<,> 250B<);>
+
+cdCanvasVertexB<(>canvasB<,> 320B<,> 270B<);>
+
+cdCanvasVertexB<(>canvasB<,> 350B<,> 260B<);>
+
+cdCanvasVertexB<(>canvasB<,> 340B<,> 200B<);>
+
+cdCanvasVertexB<(>canvasB<,> 310B<,> 210B<);>
+
+cdCanvasEndB<(>canvasB<);>
+
+/* Draw the red diagonal line with a custom line style.
+
+Notice that line styles are not supported in the IMAGERGB driver. */
+
+cdCanvasForegroundB<(>canvasB<,> CD_REDB<);>
+
+cdCanvasLineWidthB<(>canvasB<,> 3B<);>
+
+dashes B<=> B<{>20B<,> 15B<,> 5B<,> 5B<};>
+
+cdCanvasLineStyleDashesB<(>canvasB<,> dashesB<,> 4B<);>
+
+cdCanvasLineStyleB<(>canvasB<,> CD_CUSTOMB<);>
+
+cdCanvasLineB<(>canvasB<,> 0B<,> 0B<,> wB<->1B<,> hB<->1B<);>
+
+/* Draw the blue diagonal line with a pre-defined line style.
+
+Notice that the pre-defined line style is dependent on the driver. */
+
+cdCanvasForegroundB<(>canvasB<,> CD_BLUEB<);>
+
+cdCanvasLineWidthB<(>canvasB<,> 10B<);>
+
+cdCanvasLineStyleB<(>canvasB<,> CD_DOTTEDB<);>
+
+cdCanvasLineB<(>canvasB<,> 0B<,> hB<->1B<,> wB<->1B<,> 0B<);>
+
+/* Reset line style and width */
+
+cdCanvasLineStyleB<(>canvasB<,> CD_CONTINUOUSB<);>
+
+cdCanvasLineWidthB<(>canvasB<,> 1B<);>
+
+/* Draw an arc at bottom-left, and a sector at bottom-right.
+
+Notice that counter-clockwise orientation of both. */
+
+cdCanvasInteriorStyleB<(>canvasB<,> CD_SOLIDB<);>
+
+cdCanvasForegroundB<(>canvasB<,> CD_MAGENTAB<);>
+
+cdCanvasSectorB<(>canvasB<,> wB<->100B<,> 100B<,> 100B<,> 100B<,>
+50B<,> 180B<);>
+
+cdCanvasForegroundB<(>canvasB<,> CD_REDB<);>
+
+cdCanvasArcB<(>canvasB<,> 100B<,> 100B<,> 100B<,> 100B<,> 50B<,>
+180B<);>
+
+/* Draw a solid filled rectangle at center. */
+
+cdCanvasForegroundB<(>canvasB<,> CD_YELLOWB<);>
+
+cdCanvasBoxB<(>canvasB<,> wB</>2 B<-> 100B<,> wB</>2 B<+> 100B<,>
+hB</>2 B<-> 100B<,> hB</>2 B<+> 100B<);>
+
+/* Prepare font for text. */
+
+cdCanvasTextAlignmentB<(>canvasB<,> CD_CENTERB<);>
+
+cdCanvasTextOrientationB<(>canvasB<,> 70B<);>
+
+cdCanvasFontB<(>canvasB<,> "Times"B<,> CD_BOLDB<,> 24B<);>
+
+/* Draw text at center, with orientation,
+
+and draw its bounding box.
+
+Notice that in some drivers the bounding box is not precise. */
+
+cdCanvasGetTextBoundsB<(>canvasB<,> wB</>2B<,> hB</>2B<,> "cdMin Draw
+()"B<,> irectB<);>
+
+cdCanvasForegroundB<(>canvasB<,> CD_REDB<);>
+
+cdCanvasBeginB<(>canvasB<,> CD_CLOSED_LINESB<);>
+
+cdCanvasVertexB<(>canvasB<,> irectB<[>0B<],> irectB<[>1B<]);>
+
+cdCanvasVertexB<(>canvasB<,> irectB<[>2B<],> irectB<[>3B<]);>
+
+cdCanvasVertexB<(>canvasB<,> irectB<[>4B<],> irectB<[>5B<]);>
+
+cdCanvasVertexB<(>canvasB<,> irectB<[>6B<],> irectB<[>7B<]);>
+
+cdCanvasEndB<(>canvasB<);>
+
+cdCanvasForegroundB<(>canvasB<,> CD_BLUEB<);>
+
+cdCanvasTextB<(>canvasB<,> wB</>2B<,> hB</>2B<,> "cdMin Draw ()"B<);>
+
+/* Prepare World Coordinates */
+
+wdCanvasViewportB<(>canvasB<,> 0B<,>wB<->1B<,>0B<,>hB<->1B<);>
+
+if B<(>wB<E<gt>>hB<)>
+
+wdCanvasWindowB<(>canvasB<,>
+0B<,(>doubleB<)>wB</(>doubleB<)>hB<,>0B<,>1B<);>
+
+else
+
+wdCanvasWindowB<(>canvasB<,>
+0B<,>1B<,>0B<,(>doubleB<)>hB</(>doubleB<)>wB<);>
+
+/* Draw a filled blue rectangle in WC */
+
+wdCanvasBoxB<(>canvasB<,> 0.20B<,> 0.30B<,> 0.40B<,> 0.50B<);>
+
+cdCanvasForegroundB<(>canvasB<,> CD_REDB<);>
+
+/* Draw the diagonal of that rectangle in WC */
+
+wdCanvasLineB<(>canvasB<,> 0.20B<,> 0.40B<,> 0.30B<,> 0.50B<);>
+
+/* Prepare Vector Text in WC. */
+
+wdCanvasVectorCharSizeB<(>canvasB<,> 0.07B<);>
+
+/* Draw vector text, and draw its bounding box.
+
+We also use this text to show when we are using a contextplus driver.
+*/
+
+cdCanvasForegroundB<(>canvasB<,> CD_REDB<);>
+
+if B<(>contextplusB<)>
+
+wdCanvasGetVectorTextBoundsB<(>canvasB<,> "WDj-Plus"B<,> 0.25B<,>
+0.35B<,> drectB<);>
+
+else
+
+wdCanvasGetVectorTextBoundsB<(>canvasB<,> "WDj"B<,> 0.25B<,> 0.35B<,>
+drectB<);>
+
+cdCanvasBeginB<(>canvasB<,> CD_CLOSED_LINESB<);>
+
+wdCanvasVertexB<(>canvasB<,> drectB<[>0B<],> drectB<[>1B<]);>
+
+wdCanvasVertexB<(>canvasB<,> drectB<[>2B<],> drectB<[>3B<]);>
+
+wdCanvasVertexB<(>canvasB<,> drectB<[>4B<],> drectB<[>5B<]);>
+
+wdCanvasVertexB<(>canvasB<,> drectB<[>6B<],> drectB<[>7B<]);>
+
+cdCanvasEndB<(>canvasB<);>
+
+cdCanvasLineWidthB<(>canvasB<,> 2B<);>
+
+cdCanvasLineStyleB<(>canvasB<,> CD_CONTINUOUSB<);>
+
+if B<(>contextplusB<)>
+
+wdCanvasVectorTextB<(>canvasB<,> 0.25B<,> 0.35B<,> "WDj-Plus"B<);>
+
+else
+
+wdCanvasVectorTextB<(>canvasB<,> 0.25B<,> 0.35B<,> "WDj"B<);>
+
+/* Reset line width */
+
+cdCanvasLineWidthB<(>canvasB<,> 1B<);>
+
+/* Draw a filled path at center-right (looks like a weird fish).
+
+Notice that in PDF the arc is necessarily a circle arc, and not an
+ellipse. */
+
+cdCanvasForegroundB<(>canvasB<,> CD_GREENB<);>
+
+cdCanvasBeginB<(>canvasB<,> CD_PATHB<);>
+
+cdCanvasPathSetB<(>canvasB<,> CD_PATH_MOVETOB<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2 B<+> 200B<,> hB</>2B<);>
+
+cdCanvasPathSetB<(>canvasB<,> CD_PATH_LINETOB<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2 B<+> 230B<,> hB</>2 B<+> 50B<);>
+
+cdCanvasPathSetB<(>canvasB<,> CD_PATH_LINETOB<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2 B<+> 250B<,> hB</>2 B<+> 50B<);>
+
+cdCanvasPathSetB<(>canvasB<,> CD_PATH_CURVETOB<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2B<+>150B<+>150B<,>
+hB</>2B<+>200B<->50B<);> /* control point for start */
+
+cdCanvasVertexB<(>canvasB<,> wB</>2B<+>150B<+>180B<,>
+hB</>2B<+>250B<->50B<);> /* control point for end */
+
+cdCanvasVertexB<(>canvasB<,> wB</>2B<+>150B<+>180B<,>
+hB</>2B<+>200B<->50B<);> /* end point */
+
+cdCanvasPathSetB<(>canvasB<,> CD_PATH_CURVETOB<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2B<+>150B<+>180B<,>
+hB</>2B<+>150B<->50B<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2B<+>150B<+>150B<,>
+hB</>2B<+>100B<->50B<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2B<+>150B<+>300B<,>
+hB</>2B<+>100B<->50B<);>
+
+cdCanvasPathSetB<(>canvasB<,> CD_PATH_LINETOB<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2B<+>150B<+>300B<,> hB</>2B<->50B<);>
+
+cdCanvasPathSetB<(>canvasB<,> CD_PATH_ARCB<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2B<+>300B<,> hB</>2B<);> /* center */
+
+cdCanvasVertexB<(>canvasB<,> 200B<,> 100B<);> /* width, height */
+
+cdCanvasVertexB<(>canvasB<,> B<->30B<*>1000B<,> B<->170B<*>1000B<);> /*
+start angle, end angle (degrees / 1000) */
+
+cdCanvasPathSetB<(>canvasB<,> CD_PATH_FILLB<);>
+
+cdCanvasEndB<(>canvasB<);>
+
+/* Draw 3 pixels at center left. */
+
+cdCanvasPixelB<(>canvasB<,> 10B<,> hB</>2B<+>0B<,> CD_REDB<);>
+
+cdCanvasPixelB<(>canvasB<,> 11B<,> hB</>2B<+>1B<,> CD_GREENB<);>
+
+cdCanvasPixelB<(>canvasB<,> 12B<,> hB</>2B<+>2B<,> CD_BLUEB<);>
+
+/* Draw 4 mark types, distributed near each corner. */
+
+cdCanvasForegroundB<(>canvasB<,> CD_REDB<);>
+
+cdCanvasMarkSizeB<(>canvasB<,> 30B<);>
+
+cdCanvasMarkTypeB<(>canvasB<,> CD_PLUSB<);>
+
+cdCanvasMarkB<(>canvasB<,> 200B<,> 200B<);>
+
+cdCanvasMarkTypeB<(>canvasB<,> CD_CIRCLEB<);>
+
+cdCanvasMarkB<(>canvasB<,> w B<-> 200B<,> 200B<);>
+
+cdCanvasMarkTypeB<(>canvasB<,> CD_HOLLOW_CIRCLEB<);>
+
+cdCanvasMarkB<(>canvasB<,> 200B<,> h B<-> 200B<);>
+
+cdCanvasMarkTypeB<(>canvasB<,> CD_DIAMONDB<);>
+
+cdCanvasMarkB<(>canvasB<,> w B<-> 200B<,> h B<-> 200B<);>
+
+/* Draw all the line style possibilities at bottom.
+
+Notice that they have some small differences between drivers. */
+
+cdCanvasLineWidthB<(>canvasB<,> 1B<);>
+
+cdCanvasLineStyleB<(>canvasB<,> CD_CONTINUOUSB<);>
+
+cdCanvasLineB<(>canvasB<,> 0B<,> 10B<,> wB<,> 10B<);>
+
+cdCanvasLineStyleB<(>canvasB<,> CD_DASHEDB<);>
+
+cdCanvasLineB<(>canvasB<,> 0B<,> 20B<,> wB<,> 20B<);>
+
+cdCanvasLineStyleB<(>canvasB<,> CD_DOTTEDB<);>
+
+cdCanvasLineB<(>canvasB<,> 0B<,> 30B<,> wB<,> 30B<);>
+
+cdCanvasLineStyleB<(>canvasB<,> CD_DASH_DOTB<);>
+
+cdCanvasLineB<(>canvasB<,> 0B<,> 40B<,> wB<,> 40B<);>
+
+cdCanvasLineStyleB<(>canvasB<,> CD_DASH_DOT_DOTB<);>
+
+cdCanvasLineB<(>canvasB<,> 0B<,> 50B<,> wB<,> 50B<);>
+
+/* Draw all the hatch style possibilities in the top-left corner.
+
+Notice that they have some small differences between drivers. */
+
+cdCanvasHatchB<(>canvasB<,> CD_VERTICALB<);>
+
+cdCanvasBoxB<(>canvasB<,> 0B<,> 50B<,> h B<-> 60B<,> hB<);>
+
+cdCanvasHatchB<(>canvasB<,> CD_FDIAGONALB<);>
+
+cdCanvasBoxB<(>canvasB<,> 50B<,> 100B<,> h B<-> 60B<,> hB<);>
+
+cdCanvasHatchB<(>canvasB<,> CD_BDIAGONALB<);>
+
+cdCanvasBoxB<(>canvasB<,> 100B<,> 150B<,> h B<-> 60B<,> hB<);>
+
+cdCanvasHatchB<(>canvasB<,> CD_CROSSB<);>
+
+cdCanvasBoxB<(>canvasB<,> 150B<,> 200B<,> h B<-> 60B<,> hB<);>
+
+cdCanvasHatchB<(>canvasB<,> CD_HORIZONTALB<);>
+
+cdCanvasBoxB<(>canvasB<,> 200B<,> 250B<,> h B<-> 60B<,> hB<);>
+
+cdCanvasHatchB<(>canvasB<,> CD_DIAGCROSSB<);>
+
+cdCanvasBoxB<(>canvasB<,> 250B<,> 300B<,> h B<-> 60B<,> hB<);>
+
+/* Draw 4 regions, in diamond shape,
+
+at top, bottom, left, right,
+
+using different interior styles. */
+
+/* At top, not filled polygon, notice that the last line style is used.
+*/
+
+cdCanvasBeginB<(>canvasB<,> CD_CLOSED_LINESB<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2B<,> h B<-> 100B<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2 B<+> 50B<,> h B<-> 150B<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2B<,> h B<-> 200B<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2 B<-> 50B<,> h B<-> 150B<);>
+
+cdCanvasEndB<(>canvasB<);>
+
+/* At left, hatch filled polygon */
+
+cdCanvasHatchB<(>canvasB<,> CD_DIAGCROSSB<);>
+
+cdCanvasBeginB<(>canvasB<,> CD_FILLB<);>
+
+cdCanvasVertexB<(>canvasB<,> 100B<,> hB</>2B<);>
+
+cdCanvasVertexB<(>canvasB<,> 150B<,> hB</>2 B<+> 50B<);>
+
+cdCanvasVertexB<(>canvasB<,> 200B<,> hB</>2B<);>
+
+cdCanvasVertexB<(>canvasB<,> 150B<,> hB</>2 B<-> 50B<);>
+
+cdCanvasEndB<(>canvasB<);>
+
+/* At right, pattern filled polygon */
+
+cdCanvasPatternB<(>canvasB<,> STYLE_SIZEB<,> STYLE_SIZEB<,>
+patternB<);>
+
+cdCanvasBeginB<(>canvasB<,> CD_FILLB<);>
+
+cdCanvasVertexB<(>canvasB<,> w B<-> 100B<,> hB</>2B<);>
+
+cdCanvasVertexB<(>canvasB<,> w B<-> 150B<,> hB</>2 B<+> 50B<);>
+
+cdCanvasVertexB<(>canvasB<,> w B<-> 200B<,> hB</>2B<);>
+
+cdCanvasVertexB<(>canvasB<,> w B<-> 150B<,> hB</>2 B<-> 50B<);>
+
+cdCanvasEndB<(>canvasB<);>
+
+/* At bottom, stipple filled polygon */
+
+cdCanvasStippleB<(>canvasB<,> STYLE_SIZEB<,> STYLE_SIZEB<,>
+stippleB<);>
+
+cdCanvasBeginB<(>canvasB<,> CD_FILLB<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2B<,> 100B<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2 B<+> 50B<,> 150B<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2B<,> 200B<);>
+
+cdCanvasVertexB<(>canvasB<,> wB</>2 B<-> 50B<,> 150B<);>
+
+cdCanvasEndB<(>canvasB<);>
+
+/* Draw two beziers at bottom-left */
+
+cdCanvasBeginB<(>canvasB<,> CD_BEZIERB<);>
+
+cdCanvasVertexB<(>canvasB<,> 100B<,> 100B<);>
+
+cdCanvasVertexB<(>canvasB<,> 150B<,> 200B<);>
+
+cdCanvasVertexB<(>canvasB<,> 180B<,> 250B<);>
+
+cdCanvasVertexB<(>canvasB<,> 180B<,> 200B<);>
+
+cdCanvasVertexB<(>canvasB<,> 180B<,> 150B<);>
+
+cdCanvasVertexB<(>canvasB<,> 150B<,> 100B<);>
+
+cdCanvasVertexB<(>canvasB<,> 300B<,> 100B<);>
+
+cdCanvasEndB<(>canvasB<);>
+
+/* Draw the image on the top-right corner but increasing its actual
+size,
+
+and uses the complete image */
+
+cdCanvasPutImageRectRGBAB<(>canvasB<,> IMAGE_SIZEB<,> IMAGE_SIZEB<,>
+redB<,> greenB<,> blueB<,> alphaB<,>
+
+w B<-> 400B<,> h B<-> 310B<,> 3B<*>IMAGE_SIZEB<,> 3B<*>IMAGE_SIZEB<,>
+0B<,> 0B<,> 0B<,> 0B<);>
+
+/* Adds a new page, or
+
+flushes the file, or
+
+flushes the screen, or
+
+swap the double buffer. */
+
+cdCanvasFlushB<(>canvasB<);>
+
+B<>
+
+}
+
+=cut

@@ -1,0 +1,315 @@
+=head1 Canvas Initialization
+
+ cdCanvas *cdCreateCanvas(cdContext* ctx, void *data); [in C]
+ 
+ cd.CreateCanvas(ctx: number, data: string or userdata) -> (canvas: cdCanvas) [in Lua]
+
+Creates a CD canvas for a virtual visualization surface (VVS). A VVS
+may be the canvas of a user-interface window, the page of a document
+sent to a printer, an offscreen image, the clipboard, a metafile, and
+so on. To create the canvas, it is necessary to specify the driver in
+which each canvas is implemented.
+
+The driver is set by the B<driver> variable with additional information
+provided in the C< B<data>> parameter. Even though it is possible to
+create more than one canvas with the same C< B<driver/data>> pair, this
+is not recommended, and its behavior is not specified. Each canvas
+maintains its own features.
+
+In case of failure, a B<NULL> value is returned. The following
+predefined drivers are available:
+
+B<Window-Base Drivers>
+
+=over
+
+=item * L<B<CD_IUP>|../drv/iup.html> = IUP Canvas (B<cdiup.h>).
+
+=item * L<B<CD_NATIVEWINDOW>|../drv/native.html> = Native Window
+(B<cdnative.h>).
+
+=item * B<L<CD_GL|../drv/gl.html>> = Native Window (B<cdgl.h>).
+
+=back
+
+B<Device-Based Drivers>
+
+=over
+
+=item * L<B<CD_CLIPBOARD>|../drv/clipbd.html> = Clipboard
+(B<cdclipbd.h>).
+
+=item * L<B<CD_PRINTER>|../drv/printer.html> = Printer (B<cdprint.h>).
+
+L<B<CD_PICTURE>|../drv/picture.html> = Picture in memory
+(B<cdpicture.h>).
+
+=back
+
+B<Image-Based Drivers>
+
+=over
+
+=item * L<B<CD_IMAGE>|../drv/image.html> = Server-Image Drawing
+(B<cdimage.h>).
+
+=item * L<B<CD_IMAGERGB>|../drv/irgb.html> = Client-Image Drawing
+(B<cdirgb.h>).
+
+=item * L<B<CD_DBUFFER>|../drv/dbuf.html> = Offscreen Drawing
+(B<cddbuf.h>).
+
+=item * B<L<CD_DBUFFERRGB|../drv/dbufrgb.html>> = Client Offscreen
+Drawing (B<cddbuf.h>).
+
+=back
+
+B<File-Based Drivers>
+
+=over
+
+=item * L<B<CD_PDF>|../drv/pdf.html> = Adobe Portable Document Format
+(B<cdpdf.h>).
+
+=item * L<B<CD_PS>|../drv/ps.html> = PostScript File (B<cdps.h>).
+
+=item * L<B<CD_SVG>|../drv/svg.html> = Scalable Vector Graphics
+(B<cdsvg.h>).
+
+=item * L<B<CD_METAFILE>|../drv/mf.html> = Internal CD Metafile
+(B<cdmf.h>).
+
+=item * L<B<CD_DEBUG>|../drv/debug.html> = Internal CD Debug Log
+(B<cddebug.h>).
+
+=item * L<B<CD_CGM>|../drv/cgm.html> = Computer Graphics Metafile ISO
+(B<cdcgm.h>).
+
+=item * L<B<CD_DGN>|../drv/dgn.html> = MicroStation Design File
+(B<cddgn.h>).
+
+=item * L<B<CD_DXF>|../drv/dxf.html> = AutoCad Drawing Interchange File
+(B<cddxf.h>).
+
+=item * L<B<CD_EMF>|../drv/emf.html> = Microsoft Windows Enhanced
+Metafile (B<cdemf.h>). Works only in MS Windows systems.
+
+=item * L<B<CD_WMF>|../drv/wmf.html> = Microsoft Windows Metafile
+(B<cdwmf.h>). Works only in MS Windows systems.
+
+=back
+
+ cdCanvas* cdCreateCanvasf(cdContext *ctx, const char* format, ...); [in C]
+ 
+ [There is no equivalent in Lua]
+
+Same as B<cdCreateCanvas>, used in the case that the parameter B< data>
+is a string composed by several parameters. This function can be used
+with parameters equivalent to the B<printf> function from the default C
+library.
+
+ void cdKillCanvas(cdCanvas *canvas); [in C]
+ 
+ cd.KillCanvas(canvas: cdCanvas) [in Lua]
+
+Destroys a previously created canvas. If this function is not called in
+Lua, the garbage collector will call it.
+
+ int cdCanvasActivate(cdCanvas *canvas); [in C]
+ 
+ canvas:Activate(canvas: cdCanvas) -> (status: number) [in Lua]
+
+Activates a canvas for drawing. This is used only for a few drivers.
+Native Window and IUP drivers will update the canvas size if the window
+size has changed. Double Buffer driver will recreate the image buffer
+if the window canvas size has changed. In these cases the function MUST
+be called, for other drivers is useless. Returns CD_ERROR or CD_OK.
+
+ void cdCanvasDeactivate(cdCanvas* canvas); [in C]
+ 
+ canvas:Deactivate(canvas: cdCanvas) [in Lua]
+
+Called when the application has finished drawing in the canvas. It is
+optional, but if used for the Native Window driver in Windows when the
+handle can not be retained, the drawing can only be done again after a
+B< cdCanvasActivate>. On some drivers will simply call
+L<Flush|control.html#cdFlush>.
+
+ int cdUseContextPlus(int use); [in C]
+ 
+ cd.UseContextPlus(use: boolean) -> (old_use: boolean) [in Lua]
+
+Activates or deactivates the use of an external context for the next
+calls of the B< L<cdCreateCanvas|../func/init.html#cdCreateCanvas>>
+function.
+
+ void cdInitContextPlus(void); [in C]
+ 
+ cd.InitContextPlus() [in Lua]
+
+Initializes the context driver to use another context replacing the
+standard drivers. This functions is only available when a library
+containing a "ContextPlus" context driver is used. See the
+L<Cairo|../drv/cairo.html>, L<GDI+|../drv/gdiplus.html> and
+L<XRender|../drv/xrender.html> base drivers. Those libraries does not
+support XOR write mode, but has support for anti-aliasing and alpha for
+transparency.
+
+In Lua, when using require"cdluacontextplus" this function will be
+automatically called.
+
+----
+
+ cdContext* cdCanvasGetContext(cdCanvas *canvas); [in C]
+ 
+ canvas:GetContext(canvas: cdCanvas) -> (ctx: number) [in Lua]
+
+Returns the context of a given canvas, which can be compared with the
+predefined contexts, such as "CD_PS".
+
+ int cdContextCaps(cdContext* ctx); [in C]
+ 
+ cd.ContextCaps(ctx: number) -> (caps: number) [in Lua]
+
+Returns the resources available for that context. To verify if a given
+resource is available, perform a binary AND ('&.html with the following
+values:
+
+CD_CAP_FLUSH
+
+CD_CAP_CLEAR
+
+CD_CAP_PLAY
+
+CD_CAP_YAXIS - The Y axis has the same orientation as the CD axis.
+
+CD_CAP_CLIPAREA
+
+CD_CAP_CLIPPOLY - Usually is not implemented.
+
+CD_CAP_MARK - Marks are implemented directly in the driver (they are
+usually simulated).
+
+CD_CAP_RECT - Rectangles are implemented directly in the driver (they
+are usually simulated).
+
+CD_CAP_VECTORTEXT - Vector text is implemented directly in the driver
+(it is usually simulated).
+
+CD_CAP_IMAGERGB
+
+CD_CAP_IMAGERGBA - If this is not implemented, but cdGetImageRGB is,
+then it is simulated using cdGetImageRGB and cdPutImageRGB.
+
+CD_CAP_IMAGEMAP
+
+CD_CAP_GETIMAGERGB
+
+CD_CAP_IMAGESRV - Usually is only implemented in contexts of window
+graphics systems (Native Window and IUP).
+
+CD_CAP_BACKGROUND
+
+CD_CAP_BACKOPACITY
+
+CD_CAP_WRITEMODE
+
+CD_CAP_LINESTYLE
+
+CD_CAP_LINEWITH
+
+CD_CAP_WD - Functions of world coordinates are implemented directly in
+the driver (they are usually simulated).
+
+CD_CAP_HATCH
+
+CD_CAP_STIPPLE
+
+CD_CAP_PATTERN
+
+CD_CAP_FONT
+
+CD_CAP_FONTDIM - If not defined, the function is implemented using an
+internal heuristics of the library.
+
+CD_CAP_TEXTSIZE - If not defined, the function is implemented using an
+internal heuristics of the library.
+
+CD_CAP_TEXTORIENTATION - Usually is not implemented.
+
+CD_CAP_PALETTE - Usually is only implemented in contexts of window
+graphics systems (Native Window and IUP).
+
+ int cdCanvasSimulate(cdCanvas* canvas, int mode); [in C]
+ 
+ canvas:Simulate(mode: number) -> (old_mode: number) [in Lua]
+
+Activates the simulation of one or more primitives. It is ignored for
+the canvas in the ImageRGB context, because in this case everything is
+already simulated. It also has no effect for primitives that are
+usually simulated. It returns the previous simulation, but does not
+include primitives that are usually simulated. The simulation can be
+activated at any moment. For instance, if a line simulation is required
+only for a situation, the simulation can be activated for the line to
+be drawn, and then deactivated.
+
+If simulation is activated the driver transformation matrix is
+disabled.
+
+See in the Simulation sub-driver the information on how each simulation
+is performed.
+
+To activate a given simulation, perform a binary OR ('|.html using one
+or more of the following values (in Lua, the values must be added
+'+.html:
+
+CD_SIM_NONE - Deactivates all kinds of simulation.
+
+CD_SIM_LINE
+
+CD_SIM_RECT
+
+CD_SIM_BOX
+
+CD_SIM_ARC
+
+CD_SIM_SECTOR
+
+CD_SIM_CHORD
+
+CD_SIM_POLYLINE
+
+CD_SIM_POLYGON
+
+CD_SIM_TEXT
+
+CD_SIM_ALL - Activates all simulation options.
+
+CD_SIM_LINES - Combination of CD_SIM_LINE, CD_SIM_RECT, CD_SIM_ARC and
+CD_SIM_POLYLINE.
+
+CD_SIM_FILLS - Combination of CD_SIM_BOX, CD_SIM_SECTOR, CD_SIM_CHORD
+and CD_SIM_POLYGON.
+
+=head2 Extras
+
+ int cdlua_open(lua_State* L); [for Lua 5]
+
+Initializes the CDLua binding. In Lua 5 the binding is lua state safe,
+this means that several states can be initialized any time.
+
+ int cdlua_close(lua_State* L); [for Lua 5]
+
+Releases the memory allocated by the CDLua binding.
+
+ cdCanvas* cdlua_checkcanvas(lua_State* L, int pos); [for Lua 5]
+
+Returns the canvas in the Lua stack at position pos. The function will
+call lua_error if there is not a valid canvas in the stack at the given
+position.
+
+ void cdlua_pushcanvas(lua_State* L, cdCanvas* canvas);
+
+Pushes the given canvas into the stack.
+
+=cut

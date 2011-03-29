@@ -1,0 +1,77 @@
+=head1 Samples
+
+=head2 Simple Draw
+
+This is an example of a simple drawing program using a IUP canvas:
+
+ cdCanvas* canvas = cdCreateCanvas(CD_NATIVEWINDOW, IupGetAttribute(IupCanvas,"CONID")); cdCanvasLineStyle(canvas, CD_DASHED);cdCanvasLine(canvas, 0, 0, 100, 100);cdKillCanvas(canvas);
+
+If you want to use X<World Coordinates>B<World Coordinates>:
+
+ cdCanvas* canvas = cdCreateCanvas(CD_NATIVEWINDOW, IupGetAttribute(IupCanvas,"CONID")); wdCanvasViewport(canvas, 0, 100, 0, 100); wdCanvasWindow(canvas, -1.5, 1.5, -3000, 3000); cdCanvasLineStyle(canvas, CD_DASHED); wdCanvasLine(canvas, -0.5, -500, 1.0, 1000); cdKillCanvas(canvas); 
+
+=head2 X<Off Screen Drawing>Off Screen Drawing (Double Buffering)
+
+To draw in the background and later on transfer the drawing to the
+screen, use:
+
+ cdCanvas* canvas = cdCreateCanvas(CD_NATIVEWINDOW, IupGetAttribute(IupCanvas,"CONID")); cdCanvas* db_canvas = cdCreateCanvas(CD_DBUFFER, canvas); cdCanvasActivate(db_canvas); // update canvas size, window could be resizedcdCanvasLineStyle(db_canvas, CD_DASHED); cdCanvasLine(db_canvas, 10, 10, 50, 50); cdCanvasFlush(db_canvas);  // swap to the window canvas cdKillCanvas(db_canvas); cdKillCanvas(canvas); 
+
+To draw in a RGB image, use:
+
+ cdCanvas* canvas = cdCreateCanvasf(CD_IMAGERGB, "%dx%d", width, height);
+ cdCanvasLineStyle(canvas, CD_DASHED); 
+ cdCanvasLine(canvas, 10, 10, 50, 50); 
+ unsigned char* red = cdCanvasGetAttribute(canvas, "REDIMAGE");
+ // do something with the raw image data
+ cdKillCanvas(canvas); 
+
+=head2 Lua Samples
+
+To draw in a RGB image in CDLua for Lua 5:
+
+ bitmap = cd.CreateBitmap(200,200,cd.RGB)
+ canvas = cd.CreateCanvas(cd.IMAGERGB, bitmap)
+ canvas:Font("Times", cd.BOLD, 12)
+ canvas:Text(10, 10, "Test")
+ canvas:KillCanvas()
+
+Check the file L<samples_cdlua5.zip|../download/samples_cdlua5.zip> or
+L<samples_cdlua5.tar.gz|../download/samples_cdlua5.tar.gz> for several
+samples in Lua. For some of them you will need also the IUP libraries.
+You can also browse the L<examples folder|../examples/>.
+
+=head2 Screen Capture in Windows
+
+Using a NULL parameter to the NATIVEWINDOW driver you can get access to
+the entire screen:
+
+ cdCanvas *canvas = cdCreateCanvas(CD_NATIVEWINDOW, NULL);
+ cdCanvasGetSize(canvas, &width, &height, NULL, NULL);
+ // allocate red, green and blue pointers
+ cdCanvasGetImageRGB(canvas, red, green, blue, 0, 0, width, height);
+ cdKillCanvas(canvas);
+
+=head2 Generating an EMF file that contains an IM Image in Lua
+
+ image = im.FileImageLoadBitmap(image_filename)
+ canvas = cd.CreateCanvas(cd.EMF,emf_filename.." "..image:Width().."x"..image:Height())
+ image:cdCanvasPutImageRect(canvas,0,0,0,0)
+ cd.KillCanvas(canvas)
+
+=head2 Complete Example
+
+We have created an application called Simple Draw that illustrates the
+use of all functions in the CD library (including WD). You can see the
+source code in the file L<simple.zip|../download/simple.zip>.
+
+=head2 Example for Tests
+
+The L<CDTEST|../download/cdtest.zip> example is actually one of the
+applications used to test virtually all functions of the CD library.
+Its interface uses the IUP library, and it can run in several
+platforms. You can take either the .EXE files or the source code.
+Extract the files creating subfolders, using parameter "-d". Warning:
+This application is not didactic.
+
+=cut

@@ -1,0 +1,113 @@
+=head1 System
+
+ char* cdVersion(void); [in C]
+ 
+ cd.Version() -> (version: string) [in Lua]
+
+Returns the current version number of the library. The string with the
+version number has a format "major.minor.build". For instance, the
+string "2.1.3" has number 2 as the main (major) version number, 1 as
+the secondary (minor) version number, and 3 as the build number. The
+major version number represents a change in the structure or behavior
+of functions; the minor version number represents one or more new
+drivers and functions added to the library; and the build version
+number represents one or more corrected bugs.
+
+ char* cdVersionDate(void); [in C]
+ 
+ cd.VersionDate() -> (versiondate: string) [in Lua]
+
+Returns the release date of the current version of the library.
+
+ int cdVersionNumber(void); [in C]
+ 
+ cd.VersionNumber() -> (version: number) [in Lua]
+
+Returns the current version number of the library.
+
+ [in C]
+ CD_NAME           "CD - Canvas Draw"
+ CD_DESCRIPTION    "A 2D Graphics Library"
+ CD_COPYRIGHT      "Copyright (C) 1994-2007 Tecgraf/PUC-Rio and PETROBRAS S/A"
+ CD_VERSION        "5.0"
+ CD_VERSION_DATE   "2007/04/09"
+ CD_VERSION_NUMBER 500000
+ 
+ [in Lua]
+ cd._NAME
+ cd._DESCRIPTION
+ cd._COPYRIGHT
+ cd._VERSION
+ cd._VERSION_DATE
+ cd._VERSION_NUMBER
+
+Useful definitions. They have the same value returned by B<cdVersion>*
+functions, except that they do not include the build number.
+
+----
+
+=head1 Metafile Interpretation
+
+ int cdCanvasPlay(cdCanvas* canvas, cdContext* ctx, int xmin, int xmax, int ymin, int ymax, void *data); [in C]
+ 
+ canvas:Play(ctx, xmin, xmax, ymin, ymax: number, data: string) -> (status: number) [in Lua]
+
+Interprets the graphical contents (primitives and attributes) in a
+given driver and calls equivalent functions of the CD library using the
+given canvas. The primitives are drawn inside the region defined by the
+given limits. If limits are 0 (xmin, xmax, ymin and ymax) the
+primitives will be drawn with their coordinates having the original
+values in the file.
+
+Only some drivers implement this function:
+
+=over
+
+=item * L<B< CD_CLIPBOARD>|../drv/clipbd.html> = Clipboard, data is
+ignored.
+
+=item * L<B< CD_WMF>|../drv/wmf.html> = Windows Metafile, data is a
+B<char*> for the string ''I<filename>''. Works only in the MS Windows
+system.
+
+=item * L<B< CD_EMF>|../drv/emf.html> = Windows Enhanced Metafile, data
+is a B<char*> for the string ''I<filename>''. Works only in the MS
+Windows system.
+
+=item * L<B< CD_CGM>|../drv/cgm.html> = Computer Graphics Metafile ISO,
+data is a B<char*> for the string ''I<filename>''.
+
+=item * L<B< CD_METAFILE>|../drv/mf.html> = CD Metafile, data is a
+B<char*> for the string ''I<filename>''.
+
+=item * L<B< CD_PICTURE>|../drv/picture.html> = CD Picture, data is a
+B<cdCanvas>B<*> of the Picture canvas.
+
+=back
+
+ int cdContextRegisterCallback(cdContext *ctx, int cb, int(*func)(cdCanvas* canvas, ...)); [in C]
+ 
+ cd.ContextRegisterCallback(ctx, cb: number, func: function) -> (status: number) [in Lua]
+
+Used to customize the behavior of the B<Play> function. If you register
+a known callback function, it will be called during the processing loop
+of B<cdCanvasPlay>. Returns CD_OK if the specified callback is
+supported or CD_ERROR otherwise.
+
+The callback itself should return CD_CONTINUE, if it returns CD_ABORT,
+the cdPlay function is aborted. The callback identifiers of a given
+driver must be in the header file relative to that driver, with prefix
+"CD_XXYYYCB", where XX identifies that driver and YYY identifies the
+callback name.
+
+There is a default callback common to all implementations of cdPlay,
+B<CD_SIZECB>. Its definition is:
+
+ int cdResizeCB(cdCanvas* canvas, int width, int height, double mm_width, double mm_height)
+
+It returns the size of the image in the file before any function in the
+CD library is called, so that you can call the cdPlay function without
+an active canvas and create the canvas inside the callback. It works as
+a B< cdCanvasGetSize> function.
+
+=cut

@@ -1,0 +1,53 @@
+=head1 CD_CLIPBOARD - Clipboard Driver (cdclipbd.h)
+
+This driver allows the access to a Clipboard area. It is greatly
+dependent on the system. In Win32, it creates an L<Enhanced
+Metafile|emf.html>, a B<Bitmap> or a L<CD Metafile|mf.html>; in
+X-Windows and with GDK it creates only a L<CD Metafile|mf.html>.
+
+=head2 Use
+
+The canvas is created by means of a call to function L<
+B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_CLIPBOARD,
+Data), after which other functions in the CD library can be called as
+usual. The Data parameter string is platform-dependent and varies
+according to the metafile created. See each metafile's documentation,
+but remember to exclude parameter "filename".
+
+In the Windows environment, if the string "-b" is present, it means
+that a B<Bitmap> must be created instead of a metafile, and, if the
+string "-m" is specified, a B<CD Metafile> will be created. For a
+B<Bitmap> the remaining string must contains the bitmap size and
+optionally its resolution: I<"-b widthxheight [resolution]"> or in C
+"C<I<B<%dx%d %g">>>, the resolution default is the screen resolution.
+
+In the X-Windows environment, the Display ("%p") where the data will be
+stored must be passed as a parameter before the B<CD Metafile>
+parameters. This environment's driver is used only for applications
+that use CD to communicate with each other, because only CD Metafiles
+are created.
+
+Any amount of such canvases may exist simultaneously. It is important
+to note that a call to function L<
+B<cdKillCanvas>|../func/init.html#cdKillCanvas> is required to properly
+copy the data to the Clipboard.
+
+You can interpret the data from the Clipboard using function B<cdPlay>.
+In the X-Windows environment, the parameter "data" for the B<cdPlay
+>function is the pointer to the Display where the metafile will be
+obtained. The B<cdRegisterCallback> must be called for the driver that
+will interpret the file, except for bitmaps that the B<CD_CLIPBOARD>
+driver must be used.
+
+To use this driver in Windows using GDI+ is necessary to call B<
+cdUseContextPlus>B<(1)> before creating the canvas.
+
+=head2 Behavior of Functions
+
+This driver is greatly platform-dependent. For further detail, see the
+B< Behavior of Functions> in each platform: L<Microsoft Windows
+(GDI)|win32.html>, L<X-Windows (XLIB)|xwin.html>. However, it should be
+noted that some functions behave differently from the basic functions
+of each platform.
+
+=cut

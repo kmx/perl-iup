@@ -1,0 +1,192 @@
+=head1 CD_DGN - MicroStation Design File Driver (cddgn.h)
+
+This driver allows generating a MicroStation design file. The file name
+usually has an extension .DGN. The driver supports only MicroStation
+version 4.0 or later. The format's copyrights are property of L<Bentley
+Systems|http://www.bentley.com>.
+
+=head2 Use
+
+The file is created and opened by calling function
+L<B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_DGN, Data), in
+which Data contains the filename and canvas dimensions. This function
+opens the file and writes its header. Then, other functions in the CD
+library can be called as usual. The Data parameter string has the
+following format:
+
+ "filename [widthxheight] [resolution] [-f] [-sseedfile]"   or in C "%s %gx%g %g %s"
+
+Only the parameter filename is required. The filename must be inside
+double quotes (") if it has spaces. Width and height are provided in
+millimeters (note the lowercase "x" between them), and their default
+value in pixels is INT_MAX for both dimensions. Resolution is the
+number of pixels per millimeter; its default value is "3.78 pixels/mm"
+(96 DPI). Width, height and resolution are real values. Parameter -f
+modifies the polygon filling's behavior. Just as in MicroStation, you
+can specify a seed file using parameter -s. Width, height and
+resolution are used only by L<
+B<cdCanvasGetSize>|../func/coordinates.html#cdGetCanvasSize> and in
+pixel-millimeter conversion.
+
+Any amount of such canvases may exist simultaneously. It is important
+to note that a call to function L<B<
+cdKillCanvas>|../func/init.html#cdKillCanvas> is required to close the
+file properly.
+
+B<Images and Colors> - The DGN format does not support server images
+and works with an indexed-color format. Color quality is limited to 256
+colors, and the format uses a uniform palette to convert RGB colors
+into palette indices. If you configure a palette, the color conversion
+process will become slower.
+
+B<Filling> - Up to version 5.0, MicroStation presents some limitations
+for polygon filling. You can disable filling by means of string "-f" in
+the Data parameter. Filled polygons can only have around 10,000
+vertices; if the value is larger, the polygon style changes to closed
+lines.
+
+B<Seed> - In the seed file, several DGN parameters can be defined to be
+used in the drawing. The library offers a default seed file, called
+"SEED2D.DGN". The file's location depends on the environment variable
+B<CDDIR>.
+
+=head2 Behavior of Functions
+
+=head2 Control
+
+=over
+
+=item * L<B<Clear>|../func/control.html#cdClear>: does nothing.
+
+=item * L<B<Play>|../func/other.html#cdPlay>: does nothing, returns
+CD_ERROR.
+
+=back
+
+=head2 Coordinate System and Clipping
+
+=over
+
+=item * L<B<Clip>|../func/clipping.html#cdClip>: does nothing (no
+clipping function is supported), returns CD_CLIPOFF.
+
+=item * L< B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: does
+nothing. The axis orientation is the same as the CD library.
+
+=item * B<Transformation Matrix>: not supported.
+
+=back
+
+=head2 Primitives
+
+=over
+
+=item * L<B<Begin>|../func/lines.html#cdBegin>: if parameter
+B<C<CD_CLIP>> is specified, does nothing. B<C< CD_BEZIER>> and
+B<C<CD_PATH>> are simulated with lines.
+
+=item * B<L<cdChord|../func/filled.html#cdChord>>: does nothing.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L<B< BackOpacity>|../func/filled.html#cdBackOpacity>: does
+nothing, returns CD_OPAQUE.
+
+=item * L< B< WriteMode>|../func/attributes.html#cdWriteMode>: does
+nothing, returns CD_REPLACE.
+
+=item * L< B< InteriorStyle>|../func/filled.html#cdInteriorStyle>: does
+nothing.
+
+=item * L<B< FillMode>|../func/filled.html#cdFillMode>: does nothing.
+
+=item * L<B< LineCap>|../func/filled.html#cdLineCap>: does nothing.
+
+=item * L<B< LineJoin>|../func/filled.html#cdLineJoin>: does nothing.
+
+=item * L<B<Hatch>|../func/filled.html#cdHatch>: does nothing.
+
+=item * L<B< Stipple>|../func/filled.html#cdStipple>: does nothing.
+
+=item * L<B< Pattern>|../func/filled.html#cdPattern>: does nothing.
+
+=item * L<B< TextSize>|../func/text.html#cdTextSize>: returns a
+bounding box which is usually larger than the text (the computation is
+based on the widest character).
+
+=item * L<B< TextAlignment>|../func/text.html#cdTextAlignment>: uses
+B<cdTextSize>, therefore is not precise.
+
+=item * L<B<Font>|../func/text.html#cdFont>: See the font mapping table
+for the equivalence used to map CD fonts into MicroStation fonts.
+Styles are not supported.
+
+=back
+
+Font Mapping
+
+CD Fonts
+
+MicroStation Font Index
+
+System
+
+0
+
+Courier
+
+1
+
+Times
+
+2
+
+Helvetica
+
+3
+
+=head2 Colors
+
+=over
+
+=item * L< B< GetColorPlanes>|../func/color.html#cdGetColorPlanes>:
+returns 8 (MicroStation uses a palette with 256 values).
+
+=item * L< B< Background>|../func/attributes.html#cdBackground>: always
+returns C<CD_WHITE>.
+
+=back
+
+=head2 Client Images
+
+=over
+
+=item * L<B< GetImageRGB>|../func/client.html#cdGetImageRGB>: does
+nothing.
+
+=item * L<B< PutImageRGB>|../func/client.html#cdPutImageRGB>:
+considering that the format supports only 256 colors, image quality is
+quite poor.
+
+=item * L<B< PutImageRGBA>|../func/client.html#cdPutImageRGBA>: alpha
+is ignored.
+
+=item * L<B< PutImageMap>|../func/client.html#cdPutImageMap>:
+considering that the format supports only 256 colors, image quality is
+quite poor.
+
+=back
+
+=head2 Server Images
+
+=over
+
+=item * All functions do nothing.
+
+=back
+
+=cut

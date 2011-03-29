@@ -1,0 +1,75 @@
+=head1 CD_EMF - Enhanced Metafile Driver (cdemf.h)
+
+This driver allows generating a Microsoft Windows Enhanced Metafile,
+the format used by 32-bit Windows systems to store graphics primitives.
+Usually, the filename has an extension "*.emf".
+
+The driver works only in the Microsoft Windows platform, but you can
+use it in other platforms without the risk of compilation error. If you
+attempt to create a canvas in another platform, function B<
+cdCreateCanvas> will return NULL.
+
+=head2 Use
+
+The canvas is created by means of a call to function L<
+B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_EMF, Data),
+after which other CD functions can be called as usual. Parameter Data
+has the following format:
+
+ "filename widthxheight"     or in C "%s %dx%d"
+
+It must include the filename and the canvas' dimensions. The filename
+must be inside double quotes (") if it has spaces. Width and height are
+provided in pixels (note the lowercase "x" between them). Resolution
+(the number of pixels per millimeter) is always the screen resolution.
+
+Any amount of such canvases may exist simultaneously. Function
+B<cdCreateCanvas> B<opens> the file, and a call to function L<
+B<cdKillCanvas>|../func/init.html#cdKillCanvas> is required to B<close>
+the file properly.
+
+To use this driver in Windows using GDI+ is necessary to call B<
+cdUseContextPlus>B<(1)> before creating the canvas. If you intend to
+use B<cdCanvasPlay> to interpret the EMF, then do not use GDI+ to
+generate the metafile. GDI+ extensively use internal transformations
+that will affect the B< cdCanvasPlay> interpretation. Also some
+interior style will not be correctly interpreted.
+
+=head2 Behavior of Functions
+
+This driver is greatly platform-dependent. For further detail, see the
+B< Behavior of Functions> of the L<Microsoft Windows (GDI)|win32.html>
+or L<Windows Using GDI+|gdiplus.html> platform base drivers. It has
+been noticed that EMF, when saved in the Windows 95 environment, is not
+totally compatible with EMF saved in the Windows NT environment.
+
+=head2 Control Functions
+
+=over
+
+=item * L< B<Play>|../func/other.html#cdPlay>: different from the basic
+driver, is implemented. Not implemented using GDI+.
+
+=item * L< B<Clear>|../func/control.html#cdClear>: different from the
+basic driver, does nothing.
+
+=back
+
+=head2 Client Images
+
+=over
+
+=item * L< B<GetImageRGB>|../func/client.html#cdGetImageRGB>: does
+nothing.
+
+=back
+
+=head2 Server Images
+
+=over
+
+=item * All functions do nothing.
+
+=back
+
+=cut

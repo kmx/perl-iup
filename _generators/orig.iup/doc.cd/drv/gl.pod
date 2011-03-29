@@ -1,0 +1,164 @@
+=head1 GL Driver
+
+This driver represents a driver for drawing using L<
+OpenGL|http://www.opengl.org/>. The implementation uses the OpenGL
+functions only. For the font support, this driver uses the
+L<FTGL|http://homepages.paradise.net.nz/henryj/code/index.html#FTGL>
+API functions, which it was written against the L<Free
+Type|http://www.freetype.org/> library.
+
+The driver is not dependent of system functions. It uses only the
+OpenGL portable funtions. So if the window canvas changes its size the
+attribute "SIZE" must be set with the new size or cdCanvasGetSize will
+return an incorrect value.
+
+=head2 Use
+
+The canvas is created by means of a call to the function
+L<B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_GL, Data),
+after which other functions in the CD library can be called as usual.
+The Data parameter string has the following format:
+
+ "widthxheight [resolution]"      in C "%dx%d %g"
+
+It must include the initial canvas' dimensions. Width and height are
+provided in pixels (note the lowercase "x" between them). The
+resolution is optional, its default value is "3.78 pixels/mm" (96 DPI).
+
+To use this driver, the application must be linked with the "B<cdgl>",
+the ftgl library and the OpenGL library. The FTGL library is dependent
+also on the GLU library. In UNIX B<cdgl> is also dependent on B<iconv>.
+
+In Lua, it is necessary to call function B<cdluagl_open() > after a
+call to function B<cdlua_open()>, apart from linkediting with the
+"B<cdluagl>" library. This is not necessary if you do require"cdluagl".
+
+=head2 Behavior of Functions
+
+=head2 Control
+
+=over
+
+=item * L< B<Play>|../func/other.html#cdPlay>: does nothing, returns
+CD_ERROR.
+
+=back
+
+=head2 Coordinate System and Clipping
+
+=over
+
+=item * L< B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: does
+nothing.
+
+=item * B<Clipping>: only support rectangular areas.
+
+=item * B<Complex Regions>: not supported.
+
+=back
+
+=head2 Primitives
+
+=over
+
+=item * L< B<Begin>|../func/lines.html#cdBegin>: B<C<CD_PATH>> is
+simulated. CD_FILL allows convex polygons only.
+
+=item * Floating point primitives are supported.
+
+=back
+
+=head2 Client Images
+
+=over
+
+=item * Images are bitmaps, and cannot be directly rotated or scaled.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L< B<LineStyle>|../func/lines.html#cdLineStyle>: in B<C<
+CD_CUSTOM>>, style patterns more than 16 bits are not supported.
+
+=item * L< B<LineCap>|../func/lines.html#cdLineCap>: does nothing.
+
+=item * L< B<LineJoin>|../func/lines.html#cdLineJoin>: does nothing.
+
+=item * L<B<Stipple>|../func/filled.html#cdStipple>: does nothing.
+There is no support for patterns more than 16 bits.
+
+=item * L<B<Pattern>|../func/filled.html#cdPattern>: does nothing.
+
+=item * L<B< FillMode>|../func/filled.html#cdFillMode>: does nothing.
+
+=item * L< B<NativeFont>|../func/text.html#cdNativeFont>: also accepts
+the X-Windows font string format.
+
+=item * L< B<Font>|../func/text.html#cdFont>: In Windows, "Courier" is
+mapped to "Courier New", "Helvetica" is mapped to "Arial", and "Times"
+is mapped to "Times New Roman". In UNIX, "Courier" is mapped to
+"freemono", "Helvetica" is mapped to "freesans", and "Times" is mapped
+to "freeserif". Underline and Strikeout are NOT supported. If not found
+then the font file is searched used the same logic of the
+L<Simulation|sim.html> driver, but B<ADDFONTMAP> is not supported. If
+still is not found then the typeface is used as file name for the font.
+
+=back
+
+=head2 Colors
+
+=over
+
+=item * L<
+B<Palette>|http://www.tecgraf.puc-rio.br/cd/en/func/color.html#cdPalette>:
+does nothing.
+
+=back
+
+=head2 Exclusive Attributes
+
+=over
+
+=item * "B<ALPHA>": allows the usage of an alpha channel for the
+drawing shapes. Assumes values "1" (active) and "0" (inactive). Default
+value: "1".
+
+=back
+
+=over
+
+=item * "B<ANTIALIAS>": allows the use of anti-aliasing for the drawing
+shapes. Assumes values "1" (active) and "0" (inactive). Default value:
+"1".
+
+=back
+
+=over
+
+=item * B<"GLVERSION": >returns a string with the OpenGL version or
+release number. It is empty if the OpenGL is not available.
+
+=back
+
+=over
+
+=item * "B<ROTATE>": allows the usage of 1 angle and 1 coordinate (x,
+y), that define a global rotation transformation centered in the
+specified coordinate. Use 1 real and 2 integer values inside a string
+("%g %d %d" = angle x y).
+
+=back
+
+=over
+
+=item * "B<SIZE>": sets the canvas size. Must be used after the window
+is resized. The format is the same of the data parameter in
+cdCreateCanvas, I<"widthB<x>height [resolution]"> or in C "I<B<C<%dx%d
+%g".>>>
+
+=back
+
+=cut

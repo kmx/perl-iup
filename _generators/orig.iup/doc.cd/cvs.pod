@@ -1,0 +1,12 @@
+=head1 CVS
+
+The CVS repository is at B<SourceForge>. It can also be interactively
+browsed at:
+
+L<http:E<47>E<47>canvasdraw.cvs.sourceforge.netE<47>canvasdrawE<47>|http://canvasdraw.cvs.sourceforge.net/canvasdraw/>
+
+To checkout use the module name "cd" and the CVSROOT:
+
+ :pserver:anonymous@canvasdraw.cvs.sourceforge.net:/cvsroot/canvasdraw
+
+=cut

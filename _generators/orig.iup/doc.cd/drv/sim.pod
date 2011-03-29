@@ -1,0 +1,120 @@
+=head1 Simulation Base Driver
+
+The Simulation driver was created to simulate functions that were not
+supported by some CD drivers. It works jointly with the other driver
+(known as "client"), using its pixel, line and text functions to
+simulate arcs, sectors, polygons, boxes, and fillings with styles.
+
+B<Important:> All simulation primitives are based in the client's
+Pixel, Image and/or Line functions.
+
+=head2 Use
+
+The Simulation driver is used in several parts of the CD library.
+
+In many drivers, the behavior of a given primitive may not be the
+expected. Usually this is documented in the manual. If you wish to
+activate the simulation of a primitive, simply call function B<
+L<cdSimulate|../func/init.html#cdSimulate>> with the code of the
+primitive to be simulated.
+
+=head2 Behavior of Functions
+
+=head2 Clipping
+
+=over
+
+=item * Clipping is not implemented in the simulation base driver. The
+primary driver must implement its own clipping.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L<B< LineCap>|../func/filled.html#cdLineCap>: only CD_CAPFLAT
+is supported.
+
+=item * L<B< LineJoin>|../func/filled.html#cdLineJoin>: only CD_MITER
+is supported.
+
+=item * B<L< LineStyle|../func/lines.html#cdLineStyle>>: If line width
+is greater than 1, the style is always continuous.
+
+=item * L<B<Font>|../func/text.html#cdFont>: Selects a True Type font
+file for the L<FreeType|http://www.freetype.org/> library to render the
+text. Notice that TTF fonts have different files for different font
+styles, like bold and italic. Font files can be in the current
+directory, in the directory pointed by the CDDIR environment variable,
+in Windows in the system defined Font directory, or using the full path
+of the file.
+
+Old name "System" is mapped to "Courier". For the know font names
+"Courier" (cour), "Times" (times) and "Helvetica" (arial), the styles
+are added to the font file name as a suffix: "bd", "i" and "bi" are
+used for bold, italic and bold-italic. For other fonts, it will first
+check for a font map added using the attribute B<ADDFONTMAP>, if failed
+it will try to load the type_face name without any change, if fail it
+will add the style suffix to the type_face and try to load again. The
+".ttf" file extension is always automatically added to the end of the
+file name.
+
+=back
+
+=head2 B<Primitives>
+
+=over
+
+=item * B<L<Pixel|../func/marks.html#cdPixel>>: always uses the
+client's pixel function. When clipping simulation is active, it
+executes area and polygon clipping.
+
+=item * L<B<Line>|../func/lines.html#cdLine>: draws lines pixel per
+pixel.
+
+=item * B<L<Rect|../func/lines.html#cdRect>>: simulated using the
+client's B<Line>.
+
+=item * L<B<Arc>|../func/lines.html#cdArc>: simulated using the
+client's B<Line>.
+
+=item * L<B<Sector>|../func/filled.html#cdSector>: simulated using the
+client's B<Poly>.
+
+=item * B<L<Chord|../func/filled.html#cdChord>>: simulated using the
+client's B<Poly>
+
+=item * L<B<Box>|../func/filled.html#cdBox>: simulated using the
+client's B<Poly>.
+
+=item * B<L<Begin|../func/lines.html#cdBegin>>,
+L<B<Vertex>|../func/lines.html#cdVertex> and
+L<B<End>|../func/lines.html#cdEnd>: simulated using the B<Line> or
+B<Pixel> functions, depending on the interior style.
+
+=item * L<B<Text>|../func/text.html#cdText>: text simulation is made
+using TrueType font files in a transparent way for the user. Oriented
+text is not supported.
+
+=back
+
+=head2 Exclusive Attributes
+
+=over
+
+=item * "B<ADDFONTMAP>": Add a font map between a type face name and a
+file name. It has the format "Type Face=filename", For ex: "Arial
+Narrow Bold=ARIALNB". "Type Face" is not case sensitive.
+
+=back
+
+=over
+
+=item * "B<FREETYPEVERSION>": Returns a version string with the current
+Freetype library being used, in the format "FreeType
+E<lt>majorE<gt>.E<lt>minorE<gt>.E<lt>patchE<gt>".
+
+=back
+
+=cut

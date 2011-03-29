@@ -1,0 +1,150 @@
+=head1 Color Coding
+
+The library's color system is RGB. In order to simplify some functions,
+a compact representation was created for the 3 values. To make a
+conversion from this representation to the 3 separate values and
+vice-versa, use functions B< cdDecodeColor> and B< cdEncodeColor>.
+
+When the canvas used does not support more than 8 bpp of color
+resolution, you can use function B< Palette> to give the driver an idea
+of which colors to prioritize. B< Palette's> behavior is driver
+dependent.
+
+There are some predefined colors:
+
+ CD_RED          = (255,  0,  0)
+ CD_DARK_RED     = (128,  0,  0)
+ CD_GREEN        = (0  ,255,  0)
+ CD_DARK_GREEN   = (  0,128,  0)
+ CD_BLUE         = (  0,  0,255)
+ CD_DARK_BLUE    = (  0,  0,128)
+ CD_YELLOW       = (255,255,  0)
+ CD_DARK_YELLOW  = (128,128,  0)
+ CD_MAGENTA      = (255,  0,255)
+ CD_DARK_MAGENTA = (128,  0,128)
+ CD_CYAN         = (  0,255,255)
+ CD_DARK_CYAN    = (  0,128,128)
+ CD_WHITE        = (255,255,255)
+ CD_BLACK        = (  0,  0 , 0)
+ CD_DARK_GRAY    = (128,128,128)
+ CD_GRAY         = (192,192,192)
+
+----
+
+ long int cdEncodeColor(unsigned char red, unsigned char green, unsigned char blue) [in C]
+ 
+ cd.EncodeColor(r, g, b: number) -> (old_color: lightuserdata) [in Lua]
+
+Returns a codified triple (I<r,g,b>) in a long integer such as
+B<C<0x00RRGGBB>>, where C<B<RR> >are the red components, B<C<GG>> are
+the green ones and B<C<BB>> are the blue ones. The code is used in the
+CD library to define colors. It can be used without an active canvas.
+
+ void cdDecodeColor(long int color, unsigned char *red, unsigned char *green, unsigned char *blue) [in C]
+ 
+ cd.DecodeColor(color: lightuserdata) -> (r, g, b: number) [in Lua]
+
+Returns the red, green and blue components of a color in the CD
+library. Can be used without an active canvas.
+
+ long int cdEncodeAlpha(long int color, unsigned char alpha) [in C]
+ 
+ cd.EncodeAlpha(color: lightuserdata, alpha: number) -> (color: lightuserdata) [in Lua]
+
+Returns the given color coded with the alpha information. ATENTION: At
+the moment only the L<Cairo|../drv/cairo.html>,
+L<GDI+|../drv/gdiplus.html>, L<XRender|../drv/xrender.html> and
+L<IMAGERGB|../drv/irgb.html> drivers support alpha components in color
+coding. The internal representation of the component is inverted,
+because the default value must be 0 and opaque for backward
+compatibility, so you should use the B<cdDecodeAlpha> function or the
+B<cdAlpha> macro to retrieve the alpha component. 0 is transparent, 255
+is opaque.
+
+ unsigned char cdDecodeAlpha(long int color) [in C]
+ 
+ cd.DecodeAlpha(color: lightuserdata) -> (a: number) [in Lua]
+
+Returns the alpha component of a color in the CD library. Can be used
+without an active canvas. 0 is transparent, 255 is opaque.
+
+ unsigned char cdAlpha(long int color); [in C]
+ 
+ cd.Alpha(color: lightuserdata) -> (r: number) [in Lua]
+
+Macro that returns the alpha component of a color in the CD library.
+Can be used without an active canvas.
+
+ unsigned char cdRed(long int color); [in C]
+ 
+ cd.Red(color: lightuserdata) -> (r: number) [in Lua]
+
+Macro that returns the red component of a color in the CD library. Can
+be used without an active canvas.
+
+ unsigned char cdGreen(long int color); [in C]
+ 
+ cd.Green(color: lightuserdata) -> (g: number) [in Lua]
+
+Macro that returns the green component of a color in the CD library.
+Can be used without an active canvas.
+
+ unsigned char cdBlue(long int color); [in C]
+ 
+ cd.Blue(color: lightuserdata) -> (b: number) [in Lua]
+
+Macro that returns the blue component of a color in the CD library. Can
+be used without an active canvas.
+
+----
+
+ int cdCanvasGetColorPlanes(cdCanvas* canvas); [in C]
+ 
+ canvas:GetColorPlanes() -> (bpp: number) [in Lua]
+
+Returns a given number, for instance I<p>, which defines the number of
+colors supported by the current device as I<2p>, representing the
+number of bits by pixel.
+
+ void cdCanvasPalette(cdCanvas* canvas, int n, const long int *color, int mode); [in C]
+ 
+ canvas:Palette(palette: cdPalette; mode: number) [in Lua]
+
+In systems limited to 256 palette colors, this function aims at adding
+B<C< n>> colors to the system's palette. In such systems, the colors
+demanded forward or backward which are not in the palette are
+approximated to the closest available color. The type can be
+C<B<CD_FORCE> >or B<C<CD_POLITE>>. B<C<CD_FORCE>> ignores the system
+colors and interface elements, since the menus and dialogues may be in
+illegible colors, but there will be more colors available.
+C<B<CD_POLITE>> is the recommended type. It must always be used before
+drawing. It cannot be queried.
+
+=head2 Palette
+
+ cd.CreatePalette(size: number) -> (palette: cdPalette) [in Lua Only]
+
+Creates a palette.
+
+ cd.KillPalette(palette: cdPalette) [in Lua Only]
+
+Destroys the created palette and liberates allocated memory. If this
+function is not called in Lua, the garbage collector will call it.
+
+=head2 Palette X<DataAccess>Data Access
+
+Data access in Lua is done directly using the array access operators.
+The colors can have their values checked or changed directly as if they
+were Lua tables:
+
+ palette[index] = cd.EncodeColor(r, g, b)
+ count = #palette
+ ...
+ color = palette[index]
+ r, g, b = cd.DecodeColor(color)
+
+Notice that the type of value returned or received by palette[index] is
+a lightuserdata, the same type used with functions B< cdEncodeColor>,
+B< cdDecodeColor>, B< cdPixel>, B< cdForeground> and B< cdBackground>.
+
+=cut

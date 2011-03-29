@@ -1,0 +1,144 @@
+=head1 Coordinate System
+
+ void cdCanvasGetSize(cdCanvas* canvas, int *width, int *height, double *width_mm, double *height_mm); [in C]
+ 
+ canvas:GetSize() -> (width, height, mm_width, mm_height: number) [in Lua]
+
+Returns the canvas size in pixels and in millimeters. You can provide
+only the desired values and NULL for the others.
+
+ int cdCanvasYAxisMode(cdCanvas* canvas, int invert); [in C]
+ 
+ canvas:YAxisMode(invert: number) -> (old_invert: number) [in Lua]
+
+Controls the orientation of the Y axis. Internally in some drivers the
+native axis orientation is top-bottom, so the CD primitives must invert
+the Y axis since the CD orientation is bottom-top. Using CD_QUERY will
+return the current Y axis mode, if needs to be invert or not. Using 1
+or 0 you can control if the Y axis should be inverted or not
+independent from the native orientation, with that you can in fact
+invert the orientation of the CD primitives.
+
+ int cdCanvasUpdateYAxis(cdCanvas* canvas, int *y); [in C]
+ double cdfCanvasUpdateYAxis(cdCanvas* canvas, double *y); [in C]
+ int cdCanvasInvertYAxis(cdCanvas* canvas, int y); [in C]
+ double cdfCanvasInvertYAxis(cdCanvas* canvas, double y); [in C]
+ 
+ canvas:UpdateYAxis(yc: number) -> (yr: number) [in Lua]
+ canvas:InvertYAxis(yc: number) -> (yr: number) [in Lua]
+
+Converts the coordinate system of the CD library into the internal
+system of the active canvas' driver, and the other way round, if they
+are invert, or else do nothing. This is just "y = height-1 - y". It
+returns the changed value. The "Invert" will always invert the given
+value, the "Update" function will invert only if the canvas has the Y
+axis inverted.
+
+ void cdCanvasMM2Pixel(cdCanvas* canvas, double mm_dx, double mm_dy, int *dx, int *dy); [in C]
+ void cdfCanvasMM2Pixel(cdCanvas* canvas, double mm_dx, double mm_dy, double *dx, double *dy); [in C]
+ 
+ canvas:MM2Pixel(mm_dx, mm_dy: number) -> (dx, dy: number) [in Lua]
+ canvas:fMM2Pixel(mm_dx, mm_dy: number) -> (dx, dy: number) [in Lua]
+
+Converts sizes in millimeters into pixels (canvas coordinates). You can
+provide only the desired values and NULL for the others.
+
+ void cdCanvasPixel2MM(cdCanvas* canvas, int dx, int dy, double *mm_dx, double *mm_dy); [in C]
+ void cdfCanvasPixel2MM(cdCanvas* canvas, double dx, double dy, double *mm_dx, double *mm_dy); [in C]
+ 
+ canvas:Pixel2MM(dx, dy: number) -> (mm_dx, mm_dy: number) [in Lua]
+ canvas:fPixel2MM(dx, dy: number) -> (mm_dx, mm_dy: number) [in Lua]
+
+Converts sizes in pixels (canvas coordinates) into millimeters. You can
+provide only the desired values and NULL for the others. Use this
+function to obtain the horizontal and vertical resolution of the canvas
+by passing 1 as parameter in dx and dy. The resolution value is
+obtained using the formula B<res=1.0/mm>.
+
+ void cdCanvasOrigin(cdCanvas* canvas, int x, int y); [in C]
+ void cdfCanvasOrigin(cdCanvas* canvas, double x, double y); [in C]
+ 
+ canvas:Origin(x, y: number) [in Lua]
+ canvas:fOrigin(x, y: number) [in Lua]
+
+Allows translating the origin - for instance, to the center of the
+canvas. The function profits from the architecture of the library to
+simulate a translation of the origin, which in fact is never actually
+passed to the canvas in the respective driver. Default values: (0, 0)
+
+ void cdCanvasGetOrigin(cdCanvas* canvas, int *x, int *y); [in C]
+ void cdfCanvasGetOrigin(cdCanvas* canvas, double *x, double *y); [in C]
+ 
+ canvas:GetOrigin() -> (x, y: number) [in Lua]
+ canvas:fGetOrigin() -> (x, y: number) [in Lua]
+
+Returns the origin.
+
+=head2 Transformation Matrix
+
+ void cdCanvasTransform(cdCanvas* canvas, const double* matrix); [in C]
+ 
+ canvas:Transform(matrix: table) [in Lua]
+
+Defines a transformation matrix with 6 elements. If the matrix is NULL,
+the transformation is reset to the identity. Default value: NULL.
+
+The matrix contains scale, rotation and translation elements as
+follows:
+
+ |x'|   |sx*cos(angle)    -sin(angle)  dx|   |x|                     |0   2   4| 
+ |y'| = |   sin(angle)  sy*cos(angle)  dy| * |y|      with indices   |1   3   5|
+                                             |1|
+
+But notice that the indices are different of the B<
+cdCanvasVectorTextTransform>.
+
+Functions that retrieve images from the canvas are not affected by the
+transformation matrix, such as B<GetImage>, B<GetImageRGB> and
+B<ScrollArea>.
+
+Transformation matrix is independent of the B<World Coordinate> and
+B<Origin> functions. And those are affected if a transformation is set,
+just like other regular primitives.
+
+ double* cdCanvasGetTransform(cdCanvas* canvas); [in C]
+ 
+ canvas:GetTransformation() -> (matrix: table) [in Lua]
+
+Returns the transformation matrix. If the identity is set, returns
+NULL.
+
+ void cdCanvasTransforMultiply(cdCanvas* canvas, const double* matrix); [in C]
+ 
+ canvas:TransformMultiply(matrix: table) [in Lua]
+
+Left multiply the current transformation by the given transformation.
+
+ void cdCanvasTransformTranslate(cdCanvas* canvas, double dx, double dy); [in C]
+ 
+ canvas:TransformTranslate(dx, dy: number) [in Lua]
+
+Applies a translation to the current transformation.
+
+ void cdCanvasTransformScale(cdCanvas* canvas, double sx, double sy); [in C]
+ 
+ canvas:TransformScale(sx, sy: number) [in Lua]
+
+Applies a scale to the current transformation.
+
+ void cdCanvasTransformRotate(cdCanvas* canvas, double angle); [in C]
+ 
+ canvas:TransformRotate(angle: number) [in Lua]
+
+Applies a rotation to the current transformation. Angle is in degrees,
+oriented counter-clockwise from the horizontal axis.
+
+ void cdCanvasTransformPoint(cdCanvas* canvas, int x, int y, int *tx, int *ty); [in C]
+ void cdfCanvasTransformPoint(cdCanvas* canvas, double x, double y, double *tx, double *ty); [in C]
+ 
+ canvas:TransformPoint(x, y: number) -> (tx, ty: number) [in Lua]
+ canvas:fTransformPoint(x, y: number) -> (tx, ty: number) [in Lua]
+
+Applies a transformation to a given point.
+
+=cut

@@ -1,0 +1,13 @@
+=head1 Drivers
+
+Driver is the implementation of functions of a canvas for a specific
+canvas type. In other words it represents the context in which the
+canvas is situated. For example, a Window System that has windows on
+which you can draw.
+
+It can be portable, platform independent, or it can has a different
+implementation in each platform. In this case its functions may have
+different behaviors, but the library is implemented in such a way that
+these differences are minimized.
+
+=cut

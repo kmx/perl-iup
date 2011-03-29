@@ -1,0 +1,189 @@
+=head1 Overview
+
+CD is a platform-independent graphics library. Its drivers are
+implemented in several platforms, some use portable code, others use
+native graphics libraries, such as Microsoft Windows (GDI and GDI+) and
+X-Windows (XLIB).
+
+The library contains functions to support both vector and image
+applications, and the visualization surface can be either a canvas or a
+more abstract surface, such as Clipboard, Metafile, PS, and so on.
+
+Furthermore, the list of parameters of the CD primitive functions
+contains only the geometrical descriptions of the objects (line,
+circle, text, etc.). Where these objects should appear and what is the
+their color, thickness, etc. are defined as current state variables
+stored in the visualization surfaces. That is, the library is
+visualization-surface oriented, meaning that all attributes are stored
+in each visualization surface.
+
+CD is free software, can be used for public and commercial
+applications.
+
+=head1 Availability
+
+The library is available for several B<compilers>:
+
+=over
+
+=item * GCC and CC, in the UNIX environment
+
+=item * Visual C++, Borland C++, Watcom C++ and GCC (Cygwin and MingW),
+in the Windows environment
+
+=back
+
+The library is available for several B<operating systems>:
+
+=over
+
+=item * UNIX (SunOS, IRIX, AIX, FreeBSD and Linux)
+
+=item * Microsoft Windows NT/2K/XP
+
+=back
+
+=head1 X<Suport>Support
+
+The official support mechanism is by e-mail, using
+L<B<cd>|mailto:cd@tecgraf.puc-rio.br?subject=[CD]>L<B<@tecgraf.puc-rio.br>|mailto:cd@tecgraf.puc-rio.br?subject=[CD]>.
+Before sending your message:
+
+=over
+
+=item * Check if the reported behavior is not described in the user
+guide.
+
+=item * Check if the reported behavior is not described in the specific
+driver characteristics.
+
+=item * Check the History to see if your version is updated.
+
+=item * Check the To Do list to see if your problem has already been
+reported.
+
+=back
+
+After all of the above have been checked, report the problem, including
+in your message: B<function, element, driver, platform, and compiler.>
+
+We host the B<CD> support features at B<SourceForge>: L<
+http:E<47>E<47>sourceforge.netE<47>projectsE<47>canvasdrawE<47>|http://sourceforge.net/projects/canvasdraw/>.
+It provides us Mailing List, CVS Repository and Downloads.
+
+The discussion list is available at: L<
+http:E<47>E<47>lists.sourceforge.netE<47>listsE<47>listinfoE<47>canvasdraw-users|http://lists.sourceforge.net/lists/listinfo/canvasdraw-users>.
+
+Source code, pre-compiled binaries and documentation can be downloaded
+at:
+L<http:E<47>E<47>sourceforge.netE<47>projectE<47>showfiles.php?group_id=241317|http://sourceforge.net/project/showfiles.php?group_id=241317>.
+
+The CVS can be browsed at: L<
+http:E<47>E<47>canvasdraw.cvs.sourceforge.netE<47>canvasdrawE<47>|http://canvasdraw.cvs.sourceforge.net/canvasdraw/>.
+
+If you want us to develop a specific feature for the library, Tecgraf
+is available for partnerships and cooperation. Please contact
+B<tcg@tecgraf.puc-rio.br>.
+
+Lua documentation and resources can be found at
+L<http:E<47>E<47>www.lua.orgE<47>|http://www.lua.org/>.
+
+=head1 X<Acknowledgments>Credits
+
+This work was developed at Tecgraf by means of the partnership with
+PETROBRAS/CENPES.
+
+Library Authors:
+
+=over
+
+=item * Marcelo Gattass
+
+=item * Luiz Henrique de Figueiredo
+
+=item * Luiz Fernando Martha
+
+=item * Antonio Scuri
+
+=back
+
+Thanks to the people that worked and contributed to the library:
+
+=over
+
+=item * Alexandre Ferreira
+
+=item * Andr Derraik
+
+=item * Camilo Freire
+
+=item * Carlos Augusto Mendes
+
+=item * Carlos Cassino
+
+=item * Carlos Henrique Levy
+
+=item * Carolina Alfaro
+
+=item * Danilo Tuler
+
+=item * Diego Fernandes Nehab
+
+=item * Erick de Moura Ferreira
+
+=item * Marcelo Cohen
+
+=item * Milton Jonathan
+
+=item * Pedro Miller
+
+=item * Rafael Rieder
+
+=item * Renato Borges
+
+=item * Vinicius da Silva Almendra
+
+=back
+
+We also thank the developers of the
+L<FreeType|http://www.freetype.org/>, L<libJPEG|http://www.ijg.org/>
+and L<Mesa|http://www.ssec.wisc.edu/~brianp/Mesa.html> libraries, for
+making the source code available, which helped us improve our
+implementation of the Simulation driver and of the X-Windows driver.
+Thanks to Alan Richardson for the XVertex rotines. Thanks to Lode
+Vandevenne for the LodePNG rotines used in the SVG driver. Thanks to
+Jason Perkins for the L<Premake|http://premake.sourceforge.net/> tool.
+
+The CD distribution includes the FreeType library, this is a third
+party library not developed at Tecgraf. But its license is also free
+and have the same freedom as the L<Tecgraf Library
+License|copyright.html>. You can read the Free Type license and
+copyright in the file L<freetype.txt|freetype.txt>. FreeType is
+copyright David Turner, Robert Wilhelm, and Werner Lemberg.
+
+Mesa X-Windows utilities source code copyright Brian Paul. libJPEG
+quantization source code copyright Thomas G. Lane. XVertex rotines
+source code copyright Alan Richardson.
+
+Thanks for the L<SourceForge|http://sourceforge.net/> for hosting the
+support features. Thanks for the L< LuaForge|http://luaforge.net/> team
+for previously hosting the support features for many years.
+
+CD is registered at the National Institute of Intellectual Property in
+Brazil (INPI) under the number 07571-1, and so it is protected against
+illegal use. See the L<Tecgraf Library License|copyright.html> for
+further usage information and Copyright.
+
+=head1 X<About>Documentation
+
+This library is available at L<
+http:E<47>E<47>www.tecgraf.puc-rio.brE<47>cd|http://www.tecgraf.puc-rio.br/cd>.
+
+The full documentation can be downloaded from the L< Download
+Files|download.html>. The documentation is also available in Adobe
+Acrobat and Windows HTML Help formats.
+
+The HTML navigation uses the WebBook tool, available at L<
+http:E<47>E<47>www.tecgraf.puc-rio.brE<47>webbook|http://www.tecgraf.puc-rio.br/webbook>.
+
+=cut

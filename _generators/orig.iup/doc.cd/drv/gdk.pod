@@ -1,0 +1,137 @@
+=head1 GDK Base Driver
+
+This driver represents a basic driver for all system-dependent drivers
+implemented in the X-Windows system. The implementation uses the
+L<GDK|http://library.gnome.org/devel/gdk/> and
+L<Pango|http://library.gnome.org/devel/pango/> API functions. This
+driver was designed for the GTK+ version 2, and can be compiled and
+used in all systems GDK is supported.
+
+This is included in the main library in Linux and BSD. To use it in
+other Unices and in Win32 you must link with the B<cdgdk> library
+instead of the B<cd> main library.
+
+=head2 Behavior of Functions
+
+=head2 Control
+
+=over
+
+=item * L< B<Play>|../func/other.html#cdPlay>: does nothing, returns
+CD_ERROR.
+
+=back
+
+=head2 Coordinate System and Clipping
+
+=over
+
+=item * L< B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: the
+orientation of axis Y is the opposite to its orientation in the CD
+library.
+
+=back
+
+=head2 Primitives
+
+=over
+
+=item * L< B<Begin>|../func/lines.html#cdBegin>: B<C< CD_BEZIER>> and
+B<C<CD_PATH>> are simulated with lines.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L< B<LineWidth>|../func/lines.html#cdLineWidth>: if width is 1,
+the driver will use 0 for a better performance.
+
+=item * L< B<LineStyle>|../func/lines.html#cdLineStyle>: thick lines
+have style only in the line's direction. For example, you will see
+small rectangles in a thick dotted line.
+
+=item * L< B<NativeFont>|../func/text.html#cdNativeFont>: also accepts
+the X-Windows font string format.
+
+=item * L< B<Font>|../func/text.html#cdFont>: "Courier" is mapped to
+"Monospace", "Helvetica" is mapped to "Sans", and "Times" is mapped to
+"Serif". Underline and Strikeout are supported.
+
+=back
+
+=head2 Colors
+
+=over
+
+=item * L< B<Palette>|../func/color.html#cdPalette>: When the number of
+bits per pixel is smaller than or equal to 8, the driver will use the
+system palette to solve colors passed as parameters to the canvas. The
+driver allocates colors as they are requested - if a color cannot be
+allocated, the closest color is used in the palette. For such, the
+driver sees all available colors, in the current application and
+others. If one of the applications is terminated, a color in the
+palette may become invalid and will only be updated by the driver when
+it is requested again. For this reason, a call to B< cdForeground >or
+B<cdBackground> or B<cdPalette> is recommended before drawing.
+
+When CD_FORCE is used, the driver forces color allocation. This may
+imply changing colors in other applications when a cursor moves in and
+out of the canvas. However, if the number of requested colors is
+smaller than the maximum number of possible colors in the palette, then
+the first colors in the default system palette will be preserved,
+minimizing this problem.
+
+When CD_POLITE is used, all colors allocated by the driver are
+liberated, and the requested colors are allocated. This is useful for
+the application to prioritize the colors that will be allocated,
+causing other colors to be mapped to their closest colors.
+
+Note that canvases in the same application interfere with one another,
+but when a canvas is terminated it liberates all allocated colors.
+
+=back
+
+=head2 Exclusive Attributes
+
+=over
+
+=item * "B<GC>": returns the GDK graphics context (get only). In Lua is
+returned as an user data.
+
+=back
+
+=over
+
+=item * "B<IMGDITHER>": changes how dithering is used in images when
+bppE<lt>=8. Can be "NORMAL" or "NONE". Default: "NONE".
+
+=back
+
+=over
+
+=item * "B<IMGINTERP>": changes how interpolation is used in image
+scale. Can be "BILINEAR" or "NEAREST". Default: "NEAREST".
+
+=back
+
+=over
+
+=item * "B<ROTATE>": allows the usage of 1 angle and 1 coordinate (x,
+y), that define a global rotation transformation centered in the
+specified coordinate. Use 1 real and 2 integer values inside a string
+("%g %d %d" = angle x y). In this driver will change the current
+transformation matrix, if removed will reset the current transformation
+matrix.
+
+=back
+
+=over
+
+=item * B<"PANGOVERSION": >returns a string with the Pango version
+number. It is empty if the Pango is not available.
+
+=back
+
+=cut

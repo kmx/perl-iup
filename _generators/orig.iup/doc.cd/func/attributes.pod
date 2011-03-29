@@ -1,0 +1,49 @@
+=head1 General Attributes
+
+ long int cdCanvasForeground(cdCanvas* canvas, long int color); [in C]
+ void cdCanvasSetForeground(cdCanvas* canvas, long int color); [in C]
+ 
+ canvas:Foreground(color: lightuserdata) -> (old_color: lightuserdata) [in Lua]
+ canvas:SetForeground(color: lightuserdata) [in Lua]
+
+Configures a new current foreground color and returns the previous one.
+This color is used in all primitives (lines, areas, marks and text).
+Default value: B< C<CD_BLACK>>. Value C<B<CD_QUERY> >simply returns the
+current value.
+
+Notice that CD_QUERY conflicts with color RGBA=(255,255,255,0) (full
+transparent white). Use B<SetForeground> to avoid the conflict. See
+also L<Color Coding|color.html>.
+
+ long int cdCanvasBackground(cdCanvas* canvas, long int color); [in C]
+ void cdCanvasSetBackground(cdCanvas* canvas, long int color); [in C]
+ 
+ canvas:Background(color: lightuserdata) -> (old_color: lightuserdata) [in Lua]
+ canvas:SetBackground(color: lightuserdata) [in Lua]
+
+Configures the new current background color and returns the previous
+one. However, it does not automatically change the background of a
+canvas. For such, it is necessary to call the B<Clear> function. The
+background color only makes sense for B<Clear>C< >and for primitives
+affected by the background opacity attribute. Default value:
+B<C<CD_WHITE>>. Value C<B<CD_QUERY> >simply returns the current value.
+
+Notice that CD_QUERY conflicts with color RGBA=(255,255,255,0) (full
+transparent white). Use B<SetBackground> to avoid the conflict. See
+also L<Color Coding|color.html>.
+
+ int cdCanvasWriteMode(cdCanvas* canvas, int mode); [in C]
+ 
+ canvas:WriteMode(mode: number) -> (old_mode: number) [in Lua]
+
+Defines the writing type for all drawing primitives. Values:
+B<C<CD_REPLACE>>, B<C<CD_XOR>> or B<C<CD_NOT_XOR>>. Returns the
+previous value. Default value: B<C<CD_REPLACE>>. Value C<B<CD_QUERY> >
+simply returns the current value.
+
+Note: operation XOR is very useful, because, using white as the
+foreground color and drawing the same image twice, you can go back to
+the original color, before the drawing. This is commonly used for mouse
+selection feedback.
+
+=cut

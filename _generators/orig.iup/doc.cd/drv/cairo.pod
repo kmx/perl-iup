@@ -1,0 +1,232 @@
+=head1 CAIRO Base Driver
+
+This driver represents a basic driver for all system-dependent drivers
+implemented in the X-Windows and MS-Windows systems. The implementation
+uses the L<Cairo|http://library.gnome.org/devel/pango/> and Pango
+functions. This driver can be compiled and used in all systems Cairo is
+supported. The drivers B<Native Window>, B<Image>, B<EMF>, B<Printer>
+and B<Double Buffer> were implemented.
+
+The main motivation for the use of Cairo was transparency for all the
+primitives. Beyond that we got other features like anti-aliasing,
+gradient filling, transformations and other back-ends (support to
+rendering: PDF, PS, SVG and IMAGERGB surfaces).
+
+This driver still does not completely replace the X-Windows and GDI
+Windows base drivers, because Cairo does not have support for bitwise
+XOR operations and for complex clipping regions.
+
+So we let the programmer to choose what to use. We created the function
+B< cdUseContextPlus> that allows to activate or to deactivate the use
+of Cairo for the available GDK, Win32 or X-Windows based drivers. This
+function affects only the B<cdCreateCanvas> function call, once created
+the canvas will be always a Cairo canvas. In fact the function affects
+primary the definitions B<CD_NATIVEWINDOW>, B<CD_IMAGE>, B<CD_EMF>,
+B<CD_PRINTER> and B< CD_DBUFFER>, because they are function calls and
+not static defines. B<CD_PRINTER> can be used with the GDK base driver
+in UNIX, or with the Win32 base driver in Windows. B<CD_EMF > can be
+used in Windows only, with GDK or Win32 base drivers.
+
+Using Cairo it is allowed to create more that one canvas at the same
+time for the same Window. And they can co-exist with a standard GDK,
+Win32 or X-Windows canvas.
+
+To enable the use of Cairo based drivers you must call the
+initialization function B< cdInitContextPlus()> once and link to the
+libraries "B<cdcairo>" and "B<cairo>". Also the Cairo library must be
+installed in your system. When using the GDK base driver you do not
+need to link with the "B<cdcairo>" library.
+
+In CDLua it is not necessary any additional initialization, and
+B<require"cdluacairo"> can be used when using dynamic libraries. But
+when using require there are some restrictions, in Win32 the GDK base
+driver can NOT be used, in Linux the X11 base driver can NOT be used,
+and in other UNICES the GDK base driver can NOT be used.
+
+=head2 Extra Drivers (cdcairo.h)
+
+Only available in Lua when B<require"cdluacairo"> is used.
+
+=head2 CD_CAIRO_PS - PostScript Driver
+
+Similar to L<CD_PS|ps.html>, uses the same creation parameters. But
+margins are not supported and Postscript level can be 2 (parameter -2)
+or 3 (parameter -3). The "CMD" attribute is not supported, and the new
+attribute "DSCCOMMENT" accepts a string that is saved as a DSC comment.
+
+=head2 CD_CAIRO_PDF - PDF Driver
+
+Similar to L<CD_PDF|pdf.html>, uses the same creation parameters. The
+driver also does not depends on the PDFLib. The additional attributes
+"OPACITY", "PATTERN", "PDF", "PDFLIBVERSION" and the description
+strings, are not supported.
+
+=head2 CD_CAIRO_SVG - Scalable Vector Graphics Driver
+
+Similar to L<CD_SVG|svg.html>, uses the same creation parameters. The
+additional attributes "OPACITY" and "CMD" are not supported.
+
+=head2 CD_CAIRO_IMAGERGB - RGB Client Image Driver
+
+Similar to L<CD_IMAGERGB|irgb.html>, uses almost the same creation
+parameters. The main difference is that the data pointers are packed in
+RGBARGBARGBA... format. So it is used only 1 pointer for data, instead
+of 3. Also the attributes "REDIMAGE", "GREENIMAGE", "BLUEIMAGE" and
+"ALPHAIMAGE are not supported and replaced by the "RGBDATA" attribute.
+There are also two new attributes, "STRIDE" that returns the line size
+in bytes, when data is specified during creation then stride is always
+width*32. Even when there is not alpha channel, data is stored in 32
+bits per pixel. Image data is also organized in top-bottom orientation,
+it means the data pointer points to the top-left corner. And the
+"WRITE2PNG" attribute that accepts a filename to save the image as a
+PNG file (this does not depends of the
+L<IM|http://www.tecgraf.puc-rio.br/im> library).
+
+=head2 Behavior of Functions
+
+=head2 Control
+
+=over
+
+=item * L< B<Play>|../func/other.html#cdPlay>: does nothing, returns
+CD_ERROR.
+
+=back
+
+=head2 Coordinate System and Clipping
+
+=over
+
+=item * L< B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: the
+orientation of axis Y is the opposite to its orientation in the CD
+library.
+
+=back
+
+=head2 Primitives
+
+=over
+
+=item * Floating point primitives are supported.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L<
+B<WriteMode>|http://www.tecgraf.puc-rio.br/cd/en/func/attributes.html#cdWriteMode>:
+does nothing. There is no support for XOR or NOT_XOR.
+
+=item * L< B<NativeFont>|../func/text.html#cdNativeFont>: also accepts
+the X-Windows font string format.
+
+=item * L< B<Font>|../func/text.html#cdFont>: "Courier" is mapped to
+"Monospace", "Helvetica" is mapped to "Sans", and "Times" is mapped to
+"Serif". Underline and Strikeout are supported.
+
+=back
+
+=head2 Colors
+
+=over
+
+=item * L< B<Palette>|../func/color.html#cdPalette>: NOT supported.
+
+=back
+
+=head2 Exclusive Attributes
+
+=over
+
+=item * "B<ANTIALIAS>": controls the use of anti-aliasing for the text
+and drawing shapes. Assumes values "1" (active) and "0" (inactive).
+Default value: "1".
+
+=back
+
+=over
+
+=item * "B<CAIRODC>": returns the Cairo drawing context (get only). In
+Lua is returned as a user data.
+
+=back
+
+=over
+
+=item * B<"CAIROVERSION": >returns a string with the Cairo version
+number. It is empty if the Cairo is not available.
+
+=back
+
+=over
+
+=item * B<"HATCHBOXSIZE">: defines the size of smallest hatch box
+pattern. This affects the spacing between the hatch lines. The value
+passed must be a string containing an integer ("%d"). If the value of
+the attribute passed is NULL, the value is rest to the default. When
+consulted returns the current value ("%d"). Default: "8".
+
+=back
+
+=over
+
+=item * "B<IMGINTERP>": changes how interpolation is used in image
+scale. Can be "BEST" (highest-quality), "BILINEAR" (linear
+interpolation), "GOOD" (quality similar to BILINEAR), "NEAREST"
+(nearest-neighbor filtering) or "FAST" (quality similar to NEAREST).
+Default: "GOOD".
+
+=back
+
+=over
+
+=item * "B<LINEGRADIENT>": defines a filled interior style that uses a
+line gradient between two colors. It uses 2 points ("%d %d %d %d" = x1
+y1 x2 y2), one for the starting point using (using the foreground
+color), and another one for the end point (using the background color).
+
+=back
+
+=over
+
+=item * "B<PATTERNIMAGE>": defines a filled interior style using a
+server image as pattern. Data must be a server image handle created
+with he Cairo base driver.
+
+=back
+
+=over
+
+=item * "B<POLYHOLE>": defines the index of the vertex where there is a
+hole in a closed polygon. It will affect the next B<cdEnd>. Can be
+called several times between B<cdBegin> and B<cdEnd> to define holes.
+The value passed must be a string containing an integer ("%d"). If the
+value of the attribute passed is NULL, all holes will no longer be
+considered. When consulted returns the current number of holes ("%d").
+It can have a maximum of 500 holes. Default: NULL.
+
+=back
+
+=over
+
+=item * "B<RADIALGRADIENT>": defines a filled interior style that uses
+a radial gradient between two colors. It uses 2 points and 2 radius
+("%d %d %g %d %d %g" = x1 y1 rad1 x2 y2 rad2), one for the starting
+point using (using the foreground color), and another one for the end
+point (using the background color).
+
+=back
+
+=over
+
+=item * "B<ROTATE>": allows the usage of 1 angle and 1 coordinate (x,
+y), that define a global rotation transformation centered in the
+specified coordinate. Use 1 real and 2 integer values inside a string
+("%g %d %d" = angle x y). Can not be set if a transformation is already
+set.
+
+=back
+
+=cut

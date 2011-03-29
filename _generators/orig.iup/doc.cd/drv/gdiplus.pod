@@ -1,0 +1,287 @@
+=head1 Microsoft Windows Base I<Driver> Using GDI+
+
+This driver represents a base driver for all system-dependent drivers
+implemented in the Microsoft Windows system, but uses a new API called
+GDI+. The drivers B<Clipboard, Native Window>, B<IUP>, B<Image>,
+B<Printer>, B<EMF> and B<Double Buffer> were implemented. The driver
+B<WMF>, and the function B<cdPlay> of the B<Clipboard> and B<EMF>
+drivers were not implemented using GDI+.
+
+The main motivation for the use of GDI+ was transparency for all the
+primitives. Beyond that we got other features like anti-aliasing,
+gradient filling, bezier lines and filled cardinal splines.
+
+This driver still does not completely replace the GDI Windows base
+driver, because GDI+ does not have support for XOR. Also the
+applications need to adapt the rendering of text that is slightly
+different from GDI. It is know that GDI+ can be slower than GDI in some
+cases and faster in other cases, Microsoft does not make this clear.
+
+So we let the programmer to choose what to use. We created the function
+B< cdUseContextPlus> that allows to activate or to deactivate the use
+of GDI+ for the available Windows based drivers. This function affects
+only the B<cdCreateCanvas> function call, once created the canvas will
+be always a GDI+ canvas. In fact the function affects primary the
+definitions B<CD_NATIVEWINDOW>, B<CD_IMAGE>, B< CD_PRINTER>, B<
+CD_EMF>, B< CD_DBUFFER> and B< CD_CLIPBOARD>, because they are function
+calls and not static defines.
+
+Using GDI+ it is allowed to create more that one canvas at the same
+time for the same Window. And they can co-exist with a standard GDI
+canvas.
+
+To enable the use of GDI+ based drivers you must call the
+initialization function B< cdInitContextPlus()> once and link to the
+libraries "B<cdcontextplus.lib>" and "B<gdiplus.lib>". Also the file
+"B<gdiplus.dll>" must be available in your system. These files already
+came with Visual C++ 7 and Windows XP. For other compilers or systems
+you will need to copy the ".lib" file for you libraries area, and you
+will need to copy the DLL for the Windows\System (Win98/Me) or
+Windows\System32 (Win2000/NT4-SP6) folder. The gdiplus files can be
+obtained from L<
+Microsoft|http://www.microsoft.com/downloads/details.aspx?familyid=6a63ab9c-df12-4d41-933c-be590feaa05a&displaylang=en>
+or from L<here|../../download/gdiplus.zip>.
+
+In CDLua it is not necessary any additional initialization, but the
+application must still be linked with the B<cdcontextplus.lib> library
+or a B<require"cdluacontextplus"> can be used when using dynamic
+libraries.
+
+=head2 Behavior of Functions
+
+=head2 Control
+
+=over
+
+=item * L<B<Play>|../func/other.html#cdPlay>: does nothing, returns
+CD_ERROR.
+
+=back
+
+=head2 Coordinate System and Clipping
+
+=over
+
+=item * L< B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: the
+orientation of axis Y is the opposite to its orientation in the CD
+library. Except when using transformations.
+
+=back
+
+=head2 Primitives
+
+=over
+
+=item * Floating point primitives are supported.
+
+=item * B<L<Pixel|../func/marks.html#cdPixel>>: uses GDI. Excepting
+when the canvas is an image so it is done using GDI+.
+
+=item * L<B<Sector>|../func/filled.html#cdSector>: it also draws an arc
+in the same position to complete the size of the sector.
+
+=item * L<B<Text>|../func/text.html#cdText>: opaque text is simulated
+using a rectangle in the back.
+
+=item * L<B<Begin>|../func/lines.html#cdBegin>: Beyond the standard
+modes it accepts the additional modes: B<C<CD_FILLSPLINE>> and B<C<
+CD_FILLGRADIENT>>. The C definitions of these modes are available in
+the B<cdgdiplus.h> header.
+
+CD_SPLINE defines the points of a curve constructed by a cardinal
+spline. Uses the current line style.
+
+B<C<CD_FILLSPLINE>> defines the points of a filled curve constructed by
+a cardinal spline. Uses the current interior style.
+
+B<C<CD_FILLGRADIENT>> defines the points of a filled polygon. It is
+filled with a gradient from colors in each vertex to a color in its
+center. The colors are defined by the "B<C<GRADIENTCOLOR>>" attribute,
+that must be set before each B<C<cdVertex>> call and before B<C<cdEnd>>
+for the center color. This will not affect the current interior style.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L<B< BackOpacity>|../func/filled.html#cdBackOpacity>: only
+changes the transparency of the background color to 0 (transparent) or
+255 (opaque).
+
+=item * L<B<Hatch>|../func/filled.html#cdHatch>: diagonal styles are
+drawn with anti-aliasing.
+
+=item * L< B< WriteMode>|../func/attributes.html#cdWriteMode>: does
+nothing. There is no support for XOR or NOT_XOR.
+
+=item * L<B< Pattern>|../func/filled.html#cdPattern>: each pixel can
+contain transparency information.
+
+=item * B<L< LineStyle|../func/lines.html#cdLineStyle>>: uses a custom
+GDI+ style when line width is 1. In World Coordinates the line style
+has its scaled changed.
+
+=item * L<B<FontDim>|../func/text.html#cdFontDim>: the maximum width is
+estimated from the character "W".
+
+=item * B<L< TextAlignment|../func/text.html#cdTextAlignment>>: is
+simulated. Although GDI+ has text alignment, the results do not match
+the CD text alignment.
+
+=item * L<B< NativeFont>|../func/text.html#cdNativeFont>: also accepts
+I<B<"-d">> to show the font-selection dialog box.
+
+=item * L<B<Font>|../func/text.html#cdFont>: "System" is mapped to "MS
+Sans Serif", "Courier" is mapped to "Courier New", "Helvetica" is
+mapped to "Arial", and "Times" is mapped to "Times New Roman".
+Underline and Strikeout are supported.
+
+=back
+
+=head2 Colors
+
+=over
+
+=item * L<B<Palette>|../func/color.html#cdPalette>: works only when the
+canvas is a server image.
+
+=item * L< B< Foreground>|../func/attributes.html#cdForeground> & L<
+B<Background>|../func/attributes.html#cdBackground>: accepts the
+transparency information encoded in the color.
+
+=back
+
+=head2 Client Images
+
+=over
+
+=item * L<B< GetImageRGB>|../func/client.html#cdGetImageRGB>: uses GDI.
+Excepting when the canvas is an image so it is done using GDI+.
+
+=back
+
+=head2 Server Images
+
+=over
+
+=item * B<L<GetImage|../func/server.html#cdGetImage>>: uses GDI.
+Excepting when the canvas is an image so it is done using GDI+.
+
+=item * B<L<ScrollArea|../func/server.html#cdScrollArea>>: uses GDI.
+Excepting when the canvas is an image so it is done using GDI+.
+
+=back
+
+=head2 Exclusive Attributes
+
+=over
+
+=item * "B<GDI+>": returns "1". So the application can detect if the
+driver uses the GDI+ base driver. Other drivers that do not implement
+this attribute will return NULL.
+
+=back
+
+=over
+
+=item * "B<HDC>": returns the HDC of the Win32 canvas. It can only be
+retrieved (get only). In Lua is returned as a user data. It is not NULL
+only in some Native Windows canvas and in the printer canvas.
+
+=back
+
+=over
+
+=item * "B<ANTIALIAS>": controls the use of anti-aliasing for the text,
+image zoom and line drawing primitives. Assumes values "1" (active) and
+"0" (inactive). Default value: "1".
+
+=back
+
+=over
+
+=item * "B<GRADIENTCOLOR>": necessary for the creation of the gradient
+fill defined by a polygon (see details in the function B<cdBegin>
+above). Defines the color of each vertex and the center (%d %d %d" = r
+g b). It can not be retrieved (set only).
+
+=back
+
+=over
+
+=item * "B<IMAGETRANSP>": defines an interval of colors to be
+considered transparent in client and server images (except for RGBA
+images). It uses two colors to define the interval ("%d %d %d %d %d %d"
+= r1 g1 b1 r2 g3 b3). Use NULL to remove the attribute.
+
+=back
+
+=over
+
+=item * "B<IMAGEFORMAT>": defines the number of bits per pixel used to
+create server images. It uses 1 integer that can have the values: "32"
+or "24" (%d). Use NULL to remove the attribute. It is used only in the
+B<cdCreateImage>. When not defined, the server images use the same
+format of the canvas.
+
+=back
+
+=over
+
+=item * "B<IMAGEALPHA>": allows the usage of an alpha channel for
+server images if IMAGEFORMAT=32. The attribute format is a pointer to
+the transparency values in a sequence of chars in the same format of
+alpha for client images. The attribute is used in the B< cdCreateImage>
+and for every B< cdPutImageRect>, the pointer must exists while the
+image exists. The alpha values are transfered to the image only in
+B<cdPutImageRect>, so they can be freely changed any time. The data is
+not duplicated, only the pointer is stored. The size of the data must
+be the same size of the image. Use NULL to remove the attribute. Not
+accessible in Lua.
+
+=back
+
+=over
+
+=item * "B<IMAGEPOINTS>": define 3 coordinates of a paralelogram that
+will be used to warp server and client images in the subsequent calls
+of B<PutImage> functions. Use 6 integer values inside a string ("%d %d
+%d %d %d %d" = x1 y1 x2 y2 x3 y3). Use NULL to remove the attribute.
+The destination rectangle of the B<PutImage> functions will be ignored.
+The respective specified points are the upper-left corner, the
+upper-right corner and the lower left corner. In GDI+ this attribute is
+more complete than in GDI, because affects also client images.
+
+=back
+
+=over
+
+=item * "B<ROTATE>": allows the usage of 1 angle and 1 coordinate (x,
+y), that define a global rotation transformation centered in the
+specified coordinate. Use 1 real and 2 integer values inside a string
+("%g %d %d" = angle x y). Can not be set if a transformation is already
+set.
+
+=back
+
+=over
+
+=item * B<"LINEGRADIENT": >defines a filled interior style that uses a
+line gradient between two colors. It uses 2 points ("%d %d %d %d" = x1
+y1 x2 y2), one for the starting point using (using the foreground
+color), and another one for the end point (using the background color).
+
+=back
+
+=over
+
+=item * B<"LINECAP": >defines addicional line cap styles. It can have
+the following values: "Triangle", "NoAnchor", "SquareAnchor",
+"RoundAnchor", "DiamondAnchor", or "ArrowAnchor". It can not be
+retrieved (set only).
+
+=back
+
+=cut

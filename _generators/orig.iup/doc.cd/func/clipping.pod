@@ -1,0 +1,76 @@
+=head1 Clipping
+
+The clipping area is an area that limits the available drawing area
+inside the canvas. Any primitive is drawn only inside the clipping
+area. It affects all primitives.
+
+You can set the clipping area by using the function B<cdClipArea>, and
+retrieve it using B<cdGetClipArea>. The clipping area is a rectangle by
+default, but it can has other shapes. In some drivers a polygon area
+can be defined, and in display based drivers a complex region can be
+defined. The complex region can be a combination of boxes, polygons,
+sectors, chords and texts.
+
+The B<Clip> function activates and deactivaes the clipping.
+
+----
+
+ int cdCanvasClip(cdCanvas* canvas, int mode); [in C]
+ 
+ canvas:Clip(mode: number) -> (old_mode: number) [in Lua]
+
+Activates or deactivates clipping. Returns the previous status. Values:
+B<CD_CLIPAREA, CD_CLIPPOLYGON, CD_CLIPREGION> or B<CD_CLIPOFF>. The
+value B<CD_QUERY> simply returns the current status. Default value:
+B<CD_CLIPOFF>.
+
+The value B<CD_CLIPAREA> activates a rectangular area as the clipping
+region.
+
+The value B<CD_CLIPPOLYGON> activates a polygon as a clipping region,
+but works only in some drivers (please refer to the notes of each
+driver). The clipping polygon must be defined before activating the
+polygon clipping; if it is not defined, the current clipping state
+remains unchanged. See the documentation of
+L<cdBeginE<47>cdVertexE<47>cdEnd|polygon.html> to create a polygon.
+
+The value B<CD_CLIPREGION> activates a complex clipping region. See the
+documentation of L<Regions|region.html>.
+
+The defined clipping area, polygon and complex regions are stored
+internally, so you may define them independently and switch between
+area, polygon and complex region without having to define them again.
+Also if the active clipping region is re-defined it immediately becomes
+the current clipping region.
+
+ void cdCanvasClipArea(cdCanvas* canvas, int xmin, int xmax, int ymin, int ymax); [in C]
+ void cdfCanvasClipArea(cdCanvas* canvas, double xmin, double xmax, double ymin, double ymax); [in C]
+ void wdCanvasClipArea(cdCanvas* canvas, double xmin, double xmax, double ymin, double ymax); (WC) [in C]
+ 
+ canvas:ClipArea(xmin, xmax, ymin, ymax: number) [in Lua]
+ canvas:wClipArea(xmin, xmax, ymin, ymax: number) (WC) [in Lua]
+
+Defines the current rectangle for clipping. Only the points in the
+interval I<B<xminE<lt>= x E<lt>= xmax>> and I<B<ymin E<lt>= y E<lt>=
+ymax>> will be printed. Default region: (0, w-1, 0, h-1).
+
+ int cdCanvasGetClipArea(cdCanvas* canvas, int *xmin, int *xmax, int *ymin, int *ymax); [in C]
+ int cdfCanvasGetClipArea(cdCanvas* canvas, double *xmin, double *xmax, double *ymin, double *ymax); [in C]
+ int wdCanvasGetClipArea(cdCanvas* canvas, double *xmin, double *xmax, double *ymin, double *ymax); (WC) [in C]
+ 
+ canvas:GetClipArea() -> (xmin, xmax, ymin, ymax, status: number) [in Lua]
+ canvas:wGetClipArea() -> (xmin, xmax, ymin, ymax, status: number) (WC) [in Lua]
+
+Returns the rectangle and the clipping status. It is not necessary to
+provide all return pointers, you can provide only the desired values
+and I<B<NULL>> for the others.
+
+ Polygons
+
+A polygon for clipping can be created using
+B<cdBegin(>CD_CLIPB<)/cdVertex(x,y)/.../cdEnd()>.
+
+See the documentation of
+L<cdBeginE<47>cdVertexE<47>cdEnd|polygon.html>.
+
+=cut

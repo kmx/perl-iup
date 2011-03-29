@@ -1,0 +1,417 @@
+=head1 Tecgraf/PUC-Rio Library Download Tips
+
+All the libraries were build using B<Tecmake>. Please use it if you
+intend to recompile the sources. B<Tecmake> can be found at
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>tecmake|http://www.tecgraf.puc-rio.br/tecmake>.
+
+The B<IM> files can be downloaded at L<
+http:E<47>E<47>sourceforge.netE<47>projectsE<47>imtoolkitE<47>filesE<47>|http://sourceforge.net/projects/imtoolkit/files/>.
+
+The B<CD> files can be downloaded at L<
+http:E<47>E<47>sourceforge.netE<47>projectsE<47>canvasdrawE<47>filesE<47>|http://sourceforge.net/projects/canvasdraw/files/>.
+
+The B<IUP> files can be downloaded at L<
+http:E<47>E<47>sourceforge.netE<47>projectsE<47>iupE<47>filesE<47>|http://sourceforge.net/projects/iup/files/>.
+
+The B<Lua> files can be downloaded at L<
+http:E<47>E<47>sourceforge.netE<47>projectsE<47>luabinariesE<47>filesE<47>|http://sourceforge.net/projects/luabinaries/files/>.
+
+=head2 X<build>Build Configuration
+
+Libraries and executables were built using speed optimization. In UNIX
+the dynamic libraries were NOT built with the -fpic parameter. In MacOS
+X the dynamic libraries are in bundle format. The source code along
+with the "config.mak" files for B<Tecmake> are also available.
+
+The DLLs were built using the B<cdecl> calling convention. This should
+be a problem for Visual Basic users.
+
+In Visual C++ 6 and 7 we use the single thread C Run Time Library for
+static libraries and the multi thread C RTL for DLLs. Because this were
+the default in Visual Studio for new projects. Since Visual C++ 8, both
+use the multithread C RTL.
+
+=head2 X<pack>Packaging
+
+The package files available for download are named according to the
+platform where they were build.
+
+In UNIX all strings are based in the result of the command "uname -a".
+The package name is a concatenation of the platform B<uname>, the
+system B<major> version number and the system B<minor> version number.
+Some times a suffix must be added to complement the name. The compiler
+used is always gcc. Binaries for 64-bits receive the suffix: "_64". In
+Linux when there are different versions of gcc for the same uname, the
+platform name is created adding the major version number of the
+compiler added as a suffix: "g3" for gcc 3 and "g4" for gcc 4.
+
+In Windows the platform name is the B<compiler> and its B<major>
+version number.
+
+All library packages B<(*_lib*)> contains pre-compiled binaries for the
+specified platform and includes. Packages with B<"_bin"> suffix
+contains executables only.
+
+The package name is a general reference for the platform. If you have
+the same platform it will work fine, but it may also work in similar
+platforms.
+
+Here are some examples of packages:
+
+B<iup2_4_Linux26_lib.tar.gz> = IUP 2.4 32-bits Libraries and Includes
+for Linux with Kernel version 2.6 built with gcc 3.
+
+B<iup2_4_>B<Linux26g4_64>B<_bin.tar.gz> = IUP 2.4 64-bits Executables
+for Linux with Kernel version 2.6 built with gcc 4.
+
+B<iup2_4_Win32_vc8_lib.tar.gz> = IUP 2.4 32-bits Static Libraries and
+Includes for Windows to use with Visual C++ 8 (2005).
+
+B<iup2_4_Win32_dll9_lib.tar.gz> = IUP 2.4 32-bits Dynamic Libraries
+(DLLs), import libraries and Includes for Windows to use with Visual
+C++ 9 (2008).
+
+B<iup2_4_Docs_html.tar.gz> = IUP 2.4 documentation files in HTML format
+(the web site files can be browsed locally).
+
+B<iup2_4_Win32_bin.tar.gz> = IUP 2.4 32-bits Executables for Windows.
+
+The documentation files are in HTML format. They do not include the CHM
+and PDF versions. These two files are provided as a separate download,
+but they all have the same documentation.
+
+=head2 X<install>Installation
+
+For any platform we recommend you to create a folder to contain the
+third party libraries you download. Then just unpack the packages you
+download in that folder. The packages already contains a directory
+structure that separates each library or toolkit. For example:
+
+ \mylibs\
+         iup\
+             bin\
+             html\
+             include\
+             lib\Linux26
+             lib\Linux26g4_64
+             lib\vc8
+             src
+         cd\
+         im\
+         lua5.1\
+
+This structure will also made the process of building from sources more
+simple, since the projects and makefiles will assume this structure .
+
+=head2 X<usage>Usage
+
+For makefiles use:
+
+ 1) "-I/mylibs/iup/include" to find include files
+ 2) "-L/mylibs/iup/lib/Linux26" to find library files
+ 3) "-liup" to specify the library files
+
+For IDEs the configuration involves the same 3 steps above, but each
+IDE has a different dialog. The IUP toolkit has a Guide for some IDEs:
+
+B<Borland C++ BuilderX> -
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>cppbx.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/cppbx.html>
+
+B<Code Blocks> -
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>codeblocks.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/codeblocks.html>
+
+B<Dev-C++> -
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>dev-cpp.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/dev-cpp.html>
+
+B<Eclipse for C++> - L<
+http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>eclipse.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/eclipse.html>
+
+B<Microsoft Visual C++> (Visual Studio 2003) -
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>msvc.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/msvc.html>
+
+B<Microsoft Visual C++> (Visual Studio 2005) -
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>msvc8.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/msvc8.html>
+
+B<Open Watcom> -
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>owc.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/owc.html>
+
+=head2 X<plat>Available Platforms
+
+The following platforms can be available:
+
+Package Name
+
+Description
+
+B<AIX43>
+
+IBM AIX 4.3 (ppc) / gcc 2.95 / Motif 2.1
+
+B<IRIX65>
+
+SGI IRIX 6.5 (mips) / gcc 3.0 / Motif 2.1
+
+B<IRIX6465>
+
+SGI IRIX 6.5 (mips) / gcc 3.3 / Motif 1.2
+
+B<Linux24>
+
+Red Hat 7.3 (x86) / Kernel 2.4 / gcc 2.95 / L<Open Motif
+2.1|http://www.ist-inc.com/DOWNLOADS/motif_download.html> / GTK 2.0
+
+B<Linux24g3>
+
+CentOS 3.9 (x86) / Kernel 2.4 / gcc 3.2 / Open Motif 2.2 3 / GTK 2.2
+
+B<Linux24g3_64>
+
+Red Hat E.L. WS 3 (x64) / Kernel 2.4 / gcc 3.2 / Open Motif 2.2 3 / GTK
+2.2
+
+B<Linux26>
+
+CentOS 4.6 (x86) / Kernel 2.6 / gcc 3.4 / Open Motif 2.2 3 / GTK 2.4
+
+B<Linux26_64>
+
+CentOS 4.6 (x64) / Kernel 2.6 / gcc 3.4 / Open Motif 2.2 3 / GTK 2.4
+
+B<Linux26g4>
+
+CentOS 5.3 (x86) / Kernel 2.6 / gcc 4.1 / Open Motif 2.2 3 / GTK 2.12
+
+B<Linux26g4_64>
+
+CentOS 5.2 (x64) / Kernel 2.6 / gcc 4.1 / OpenMotif 2.2 3 / GTK 2.10
+
+B<Linux26g4ppc>
+
+Ubuntu 7.10 (ppc) / Kernel 2.6 / gcc 4.1 / Open Motif 2.2 3 / GTK 2.?
+
+B<Linux26_ia64>
+
+Red Hat E.L. AS 4 (ia64) / Kernel 2.6 / gcc 3.4 / Open Motif 2.2 3 /
+GTK 2.4
+
+B<SunOS57>
+
+Sun Solaris 7 (sparc) / gcc 2.95 / Motif 2.1
+
+B<SunOS58>
+
+Sun Solaris 8 (sparc) / gcc 3.4 / Motif 2.1
+
+B<SunOS510>
+
+Sun Solaris 10 (sparc) / gcc 3.4 / Motif 2.1
+
+B<SunOS510x86>
+
+Sun Solaris 10 (x86) / gcc 3.3 / Motif 2.1
+
+B<FreeBSD54>
+
+Free BSD 5.4 (x86) / gcc 3.4
+
+B<MacOS104>
+
+Mac OS X 10.4 (ppc) [Tiger] / Darwin Kernel 8 / gcc 4.0
+
+B<MacOS104x86>
+
+Mac OS X 10.4 (x86) [Tiger] / Darwin Kernel 8 / gcc 4.0
+
+B<MacOS105x86>
+
+Mac OS X 10.5 (x86) [Leopard] / Darwin Kernel 9 / gcc 4.0
+
+B<MacOS106>
+
+Mac OS X 10.6 (x64) [Snow Leopard] / Darwin Kernel 10 / gcc 4.2
+
+B<Win32_vc6>
+
+Static library built with Microsoft Visual C++ 6 (static RTL/single
+thread)
+
+B<Win32_vc7>
+
+Static library built with Microsoft Visual C++ 7.1 (.NET 2003) (static
+RTL/single thread)
+
+Also compatible with Microsoft Visual C++ Toolkit 2003
+
+B<Win32_vc8>
+
+Static library built with Microsoft Visual C++ 8.0 (2005) (static
+RTL/multithread)
+
+Also compatible with Microsoft Visual C++ 2005 Express Edition
+
+B<Win32_vc9>
+
+Static library built with Microsoft Visual C++ 9.0 (2008) (static
+RTL/multithread)
+
+Also compatible with Microsoft Visual C++ 2008 Express Edition
+
+B<Win32_vc10>
+
+Static library built with Microsoft Visual C++ 10.0 (2010) (static
+RTL/multithread)
+
+Also compatible with Microsoft Visual C++ 2010 Express Edition -
+
+L<http:E<47>E<47>www.microsoft.comE<47>expressE<47>vcE<47>|http://www.microsoft.com/express/vc/>
+E<sup1>
+
+B<Win32_dll6>
+
+DLL and import library built with vc6, creates dependency with
+MSVCRT.DLL
+
+B<Win32_dll7>
+
+DLL and import library built with vc7, creates dependency with
+MSVCR71.DLL
+
+B<Win32_dll8>
+
+DLL and import library built with vc8, creates dependency with
+MSVCR80.DLL
+
+B<Win32_dll9>
+
+DLL and import library built with vc9, creates dependency with
+MSVCR90.DLL
+
+B<Win32_dll10>
+
+DLL and import library built with vc10, creates dependency with
+MSVCR100.DLL
+
+B<Win64_vc8>
+
+Same as B<Win32_vc8> but for 64-bits systems using the x64 standard.
+
+B<Win64_vc9>
+
+Same as B<Win32_vc9> but for 64-bits systems using the x64 standard.
+
+B<Win64_vc10>
+
+Same as B<Win32_vc10> but for 64-bits systems using the x64 standard.
+
+B<Win64_dll8>
+
+Same as B<Win32_dll8> but for 64-bits systems using the x64 standard.
+
+B<Win64_dll9>
+
+Same as B<Win32_dll9> but for 64-bits systems using the x64 standard.
+
+B<Win64_dll10>
+
+Same as B<Win32_dll10> but for 64-bits systems using the x64 standard.
+
+B<Win32_gcc3>
+
+Static library built with Cygwin gcc 3.4 (Depends on Cygwin DLL 1.5)
+
+B<Win32_gcc4>
+
+Static library built with Cygwin gcc 4.3 (Depends on Cygwin DLL 1.7) -
+L<http:E<47>E<47>www.cygwin.comE<47>|http://www.cygwin.com/> E<sup1>
+
+B<Win32_cygw15>
+
+Same as B<Win32_gcc3>, but using the Cygwin Posix system and also with
+a DLL and import library
+
+B<Win32_cygw17>
+
+Same as B<Win32_gcc4>, but using the Cygwin Posix system and also with
+a DLL and import library
+
+B<Win32_dllg4>
+
+DLL and import library built with Cygwin gcc 4.3 (See B<Win32_gcc4>)
+
+B<Win32_mingw3>
+
+Static library built with MingW gcc 3.4
+
+B<Win32_mingw4>
+
+Static library built with MingW gcc 4.3 -
+L<http:E<47>E<47>www.mingw.orgE<47>|http://www.mingw.org/> E<sup1>
+
+Also compatible with Dev-C++ -
+L<http:E<47>E<47>www.bloodshed.netE<47>devcpp.html|http://www.bloodshed.net/devcpp.html>
+
+and with Code Blocks - L<
+http:E<47>E<47>www.codeblocks.orgE<47>|http://www.codeblocks.org/>
+E<sup1>
+
+B<Win32_dllw4>
+
+DLL and import library built with MingW gcc 4.3 (See B<Win32_mingw4>)
+
+B<Win32_owc1>
+
+Static library built with Open Watcom 1.5 -
+L<http:E<47>E<47>www.openwatcom.orgE<47>|http://www.openwatcom.org/>
+
+B<Win32_bc55>
+
+Static library built with Borland C++ 5.5 Compiler -
+
+L<https:E<47>E<47>downloads.embarcadero.comE<47>freeE<47>c_builder|https://downloads.embarcadero.com/free/c_builder>
+E<sup1>
+
+B<Win32_bc56>
+
+Static library built with Borland C++ BuilderX 1.0 / Borland C++ 5.6
+Compiler E<sup1>,E<sup2>
+
+(the C++ BuilderX IDE can also be configured to use mingw3 or gcc3
+versions.)
+
+B<Win32_bc6>
+
+Static library built with Embarcadero C++ Builder 2010 / Embarcadero
+C++ 6 Compiler -
+
+L<https:E<47>E<47>downloads.embarcadero.comE<47>freeE<47>c_builder|https://downloads.embarcadero.com/free/c_builder>
+(trial)
+
+B<Win32_bin>
+
+Executables only for Windows NT/2000/XP/Vista/7 (can be generated by
+any of the above compilers)
+
+B<Win64_bin>
+
+Same as B<Win32_bin> but for 64-bits systems using the x64 standard
+
+B<Win32_cygw15_bin>
+
+Executables only for Windows NT/2000/XP, but using the Cygwin Posix
+system (See B<Win32_cygw15>)
+
+B<Win32_cygw17_bin>
+
+Executables only for Windows NT/2000/XP, but using the Cygwin Posix
+system (See B<Win32_cygw17>)
+
+E<sup1> - Notice that all the Windows compilers with links here are
+free to download and use.
+
+E<sup2> - Recently Borland removed the C++ Builder X from download. But
+if you bought a book that has the CD of the compiler, then it is still
+free to use.
+
+3 - OpenMotif 2.2 is classified as 'experimental' by the Open Group.
+
+=cut

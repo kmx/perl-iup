@@ -1,0 +1,186 @@
+=head1 Microsoft Windows Base Driver
+
+This driver represents a base driver for all system-dependent drivers
+implemented in the Microsoft Windows system. The implementation uses
+Win32 API graphics functions, the GDI. The driver works better in
+Windows NT, but it may also work in Windows 9x/Me.
+
+=head2 Behavior of Functions
+
+=head2 Control
+
+=over
+
+=item * L<B<Flush>|../func/control.html#cdFlush>: does nothing.
+
+=item * L<B<Play>|../func/other.html#cdPlay>: does nothing, returns
+CD_ERROR.
+
+=back
+
+=head2 Coordinate System and Clipping
+
+=over
+
+=item * L< B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: the
+orientation of axis Y is the opposite to its orientation in the CD
+library.
+
+=back
+
+=head2 Primitives
+
+=over
+
+=item * L<B<Text>|../func/text.html#cdText>: when Write Mode is
+B<C<XOR>> or B<C<NOT_XOR>>, the XOR effect is simulated using bitmaps.
+
+=item * B<L<Line|../func/lines.html#cdLine>>: needs to draw an extra
+pixel in the final position.
+
+=back
+
+=head2 Attributes
+
+=over
+
+=item * L< B< WriteMode>|../func/attributes.html#cdWriteMode>: for the
+client and server image functions, the mode B<C<NOT_XOR>> works as
+B<C<XOR>>.
+
+=item * L<B< Stipple>|../func/filled.html#cdStipple>: is always opaque.
+If not in Windows NT and if width or height are greater than 8, the
+stipple is simulated using non-regular Windows clipping regions and
+bitmaps. The simulation is made when filled boxes, sectors and polygons
+are drawn.
+
+=item * L<B< Pattern>|../func/filled.html#cdPattern>: If not in Windows
+NT and if width or height are greater than 8, the pattern is simulated
+using non-regular Windows clipping regions and bitmaps. The simulation
+is made when filled boxes, sectors and polygons are drawn.
+
+=item * L<B< TextAlignment>|../func/lines.html#cdLineWidth>: the
+vertical alignment of CD_CENTER, CD_EAST, CD_WEST is manually
+calculated.
+
+=item * L<B< LineWidth>|../func/lines.html#cdLineWidth>: If not in
+Windows NT line width is always 1. If line width is 1, then a cosmetic
+pen is used for fast drawing.
+
+=item * B<L< LineStyle|../func/lines.html#cdLineStyle>>: If line width
+is 1, the style is a little different from when line width is not 1,
+because a cosmetic pen is used for width=1.
+
+=item * L<B< NativeFont>|../func/text.html#cdNativeFont>: also accepts
+I<B<"-d">> to show the font-selection dialog box.
+
+=item * L<B<Font>|../func/text.html#cdFont>: "Courier" is mapped to
+"Courier New", "Helvetica" is mapped to "Arial", and "Times" is mapped
+to "Times New Roman". Underline and Strikeout are supported. The System
+font does not have orientation.
+
+=back
+
+=head2 Client Images
+
+=over
+
+=item * B<L< PutImageRGBA|../func/client.html#cdPutImageRGBA>>: Try to
+use the new GDI function AlphaBlend, if not available captures an image
+from the canvas to blend it manually.
+
+=back
+
+=head2 Colors
+
+=over
+
+=item * L<B<Palette>|../func/color.html#cdPalette>: is useful only if
+the device has 256 colors. If it has less than 256 colors, ignore this
+function, for it will not make much difference. If two different
+canvases have their palettes modified, the last one to be modified will
+have the best quality; the other one will not have good quality and the
+colors might have a completely different appearance.
+
+=back
+
+=head2 Exclusive Attributes
+
+=over
+
+=item * "B<HDC>": returns the HDC of the Win32 canvas. It can only be
+retrieved (get only). In Lua is returned as a user data.
+
+=back
+
+=over
+
+=item * "B<PENFILLPOLY>": controls the polygon filling outline. Assumes
+values "1" (active) and "0" (inactive). Default value: "1". When a
+filled polygon is drawn, a line in the same color is used to draw the
+border which is not included in the filling. Deactivating this
+attribute solves the problem of polygons with holes, in which there is
+a line connecting the external polygon to the internal polygon.
+
+=back
+
+=over
+
+=item * "B<IMAGEFORMAT>": defines the number of bits per pixel used to
+create server images. It uses 1 integer that can have the values: "32"
+or "24" (%d). Use NULL to remove the attribute. It is used only in the
+B<cdCreateImage>. When not defined, the server images use the same
+format of the canvas.
+
+=back
+
+=over
+
+=item * "B<IMAGEALPHA>": allows the usage of an alpha channel for
+server images if IMAGEFORMAT=32. The attribute format is a pointer to
+the transparency values in a sequence of chars in the same format of
+alpha for client images. The attribute is used only in the B<
+cdCreateImage> and for every B< cdPutImageRect>, the pointer must
+exists while the image exists. The alpha values are transfered to the
+image only in B<cdPutImageRect>, so they can be freely changed any
+time. It will use the B<AlphaBlend> GDI function. The data is not
+duplicated, only the pointer is stored. The size of the data must be
+the same size of the image. Use NULL to remove the attribute. Not
+accessible in Lua.
+
+=back
+
+=over
+
+=item * "B<IMAGEMASK>": defines a binary transparency mask for server
+images. The format is the same of a stipple, can contain only 0s and
+1s. Use 2 integers, width and height, and a char pointer to the mask
+values inside a string ("%d %d %p"). Use NULL to remove the attribute.
+It can not be retrieved (set only). Not accessible in Lua. It will use
+the B<MaskBlt> GDI function.
+
+=back
+
+=over
+
+=item * "B<IMAGEPOINTS>": define 3 coordinates of a paralelogram that
+will be used to warp server images. Use 6 integer values inside a
+string ("%d %d %d %d %d %d" = x1 y1 x2 y2 x3 y3). Use NULL to remove
+the attribute. The respective specified points are the upper-left
+corner, the upper-right corner and the lower left corner. The drawing
+is also affected by the "IMAGEMASK" attribute. It will use the B<
+PlgBlt> GDI function.
+
+=back
+
+=over
+
+=item * "B<ROTATE>": allows the usage of 1 angle and 1 coordinate (x,
+y), that define a global rotation transformation centered in the
+specified coordinate. Use 1 real and 2 integer values inside a string
+("%g %d %d" = angle x y). Can not be set if a transformation is already
+set.
+
+=back
+
+=cut
