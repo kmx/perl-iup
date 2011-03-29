@@ -1,0 +1,88 @@
+=head1 IupGauge (Deprecated since 3.0, will be removed in a future
+version)
+
+B<Use the > L<B<IupProgressBar>|../elem/iupprogressbar.html>B< control
+of the main library.>
+
+Creates a Gauge control. Shows a percent value that can be updated to
+simulate a progression. It inherits from
+L<IupCanvas|../elem/iupcanvas.html>.
+
+This is an additional control that depends on the CD library. It is
+included in the L<Controls Library|../iupcontrols.html>.
+
+=head2 Creation
+
+ Ihandle* IupGauge(void); [in C]
+ iup.gauge{} -> (elem: ihandle) [in Lua]
+ gauge() [in LED] 
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<DASHED>: Changes the style of the gauge for a dashed pattern. Default
+is "NO".
+
+L<FGCOLOR|../attrib/iup_fgcolor.html>: Controls the gauge and text
+color. The default is "64 96 192".
+
+B<MAX >(non inheritable): Contains the maximum value. Default is "1".
+
+B<MIN >(non inheritable): Contains the minimum value. Default is "0".
+
+B<PADDING>: internal margin. Works just like the MARGIN attribute of
+the B<IupHbox> and B<IupVbox> containers, but uses a different name to
+avoid inheritance problems. Default value: "0x0". (since 3.0)
+
+B<SHOW_TEXT>: Indicates if the text inside the Gauge is to be shown or
+not. If the gauge is dashed the text is never shown. Possible values:
+"YES" or "NO". Default: "YES".
+
+L<SIZE|../attrib/iup_size.html> (non inheritable): The initial size is
+"120x14". Set to NULL to allow the automatic layout use smaller values.
+
+B<TEXT >(non inheritable): Contains a text to be shown inside the Gauge
+when SHOW_TEXT=YES. If it is NULL, the percentage calculated from VALUE
+will be used. If the gauge is dashed the text is never shown.
+
+B<VALUE >(non inheritable): Contains a number between "MIN" and "MAX",
+controlling the current position.
+
+=over
+
+----
+
+=back
+
+L<ACTIVE|../attrib/iup_active.html>,
+L<BGCOLOR|../attrib/iup_bgcolor.html>,
+L<EXPAND|../attrib/iup_expand.html>, L<FONT|../attrib/iup_font.html>,
+L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
+L<TIP|../attrib/iup_tip.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<ZORDER|../attrib/iup_zorder.html>,
+L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+=head2 Callbacks
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>: common callbacks are supported.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+iupgauge.png
+
+The Two Types of Gauge
+
+=head2 X<SeeAlso>See Also
+
+L<IupCanvas|../elem/iupcanvas.html>
+
+=cut

@@ -1,0 +1,33 @@
+=head1 IupVersion
+
+Returns a string with the IUP version number.
+
+=head2 Parameters/Return
+
+ char* IupVersion(void); [in C]
+ iup.Version() -> (version: string) [in Lua]
+ int IupVersionNumber(void); [in C]
+ iup.VersionNumber() -> (version: number) [in Lua]
+
+Returns: the version number including the bug fix. The defines only
+includes the major and minor numbers. For example: "2.7.1".
+
+=head2 Definitions
+
+ [in C]
+ IUP_NAME            "IUP - Portable User Interface"
+ IUP_COPYRIGHT       "Copyright (C) 1994-2007 Tecgraf/PUC-Rio and PETROBRAS S/A"
+ IUP_DESCRIPTION     "Portable toolkit for building graphical user interfaces."
+ IUP_VERSION         "2.7"
+ IUP_VERSION_DATE    "2008/10/14"
+ IUP_VERSION_NUMBER  207000
+ 
+ [in Lua]
+ iup._NAME
+ iup._DESCRIPTION
+ iup._COPYRIGHT
+ iup._VERSION
+ iup._VERSION_DATE
+ iup._VERSION_NUMBER
+
+=cut

@@ -1,0 +1,27 @@
+=head1 IupGetAttributeHandle
+
+Instead of using IupGetAttribute and IupGetHandle, this function
+directly returns the associated handle.
+
+=head2 Parameters/Return
+
+ Ihandle* IupGetAttributeHandle(Ihandle *ih, const char *name); [in C]
+ [There is no equivalent in Lua] 
+
+B<ih>: identifier of the interface element.
+
+B<name>: name of the attribute.
+
+Returns: the element with the associated name. The function will not
+check for inheritance since all the attributes that associate handles
+are not inheritable.
+
+=head2 See Also
+
+L<IupSetAttributeHandle|iupsetattributehandle.html>,
+L<IupSetAttribute|iupsetattribute.html>,
+L<IupSetAttributes|iupsetattributes.html>,
+L<IupStoreAttribute|iupstoreattribute.html>,
+L<IupSetHandle|iupsethandle.html>
+
+=cut

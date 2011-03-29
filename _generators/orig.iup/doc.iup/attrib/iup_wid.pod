@@ -1,0 +1,24 @@
+=head1 WID (read-only) (non inheritable)
+
+Element identifier in the native interface system.
+
+=head2 Value
+
+In Motif, returns the B<Widget> handle.
+
+In Windows, returns the B<HWND> handle.
+
+In GTK, return the B<GtkWidget*> handle.
+
+=head2 Notes
+
+Verification-only attribute, available after the control is mapped.
+
+For elements that do not have a native representation, NULL is
+returned.
+
+=head2 Affects
+
+All.
+
+=cut

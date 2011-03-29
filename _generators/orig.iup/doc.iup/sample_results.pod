@@ -1,0 +1,29 @@
+=head1 Sample Results (1)
+
+The following screenshots shows the L<sample.c|../examples/C/sample.c>
+results. See also the same sample changing the dialog L<
+BACKGROUND|sample_results_background.html>, the dialog
+L<BGCOLOR|sample_results_bgcolor.html> and the L<children
+BGCOLOR|sample_results_bgcolor_indiv.html>.
+
+=head2 Motif in MWM
+
+[IMAGE]
+
+=head2 GTK in Gnome
+
+[IMAGE]
+
+=head2 Windows Classic
+
+[IMAGE]
+
+=head2 Windows XP Style
+
+[IMAGE]
+
+=head2 Windows Vista
+
+[IMAGE]
+
+=cut

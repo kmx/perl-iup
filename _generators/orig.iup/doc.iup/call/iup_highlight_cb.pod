@@ -1,0 +1,17 @@
+=head1 HIGHLIGHT_CB
+
+Callback triggered every time the user selects an B<IupItem> or
+B<IupSubmenu>.
+
+=head2 Callback
+
+ int function(Ihandle *ih); [in C]
+ elem:highlight_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+=head2 Affects
+
+L<IupItem|../elem/iupitem.html>, L<IupSubmenu|../elem/iupsubmenu.html>
+
+=cut

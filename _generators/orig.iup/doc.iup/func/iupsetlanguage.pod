@@ -1,0 +1,44 @@
+=head1 IupSetLanguage
+
+Defines the language used by some pre-defined dialogs. This is an old
+function, it just sets the global attribute LANGUAGE.
+
+=head2 Parameters/Return
+
+ void IupSetLanguage(const char *lng); [in C] 
+ iup.SetLanguage(lng: string) [in Lua]
+
+B<lng>: Language to be used. Can have one of the following values:
+
+=over
+
+=item * "ENGLISH"
+
+=item * "PORTUGUESE"
+
+=back
+
+default: "ENGLISH".
+
+=head2 Affects
+
+All elements that have predefined texts.
+
+=head2 Examples
+
+ #include "iup.h"
+ 
+ void main(void)
+ {
+   IupOpen();
+   IupSetLanguage("ENGLISH"); 
+   IupMessage("IUP Language", IupGetLanguage());
+   IupClose();
+ }
+
+=head2 See Also
+
+L<IupGetLanguage|iupgetlanguage.html>,
+L<LANGUAGE|../attrib/iup_globals.html#LANGUAGE>
+
+=cut

@@ -1,0 +1,24 @@
+=head1 ACTION
+
+Action generated when the element is activated. Affects each element
+differently.
+
+=head2 Callback
+
+ int function(Ihandle *ih); [in C]
+ elem:action() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+In some elements, this callback may receive more parameters, apart from
+B<ih>. Please refer to each element's documentation.
+
+=head2 Affects
+
+L<IupButton|../elem/iupbutton.html>, L<IupItem|../elem/iupitem.html>,
+L<IupList|../elem/iuplist.html>, L<IupText|../elem/iuptext.html>,
+L<IupCanvas|../elem/iupcanvas.html>,
+L<IupMultiline|../elem/iupmultiline.html>,
+L<IupToggle|../elem/iuptoggle.html>
+
+=cut

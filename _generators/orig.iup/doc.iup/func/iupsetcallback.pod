@@ -1,0 +1,43 @@
+=head1 IupSetCallback
+
+Associates a callback to an event.
+
+=head2 Parameters/Return
+
+ Icallback IupSetCallback(Ihandle* ih, const char *name, Icallback func); [in C]
+ [There is no equivalent in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<name>: attribute name of the callback.
+
+B<func>: address of a C function. If NULL removes the association.
+
+Returns: the address of the previous function associated to the action.
+
+=head2 Notes
+
+This function replaces the combination:
+
+ IupSetFunction(global_name, func);
+ IupSetAttribute(ih, name, global_name);
+
+So it eliminates the need for a global name.
+
+Callbacks set using B<IupSetCallback> can not be retrieved using
+B<IupGetFunction>.
+
+In Lua, callbacks are associated by simply setting a function as the
+value of the callback name, for example:
+
+ button = iup.button{...
+ 
+ button.action = function(...    OR
+ function button:action(...
+
+=head2 See Also
+
+L<IupGetCallback|iupgetcallback.html>,
+L<IupSetFunction|iupsetfunction.html>
+
+=cut

@@ -1,0 +1,16 @@
+=head1 OPEN_CB
+
+Called just before the menu is opened.
+
+=head2 Callback
+
+ int function(Ihandle *ih); [in C]
+ elem:open_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+=head2 Affects
+
+L<IupMenu|../elem/iupmenu.html>
+
+=cut

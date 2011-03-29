@@ -1,0 +1,21 @@
+=head1 IupGetFloat
+
+Returns the value of an interface element attribute as a floating point
+number.
+
+=head2 Parameters/Return
+
+ float IupGetFloat(Ihandle *ih, const char *name) [in C]
+ [There is no equivalent in Lua]
+
+B<ih>: Identifier of the interface element.
+
+B<name>: name of the attribute.
+
+Returns: a float corresponding to the attributeE<rsquo>s value.
+
+=head2 See Also
+
+L<IupGetAttribute|iupgetattribute.html>, L<IupGetInt|iupgetint.html>.
+
+=cut

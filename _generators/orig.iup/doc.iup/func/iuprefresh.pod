@@ -1,0 +1,49 @@
+=head1 IupRefresh
+
+Updates the size and layout of controls after changing size attributes.
+Can be used for any element inside a dialog, the layout of the dialog
+will be updated. It can change the layout of all the controls inside
+the dialog because of the dynamic layout positioning.
+
+=head2 Parameters/Return
+
+ void IupRefresh(Ihandle *ih); [in C]
+ iup.Refresh(ih: ihandle) [in Lua]
+
+B<ih>: identifier of the interface element.
+
+=head2 Notes
+
+Can be used for any control, but it will always affect the whole
+dialog. Can be called even if the dialog is not mapped.
+
+The elements are immediately repositioned, if the dialog is visible
+then the change will be immediately reflected on the display.
+
+This function will NOT change the size of the dialog, except when the
+SIZE or RASTERSIZE attributes of the dialog where changed before the
+call.
+
+If you also want to change the size of the dialog use:
+
+ IupSetAttribute(dialog, "SIZE", ...);
+ IupRefresh(dialog);
+
+So the dialog will be resized for the new B<User> size, if the new size
+is NULL the dialog will be resized to the B<Natural> size that include
+all the elements.
+
+Changing the size of elements without changing the dialog size may
+position some controls outside the dialog area at the left or bottom
+borders (the elements will be cropped at the dialog borders by the
+native system).
+
+B<IupMap> also updates the dialog layout even if the control is already
+mapped, so using it or using B<IupShow>, B<IupShowXY> or B<IupPopup>
+(they all call B<IupMap>) will also update the dialog layout.
+
+=head2 See Also
+
+L<SIZE|../attrib/iup_size.html>, L<IupMap|iupmap.html>
+
+=cut

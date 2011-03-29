@@ -1,0 +1,246 @@
+=head1 Comparing IUP with Other Interface Toolkits
+
+=head2 Why to still maintain IUP if today we have so many other popular
+toolkits?
+
+This is a question we always ask to ourselves before going on for
+another year.
+
+To answer that question we must first define the characteristics of the
+"ideal" toolkit, list the available toolkits and compare them with the
+"ideal" and with IUP.
+
+We would like a toolkit that has:
+
+=over
+
+=item * B<Portability.> That provides an abstraction for User Interface
+in Windows, UNIX and Macintosh.
+
+=item * B<Free License and Open Source.> This means that we can also
+produce commercial applications. The pure GPL license can not be used
+but the LGPL can but must contain an exception stating that derived
+works in binary form may be distributed on the user's own terms. This
+is a solution that satisfies those who wish to produce GPL'ed software
+and also those producing proprietary software. Many libraries are
+distributed with this license combination.
+
+=item * B<Small and Simple API. >This is rare. Many libraries assume
+that an Interface toolkit is also a synonymous of a system abstraction
+and accumulate thousands of extra functions that are not related to
+User Interface. At Tecgraf we like many small libraries instead of one
+big library. Almost all available toolkits today are in C++ only, so C
+applications are excluded, also this means a hundred classes to include
+and understand each member function. The use of attributes makes a lot
+of things more elegant and simpler to understand.
+
+=item * B<Native Look & Feel>. Many toolkits draw their own controls.
+This gives an uniformity among systems, but also a disparity among the
+available applications in the same system. Native controls are also
+faster because they are drawn by the system. But the problem is what's
+"native" in UNIX? Some commercial applications in UNIX start using
+Motif as the "native" option. It was the official standard but because
+of license restrictions, before the OpenMotif event, the system became
+old and some good alternatives were developed, including GTK and Qt.
+
+=back
+
+=head2 Toolkits
+
+With these characteristics in mind we select some of the available
+toolkits:
+
+Name
+
+License
+
+Last Update
+
+Version
+
+Language
+
+Platforms
+
+Controls
+
+Team
+
+Comments
+
+L<FOX|http://www.fox-toolkit.org/>
+
+LGPL
+
+1997-2009/03
+
+1.6.36
+
+C++
+
+Win, X
+
+own
+
+3
+
+great look, license restrictions
+
+L<FLTK|http://www.fltk.org/>
+
+LGPL*
+
+1998-2008/04
+
+1.1.9
+
+C++
+
+Win, X, Mac
+
+own
+
+4
+
+was from Digital Domain. Easy to learn.
+
+L<GTK+|http://www.gtk.org/>
+
+LGPL*
+
+1997-2009/06
+
+2.16.2
+
+C
+
+Win, X, Mac
+
+own
+
+10
+
+target for X-Windows, basis of GNOME, Windows is apart, Mac using X
+
+L<Qt|http://www.trolltech.com>
+
+GPL
+
+1994-2009/03
+
+4.5.1
+
+C++
+
+Win, X, Mac
+
+own
+
+(many)
+
+Is free for Non Commercial, basis of KDE, Emulates the native look and
+feel
+
+L<wxWidgets|http://www.wxwidgets.org/>
+
+LGPL*
+
+1992-2009/03
+
+2.8.10
+
+C++
+
+Win, X, Mac
+
+native
+
+6
+
+X can use Motif or GTK
+
+L<IUP|http://www.tecgraf.puc-rio.br/iup/>
+
+MIT
+
+1994-2008/12
+
+2.7.1
+
+C
+
+Win, X, Mac
+
+native
+
+2
+
+X can use Motif or GTK, Mac using X
+
+Table Last Update: June 2009
+
+More toolkits can be found here: L<The GUI Toolkit, Framework
+Page|http://www.geocities.com/SiliconValley/Vista/7184/guitool.html>.
+
+An interesting article can be found here: L<GUI Toolkits for The X
+Window System|http://freshmeat.net/articles/view/928/>.
+
+=head2 Discussion
+
+FOX has a great look but the license can be restrictive in some cases.
+
+FLTK promises a new version with a better look and new features, but
+there are no concrete release dates. The FLTK documentation also does
+not help.
+
+GTK+ can be used as a replacement for Motif, but not as a fully
+"portable" toolkit since it is was originally target for X-Windows.
+Nowadays GTK+ 2 is a great free C toolkit. But some predefined dialogs
+could be the native ones, like the File Selection, specially in
+Windows. The Windows port has a look and feel very similar to the
+Windows native look and feel, but it is different from a native
+application. A MacOS X port without using X-Windows is on the way, so
+the future is promising.
+
+Qt had several license limitations, but since mid 2009 a new license
+model take place and it became more attractive. It is a very stable and
+powerful toolkit.
+
+wxWidgets is an excellent choice because of the native controls and its
+portability.
+
+It is hard to compare IUP with wxWidgets and Qt since they are much
+more than an User Interface Toolkit. They are complete development
+platforms that include several secondary libraries not related to User
+Interface. In IUP we focus only in Graphical User Interface.
+
+=head2 Developing IUP
+
+IUP has a C API, only has functions for Graphical User Interface, and
+uses "Native Controls" in Windows, Motif and GTK+. These are the major
+differences between IUP and other toolkits. Because of that IUP is
+small, fast and very powerful.
+
+We have a small but very active team and we have many Tecgraf and
+foreign applications that today use IUP, collaborating for its
+evolution. Our objective is to surpass the Tecgraf needs, keeping
+backward compatibility and improving the internal code.
+
+IUP does not have a wide localization feature, it only includes support
+for messages in English and Portuguese. And it does not have support
+for Unicode characters.
+
+B<Why Not Mac? >The first Mac driver was developed for MacOS 9 and had
+several memory limitations so it was abandoned. With Mac OS X we have
+the opportunity to do something better. Today IUP runs on Mac OS X
+using X11 with Motif or GTK. We plan for the future to build a native
+Carbon driver.
+
+B<Why Still Motif? >Motif is very important for non Linux systems, some
+Tecgraf applications run on old AIX, SGI and Sun systems, that only
+have Motif installed and we can not force the installation of other
+toolkits like GTK.
+
+I<.. "Make it Reusable, Make it Simple, Make it Small" ...>
+
+=cut

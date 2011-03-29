@@ -1,0 +1,31 @@
+=head1 IupSaveImageAsText (since 3.0)
+
+Saves the B<IupImage> as a text file to be reused in other programs.
+
+It does NOT depends on the IM library.
+
+=head2 Parameters/Return
+
+ int IupSaveImageAsText(Ihandle* ih, const char* file_name, const char* format, const char* name); [in C]
+ iup.SaveImageAsText(ih: ihandle, file_name, format[, name]: string) -> (ret: boolean) [in Lua]
+
+B<ih:> handle of the B<IupImage>.
+
+B<file_name>: Name of the file to be loaded.
+
+B<format>: text format. Can be: "LED", "LUA" or "C".
+
+B<name>: name of the image. Can be NULL.
+
+Returns: zero if failed, non zero value if sucess.
+
+=head2 Notes
+
+If name is NULL and the B<IupImage> is associated with a name then that
+name is used, if no name is associated then "image" will be used.
+
+=head2 X<SeeAlso>See Also
+
+L<IupImage|../elem/iupimage.html>, L<IUP-IM Functions|../iupim.html>
+
+=cut

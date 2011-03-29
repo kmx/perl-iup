@@ -1,0 +1,24 @@
+=head1 MOTION_CB
+
+Action generated when the mouse moves.
+
+=head2 Callback
+
+ int function(Ihandle *ih, int x, int y, char *status); [in C]
+ elem:motion_cb(x, y: number, status: string) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<x>, B<y>: position in the canvas where the event has occurred, in
+pixels.
+
+B<status>: status of mouse buttons and certain keyboard keys at the
+moment the event was generated. The same macros used for
+L<BUTTON_CB|../call/iup_button_cb.html> can be used for this status.
+
+=head2 Affects
+
+L<IupCanvas|../elem/iupcanvas.html>,
+L<IupGLCanvas|../ctrl/iupglcanvas.html>
+
+=cut

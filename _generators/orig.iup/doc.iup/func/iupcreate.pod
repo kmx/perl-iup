@@ -1,0 +1,30 @@
+=head1 IupCreate
+
+Creates an interface element given its class name and parameters. This
+function is called from all constructors like IupDialog(...),
+IupLabel(...), and so on.
+
+After B<creation> the element still needs to be B<attached> to a
+container and B<mapped> to the native system so it can be visible.
+
+=head2 Parameters/Return
+
+ Ihandle* IupCreate(const char *classname); [in C]
+ Ihandle* IupCreatev(const char *classname, void **params)
+ Ihandle *IupCreatep(const char *classname, void* params0, ...)
+ [Not available in Lua]
+
+B<classname>: class name of the element to be created
+
+B<params>: list of parameters limited by a NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 See Also
+
+L<IupAppend|iupappend.html>, L<IupDetach|iupdetach.html>,
+L<IupMap|iupmap.html>, L<IupUnmap|iupunmap.html>,
+L<IupDestroy|iupdestroy.html>, L<IupGetClassName|iupgetclassname.html>
+
+=cut

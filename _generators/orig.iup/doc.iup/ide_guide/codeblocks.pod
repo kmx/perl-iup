@@ -1,0 +1,39 @@
+=head1 Code Blocks Project Properties Guide
+
+=head2
+L<http:E<47>E<47>www.codeblocks.orgE<47>|http://www.codeblocks.org/>
+
+This guide was built using Code Blocks 8.02 IDE in Windows (but similar
+configuration can be applied for Linux).
+
+To create a new project go to the menu "File / New / Project" and
+select "Win32 GUI project":
+
+L<[IMAGE]|codeblocks1.png>
+
+You can use several compilers, for this tutorial we will choose the
+MingW3 compiler. Just use the respective IUP binaries package:
+"mingw3".
+
+Then remove the automatically added files and add your files to the
+projet workspace.
+
+After creating the project you must configure it to find the IUP
+includes and libraries. Go the menu "Project / Build Options".
+
+To configure the include files location go to "Search Directories" then
+in Compiler add the paths you need:
+
+L<[IMAGE]|codeblocks2.png>
+
+To configure the library files location go to "Search Directories" then
+in Compiler add the paths you need:
+
+L<[IMAGE]|codeblocks3.png>
+
+To add the library files go to "Linker Settings" then in "Link
+libraries" add the files you need:
+
+L<[IMAGE]|codeblocks4.png>
+
+=cut

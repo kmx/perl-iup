@@ -1,0 +1,31 @@
+=head1 IupStoreAttribute
+
+Defines an attribute for an interface element but the string is
+internally duplicated.
+
+=head2 Parameters/Return
+
+ void IupStoreAttribute(Ihandle *ih, const char *name, const char *value); [in C]
+ iup.StoreAttribute(ih: iulua_tag, name: string, value: string) [in Lua] 
+
+B<ih>: identifier of the interface element. If NULL will set in the
+global environment.
+
+B<name>: name of the attribute.
+
+B<value>: value of the attribute. If NULL (nil in IupLua), the
+attribute will be removed from the element.
+
+=head2 Notes
+
+The value is duplicated before it is stored in the hash table, if that
+happen. Otherwise behaves just like B<IupSetAttribute>.
+
+You can NOT use this functions for pointers that are not strings.
+
+=head2 See Also
+
+L<IupGetAttribute|iupgetattribute.html>,
+L<IupSetAttribute|iupsetattribute.html>
+
+=cut

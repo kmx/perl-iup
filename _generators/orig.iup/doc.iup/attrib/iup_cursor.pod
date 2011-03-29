@@ -1,0 +1,197 @@
+=head1 CURSOR (non inheritable)
+
+Defines the element's cursor.
+
+=head2 Value
+
+Name of a cursor.
+
+It will check first for the following predefined names:
+
+[IMAGE]
+
+[IMAGE]
+
+Name
+
+"NONE" or "NULL"
+
+[IMAGE]
+
+[IMAGE]
+
+"ARROW"
+
+[IMAGE]
+
+[IMAGE]
+
+"BUSY"
+
+[IMAGE]
+
+[IMAGE]
+
+"CROSS"
+
+[IMAGE]
+
+[IMAGE]
+
+"HAND"
+
+[IMAGE]
+
+[IMAGE]
+
+"HELP"
+
+[IMAGE]
+
+[IMAGE]
+
+"MOVE"
+
+[IMAGE]
+
+[IMAGE]
+
+"PEN" (*)
+
+[IMAGE]
+
+[IMAGE]
+
+"RESIZE_N"
+
+[IMAGE]
+
+[IMAGE]
+
+"RESIZE_S"
+
+[IMAGE]
+
+[IMAGE]
+
+"RESIZE_NS"
+
+[IMAGE]
+
+[IMAGE]
+
+"RESIZE_W"
+
+[IMAGE]
+
+[IMAGE]
+
+"RESIZE_E"
+
+[IMAGE]
+
+[IMAGE]
+
+"RESIZE_WE"
+
+[IMAGE]
+
+[IMAGE]
+
+"RESIZE_NE"
+
+[IMAGE]
+
+[IMAGE]
+
+"RESIZE_SW"
+
+[IMAGE]
+
+[IMAGE]
+
+"RESIZE_NW"
+
+[IMAGE]
+
+[IMAGE]
+
+"RESIZE_SE"
+
+[IMAGE]
+
+[IMAGE]
+
+"TEXT"
+
+[IMAGE]
+
+----
+
+"APPSTARTING" (Windows Only)
+
+[IMAGE]
+
+----
+
+"NO" (Windows Only)
+
+[IMAGE]
+
+[IMAGE]
+
+"UPARROW"
+
+Default: "ARROW"
+
+(*) To use these cursors on Windows, the B<iup.rc> file, provided with
+IUP, must be linked with the application (except when using the IUP
+DLL).
+
+The GTK cursors have the same appearance of the X-Windows cursors.
+Althought GTK cursors can have more than 2 colors depending on the
+X-Server.
+
+If it is not a pre-defined name, then will check for other system
+cursors. In Windows the value will be used to load a cursor form the
+application resources. In Motif the value will be used as a X-Windows
+cursor number, see definitions in the X11 header "cursorfont.h". In GTK
+the value will be used as a cursor name, see the GDK documentation on
+Cursors.
+
+If no system cursors were found then the value will be used to try to
+find an IUP image with the same name. Use B<IupSetHandle> to define a
+name for an B<IupImage>. But the image will need an extra attribute and
+some specific characteristics, see notes bellow.
+
+=head2 Notes
+
+For an image to represent a cursor, it should has the attribute
+"B<HOTSPOT"> to define the cursor hotspot (place where the mouse click
+is actually effective). The default value is "0:0".
+
+Usually only color indices 0, 1 and 2 can be used in a cursor, where 0
+will be transparent (must be "BGCOLOR"). The RGB colors corresponding
+to indices 1 and 2 are defined just as in regular images. In Windows
+and GTK the cursor can have more than 2 colors. Cursor sizes are
+usually less than or equal to 32x32.
+
+The cursor will only change when the interface system regains control
+or when IupFlush is called.
+
+The Windows SDK recommends that cursors and icons should be implemented
+as resources rather than created at run time.
+
+When the cursor image is no longer necessary, it must be destroyed
+through function L<IupDestroy|../func/iupdestroy.html>. Attention: the
+cursor cannot be in use when it is destroyed.
+
+=head2 Affects
+
+L<IupDialog|../dlg/iupdialog.html>, L<IupCanvas|../elem/iupcanvas.html>
+
+=head2 See Also
+
+L<IupImage|../elem/iupimage.html>
+
+=cut

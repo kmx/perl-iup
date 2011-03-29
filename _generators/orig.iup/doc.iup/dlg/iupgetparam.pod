@@ -1,0 +1,276 @@
+=head1 IupGetParam
+
+Shows a modal dialog for capturing parameter values using several types
+of controls.
+
+=head2 X<Creation>Creation and Show
+
+=over
+
+=over
+
+ int IupGetParam(const char* title, Iparamcb action, void* user_data, const char* format,...); [in C]
+ iup.GetParam(title: string, action: function, format: string,...) -> (status: boolean, ...) [in Lua]
+
+title
+
+: dialog title.
+
+B<action:> user callback to be called whenever a parameter value was
+changed, and when the user pressed the OK button. It can be NULL.
+
+B<user_data>: user pointer passed to the user callback.
+
+B<format>: string describing the parameter
+
+...: list of variables address with initial values for the parameters.
+
+Returns: a B<status> code 1 if the OK button is pressed, 0 if the user
+canceled or if an error occurred.
+
+The function will abort if there are errors in the format string as in
+the number of the expected parameters. In Lua, the values are returned
+by the function in the same order they were passed. The Lua type of
+each parameter is the equivalent C type (boolean is integer).
+
+=back
+
+=back
+
+=head2 Callbacks
+
+=over
+
+ int function(Ihandle* dialog, int param_index, void* user_data); [in C]luafunction(dialog: ihandle, param_index: number) -> (ret: number) [in Lua]
+
+B<dialog>: dialog handle
+
+B<param_index>: current parameter being changed. It is -1 if the user
+pressed the B<OK> button. It is -2 after the dialog is B<mapped> and
+just before it is shown. It is -3 if the user pressed the B<Cancel>
+button. It is -4 if the user pressed the B<Help> button, if any.
+
+B<user_data>: a user pointer that is passed in the function call.
+
+Returns: You can reject the change or the OK action by returning 0 in
+the callback, otherwise you must return 1.
+
+You should not programmatically change the current parameter value
+during the callback. On the other hand you can freely change the value
+of other parameters.
+
+Use the dialog attribute "PARAMn" to get the parameter "Ihandle*",
+where "n" is the parameter index in the order they are specified
+starting at 0, but separators and button names are not counted. Notice
+that this is not the actual control, use the parameter attribute
+"CONTROL" to get the actual control. For example:
+
+ Ihandle* param2 = (Ihandle*)IupGetAttribute(dialog, "PARAM2");
+ int value2 = IupGetInt(param2, IUP_VALUE);
+ 
+ Ihandle* param5 = (Ihandle*)IupGetAttribute(dialog, "PARAM5");
+ Ihandle* ctrl5 = (Ihandle*)IupGetAttribute(param5, "CONTROL");
+ 
+ if (value2 == 0)
+ {
+   IupSetAttribute(param5, IUP_VALUE, "New Value");
+   IupSetAttribute(ctrl5, IUP_VALUE, "New Value");
+ }
+
+Since parameters are user controls and not real controls, you must
+update the control value and the parameter value.
+
+Be aware that programmatically changes are not filtered. The valuator,
+when available, can be retrieved using the parameter attribute
+"AUXCONTROL". The valuator is not automatically updated when the text
+box is changed programmatically. The parameter label is also available
+using the parameter attribute "LABEL".
+
+=back
+
+=head2 X<Attributes>Attributes (inside the callback)
+
+For the dialog:
+
+"PARAMn" - returns an IUP Ihandle* representing the nth parameter,
+indexed by the declaration order, not counting separators or button
+names.
+
+"OK" - returns an IUP Ihandle*, the main button.
+
+"CANCEL" - returns an IUP Ihandle*, the close button.
+
+For a parameter:
+
+"LABEL" - returns an IUP Ihandle*, the label associated with the
+parameter.
+
+"CONTROL" - returns an IUP Ihandle*, the real control associated with
+the parameter.
+
+"AUXCONTROL" - returns an IUP Ihandle*, the auxiliary control
+associated with the parameter (only for Valuators).
+
+"INDEX" - returns an integer value associated with the parameter index.
+B<IupGetInt> can also be used.
+
+"VALUE" - returns the parameter value as a string, but B<IupGetFloat>
+and B<IupGetInt> can also be used. It usually contains the new value of
+the control while the VALUE attribute of the control still has the old
+value.
+
+In Lua, to retrieve a parameter you must use the following function:
+
+ iup.GetParamParam(dialog: ihandle, param_index: number)-> (param: ihandle) [in Lua]
+
+B<dialog>: Identifier of the dialog.
+
+B<param_index>: parameter to be retrieved.
+
+=head2 Notes
+
+The format string must have the following format, notice the "\n" at
+the end
+
+"B<I<text>>%B<I<x>[I<extra>]{tip}>\n", where:
+
+B<I<text>> is a descriptive text, to be placed to the left of the entry
+field in a label.
+
+B<I<x>> is the type of the parameter. The valid options are:
+
+B<b> = boolean (shows a True/False toggle, use "int" in C)
+
+i = integer (shows a integer number filtered text box, use "int" in C)
+
+r = real (shows a real number filtered text box, use "float" in C)
+
+a = angle in degrees (shows a real number filtered text box and a dial
+[if B<IupControlsOpen> is called], use "float" in C)
+
+B<s> = string (shows a text box, use "char*" in C, it must have room
+enough for your string)
+
+B<m> = multiline string (shows a multiline text box, use "char*" in C,
+it must have room enough for your string)
+
+B<l> = list (shows a dropdown list box, use "int" in C for the zero
+based item index selected)
+
+B<t> = separator (shows a horizontal line separator label, in this case
+text can be an empty string, not included in parameter count)
+
+B<f> = string (same as B<s>, but also show a button to open a file
+selection dialog box)
+
+B<c> = string (same as B<s>, but also show a color button to open a
+color selection dialog box)
+
+u = buttons names (allow to redefine the OK and Cancel button names,
+and to add a Help button, use [ok,cancel,help] as extra data, can omit
+one of them, it will use the default name, not included in parameter
+count) (since 3.1)
+
+B<I<extra>> is one or more additional options for the given type
+
+B<[min,max,step]> are optional limits for integer and real types. The
+B<max> and B<step> values can be omitted. When B<min> and B<max> are
+specified a valuator will also be added to change the value. To specify
+B<step>, B<max> must be also specified. B<step> is the size of the
+increment.
+
+B<[false,true]> are optional strings for boolean types to be displayed
+after the toggle. The strings can not have commas 'B<,>', nor brackets
+'B<[>' or 'B<]>'.
+
+mask is an optional mask for the string and multiline types. The dialog
+uses the L<MASK|../attrib/iup_mask.html> attribute internally. In this
+case we do no use the brackets 'B<[>' and 'B<]>' to avoid confusion
+with the specified mask.
+
+B<|item0|item1|item2,...|> are the items of the list. At least one item
+must exist. Again the brackets are not used to increase the
+possibilities for the strings, instead you must use 'B<|>'. Items index
+are zero based start.
+
+B<[dialogtype|filter|directory|nochangedir|nooverwriteprompt]> are the
+respective attribute values passed to the L<
+IupFileDlg|iupfiledlg.html> control when activated. All commas must
+exist, but you can let empty values to use the default values. No mask
+can be set.
+
+B<tip> is a string that is displayed in a TIP for the main control of
+the parameter. (since 3.0)
+
+There is no extra parameters for the color string. The mask is
+automatically set to capture 3 or 4 unsigned integers from 0 to 255 (R
+G B) or (R G B A) (alpha is optional).
+
+The number of lines in the format string ("\n"s) will determine the
+number of required parameters. But separators will not count as
+parameters.
+
+A integer parameter always has a spin attached to the text to increment
+and decrement the value. A real parameter only has a spin in a full
+interval is defined (min and max), in this case the default step is
+(max-min)/20. When the callback is called because a spin was activated
+then the attribute SPINNING of the dialog will be defined to a non NULL
+and non zero value.
+
+The dialog is resizable if it contains a string, a multiline string or
+a number with a valuator. All the multiline strings will increase size
+equally in both directions.
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+Here is an example showing many the possible parameters. We show only
+one for each type, but you can have as many parameters of the same type
+you want.
+
+  // initial values
+  int pboolean0 = 1;
+  int pinteger1 = 3456;
+  float preal2 = 3.543f;
+  int pinteger3 = 192;
+  float preal4 = 0.5f;
+  float pangle5 = 90;
+  char pstring6[100] = "string text";
+  int plist7 = 2;
+  char pfile_name8[500] = "test.jpg";
+  char pcolor9[100] = "255 0 128";
+  char pstring10[200] = "second text\nsecond line";
+   
+  if (!IupGetParam("Title", param_action, 0,
+                   "Boolean: %b[No,Yes]{Boolean Tip}\n"
+                   "Integer: %i{Integer Tip}\n"
+                   "Real 1: %r{Real Tip}\n"
+                   "Sep1 %t\n"
+                   "Integer: %i[0,255]{Integer Tip 2}\n"
+                   "Real 2: %r[-1.5,1.5]{Real Tip 2}\n"
+                   "Sep2 %t\n"
+                   "Angle: %a[0,360]{Angle Tip}\n"
+                   "String: %s{String Tip}\n"
+                   "List: %l|item1|item2|item3|{List Tip}\n" 
+                   "File: %f[OPEN|*.bmp;*.jpg|CURRENT|NO|NO]{File Tip}\n"
+                   "Color: %c{Color Tip}\n"
+                   "Sep3 %t\n"
+                   "Multiline: %m{Multiline Tip}\n",
+                   &pboolean0, &pinteger1, &preal2, &pinteger3, &preal4, &pangle5, pstring6, &plist7, pfile_name8, pcolor9, pstring10, NULL))
+    return IUP_DEFAULT;
+
+[IMAGE]
+
+=head2 X<SeeAlso>See Also
+
+L<IupScanf|iupscanf.html>, L<IupGetColor|iupgetcolor.html>,
+L<IupMask|iupmask.html>, L<IupVal|../elem/iupval.html>,
+L<IupDial|iupdial.html>, L<IupList|../elem/iuplist.html>,
+L<IupFileDlg|iupfiledlg.html>.
+
+=cut

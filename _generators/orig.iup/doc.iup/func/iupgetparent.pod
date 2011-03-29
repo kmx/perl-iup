@@ -1,0 +1,20 @@
+=head1 IupGetParent
+
+Returns the parent of a control.
+
+=head2 Parameters/Return
+
+ Ihandle* IupGetParent(Ihandle *ih); [in C]
+ iup.GetParent(ih: ihandle) -> parent: ihandle [in Lua]
+
+B<ih>: identifier of the interface element.
+
+Returns: the handle of the parent or NULL if does not have a parent.
+
+=head2 See Also
+
+L<IupGetChild|iupgetchild.html>,
+L<IupGetNextChild|iupgetnextchild.html>,
+L<IupGetBrother|iupgetbrother.html>
+
+=cut

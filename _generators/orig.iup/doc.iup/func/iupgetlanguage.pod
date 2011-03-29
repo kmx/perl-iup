@@ -1,0 +1,16 @@
+=head1 IupGetLanguage
+
+Returns the global attribute LANGUAGE.
+
+=head2 Parameters/Return
+
+ char* IupGetLanguage(void); [in C] iup.GetLanguage() -> (language: string) [in Lua] 
+
+Returns: the language.
+
+=head2 See Also
+
+L<IupSetLanguage|iupsetlanguage.html>,
+L<LANGUAGE|../attrib/iup_globals.html#LANGUAGE>.
+
+=cut

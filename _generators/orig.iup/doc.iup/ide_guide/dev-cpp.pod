@@ -1,0 +1,83 @@
+=head1 Dev-C++ IDE Project Options Guide
+
+=head2
+L<http:E<47>E<47>www.bloodshed.netE<47>devcpp.html|http://www.bloodshed.net/devcpp.html>
+
+"Bloodshed Dev-C++ is a full-featured Integrated Development
+Environment (IDE) for the C/C++ programming language. It uses Mingw
+port of GCC (GNU Compiler Collection) as it's compiler. Dev-C++ can
+also be used in combination with Cygwin or any other GCC based
+compiler."
+
+It has many features, and integrated debug and it is free! To use IUP
+with Dev-C++ you will need to download the "mingw3" binaries in the
+download page.
+
+After unpacking the file in your conputer, you must create a new
+Project and configure your Project Options. In the Project Options
+dialog there are 3 important places:
+
+=over
+
+=item * General / Type - you can configure Win32 GUI or Win32 Console,
+but if you set to console it will always create a console screen behind
+your window when the program starts. Do not select "Support Windows XP
+Themes".
+
+=back
+
+L<[IMAGE]|dev_cpp1.gif>
+
+=over
+
+=item * Parameters / Linker - where you are going to list the libraries
+you use, for example:
+
+=back
+
+ -liup
+ -liupcontrols
+ -lcd
+ -liupcd
+ -lcomctl32
+ -lole32
+ -lgdi32 (if Win32 Console)
+ -lcomdlg32 (if Win32 Console)
+
+In this configuration you are using also the additional library of
+Controls that uses the L<CD library|http://www.tecgraf.puc-rio.br/cd>,
+also available at the download page.
+
+L<[IMAGE]|dev_cpp2.gif>
+
+=over
+
+=item * Directories / Library Directories and Include Directories -
+where you are going to list the include path, for example:
+
+=back
+
+ ..\..\iup\lib\mingw3
+ ..\..\cd\lib\mingw3
+ or
+ c:\tecgraf\iup\lib\mingw3 
+ c:\tecgraf\cd\lib\mingw3
+
+And:
+
+ ..\..\iup\include
+ ..\..\cd\include
+ or
+ c:\tecgraf\iup\include
+ c:\tecgraf\cd\include
+
+L<[IMAGE]|dev_cpp3.gif> L< [IMAGE]|dev_cpp4.gif>
+
+In some cases the IDE may force the compilation of C files as C++. If
+do not want that then uncheck the option in the settings for each file.
+Still in the Project Options dialog, in the Files tab, select the file
+and uncheck "Compile File as C++".
+
+L<[IMAGE]|dev_cpp5.gif>
+
+=cut

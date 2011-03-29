@@ -1,0 +1,127 @@
+=head1 Lua Binding
+
+=head2 X<iuplua>Overview
+
+All the IUP functions are available in Lua, with a few exceptions. We
+call it B<IUPLua>. To use them the general application will do
+require"iuplua", and require"iupluaxxxx" to all other secondary
+libraries that are needed. The functions and definitions will be
+available under the table "iup" using the following name rules:
+
+ iupXxx  -> iup.Xxx    (for functions)IUP_XXX -> iup.XXX    (for definitions)
+
+All the metatables have the "tostring" metamethod implemented to help
+debugging.
+
+Also the functions which receive values by reference in C were
+modified. Generally, the values of parameters that would have their
+values modified are now returned by the function in the same order.
+
+Notice that, as opposed to C, in which enumeration flags areI<
+>combined with the bitwise operator OR, in Lua the flags are added
+arithmetically.
+
+In Lua all parameters are checked and a Lua error is emitted when the
+check fails.
+
+All the objects are NOT garbage collected by the Lua garbage collector,
+you must manually call B<iup.Destroy> or elem:B<destroy>, if you would
+like to destroy an element.
+
+In Iup additional features were created for the Lua Binding using the
+metamethods. Attributes and callbacks can be set and get in a much more
+natural way:
+
+ IupSetAttribute(label, "TITLE", "test")   >>   label.title = "test"             (names are in lower case)title = IupGetAttribute(label, "TITLE")   >>   title = label.titleIupSetCallback(button, "ACTION", button_action_cb);   >>    function button:action() ... end
+
+Also the element constructors were changed so you can use tables to
+initialize their parameters and attributes:
+
+ IupButton("test")         >>    iup.button{title = "test", alignment="acenter"}IupHbox(bt1, bt2, NULL)   >>    iup.hbox{bt1, bt2, margin="10x10"} 
+
+B<Lua> was created after B<LED>, so that's why B<LED> exists. Since we
+have many application still using LED, its support will continue in
+IUP. Today B<IupLua> completely replaces the LED functionality and adds
+much more.E<gt>
+
+The distribution files include an executable called B<iuplua51>, that
+you can use to test your Lua code. It has support for all the
+addicional controls, for IM, CD and OpenGL calls. It is available at
+the L<Download|download.html>.
+
+=head2 X<iupluainit>IupLua Initialization
+
+B<Lua> 5.1 "require" can be used for all the B<IupLua> libraries. You
+can use B<require>"B<iuplua>" and so on, but the LUA_CPATH must also
+contains at least the following:
+
+ "./lib?51.so;"    [in UNIX]
+ 
+ ".\\?51.dll;"     [in Windows]
+
+The L<LuaBinaries|http://luabinaries.luaforge.net/> distribution
+already includes these modifications on the default search path.
+
+The simplest form B<require>"B<iup>" and so on, can not be used because
+there are IUP dynamic libraries with names that will conflict with the
+names used by B<require> during search.
+
+Additionally you can statically link the B<IupLua> libraries, but you
+must call the initialization functions manually. The B< iuplua_open>
+function is declared in the header file B<iuplua.h>, see the example
+below:
+
+ #include <lua.h>
+ #include <lualib.h>
+ #include <lauxlib.h>
+ #include <iuplua.h>
+ void main(void)
+ {
+   lua_State *L = lua_open();
+ 
+   luaopen_string(L);
+   luaopen_math(L);
+   luaopen_io(L);  
+ 
+   iuplua_open(L); 
+   lua_dofile("myprog.lua");
+   
+   lua_close(L);
+ }
+
+When using B<Lua> the Iup initialization functions, B<IupOpen>,
+B<IupControlsOpen> and others, are not necessary. The initialization is
+automatically done inside the respective B<IupLua> initialization
+function.
+
+=head2 Embedding Lua files in the Application Executable
+
+The Lua files are dynamically loaded and must be sent together with the
+applications executable. However, this often becomes an inconvenience.
+To deal with it, there is the B<LuaC> compiler that creates a C module
+from the Lua contents. For example:
+
+ luac5.1 -o myfile.lo myfile.lua
+ bin2c5.1 myfile.lo > myfile.loh
+
+In C, you can used a define to interchanged the use of .LOH files:
+
+ #ifdef _DEBUG
+   ret_val = iuplua_dofile("myfile.lua");
+ #else
+ #include "myfile.loh"
+ #endif
+
+=head2 More Information
+
+Steve Donovan wrote a very nice "L<A Basic Guide to using
+IupLua|basic/index.html>" that was included in L<Lua for
+Windows|http://luaforwindows.luaforge.net/>. It is now available as
+part of the IUP documentation.
+
+The slides for B<"Tecgraf Development Tools: IUP, CD and IM"> presented
+at the Lua Workshop 2009 are also available for L<
+Download|../download>
+[L<iupcdim_wlua2009_en.pdf|../download/iupcdim_wlua2009_en.pdf>].
+
+=cut

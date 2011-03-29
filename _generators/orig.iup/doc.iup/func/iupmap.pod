@@ -1,0 +1,58 @@
+=head1 IupMap
+
+Creates (B<maps>) the native interface objects corresponding to the
+given IUP interface elements.
+
+It will also create the native element of all the children in the
+element's tree.
+
+The element must be already B<attached> to a container if not a dialog.
+
+=head2 Parameters/Return
+
+ int IupMap(Ihandle* ih); [in C]
+ iup.Map(ih: iuplua-tag) -> ret: number [in Lua]
+
+B<ih>: Identifier of an interface element.
+
+Returns: IUP_NOERROR if successful. If the element was already mapped
+returns IUP_NOERROR. If the native creation failed returns IUP_ERROR.
+
+=head2 Notes
+
+If the element is a dialog then the abstract layout will be updated
+even if the element is already mapped. If the dialog is visible the
+elements will be immediately repositioned. Calling B<IupMap> for an
+already mapped dialog is the same as only calling B<IupRefresh> for the
+dialog.
+
+If you add new elements to an already mapped dialog you must call
+B<IupMap> for that elements. And then call B<IupRefresh> to update the
+dialog layout.
+
+If the WID attribute is NULL, it means the element was not already
+mapped. Some containers do not have a native element associated, like
+VBOX and HBOX. In this case their WID is a fake (-1) value.
+
+A child is only mapped if its parent is already mapped.
+
+This function is automatically called before the dialog is shown in
+B<IupShow>, B<IupShowXY> or B<IupPopup>.
+
+It is usefull for the application to call B<IupMap> when the value of
+the WID attribute must be known, or the native element must exist,
+before a dialog is made visible.
+
+The MAP_CB callback is called just after the native element is created
+and the dialog layout updated, so it can also be used to create other
+things that depend on the WID attribute.
+
+=head2 See Also
+
+L<IupAppend|iupappend.html>, L<IupDetach|iupdetach.html>,
+L<IupUnmap|iupunmap.html>, L<IupCreate|iupcreate.html>,
+L<IupDestroy|iupdestroy.html>, L<IupShowXY|iupshowxy.html>,
+L<IupShow|iupshow.html>, L<IupPopup|iuppopup.html>,
+L<MAP_CB|../call/iup_map_cb.html>
+
+=cut

@@ -1,0 +1,34 @@
+=head1 IupSetGlobal
+
+Defines an attribute for the global environment. If the driver process
+the attribute then it will not be stored internally.
+
+=head2 Parameters/Return
+
+ void IupSetGlobal(const char *name, const char *value); [in C]
+ iup.SetGlobal(name: string, value: string) [in Lua] 
+
+B<name>: name of the attribute.
+
+B<value>: value of the attribute. If it equals NULL (nil in IupLua),
+the attribute will be removed.
+
+=head2 Notes
+
+The value stored in the attribute is not duplicated. Therefore, you can
+store your private attributes, such as a structure of data to be used
+in a callback.
+
+When you want IUP to store the attribute's value by duplicating the
+string, use function B<IupStoreGlobal>.
+
+IupSetAttribute can also be used to set global attributes, just set the
+element to NULL.
+
+=head2 See Also
+
+L<IupSetAttribute|iupsetattribute.html>,
+L<IupGetGlobal|iupgetglobal.html>,
+L<IupStoreGlobal|iupstoreglobal.html>
+
+=cut

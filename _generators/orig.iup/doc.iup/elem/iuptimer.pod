@@ -1,0 +1,46 @@
+=head1 IupTimer
+
+Creates a timer which periodicaly invokes a callback when the time is
+up. Each timer should be destroyed using
+L<IupDestroy|../func/iupdestroy.html>.
+
+=head2 Creation
+
+ Ihandle* IupTimer(void); [in C]
+ iup.timer{} -> (elem: ihandle) [in Lua] 
+ timer() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<TIME>: The time interval in milliseconds. In Windows the minimum
+value is 10ms.
+
+B<RUN>: Starts and stops the timer. Possible values: "YES" or "NO".
+Returns the current timer state.
+
+B<WID> (read-only): Returns the native serial number of the timer.
+Returns -1 if not running. A timer is mapped only when it is running.
+
+=head2 Callbacks
+
+B<ACTION_CB>: Called when the time is up.
+
+ int function(Ihandle *ih); [in C]
+ elem:action_cb() -> (ret: number) [in Lua]
+
+=over
+
+B<ih>: identifier of the element that activated the event.
+
+Returns: IUP_CLOSE will be processed.
+
+=back
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=cut

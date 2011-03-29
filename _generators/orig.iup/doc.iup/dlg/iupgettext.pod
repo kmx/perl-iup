@@ -1,0 +1,36 @@
+=head1 IupGetText
+
+Shows a modal dialog to edit a multiline text.
+
+=head2 Creation and Show
+
+=over
+
+ int IupGetText(const char* title, char *text); [in C]
+ iup.GetText(title, text: string) -> (text: string) [in Lua]
+
+=back
+
+B<text>: It contains the initial value of the text and the returned
+text. It must have room for the edited string.
+
+Returns: a non zero value if successfull. In Lua returns the text or
+nil if an error occured.
+
+=head2 Notes
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined.
+
+=head2 Examples
+
+[IMAGE]
+
+=head2 See Also
+
+L<IupMessage|iupmessage.html>, L<IupScanf|iupscanf.html>,
+L<IupListDialog|iuplistdialog.html>, L<IupAlarm|iupalarm.html>,
+L<IupSetLanguage|../func/iupsetlanguage.html>.
+
+=cut

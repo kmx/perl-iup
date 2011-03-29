@@ -1,0 +1,149 @@
+=head1 FORMATTING [Windows and GTK Only] (non inheritable) (since 3.0)
+
+When enabled allow the use of text formatting attributes. In GTK is
+always enabled, but only when MULTILINE=YES. Default: NO.
+
+=head2 Value
+
+Can be: YES or NO. Default: NO.
+
+=head2 Affects
+
+L<IupText|../elem/iuptext.html>
+
+=head2 Auxiliary Attributes
+
+=head2 ADDFORMATTAG [write only] (non inheritable)
+
+Name of a format tag element to be added to the B<IupText>. The name is
+associated in C using L<IupSetHandle|../func/iupsethandle.html>. The
+name association must be done before setting the attribute. It will set
+the ADDFORMATTAG_HANDLE with the associated handle.
+
+=head2 ADDFORMATTAG_HANDLE [write only] (non inheritable)
+
+Handle of a format tag element to be added to the B<IupText>. The tag
+element will be automatically destroyed when the B<IupText> is mapped.
+If the B<IupText> is already mapped, the format tag is immediately
+destroyed when the attribute is set. The format tag can NOT be reused.
+
+=head2 REMOVEFORMATTING [write only] (non inheritable)
+
+Removes the formatting of the current selection. The given value is
+ignored, and can be NULL.
+
+=head2 Format Tag
+
+The format tag element is a simple L<IupUser|../elem/iupuser.html>
+element with some known attributes that will be interpreted when the
+tag is updated in the native system.
+
+The formatting depends on the existing text, so if VALUE attribute is
+set, all formatting is lost. You must set it again for the new text.
+
+If the FONT attribute of the B<IupText> is set then it will affect the
+format of all characters in the text.
+
+The default values can not be dynamically changed.
+
+=head2 General Format Tag Attributes
+
+B<SELECTION>: same as the IupText
+L<SELECTION|../elem/iuptext.html#SELECTION> attribute. If not defined
+the B<IupText> attribute will be used. If the B<IupText> attribute is
+also not defined then the current position will receive the format, so
+new text inserted or typed will be formatted with the tag (this is not
+working in GTK). Different tags that use the same selection interval
+are combined.
+
+B<UNITS> [Windows Only]: By default all distance units are integers in
+pixels, but in Windows you can also specify integer units in TWIPs (one
+twip is 1/1440 of an inch). Can be TWIP or PIXELS. Default: PIXELS.
+
+=head2 Paragraph Format Tag Attributes
+
+B<ALIGNMENT>: Can be JUSTIFY, RIGHT, CENTER and LEFT. Default: LEFT.
+
+B<INDENT>: paragraph indentation, the distance between the margin and
+the paragraph. In Windows the right indentation, and the indentation of
+the second and subsequent lines (relative to the indentation of the
+first line) can be independently set using the B<INDENTRIGHT> and
+B<INDENTOFFSET> attributes, but only when B<INDENT> is set.
+
+B<LINESPACING>: the distance between lines of the same paragraph. In
+Windows, the values SINGLE, ONEHALF and DOUBLE can be used.
+
+B<NUMBERING> [Windows Only]: Can be BULLET (bullet symbol), ARABIC
+(arabic numbers - 1,2,3...), LCLETTER (lowercase letters - a,b,c...),
+UCLETTER (uppercase letters - A,B,C...), LCROMAN (lowercase Roman
+numerals - i,ii,iii...), UCROMAN (uppercase Roman numerals -
+I,II,III...) and NONE. Default: NONE.
+
+B<NUMBERINGSTYLE> [Windows Only]: Can be RIGHTPARENTESES "a)",
+PARENTESES "(a)", PERIOD "a.", NONUMBER (it will skip the numbering or
+bullet for the item) and NONE "". Default: NONE.
+
+B<NUMBERINGTAB> [Windows Only]: Minimum distance from a paragraph
+numbering or bullet to the paragraph text.
+
+B<SPACEAFTER>: distance left empty above the paragraph.
+
+B<SPACEBEFORE>: distance left empty bellow the paragraph.
+
+B<TABSARRAY>: a sequence of tab positions and alignment up to 32 tabs.
+It uses the format:"pos align pos align pos align...". Position is the
+distance relative to the left margin and alignment can be LEFT, CENTER,
+RIGHT and DECIMAL. In GTK only LEFT is currently supported. When
+DECIMAL alignment is used, the text is aligned according to a decimal
+point or period in the text, it is normally used to align numbers.
+
+=head2 Character Format Tag Attributes
+
+B<BGCOLOR>: string containing a color in the format "rrr ggg bbb" for
+the background of the text.
+
+B<DISABLED> [Windows Only]: Can be YES or NO. Default NO. Set the
+visual appearance to disabled.
+
+B<FGCOLOR>: string containing a color in the format "rrr ggg bbb" for
+the text.
+
+B<FONTSCALE>: a size scale relative to the selected or current size.
+Values greatter than 1 will increase the font. Values smaller than 1
+will shirnk the font. Default: 1.0. The following values are also
+accpeted: "XX-SMALL" (0.58), "X-SMALL" (0.64), "SMALL" (0.83), "MEDIUM"
+(1.0), "LARGE" (1.2), "X-LARGE" (1.44), "XX-LARGE" (1.73).
+
+B<FONTFACE>: the face name of the font.
+
+B<FONTSIZE>: the size of the font in pixels or points. Pixel size uses
+negative values.
+
+B<ITALIC>: Can be YES or NO. Default NO.
+
+B<LANGUAGE> [GTK Only]: A text with a description of the text language.
+The same value can be used in the "SYSTEMLANGUAGE" global attribute.
+
+B<RISE>: the distance, positive or negative from the base line. Can
+also use the values SUPERSCRIPT and SUBSCRIPT, but this values will
+also reduce the size of the font.
+
+B<SMALLCAPS> [GTK Only]: Can be YES or NO. Default NO. (Does not work
+always, depends on the font)
+
+B<PROTECTED>: Can be YES or NO. Default NO. When set to YES the
+selected text can NOT be edited.
+
+B<STRETCH> [GTK Only]: Can be EXTRA_CONDENSED, CONDENSED,
+SEMI_CONDENSED, NORMAL, SEMI_EXPANDED, EXPANDED and EXTRA_EXPANDED.
+Default NORMAL. (Does not work always, depends on the font)
+
+B<STRIKEOUT>: Can be YES or NO. Default NO.
+
+B<UNDERLINE>: Can be SINGLE, DOUBLE, DOTTED or NONE. Default NONE.
+DOTTED is supported only in Windows.
+
+B<WEIGHT>: Can be EXTRALIGHT, LIGHT, NORMAL, SEMIBOLD, BOLD, EXTRABOLD
+and HEAVY. Default: NORMAL.
+
+=cut

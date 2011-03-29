@@ -1,0 +1,83 @@
+=head1 IUP-IM Functions
+
+Functions to load/save an B<IupImage> from/to a file using the IM
+library. The function can load or save the formats: BMP, JPEG, GIF,
+TIFF, PNG, PNM, PCX, ICO and others. For more information about the IM
+library see L<
+http:E<47>E<47>www.tecgraf.puc-rio.brE<47>im|http://www.tecgraf.puc-rio.br/im>.
+
+=head2 Initialization and Usage
+
+To generate an application that uses this function, the program must be
+linked with the IM library and with the function library (im and iupim
+libraries). The "iupim.h" file must also be included in the source
+code.
+
+To make the function available in Lua, use require"iupluaim" or
+manually calling the initialization function in C, iupimlua_open, after
+calling B<iuplua_open> (the iupluaim.h file must also be included in
+the source code, and the program must be linked to the iupluaim
+library).
+
+=head2 Load
+
+ Ihandle* IupLoadImage(const char* file_name); [in C]
+ iup.LoadImage(file_name: string) -> (elem: ihandle) [in Lua]
+
+B<file_name>: Name of the file to be loaded.
+
+Returns: the identifier of the created image, or NULL if an error
+occurs. When failed the global attribute "IUPIM_LASTERROR" is set with
+a message describing the error.
+
+=head2 Save
+
+ int IupSaveImage(Ihandle* ih, const char* file_name, const char* format); [in C]
+ iup.SaveImage(ih: ihandle, file_name, format: string) -> (ret: boolean) [in Lua]
+
+B<ih:> handle of the B<IupImage>.
+
+B<file_name>: Name of the file to be loaded.
+
+B<format>: format descriptor for IM. For ex: "BMP", "JPEG", "GIF",
+"TIFF", "PNG", "PNM", "PCX", "ICO", etc.
+
+Returns: zero if failed. When failed the global attribute
+"IUPIM_LASTERROR" is set with a message describing the error.
+
+=head2 Native Handle to imImage
+
+ imImage* IupGetNativeHandleImage(void* handle); [in C]
+ iup.GetNativeHandleImage(handle: userdata) -> (image: imImage) [in Lua]
+
+B<handle:> image native handle. In Win32 is a B<HANDLE> of a DIB. In
+GTK is a B<GdkPixbuf*>. In Motif is a B<Pixmap>. Its memory is released
+after the B<imImage> is created.
+
+Returns: the B<imImage>* handle. Usefull when pasting data from a
+B<IupClipboard>.
+
+You must include the "im_image.h" header before the "iupim.h" to enable
+these functions.
+
+=head2 imImage to Native Handle
+
+ imImage* IupGetImageNativeHandle(imImage* image); [in C]
+ iup.GetImageNativeHandle(image: imImage) -> (handle: userdata) [in Lua]
+
+B<image:> the B<imImage>* handle. Must be a bitmap image.
+
+Returns: the image native handle. In Win32 is a B< HANDLE> for a DIB.
+In GTK is a B<GdkPixbuf*>. In Motif is a B<Pixmap>. Usefull when
+copying data to a B<IupClipboard>.
+
+You must include the "im_image.h" header before the "iupim.h" to enable
+these functions.
+
+=head2 X<SeeAlso>See Also
+
+L<IupImage|elem/iupimage.html>,
+L<IupSaveImageAsText|func/iupsaveimageastext.html>,
+L<IupClipboard|elem/iupclipboard.html>
+
+=cut

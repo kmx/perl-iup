@@ -1,0 +1,65 @@
+=head1 IupCbox
+
+Creates a Cbox element. It is a B<concrete> layout container, i.e. its
+children are positioned in specified coordinates.
+
+The B<IupCbox> is equivalent of a B<IupVbox> or B<IupHbox> where all
+the children have the L<FLOATING|../attrib/iup_floating.html> attribute
+set to YES, but children must use CX and CY attributes instead of the
+POSITION attribute.
+
+=head2 Creation
+
+ Ihandle* IupCbox(Ihandle* child, ...); [in C]
+ Ihandle* IupCboxv(Ihandle** children); [in C]
+ iup.cbox{child, ...: ihandle} -> (elem: ihandle) [in Lua]
+ cbox(child, ...) [in LED]
+
+B<child>, ... : List of the identifiers that will be placed in the box.
+NULL must be used to define the end of the list in C. It can be empty.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<CX, CY> (non inheritable) B<(at children only)>: Position in pixels
+of the child relative to the top-left corner of the box. Must be set
+for each child inside the box.
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
+value is "YES".
+
+L<SIZE|../attrib/iup_size.html> /
+L<RASTERSIZE|../attrib/iup_rastersize.html> (non inheritable): Must be
+defined for each child. If not defined for the box, then it will be the
+bounding box that includes all children in their position.
+
+B<WID> (read-only): returns -1 if mapped.
+
+=over
+
+----
+
+=back
+
+L<FONT|../attrib/iup_font.html>,
+L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
+
+=head2 Notes
+
+The box can be created with no elements and be dynamic filled using
+L<IupAppend|../func/iupappend.html>.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=head2 X<SeeAlso>See Also
+
+L<IupVbox|iupvbox.html>, L< IupHbox|iuphbox.html>
+
+=cut

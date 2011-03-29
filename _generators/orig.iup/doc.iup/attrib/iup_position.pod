@@ -1,0 +1,22 @@
+=head1 POSITION (read-only) (non inheritable)
+
+The position of the element relative to the origin of the client area
+of the native parent.
+
+It is normally read-only, but if FLOATING=YES then POSITION can be set.
+
+=head2 Value
+
+"x,y", where I<x> and I<y> are integer values corresponding to the
+horizontal and vertical position, respectively, in pixels.
+
+=head2 Affects
+
+All, except menus.
+
+=head2 See Also
+
+L<SIZE|iup_size.html>, L<RASTERSIZE|iup_rastersize.html>,
+L<FLOATING|iup_floating.html>
+
+=cut

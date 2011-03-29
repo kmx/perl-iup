@@ -1,0 +1,20 @@
+=head1 VISIBLE
+
+Shows or hides the element.
+
+=head2 Value
+
+"YES" (visible), "NO" (hidden).
+
+Default: "YES"
+
+=head2 Notes
+
+An interface element is only visible if its native parent is also
+visible.
+
+=head2 Affects
+
+All controls that have visual representation.
+
+=cut

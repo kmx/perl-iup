@@ -1,0 +1,18 @@
+=head1 IupGetChildCount(since 3.0)
+
+Returns the number of children of the given control.
+
+=head2 Parameters/Return
+
+ int IupGetChildCount(Ihandle* ih); [in C]
+ iup.GetChildCount(ih: ihandle) ->  pos: number [in Lua]
+
+B<ih>: identifier of the interface element.
+
+=head2 See Also
+
+L<IupGetChildPos|iupgetchildpos.html>, L<IupGetChild|iupgetchild.html>,
+L<IupGetNextChild|iupgetnextchild.html>,
+L<IupGetBrother|iupgetbrother.html>, L<IupGetParent|iupgetparent.html>
+
+=cut

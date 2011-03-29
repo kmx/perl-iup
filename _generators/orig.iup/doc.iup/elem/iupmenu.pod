@@ -1,0 +1,167 @@
+=head1 IupMenu
+
+Creates a menu element, which groups 3 types of interface elements:
+item, submenu and separator. Any other interface element defined inside
+a menu will be an error.
+
+=head2 Creation
+
+ Ihandle* IupMenu(Ihandle *child, ...); [in C]
+ Ihandle* IupMenuv(Ihandle **children); [in C]
+ iup.menu{child, ...: ihandle} -> (elem: ihandle) [in Lua]
+ menu(child, ...) [in LED]
+
+B<child>, ... : List of identifiers that will be grouped by the menu.
+NULL must be used to mark the end of the list in C. It can be empty.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+L<BGCOLOR|../attrib/iup_bgcolor.html>: the background color of the
+menu, affects all items in the menu. (since 3.0)
+
+B<X<RADIO>RADIO> (non inheritable): enables the automatic toggle of one
+child item. When a child item is selected the other item is
+automatically deselected. The menu acts like a B<IupRadio> for its
+children. Submenus and their children are not affected.
+
+L<WID|../attrib/iup_wid.html> (non inheritable): In Windows, returns
+the HMENU of the menu.
+
+=head2 Callbacks
+
+L<OPEN_CB|../call/iup_open_cb.html>: Called just before the menu is
+opened.
+
+L<MENUCLOSE_CB|../call/iup_menuclose_cb.html>: Called just after the
+menu is closed.
+
+----
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>: common callbacks are supported.
+
+=head2 Notes
+
+A menu can be a menu bar of a dialog, defined by the dialog's MENU
+attribute, or a popup menu.
+
+A popup menu is displayed for the user using the B<IupPopup> function
+(usually on the mouse position) and disappears when an item is
+selected.
+
+B<IupDestroy> should be called only for popup menus. Menu bars
+associated with dialogs are automatically destroyed when the dialog is
+destroyed. But if you change the menu of a dialog for another menu, the
+previous one should be destroyed using B<IupDestroy>. If you replace a
+menu bar of a dialog, the previous menu is unmapped.
+
+Any item inside a menu bar can retrieve attributes from the dialog
+using B<IupGetAttribute>. It is not necessary to call B< IupGetDialog>.
+
+=head2 Lua Binding
+
+Offers a "cleaner" syntax than LED for defining menu, submenu and
+separator items. The list of elements in the menu is described as a
+string, with one element after the other, separated by commas.
+
+Each element can be:
+
+ {"<item_name>"} - menu item
+ {"<submenu_name>", <menu>} - submenu
+ {} - separator
+
+For example:
+
+ mnu = iup.menu
+ {
+   iup.submenu
+   {
+     iup.menu
+     {
+       iup.item{title="IupItem 1 Checked",value="ON"},
+       iup.separator{},
+       iup.item{title="IupItem 2 Disabled",active="NO"}
+     } 
+     ;title="IupSubMenu 1"
+   },
+   iup.item{title="IupItem 3"},
+   iup.item{title="IupItem 4"}
+ }
+
+The same example using the cleaner syntax:
+
+ mnu = iup.menu
+ {
+   {
+     "IupSubMenu 1",
+     iup.menu
+     {
+       {"IupItem 1 Checked";value="ON"},
+       {},
+       {"IupItem 2 Disabled";active="NO"}
+     } 
+   },
+   {"IupItem 3"},
+   {"IupItem 4"}
+ }
+
+It is also possible to mix the cleaner syntax with the normal syntax or
+with already create elements.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+[IMAGE]
+
+[IMAGE]
+
+Motif
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+The B<IupItem> check is affected by the RADIO attribute in B<IupMenu>:
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+[IMAGE]
+
+[IMAGE]
+
+Motif
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+=head2 X<SeeAlso>See Also
+
+L<IupDialog|../dlg/iupdialog.html>, L<IupItem|iupitem.html>,
+L<IupSeparator|iupseparator.html>, L<IupSubmenu|iupsubmenu.html>,
+L<IupPopup|../func/iuppopup.html>,
+L<IupDestroy|../func/iupdestroy.html>
+
+=cut

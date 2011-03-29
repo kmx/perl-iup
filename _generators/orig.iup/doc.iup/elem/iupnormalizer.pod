@@ -1,0 +1,65 @@
+=head1 IupNormalizer (since 3.0)
+
+Normalizes all controls from a list so their natural size to be the
+biggest natural size among them. All natural width will be set to the
+biggest width, and all natural height will be set to the biggest height
+according to is value.
+
+=head2 Creation
+
+ Ihandle* IupNormalizer(Ihandle *ih_first, ...); [in C]
+ Ihandle* IupNormalizerv(Ihandle **ih_list); [in C]
+ iup.normalizer{ih_first, ...: ihandle} -> (elem: ihandle) [in Lua]
+ normalizer(ih_first, ...) [in LED]
+
+B<ih_first>, ... : List of the identifiers that will be normalized.
+NULL must be used to define the end of the list in C. It can be empty.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<NORMALIZE> (non inheritable): normalization direction. Can be
+HORIZONTAL, VERTICAL or BOTH. These are the same values of the
+NORMALIZESIZE attribute. Default: HORIZONTAL.
+
+B<NORMALIZERGROUP> (non inheritable) B<(for contained controls use)>:
+name of a normalizer to automatically add the control. If a normalizer
+with that name does not exists then one is created.
+
+B<ADDCONTROL> (non inheritable): Adds a control to the normalizer. The
+value passed must be the name of an element. Use
+L<IupSetHandle|../func/iupsethandle.html> or
+L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
+associate an element to a name. In Lua you can also use the element
+reference directly.
+
+B<ADDCONTROL_HANDLE> (non inheritable): Adds a control to the
+normalizer. The value passed must be a handle of an element.
+
+=head2 Notes
+
+It is NOT necessary to add the normalizer to a dialog hierarchy. Every
+time the NORMALIZE attribute is set a normalization occurs. If the
+normalizer is added to a dialog hierarchy, then whenever the B<Natural>
+size is calculated a normalization occurs, so add it to the hierarchy
+before the elements you want to normalize or its normalization will be
+not used.
+
+The elements do NOT need to be children of the same parent, do NOT need
+to be mapped, and do NOT need to be in a complete hierarchy of a
+dialog.
+
+The elements are NOT children of the normalizer. To remove or add other
+elements, the normalizer must be destroyed and created a new one.
+
+Has the same effect of the NORMALIZESIZE attribute of the B<IupVbox>
+and B<IupHbox> controls, but it can be used for elements with different
+parents, it changes the B<User> size of the elements.
+
+=head2 See Also
+
+L<IupHbox|../elem/iuphbox.html>, L< IupVbox|../elem/iupvbox.html>
+
+=cut

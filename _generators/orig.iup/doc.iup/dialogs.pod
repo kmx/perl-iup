@@ -1,0 +1,35 @@
+=head1 Dialogs
+
+In IUP you can create your own dialogs or use one of the predefined
+dialogs. To create your own dialogs you will have to create all the
+controls of the dialog before the creation of the dialog. All the
+controls must be composed in a hierarchical structure so the root will
+be used as a parameter to the dialog creation.
+
+When a control is created, its parent is not known. After the dialog is
+created all elements receive a parent. This mechanism is quite
+different from that of native systems, who first create the dialog and
+then the element are inserted, using the dialog as a parent. This
+feature creates some limitations for IUP, usually related to the
+insertion and removal of controls.
+
+Since the controls are created in a different order from the native
+system, native controls can only be created after the dialog. This will
+happen automatically when the application call the B<IupShow> function
+to show the dialog. But we often need the native controls to be created
+so we can use some other functionality of those before they are visible
+to the user. For that purpose, the B<IupMap> function was created. It
+forces IUP to map the controls to their native system controls. The
+B<IupShow> function internally uses B<IupMap> before showing the dialog
+on the screen. B<IupShow> can be called many times, but the map process
+will occur only once.
+
+B<IupShow> can be replaced by B<IupPopup>. In this case the result will
+be a modal dialog and all the other previously shown dialogs will be
+unavailable to the user. Also the program will interrupt in the
+function call until the application return IUP_CLOSE or B<IupExitLoop>
+is called.
+
+All dialogs are automatically destroyed in B<IupClose>.
+
+=cut

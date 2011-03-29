@@ -1,0 +1,339 @@
+=head1 IupTree Attributes
+
+=head2 X<global>General
+
+B<ADDEXPANDED> (non inheritable): Defines if branches will be expanded
+when created. The branch will be actually expanded when it receives the
+first child. Possible values: "YES" = The branches will be created
+expanded; "NO" = The branches will be created collapsed. Default:
+"YES".
+
+B<ADDROOT> (non inheritable): automatically adds an empty branch as the
+first node when the tree is mapped. (Since 3.1)
+
+L<BGCOLOR|../attrib/iup_bgcolor.html>: Background color of the tree.
+Default: the global attribute TXTBGCOLOR.
+
+B<CANFOCUS> (creation only) (non inheritable): enables the focus
+traversal of the control. Default: YES. (since 3.0)
+
+B<COUNT> (read only) (non inheritable): returns the total number of
+nodes in the tree. (since 3.0)
+
+B<DRAGDROP> [Windows and GTK Only] (non inheritable): Enable or disable
+the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
+when the element is mapped then it will be automatically enabled. This
+is NOT related to the drag&drop of nodes inside the tree. (since 3.0)
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
+value is "YES".
+
+B<FGCOLOR>: default text foreground color. Once each node is created it
+will not change its color when FGCOLOR is changed. Default: the global
+attribute TXTFGCOLOR. (since 3.0)
+
+B<HIDEBUTTONS> (creation only): hide the expand and collapse buttons.
+In GTK, branches will be only expanded programmatically. In Motif it
+did not work and crash the test. (since 3.0) (GTK 2.12)
+
+B<HIDELINES> (creation only): hide the lines that connect the nodes in
+the hierarchy. (since 3.0) (GTK 2.10)
+
+B<INDENTATION>: sets the indentation level in pixels. The visual effect
+of changing the indentation is highly system dependent. In GTK it acts
+as an additional indent value, and the lines do not follow the extra
+indent. In Windows is limited to a minimum of 5 pixels. (since 3.0)
+(GTK 2.12)
+
+L<RASTERSIZE|../attrib/iup_rastersize.html> (non inheritable): the
+initial size is "400x200". Set to NULL to allow the automatic layout
+use smaller values.
+
+B<SHOWDRAGDROP> (creation only) (non inheritable): Enables the drag and
+drop of nodes, and enables the B<DRAGDROP_CB> callback. Default: "NO".
+Works only if MARKMODE=SINGLE.
+
+B<SPACING>: vertical internal padding for each node. Notice that the
+distance between each node will be actually 2x the spacing. (since 3.0)
+
+B<TOPITEM> (write-only): position the given node identifier at the top
+of the tree or near to make it visible. If any parent node is collapsed
+then they are automatically expanded. (since 3.0)
+
+=over
+
+----
+
+=back
+
+L<ACTIVE|../attrib/iup_active.html>,
+L<EXPAND|../attrib/iup_expand.html>, L<FONT|../attrib/iup_font.html>,
+L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
+L<TIP|../attrib/iup_tip.html>, L<SIZE|../attrib/iup_size.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<ZORDER|../attrib/iup_zorder.html>,
+L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+The NAME common attribute is still not supported because of a backward
+compatibility code. Old applications must change the use of the old
+NAME attribute to TITLE, so the new NAME common attribute can be
+enabled in future versions.
+
+=head2 X<nodes>Nodes (non inheritable)
+
+For these attributes "id" is the specified branch identifier. If id is
+empty, then the focus node is used as the specified node.
+
+B<CHILDCOUNTid> (read only): returns the immediate children count of
+the specified branch. It does not count children of child that are
+branches. (since 3.0)
+
+B<COLORid>: text foreground color of the specified node. The value
+should be a string in the format "R G B" where R, G, B are numbers from
+0 to 255.
+
+B<DEPTHid >(read only): returns the depth of the specified node. The
+first node has depth=0, its immediate children has depth=1, their
+children has depth=2 and so on.
+
+B<KINDid >(read only): returns the kind of the specified node. Possible
+values:
+
+=over
+
+=over
+
+=item * "LEAF": The node is a leaf
+
+=item * "BRANCH": The node is a branch
+
+=back
+
+=back
+
+B<PARENTid >(read only): returns the identifier of the specified node.
+
+B<STATEid>: the state of the specified branch. Returns NULL for a LEAF.
+In Windows, it will be effective only if the branch has children. In
+GTK, it will be effective only if the parent is expanded. Possible
+values:
+
+=over
+
+=over
+
+=item * "EXPANDED": Expanded branch state (shows its children)
+
+=item * "COLLAPSED": Collapsed branch state (hides its children)
+
+=back
+
+=back
+
+B<TITLEid>: the text label of the specified node.
+
+B<TITLEFONTid>: the text font of the specified node. The format is the
+same as the L<FONT|../attrib/iup_font.html> attribute. (since 3.0)
+
+B<TOTALCHILDCOUNTid> (read only): returns the total children count of
+the specified branch. It counts all grandchildren. (since 3.0)
+
+B<USERDATAid>: the user data associated with the specified node. (since
+3.0)
+
+=head2 X<images>Images (non inheritable)
+
+B<IMAGEid>: image name to be used in the specified node, where id is
+the specified node identifier. If id is empty, then the focus node is
+used as the specified node. Use
+L<IupSetHandle|../func/iupsethandle.html> or
+L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
+associate an image to a name. See also L<IupImage|iupimage.html>. In
+Windows and Motif set the BGCOLOR attribute before setting the image.
+If node is a branch it is used when collapsed.
+
+B<IMAGEEXPANDEDid>: same as the IMAGE attribute but used for expanded
+branches.
+
+B<IMAGELEAF>: the image name that will be shown for all leaves.
+Default: "IMGLEAF". Internal values "IMGBLANK" and "IMGPAPER" are also
+available. If BGCOLOR is set the image is automatically updated.
+
+B<IMAGEBRANCHCOLLAPSED>: the image name that will be shown for all
+collapsed branches. Default: "IMGCOLLAPSED". If BGCOLOR is set the
+image is automatically updated.
+
+B<IMAGEBRANCHEXPANDED>: the image name that will be shown for all
+expanded branches. Default: "IMGEXPANDED". If BGCOLOR is set the image
+is automatically updated.
+
+=head2 X<focus>Focus Node
+
+B<VALUE> (non inheritable): The focus node identifier. When retrieved
+but there isn't a node with focus it returns 0 if there are any nodes,
+and returns -1 if there are no nodes. When changed and MARKMODE=SINGLE
+the node is also selected. The tree is always scrolled so the node
+becomes visible. In Motif the tree will also receive the focus.
+Additionally accepts the values:
+
+=over
+
+"ROOT" or "FIRST": the first node
+
+"LAST": the last visible node
+
+"NEXT": the next visible node, one node after the focus node. If at the
+last does nothing
+
+"PREVIOUS": the previous visible node, one node before the focus node.
+If at the first does nothing
+
+"PGDN": the next visible node, ten nodes node after the focus node. If
+at the last does nothing
+
+"PGUP": the previous visible node, ten nodes before the focus node. If
+at the first does nothing
+
+=back
+
+=head2 X<marks0>Marks
+
+B<MARK> (write only) (non inheritable): Selects a range of nodes in the
+format "start-end" (%d-%d). Allowed only when MARKMODE=MULTIPLE. Also
+accepts the values:
+
+=over
+
+"INVERTid": Inverts the specified node mark state, where id is the
+specified node identifier. If id is empty, then the focus node is used
+as reference node.
+
+"BLOCK": Marks all nodes between the focus node and the initial
+block-marking node defined by MARKSTART
+
+"CLEARALL": Unmark all nodes
+
+"MARKALL": Marks all nodes
+
+"INVERTALL": Inverts the marking of all nodes
+
+=back
+
+B<MARKEDid> (non inheritable): The selection state of the specified
+node, where id is the specified node identifier. If id is empty, then
+the focus node is used as reference node. Can be: YES or NO. Default:
+NO
+
+B<MARKEDNODES> (non inheritable): The selection state of all nodes when
+MARKMODE=MULTIPLE. It is/accepts a sequence of '+' and '-' symbols
+indicating the state of each item ('+'=selected, '-'=unselected. When
+setting this value, if the number of specified symbols is smaller than
+the total count then the remaining nodes will not be changed. (since
+3.1)
+
+B<MARKMODE>: defines how the nodes can be selected. Can be: SINGLE or
+MULTIPLE. Default: SINGLE.
+
+B<MARKSTART> (non inheritable): Defines the initial node for the block
+marking, used when MARK=BLOCK. The value must be the node identifier.
+Default: 0 (first node).
+
+=head2 X<tree>Hierarchy (non inheritable)
+
+B<ADDLEAF>B<id> (write only): Adds a new leaf after the reference
+node, where id is the reference node identifier. If id is empty, then
+the focus node is used as reference node. Use id=-1 to add the first
+node in an empty tree. The value is used as the text label of the new
+node. The id of the new node will be the id of the reference node + 1.
+The attribute B<LASTADDNODE> is set to the new id. The reference node
+is marked and all others unmarked. The reference node position remains
+the same. If the reference node does not exist, nothing happens. If the
+reference node is a branch then the depth of the new node is one depth
+increment from the depth of the reference node, if the reference node
+is a leaf then the new node has the same depth. If you need to add a
+node after a specified node but at a different depth use B<
+INSERTLEAF>. Ignored if set before map.
+
+B<ADDBRANCHid >(write only): Same as B<ADDLEAF> for branches. Branches
+can be created expanded or collapsed depending on B<ADDEXPANDED>.
+Ignored if set before map.
+
+B<COPYNODEid >(write only): Copies a node and its children, where id is
+the specified node identifier. If id is empty, then the focus node is
+used as the specified node. The value is the destination node
+identifier. If the destination node is a branch and it is expanded,
+then the specified node is inserted as the first child of the
+destination node. If the branch is not expanded or the destination node
+is a leaf, then it is inserted as the next brother of the leaf. The
+specified node is not changed. All node attributes are copied, except
+user data. Ignored if set before map. (since 3.0)
+
+B<DELNODEid >(write only): Removes a node and/or its children, where id
+is the specified node identifier. If id is empty, then the focus node
+is used as the specified node. Ignored if set before map. Possible
+values:
+
+=over
+
+=over
+
+=item * "ALL": deletes all nodes, id is ignored (Since 3.1)
+
+=item * "SELECTED": deletes the specified node and its children
+
+=item * "CHILDREN": deletes only the children of the specified node
+
+=item * "MARKED": deletes all the selected nodes (and all their
+children), id is ignored
+
+=back
+
+=back
+
+B<EXPANDALL >(write only): expand or contracts all nodes. Can be YES
+(expand all), or NO (contract all). (since 3.0)
+
+B<FINDUSERDATAp >(read only): finds the id of the given userdata. "p"
+must be the address of a pointer formatted in the string as "%p".
+(since 3.0)
+
+B<INSERTLEAFid>, B<INSERTBRANCHid > (write only): Same as B<ADDLEAF>
+and B<ADDBRACH> but the depth of the new node is always the same of the
+reference node. If the reference node is a leaf, then the id of the new
+node will be the id of the reference node + 1. If the reference node is
+a branch the id of the new node will be the id of the reference node +
+1 + the total number of child nodes of the reference node. (since 3.0)
+
+B<MOVENODEid >(write only): Moves a node and its children, where id is
+the specified node identifier. If id is empty, then the focus node is
+used as the specified node. The value is the destination node
+identifier. If the destination node is a branch and it is expanded,
+then the specified node is inserted as the first child of the
+destination node. If the branch is not expanded or the destination node
+is a leaf, then it is inserted as the next brother of the leaf. The
+specified node is removed. User data and all node attributes are
+preserved. Ignored if set before map. (since 3.0)
+
+=head2 X<edit>Editing
+
+B<RENAME >(write only): Forces a rename action to take place. Valid
+only when SHOWRENAME=YES.
+
+RENAMECARET (write only): the caretE<rsquo>s position of the text
+box when in-place renaming. Same as the CARET attribute for
+L<IupText|iuptext.html#Attributes>, but here is used only once after
+SHOWRENAME_CB is called and before the text box is shown.
+
+RENAMESELECTION (write only): the selection interval of the text box
+when in-place renaming. Same as the SELECTION attribute for
+L<IupText|iuptext.html#Attributes>, but here is used only once after
+SHOWRENAME_CB is called and before the text box is shown.
+
+B<SHOWRENAME> (creation only) (non inheritable): Allows the in place
+rename of a node. Default: "NO". Since IUP 3.0, F2 and clicking twice
+only starts to rename a node if SHOWRENAME=Yes.
+
+=cut

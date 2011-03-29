@@ -1,0 +1,110 @@
+=head1 IupPopup
+
+Shows a dialog or menu and restricts user interaction only to the
+specified element. It is equivalent of creating a Modal dialog is some
+tooklits.
+
+If another dialog is shown after B<IupPopup> using B<IupShow>, then its
+interaction will not be inhibited. Every B<IupPopup> call creates a new
+popup level that inhibits all previous dialogs interactions, but does
+not disable new ones. IMPORTANT: The popup levels must be closed in the
+reverse order they were created or unpredictable results will occur.
+
+For a dialog this function will only return the control to the
+application after a callback returns IUP_CLOSE, B<IupExitLoop> is
+called, or when the popup dialog is hidden, for exemple using
+B<IupHide>. For a menu it returns automatically after a menu item is
+selected. IMPORTANT: If a menu item callback returns IUP_CLOSE, it will
+ends the current popup level dialog.
+
+=head2 Parameters/Return
+
+ int IupPopup(Ihandle *ih, int x, int y); [in C]
+ iup.Popup(ih: ihandle[, x, y: number]) -> (ret: number) [in Lua]
+ or ih:popup([x, y: number]) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of a dialog or a menu.
+
+B<x>: horizontal position of the dialog or menu relative to the origin
+of the screen. The following macros are valid:
+
+=over
+
+=item * IUP_LEFT: Positions the element on the left corner of the
+screen
+
+=item * IUP_CENTER: Centers the element on the screen
+
+=item * IUP_RIGHT: Positions the element on the right corner of the
+screen
+
+=item * IUP_MOUSEPOS: Positions the element on the mouse cursor
+
+=item * IUP_CENTERPARENT: Horizontally centralizes the dialog relative
+to its parent. Not valid for menus. (Since 3.0)
+
+=item * IUP_CURRENT: use the current position of the dialog. This is
+the default value in Lua if the parameter is not defined. Not valid for
+menus. (Since 3.0)
+
+=back
+
+B<y>: vertical position of the dialog or menu relative to the origin of
+the screen. The following macros are valid:
+
+=over
+
+=item * IUP_TOP: Positions the element on the top of the screen
+
+=item * IUP_CENTER: Vertically centers the element on the screen
+
+=item * IUP_BOTTOM: Positions the element on the base of the screen
+
+=item * IUP_MOUSEPOS: Positions the element on the mouse cursor
+
+=item * IUP_CENTERPARENT: Vertically centralizes the dialog relative to
+its parent. Not valid for menus. (Since 3.0)
+
+=item * IUP_CURRENT: use the current position of the dialog. This is
+the default value in Lua if the parameter is not defined. Not valid for
+menus. (Since 3.0)
+
+=back
+
+Returns: IUP_NOERROR if sucessful. Returns IUP_INVALID if not a dialog
+or menu. If there was an error returns IUP_ERROR..
+
+=head2 Notes
+
+Will call B<IupMap> for the element.
+
+See the L<PLACEMENT|../dlg/iupdialog.html#PLACEMENT> attribute for
+other position and show options.
+
+When IUP_CENTERPARENT is used but PARENTDIALOG is not defined then it
+is replaced by IUP_CENTER.
+
+When IUP_CURRENT is used at the first time the dialog is shown then it
+will be replaced by IUP_CENTERPARENT.
+
+B<IupPopup> works just like B<IupShow> and B<IupShowXY>, but it
+inhibits interaction with other dialogs and interrupts the processing
+until IUP_CLOSE is returned in a callback or the dialog is hidden.
+Althougth it interrupts the processing, it does not destroy the dialog
+when it ends. To destroy the dialog, B<IupDestroy> must be called.
+
+IMPORTANT: Calling B<IupPopup> for an already visible dialog will only
+update its position and/or size on screen, will NOT change its modal
+state and will NOT interrupt processing.
+
+In GTK and Motif the inactive dialogs will still be able to move,
+resize and change their Z-order. Although their contents will be
+inactive, keyboard will be disabled, and they can not be closed from
+the close box.
+
+=head2 See Also
+
+L<IupShowXY|iupshowxy.html>, L<IupShow|iupshow.html>,
+L<IupHide|iuphide.html>, L<IupMap|iupmap.html>
+
+=cut

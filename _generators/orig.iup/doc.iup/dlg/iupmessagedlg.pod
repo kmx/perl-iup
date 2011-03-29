@@ -1,0 +1,100 @@
+=head1 IupMessageDlg (since 3.0)
+
+Creates the Message Dialog element. It is a predefined dialog for
+displaying a message. The dialog can be shown with the IupPopup
+function only.
+
+=head2 Creation
+
+ Ihandle* IupMessageDlg(void); [in C]
+ iup.messagedlg() -> (elem: ihandle) [in Lua]
+ messagedlg() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<BUTTONDEFAULT>: Number of the default button. Can be "1" or "2". "2"
+is valid only for "OKCANCEL" and "YESNO" button configurations.
+Default: "1".
+
+B<BUTTONRESPONSE>: Number of the pressed button. Can be "1" or "2".
+Default: "1".
+
+B<BUTTONS>: Buttons configuration. Can have values: "OK", "OKCANCEL" or
+"YESNO". Default: "OK". Additionally the "Help" button is displayed if
+the HELP_CB callback is defined.
+
+B<DIALOGTYPE>: Type of dialog defines which icon will be displayed
+besides the message text. Can have values: "MESSAGE" (No Icon), "ERROR"
+(Stop-sign), "WARNING" (Exclamation-point), "QUESTION" (Question-mark)
+or "INFORMATION" (Letter "i"). Default: "MESSAGE".
+
+L<PARENTDIALOG|../attrib/iup_parentdialog.html> (creation only): Name
+of a dialog to be used as parent. This dialog will be always in front
+of the parent dialog. If not defined in Motif the dialog could not be
+modal.
+
+L<TITLE|../attrib/iup_title.html>: Dialog title.
+
+B<VALUE>: Message text.
+
+=head2 Callbacks
+
+L<HELP_CB|../call/iup_help_cb.html>: Action generated when the Help
+button is pressed.
+
+=head2 Notes
+
+The B<IupMessageDlg> is a native pre-defined dialog not altered by
+B<IupSetLanguage>.
+
+To show the dialog, use function B<IupPopup>. In Lua, use the B<popup>
+function.
+
+The dialog is mapped only inside B<IupPopup>, B<IupMap> does nothing.
+
+In Windows the position (x,y) used in B<IupPopup> is ignored and the
+dialog is always centered on screen.
+
+The B<IupMessage> function simply creates and popup a B<IupMessageDlg>.
+
+In Windows each different dialog type is always associated with a
+different beep sound.
+
+=head2 Examples
+
+ Ihandle* dlg = IupMessageDlg();
+ 
+ IupSetAttribute(dlg, "DIALOGTYPE", "WARNING");
+ IupSetAttribute(dlg, "TITLE", "IupMessageDlg Test");
+ IupSetAttribute(dlg, "BUTTONS", "OKCANCEL");
+ IupSetAttribute(dlg, "VALUE", "Message Text\nSecond Line");
+ IupSetCallback(dlg, "HELP_CB", (Icallback)help_cb);
+ 
+ IupPopup(dlg, IUP_CURRENT, IUP_CURRENT);
+ 
+ printf("BUTTONRESPONSE(%s)\n", IupGetAttribute(dlg, "BUTTONRESPONSE"));
+ 
+ IupDestroy(dlg);  
+
+Windows XP
+
+[IMAGE]
+
+Motif/Mwm
+
+[IMAGE]
+
+GTK/GNOME
+
+[IMAGE]
+
+=head2 X<SeeAlso>See Also
+
+L<IupMessage|iupmessage.html>, L<IupScanf|iupscanf.html>,
+L<IupListDialog|iuplistdialog.html>, L<IupAlarm|iupalarm.html>,
+L<IupGetFile|iupgetfile.html>, L<IupPopup|../func/iuppopup.html>
+
+=cut

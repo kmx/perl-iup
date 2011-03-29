@@ -1,0 +1,25 @@
+=head1 IupGetName
+
+Returns the name of an interface element, if the element has an
+associated name using B<IupSetHandle> or using LED. .
+
+=head2 Parameters/Return
+
+ char* IupGetName(Ihandle* ih); [in C]
+ iup.GetName(ih: ihandle) -> (name: string) [in Lua]
+
+B<ih>: Identifier of the interface element.
+
+Returns: the name.
+
+=head2 Notes
+
+This name is not associated with the Lua variable name; this was
+inherited from LED and is needed for some functions.
+
+=head2 See Also
+
+L<IupSetHandle|iupsethandle.html>, L<IupGetHandle|iupgethandle.html>,
+L<IupGetAllNames|iupgetallnames.html>.
+
+=cut

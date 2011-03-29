@@ -1,0 +1,39 @@
+=head1 MINSIZE (non inheritable) (since 3.0)
+
+Specifies the element minimum size in pixels during the layout process.
+
+See the L<Layout Guide|../layout_guide.html> for more details on sizes.
+
+=head2 Value
+
+"I<width>xI<height>", where I<width> and I<height> are integer values
+corresponding to the horizontal and vertical size, respectively, in
+pixels.
+
+You can also set only one of the parameters by removing the other one
+and maintaining the separator "x", but this is equivalent of setting
+the other value to 0. For example: "x40" (height only = "0x40") or
+"40x" (width only = "40x0").
+
+=head2 Affects
+
+All, except menus and the dialog.
+
+The B<IupDialog> has the same attribute but within a different behavior
+although with a very similar objective.
+
+=head2 Notes
+
+The limits are applied during the layout computation. It will limit the
+Natural size and the Current size.
+
+If the element can be expanded, then its empty space will NOT be
+occupied by other controls although its size will be limited.
+
+See the L<Layout Guide|../layout_guide.html> for mode details on sizes.
+
+=head2 See Also
+
+L<RASTERSIZE|iup_rastersize.html>, L< MAXSIZE|iup_maxsize.html>
+
+=cut

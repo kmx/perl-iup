@@ -1,0 +1,55 @@
+=head1 C++ BuilderX IDE Project Options Guide
+
+=head2
+L<http:E<47>E<47>www.borland.comE<47>productsE<47>downloadsE<47>download_cbuilderx.html|http://www.borland.com/products/downloads/download_cbuilderx.html>
+
+Borland C++ Builder X is an Integrated Development Environment (IDE)
+for Java and C/C++ languages. It can use several sets of compilers,
+including the Borland command line compilers version 5.6.
+
+It also has many features, with the Borland name behind it. Its
+download is free. To use IUP with C++BuilderX you will need to download
+the "bc56" binaries in the download page.
+
+After unpacking the file in your conputer, you must create a new
+Project for a "New GUI Application" and configure your Project Options.
+In the Project Build Options Explorer dialog there are 3 important
+places:
+
+=over
+
+=item * In the Tools list, click on ILINK32. Then bellow select the
+Path and Defines tab - there you are going to add the path of the
+libraries you use, for example:
+
+=back
+
+ .\lib\bc56;..\..\iup\lib\bc56;..\..\cd\lib\bc56;..\..\im\lib\bc56
+
+L<[IMAGE]|cppbx1.gif>
+
+=over
+
+=item * In the same ILINK32 options, in the tab Options, select Other
+Options and Parameters, then Library files - there you are going to
+list the libraries, for example:
+
+=back
+
+ cw32.lib import32.lib vfw32.lib comctl32.lib iup.lib iupcontrols.lib cd.lib iupcd.lib im.lib im_capture.lib im_avi.lib im_process.lib iupgl.lib opengl32.lib glu32.lib
+
+L<[IMAGE]|cppbx2.gif>
+
+=over
+
+=item * In the Tools list, click on IBCC32. Then bellow select the Path
+and Defines tab - there you are going to list the include path, for
+example:
+
+=back
+
+ ..\include;..\..\iup\include;..\..\cd\include;..\..\im\include
+
+L<[IMAGE]|cppbx3.gif>
+
+=cut

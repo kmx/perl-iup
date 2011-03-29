@@ -1,0 +1,22 @@
+=head1 VALUE (non inheritable)
+
+Affects several elements differently - that is, its behavior is element
+dependent. It is often used to change the control's main value, such as
+the text of a L<IupText|../elem/iuptext.html>.
+
+For the L<IupRadio|../elem/iupradio.html> and
+L<IupZbox|../elem/iupzbox.html>, elements, which are categorized as
+composition elements, this attribute represents the element "selected"
+among the others in the designed composition. To change this attribute
+in such cases, different mechanisms are necessary according to the
+programming environment used. When the elements taking part in a
+composition were created in C, this attribute's contents is a name that
+must be defined by the L<IupSetHandle|../func/iupsethandle.html>
+function. When the elements were created in Lua, this attribute's
+contents is the name of a variable - more precisely, the one receiving
+the return from the function that created the element you wish to
+select. In LED it is not possible to dynamically change the value of
+any attribute, so the elements created in this environment must be
+identified and manipulated in C by means of their identifying name.
+
+=cut

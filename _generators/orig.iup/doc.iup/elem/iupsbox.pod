@@ -1,0 +1,86 @@
+=head1 IupSbox
+
+Creates a resizeable container. Allows the provided control to be
+enclosed in a box that allows expanding and contracting the element
+B<size> in one direction.
+
+It does not have a native representation but it uses a B<IupCanvas> to
+implement the bar handler.
+
+=head2 Creation
+
+ Ihandle* IupSbox(Ihandle* child); [in C]
+ iup.sbox{child: ihandle} -> (elem: ihandle) [in Lua]
+ sbox(child) [in LED]
+
+B<child>: Identifier of an interface element which will receive the
+box. It can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<COLOR>: Changes the color of the bar handler. The value should be
+given in "R G B" color style. Default: "192 192 192".
+
+B<DIRECTION> (creation only): Indicates the direction of the resize and
+the position of the bar handler. Possible values are "NORTH", "SOUTH"
+(vertical direction), "EAST" or "WEST" (horizontal direction). Default:
+"EAST".
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): It will expand
+automatically only in the direction opposite to the handler.
+
+B<WID> (read-only): returns -1 if mapped.
+
+=over
+
+----
+
+=back
+
+L<FONT|../attrib/iup_font.html>, L<SIZE|../attrib/iup_size.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
+
+=head2 Notes
+
+The controls that you want to be resized must have the EXPAND=YES
+attribute set. The control inside the sbox will not be resized with a
+size lesser than its B<Natural> size. See the L<Layout
+Guide|../layout_guide.html> for mode details on sizes.
+
+The B<IupCanvas> bar handler is always the first child of the sbox. It
+can be obtained using B<IupGetChild> or B< IupGetNextChild>.
+
+B<IupSbox> can be resized above the maximum size so some controls go to
+outside the dialog area at right or bottom. In fact this is part of the
+dynamic layout default reposition of controls inside the dialog. See
+the B<IupRefresh> function. The IUP layout does not have a maximum
+limit only a minimum, except if you use the MAXSIZE common attribute.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+Natural Size
+
+[IMAGE]
+
+After Expanding the Sbox
+
+[IMAGE]
+
+Expanding the Dialog
+
+[IMAGE]
+
+After Expanding the Sbox
+
+=cut

@@ -1,0 +1,24 @@
+=head1 XMIN
+
+Minimum value of the horizontal scrollbar, in any unit.
+
+=head2 Value
+
+Any floating-point value.
+
+Default: "0.0"
+
+=head2 Notes
+
+A change in this value will only be effective after the attribute
+L<DX|iup_dx.html> is changed.
+
+=head2 Affects
+
+L<IupCanvas|../elem/iupcanvas.html>
+
+=head2 See Also
+
+L<SCROLLBAR|iup_scrollbar.html>
+
+=cut

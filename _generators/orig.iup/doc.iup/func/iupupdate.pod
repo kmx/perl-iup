@@ -1,0 +1,17 @@
+=head1 IupUpdate
+
+IupUpdateChildren
+
+Mark the element or its children to be redraw when the control returns
+to the system.
+
+=head2 Parameters/Return
+
+ void IupUpdate(Ihandle* ih); [in C]
+ void IupUpdateChildren(Ihandle* ih); [in C]
+ iup.Update(ih: ihandle) [in Lua]
+ iup.UpdateChildren(ih: ihandle) [in Lua]
+
+B<ih>: identifier of the interface element.
+
+=cut

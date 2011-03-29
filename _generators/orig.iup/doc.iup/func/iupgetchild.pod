@@ -1,0 +1,25 @@
+=head1 IupGetChild
+
+Returns the a child of the given control given its position.
+
+=head2 Parameters/Return
+
+ Ihandle *IupGetChild(Ihandle* ih, int pos); [in C]
+ iup.GetChild(ih: ihandle, pos: number) -> child: ihandle [in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<pos>: position of the desire child.
+
+=head2 Notes
+
+This function will return the children of the control in the exact same
+order in which they were assigned.
+
+=head2 See Also
+
+L<IupGetChildPos|iupgetnextchildpos.html>,
+L<IupGetNextChild|iupgetnextchild.html>,
+L<IupGetBrother|iupgetbrother.html>, L<IupGetParent|iupgetparent.html>
+
+=cut

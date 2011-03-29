@@ -1,0 +1,16 @@
+=head1 UNMAP_CB
+
+Called right before an element is unmapped.
+
+=head2 Callback
+
+ int function(Ihandle *ih); [in C]
+ elem:unmap_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+=head2 Affects
+
+All that have a native representation.
+
+=cut

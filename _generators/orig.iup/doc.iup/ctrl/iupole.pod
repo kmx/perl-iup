@@ -1,0 +1,136 @@
+=head1 IupOleControl [Windows only]
+
+The IupOleControl hosts an windows OLE control (also named ActiveX
+control), allowing it to be used inside IUP dialogs. There are many OLE
+controls available, like calendars, internet browsers, PDF readers etc.
+
+Notice that IupOleControl just takes care of the visualization of the
+control (size and positioning). It does not deal with properties,
+methods and events. The application must deal with them using the the
+COM interfaces offered by the control. Nevertheless, using IupLua
+together with L<LuaCOM|http://luaforge.net/projects/luacom/> makes it
+possible to use OLE controls very easily in Lua, accessing their
+methods, properties and events similarly to the other IUP elements.
+
+Notice that this control works only on Windows.
+
+=head2 Initialization and usage
+
+The B<IupOleControlOpen> function must be called after a B<IupOpen>, so
+that the control can be used. The iupole.h file must also be included
+in the source code. The program must be linked to the controls library
+(iupole).
+
+To make the control available in Lua, use the initialization function
+in C, B<iupolelua_open>, after calling B<iuplua_open>. The iupluaole.h
+file must also be included in the source code. The program must be
+linked to the lua control library (iupluaole).
+
+=head2 Creation
+
+ Ihandle* IupOleControl(const char* ProgID); [in C]
+ iup.olecontrol{ProgID: string} -> (elem: ihandle) [in Lua]
+
+ProgID
+
+: the programmatic identifier of the OLE control. This can be found in
+the documentation of the OLE control or by browsing the list of
+registered controls, using tools like OleView.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<DESIGNMODE>: activates the design mode. Some controls behave
+differently when in design mode. See L<this
+article|http://support.microsoft.com/default.aspx?scid=kb;en-us;260744>
+for more information about design mode. Can be YES or NO. Default
+value: "NO".
+
+B<DESIGNMODE_DONT_NOTIFY>: sets the design mode, but do not notify the
+native control.
+
+B<IUNKNOWN> (read-only): Returns the IUnknown pointer for the control.
+This pointer is necessary to access methods and properties of the
+control in C/C++ code.
+
+=over
+
+----
+
+=back
+
+The control's specific attributes shall be accessed using the COM
+mechanism (see section below for more information).
+
+Some IupCanvas attributes may also work, like:
+
+L<ACTIVE|../attrib/iup_active.html>, L<X|../attrib/iup_x.html>,
+L<Y|../attrib/iup_y.html>, L< POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
+L<TIP|../attrib/iup_tip.html>, L<SIZE|../attrib/iup_size.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<ZORDER|../attrib/iup_zorder.html>,
+L<VISIBLE|../attrib/iup_visible.html>
+
+=head2 Callbacks
+
+In C/C++, the OLE control's callbacks (events, in ActiveX terms) shall
+be set using the control's interface and the COM mechanism. When using
+IupLua, it's possible to call methods, access properties and receive
+events from the OLE control using the
+L<LuaCOM|http://luaforge.net/projects/luacom/> library. When the LuaCOM
+library is loaded, call elem:CreateLuaCOM so a LuaCOM object is created
+and stored in the B< "elem.com"> field of the object returned by
+iup.olecontrol. This LuaCOM object can be used to access properties,
+methods and events in a way very similar to VB. See the examples for
+more information.
+
+=over
+
+----
+
+=back
+
+Some B<IupCanvas> callbacks may also work, like:
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>,
+L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
+L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>.
+
+=head2 Additional Methods in Lua
+
+ elem:CreateLuaCOM()
+
+If LuaCOM is loaded and the IUNKNOWN is valid then set:
+
+=over
+
+ elem.com = luacom.CreateLuaCOM(luacom.ImportIUnknown(elem.iunknown))
+
+=back
+
+=head2 Notes
+
+To learn more about OLE and ActiveX:
+
+L<http:E<47>E<47>www.microsoft.comE<47>com|http://www.microsoft.com/com>
+
+L<http:E<47>E<47>www.webopedia.comE<47>TERME<47>AE<47>ActiveX_control.html|http://www.webopedia.com/TERM/A/ActiveX_control.html>
+
+L<http:E<47>E<47>msdn.microsoft.comE<47>workshopE<47>componentsE<47>activexE<47>activex_node_entry.asp|http://msdn.microsoft.com/workshop/components/activex/activex_node_entry.asp>
+
+L<http:E<47>E<47>activex.microsoft.comE<47>activexE<47>activexE<47>|http://activex.microsoft.com/activex/activex/>
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+=cut

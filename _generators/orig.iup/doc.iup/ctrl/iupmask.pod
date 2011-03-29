@@ -1,0 +1,121 @@
+=head1 iupMask (deprecated since 3.0, will be removed in a future
+version)
+
+B<Since IUP 3.0, IupText and IupMatrix have several MASK* attributes to
+support masks. See the > L< B<MASK>|../attrib/iup_mask.html>B<
+attribute for more information.>
+
+Functions to associate an input mask to a B<IupText> or a B<IupMatrix>
+element.
+
+These functions are included in the L<Controls
+Library|../iupcontrols.html>.
+
+=head2 Functions
+
+ int iupMaskSet(Ihandle *ih, const char *mask, int autofill, int casei);
+ int iupMaskMatSet(Ihandle *ih, const char *mask, int autofill, int casei, int lin, int col);
+
+These functions are responsible for setting the mask to be used.
+
+B<ih>: Ihandle of IupText or IupMatrix
+
+B<mask>: Mask to be used
+
+B<autofill>: When 1, turns the auto-fill mode on. In auto-fill mode,
+whenever possible, literal characters will be automatically added to
+the field (NOT supported since 3.0)
+
+B<casei>: When 1, uppercase or lowercase characters will be treated
+indistinctly
+
+lin, col: Line and column numbers in the matrix
+
+They return 1 if the mask is set, or 0 if there is an error (e.g.,
+invalid mask).
+
+ int iupMaskSetInt(Ihandle *ih, int autofill, int min, int max);
+ int iupMaskSetFloat(Ihandle *ih, int autofill, float min, float max);
+ int iupMaskMatSetInt(Ihandle *ih, int autofill, int min, int   max, int lin, int col);
+ int iupMaskMatSetFloat(Ihandle *ih, int autofill, float min, float max, int lin, int col);
+
+These functions set a mask that defines a limit to a number. Works only
+for integers and floats. Limitations: since the validation process is
+performed key by key, the user cannot type intermediate numbers (even
+inside the limit) if they are not following the mask rules.
+
+B<ih>: Ihandle of IupText or IupMatrix
+
+B<autofill>: When 1, turns the auto-fill mode on. In auto-fill mode,
+whenever possible, literal characters will be automatically added to
+the field (NOT supported since 3.0)
+
+B<min>: Minimum value accepted in the field
+
+B<max>: Maximum value accepted in the field
+
+B<lin, col>: Line and column numbers in the matrix
+
+They always return 1.
+
+ int iupMaskRemove(Ihandle *ih);
+ int iupMaskMatRemove(Ihandle *ih, int lin, int col);
+
+These functions are responsible for removing the mask from the control.
+
+B<ih>: Ihandle of IupText or IupMatrix
+
+B<lin, col>: Line and column numbers in the matrix
+
+ int iupMaskCheck (Ihandle *ih);
+ int iupMaskMatCheck(Ihandle *ih, int lin, int col);
+
+These functions verify if what was typed by the user is valid for the
+defined mask. For IupMatrix they work only when in edition mode.
+
+B<ih>: Ihandle of IupText or IupMatrix
+
+B<lin, col>: Line and column numbers in the matrix
+
+They return 1 if the text satisfies the mask, or 0 otherwise.
+
+ int iupMaskGet(Ihandle *ih, char **val);
+ int iupMaskGetFloat(Ihandle *ih, float *fval);
+ int iupMaskGetInt(Ihandle *ih, int *ival);
+ int iupMaskMatGet(Ihandle *ih, char **val, int lin, int col);
+ int iupMaskMatGetFloat(Ihandle *ih, float  *fval, int lin, int col);
+ int iupMaskMatGetDouble(Ihandle *ih, double *dval, int lin, int col);
+ int iupMaskMatGetInt(Ihandle *ih, int *ival, int lin, int col);
+
+These functions check if the text satisfies the mask, and they retrieve
+the fields value in only one call. For IupMatrix they work only when in
+edition mode.
+
+B<ih>: Ihandle of IupText or IupMatrix
+
+B<val, fval, ival>: Pointers used to complete the return value
+
+B<lin, col>: Line and column numbers in the matrix.
+
+They return 1 if the text satisfies the mask, or 0 otherwise.
+
+=head2 Notes
+
+To make the use of masks simpler, the following predefined masks were
+created:
+
+IUPMASK_FLOAT - Float number
+
+IUPMASK_UFLOAT - Unsigned Float number
+
+IUPMASK_EFLOAT - Float number with exponential notation
+
+IUPMASK_INT - Integer number
+
+IUPMASK_UINT - Unsigned Integer number
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=cut

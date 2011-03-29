@@ -1,0 +1,29 @@
+=head1 IupUnmap (since 3.0)
+
+B<Unmap> the element from the native system. It will also unmap all its
+children.
+
+It will NOT B<detach> the element from its parent, , and it will NOT
+B<destroy> the IUP element.
+
+=head2 Parameters/Return
+
+ void IupUnmap(Ihandle* ih); [in C]
+ iup.Unmap(ih: iuplua-tag) [in Lua]
+
+B<ih>: Identifier of an interface element.
+
+=head2 Notes
+
+When the element is mapped some attributes are stored only in the
+native system. If the element is B<unmaped> those attributes are lost.
+Use the function L<IupSaveClassAttributes|iupsaveclassattributes.html>
+when you want to B<unmap> the element and keep its attributes.
+
+=head2 See Also
+
+L<IupAppend|iupappend.html>, L<IupDetach|iupdetach.html>,
+L<IupMap|iupmap.html>, L<IupCreate|iupcreate.html>,
+L<IupDestroy|iupdestroy.html>
+
+=cut

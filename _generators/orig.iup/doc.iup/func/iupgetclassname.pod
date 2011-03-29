@@ -1,0 +1,57 @@
+=head1 IupGetClassName (renamed from IupGetType in 2.7)
+
+Returns the name of the class of an interface element.
+
+=head2 Parameters/Return
+
+ char* IupGetClassName(Ihandle* ih); [in C]
+ iup.GetClassName(ih: ihandle) -> (name: string) [in Lua]
+
+B<ih>: Identifier of the interface element.
+
+=head2 Notes
+
+The following names are known:
+
+ "image"
+ "button"
+ "canvas"
+ "dialog"
+ "fill"
+ "frame" 
+ "hbox"
+ "item"
+ "separator"
+ "submenu"
+ "label"
+ "list"
+ "menu"
+ "radio"
+ "text" 
+ "toggle"
+ "vbox"
+ "zbox"
+ "multiline"
+ "user"
+ "matrix"
+ "tree"
+ "dial"
+ "gauge"
+ "val"
+ "glcanvas"
+ "tabs"
+ "cells"
+ "colorbrowser"
+ "colorbar"
+ "spin"
+ "sbox"
+ "cbox"
+ "progressbar"
+ "olecontrol"
+
+=head2 See Also
+
+L<IupGetClassType|iupgetclasstype.html>,
+L<IupGetClassAttributes|iupgetclassattributes.html>
+
+=cut

@@ -1,0 +1,35 @@
+=head1 Eclipse for C++ Project Properties Guide
+
+=head2 L<http:E<47>E<47>www.eclipse.orgE<47>|http://www.eclipse.org/>
+
+This guide was built using Eclipse 3.3 IDE for C/C++ Developers in
+Windows (but similar configuration can be applied for Linux).
+
+To create a new project go to the menu "File / New / C or C++ Project":
+
+L<[IMAGE]|eclipse1.png>
+
+You can use the MingW3 or Cygwin compiler. Just use the respective IUP
+binaries package: "mingw3" or "gcc3".
+
+Then add your files to the projet folder if they are not already there.
+
+After creating the project you must configure it to find the IUP
+includes and libraries.
+
+Go the menu "Project / Properties", then to configure the include files
+location select "GCC C Compiler / Directories" in the left tree, then
+add the list of folders in "Include Paths".
+
+L<[IMAGE]|eclipse2.png>
+
+Be aware that you will have to repeat the configuration for the C++
+compiler.
+
+To configure the library files location select "MinGW C++ Linker /
+Libraries" in the left tree, then add the list of folders in "Library
+Search Path" and add the add the list of folders in "Libraries".
+
+L<[IMAGE]|eclipse3.png>
+
+=cut

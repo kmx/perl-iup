@@ -1,0 +1,38 @@
+=head1 SHRINK
+
+If this attribute is defined, the elements inside the dialog will try
+to adjust their sizes even when the dialog's size is smaller than its
+natural size.
+
+See the L<Layout Guide|../layout_guide.html> for more details on sizes.
+
+=head2 Value
+
+"YES" or "NO".
+
+Default: "NO".
+
+=head2 Notes
+
+When the user changes the size of the dialog, the elements are
+automatically re-distributed inside the dialog. Some elements even have
+their size changed if the EXPAND attribute is active. When this size is
+smaller than a minimum limit in which all elements still fit the
+dialog, the elements' distribution is no longer modified. Actually, the
+virtual size of the dialog remains larger than its actual size on the
+screen, and some elements to the right and bottom are hidden by the
+borders of the dialog.
+
+The SHRINK attribute offers an alternative to this behavior. It makes
+the elements continue to rearrange, even if they must overlap.
+
+The results of this new rearrangement may vary according to the
+elements' distribution on the dialog.
+
+See the L<Layout Guide|../layout_guide.html> for more details on sizes.
+
+=head2 Affects
+
+L<IupDialog|../dlg/iupdialog.html>
+
+=cut

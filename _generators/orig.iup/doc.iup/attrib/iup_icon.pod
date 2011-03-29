@@ -1,0 +1,34 @@
+=head1 ICON
+
+Dialog's icon. This icon will be used when the dialog is minimized.
+
+=head2 Value
+
+Name of a IUP image.
+
+Default: NULL
+
+=head2 Notes
+
+Icon sizes are usually less than or equal to 32x32.
+
+The Windows SDK recomends that cursors and icons should be implemented
+as resources rather than created at run time.
+
+On Motif, it only works with some window managers, like I<mwm> and
+I<gnome>. Icon colors can have the BGCOLOR values, but it works better
+if it is at index 0.
+
+Use L<IupSetHandle|../func/iupsethandle.html> or
+L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
+associate an image to a name.
+
+=head2 Affects
+
+L<IupDialog|../dlg/iupdialog.html>
+
+=head2 X<SeeAlso>See Also
+
+L<IupImage|../elem/iupimage.html>
+
+=cut

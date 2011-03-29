@@ -1,0 +1,85 @@
+=head1 IupShowXY
+
+Displays a dialog in a given position on the screen.
+
+=head2 Parameters/Return
+
+ int IupShowXY(Ihandle *ih, int x, int y); [in C]
+ iup.ShowXY(ih: ihandle[, x, y: number]) -> (ret: number) [in Lua]
+ or ih:showxy([x, y: number]) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the dialog.
+
+B<x>: horizontal position of the dialog relative to the origin of the
+screen. The following macros are valid:
+
+=over
+
+=item * IUP_LEFT: Positions the dialog on the left corner of the screen
+
+=item * IUP_CENTER: Horizontally centralizes the dialog on the screen
+
+=item * IUP_RIGHT: Positions the dialog on the right corner of the
+screen
+
+=item * IUP_MOUSEPOS: Positions the dialog on the mouse position
+
+=item * IUP_CENTERPARENT: Horizontally centralizes the dialog relative
+to its parent (Since 3.0)
+
+=item * IUP_CURRENT: use the current position of the dialog. This is
+the default value in Lua if the parameter is not defined. (Since 3.0)
+
+=back
+
+B<y>: vertical position of the dialog relative to the origin of the
+screen. The following macros are valid:
+
+=over
+
+=item * IUP_TOP: Positions the dialog on the top of the screen
+
+=item * IUP_CENTER: Vertically centralizes the dialog on the screen
+
+=item * IUP_BOTTOM: Positions the dialog on the base of the screen
+
+=item * IUP_MOUSEPOS: Positions the dialog on the mouse position
+
+=item * IUP_CENTERPARENT: Vertically centralizes the dialog relative to
+its parent (Since 3.0)
+
+=item * IUP_CURRENT: use the current position of the dialog. This is
+the default value in Lua if the parameter is not defined.(Since 3.0)
+
+=back
+
+Returns: IUP_NOERROR if sucessful. Returns IUP_INVALID if not a dialog.
+If there was an error returns IUP_ERROR.
+
+=head2 Notes
+
+Will call B<IupMap> for the element.
+
+See the L<PLACEMENT|../dlg/iupdialog.html#PLACEMENT> attribute for
+other position and show options.
+
+When IUP_CENTERPARENT is used but PARENTDIALOG is not defined then it
+is replaced by IUP_CENTER.
+
+When IUP_CURRENT is used at the first time the dialog is shown then it
+will be replaced by IUP_CENTERPARENT.
+
+This function can be executed more than once for the same dialog. This
+will make the dialog be placed above all other dialogs in the
+application, changing its Z-order, and update its position and/or size
+on screen.
+
+IMPORTANT: Calling B<IupShowXY> for a visible dialog shown with
+B<IupPopup> does nothing.
+
+=head2 See Also
+
+L<IupShow|iupshow.html>, L<IupHide|iuphide.html>,
+L<IupPopup|iuppopup.html>, L<IupMap|iupmap.html>
+
+=cut

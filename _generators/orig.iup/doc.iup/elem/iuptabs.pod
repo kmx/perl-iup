@@ -1,0 +1,202 @@
+=head1 IupTabs (since 3.0)
+
+Creates a Tabs element. Allows a single dialog to have several screens,
+grouping options. The grouping is done in a single line of tabs
+arranged according to the tab type. Also known as Notebook in native
+systems.
+
+=head2 Creation
+
+ Ihandle* IupTabs(Ihandle* child, ...); [in C]
+ Ihandle* IupTabsv(Ihandle** children); [in C]
+ iup.tabs{child, ...: ihandle} -> (elem: ihandle) [in Lua]
+ tabs(child, ...) [in LED]
+
+B<child, ... >: List of the elements that will be placed in the box.
+NULL must be used to define the end of the list in C. It can be empty.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+L<BGCOLOR|../attrib/iup_bgcolor.html>: In Windows and in GTK when in
+Windows, the tab buttons background it will be always defined by the
+system. In Windows the default background is different from the dialog
+background. Default: the global attribute DLGBGCOLOR.
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
+value is "YES".
+
+L<FGCOLOR|../attrib/iup_fgcolor.html>: Tabs title color. Default: the
+global attribute DLGFGCOLOR.
+
+B<MULTILINE> [Windows Only] (non inheritable): Enable multiple lines
+of tab buttons. This will hide the tab scroll and fits to make all tab
+buttons visible. Can be "YES" or "NO". Default "NO". It is always
+enabled when TABTYPE=LEFT or TABTYPE=RIGHT. (since 3.0)
+
+B<PADDING> (non inheritable): internal margin of the tab title. Works
+just like the MARGIN attribute of the IupHbox and IupVbox containers,
+but uses a different name to avoid inheritance problems. Default value:
+"0x0". (since 3.0)
+
+L<SIZE|../attrib/iup_size.html> (non inheritable): The default size is
+the smallest size that fits its largest child. All child elements are
+considered even invisible ones.
+
+B<TABIMAGEn >(non inheritable): image name to be used in the respective
+tab. Use L< IupSetHandle|../func/iupsethandle.html> or
+L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
+associate an image to a name. See also L<IupImage|iupimage.html>. In
+Motif, the image is shown only if B<TABTITLEn> is NULL. In Windows and
+Motif set the BGCOLOR attribute before setting the image. (since 3.0)
+
+B<TABORIENTATION >(non inheritable): Indicates the orientation of tab
+text, which can be "HORIZONTAL" or "VERTICAL". Default is "HORIZONTAL".
+VERTICAL is supported only in GTK and in Windows. In Windows, VERTICAL
+is only supported when TABTYPE=LEFT or TABTYPE=RIGHT. (GTK 2.6)
+
+B<TABTITLEn >(non inheritable): Contains the text to be shown in the
+respective tab title. If this value is NULL, it will remain empty.
+(since 3.0)
+
+B<TABTITLE >(non inheritable) B<(at children)>: Same as B<TABTITLEn>
+but set in each child. Works only before the child is added to the
+tabs. Deprecated, use B< TABTITLEn>.
+
+B<TABTYPE >(non inheritable) (creation only in Windows): Indicates the
+type of tab, which can be "TOP", "BOTTOM", "LEFT" or "RIGHT". Default
+is "TOP". In Windows, if LEFT or RIGHT, then MULTILINE=YES and
+TABORIENTATIONB<=>VERTICAL always. In Windows, when not TOP, then
+visual style is removed from tabs.
+
+B<VALUE >(non inheritable): Changes the active tab by its name. The
+value passed must be the name of one of the elements contained in the
+tabs. Use L< IupSetHandle|../func/iupsethandle.html> or L<
+IupSetAttributeHandle|../func/iupsetattributehandle.html> to associate
+a child to a name. In Lua you can also use the element reference
+directly.
+
+B<VALUE_HANDLE> (non inheritable): Changes the active tab by its
+handle. The value passed must be the handle of a child contained in the
+tabs. When the tabs is created, the first element inserted is set as
+the visible child. (since 3.0)
+
+B<VALUEPOS >(non inheritable): Changes the active tab by its position,
+starting at 0. When the tabs is created, the first element inserted is
+set as the visible child. (since 3.0)
+
+=over
+
+----
+
+=back
+
+L<ACTIVE|../attrib/iup_active.html>, L<FONT|../attrib/iup_font.html>,
+L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<ZORDER|../attrib/iup_zorder.html>,
+L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+=head2 Callbacks
+
+B<TABCHANGE_CB>: Callback called when the user shifts the active tab.
+The parameters passed are:
+
+ int function(Ihandle* ih, Ihandle* new_tab, Ihandle* old_tab); [in C]
+ elem:tabchange_cb(new_tab, old_tab: ihandle) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<new_tab>: the new tab selected by the user
+
+B<old_tab>: the previously selected tab
+
+=over
+
+----
+
+=back
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>,
+L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
+L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
+L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>:
+All common callbacks are supported.
+
+=head2 Notes
+
+The Tabs can be created with no children and be dynamic filled using
+L<IupAppend|../func/iupappend.html>.
+
+The ENTERWINDOW_CB and LEAVEWINDOW_CB callbacks are called only when
+the mouse enter or leaves the tabs buttons area.
+
+The Tabs children, differently from a B<IupZbox>, automatically
+receives a name if does not already have one when it is appended to the
+tabs in the native system. Also B<IupTabs> does NOT depends on the
+VISIBLE attribute.
+
+In GTK, when the tabs buttons are scrolled, the active tab is also
+changed.
+
+When you change the active tab the focus is usually not changed. If you
+want to control the focus behavior call B<IupSetFocus> in the
+TABCHANGE_CB callback.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+In Windows, the Visual Styles work only when TABTYPE is TOP.
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+GTK is the only one that supports vertical text in the TOP
+configuration, but does not supports multiple lines of tab buttons.
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+Motif does not supports vertical text.
+
+Motif
+
+[IMAGE]
+
+[IMAGE]
+
+=cut

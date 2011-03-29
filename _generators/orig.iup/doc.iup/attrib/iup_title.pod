@@ -1,0 +1,40 @@
+=head1 TITLE (non inheritable)
+
+ElementE<rsquo>s title. It is often used to modify some static text of
+the element (which cannot be changed by the user).
+
+=head2 Value
+
+Text.
+
+Default: ""
+
+=head2 Notes
+
+The '\n' character usually is accepted for line change (except for
+menus).
+
+The "&" character can be used to define a MNEMONIC, use "&&" to show
+the "&" character instead on defining a mnemonic.
+
+If a mnemonic is defined then the character relative to it is
+underlined and a key is associated so that when pressed together with
+the Alt key activates the control.
+
+In GTk, if you define a mnemonic using "&" and the string has an
+underscore, then make sure that the mnemonic comes before the
+underscore.
+
+In GTK, if the MARKUP attribute is defined then the title string can
+contains pango markup commands. Works only if a mnemonic is NOT defined
+in the title. Not valid for menus.
+
+=head2 Affects
+
+All elements with an associated text.
+
+=head2 See Also
+
+L<FONT|iup_font.html>
+
+=cut

@@ -1,0 +1,31 @@
+=head1 BGCOLOR
+
+ElementE<rsquo>s background color.
+
+=head2 Value
+
+The RGB components.
+
+Values should be between 0 and 255, separated by a blank space. For
+example "255 0 128", red=255 blue=0 green=128.
+
+Default: It is the value of the DLGBGCOLOR global attribute. On some
+controls if not defined will inherit the background of the native
+parent.
+
+=head2 Affects
+
+All, but with restrictions. Several controls have transparent parts
+that are not affected by the BGCOLOR.
+
+See also the screenshots of the L<sample.c|../../examples/C/sample.c>
+results with L<normal background|../sample_results.html>, changing the
+dialog L< BACKGROUND|../sample_results_background.html>, the dialog
+L<BGCOLOR|../sample_results_bgcolor.html> and the L<children
+BGCOLOR|../sample_results_bgcolor_indiv.html>.
+
+=head2 See Also
+
+L<FGCOLOR|iup_fgcolor.html>, L< DLGBGCOLOR|iup_globals.html#DLGBGCOLOR>
+
+=cut

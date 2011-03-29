@@ -1,0 +1,16 @@
+=head1 MENUCLOSE_CB
+
+Called just after the menu is closed.
+
+=head2 Callback
+
+ int function(Ihandle *ih); [in C]
+ elem:menuclose_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+=head2 Affects
+
+L<IupMenu|../elem/iupmenu.html>
+
+=cut

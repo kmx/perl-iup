@@ -1,0 +1,15 @@
+=head1 IupGetDialog
+
+Returns the handle of the dialog that contains that interface element.
+Works also for children of a menu that is associated with a dialog.
+
+=head2 Parameters/Return
+
+ Ihandle* IupGetDialog(Ihandle *ih); [in C]
+ iup.GetDialog(ih: ihandle) -> (ih: ihandle) [in Lua]
+
+B<ih>: Identifier of an interface element.
+
+Returns: the handle of the dialog or NULL if not found.
+
+=cut

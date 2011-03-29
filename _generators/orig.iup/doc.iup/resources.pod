@@ -1,0 +1,41 @@
+=head1 Resources
+
+Resources are several auxiliary tools including menus, images, fonts
+and global names.
+
+Some objects like menus and images, that are not inserted in a dialog
+children tree, are in fact "associated" with dialogs or controls.
+
+Menus can be associated with dialogs only. Images can be associated
+with labels, buttons, toggles and menu items (this last in Windows
+only).
+
+Both images and menus to be associated use a global table of names.
+This exist because of the LED scripts. First you associate the image or
+menu Ihandle to a name, then you associated the MENU or IMAGE attribute
+to the respective name.
+
+For example, in C:
+
+ Ihandle* img = IupImage (11, 11, pixmap) ;
+ IupSetHandle("myImg", img);
+ IupSetAttribute(myButton, "IMAGE", "myImg") ;
+
+or in LED:
+
+ myImg = image[...] (
+ ...
+ )
+ myButton = button[IMAGE = myImg]("")
+
+or in Lua:
+
+ myImg = iupimage {
+ ...
+ }
+ myButton = iupbutton { title = "", image = myImg }
+
+Only dialogs, timers, popup menus and images can be destroyed. Menu
+bars associated with dialogs are automatically destroyed.
+
+=cut

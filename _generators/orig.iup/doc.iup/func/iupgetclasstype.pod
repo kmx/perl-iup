@@ -1,0 +1,28 @@
+=head1 IupGetClassType (Since 3.0)
+
+Returns the name of the native type of an interface element.
+
+=head2 Parameters/Return
+
+ char* IupGetClassType(Ihandle* ih); [in C]
+ iup.GetClassType(ih: ihandle) -> (name: string) [in Lua]
+
+B<ih>: Identifier of the interface element.
+
+=head2 Notes
+
+There are only a few pre-defined class types:
+
+ "void" - No native representation - HBOX, VBOX, ZBOX, FILL, RADIO
+ "control" - Native controls - BUTTON, LABEL, TOGGLE, LIST, TEXT, MULTILINE, ITEM, SEPARATOR, SUBMENU, FRAME, others
+ "canvas" - Drawing canvas, also used as a base control for custom controls.
+ "dialog"
+ "image"
+ "menu"
+
+=head2 See Also
+
+L<IupGetClassName|iupgetclassname.html>,
+L<IupGetClassAttributes|iupgetclassattributes.html>
+
+=cut

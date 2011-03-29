@@ -1,0 +1,150 @@
+=head1 IupLabel
+
+Creates a label interface element, which displays a separator, a text
+or an image.
+
+=head2 Creation
+
+ Ihandle* IupLabel(const char *title); [in C]
+ iup.label{[title = title: string]} -> (elem: ihandle) [in Lua]
+ label(title) [in LED]
+
+B<title>: Text to be shown on the label. It can be NULL. It will set
+the TITLE attribute.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<ACTIVE>: The only difference between an active label and an inactive
+one is its visual feedback. Possible values: "YES, "NO". Default:
+"YES".
+
+B<ALIGNMENT> (non inheritable): horizontal and vertical alignment.
+Possible values: "ALEFT", "ACENTER" and "ARIGHT", combined to "ATOP",
+"ACENTER" and "ABOTTOM". Default: "ALEFT:ACENTER". Partial values are
+also accepted, like "ARIGHT" or ":ATOP", the other value will be used
+from the current alignment. In Motif, vertical alignment is restricted
+to "ACENTER". (vertical alignment since 3.0)
+
+L<BGCOLOR|../attrib/iup_bgcolor.html>: ignored, transparent in all
+systems. Will use the background color of the native parent.
+
+B<ELLIPSIS> [Windows and GTK only]: add an ellipsis: "..." to the text
+if there is not enough space to render the entire string. Can be "YES"
+or "NO". Default: "NO". (since 3.0) (GTK 2.6)
+
+L<FGCOLOR|../attrib/iup_fgcolor.html>: Text color. Default: the global
+attribute DLGFGCOLOR.
+
+B<IMAGE> (non inheritable): Image name. If set before map defines the
+behavior of the label to contain an image. The natural size will be
+size of the image in pixels. Use
+L<IupSetHandle|../func/iupsethandle.html> or
+L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
+associate an image to a name. See also L<IupImage|iupimage.html>.
+
+B<IMINACTIVE> (non inheritable) [GTK and Motif only]: Image name of the
+element when inactive. If it is not defined then the IMAGE is used and
+the colors will be replaced by a modified version of the background
+color creating the disabled effect. GTK will also change the inactive
+image to look like other inactive objects.
+
+B<MARKUP> [GTK only]: allows the title string to contains pango markup
+commands. Works only if a mnemonic is NOT defined in the title. Can be
+"YES" or "NO". Default: "NO".
+
+B<PADDING>: internal margin. Works just like the MARGIN attribute of
+the IupHbox and IupVbox containers, but uses a different name to avoid
+inheritance problems. Not used when SEPARATOR is used. Default value:
+"0x0". (since 3.0)
+
+B<SEPARATOR >(creation only) (non inheritable): Turns the label into a
+line separator. Possible values: "HORIZONTAL" or "VERTICAL". When
+changed before mapping the EXPAND attribute is set to "HORIZONTAL" or
+"VERTICAL" accordingly.
+
+L<TITLE|../attrib/iup_title.html> (non inheritable): Label's text. If
+SEPARATOR or IMAGE are not defined before map, then the default
+behavior is to contain a text. The label behavior can not be changed
+after map. The natural size will be larger enough to include all the
+text in the selected font, even using multiple lines. The '\n'
+character is accepted for line change. The "&" character can be used to
+define a mnemonic, the next character will be used as key. Use "&&" to
+show the "&" character instead of defining a mnemonic. The next control
+from the label will be activated from any control in the dialog using
+the "Alt+key" combination. (mnemonic support since 3.0)
+
+B<WORDWRAP> [Windows and GTK only]: enables or disable the wrapping of
+lines that does not fits in the label. Can be "YES" or "NO". Default:
+"NO". Can only set WORDWRAP=YES if ALIGNMENT=ALEFT. (since 3.0)
+
+=over
+
+----
+
+=back
+
+L<FONT|../attrib/iup_font.html>, L<EXPAND|../attrib/iup_expand.html>,
+L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
+L<TIP|../attrib/iup_tip.html>, L<SIZE|../attrib/iup_size.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<ZORDER|../attrib/iup_zorder.html>,
+L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+=head2 Callbacks
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>: common callbacks are supported.
+
+=head2 Notes
+
+Labels with images, texts or line separator can not change its behavior
+after mapped. But after map the image can be changed for another image,
+and the text for another text.
+
+=head2 Examples
+
+Normal Text Label -
+
+[IMAGE]
+
+- Normal Image Label
+
+Horizontal Separator -
+
+- Horizontal Separator
+
+FGCOLOR = "0 0 255"
+
+ALIGNMENT="ALEFT:ATOP"
+
+- (8bpp Image)
+
+FONT = "Helvetica, 14"
+
+ALIGNMENT = "ACENTER:ACENTER"
+
+- ALIGNMENT = "ACENTER"
+
+(24 bpp Image)
+
+MARKUP = "YES" (GTK Only)
+
+ALIGNMENT = "ARIGHT:ABOTTOM"
+
+- ALIGNMENT = "ARIGHT"
+
+(32 bpp Image)
+
+L<Browse for Example Files|../../examples/>
+
+=head2 X<SeeAlso>See Also
+
+L<IupImage|iupimage.html>, L<IupButton|iupbutton.html>.
+
+=cut

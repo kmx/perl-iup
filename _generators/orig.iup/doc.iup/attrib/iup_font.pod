@@ -1,0 +1,862 @@
+=head1 FONT (since 3.0)
+
+Character font of the text shown in the element. See L<
+FONT|iup_font2.html> definition up to IUP 2.x. Although it is an
+inheritable attribute, it is defined only on elements that have a
+native representation.
+
+=head2 Value
+
+Font description containing typeface, style and size. Default: the
+global attribute DEFAULTFONT.
+
+The common format definition is similar to the the L<
+Pango|http://www.pango.org/> library Font Description, used by GTK+2.
+It is defined as having 3 parts: "E<lt>font familyE<gt>, E<lt>font
+stylesE<gt> E<lt>font sizeE<gt>".
+
+Font family can be a list of fonts face names, but this is only
+accepted in GTK. So the font family can be reduced to font face.
+
+The supported font style is a combination of: B<Bold>, B<Italic>, B<
+Underline> and B<Strikeout>. The Pango format include many other
+definitions not supported by the common format, they are supported only
+by the GTK driver. Unsupported values are simply ignored.
+
+Font size is in points (1/72 inch) or in pixels (using negative
+values).
+
+The old L<Font Names|iup_font.html#Font_Names> are still supported. The
+old Windows L<FONT|iup_font.html> format is still supported in the
+Windows driver.
+
+Returned values will be the same value when changing the attribute,
+except for the old font names that will be converted to the new common
+format definition.
+
+=head2 Windows
+
+The DEFAULTFONT is retrieved from the System Settings (see bellow), if
+this failed then "Tahoma, 10" is assumed.
+
+The native handle can be obtained using the "B<HFONT>" attribute.
+
+In "Control Panel", open the "Display Properties" then click on
+"Advanced" and select "Message Box" and change its Font to affect the
+default font for applications. In Vista go to "Window Color and
+Appearance", then "Open Classic Appearance", then Advanced.
+
+=head2 Motif
+
+The DEFAULTFONT is retrieved from the user resource file (see bellow),
+if failed then "Fixed, 11" is assumed.
+
+The X-Windows Logical Font Description format (XLFD) is also supported.
+
+The native handle can be obtained using the "B<XMFONTLIST>" and
+"B<XFONTSTRUCT>" attributes. The selected X Logical Font Description
+string can be obtained from the attribute "B<XLFD>".
+
+You can use the B<xfontsel> program to obtain a string in the X-Windows
+Logical Font Description format (XLFD). Noticed that the first size
+entry of the X-Windows font string format (B<pxlsz>) is in pixels and
+the next one (B<ptSz>) is in deci-points (multiply the value in points
+by 10).
+
+Be aware that the resource files ".Xdefaults" and "Iup" in the user
+home folder can affect the default font and many others visual
+appearance features in Motif.
+
+=head2 GTK
+
+The DEFAULTFONT is retrieved from the style defined by GNOME (see
+bellow), if failed "Sans, 10" is assumed.
+
+The X-Windows Logical Font Description format (XLFD) is also supported.
+
+The native handle can be obtained using the "B<PANGOFONTDESC>"
+attribute.
+
+Style can also be a combination of: Small-Caps,
+[Ultra-Light|Light|Medium|Semi-Bold|Bold|Ultra-Bold|Heavy],
+[Ultra-Condensed|Extra-Condensed|Condensed|Semi-Condensed|Semi-Expanded|Expanded|Extra-Expanded|Ultra-Expanded].
+Those values can be used only when the string is a full Pango compliant
+font, i.e. no underline, no strikeout and sizeE<gt>0.
+
+In GNOME, go to the "Appearance Preferences" tool, then in the Fonts
+tab change the Applications Font to affect the default font.
+
+=head2 Examples:
+
+ "Times, Bold 18"
+ "Arial,Helvetica, 24" (list of fonts for GTK)
+ "Courier New, Italic Underline -30" (size in pixels)
+
+=head2 Affects
+
+All elements, since the SIZE attribute depends on the FONT attribute,
+except for menus.
+
+=head2 Notes
+
+When FONT is changed and L<SIZE|iup_size.html> is set, then
+L<RASTERSIZE|iup_rastersize.html> is also updated.
+
+Since font face names are not a standard between Windows, Motif and
+GTK, a few names are specially handled to improve application
+portability. If you want to use names that work for all systems we
+recommend using: Courier, Times and Helvetica (same as Motif). Those
+names always have a native system name equivalent. If you use those
+names IUP will automatically map to the native system equivalent. See
+the table bellow:
+
+Motif
+
+Windows
+
+GTK
+
+Description
+
+B<Helvetica>
+
+Arial
+
+Sans
+
+without serif, variable spacing
+
+B<Courier>
+
+Courier New
+
+Monospace
+
+with serif, fixed spacing
+
+B<Times>
+
+Times New Roman
+
+Serif
+
+with serif, variable spacing
+
+=head2 Auxiliary Attributes
+
+They will change the FONT attribute, and depends on it. They are used
+only to set partial FONT parameters of style and size. To do that the
+FONT attribute is parsed, changed and updated to the new value in the
+common format definition. This means that if the attribute was set in
+X-Windows format or in the old Windows and IUP formats, the previous
+value will be replaced by a new value in the common format definition.
+Pango additional styles will also be removed.
+
+=head2 FONTSTYLE (non inheritable)
+
+Replaces or returns the style of the current FONT attribute.
+
+=head2 FONTSIZE (non inheritable)
+
+Replaces or returns the size of the current FONT attribute.
+
+=head2 FONTFACE (read-only, non inheritable)
+
+Returns the face name of the current FONT attribute.
+
+=head2 X<CHARSIZE>CHARSIZE (read-only, non inheritable)
+
+Returns the average character size of the current FONT attribute. This
+is the factor used by the SIZE attribute to convert its units to
+pixels.
+
+=head2 FOUNDRY [Motif Only] (non inheritable)
+
+Allows to select a foundry for the FONT being selected. Must be set
+before setting the FONT attribute.
+
+=head2 Encoding
+
+The number that represents each character is dependent on the encoding
+used. For example, in ASCII encoding the letter A has code 65, but
+codes above 128 can be very different according to the encoding. An
+encoding is defined by a charset.
+
+IUP uses the default locale in ANSI-C. This means that it does not
+adopts a specific charset, and so the results can be different if the
+developer charset is different than the run time charset where the user
+is running the application. The advantage is that different charsets
+can be used. For example, if the developer is using a charset, and its
+user is also using the same encoding, then everything will work fine
+without the need of text encoding conversions.
+
+GTK uses UTF-8 (ISO10646-1) as its charset for all displayed text, so
+IUP will automatically convert all strings to (SetAttribute) and from
+(GetAttribute) UTF-8. If you want to specify strings in the UTF-8
+charset at the GTK driver, then set the global attribute
+UTF8AUTOCONVERT to NO, the default is YES. If the default locale is
+already UTF-8, but the given string is not UTF-8 then it will be
+assumed that the string uses the ISO8859-1 charset.
+
+In the future IUP should also support Unicode strings, increasing
+application portability.
+
+=head2 ISO8859-1 and Windows-1252 Displayable Characters
+
+The Latin-1 charset (ISO8859-1) defines an encoding for all of the
+characters used in Western languages. The first half of Latin-1 is
+standard ASCII, while the second half (with the eighth bit set)
+contains accented characters needed for Western languages other than
+English. In Windows, the ISO8859-1 charset was changed, and some
+control characters were replaced to include more display characters,
+this new charset is named Windows-1252. These characters are marked in
+the table bellow with thick borders.
+
+32
+
+!
+
+I<B<33>>
+
+"
+
+I<B<34>>
+
+#
+
+I<B<35>>
+
+$
+
+I<B<36>>
+
+%
+
+I<B<37>>
+
+&
+
+I<B<38>>
+
+'
+
+I<B<39>>
+
+(
+
+I<B<40>>
+
+)
+
+I<B<41>>
+
+*
+
+I<B<42>>
+
++
+
+I<B<43>>
+
+,
+
+I<B<44>>
+
+-
+
+I<B<45>>
+
+.
+
+I<B<46>>
+
+/
+
+I<B<47>>
+
+0
+
+I<B<48>>
+
+1
+
+I<B<49>>
+
+2
+
+I<B<50>>
+
+3
+
+I<B<51>>
+
+4
+
+I<B<52>>
+
+5
+
+I<B<53>>
+
+6
+
+I<B<54>>
+
+7
+
+I<B<55>>
+
+8
+
+I<B<56>>
+
+9
+
+I<B<57>>
+
+:
+
+I<B<58>>
+
+;
+
+I<B<59>>
+
+E<lt>
+
+I<B<60>>
+
+E<61>
+
+I<B<61>>
+
+E<gt>
+
+I<B<62>>
+
+?
+
+I<B<63>>
+
+@
+
+I<B<64>>
+
+A
+
+I<B<65>>
+
+B
+
+I<B<66>>
+
+C
+
+I<B<67>>
+
+D
+
+I<B<68>>
+
+E
+
+I<B<69>>
+
+F
+
+I<B<70>>
+
+G
+
+I<B<71>>
+
+H
+
+I<B<72>>
+
+I
+
+I<B<73>>
+
+J
+
+I<B<74>>
+
+K
+
+I<B<75>>
+
+L
+
+I<B<76>>
+
+M
+
+I<B<77>>
+
+N
+
+I<B<78>>
+
+O
+
+I<B<79>>
+
+P
+
+I<B<80>>
+
+Q
+
+I<B<81>>
+
+R
+
+I<B<82>>
+
+S
+
+I<B<83>>
+
+T
+
+I<B<84>>
+
+U
+
+I<B<85>>
+
+V
+
+I<B<86>>
+
+W
+
+I<B<87>>
+
+X
+
+I<B<88>>
+
+Y
+
+I<B<89>>
+
+Z
+
+I<B<90>>
+
+[
+
+I<B<91>>
+
+\
+
+I<B<92>>
+
+]
+
+I<B<93>>
+
+^
+
+I<B<94>>
+
+_
+
+I<B<95>>
+
+`
+
+I<B<96>>
+
+a
+
+I<B<97>>
+
+b
+
+I<B<98>>
+
+c
+
+I<B<99>>
+
+d
+
+I<B<100>>
+
+e
+
+I<B<101>>
+
+f
+
+I<B<102>>
+
+g
+
+I<B<103>>
+
+h
+
+I<B<104>>
+
+i
+
+I<B<105>>
+
+j
+
+I<B<106>>
+
+k
+
+I<B<107>>
+
+l
+
+I<B<108>>
+
+m
+
+I<B<109>>
+
+n
+
+I<B<110>>
+
+o
+
+I<B<111>>
+
+p
+
+I<B<112>>
+
+q
+
+I<B<113>>
+
+r
+
+I<B<114>>
+
+s
+
+I<B<115>>
+
+t
+
+I<B<116>>
+
+u
+
+I<B<117>>
+
+v
+
+I<B<118>>
+
+w
+
+I<B<119>>
+
+x
+
+I<B<120>>
+
+y
+
+I<B<121>>
+
+z
+
+I<B<122>>
+
+{
+
+I<B<123>>
+
+|
+
+I<B<124>>
+
+}
+
+I<B<125>>
+
+~
+
+I<B<126>>
+
+I<B<127>>
+
+I<B<128>>
+
+I<B<129>>
+
+I<B<130>>
+
+I<B<131>>
+
+I<B<132>>
+
+I<B<133>>
+
+I<B<134>>
+
+I<B<135>>
+
+I<B<136>>
+
+I<B<137>>
+
+I<B<138>>
+
+I<B<139>>
+
+I<B<140>>
+
+I<B<141>>
+
+I<B<142>>
+
+I<B<143>>
+
+I<B<144>>
+
+I<B<145>>
+
+I<B<146>>
+
+I<B<147>>
+
+I<B<148>>
+
+I<B<149>>
+
+I<B<150>>
+
+I<B<151>>
+
+I<B<152>>
+
+I<B<153>>
+
+I<B<154>>
+
+I<B<155>>
+
+I<B<156>>
+
+I<B<157>>
+
+I<B<158>>
+
+I<B<159>>
+
+I<B<160>>
+
+I<B<161>>
+
+I<B<162>>
+
+I<B<163>>
+
+I<B<164>>
+
+I<B<165>>
+
+I<B<166>>
+
+I<B<167>>
+
+I<B<168>>
+
+I<B<169>>
+
+I<B<170>>
+
+I<B<171>>
+
+I<B<172>>
+
+I<B<173>>
+
+I<B<174>>
+
+I<B<175>>
+
+I<B<176>>
+
+I<B<177>>
+
+I<B<178>>
+
+I<B<179>>
+
+I<B<180>>
+
+I<B<181>>
+
+I<B<182>>
+
+I<B<183>>
+
+I<B<184>>
+
+I<B<185>>
+
+I<B<186>>
+
+I<B<187>>
+
+I<B<188>>
+
+I<B<189>>
+
+I<B<190>>
+
+I<B<191>>
+
+I<B<192>>
+
+I<B<193>>
+
+I<B<194>>
+
+I<B<195>>
+
+I<B<196>>
+
+I<B<197>>
+
+I<B<198>>
+
+I<B<199>>
+
+I<B<200>>
+
+I<B<201>>
+
+I<B<202>>
+
+I<B<203>>
+
+I<B<204>>
+
+I<B<205>>
+
+I<B<206>>
+
+I<B<207>>
+
+I<B<208>>
+
+I<B<209>>
+
+I<B<210>>
+
+I<B<211>>
+
+I<B<212>>
+
+I<B<213>>
+
+I<B<214>>
+
+I<B<215>>
+
+I<B<216>>
+
+I<B<217>>
+
+I<B<218>>
+
+I<B<219>>
+
+I<B<220>>
+
+I<B<221>>
+
+I<B<222>>
+
+I<B<223>>
+
+I<B<224>>
+
+I<B<225>>
+
+I<B<226>>
+
+I<B<227>>
+
+I<B<228>>
+
+I<B<229>>
+
+I<B<230>>
+
+I<B<231>>
+
+I<B<232>>
+
+I<B<233>>
+
+I<B<234>>
+
+I<B<235>>
+
+I<B<236>>
+
+I<B<237>>
+
+I<B<238>>
+
+I<B<239>>
+
+I<B<240>>
+
+I<B<241>>
+
+I<B<242>>
+
+I<B<243>>
+
+I<B<244>>
+
+I<B<245>>
+
+I<B<246>>
+
+I<B<247>>
+
+I<B<248>>
+
+I<B<249>>
+
+I<B<250>>
+
+I<B<251>>
+
+I<B<252>>
+
+I<B<253>>
+
+I<B<254>>
+
+I<B<255>>
+
+Punctuation and Symbols
+
+Numbers
+
+Letters
+
+Accented
+
+Adapted from L<
+http:E<47>E<47>en.wikipedia.orgE<47>wikiE<47>Windows-1252|http://en.wikipedia.org/wiki/Windows-1252>.
+
+=cut

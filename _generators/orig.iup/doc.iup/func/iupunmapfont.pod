@@ -1,0 +1,19 @@
+=head1 IupUnMapFont (Deprecated since 3.0)
+
+Retrieves the name of the old IUP FONT names, given the native font.
+See the old L<Font Names|../attrib/iup_font.html#Font_Names> table for
+a list of names.
+
+=head2 Parameters/Return
+
+ char* IupUnMapFont(const char *driverfont); [in C]
+ iup.UnMapFont(driverfont :string) -> (iupfont : string) [in Lua]
+
+Returns: the name of the IUP font, given the native font. If such font
+does not exist, the function will return NULL.
+
+=head2 See Also
+
+L<IupMapFont|iupmapfont.html>
+
+=cut

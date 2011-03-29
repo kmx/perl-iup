@@ -1,0 +1,306 @@
+=head1 Global Attributes
+
+----
+
+=head2 X<General>General
+
+=head2 B<X<LANGUAGE>LANGUAGE>
+
+The language used by some pre-defined dialogs.
+
+Can have the values ENGLISH and PORTUGUESE. Default: ENGLISH. Can also
+be set by B<IupSetLanguage>.
+
+=head2 B<X<version>VERSION> (read-only)
+
+Returns the name of IUP's version.
+
+The value follows the "major.minor.micro" format, major referring to
+broader changes, minor referring to smaller changes, and micro
+referring to corrections only. Ex.: "1.7.2".
+
+=head2 X<copyright>B<COPYRIGHT> (read-only)
+
+Returns the IUP's copyright.
+
+Ex: "Copyright (C) 1994-2004 Tecgraf/PUC-Rio and PETROBRAS S/A".
+
+=head2 X<driver>B<DRIVER> (read-only)
+
+Informs the current driver being used.
+
+Two drivers are available now, one for each platform: "GTK", "Motif"
+and "Win32".
+
+=head2 System X<Control>Control
+
+=head2 B<LOCKLOOP>
+
+When the last visible dialog is closed the B<IupExitLoop> function is
+called. To avoid that set LOCKLOOP=YES before hiding the last dialog.
+Possible values: "YES" or "NO". Default: "NO".
+
+=head2 B<X<cursorpos>CURSORPOS>
+
+The cursor position in absolute coordinates relative to the upper left
+corner of the screen. Accept values in the format "XB<x>Y", example
+"200x200". Can be set only in GTK 2.8.
+
+=head2 X<SHIFTKEY>B<SHIFTKEY> (read-only) (since 3.0)
+
+Returns the state of the Shit keys (left and right). Possible values:
+"ON" or "OFF".
+
+=head2 X<CONTROLKEY>B<CONTROLKEY> (read-only) (since 3.0)
+
+Returns the state of the Control keys (left and right). Possible
+values: "ON" or "OFF".
+
+=head2 X<MODKEYSTATE>B<MODKEYSTATE> (read-only) (since 3.0)
+
+Returns the state of the keyboard modifier keys: Shift, Ctrl, Alt and
+sYs(Win/Apple). In the format of 4 characters: "SCAY". When not pressed
+the respective letter is replaced by a space " ".
+
+=head2 B<KEYPRESS> (write-only) (since 3.0)
+
+Sends a key press message to the element with the focus. The value is a
+key code. See the L<Keyboard Codes|key.html> table for a list of the
+possible values.
+
+=head2 B<KEY>RELEASE (write-only) (since 3.0)
+
+Sends a key release message to the element with the focus. The value is
+a key code. See the L<Keyboard Codes|key.html> table for a list of the
+possible values.
+
+=head2 B<KEY> (write-only) (since 3.0)
+
+Sends a key press and a key release messages to the element with the
+focus. The value is a key code. See the L<Keyboard Codes|key.html>
+table for a list of the possible values.
+
+=head2 B<X<AUTOREPEAT>AUTOREPEAT> [Motif Only]
+
+Turns on/off ("YES" or "NO") the autorepeat of keyboard keys in the
+whole system - may be used as an optimization in high performance
+applications.
+
+=head2 B<X<UTF8AUTOCONVERT>UTF8AUTOCONVERT> [GTK Only]
+
+GTK uses UTF-8 as its charset for all displayed text, so IUP will
+automatically convert all strings to (SetAttribute) and from
+(GetAttribute) UTF-8. Default: YES. If the default locale is already
+UTF-8, but the given string is not UTF-8 then it will be assumed that
+the string uses the ISO8859-1 charset.
+
+=head2 B<SINGLEINSTANCE> [Windows Only] (since 3.2)
+
+Restricts the number of instances of the application by using a name to
+identify it. The value must also be a partial match to the title of a
+dialog that will receive the COPYDATA_CB callback with the command line
+of the second instance. When consulted return NULL if inside the second
+instance. So usually in the application initialization after
+B<IupOpen>, set SINGLEINSTANCE and then consult its value, if NULL
+abort the second instance by calling B< IupClose> and returning from
+I<main>.
+
+=head2 System X<Information>Information
+
+=head2 B<SYSTEMLANGUAGE> (read-only)
+
+Return respectively a text with a description of the system language.
+
+=head2 B<SYSTEM> (read-only)
+
+Informs the current operating system. On UNIX, it is equivalent to the
+command "uname -s" (sysname). On Windows, it identifies if you are on
+Windows 2000, Windows XP or Windows Vista. Some known names:
+
+=over
+
+=over
+
+=item * "MacOS"
+
+=item * "FreeBSD"
+
+=item * "Linux"
+
+=item * "SunOS"
+
+=item * "Solaris"
+
+=item * "IRIX"
+
+=item * "AIX"
+
+=item * "HP-UX"
+
+=item * "Win2K"
+
+=item * "WinXP"
+
+=item * "Vista"
+
+=item * "Win7"
+
+=back
+
+=back
+
+=head2 B<SYSTEMVERSION> (read-only)
+
+Informs the current operating system version number.
+
+On UNIX, it is equivalent to the command "uname -r" (release). On
+Windows, it identifies the system version number and service pack
+version. On MacOSX is system version.
+
+=head2 B<X<GTKVERSION>GTKVERSION> (read-only) [GTK Only]
+
+Returns the run time version of the GTK toolkit. This is the version
+being used at the time of the IupOpen function was called by the
+application.
+
+=head2 B<X<GTKDEVVERSION>GTKDEVVERSION> (read-only) [GTK Only]
+
+Returns the development version of the GTK toolkit. This is the version
+at the time the IUP library was compiled.
+
+=head2 X<MOTIFVERSION>B<MOTIFVERSION> (read-only) [Motif Only]
+
+Returns the version of the run time Motif.
+
+=head2 B<X<MOTIFNUMBER>MOTIFNUMBER> (read-only) [Motif Only]
+
+Returns the number of the Motif Version if full form, e.x: 2.2.3 =
+"2203".
+
+=head2 B<X<computername>COMPUTERNAME> (read-only)
+
+Returns the hostname.
+
+=head2 B<X<username>USERNAME> (read-only)
+
+Returns the user logged in.
+
+=head2 B<X<XSERVERVENDOR>XSERVERVENDOR> (read-only) [GTK and Motif
+Only] (since 3.0)
+
+X-Windows Server Vendor string.
+
+=head2 B<X<XVENDORRELEASE>XVENDORRELEASE> (read-only) [GTK and Motif
+Only] (since 3.0)
+
+X-Windows Server Vendor release number.
+
+=head2 X<Screen>Screen Information
+
+=head2 B<FULLSIZE> (read-only)
+
+Returns the full screen size in pixels.
+
+String in the "I<width>xI<height>" format.
+
+=head2 B<SCREENSIZE> (read-only)
+
+Returns the screen size in pixels available for dialogs, i.e. not
+including menu bars, task bars, etc. In Motif has the same value as the
+FULLSIZE attribute.
+
+String in the "I<width>xI<height>" format.
+
+=head2 B<SCREENDEPTH> (read-only)
+
+Returns the screen depth in bits per pixel.
+
+=head2 X<TRUECOLORCANVAS>B<TRUECOLORCANVAS> (read-only)
+
+Indicates if the display allows creating TrueColor (E<gt> 8bpp)
+B<IupCanvas> controls, even if PseudoColor is the default, i.e. even if
+SCREENDEPTHE<lt>=8 . Returns "YES" or "NO". Usefull in Motif.
+
+=head2 B<X<VIRTUALSCREEN>VIRTUALSCREEN> (read-only) (since 3.0) [Win32
+and GTK Only]
+
+Returns the virtual screen position and size in pixels. It is the
+virtual space defined by all monitors in the system.
+
+String in the "I<x y width height>" format.
+
+=head2 X<MONITORSINFO>MONITORSINFO (read-only) (since 3.0) [Win32 and
+GTK Only]
+
+Returns the position and size in pixels of all monitors. Each monitor
+information is terminated by a "\n" character.
+
+String in the "I<x y width height>\nI<x y width height>\n..." format.
+
+=head2 System X<Data>Data
+
+=head2 X<HINSTANCE>B<HINSTANCE> (read-only) [Win32 Only]
+
+Returns a handle (HINSTANCE) that identifies the application in the
+native system.
+
+=head2 X<DLL_HINSTANCE>B<DLL_HINSTANCE> [Win32 Only] (since 3.0)
+
+Changes and returns a handle (HINSTANCE) that identifies the DLL where
+resources are stored.
+
+=head2 X<APPSHELL>B<APPSHELL> (read-only) [Motif Only] (since 3.0)
+
+Returns the shell Widget created by XtOpenApplication.
+
+=head2 X<XDISPLAY>B<XDISPLAY> (read-only) [GTK and Motif Only] (since
+3.0)
+
+Returns the X-Windows Display.
+
+=head2 X<XSCREEN>B<XSCREEN> (read-only) [GTK and Motif Only] (since
+3.0)
+
+Returns the X-Windows Screen.
+
+=head2 X<Default>Default Attributes
+
+=head2 B<X<DLGBGCOLOR>DLGBGCOLOR>
+
+The default background color for all elements that have the background
+similar of the dialog.
+
+=head2 B<X<DLGFGCOLOR>DLGFGCOLOR> (since 3.0)
+
+The default foreground color for all elements that have text over the
+background of the dialog or similar. Usually is "0 0 0".
+
+=head2 B<X<MENUBGCOLOR>MENUBGCOLOR> (since 3.0)
+
+The default menu background color. Usually is "255 255 255".
+
+=head2 B<X<MENUFGCOLOR>MENUFGCOLOR> (since 3.0)
+
+The default menu foreground color. Usually is "0 0 0".
+
+=head2 B<X<TXTBGCOLOR>TXTBGCOLOR> (since 3.0)
+
+The default background color for editable text, also used by lists and
+tree. Usually is "255 255 255".
+
+=head2 B<X<TXTFGCOLOR>TXTFGCOLOR> (since 3.0)
+
+The default foreground color for editable text, also used by lists and
+tree. Usually is "0 0 0".
+
+=head2 B<X<DEFAULTFONT>DEFAULTFONT>
+
+The default font used by all elements, except for menus.
+
+=head2 B<X<DEFAULTFONTSIZE>DEFAULTFONTSIZE> (since 3.0)
+
+Auxiliar attribute to retrieve and set the default font size used by
+all elements. It retrieves the size from DEFAULTFONT. When changed will
+actually change the DEFAULTFONT.
+
+=cut

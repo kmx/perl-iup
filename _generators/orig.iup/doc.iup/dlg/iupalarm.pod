@@ -1,0 +1,51 @@
+=head1 IupAlarm
+
+Shows a modal dialog containing a message and up to three buttons.
+
+=head2 Creation and Show
+
+ int IupAlarm(const char *t, const char *m, const char *b1, const char *b2, const char *b3); [in C]
+ iup.Alarm(t, m, b1[, b2, b3]: string) -> (button: number) [in Lua]
+
+B<t>: DialogE<rsquo>s title
+
+B<m>: Message
+
+B<b1>: Text of the first button
+
+B<b2>: Text of the second button (optional)
+
+B<b3>: Text of the third button (optional)
+
+Returns: the number of the B<button> selected by the user (1, 2 or 3) ,
+or 0 if failed. It fails only if b1 is not defined.
+
+=head2 Notes
+
+This function shows a dialog centralized on the screen, with the
+message and the buttons. The E<lsquo>\nE<rsquo> character can be added
+to the message to indicate line change.
+
+A button is not shown if its parameter is NULL. This is valid only for
+B<b2> and B<b3>.
+
+Button 1 is set as the "DEFAULTENTER" and "DEFAULTESC". If Button 2
+exists it is set as the "DEFAULTESC". If Button 3 exists it is set as
+the "DEFAULTESC".
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+=head2 See Also
+
+L<IupMessage|iupmessage.html>, L<IupScanf|iupscanf.html>,
+L<IupListDialog|iuplistdialog.html>, L<IupGetFile|iupgetfile.html>.
+
+=cut

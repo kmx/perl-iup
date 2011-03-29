@@ -1,0 +1,18 @@
+=head1 IupGetActionName
+
+Should return the name of the action being executed by the application.
+In fact returns only the name of the action last retrieved in
+B<IupGetFunction>.
+
+=head2 Parameters/Return
+
+ const char* IupGetActionName(void); [in C]
+ [There is no equivalent in Lua]
+
+Returns: the name of the action.
+
+=head2 See Also
+
+L<DEFAULT_ACTION|../call/iup_default_action.html>
+
+=cut

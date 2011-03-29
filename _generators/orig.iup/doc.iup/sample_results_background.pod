@@ -1,0 +1,34 @@
+=head1 Sample Results (2)
+
+The following screenshots shows the L<sample.c|../examples/C/sample.c>
+results when the dialog L<BACKGROUND|dlg/iupdialog.html#Attributes>
+attribute is changed. See also the same sample with L<normal
+background|sample_results.html>, the L<dialog
+BGCOLOR|sample_results_bgcolor.html> and the L<children
+BGCOLOR|sample_results_bgcolor_indiv.html>.
+
+Notice that the dialog BACKGROUND attribute affects only the background
+of the dialog, the background of each control is preserved except for
+the ones that the background is transparent.
+
+=head2 Motif in MWM
+
+[IMAGE]
+
+=head2 GTK in Gnome
+
+[IMAGE]
+
+=head2 Windows Classic
+
+[IMAGE]
+
+=head2 Windows XP Style
+
+[IMAGE]
+
+=head2 Windows Vista
+
+[IMAGE]
+
+=cut

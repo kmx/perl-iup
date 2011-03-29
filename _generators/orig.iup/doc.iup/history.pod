@@ -1,0 +1,15 @@
+=head1 History of Changes
+
+=head2 Version 3.x
+
+See L<Version 3.x History|history3.html>.
+
+=head2 Version 2.x
+
+See L<Version 2.x History|history2.html>.
+
+=head2 Version 1.x
+
+See L<Version 1.x History|history1.html>.
+
+=cut

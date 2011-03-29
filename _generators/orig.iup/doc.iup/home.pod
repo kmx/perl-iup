@@ -1,0 +1,39 @@
+=pod
+
+IUP
+
+Portable User Interface
+
+Version 3
+
+----
+
+B<IUP> is a portable toolkit for building graphical user interfaces. It
+offers a configuration API in three basic languages: C, Lua and LED.
+B<IUP>'s purpose is to allow a program to be executed in different
+systems without any modification, therefore it is highly portable. Its
+main advantages are:
+
+=over
+
+=item * high performance, due to the fact that it uses native interface
+elements.
+
+=item * fast learning by the user, due to the simplicity of its API.
+
+=back
+
+This work was developed at Tecgraf/PUC-Rio by means of the partnership
+with PETROBRAS/CENPES.
+
+=head1 Project Management:
+
+Antonio Escao Scuri
+
+Tecgraf - Computer Graphics Technology Group, PUC-Rio, Brazil
+
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iup|http://www.tecgraf.puc-rio.br/iup>
+
+L<SourceForge.net Logo|http://sourceforge.net>
+
+=cut

@@ -1,0 +1,200 @@
+=head1 IupButton
+
+Creates an interface element that is a button. When selected, this
+element activates a function in the application. Its visual
+presentation can contain a text and/or an image.
+
+=head2 Creation
+
+ Ihandle* IupButton(const char *title, const char *action); [in C]iup.button{[title = title: string]} -> elem: ihandle [in Lua]button(title, action) [in LED]
+
+B<title>: Text to be shown to the user. It can be NULL. It will set the
+TITLE attribute.
+
+B<action>: Name of the action generated when the button is selected. It
+can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<ALIGNMENT> (non inheritable): horizontal and vertical alignment.
+Possible values: "ALEFT", "ACENTER" and "ARIGHT", combined to "ATOP",
+"ACENTER" and "ABOTTOM". Default: "ACENTER:ACENTER". Partial values are
+also accepted, like "ARIGHT" or ":ATOP", the other value will be used
+from the current alignment. In Motif, vertical alignment is restricted
+to "ACENTER". (since 3.0)
+
+L<BGCOLOR|../attrib/iup_bgcolor.html>: Background color. BGCOLOR is
+ignored always when FLAT=YES because it will inherit from the native
+parent. If text and image are not defined, the BGCOLOR is used to show
+a color not necessary as a background color of the button, in this case
+set the button size because the natural size will be very small. In
+Windows, when using the Windows driver or the GTK driver, the BGCOLOR
+attribute is ignored if text or image is defined. Default: the global
+attribute DLGBGCOLOR.
+
+B<CANFOCUS> (creation only) (non inheritable): enables the focus
+traversal of the control. Default: YES. (since 3.0)
+
+B<FLAT> (creation only): Hides the button borders until the mouse enter
+the button area. Can be YES or NO.
+
+B<FOCUSONCLICK >(creation only): if NO the button will not receive the
+focus when clicked. Default: YES. Useful for toolbar buttons.
+
+L<FGCOLOR|../attrib/iup_fgcolor.html>: Text color. Default: the global
+attribute DLGFGCOLOR.
+
+B<IMAGE> (non inheritable): Image name. If set before map defines the
+behavior of the button to contain an image. The natural size will be
+size of the image in pixels, plus the button borders. Use
+L<IupSetHandle|../func/iupsethandle.html> or
+L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
+associate an image to a name. See also L<IupImage|iupimage.html>. If
+TITLE is also defined and not empty both will be shown (except in
+Motif). (GTK 2.6)
+
+B<IMINACTIVE> (non inheritable): Image name of the element when
+inactive. If it is not defined then the IMAGE is used and the colors
+will be replaced by a modified version of the background color creating
+the disabled effect. GTK will also change the inactive image to look
+like other inactive objects. (GTK 2.6)
+
+B<IMPRESS >(non inheritable): Image name of the pressed button. If
+IMPRESS and IMAGE are defined, the button borders are not shown, but
+the border size is always included in size computation. When the button
+has the focus, in Motif and GTK a small border is displayed. When the
+button is clicked the pressed image does not offset, except in GTK.
+(GTK 2.6)
+
+B<IMPRESSBORDER >(non inheritable): if enabled the button borders will
+be shown even if IMPRESS is defined. Can be "YES" or "NO". Default:
+"NO".
+
+B<IMAGEPOSITION >(non inheritable): Position of the image relative to
+the text when both are displayed. Can be: LEFT, RIGHT, TOP, BOTTOM.
+Default: LEFT. (since 3.0) (GTK 2.10)
+
+B<MARKUP> [GTK only]: allows the title string to contains pango markup
+commands. Works only if a mnemonic is NOT defined in the title. Can be
+"YES" or "NO". Default: "NO".
+
+B<PADDING>: internal margin. Works just like the MARGIN attribute of
+the B<IupHbox> and B<IupVbox> containers, but uses a different name to
+avoid inheritance problems. Default value: "0x0". (since 3.0)
+
+B<SPACING >(creation only): defines the spacing between the image
+associated and the button's text. Default: "2".
+
+L<TITLE|../attrib/iup_title.html> (non inheritable): Button's text. If
+IMAGE is not defined before map, then the default behavior is to
+contain only a text. The button behavior can not be changed after map.
+The natural size will be larger enough to include all the text in the
+selected font, even using multiple lines, plus the button borders. The
+'\n' character is accepted for line change. The "&" character can be
+used to define a mnemonic, the next character will be used as key. Use
+"&&" to show the "&" character instead on defining a mnemonic. The
+button can be activated from any control in the dialog using the
+"Alt+key" combination. (mnemonic support since 3.0)
+
+=over
+
+----
+
+=back
+
+L<ACTIVE|../attrib/iup_active.html>, L<FONT|../attrib/iup_font.html>,
+L<EXPAND|../attrib/iup_expand.html>, L<X|../attrib/iup_x.html>,
+L<Y|../attrib/iup_y.html>, L< POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
+L<TIP|../attrib/iup_tip.html>, L<SIZE|../attrib/iup_size.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<ZORDER|../attrib/iup_zorder.html>,
+L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+=head2 Callbacks
+
+L<ACTION|../call/iup_action.html>: Action generated when the button 1
+(usually left) is selected. This callback is called only after the
+mouse is released and when it is released inside the button area.
+
+ int funcion(Ihandle* ih); [in C]elem:action() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+Returns: IUP_CLOSE will be processed.
+
+L<BUTTON_CB|../call/iup_button_cb.html>: Action generated when any
+mouse button is pressed and released.
+
+----
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>,
+L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
+L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
+L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>:
+All common callbacks are supported.
+
+=head2 Notes
+
+Buttons with images and/or texts can not change its behavior after
+mapped. This is a creation dependency. But after creation the image can
+be changed for another image, and the text for another text.
+
+Buttons are activated using Enter or Space keys.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+The buttons with image and text simultaneous have PADDING=5x5, the
+other buttons have no padding.
+
+Motif
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+=head2 X<SeeAlso>See Also
+
+L<IupImage|iupimage.html>, L<IupToggle|iuptoggle.html>,
+L<IupButton|iuplabel.html>
+
+=cut

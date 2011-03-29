@@ -1,0 +1,119 @@
+=head1 IupLua Advanced Guide
+
+=head2 Exchanging "Ihandle*" between C and Lua
+
+Each binding to a version of Lua uses different features of the
+language in order to implement IUP handles (Ihandle) in Lua. Therefore,
+functions have been created to help exchange references between Lua and
+C.
+
+In C, to push an Ihandle in Lua's stack, use the function:
+
+ iuplua_pushihandle(lua_State *L, Ihandle *ih);
+
+In C, to receive an Ihandle in a C function called from Lua, just use
+one of the following code:
+
+ Ihandle* ih = *(Ihandle**)lua_touserdata(L, pos);
+
+or using parameter checking:
+
+ Ihandle* iuplua_checkihandle(lua_State *L, int pos);
+
+In Lua, if the handle is a user data create with the above structure,
+but not mapped to a Lua object, use the function:
+
+ iup.RegisterHandle(handle, classname)
+
+where "classname" is the string returned in
+L<IupGetClassName|func/iupgetclassname.html>.
+
+In Lua, to access a handle created in C as a Lua object, alternatively
+use the function:
+
+ handle = iup.GetFromC(name)
+
+where "name" is the name of the element previously defined with
+IupSetHandle.
+
+=head2 Error Handling
+
+In C to improve the error report, use the following functions to
+execute Lua code:
+
+ int iuplua_dofile(lua_State *L, const char *filename);
+ int iuplua_dostring(lua_State *L, const char *string, const char *chunk_name);
+
+These functions mimics the implementation in the standalone interpreter
+for Lua 5, that displays the error message followed by the stack.
+
+If B<iuplua_dofile> fail to open the given file, then it will preppend
+the contents of the environment variable IUPLUA_DIR to the file name
+and tries to open it again. (Since 3.2)
+
+If the these functions are used the errors will be reported through the
+"iup._ERRORMESSAGE(msg)" function. By default _ERRORMESSAGE is defined
+to show a dialog with the error message.
+
+When printing an Ihandle reference the returned string is
+"IUP(I<type>): I<address>", for example "IUP(dialog): 08C55240".
+
+=head2 The Architecture of IupLua 5
+
+There are two important names in IupLua5: "iup handle" and "iup
+widget".
+
+When you create an IUP element in Lua 5 it is created a table with a
+metatable called "iup widget". This metatable has its "__index" method
+redefined so when an index is not defined it looks for it in the
+"parent" table. The table it self represents the class of the control.
+And all the classes inherit the implementation of the base class
+WIDGET. Each control class must implement the "createElement" method of
+the class. The WIDGET class also a member called "handle" that contains
+the Ihandle* in Lua. The constructor of the WIDGET class returns the
+handle.
+
+The Ihandle* is represented in Lua as a table with a metatable called
+"iup handle". This metable has its "__index", "__newindex" and "__eq"
+methods redefined. The index methods are used to implement the set and
+get attribute facility. The handle knows its class because it is stored
+in its "parent" member.
+
+Since the controls creation is done by the "iup.E<lt>controlE<gt>"
+function, the application does not use the WIDGET class directly. All
+the time the application only uses the handle.
+
+So for example the IupLabel:
+
+ iup.label calls iup.LABEL:constructor
+ since iup.LABEL.parent = iup.WIDGET and iup.LABEL:constructor is not implemented
+ it calls iup.WIDGET:constructor  
+ then iup.WIDGET:constructor calls iup.LABEL:createElement    
+ and finally returns the created handle
+
+The complete class hierarchy for the standard controls can be
+represented as follows:
+
+ WIDGET
+    BUTTON
+    ITEM
+    TOGGLE
+    CANVAS
+    BOX
+       HBOX
+       VBOX
+       ZBOX
+       MENU
+    DIALOG
+    FILL
+    FRAME
+    IMAGE
+    LABEL
+    LIST
+    RADIO
+    SEPARATOR
+    SUBMENU
+    TEXT
+    MULTILINE
+
+=cut

@@ -1,0 +1,27 @@
+=head1 FLOATING (non inheritable) (since 3.0)
+
+If an element has FLOATING=YES then its size and position will be
+ignored by the layout processing in B<IupVbox>, B<IupHbox> and
+B<IupZbox>.
+
+This is usefull when you do not want that an invisible element to be
+computed in the box size. But if the element is visible it must be
+manually sized and positioned using B<SIZE>/B<RASTERSIZE> and
+B<POSITION> attributes. Default: "NO". (since 3.0)
+
+=head2 Value
+
+"YES" or "NO".
+
+Default: "NO".
+
+=head2 Affects
+
+All elements, except menus.
+
+=head2 X<SeeAlso>See Also
+
+L<IupZbox|../elem/iupzbox.html>, L<IupVBox|../elem/iupvbox.html>,
+L<IupHBox|../elem/iuphbox.html>
+
+=cut

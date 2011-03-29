@@ -1,0 +1,18 @@
+=head1 IupMapFont (Deprecated since 3.0)
+
+Retrieves the name of a native font, given the name of the old IUP FONT
+names. See the old L<Font Names|../attrib/iup_font.html#Font_Names>
+table for a list of names.
+
+=head2 Parameters/Return
+
+ char* IupMapFont(const char *iupfont); [in C]
+ iup.MapFont(iupfont : string) -> (driverfont : string) [in Lua]
+
+Returns: the name of the native font.
+
+=head2 See Also
+
+L<IupUnMapFont|iupunmapfont.html>
+
+=cut

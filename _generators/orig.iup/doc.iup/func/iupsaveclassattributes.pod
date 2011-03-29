@@ -1,0 +1,30 @@
+=head1 IupSaveClassAttributes
+
+Saves all registered attributes on the internal hash table.
+
+=head2 Parameters/Return
+
+ void IupSaveClassAttributes(Ihandle* ih); [in C]
+ iup.SaveClassAttributes(ih: ihandle) [in Lua]
+
+B<ih>: identifier of the interface element.
+
+=head2 Notes
+
+When the element is mapped some attributes are stored only in the
+native system. If the element is B<unmaped> those attributes are lost.
+So this function is useful when you want to B<unmap> the element and
+keep its attributes.
+
+It will not save variable name attributes, like those which has a
+complementary number. For example: items in a B<IupList>, B< IupTree>
+or B<IupMatrix>.
+
+=head2 See Also
+
+L<IupGetClassAttributes|iupgetclassattributes.html>,
+L<IupGetClassName|iupgetclassname.html>,
+L<IupGetClassType|iupgetclasstype.html>,
+L<IupGetAllAttributes|iupgetallattributes.html>
+
+=cut

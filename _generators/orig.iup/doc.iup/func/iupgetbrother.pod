@@ -1,0 +1,18 @@
+=head1 IupGetBrother
+
+Returns the brother of a control or NULL if there is none.
+
+=head2 Parameters/Return
+
+ Ihandle* IupGetBrother(Ihandle* ih); [in C]
+ iup.GetBrother(ih: ihandle) -> brother: ihandle [in Lua]
+
+B<ih>: identifier of the interface element.
+
+=head2 See Also
+
+L<IupGetChild|iupgetchild.html>,
+L<IupGetNextChild|iupgetnextchild.html>,
+L<IupGetParent|iupgetparent.html>
+
+=cut

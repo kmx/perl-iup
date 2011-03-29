@@ -1,0 +1,38 @@
+=head1 IupSetAttributeHandle
+
+Instead of using B<IupSetHandle> and B<IupSetAttribute> with a new
+creative name, this function automatically creates a non conflict name
+and associates the name with the attribute.
+
+It is very usefull for associating images and menus.
+
+=head2 Parameters/Return
+
+ void IupSetAttributeHandle(Ihandle *ih, const char *name, Ihandle *ih_named); [in C]
+ [There is no equivalent in Lua] 
+
+B<ih>: identifier of the interface element.
+
+B<name>: name of the attribute.
+
+B<ih_named>: element to associate using a name
+
+The function will not check for inheritance since all the attributes
+that associate handles are not inheritable.
+
+=head2 Notes
+
+This work is automatically done in Lua when an attribute that is an
+element name is set to an element handle. In other words, in Lua you
+can set a string or a handle as the attribute value, when a handle is
+used a name is automatically created just as the IupSetAttributeHandle.
+
+=head2 See Also
+
+L<IupGetAttributeHandle|iupgetattributehandle.html>,
+L<IupSetAttribute|iupsetattribute.html>,
+L<IupSetAttributes|iupsetattributes.html>,
+L<IupStoreAttribute|iupstoreattribute.html>,
+L<IupSetHandle|iupsethandle.html>
+
+=cut

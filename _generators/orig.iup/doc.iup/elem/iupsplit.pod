@@ -1,0 +1,107 @@
+=head1 IupSplit (since 3.1)
+
+Creates a container that split its client area in two. Allows the
+provided controls to be enclosed in a box that allows expanding and
+contracting the element B<size> in one direction, but when one is
+expanded the other is contracted.
+
+It does not have a native representation but it uses a B<IupCanvas> to
+implement the bar handler.
+
+=head2 Creation
+
+ Ihandle* IupSplit(Ihandle* child1, Ihandle* child2); [in C]
+ iup.split{child1, child2: ihandle} -> (elem: ihandle) [in Lua]
+ split(child1, child2) [in LED]
+
+B<child1>: Identifier of an interface element that will be at left or
+top. It can be NULL.
+
+B<child2>: Identifier of an interface element that will be at right or
+bottom. It can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<AUTOHIDE> (non inheritable): if the child client area is smaller than
+the bar size, then automatically hide the child. Default: NO.
+
+B<BARSIZE> (non inheritable): controls the size of the bar handler.
+Default: 5.
+
+B<COLOR>: Changes the color of the bar grip affordance. The value
+should be given in "R G B" color style. Default: "192 192 192".
+
+B<CLIENTSIZE1>, B<CLIENTSIZE2>: Same as
+L<CLIENTSIZE|../attrib/iup_clientsize.html>, but one for each of the
+child areas.
+
+B<DIRECTION> (creation only): Indicates the direction of the resize and
+the position of the bar handler. Possible values are "VERTICAL" or
+"HORIZONTAL". Default: "VERTICAL".
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
+value is "YES".
+
+B<LAYOUTDRAG> (non inheritable): When the bar is moved automatically
+update the children layout. Default: YES. If set to NO then the layout
+will be updated only when the mouse drag is released.
+
+B<MINMAX> (non inheritable): sets minimum and maximum crop values for
+VALUE, in the format "%d:%d" [min:max]. The min value can not be less
+than 0, and the max value can not be larger than 1000. This will
+constrain the interactive change of the bar handler. Default: "0:1000".
+(Since 3.2)
+
+B<SHOWGRIP> (non inheritable): Shows the bar grip affordance. Default:
+YES. When set to NO, the BARSIZE is changed from 5 to 3.
+
+B<VALUE> (non inheritable): The proportion of the left or top (child1)
+client area relative to the full available area. It is an integer
+between 0 and 1000. If not defined or set to NULL, the Native size of
+the two children will define its initial size.
+
+B<WID> (read-only): returns -1 if mapped.
+
+=over
+
+----
+
+=back
+
+L<FONT|../attrib/iup_font.html>, L<SIZE|../attrib/iup_size.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
+
+=head2 Notes
+
+The controls that you want to be resized must have the EXPAND=YES
+attribute set. The control inside the split will not be resized with a
+size lesser than its B<Natural> size. See the L<Layout
+Guide|../layout_guide.html> for mode details on sizes.
+
+The B<IupCanvas> bar handler is always the first child of the split. It
+can be obtained using B<IupGetChild> or B< IupGetNextChild>.
+
+The B<IupSplit> control looks just like the B<IupSbox>, but internally
+is very different. While sbox controls only one element and can push
+other elements outside the dialog, split balance its internal size and
+never push other elements outside its boundaries.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+Natural Size
+
+[IMAGE]
+
+After Moving the Split Bar
+
+=cut

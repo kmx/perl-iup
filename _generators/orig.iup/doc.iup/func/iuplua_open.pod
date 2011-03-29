@@ -1,0 +1,31 @@
+=head1 iuplua_open
+
+Initializes the Lua Binding. This function should be called by the host
+program before running any Lua functions, but it is important to call
+it after B<IupOpen>.
+
+It is also allowed to call B<iuplua_open> without calling B<IupOpen>.
+Then B<IupOpen> will be internally called. This is also valid for all
+the additional controls when IUP is dynamically loaded. To call
+B<IupClose> in this way you must call B<iuplua_close>.
+
+This enable you to dynamically load IUP using Lua 5 "require".
+
+=head2 Parameters/Return
+
+ int iuplua_open(lua_State *L); [in C]
+ [There is no equivalent in Lua]
+
+Returns: 0 (the number of elements in the stack).
+
+=head2 Notes
+
+For a more detailed explanation on the system control for the Lua
+Binding, please refer to L<System Guide|../sys_guide.html>.
+
+=head2 See Also
+
+L<IupOpen|iupopen.html>, L<Guide E<47> System
+Control|../guide.html#sistema>
+
+=cut

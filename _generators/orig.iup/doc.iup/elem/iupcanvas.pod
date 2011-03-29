@@ -1,0 +1,229 @@
+=head1 IupCanvas
+
+Creates an interface element that is a canvas - a working area for your
+application.
+
+=head2 Creation
+
+ Ihandle* IupCanvas(const char *action); [in C]iup.canvas{} -> (elem: ihandle) [in Lua]canvas(action) [in LED]
+
+B<action>: Name of the action generated when the canvas needs to be
+redrawn. It can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<BACKINGSTORE> [Motif Only]: Controls the canvas backing store flag.
+The default value is "YES".
+
+L<BGCOLOR|../attrib/iup_bgcolor.html>: Background color. The background
+is painted only if the ACTION callback is not defined. If the callback
+is defined the application must draw all the canvas contents. In GTK or
+Motif if you set the ACTION callback after map then you should also set
+BGCOLOR to any value just after setting the callback or the first
+redraw will be lost. Default: "255 255 255".
+
+B<BORDER >(creation only): Shows a border around the canvas. Default:
+"YES".
+
+B<CANFOCUS> (creation only) (non inheritable): enables the focus
+traversal of the control. Default: YES. (since 3.0)
+
+B<CLIPRECT> [Windows and GTK Only] (only during ACTION): Specifies a
+rectangle that has its region invalidated for painting, it could be
+used for clipping. Format: "%d %d %d %d"="x1 y1 x2 y2".
+
+L<CURSOR|../attrib/iup_cursor.html> (non inheritable): Defines a cursor
+for the canvas.
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
+value is "YES". The natural size is the size of 1 character.
+
+B<DRAGDROP> [Windows and GTK Only] (non inheritable): Enable or disable
+the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
+when the element is mapped then it will be automatically enabled.
+
+B<DRAWSIZE >(non inheritable): The size of the drawing area in pixels.
+This size is also used in the RESIZE_CB callback.
+
+Notice that the drawing area size is not the same as RASTERSIZE. The
+SCROLLBAR and BORDER attributes affect the size of the drawing area.
+
+B<HDC_WMPAINT> [Windows Only] (non inheritable): Contains the HDC
+created with the BeginPaint inside the WM_PAINT message. Valid only
+during the ACTION callback.
+
+B<HWND> [Windows Only] (non inheritable, read-only): Returns the
+Windows Window handle. Available in the Windows driver or in the GTK
+driver in Windows.
+
+L<SCROLLBAR|../attrib/iup_scrollbar.html> (creation only): Associates a
+horizontal and/or vertical scrollbar to the canvas. Default: "NO". The
+secondary attributes are all non inheritable.
+
+L<DX|../attrib/iup_dx.html>: Size of the thumb in the horizontal
+scrollbar. Also the horizontal page size. Default: "0.1".
+
+L<DY|../attrib/iup_dy.html>: Size of the thumb in the vertical
+scrollbar. Also the vertical page size. Default: "0.1".
+
+L<POSX|../attrib/iup_posx.html>: Position of the thumb in the
+horizontal scrollbar. Default: "0.0".
+
+L<POSY|../attrib/iup_posy.html>: Position of the thumb in the vertical
+scrollbar. Default: "0.0".
+
+L<XMIN|../attrib/iup_xmin.html>: Minimum value of the horizontal
+scrollbar. Default: "0.0".
+
+L<XMAX|../attrib/iup_xmax.html>: Maximum value of the horizontal
+scrollbar. Default: "1.0".
+
+L<YMIN|../attrib/iup_ymin.html>: Minimum value of the vertical
+scrollbar. Default: "0.0".
+
+L<YMAX|../attrib/iup_ymax.html>: Maximum value of the vertical
+scrollbar. Default: "1.0".
+
+B<LINEX>: The amount the thumb moves when an horizontal step is
+performed. Default: 1/10th of DX. (since 3.0)
+
+B<LINEY>: The amount the thumb moves when a vertical step is performed.
+Default: 1/10th of DY. (since 3.0)
+
+B<X<XAUTOHIDE>XAUTOHIDE>: When enabled, if DX E<gt>= XMAX-XMIN then the
+horizontal scrollbar is hidden. Default: "YES". (since 3.0)
+
+B<X<YAUTOHIDE>YAUTOHIDE>: When enabled, if DY E<gt>= YMAX-YMIN then the
+vertical scrollbar is hidden. Default: "YES". (since 3.0)
+
+B<XDISPLAY> [UNIX Only](non inheritable, read-only): Returns the
+X-Windows Display. Available in the Motif driver or in the GTK driver
+in UNIX.
+
+B<XWINDOW> [UNIX Only](non inheritable, read-only): Returns the
+X-Windows Window (Drawable). Available in the Motif driver or in the
+GTK driver in UNIX.
+
+=over
+
+----
+
+=back
+
+L<ACTIVE|../attrib/iup_active.html>, L<FONT|../attrib/iup_font.html>,
+L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
+L<TIP|../attrib/iup_tip.html>, L<SIZE|../attrib/iup_size.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<ZORDER|../attrib/iup_zorder.html>,
+L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+=head2 Callbacks
+
+L<ACTION|../call/iup_action.html>: Action generated when the canvas
+needs to be redrawn.
+
+ int function(Ihandle *ih, float posx, float posy); [in C]elem:action(posx, posy: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<posx>: thumb position in the horizontal scrollbar. The POSX attribute
+value.
+
+B<posy>: thumb position in the vertical scrollbar. The POSY attribute
+value.
+
+L<BUTTON_CB|../call/iup_button_cb.html>: Action generated when any
+mouse button is pressed or released.
+
+L<DROPFILES_CB|../call/iup_dropfiles_cb.html> [Windows and GTK Only]:
+Action generated when one or more files are dropped in the element.
+
+B<FOCUS_CB>: Called when the canvas gets or looses the focus. It is
+called after the common callbacks GETFOCUS_CB and KILL_FOCUS_CB.
+
+ int function(Ihandle *ih, int focus); [in C]elem:focus_cb(focus: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<focus>: is non zero if the canvas is getting the focus, is zero if it
+is loosing the focus.
+
+L<MOTION_CB|../call/iup_motion_cb.html>: Action generated when the
+mouse is moved.
+
+L<KEYPRESS_CB|../call/iup_keypress_cb.html>: Action generated when a
+key is pressed or released. It is called after the common callback
+K_ANY.
+
+When the canvas has the focus, pressing the arrow keys may change the
+focus to another control in some systems. If your callback process the
+arrow keys, we recommend you to return IUP_IGNORE so it will not lose
+its focus.
+
+L<RESIZE_CB|../call/iup_resize_cb.html>: Action generated when the
+canvas size is changed.
+
+L<SCROLL_CB|../call/iup_scroll_cb.html>: Called when the scrollbar is
+manipulated. (GTK 2.8) Also the POSX and POSY values will not be
+correctly updated for older GTK versions.
+
+L<WHEEL_CB|../call/iup_wheel_cb.html>: Action generated when the mouse
+wheel is rotated.
+
+L<WOM_CB|../call/iup_wom_cb.html> [Windows Only]: Action generated when
+an audio device receives an event.
+
+=over
+
+----
+
+=back
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>,
+L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
+L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
+L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>:
+All common callbacks are supported.
+
+=head2 Notes
+
+Note that some keys might remove the focus from the canvas. To avoid
+this, return IGNORE in the L< K_ANY|../call/iup_k_any.html> callback.
+
+The mouse cursor position can be programmatically controlled using the
+global attribute L<CURSORPOS|../attrib/iup_globals.html#cursorpos>.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+[IMAGE]
+
+[IMAGE]
+
+Motif
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+=cut

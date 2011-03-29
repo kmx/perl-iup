@@ -1,0 +1,32 @@
+=head1 IupGetDialogChild (since 3.0)
+
+Returns the identifier of the child element that has the NAME attribute
+equals to the given value on the same dialog hierarchy. Works also for
+children of a menu that is associated with a dialog.
+
+=head2 Parameters/Return
+
+ Ihandle* IupGetDialogChild(Ihandle *ih, const char* name); [in C]
+ iup.GetDialogChild(ih: ihandle, name: string) -> (ih: ihandle) [in Lua]
+
+B<ih>: Identifier of an interface element that belongs to the
+hierarchy.
+
+B<name>: name of the control to be found
+
+Returns: NULL if not found.
+
+=head2 Notes
+
+This function will only found the child if the NAME attribute is set at
+the control.
+
+Before the dialog is mapped the function searches the hierarchy, even
+if the hierarchy does not belongs to a dialog yet, but after the child
+is mapped the result is immediate (the hierarchy is not searched).
+
+=head2 See Also
+
+L<NAME|../attrib/iup_name.html>
+
+=cut

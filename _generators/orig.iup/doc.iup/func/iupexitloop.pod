@@ -1,0 +1,11 @@
+=head1 IupExitLoop
+
+Terminates the current message loop. It has the same effect of a
+callback returning IUP_CLOSE.
+
+=head2 Parameters/Return
+
+ void IupExitLoop(void); [in C]
+ iup.ExitLoop() [in Lua]
+
+=cut

@@ -1,0 +1,1081 @@
+=head1 A Basic Guide to using IupLua
+
+by Steve Donovan
+
+IupLua is a cross-platform kit for creating GUI applications in Lua.
+There are particularly powerful facilities for getting user input that
+don't require complicated coding, so it is particularly good for
+utility scripts.
+
+I<Attributes> are an important concept in IUP. You set and get them
+just like table fields, but they are different from fields in several
+crucial ways. First, case is not significant, C<SIZE> is just as good
+as C< size> (but try to be consistent!). Second, writing to a
+non-existent attribute will I<not> give you an error, so proof-read
+carefully. Third, writing to an attribute often causes some action; e.g
+the C<visible> attribute of controls can be used to hide them. It is
+best to think of them as a special kind of function call.
+
+Functions which create IupLua objects (i.e. I<constructors>) take
+tables as arguments. Lua allows you to drop the usual parentheses in
+such a case, but remember that something like C<iup.fill{}> is not the
+same as C<iup.fill()>; it is actually short for C<iup.fill({})>. A Lua
+table can contain an array-like part (just items separated by commas)
+and a map-like part (attribute-value pairs); the convention is to put
+the array part first, and separate the map part from it with a
+semicolon. (See Attributes/Guide/IupLua in the Manual for a good
+discussion.)
+
+All the examples presented here and some utilities can be found at the
+"L<misc|../../examples/Lua/misc/>" folder in the IupLua
+L<examples|../../examples/Lua/>.
+
+=head2 X<Simple_Output>Simple Output
+
+Even simple scripts need to give the user some feedback. Otherwise
+people get anxious and start worrying if their files really have been
+backed up, for example. This is easy in IUPLua, and takes exactly one
+line. Note that all IUP scripts must at least have a C<require
+'iuplua'> statement at the begining:
+
+ require( "iuplua" )
+ 
+ iup.Message('YourApp','Finished Successfully!')
+
+Of course, many operations require confirmation from the user. C<
+iup.Alarm> is designed for this:
+
+ require( "iuplua" )
+ 
+ b = iup.Alarm("IupAlarm Example", "File not saved! Save it now?" ,"Yes" ,"No" ,"Cancel")
+ 
+ -- Shows a message for each selected button
+ if b == 1 then
+   iup.Message("Save file", "File saved sucessfully - leaving program")
+ elseif b == 2 then
+   iup.Message("Save file", "File not saved - leaving program anyway")
+ elseif b == 3 then
+   iup.Message("Save file", "Operation canceled")
+ end
+
+Like C<iup.Message>, the first parameter appears in the title bar of
+the dialog box, the second parameter appears above the buttons, but C<
+iup.Alarm> allows you to specify a number of buttons. The return code
+will then tell you which button has been pressed, starting at 1 (which
+is always the Lua way.)
+
+=head2 X<Simple_Input>Simple Input
+
+=head2 Asking for a Filename
+
+The most common thing an interactive script will require from a user is
+a file, or set of files. For simple cases, C<iup.GetFile> will do the
+job:
+
+ require( "iuplua" )
+ 
+ f, err = iup.GetFile("*.txt")
+ if err == 1 then
+   iup.Message("New file", f)
+ elseif err == 0 then
+   iup.Message("File already exists", f)
+ elseif err == -1 then
+   iup.Message("IupFileDlg", "Operation canceled")
+ end
+
+This will present you with the standard Windows File Open dialog box,
+and allow you to either choose a filename, or cancel the operation.
+Notice that this function returns two values, the filename and a code.
+The code will tell you whether the file does not exist yet (if for
+instance you typed a new filename into the file dialog box.)
+
+=head2 Asking for Multiline Text
+
+The simplest way of getting general text is to use C<iup.GetText>:
+
+ require 'iuplua'
+ 
+ res = iup.GetText("Give me your name","")
+ 
+ if res ~= "" then
+     iup.Message("Thanks!",res)
+ end
+
+Using this dialog, you can enter as many lines as you like, and press
+OK.
+
+=head2 Asking for a Single String, or Number
+
+A better option for asking for a single string is the very versatile C<
+iup.GetParam>:
+
+ require( "iuplua" )
+ require( "iupluacontrols" )
+ 
+ res, name = iup.GetParam("Title", nil,
+     "Give your name: %s\n","")
+ 
+ iup.Message("Hello!",name)
+
+prompt
+
+This has two advantages over plain C<GetText>; you can give a prompt
+line, and you can press Enter after entering text.
+
+The C<%s> code requires some explanation. Although you might at first
+think it is a C-style formating code, as you would use in C<
+string.format>, it actually describes how the value is going to edited;
+C< %s> here merely means that a regular text box is used; if you had
+used C< %m>, then a multiline edit box (like that used by
+C<iup.GetText>) would be used.
+
+If there is a limited set of choices, then the C<%l> format is useful:
+
+ res, prof = iup.GetParam("Title", nil,
+     "Give your profession: %l|Teacher|Explorer|Engineer|\n",0)
+
+Note the C<|item1|item2|...|> list after the C<%l> format; these are
+the choices presented to the user. The initial value you give it, and
+the value you receive from it, are going to be an index into this list
+of choices. Somewhat confusingly, they start at 0 (which is not the Lua
+way!) So in this case, C<0> means that 'Teacher' is to be selected, and
+if I then selected 'Engineer', the resulting value of C<prof> would be
+2.
+
+The C<%i> code allows you to enter an integer value, with up/down
+arrows for incrementing/decrementing the value.
+
+ require( "iuplua" )
+ require( "iupluacontrols" )
+ 
+ res, age = iup.GetParam("Title", nil,
+     "Give your age: %i\n",0)
+ 
+ if res ~= 0 then    -- the user cooperated!
+     iup.Message("Really?",age)
+ end
+
+=head2 Dialogs
+
+=head2 Constructing General Layouts
+
+C<GetParam> is a very versatile facility for asking for data, but it is
+not very interactive. In general, you want to present something back to
+the user that is more complicated than a simple message. Up to now we
+have used the predefined dialogs available to IupLua; it is now time to
+go beyond that and examine custom dialogs. The structure of a simple
+IupLua program is straightforward:
+
+ require 'iuplua'
+ 
+ text = iup.multiline{expand = "YES"}
+ 
+ dlg = iup.dialog{text; title="Simple Dialog",size="QUARTERxQUARTER"}
+ 
+ dlg:show()
+ 
+ iup.MainLoop()
+
+A multiline edit I<control> is created, and put inside a window frame
+with a given size, which is then made visible with the C<show> method.
+We then enter the main loop of the application with C<MainLoop>, which
+will only finish when the window is closed.
+
+Controls are also windows, but without the frame and decorations of a
+I< top-level> window; they are always meant to be inside some window
+frame or other I<container>. We set the C<expand> attribute of C<
+multiline> to force it to use up all the available space in the frame,
+so that it takes its size from its container. The dialog's C<size>
+attribute is a string of the form "XSIZExYSIZE", where sizes can be
+expressed as fractions of the desktop window size, in this case a
+quarter of the width and height. (You can of course also use numerical
+sizes like "100x301" but these will not always scale well on displays
+with different resolutions. See Attributes/Common/SIZE in the manual
+for these units.)
+
+text
+
+It's good to pause a moment to look at the resulting application in
+action; it is fully responsive and you can enter text, paste, etc. into
+the edit control. Common keyboard shortcuts like C<Ctrl+V> and
+C<Ctrl+C> work as expected. All this functionality comes with the
+windowing system you are currently using. On my system, Task Manager
+shows that this program uses 3.8 Meg of memory, and an instance of
+Notepad uses 3.3 Meg, which represents all the common code necessary to
+support a simple GUI application; you are not actually paying much for
+using IupLua at all. The equivalent C program using the Windows API
+would be about 150 lines, so the gain in I<programmer efficiency> is
+tremendous!
+
+Of course, there is not much interaction possible with such a simple
+program. To make a program respond to the user we define I<callbacks>
+which the system calls when some event takes place. For example, we can
+put a button control in the dialog, and define its C<action> callback:
+
+ require 'iuplua'
+ 
+ btn = iup.button{title = "Click me!"}
+ 
+ function btn:action ()
+     iup.Message("Note","I have been clicked!")
+     return iup.DEFAULT
+ end
+ 
+ dlg = iup.dialog{btn; title="Simple Dialog",size="QUARTERxQUARTER"}
+ 
+ dlg:show()
+ 
+ iup.MainLoop()
+
+This is perfectly responsive, although not very useful! The button
+sizes itself to its natural size since C<expand> is not set (try
+setting C< expand> to see the button fill the whole window frame.)
+Callbacks usually return the special value C<iup.DEFAULT>, although in
+IupLua this is not really necessary.
+
+C<dialog> takes only one control, so IupLua defines containers in which
+you can pack as many controls as you like. Here C<vbox> is used to pack
+two buttons into the dialog vertically (To save space I'm leaving out
+the 'dlg:show...' common code at the bottom)
+
+ btn1 = iup.button{title = "Click me!"}
+ btn2 = iup.button{title = "and me!"}
+ 
+ function btn1:action ()
+     iup.Message("Note","I have been clicked!")
+ end
+ 
+ function btn2:action ()
+     iup.Message("Note","Me too!")
+ end
+ 
+ box = iup.vbox {btn1,btn2}
+ 
+ dlg = iup.dialog{box; title="Simple Dialog",size="QUARTERxQUARTER"}
+
+This does the job, although the buttons are sized differently according
+to their contents; this program would not win any design contests!
+Still, you now have two commands in your application. You can actually
+get a more pleasing result by using a horizontal packing box (C<hbox>)
+and specifying a non-zero gap between the buttons:
+
+ box = iup.hbox {btn1,btn2; gap=4}
+
+You can nest boxes as much as you like, which is the way to construct
+more complicated layouts. Here are our horizontal buttons packed
+vertically with a multiline edit control:
+
+bbox = iup.hbox {btn1,btn2; gap=4} text = iup.multiline{expand = "YES"}
+vbox = iup.vbox{bbox,text}
+
+dlg = iup.dialog{vbox; title="Simple Dialog",size="QUARTERxQUARTER"}
+
+We have effectively implemented a crude but functional toolbar:
+
+buttons
+
+A labeled frame can be put around a control using C<iup.frame>:
+
+ edit1 = iup.multiline{expand="YES",value="Number 1"}
+ edit2 = iup.multiline{expand="YES",value="Number 2?"}
+ 
+ box = iup.hbox {iup.frame{edit1;Title="First"},iup.frame{edit2;Title="Second"}}
+
+A useful way to present various views to a user is to put them in tabs.
+This places each control in a separate page, accessible through the
+tabbar at the top. Notice in this example that the titles of the tab
+pages are actually set as attributes of the I<pages> through
+C<tabtitle>. This is not one of the standard IUP controls (see
+Controls/Additional in the manual) so we also need to bring in the
+C<iupluacontrols> library.
+
+ require( "iupluacontrols" )
+ 
+ edit1 = iup.multiline{expand="YES",value="Number 1",tabtitle="First"}
+ edit2 = iup.multiline{expand="YES",value="Number 2?",tabtitle="Second"}
+ 
+ tabs = iup.tabs{edit1,edit2,expand='YES'}
+
+=head2 X<Timers>Timers and Idle Processing
+
+Sometimes a program needs to wake up and perform some operation, such
+as a scheduled backup or an autosave operation. IupLua provides
+I<timers> for this purpose. (Note at this point that there is no reason
+why you can't have C< print> in a IupLua application; sometimes there
+is no better way to track what's going on. But on Windows you do have
+to run the program using the regular lua.exe, not wlua.exe.)
+
+ -- timer1.lua
+ 
+ require "iuplua"
+ 
+ timer = iup.timer{time=500}
+ 
+ btn = iup.button {title = "Stop",expand="YES"}
+ 
+ function btn:action ()
+     if btn.title == "Stop" then
+         timer.run = "NO"
+         btn.title = "Start"
+     else
+         timer.run = "YES"
+         btn.title = "Stop"
+     end
+ end
+ 
+ function timer:action_cb()
+     print 'timer!'
+ end
+ 
+ timer.run = "YES"
+ 
+ dlg = iup.dialog{btn; title="Timer!"}
+ dlg:show()
+ iup.MainLoop()
+
+After a timer has been started by setting its C<run> attribute to
+"YES", it will continue to call C<action_cb> using the given time in
+milliseconds. Notice that it is important to set the timer going only
+after the callback has been defined. It is perfectly permissable to
+switch a timer off in the callback, which is how you can perform a
+single action after waiting for some time.
+
+It is a well-known fact that computers spend most of the time doing
+very little, waiting for incredibly slow humans to type something new.
+However, when a computer is actually doing intense processing, users
+become impatient if not told about progress. If you do your lengthy
+processing directly, then the windows of the application become
+unresponsive. The proper way to organize such work is to do it when the
+system is I<idle>.
+
+IupLua provides a gauge control which is intended to show progress;
+this little program shows that even when the computer is almost
+completely preoccupied doing work, it is still keeping the user
+informed and in fact the window remains useable, although a little slow
+to respond.
+
+ -- idle1.wlua
+ require "iuplua"
+ require "iupluacontrols"
+ 
+ function do_something ()
+     for i=1,6e7 do end
+ end
+ 
+ gauge = iup.gauge{show_text="YES"}
+ 
+ function idle_cb()
+     local value = gauge.value
+     do_something()
+     value = value + 0.1
+     if value > 1.0 then
+         value = 0.0
+     end
+     gauge.value = value
+     return iup.DEFAULT
+ end
+ 
+ dlg = iup.dialog{gauge; title = "IupGauge"}
+ 
+ iup.SetIdle(idle_cb)
+ 
+ dlg:showxy(iup.CENTER, iup.CENTER)
+ 
+ iup.MainLoop()
+
+=head2 Lists
+
+It is easy to display a list of values in IupLua. The values can be
+directly specified in the C<iup.list> constructor, like so:
+
+ -- list1.wlua
+ require "iuplua"
+ 
+ list = iup.list {"Horses","Dogs","Pigs","Humans"; expand="YES"}
+ 
+ dlg = iup.dialog{list; title="Lists"}
+ dlg:show()
+ iup.MainLoop()
+
+(Remember that the single argument to these constructors is just a Lua
+table, which you can construct in any way you choose, say by reading
+the values from a file.)
+
+Tracking selection changes is straightforward:
+
+ function list:action(t,i,v)
+     print(t,i,v)
+ end
+
+Now, as I move the selection through the list, from the start to the
+finish, the output is:
+
+ Horses  1       1
+ Horses  1       0
+ Dogs    2       1
+ Dogs    2       0
+ Pigs    3       1
+ Pigs    3       0
+ Humans  4       1
+
+So C<v> is 1 if we are selecting an item, 0 if we are deselecting it;
+C<i> is the one-based index in the list, and C<t> is the actual string
+value. If you want to associate some other data with each value, then
+all you need to do is keep a table of that data and look it up using
+the index C<i>.
+
+To register a double-click is a little more involved. There is (as far
+as I can tell) no way to detect whether a double-click has happened in
+the C< action> callback. So we track the selection manually; if two
+selection events for a given item happen consecutively, then that is
+understood to be a double-click. It ain't pretty, but it works (except
+perhaps for the valid case of a person wanting to double-click the same
+item repeatedly):
+
+ local lastidx,doubleclick
+ 
+ function on_double_click (t,i)
+     print(t,i)
+ end
+ 
+ function list:action(t, i, v)
+     if v ~= 0 then
+         if lastidx == i and doubleclick ~= i then
+             on_double_click(t,i)
+             doubleclick = i
+         end
+         lastidx = i
+     end
+ end
+
+Once a list has been created, how does one change the contents? The
+answer is that the list object I<behaves> like an array. For example,
+to fill a list with all the entries in a directory, I can use this
+function:
+
+ function fill (path)
+     local i = 1
+     for f in lfs.dir(path) do
+         list[i] = f
+         i = i + 1
+     end
+     list[i] = nil
+ end
+
+Note that this does not mean that a list object I<is> a table. In
+particular, you have to explicitly set the end of the list of elements
+by setting a nil value just after the end.
+
+=head2 Trees
+
+The most flexible way to present a hierarchy of information is a tree.
+A tree has a single I<root>, and several I<branches>. Each of these I<
+branches> may have I<leaves>, and other branches. All of these are
+called I<nodes>. Thinking of a family tree, a node may have I<child>
+nodes, which all share the same I<parent> node.
+
+A good example of this in everyday computer experience is a filesystem,
+where the leaves are files and the branches are directories. Lua tables
+naturally express these kind of I<nested> structures easily, and in
+fact it is easy to present a Lua table as a tree, where array items are
+leaves, and the branches are named with the special field
+C<branchname>:
+
+ require 'iuplua'
+ require 'iupluacontrols'
+ 
+ tree = iup.tree{}
+ tree.addexpanded = "NO"
+ 
+ list = {
+   {
+     "Horse",
+     "Whale";
+     branchname = "Mammals"
+   },
+   {
+     "Shrimp",
+     "Lobster";
+     branchname = "Crustaceans"
+   },
+   {
+     branchname = "Birds"
+   },
+   branchname = "Animals"
+ }
+ 
+ iup.TreeAddNodes(tree, list)
+ 
+ f = iup.dialog{tree; title = "Tree Test"}
+ 
+ f:show()
+ 
+ iup.MainLoop()
+
+This example begins with the branches 'collapsed', and you will have to
+explicitly expand them with a mouse click. By default, trees are
+presented in their fully expanded form; try taking out the fourth line
+that sets the C< addexpanded> attribute of the tree object. Note that
+branches can be empty!
+
+Tree operations are naturally more complicated than list operations,
+but there is a callback which happens when a node is selected or
+unselected. Add this to the example:
+
+ function tree:selection_cb (id,iselect)
+     print(id,iselect,tree.name)
+ end
+
+You will see that C<iselect> is 0 for the unselection operation, and 1
+for selection; id is a tree node index. These indices are always in
+order of appearance in a tree, starting at 0 for the root node. The
+C<name> attribute of the tree object is the text of the currently
+selected node.
+
+A pair of useful callbacks are C<branchopenI<cb>> and C<
+branchclosecb>. If you were displaying a potentially very large tree
+(like your computer's filesystem) then it would be inefficient to
+create the whole tree at once, especially considering that you would
+normally be only interested in a small part of that tree. Trapping
+C<branchopenI<cb>> allows you to add child nodes to your selected node
+before it is expanded. C< executeleafcb> is called when you
+double-click on a leaf, as if you were running a program in a file
+explorer.
+
+In itself, the id is not particularly useful. The id order is always
+the same in the tree, so as nodes get added and removed, the id of a
+particular node will change. Generally, there is going to be some
+deeper data associated with a node. On a filesystem, a node represents
+a full path to a file or directory, or there may be an ip address
+associated with a computer name. IUP provides you with a way to
+associate arbitrary data with nodes even if the id changes. But to use
+this you will have to understand how to build up a tree from scratch -
+C< TreeAddNodes> is very convenient, but won't help you if you have to
+add nodes later. Replace the definition of C<list> and the call to C<
+TreeAddNodes> with this code:
+
+ tree.name = "Animals"
+ tree.addbranch = "Birds"
+ tree.addbranch = "Crustaceans"
+ tree.addbranch = "Mammals"
+
+You will get the top level branches of the tree; notice that they are
+specified in reverse order, since nodes are always added to the top.
+Also note the curious way in which the C<addbranch> attribute is used.
+For a start, it is I<write-only>, and the effect of setting a value to
+it is to add a new branch to the currently selected node. By default,
+this starts out as the root (which is set using the C<name> attribute)
+The id of the root is always 0; when we add "Birds", the new branch has
+id 1, again when we add "Crustaceans" the new branch also has id 1 - by
+which time "Birds" has moved to id 2, further down the tree.
+
+To add leaves, a similar process:
+
+ tree.name = "Animals"
+ tree.addbranch = "Mammals"
+ tree.addleaf1 = "Whale"
+
+The C<addleaf> attribute works like C<addbranch>, and both of them can
+take an extra parameter, which is the id of the node to add to. In this
+case, "Whale" is a child leaf of the "Mammals" branch, which has id 1
+I< at this stage>. This new leaf gets an id of 2, which is one more
+than the parent. So this gives us a way to build up arbitrary trees,
+knowing the id at each point. IUP provides a function C<TreeSetTableId>
+which can associate a Lua table with a node id. We can choose to put a
+string value inside this table, but it really can contain anything.
+Here is the first example, using some helper functions to simplify
+matters:
+
+ -- testtree2.lua
+ 
+ require 'iuplua'
+ require 'iupluacontrols'
+ tree = iup.tree{}
+ 
+ function assoc (idx,value)
+     iup.TreeSetTableId(tree,idx,{value})
+ end
+ 
+ function addbranch(self,label,value)
+     self.addbranch = label
+     assoc(1,value or label)
+ end
+ 
+ function addleaf(self,label,value)
+     self.addleaf1 = label
+     assoc(2,value or label)
+ end
+ 
+ tree.name = "Animals"
+ addbranch(tree,"Birds")
+ addbranch(tree,"Crustaceans")
+ addleaf(tree,"Shrimp")
+ addleaf(tree,"Lobster")
+ addbranch(tree,"Mammals")
+ addleaf(tree,"Horse")
+ addleaf(tree,"Whale")
+ 
+ function dump (tp,id)
+     local t = iup.TreeGetTable(tree,id)
+     -- our string data is always the first element of this table
+     print(tp,id,t and t[1])
+ end
+ 
+ function tree:branchopen_cb(id)
+     dump('open',id)
+ end
+ 
+ function tree:selection_cb (id,iselect)
+     if iselect == 1 then dump('select',id) end
+ end
+ 
+ f = iup.dialog{tree; title = "Tree Test"}
+ 
+ f:show()
+ 
+ iup.MainLoop()
+
+There is a corresponding function C<TreeGetTable> which accesses the
+table associated with the node id. There is also a function C<
+TreeGetTableId> which will return the id, given the I<unique> table
+associated with it. You can use this to programmatically select a tree
+node given its data by setting the C<value> attribute to the returned
+id.
+
+Now let's do something interesting with a tree control, a simple file
+browser. It is straightforward to get the files and directories
+contained within a directory:
+
+ require 'lfs'
+ 
+ local append = table.insert
+ 
+ function get_dir (path)
+     local files = {}
+     local dirs = {}
+     for f in lfs.dir(path) do
+         if f ~= '.' and f ~= '..' then
+             if lfs.attributes(path..'/'..f,'mode') == 'file' then
+                 append(files,f)
+             else
+                 append(dirs,f)
+             end
+         end
+     end
+     return files,dirs
+ end
+
+We ignore '.' and '..' (the current and parent directory respectively)
+and check the mode to see if we have file or a directory; this requires
+the full path to be passed to C<attributes>. This function returns two
+separate tables containing the I<names> of the files and directories.
+
+It is useful to define two helper functions for setting and getting
+data to be associated with the tree nodes:
+
+ tree = iup.tree {}
+ 
+ function set (id,value,attrib)
+     iup.TreeSetTableId(tree,id,{value,attrib})
+ end
+ 
+ function get(id)
+     return iup.TreeGetTable(tree,id)
+ end
+
+Filling a tree with the contents of a directory is straightforward. We
+want the directories before the files, so we put them in last; nodes
+must be added in reverse order! The id of the new nodes will always be
+C<id+1> where C< id> is going to be the directory which we are filling.
+The fullpath plus a field indicating whether we are a directory is
+associated with each new item:
+
+ function fill (path,id)
+     local files,dirs = get_dir(path)
+     id = id + 1
+     local state = "STATE"..id
+     for i = #files,1,-1 do -- put the files in reverse order!
+         tree.addleaf = files[i]
+         set(id,path..'/'..files[i])
+     end
+     for i = #dirs,1,-1 do -- ditto for directories!
+         tree.addbranch = dirs[i]
+         set(id,path..'/'..dirs[i],'dir')
+         tree[state] = "COLLAPSED"
+     end
+ end
+
+By default, the directory branches will be created in their expanded
+form, so we use the C<STATE> attribute to force them into their
+collapsed state. Normally you would say this in Lua like so C<state2 =
+"COLLAPSED"> but here we build up the appropriate attribute string with
+the given id and use array indexing to set the tree attribute.
+
+Just calling C<fill('.',0)> and putting the tree into a dialog as usual
+will give you a directory listing of the current directory! But it
+would be cool if expanding a directory node would automatically fill
+that node; it would obviously be wasteful to fill the whole tree at
+startup, since your filesystem contains thousands of files. The
+C<branchopenI<cb>> callback is called when a user tries to expand a
+directory. We use this to fill the directory with its contents, but
+only on the _first time that we expand this node:
+
+ function tree:branchopen_cb(id)
+     tree.value = id
+     local t = get(id)
+     if t[2] == 'dir' then
+         fill(t[1],id)
+         set(id,t[1],'xdir')
+     end
+ end
+
+This is why directories need to be I<specially marked>, so we can tell
+later whether we have actually generated the contents of that
+directory!
+
+The first statement of this function makes the node we are opening to
+be the selected node of the tree. (Although we are passed the correct
+id of the node, it seems to be necessary to perform this step to make
+things work correctly.)
+
+See C<directory.wlua> in the examples folder.
+
+directory
+
+=head2 Menus
+
+Any application that can perform a number of operations needs a menu.
+These are not difficult to create in Iuplua, although it can be a
+little tedious to set up. The basic idea is this: create some I<items>,
+make a menu out of these items, and set the C<menu> attribute of the
+dialog. The items have an associated C<action> callback, which actually
+performs the operation.
+
+ -- simple-menu.wlua
+ 
+ require( "iuplua" )
+ 
+ -- Creates a text, sets its value and turns on text readonly mode
+ text = iup.text {readonly = "YES", value = "Show or hide this text"}
+ 
+ item_show = iup.item {title = "Show"}
+ item_hide = iup.item {title = "Hide"}
+ item_exit = iup.item {title = "Exit"}
+ 
+ function item_show:action()
+   text.visible = "YES"
+   return iup.DEFAULT
+ end
+ 
+ function item_hide:action()
+   text.visible = "NO"
+   return iup.DEFAULT
+ end
+ 
+ function item_exit:action()
+   return iup.CLOSE
+ end
+ 
+ menu = iup.menu {item_show,item_hide,item_exit}
+ 
+ -- Creates dialog with a text, sets its title and associates a menu to it
+ dlg = iup.dialog{text; title="Menu Example", menu=menu}
+ 
+ -- Shows dialog in the center of the screen
+ dlg:showxy(iup.CENTER,iup.CENTER)
+ 
+ iup.MainLoop()
+
+A menu may contain items and I<submenus>. This example shows a small
+function which makes creating arbitrarily complicated menus easier:
+
+ -- menu.wlua
+ 
+ require( "iuplua" )
+ 
+ function default ()
+     iup.Message ("Warning", "Only Exit performs an operation")
+     return iup.DEFAULT
+ end
+ 
+ function do_close ()
+     return iup.CLOSE
+ end
+ 
+ mmenu = {
+     "File",{
+         "New",default,
+         "Open",default,
+         "Close",default,
+         "-",nil,
+         "Exit",do_close,
+     },
+     "Edit",{
+         "Copy",default,
+         "Paste",default,
+         "-",nil,
+         "Format",{
+             "DOS",default,
+             "UNIX",default
+         }
+     }
+ }
+ 
+ function create_menu(templ)
+     local items = {}
+     for i = 1,#templ,2 do
+         local label = templ[i]
+         local data = templ[i+1]
+         if type(data) == 'function' then
+             item = iup.item{title = label}
+             item.action = data
+         elseif type(data) == 'nil' then
+             item = iup.separator{}
+         else
+             item = iup.submenu {create_menu(data); title = label}
+         end
+         table.insert(items,item)
+     end
+     return iup.menu(items)
+ end
+ 
+ -- Creates a text, sets its value and turns on text readonly mode
+ text = iup.text {value = "Some text", expand = "YES"}
+ 
+ -- Creates dialog with a text, sets its title and associates a menu to it
+ dlg = iup.dialog {text; title = "Creating Menus With a Table",
+       menu = create_menu(mmenu), size = "QUARTERxEIGHTH"}
+ 
+ -- Shows dialog in the center of the screen
+ dlg:showxy (iup.CENTER,iup.CENTER)
+ 
+ iup.MainLoop()
+
+The function C<create_menu> does all the work; we provide it with a Lua
+table containing pairs of values; the first value of a pair is always a
+string, and will be the label. The second value can either be a
+function, in which case it represents an item to be associated with a
+callback, or C<nil>, which means that it's a separator, or otherwise
+must be a table, which represents a submenu. It is a nice example of
+how recursion can naturally handle nested structures like menus, and
+how Lua's flexible table definitions can make specifying such
+structures easy. This useful function is available in the C< iupx>
+utility library as C<iupx.menu>.
+
+=head2 X<Plott>Plotting Data
+
+Many kinds of numerical data are best seen as X-Y plots. C<iup.pplot>
+is a control which can show several kinds of plots; you can have lines
+between points, show them as markers, or both together. Several series
+(or I<datasets>) can be shown on a single plot, and a simple legend can
+be shown. The plot will automatically scale to view all datasets, but
+the default minimum and maximum x and y values can be changed. It is
+even possible to select points and edit them on the plot.
+
+A simple plot is straightforward:
+
+ -- pplot1.wlua
+ require( "iuplua" )
+ require( "iupluacontrols" )
+ require( "iuplua_pplot51"  )
+ 
+ plot = iup.pplot{TITLE = "A simple XY Plot",
+                     MARGINBOTTOM="35",
+                     MARGINLEFT="35",
+                     AXS_XLABEL="X",
+                     AXS_YLABEL="Y"
+                     }
+ 
+ iup.PPlotBegin(plot,0)
+ iup.PPlotAdd(plot,0,0)
+ iup.PPlotAdd(plot,5,5)
+ iup.PPlotAdd(plot,10,7)
+ iup.PPlotEnd(plot)
+ 
+ dlg = iup.dialog{plot; title="Plot Example",size="QUARTERxQUARTER"}
+ 
+ dlg:show()
+ 
+ iup.MainLoop()
+
+Creating a dataset involves calling C<PPlotBegin>, a number of calls to
+C<PPlotAdd> to add data points, and finally a call to C< PPlotEnd>. You
+can create multiple datasets (or series) using multiple begin/end
+calls, and can of course use loops to add points:
+
+ iup.PPlotBegin(plot,0)
+ for x = -2,2,0.01 do
+     iup.PPlotAdd(plot,x,math.sin(x))
+ end
+ iup.PPlotEnd(plot)
+ 
+ iup.PPlotBegin(plot,0)
+ for x = -2,2,0.01 do
+     iup.PPlotAdd(plot,x,math.cos(x))
+ end
+ iup.PPlotEnd(plot)
+ 
+ plot.DS_LINEWIDTH = 3
+
+A limitation of the C<pplot> library is that it does not choose
+appropriate sizes for the plot margins. So I've had to set the bottom
+and left margins (in pixels) to properly accomodate the axes and their
+titles. As with all IupLua attributes, you can choose to make them
+uppercase if you like; a full list is found in the manual under
+Controls/Additional/IupPPlot. Some of these attributes refer to the
+plot as a whole, some to the I<current dataset>. For instance, setting
+C<GRID> to "YES" will draw gridlines for both axes, but if we set
+C<DS_LINEWIDTH> to 3 after the construction of the cosine dataset, then
+only that line is affected.
+
+Some attributes affect others. C<DS_MODE> is used to specify how to
+draw the dataset; it can be "LINE", "BAR", (for a bar chart) "MARK"
+(just for marks) or "MARKLINE" (for lines and marks). But it has to be
+set before any of the other C<DS_> attributes like C<DS_MARKSIZE>, etc.
+In another case, you will often find it useful to set an explicit
+minimum y value by setting C<AXS_YMIN>. But it will only take effect if
+C< AXIS_YAUTOMIN> has been set to "NO" to disable auto scaling.
+
+As with menus, making a Lua-friendly wrapper around an API is not
+difficult and can be very labour-saving. It would be clearer if we
+could work with the plot object in a more object-oriented way:
+
+    plot:Begin()
+    for i = 1,#xvalues do
+            plot:Add(xvalues[i],yvalues[i])
+    end
+    plot:End()
+
+And for the common case where you have arrays of values, it would be
+convenient to be able to say:
+
+ plot:AddSeries({{0,1.5},{5,4.5},{10,7.6}},{DS_MODE="MARK"})
+
+Here is a function which wraps the C<PPlot> API:
+
+ function create_pplot (tbl)
+     -- don't need to remember this anymore!
+     require( "iuplua_pplot51"  )
+ 
+     -- the defaults for these values are too small, at least on my system!
+     if not tbl.MARGINLEFT then tbl.MARGINLEFT = 30 end
+     if not tbl.MARGINBOTTOM then tbl.MARGINBOTTOM = 35 end
+ 
+     -- if we explicitly supply ranges, then auto must be switched off for that direction.
+     if tbl.AXS_YMIN then tbl.AXS_YAUTOMIN = "NO" end
+     if tbl.AXS_YMAX then tbl.AXS_YAUTOMAX = "NO" end
+     if tbl.AXS_XMIN then tbl.AXS_XAUTOMIN = "NO" end
+     if tbl.AXS_XMAX then tbl.AXS_XAUTOMAX = "NO" end
+ 
+     local plot = iup.pplot(tbl)
+     plot.End = iup.PPlotEnd
+     plot.Add = iup.PPlotAdd
+     function plot.Begin ()
+         return iup.PPlotBegin(plot,0)
+     end
+ 
+     function plot:AddSeries(xvalues,yvalues,options)
+         plot:Begin()
+         -- is xvalues a table of (x,y) pairs?
+         if type(xvalues[1]) == "table" then
+             -- because there's only one data table, the next must be options
+             options = yvalues
+             for i,v in ipairs(xvalues) do
+                 plot:Add(v[1],v[2])
+             end
+         else
+             for i = 1,#xvalues do
+                 plot:Add(xvalues[i],yvalues[i])
+             end
+         end
+         plot:End()
+         -- set any series-specific plot attributes
+         if options then
+             -- mode must be set before any other attributes!
+             if options.DS_MODE then
+                 plot.DS_MODE = options.DS_MODE
+                 options.DS_MODE = nil
+             end
+             for k,v in pairs(options) do
+                 plot[k] = v
+             end
+         end
+     end
+ 
+     function plot:Redraw()
+         plot.REDRAW='YES'
+     end
+     return plot
+ end
+
+This function creates a C<PPlot> object as usual, but supplies some
+more sensible defaults for the margins, makes setting things like
+C<AXS_XMAX> also set C<AXS_XAUTOMAX>, and adds some new methods to the
+object. Of these, C<AddSeries> is the interesting one. It allows you to
+specify the data in two forms; either as two arrays of x and y values,
+or as a single array of x-y pairs. It also allows optionally setting
+C<DS_> attributes, taking care to set the plot mode before any other
+attributes. In this way, the actual details can be hidden away from the
+programmer, who has then less things to worry about.
+
+Given this function, we can write a little program which plots some
+points and draws the linear least-squares fit between them:
+
+ -- simple-pplot.wlua
+ 
+ local xx = {0,2,5,10}
+ local yy = {1,1.5,6,8}
+ 
+ function least_squares (xx,yy)
+     local xsum = 0.0
+     local ysum = 0.0
+     local xxsum = 0.0
+     local yysum = 0.0
+     local xysum = 0.0
+     local n = #xx
+     for i = 1,n do
+         local x,y = xx[i], yy[i]
+         xsum = xsum + x
+         ysum = ysum + y
+         xxsum = xxsum + x*x
+         yysum = yysum + y*y
+         xysum = xysum + x*y
+     end
+     local m = (xsum*ysum/n - xysum )/(xsum*xsum/n - xxsum)
+     local c = (ysum - m*xsum)/n
+     return m,c
+ end
+ 
+ local m,c = least_squares(xx,yy)
+ 
+ function eval (x) return m*x + c end
+ 
+ local plot = create_pplot {TITLE = "Simple Data",AXS_YMIN=0,GRID="YES"}
+ 
+ -- the original data
+ plot:AddSeries(xx,yy,{DS_MODE="MARK",DS_MARKSTYLE="CIRCLE"})
+ 
+ -- the least squares fit
+ local xmin,xmax = xx[1],xx[#xx]
+ plot:AddSeries({xmin,xmax},{eval(xmin),eval(xmax)})
+
+plot
+
+C<create_plot> is so useful that I've packaged it as part of the C<
+iupx> library as C<iupx.pplot>. A new pseudo-attribute has been
+introduced, C<AXS_BOUNDS>, which is a table of four values C<
+{xmin,ymin,xmax,ymax}>. This example shows that very different ranges
+can happily exist on the same plot:
+
+ -- pplot5.wlua
+ 
+ require "iupx"
+ 
+ plot = iupx.pplot {TITLE = "Simple Data", AXS_BOUNDS={0,0,100,100}}
+ 
+ plot:AddSeries ({{0,0},{10,10},{20,30},{30,45}})
+ plot:AddSeries ({{40,40},{50,55},{60,60},{70,65}})
+ 
+ iupx.show_dialog{plot; title="Easy Plotting",size="QUARTERxQUARTER"}
+
+=cut

@@ -1,0 +1,371 @@
+=head1 IupMatrix Callbacks
+
+=head2 Interaction
+
+B<X<IUP_ACTION>ACTION_CB>: Action generated when a keyboard event
+occurs.
+
+ int function(Ihandle *ih, int c, int lin, int col, int edition, char* after); [in C]
+ elem:action_cb(c, lin, col, edition, after: number) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix where the user typed something.
+
+B<c>: Identifier of the typed key. Please refer to the L<Keyboard
+Codes|../attrib/key.html> table for a list of possible values.
+
+lin, B<col>: Coordinates of the selected cell.
+
+B<edition>: 1 if the cell is in edition mode, and 0 if it is not.
+
+B<after>: The new value of the text in case the key is validated (see
+return values). Notice that this value can be NULL if the cell does not
+have a value and the key pressed is not a character.
+
+Possible return values are: IUP_DEFAULT validates the key, IUP_IGNORE
+ignores the key, IUP_CONTINUE forwards the key to IUPs conventional
+processing, or the identifier of the key to be treated by the matrix.
+
+B<X<CLICK_CB>CLICK_CB>: Action generated when any mouse button is
+pressed over a cell. This callback is always called after other
+callbacks.
+
+ int function(Ihandle *ih, int lin, int col, char *status); [in C]
+ elem:click_cb(lin, col: number, status:string) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+B<lin>, B<col>: Coordinates of the cell where the mouse button was
+pressed. They can be -1 if the user click outside the matrix but inside
+the canvas that contains it.
+
+B<status>: Status of the mouse buttons and some keyboard keys at the
+moment the event is generated. The same macros used for
+L<BUTTON_CB|../call/iup_button_cb.html> can be used for this status.
+
+To avoid the display update return IUP_IGNORE.
+
+B<X<RELEASE_CB>RELEASE_CB>: Action generated when any mouse button is
+released over a cell. This callback is always called after other
+callbacks.
+
+ int function(Ihandle *ih, int lin, int col, char *status); [in C]
+ elem:click_cb(lin, col: number, status:string) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+B<lin>, B<col>: Coordinates of the cell where the mouse button was
+pressed. They can be -1 if the user click outside the matrix but inside
+the canvas that contains it.
+
+B<status>: Status of the mouse buttons and some keyboard keys at the
+moment the event is generated. The same macros used for
+L<BUTTON_CB|../call/iup_button_cb.html> can be used for this status.
+
+To avoid the display update return IUP_IGNORE.
+
+B<X<MOUSEMOVE_CB>MOUSEMOVE_CB>: Action generated to notify the
+application that the mouse has moved over the matrix.
+
+ int function(Ihandle *ih, int lin, int col); [in C]
+ elem:mousemove_cb(lin, col: number) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+B<lin>, B<col>: Coordinates of the cell that the mouse cursor is
+currently on.
+
+B<X<ENTERITEM_CB>ENTERITEM_CB>: Action generated when a matrix cell is
+selected, becoming the current cell.
+
+ int function(Ihandle *ih, int lin, int col); [in C]
+ elem:enteritem_cb(lin, col: number) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+B<lin>, B<col>: Coordinates of the selected cell.
+
+The user must return IUP_DEFAULT. This callback is also called when
+matrix is getting focus.
+
+B<X<LEAVEITEM_CB>LEAVEITEM_CB>: Action generated when a cell is no
+longer the current cell.
+
+ int function(Ihandle *ih, int lin, int col); [in C]
+ elem:leaveitem_cb(lin, col: number) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+B<lin>, B<col>: Coordinates of the cell which is no longer the current
+cell.
+
+The user must return either IUP_DEFAULT or IUP_IGNORE. This callback is
+also called when the matrix is losing focus. Returning IUP_IGNORE
+prevents the current cell from changing, but this will not work when
+the matrix is losing focus. If you try to move to beyond matrix borders
+the cell will lose focus and then get it again, so leaveitem and
+enteritem will be called.
+
+B<X<SCROLLTOP_CB>SCROLLTOP_CB>: Action generated when the matrix is
+scrolled with the scrollbars or with the keyboard. Can be used together
+with the "ORIGIN" attribute to synchronize the movement of two or more
+matrices.
+
+ int function(Ihandle *ih, int lin, int col); [in C]
+ elem:scrolltop_cb(lin, col: number) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+B<lin>, B<col>: Coordinates of the cell currently in the upper left
+corner of the matrix.
+
+The user must return IUP_DEFAULT.
+
+=head2 Drawing
+
+X<BGCOLOR_CB>B<BGCOLOR_CB> - Action generated to retrieve the
+background color of a cell when it needs to be redrawn.
+
+ int function(Ihandle *ih, int lin, int col, unsigned int *red, unsigned int *green, unsigned int *blue); [in C]
+ elem:bgcolor_cb(lin, col: number) -> (red, green, blue, ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix where the user typed something.
+
+lin, B<col>: Coordinates of the cell.
+
+red, green, blue: the cell background color.
+
+If the function return IUP_IGNORE, the return values are ignored and
+the attribute defined background color will be used. If returns
+IUP_DEFAULT the returned values will be used as the background color.
+
+X<FGCOLOR_CB>B<FGCOLOR_CB> - Action generated to retrieve the
+foreground color of a cell when it needs to be redrawn.
+
+ int function(Ihandle *ih, int lin, int col, unsigned int *red, unsigned int *green, unsigned int *blue); [in C]
+ elem:fgcolor_cb(lin, col: number) -> (red, green, blue, ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix where the user typed something.
+
+B<lin>, B<col>: Coordinates of the cell.
+
+red, green, blue: the cell foreground color.
+
+If the function return IUP_IGNORE, the return values are ignored and
+the attribute defined foreground color will be used. If returns
+IUP_DEFAULT the returned values will be used as the foreground color.
+
+B<X<FONT_CB>FONT_CB>: Action generated to verify the font of a cell.
+Called both for common cells and for line and column titles. (since
+3.0)
+
+ char* function(Ihandle* ih, int lin, int col); [in C]
+ elem:value_cb(lin, col: number) -> (ret: string) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+B<lin>, B<col>: Coordinates of the cell.
+
+Must return a font or NULL to use the the attribute defined font.
+
+B<X<DRAW_CB>DRAW_CB>: Action generated before a cell is drawn. Allows
+to draw a custom cell contents. You must use the
+L<CD|http://www.tecgraf.puc-rio.br/cd/> library primitives.
+
+ int function(Ihandle *ih, int lin, int col, int x1, int x2, int y1, int y2, cdCanvas* cnv); [in C]
+ elem:draw_cb(lin, col, x1, x2, y1, y2: number, cnv: cdCanvas) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+B<lin>, B<col>: Coordinates of the current cell.
+
+B<x1>, B<x2>, B<y1>, B<y2>: Bounding rectangle of the current cell in
+pixels.
+
+B<cnv>: internal canvas CD used to draw the matrix.
+
+If this function return IUP_IGNORE the normal text drawing will take
+place. The clipping is set for the bounding rectangle. The callback is
+called after the cell background has been filled with the background
+color. If HIDEFOCUS=NO (the default) the drawing area will not include
+the focus area, if HIDEFOCUS=YES the complete cell is available.
+
+B<X<DROPCHECK_CB>DROPCHECK_CB>: Action generated before the current
+cell is redrawn to determine if a dropdown feedback should be shown. If
+this action is not registered, no feedback will be shown.
+
+ int function(Ihandle *ih, int lin, int col); [in C]
+ elem:dropcheck_cb(lin, col: number) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+B<lin>, B<col>: Coordinates of the cell.
+
+This function must return IUP_DEFAULT to show a dropdown field
+feedback, or IUP_IGNORE to ignore the dropdown feedback.
+
+=head2 Editing
+
+B<X<DROP_CB>DROP_CB>: Action generated before the current cell enters
+edition mode to determine if a text field or a dropdown will be shown.
+It is called after EDITION_CB. If this action is not registered, a text
+field will be shown. Its return determines what type of element will be
+used in the edition mode. If the selected type is a dropdown, the
+values appearing in the dropdown must be fulfilled in this callback,
+just like elements are added to any list (the drop parameter is the
+handle of the dropdown list to be shown). You should also set the lists
+current value ("VALUE"), the default is always "1". The previously cell
+value can be verified from the given drop Ihandle via the
+"PREVIOUSVALUE" attribute.
+
+ int function(Ihandle *ih, Ihandle *drop, int lin, int col); [in C]
+ elem:drop_cb(drop: ihandle, lin, col: number) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+B<drop>: Identifier of the dropdown list which will be shown to the
+user.
+
+lin, B<col>: Coordinates of the current cell.
+
+This function must return IUP_IGNORE to show a text-edition field, or
+IUP_DEFAULT to show a dropdown field.
+
+B<X<DROPSELECT_CB>DROPSELECT_CB>: Action generated when an element in
+the dropdown list is selected. If returns IUP_CONTINUE the value is
+accepted as a new value and the matrix leaves edition mode, else the
+item is selected and editing remains.
+
+ int function(Ihandle *ih, int lin, int col, Ihandle *drop, char *t, int i, int v); [in C]
+ elem:dropselect_cb(lin, col: number, drop: ihandle, t: string, i, v: number) -> (ret: number) [in Lua] 
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+lin, B<col>: Coordinates of the current cell.
+
+B<drop>: Identifier of the dropdown list shown to the user.
+
+B<t>: Text of the item whose state was changed.
+
+B<i>: Number of the item whose state was changed.
+
+B<v>: Indicates if item was selected or unselected (1 or 0).
+
+B<X<EDITION_CB>EDITION_CB>: Action generated when the current cell
+enters or leaves the edition mode. Not called if READONLY=YES.
+
+ int function(Ihandle *ih, int lin, int col, int mode, int update);  [in C]
+ elem:edition_cb(lin, col, mode, update: number) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+lin, B<col>: Coordinates of the current cell.
+
+B<mode>: 1 if the cell has entered the edition mode, or 0 if the cell
+has left the edition mode.
+
+B<update>: used when mode=0 to identify if the value will be updated
+whe the callback returns with IUP_DEFAULT. (since 3.0)
+
+When B<mode>=1 editing is allowed if the callback returns IUP_DEFAULT,
+so to make the cell read-only return IUP_IGNORE.
+
+When B<mode>=0 the new value is accepted only if the callback returns
+IUP_DEFAULT. The VALUE attribute returns the new value that will be
+updated in the cell. If the callback returns IUP_CONTINUE the edit mode
+is ended and the new value will not be updated, so the application can
+set a different value during the callback (usefull to format the new
+value). If the callback returns IUP_IGNORE the editing is not ended.
+
+If the callback does not exists the value can always be edited and it
+is always accepted.
+
+If the control loses its focus the edition mode will be ended always
+even if the callback return IUP_IGNORE. In this case B<update> is 0.
+
+This callback is also called if the user cancel the editing with B<Esc>
+(in this case B<update> is 0)B<,> and when the user press B<Del> to
+validate the operation for each cell been cleared (in this case is
+called only with mode=1).
+
+=head2 Callback Mode
+
+B<X<VALUE_CB>VALUE_CB>: Action generated to verify the value of a cell.
+Called both for common cells and for line and column titles.
+
+ char* function(Ihandle* ih, int lin, int col); [in C]
+ elem:value_cb(lin, col: number) -> (ret: string) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+B<lin>, B<col>: Coordinates of the cell.
+
+Must return the string to be redrawn.
+
+B<IMPORTANT>: The existance of this callback defines the callback
+operation mode of the matrix when it is mapped.
+
+B<X<VALUE_EDIT_CB>VALUE_EDIT_CB>: Action generated to notify the
+application that the value of a cell was edited. Since it is a
+notification, it cannot refuse the value modification (which can be
+done by the "EDITION_CB" callback). Not called if READONLY=YES. This
+callback is usually set in callback mode, but also works in normal
+mode.
+
+ int function(Ihandle *ih, int lin, int col, char* newval); [in C]
+ elem:value_edit_cb(lin, col: number, newval: string) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+lin, B<col>: Coordinates of the cell.
+
+B<newval>: String containing the new cell value
+
+B<IMPORTANT>: if VALUE_CB is defined and VALUE_EDIT_CB is not defined
+when the matrix is mapped it will be read-only.
+
+B<X<MARK_CB>MARK_CB>: Action generated to verify the selection state of
+a cell. Called only for common cells, only when MARKMODE=CELL and only
+in callback mode.
+
+ int function(Ihandle* ih, int lin, int col); [in C]
+ elem:mark_cb(lin, col: number) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+B<lin>, B<col>: Coordinates of the cell.
+
+Must return the selection state (marked=1, not marked 0). If not
+defined the attribute "B<MARKI<L>>B<:I<C>>" will be returned.
+
+B<X<MARKEDIT_CB>MARKEDIT_CB>: Action generated to notify the
+application that the selection state of a cell was changed. Since it is
+a notification, it cannot refuse the mark modification. Called only for
+common cells, only when MARKMODE=CELL and only in callback mode.
+
+ int function(Ihandle *ih, int lin, int col, int marked); [in C]
+ elem:markedit_cb(lin, col, marked: number) -> (ret: number) [in Lua]
+
+B<ih>: Identifier of the matrix interacting with the user.
+
+B<lin>, B<col>: Coordinates of the cell.
+
+B<marked>: selection state (marked=1, not marked 0).
+
+If not defined the attribute "B<MARKI<L>:I<C>>" will be updated. So if
+you define the B<MARKEDIT_CB> the "B<MARKI<L>:I<C>>" will NOT be
+updated and the callback B<MARK_CB> must return the selection state of
+the cell. If you do not want to implement the B<MARK_CB> callback then
+set the "B<MARKI<L>:I<C>>" attribute inside the B<MARKEDIT_CB>
+callback.
+
+----
+
+The canvas callbacks L<ACTION|../call/iup_action.html>,
+L<SCROLL_CB|../call/iup_scroll_cb.html>, KEYPRESS_CB, MOTION_CB,
+MAP_CB, RESIZE_CB and L<BUTTON_CB|../call/iup_button_cb.html> can be
+changed but you should save and call the original definitions or the
+matrix will not correctly work. This can not be done in Lua.
+
+See L<IupCanvas|../elem/iupcanvas.html>.
+
+=cut

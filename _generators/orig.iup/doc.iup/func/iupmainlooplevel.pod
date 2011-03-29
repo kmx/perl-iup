@@ -1,0 +1,28 @@
+=head1 IupMainLoopLevel (since 3.0)
+
+Returns the current cascade level of B<IupMainLoop>. When no calls were
+done, return value is 0.
+
+=head2 Parameters/Return
+
+ int IupMainLoopLevel(void); [in C]
+ iup.MainLoopLevel() -> ret: number [in Lua]
+
+Returns: the cascade level.
+
+=head2 Notes
+
+You can use this function to check if B<IupMainLoop> was already called
+and avoid calling it again.
+
+A call to B<IupPopup> will increase one level.
+
+=head2 See Also
+
+L<IupOpen|iupopen.html>, L<IupClose|iupclose.html>,
+L<IupLoopStep|iuploopstep.html>, L<GuideE<47>System
+Control|../guide.html#sistema>,
+L<IDLE_ACTION|../call/iup_idle_action.html>,
+L<LOCKLOOP|../attrib/iup_globals.html#lockloop>.
+
+=cut

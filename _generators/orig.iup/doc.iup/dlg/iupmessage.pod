@@ -1,0 +1,42 @@
+=head1 IupMessage
+
+Shows a modal dialog containing a message. It simply creates and popup
+a B<IupMessageDlg>.
+
+=head2 Creation and Show
+
+ void IupMessage(const char *title, const char *message); [in C]
+   iup.Message(title: string, message: string) [in Lua]
+
+B<title>: dialog title
+
+B<message>: text message contents
+
+=head2 Notes
+
+The B<IupMessage> function shows a dialog centralized on the screen,
+showing the message and the E<ldquo>OKE<rdquo> button. The
+E<lsquo>\nE<rsquo> character can be added to the message to indicate
+line change.
+
+In C there is an utility function to help build the message string, it
+accepts the same format as the C B<sprintf>:
+
+ void IupMessagef(const char *title, const char *format, ...); [in C]
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined (used only in Motif, in Windows
+MessageBox does not have an icon in the title bar).
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=head2 See Also
+
+L<IupGetFile|iupgetfile.html>, L<IupScanf|iupscanf.html>,
+L<IupListDialog|iuplistdialog.html>, L<IupAlarm|iupalarm.html>,
+L<IupMessageDlg|iupmessagedlg.html>
+
+=cut

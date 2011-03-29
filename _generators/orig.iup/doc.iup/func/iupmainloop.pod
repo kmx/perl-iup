@@ -1,0 +1,40 @@
+=head1 IupMainLoop
+
+Executes the user interaction until a callback returns IUP_CLOSE,
+B<IupExitLoop> is called, or hiding the last visible dialog.
+
+=head2 Parameters/Return
+
+ int IupMainLoop(void); [in C]
+ iup.MainLoop() -> ret: number [in Lua]
+
+Returns: IUP_NOERROR always.
+
+=head2 Notes
+
+When this function is called, it will interrupt the program execution
+until a callback returns IUP_CLOSE, B<IupExitLoop> is called, or there
+are no visible dialogs.
+
+If you cascade many calls to B<IupMainLoop> there must be a "return
+IUP_CLOSE" or B<IupExitLoop> call for each cascade level, hiddinh all
+dialogs will close only one level. Call
+L<IupMainLoopLevel|iupmainlooplevel.html> to obtain the current level.
+
+If B<IupMainLoop> is called without any visible dialogs and no active
+timers, the application will hang and will not be possible to close the
+main loop. The process will have to be interrupted by the system.
+
+When the last visible dialog is hidden the B<IupExitLoop> function is
+automatically called, causing the B<IupMainLoop> to return. To avoid
+that set LOCKLOOP=YES before hiding the last dialog.
+
+=head2 See Also
+
+L<IupOpen|iupopen.html>, L<IupClose|iupclose.html>,
+L<IupLoopStep|iuploopstep.html>, L<IupExitLoop|iupexitloop.html>,
+L<GuideE<47>System Control|../guide.html#sistema>,
+L<IDLE_ACTION|../call/iup_idle_action.html>,
+L<LOCKLOOP|../attrib/iup_globals.html#lockloop>.
+
+=cut

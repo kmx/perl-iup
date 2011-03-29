@@ -1,0 +1,15 @@
+=head1 Attributes
+
+Attributes are used to change or consult properties of elements. Each
+element has a set of attributes that affect it, and each attribute can
+work differently for each element. Depending on the element, its value
+can be computed or simply verified. Also it can be internally stored or
+not.
+
+Attribute names are always upper case, lower case names will not work.
+But attribute values like "YES", "NO", "TOP", are case insensitive, so
+"Yes", "no", "top", and other variations will work.
+
+If not defined their value can be inherited from the parent container.
+
+=cut

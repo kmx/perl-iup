@@ -1,0 +1,89 @@
+=head1 IupFontDlg (Windows and GTK only) (since 3.0)
+
+Creates the Font Dialog element. It is a predefined dialog for
+selecting a font. The dialog can be shown with the IupPopup function
+only.
+
+=head2 Creation
+
+ Ihandle* IupFontDlg(void); [in C]
+ iup.fontdlg() -> (elem: ihandle) [in Lua]
+ fontdlg() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<PREVIEWTEXT> [GTK only]: the text shown in the preview area. If not
+defined GTK will provide a default text.
+
+B<COLOR> [Windows Only]: The initial color value and the returned
+selected value if the user pressed the Ok button. In Windows the Choose
+Font dialog allows hte user to select a color from a pre-defined list
+of colors.
+
+L<PARENTDIALOG|../attrib/iup_parentdialog.html> (creation only): Name
+of a dialog to be used as parent. This dialog will be always in front
+of the parent dialog.
+
+B<STATUS> (read-only): defined to "1" if the user pressed the Ok
+button, NULL if pressed the Cancel button.
+
+L<TITLE|../attrib/iup_title.html>: Dialog title.
+
+B<VALUE>: The initial font value and the returned selected value if the
+user pressed the Ok button. Has the same format of the
+L<FONT|../attrib/iup_font.html> attribute.
+
+=head2 Callbacks
+
+L<HELP_CB|../call/iup_help_cb.html>: Action generated when the Help
+button is pressed.
+
+=head2 Notes
+
+The B<IupFontDlg> is a native pre-defined dialog not altered by
+B<IupSetLanguage>.
+
+To show the dialog, use function B<IupPopup>. In Lua, use the B<popup>
+function.
+
+The dialog is mapped only inside B<IupPopup>, B<IupMap> does nothing.
+
+=head2 Examples
+
+ Ihandle* dlg = IupFontDlg();
+ 
+ IupSetAttribute(dlg, "COLOR", "128 0 255");
+ IupSetAttribute(dlg, "VALUE", "Times New Roman, Bold 20");
+ IupSetAttribute(dlg, "TITLE", "IupFontDlg Test");
+ IupSetCallback(dlg, "HELP_CB", (Icallback)help_cb);
+ 
+ IupPopup(dlg, IUP_CURRENT, IUP_CURRENT);
+ 
+ if (IupGetInt(dlg, "STATUS"))
+ {
+   printf("OK\n");
+   printf("  VALUE(%s)\n", IupGetAttribute(dlg, "VALUE"));
+   printf("  COLOR(%s)\n", IupGetAttribute(dlg, "COLOR"));
+ }
+ else
+   printf("CANCEL\n");
+ 
+ IupDestroy(dlg); 
+
+Windows XP
+
+[IMAGE]
+
+GTK/GNOME
+
+[IMAGE]
+
+=head2 X<SeeAlso>See Also
+
+L<IupMessageDlg|iupmessagedlg.html>, L<IupFileDlg|iupgetfiledlg.html>,
+L<IupPopup|../func/iuppopup.html>
+
+=cut

@@ -1,0 +1,14 @@
+=head1 IupRedraw (since 3.0)
+
+Force the element and its children to be redraw immediately.
+
+=head2 Parameters/Return
+
+ void IupRedraw(Ihandle* ih, int children); [in C]
+ iup.Redraw(ih: ihandle, children: boolen) [in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<children>: flag to update its children.
+
+=cut

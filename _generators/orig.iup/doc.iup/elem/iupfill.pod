@@ -1,0 +1,53 @@
+=head1 IupFill
+
+Creates a Fill composition element, which dynamically occupies empty
+spaces always trying to expand itself. Its parent B<must> be an
+B<IupHbox> or an B<IupVbox>. If an EXPAND is set on at least one of the
+other children of the box, then the Fill is ignored.
+
+It does not have a native representation.
+
+=head2 Creation
+
+ Ihandle* IupFill(void); [in C]
+ iup.fill{} -> elem: ihandle [in Lua]
+ fill() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): Ignored. If
+B<User> size is not defined, then when inside a B<IupHbox> EXPAND is
+HORIZONTAL, when inside a IupVbox EXPAND is VERTICAL. If B<User> size
+is defined then EXPAND is NO.
+
+L<SIZE|../attrib/iup_size.html> /
+L<RASTERSIZE|../attrib/iup_rastersize.html> (non inheritable): Defines
+the width, if inside a B<IupHbox>, or the height, if it is inside a
+B<IupVbox>. When consulted behaves as the standard SIZE/RASTERSIZE
+attributes.
+
+B<WID> (read-only): returns -1 if mapped.
+
+=over
+
+----
+
+=back
+
+L<FONT|../attrib/iup_font.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=head2 X<SeeAlso>See Also
+
+L<IupHbox|iuphbox.html>, L<IupVbox|iupvbox.html>.
+
+=cut

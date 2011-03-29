@@ -1,0 +1,37 @@
+=head1 Screenshots
+
+Click on the picture to enlarge image.
+
+L<[IMAGE]|screenshots/visorgraf-ematrix.gif>
+
+L<[IMAGE]|screenshots/prea3d_sea_bottom_fendp.png>
+
+L<[IMAGE]|screenshots/prea3d_sea_bottom.png>
+
+L<[IMAGE]|screenshots/prea3d_height_map.png>
+
+L<[IMAGE]|screenshots/militaryagents.png>
+
+L<[IMAGE]|screenshots/luacmd_debug.gif>
+
+L<[IMAGE]|screenshots/imlab.jpg>
+
+L<[IMAGE]|screenshots/ftool.png>
+
+L<[IMAGE]|screenshots/recon.png>
+
+IUP 3.0 beta running on a Nokia N800 Internet Tablet using the GTK
+driver (contribution by Otfried Cheong):
+
+L<[IMAGE]|screenshots/n800_photo.jpg>
+
+L<[IMAGE]|screenshots/n800_screenshot.png>
+
+IUP 3.0 beta running on a Irex Iliad Book Reader using the GTK driver
+(contribution by Hans Elbers):
+
+L<[IMAGE]|screenshots/irex_iliad_photo.jpg>
+
+L<[IMAGE]|screenshots/irex_iliad_screenshot.png>
+
+=cut

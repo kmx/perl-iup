@@ -1,0 +1,16 @@
+=head1 LEAVEWINDOW_CB
+
+Action generated when the mouse leaves a canvas or button.
+
+=head2 Callback
+
+ int function(Ihandle *ih); [in C]
+ elem:leavewindow_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+=head2 Affects
+
+All controls with user interaction.
+
+=cut

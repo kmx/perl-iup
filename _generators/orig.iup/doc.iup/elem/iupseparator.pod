@@ -1,0 +1,29 @@
+=head1 IupSeparator
+
+Creates the separator interface element. It shows a line between two
+menu items.
+
+=head2 Creation
+
+ Ihandle* IupSeparator(void); [in C]
+ iup.separator{} -> (elem: ihandle) [in Lua]
+ separator() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Notes
+
+The separator is ignored when it is part of the definition of the items
+in a bar menu.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=head2 X<SeeAlso>See Also
+
+L<IupItem|iupitem.html>, L<IupSubMenu|iupsubmenu.html>,
+L<IupMenu|iupmenu.html>.
+
+=cut

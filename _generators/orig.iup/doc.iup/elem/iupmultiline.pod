@@ -1,0 +1,28 @@
+=head1 IupMultiLine (deprecated since 3.0, use IupText with
+MULTILINE=YES)
+
+Creates an editable field with one or more lines.
+
+Since IUP 3.0, B<IupText> has support for multiple lines when the
+MULTILINE attribute is set to YES. Now when a B<IupMultiline> element
+is created in fact a B<IupText> element with MULTILINE=YES is created.
+
+See L<IupText|iuptext.html>
+
+=head2 Creation
+
+ Ihandle* IupMultiLine(const char *action); [in C]
+ iup.multiline{} -> (elem: ihandle) [in Lua]
+ multiline(action) [in LED]
+
+B<action>: name of the action generated when the user types something.
+It can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=cut

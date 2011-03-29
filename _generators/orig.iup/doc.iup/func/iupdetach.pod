@@ -1,0 +1,36 @@
+=head1 IupDetach
+
+B<Detaches> an interface element from its parent.
+
+=head2 Parameters/Return
+
+ void IupDetach(Ihandle *child); [in C]
+ iup.Detach(child: ihandle) [in Lua]
+ or child:detach() [in Lua]
+
+B<child>: Identifier of the interface element to be detached.
+
+=head2 Notes
+
+It will automatically call B<IupUnmap> to B<unmap> the element if
+necessary, and then B<detach> the element.
+
+If left B<detached> it is still necessary to call B<IupDestroy> to B<
+destroy> the IUP element.
+
+The elements are NOT immediately repositioned. Call B<IupRefresh> for
+the container (or any other element in the dialog) to update the dialog
+layout.
+
+When the element is mapped some attributes are stored only in the
+native system. If the element is B<unmaped> those attributes are lost.
+Use the function L<IupSaveClassAttributes|iupsaveclassattributes.html>
+when you want to B<unmap> the element and keep its attributes.
+
+=head2 See Also
+
+L<IupAppend|iupappend.html>, L<IupInsert|iupinsert.html>,
+L<IupRefresh|iuprefresh.html>, L<IupUnmap|iupunmap.html>,
+L<IupCreate|iupcreate.html>, L<IupDestroy|iupdestroy.html>
+
+=cut

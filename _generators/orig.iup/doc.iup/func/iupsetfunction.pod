@@ -1,0 +1,25 @@
+=head1 IupSetFunction
+
+Associates a function to an action.
+
+This function is now deprecated. The applications should use
+B<IupSetCallback> instead.
+
+=head2 Parameters/Return
+
+ Icallback IupSetFunction(const char *name, Icallback func); [in C]
+ [There is no equivalent in Lua]
+
+B<name>: name of an action.
+
+B<func>: address of a C function. If NULL removes the association.
+
+Returns: the address of the previous function associated to the action.
+
+=head2 See Also
+
+L<IupGetFunction|iupgetfunction.html>,
+L<DEFAULT_ACTION|../call/iup_default_action.html>,
+L<IupSetCallback|IupSetCallback.html>,
+
+=cut

@@ -1,0 +1,46 @@
+=head1 OpenWatcom C++ IDE Project Options Guide
+
+=head2
+L<http:E<47>E<47>www.openwatcom.orgE<47>|http://www.openwatcom.org/>
+
+Open Watcom is an Integrated Development Environment (IDE) for Fortran
+and C/C++ languages using the Watcom compilers.
+
+"It is a joint effort between SciTech Software Inc, Sybase and the Open
+Source development community to maintain and enhance the Watcom C/C++
+and Fortran cross compilers and tools. An Open Source license from
+Sybase allows free commercial and non-commercial use of the Open Watcom
+tools."
+
+To use IUP with Open Watcom you will need to download the "owc1"
+binaries in the download page.
+
+After unpacking the file in your conputer, you must create a new
+Project for a "Windowed Executable" and configure your Project Options.
+In the Project Options there are 2 important places:
+
+=over
+
+=item * In the Windows Linking Switches dialog, select option 2.
+Import, Export and Library Switches. Then enter the Library directories
+and Library files. For example:
+
+=back
+
+ .\lib\owc1;..\..\iup\lib\owc1;..\..\cd\lib\owc1;..\..\im\lib\owc1
+ comctl32.lib iup.lib iupcontrols.lib cd.lib iupcd.lib im.lib im_process.lib iupgl.lib opengl32.lib glu32.lib
+
+L<[IMAGE]|owc1.gif>
+
+=over
+
+=item * In the C Compiler Switches dialog, select 1. File Option
+Switches. Then enter the include path, for example:
+
+=back
+
+ ..\include;..\..\iup\include;..\..\cd\include;..\..\im\include
+
+L<[IMAGE]|owc2.gif>
+
+=cut

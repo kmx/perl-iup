@@ -1,0 +1,24 @@
+=head1 IupClose
+
+Ends the IUP toolkit and releases internal memory. It will also
+automatically destroy all dialogs and all elements that have names.
+
+=head2 Parameters/Return
+
+ void IupClose(void); [in C]
+ iup.Close() [in Lua]
+
+=head2 Notes
+
+In Windows, the CoUninitialize function is called.
+
+In Motif, the XtDestroyApplicationContext function is called.
+
+This function is usually called by the application. But if IUP is
+dynamically loaded in Lua 5 then you should call B<iup.Close> from Lua.
+
+=head2 See Also
+
+L<IupOpen|iupopen.html>
+
+=cut

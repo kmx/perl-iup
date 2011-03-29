@@ -1,0 +1,15 @@
+=head1 ZORDER (write-only) (non inheritable)
+
+Change the ZORDER of a dialog or control. It is commonly used for
+dialogs, but it can be used to control the z-order of controls in a
+IupCbox.
+
+=head2 Value
+
+Can be "TOP" or "BOTTOM".
+
+=head2 Affects
+
+All controls that have visual representation.
+
+=cut

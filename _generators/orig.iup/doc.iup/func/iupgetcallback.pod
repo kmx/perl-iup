@@ -1,0 +1,29 @@
+=head1 IupGetCallback
+
+Returns the callback associated to an event.
+
+=head2 Parameters/Return
+
+ Icallback IupGetCallback(Ihandle* ih, const char *name); [in C]
+ [There is no equivalent in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<name>: attribute name of the callback.
+
+=head2 Notes
+
+This function replaces the combination:
+
+ IupGetFunction(IupGetAttribute(ih, name))
+
+If an event is associated using B<IupSetFunction> and
+B<IupSetAttribute>, the B<IupGetCallback> also returns the correct
+callback. So old applications work normally.
+
+=head2 See Also
+
+L<IupSetCallback|iupsetcallback.html>,
+L<IupGetFunction|iupgetfunction.html>
+
+=cut

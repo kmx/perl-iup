@@ -1,0 +1,45 @@
+=head1 IupShow
+
+Displays a dialog in the current position, or changes a control VISIBLE
+attribute. If the dialog needs to be mapped and the current position is
+not known then the dialog is centered.
+
+For a dialog to set the attribute VISIBLE=YES is the same as calling
+IupShow. For other controls, to call IupShow is the same as setting
+VISIBLE=YES.
+
+=head2 Parameters/Return
+
+ int IupShow(Ihandle *ih); [in C]
+ iup.Show(ih: ihandle) -> (ret: number) [in Lua]
+ or ih:show() -> (ret: number) [in IupLua]
+
+B<ih>: identifier of the interface element.
+
+Returns: IUP_NOERROR if sucessful. If there was an error returns
+IUP_ERROR.
+
+=head2 Notes
+
+For dialogs it is equivalent to B<IupShowXY> using IUP_CURRENT (or
+IUP_CENTER if not mapped).
+
+Will call B<IupMap> for the element.
+
+See the L<PLACEMENT|../dlg/iupdialog.html#PLACEMENT> attribute for
+other position and show options.
+
+This function can be executed more than once for the same dialog. This
+will make the dialog be placed above all other dialogs in the
+application, changing its Z-order, and update its position and/or size
+on screen.
+
+IMPORTANT: Calling B<IupShow> for a visible dialog shown with
+B<IupPopup> does nothing.
+
+=head2 See Also
+
+L<IupShowXY|iupshowxy.html>, L<IupHide|iuphide.html>,
+L<IupPopup|iuppopup.html>, L<IupMap|iupmap.html>
+
+=cut

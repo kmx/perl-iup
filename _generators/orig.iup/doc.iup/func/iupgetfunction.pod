@@ -1,0 +1,20 @@
+=head1 IupGetFunction
+
+Returns the function associated to an action.
+
+This function is now deprecated. The applications should use
+B<IupGetCallback> instead.
+
+=head2 Parameters/Return
+
+ Icallback IupGetFunction(const char *name); [in C]
+ [There is no equivalent in Lua]
+
+B<name>: name of the action.
+
+=head2 See Also
+
+L<IupSetFunction|iupsetfunction.html>,
+L<IupGetCallback|IupGetCallback.html>
+
+=cut

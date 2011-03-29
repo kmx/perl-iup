@@ -1,0 +1,49 @@
+=head1 IupSetAtt
+
+Defines a set of attributes for an interface element and optionally
+sets its handle.
+
+=head2 Parameters/Return
+
+ Ihandle* IupSetAtt(const char* handle_name, Ihandle* ih, const char* name, ...); [in C]
+
+B<handle_name: >optional handle name. B<IupSetHandle> will be called
+internally. can be NULL.
+
+ih: Identifier of the interface element.
+
+B<name>: name of the first attribute.
+
+...: after B<name> a B<value> must be set, then a sequence of name and
+value pairs can follow until a NULL name is found. It must be a
+constant string because B<IupSetAttribute> will be used internally.
+
+Returns: B<ih>
+
+=head2 Examples
+
+This function returns the same Ihandle it receives. This way, it is a
+lot easier to create dialogs in C. See also L<
+IupSetCallbacks|iupsetcallbacks.html>.
+
+ dialog = IupSetAtt("MainDialog", IupDialog(
+     IupSetAtt(NULL, IupHBox(
+        IupSetAtt("MainCanvas", IupCanvas(NULL), "BORDER", "NO", "RASTERSIZE", "100x100", NULL),
+        NULL), "MARGIN", "10x10", NULL),
+     "TITLE", "Test", NULL);
+
+Creates a list with country names and defines Japan as the selected
+option.
+
+ Ihandle *list = IupList(NULL);
+ IupSetAtt(NULL, list, "VALUE", "3", "1", "Brazil", "2", "USA", "3", "Japan", "4", "France", NULL);
+
+=head2 See Also
+
+L<IupGetAttribute|iupgetattribute.html>,
+L<IupSetAttribute|iupsetattribute.html>,
+L<IupGetAttributes|iupgetattributes.html>,
+L<IupStoreAttribute|iupstoreattribute.html>,
+L<IupSetAttributes|iupsetattributes.html>
+
+=cut

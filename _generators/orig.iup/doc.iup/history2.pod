@@ -1,0 +1,2157 @@
+=head1 History of Changes in Version 2.x
+
+=head2 CVS (17/Jun/2009)
+
+=head2 General
+
+=over
+
+=item * Changed: the B<IupOleControl> in Lua will not automatically
+initialize LuaCOM anymore. The application must manually call
+"elem:CreateLuaCOM()". The previous initialization was incorrect
+(thanks to Ross Berteig).
+
+=item * Fixed: parameter checking and the return value in Lua for
+B<IupListDialog> when type=2.
+
+=item * Fixed: the return value for B<IupGetText> when the user
+canceled.
+
+=item * Fixed: The 32 bits version of the IupLua console in Windows
+XP64 was not working.
+
+=item * Fixed: IupLua initialization when retrieving the argc/argv
+arguments for B<IupOpen>. (Thanks to Ross Berteig)
+
+=item * Fixed: action callback return value in Lua for the
+B<IupGetParam> dialog. (Thanks to Zhiwei)
+
+=back
+
+=head2 L<Version
+2.7.1|http://sourceforge.net/projects/iup/files/2.7.1/> (15/Dec/2008)
+
+=head2 General
+
+=over
+
+=item * Fixed: the iuplua51 makefile where not using the g++ linker, so
+require"imlua" failed.
+
+=item * Changed: removed csh dependency from make_uname scripts.
+
+=item * Changed: removed IupSpeech from source and documentation.
+
+=back
+
+=head2 Motif
+
+=over
+
+=item * Fixed: IupOpen was crashing if used with NULL parameters.
+
+=item * Fixed: DIRECTORY attribute in IupFileDlg when set to NULL did
+an invalid memory access.
+
+=item * Fixed: invalid default value for SCROLLBAR attribute in
+IupMultiline and IupList.
+
+=item * Fixed: size of tips window when displaying a multiline string.
+
+=back
+
+=head2 IupControls
+
+=over
+
+=item * Fixed: some frame lines where not drawn in IupMatrix.
+
+=back
+
+=head2 L<Version 2.7|http://sourceforge.net/projects/iup/files/2.7/>
+(14/Oct/2008)
+
+=head2 General
+
+=over
+
+=item * Changed: B< INCOMPATIBILITY> - B<IupOpen> function declaration
+now include command line arguments used by X-Windows and GTK.
+
+=item * Changed: B< INCOMPATIBILITY -> "IUP" cursor in Windows renamed
+to "HELP" cursor.
+
+=item * Changed: B< INCOMPATIBILITY -> WIN_SAVEBITS renamed to
+SAVEUNDER.
+
+=item * Changed: B< INCOMPATIBILITY -> removed old "MOTIF_FONT" and
+"WINFONT" attributes. Use only the "FONT" attribute.
+
+=item * Changed: B< INCOMPATIBILITY> - removed old IUP_ANYWHERE and
+IupColor definitions.
+
+=item * Changed: B< INCOMPATIBILITY -> B<IupGetType> renamed to
+B<IupGetClassName>.
+
+=item * Changed: B<IMPORTANT> - all functions that receive a constant
+string now has the "const" modifier for the string parameter
+declaration.
+
+=item * Changed: B<IMPORTANT> - Copyright notice modified to reflect
+the registration at INPI (National Institute of Intellectual Property
+in Brazil). License continues under the same terms.
+
+=item * Changed: B< IMPORTANT> - the support services (Downloads,
+Mailing List and CVS) moved from LuaForge to SourceForge.
+
+=item * Changed: All dll8 and dll9 DLLs now have a Manifest file that
+specifies the correct MSVCR*.DLL.
+
+=item * Changed: Makefiles for UNIX now uses a compact version of
+Tecmake that does not need any installation, just type "make".
+
+=item * Changed: removed "INCLUDE" parameter for FILE_CB callback in
+IupFileDlg.
+
+=item * Changed: improved automatic inactive image generation.
+
+=item * Changed: premake files are used now only internally and were
+removed from the distribution.
+
+=item * Changed: IupLua3 libraries are not included in the distribution
+anymore. They are only available in source code or internally at
+Tecgraf.
+
+=item * Changed: All Lua samples now have the extension .wlua, and
+contains require"iuplua" and iup.MainLoop() in the code. Thanks to Ryan
+Pusztai.
+
+=item * Changed: added traceback information to error message dialog in
+IupLua. Thanks to Fred Abraham.
+
+=item * Changed: The IupLua Console now must include require commands
+for any additional library.
+
+=item * Fixed: IupView image export in C format.
+
+=item * Fixed: removed MARGIN from IupFrame documentation. IupFrame
+does not have a MARGIN attribute.
+
+=item * Fixed: removed MARGIN from IupZbox documentation. IupZbox does
+not have a MARGIN attribute.
+
+=item * Fixed: SYSTEM global attribute in Windows, when running Windows
+Vista.
+
+=item * Fixed: Improved visual appearance and ticks of bar mode in
+IupPPlot.
+
+=item * Fixed: missing IupMessagef export in the DLL.
+
+=item * Fixed: LEDC generated code for 64-bits.
+
+=item * New: B< IMPORTANT> - the "cdiup" and "cdluaiup" libraries moved
+from CD to IUP under the name "iupcd" and "iupluacd". But headers and
+documentation remains on the CD package. Function names were NOT
+changed. This change eliminates a cross-dependency of IUP and CD, now
+only IUP depends on CD.
+
+=item * New: "iupluaimglib" library so require"iupluaimglib" can be
+used to dinamically load the image library.
+
+=back
+
+=head2 Windows
+
+=over
+
+=item * Fixed: invalid memory access when set FONT to NULL.
+
+=item * Fixed: CARET position when a selection is interactively changed
+or when the caret is at the begining of the selection in IupText,
+IupMultiline and IupList.
+
+=item * Fixed: TABSIZE IupMultiline attribute scale convertion.
+
+=item * Fixed: invalid character inserted in IupMultiline when opening
+a dialog from a Ctrl+key combination.
+
+=back
+
+=head2 Motif
+
+=over
+
+=item * Fixed: Removed X run time warning when creating a list.
+
+=back
+
+=head2 IupControls
+
+=over
+
+=item * New: FRAMEVERTCOLORL:C, FRAMEHORIZCOLORL:C and CHECKFRAMECOLOR
+attributes for IupMatrix.
+
+=item * Fixed: EXTENDED_CB callback was never called in IupColorbar.
+
+=item * Fixed: invalid memory access in IupTree when using images with
+a color index greater than 128.]
+
+=item * Fixed: invalid memory access in IupTabs when all tabs are
+disabled and a next or previous tab button is pushed.
+
+=item * Fixed: invalid memory access in IupColorbar.
+
+=item * Fixed: invalid call to CLICK_CB when resizing column in
+IupMatrix.
+
+=back
+
+=head2 Version 2.6 (26/Nov/2007)
+
+=head2 General
+
+=over
+
+=item * Changed: SELECTION attribute in IupText now accept values in
+reverse order.
+
+=item * Changed: IupView improvements. New functions: "Save All
+Images"; "Save All Images in One File". Changes: "Import Image" can
+load multiple images in Windows; "Save Image" allow to save in GIF
+format.
+
+=item * New: SCROLLBAR attribute for IupMultiline and IupList.
+
+=item * New: WORDWRAP attribute for IupMultiline.
+
+=back
+
+=head2 Windows
+
+=over
+
+=item * New: "INCLUDE" parameter for FILE_CB callback in IupFileDlg.
+
+=item * Fixed: FONT creation when system uses a non ANSI charset.
+
+=back
+
+=head2 Motif
+
+=over
+
+=item * Fixed: FONT attribute internal storage.
+
+=item * Fixed: IupMapFont interpretation of the size value to use
+points in X-Windows Logical Font Description format (XLFD).
+
+=back
+
+=head2 IupControls
+
+=over
+
+=item * New: new parameter for IupGetParam to specifiy a file name
+string that can be changed using a file selection dialog. Thanks to
+Flavia Anjos. New interval step for real and integer interval.
+
+=item * Fixed: for all additional controls the used font follows strict
+the FONT attribute. Previously for some of the controls the CD default
+font were used causing an inconsistency with the control size
+calculation.
+
+=item * Fixed: ACTIVE update in IupVal.
+
+=item * Changed: in IupPPlot ACTIVE attribute renamed to CURRENT to
+avoid conflict with the IupCanvas ACTIVE attribute. Fixed DS_MODE and
+DS_EDIT return values. Fixed DS_EDIT when set to "NO" from a previously
+set to "YES".
+
+=item * Changed: moved IupSbox, IupCbox and IupSpin to the core
+library. They do not depend on the CD library.
+
+=back
+
+=head2 IupMatrix
+
+=over
+
+=item * Changed: BGCOLORL:C, FGCOLORL:C and FONTL:C are now handled
+different for title columns and title lines. When you set the color or
+font of a full line/column it will not affect the title line/column
+except when that line/column is the title line/column (lin=0 or col=0).
+Individual cell colors are still handled independently.
+
+=item * New: RASTERWIDTHn and RASTERHEIGHTn attributes.
+
+=item * Fixed: EDITION_CB called with invalid self parameter.
+
+=item * Fixed: DROPSELECT_CB called after dropdown list is hidden.
+
+=back
+
+=head2 IupLua
+
+=over
+
+=item * Fixed: missing IupCells and IupColorbar initialization in
+iupcontrolslua_open.
+
+=item * New: added LuaGL binding to the IupLua console executable. So
+OpenGL commands can be used in Lua.
+
+=back
+
+=head2 Version 2.6 RC2 (10/May/2007)
+
+=head2 General
+
+=over
+
+=item * New: function IupUpdate to force a redraw of the element and
+its children.
+
+=item * New: function IupExitLoop to exit the current message loop. It
+is equivalent of returning IUP_CLOSE in a callback.
+
+=item * Changed: now for the IupList when DROPDOWN=Yes the size of the
+dropped list will expand to include the largest text.
+
+=back
+
+=head2 Version 2.6 RC1 (15/Apr/2007)
+
+=head2 General
+
+=over
+
+=item * New: functions IupGetChild, IupGetAllAttributes.
+
+=item * New: CLIPBOARD attribute with COPY, PASTE and CUT values for
+IupText and IupMultiline.
+
+=item * New: control IupPPlot that uses the PPlot library to draw 2D
+plots. Thanks to Marian Trifon.
+
+=item * Changed: LEDC now supports IupCells, IupCbox, IupOleControl and
+IupSpin.
+
+=item * Changed: IupMultiline and IupText size calculation. When EXPAND
+is different than NO or NULL, the control will ignore its contents when
+calculating the control size if SIZE or RASTERSIZE is not set. So now
+if text is larger than the multiline and EXPAND is set, the multiline
+will not expand to include its contents when the dialog is expanded. In
+this case the multiline will be expanded only what the dialog allows it
+to expand.
+
+=item * Changed: size update when FONT is set. Now to update the
+control size IupRefresh must be called.
+
+=item * Fixed: Added missing documentation of IupGetParent.
+
+=item * Fixed: caps lock key codes.
+
+=item * Fixed: Added missing IupSetAttributeHandle and
+IupGetAttributeHandle exports in the DLL.
+
+=back
+
+=head2 Windows
+
+=over
+
+=item * Changed: Resource files moved from "iup/lib" to "iup/etc".
+
+=item * Changed: IupFileDlg attributes FILE and DIRECTORY in Windows to
+accept paths containing also "/".
+
+=item * Fixed: dialog activation after IupPopup.
+
+=item * Fixed: IUP_CLOSE return in K_ANY and K_* callbacks.
+
+=item * Fixed: WHEEL_CB parameters x and y.
+
+=item * Fixed: IupPopup for menus when used in the Tray if there is no
+visible dialogs.
+
+=item * Fixed: FONT attribute initialization when control is not mapped
+yet. Affected mainly controls inside other controls.
+
+=item * Fixed: FONT attribute parse when value is invalid.
+
+=back
+
+=head2 Motif
+
+=over
+
+=item * New: TOPLEVEL global attribute.
+
+=item * Changed: default IupHelp application in Linux to "firefox".
+
+=item * Changed: some attributes were updating the size of the control
+in the dialog. Now to update the control size IupRefresh must be
+called.
+
+=item * Fixed: Idle processing.
+
+=item * Fixed: return value of IupLoopStep.
+
+=item * Fixed: invalid resize of IupList when COMBOBOX=YES and an
+element is added dynamically.
+
+=back
+
+=head2 IupLua
+
+=over
+
+=item * New: convertion to string for an Ihandle. Now returns
+"IUP(I<type>): I<address>", for example "IUP(dialog): 08C55240".
+
+=item * Changed: IupLua5 executable in Windows to enable GDI+ in CD
+library.
+
+=item * Changed: IupLua3 libraries names changed to include "3" as a
+suffix.
+
+=item * Fixed: Added missing IupGLIsCurrent binding.
+
+=item * Fixed: error message management when inside a callback in Lua
+5.
+
+=item * Fixed: error handling in iuplua_dofile and iuplua_dostring.
+
+=item * Fixed: the second ihandle parameter inside the callabacks in
+Lua 3: DROP_CB, DROPSELECT_CB and TABCHANGE_CB.
+
+=item * Fixed: conflict in dialog resize attribute with resize callback
+from canvas in Lua 3.
+
+=item * Fixed: getattribute metamethod when value is not a number or
+string before calling GetHandle to check if it is a handle.
+
+=item * Fixed: setattribute metamethod when value is stored in C now is
+also set to nil in Lua to avoid old invalid values in Lua.
+
+=item * Fixed: IupAlarm optional parameters in Lua 3.
+
+=item * Fixed: missing edit_cb callback definition for IupList in Lua
+5.
+
+=item * Fixed: Lua object memory management when destroy is called.
+
+=back
+
+=head2 IupMatrix
+
+=over
+
+=item * New: RELEASE_CB mouse callback.
+
+=item * Changed: DRAW_CB callback to add the CD canvas as the last
+parameter. Now the canvas is also available for CDLua.
+
+=item * Fixed: BGCOLOR and FGCOLOR for full lines or full columns in
+titles (L:* or *:C).
+
+=item * Fixed: BGCOLOR for titles and empty area to use the parent's
+BGCOLOR instead of the dialog BGCOLOR.
+
+=item * Fixed: BGCOLOR_CB and FGCOLOR_CB in Lua when IUP_IGNORE is
+returned.
+
+=item * Fixed: setting VALUE attribute when the cell is being edited.
+
+=item * Fixed: redraw when resizing collum and the scroolbar is added
+to the canvas in Windows.
+
+=item * Fixed: redraw in SunOS after editing the cell.
+
+=back
+
+=head2 Other IupControls
+
+=over
+
+=item * Changed: in IupTabs, when next or previous tab is selected
+using the arrow buttons or arrow keys, inactive tabs are skipped.
+
+=item * Changed: CD calls to use the new CD API available only in CD
+version 5.0. So IUP will not be compatible with old CD versions.
+
+=item * Changed: Because of the new parameter of DRAW_CB callback in
+IupMatrix, the IupControls Lua binding now depends on the CD Lua
+binding.
+
+=item * Fixed: F2 key processing to rename a node in IupTree.
+
+=item * Fixed: focus change when changing the active tab in IupTabs.
+
+=item * Fixed: BUTTON_PRESS_CB and BUTTON_RELEASE_CB binding in Lua 3
+for IupDial and IupVal.
+
+=item * Fixed: IupTree rename box position when using scrollbars.
+
+=back
+
+=head2 IupGLCanvas
+
+=over
+
+=item * New: SHAREDCONTEXT attribute.
+
+=item * Fixed: Added missing DLL export IupGLIsCurrent.
+
+=back
+
+=head2 Version 2.5 (31/Mar/2006)
+
+=head2 General
+
+=over
+
+=item * IMPORTANT: New functions IupSetCallback and IupGetCallback to
+register callbacks without using a global name. IupGetFunction and
+IupSetFunction are still working, but are not used internally anymore.
+The new functions speed up the performance of callbacks, and reduce to
+zero name conflicts for callbacks in the global name table. It is
+recommended that the applications should replace IupSetFunction and
+IupGetFunction by IupSetCallback and IupGetCallback. IupLua
+applications are automatically benefited.
+
+=item * IMPORTANT: Applications that overload internal callbacks of the
+additional controls (like IupMatrix and IupTree) must now use
+IupSetCallback and IupGetCallback to do the overloading. And as before
+these callback can not be overloaded in Lua.
+
+=item * IMPORTANT: removed the support for callback inheritance. Now
+callbacks can only be set in the own element. The only execption is the
+K_ANY and the K_* callbacks that continues to be propagated to the
+parent of the element with the keyboard focus. (This was a not very
+usefull feature, with very few uses. But slows a lot calback management
+in C and in Lua. With the new IupGetCallback we were able to remove the
+inheritance mecanism for callbacks.)
+
+=item * Changed some function declarations of the main API, some now
+use "const char*" in their declaration.
+
+=item * Changed global attributes now are stored only if not processed
+by the driver.
+
+=item * IMPORTANT: Changed the definition of Icallback to a simple one
+without the variable arguments. Fixed canvas callback parameters, in
+the documentation is float, but with the old Icallback definition the
+compiler used double. Now must be float.
+
+=item * Changed all the internal attributes now start with the preffix
+"_IUP".
+
+=item * Changed the default limit for text in IupText and IupMultiline
+to be 231.
+
+=item * New canvas callback FOCUS_CB.
+
+=item * New helper function IupSetAttributeHandle to associate Ihandle*
+to attributes using automatic names. Instead of using IupSetHandle and
+IupSetAttribute with a new creative name, this function automatically
+creates a non conflict name and associates the name with the attribute.
+Also new function IupGetAttributeHandle.
+
+=item * New "Pause" button in the IUP Image Library.
+
+=item * Fixed the MULTISELECT_CB callback of the IupList so it does not
+need that the ACTION callback is also defined.
+
+=item * Reviewed the popup dialog management. So we improve the
+behavior of the IupShow of other dialogs after a IupPopup, and a new
+possibility to safely cascade popups.
+
+=back
+
+=head2 Windows
+
+=over
+
+=item * IMPORTANT: Global attribute WIN_DEFAULTFONT renamed to
+DEFAULTFONT.
+
+=item * Fixed attribute PLACEMENT=NORMAL when the dialog in minimized
+or maximized.
+
+=item * Fixed IupPopup for menus, when the menu item callback returned
+IUP_CLOSE, the return value is now processed and the application is
+closed.
+
+=item * Change WOM_CB and be set also for the dialog.
+
+=item * Changed CoInitialize to
+CoInitializeEx[COINIT_APARTMENTTHREADED] and InitCommonControls to
+InitCommonControlsEx[ICC_WIN95_CLASSES] in IupOpen.
+
+=back
+
+=head2 IupControls
+
+=over
+
+=item * Changed the GETFOCUS_CB and KILLFOCUS_CB callbacks for the
+additional controls IupMatrix, IupVal and IupDial, now can be set
+without affecting their implementation.
+
+=item * Changed the K_ANY for the additional controls IupTree, IupSpin
+and IupColorBrowser, now can be set without affecting their
+implementation.
+
+=item * New DOUBLEBUFFER attribute for IupTabs. Default is YES. If NO
+will disable the double buffer. This may solve a slow Tabs redraw in
+UNIX when the a Tab contains many controls.
+
+=item * New IupVal attributes HANDLER_IMAGE and HANDLER_IMAGE_INACTIVE
+that allow the use of images to replace the handler. Thanks to Rodrigo
+Espinha.
+
+=item * Reviewed and optimized iupMask code. Added new callback
+MATCH_CB.
+
+=back
+
+=head2 IupMatrix
+
+=over
+
+=item * IMPORTANT: Callbacks ACTION and SCROLL_CB were renamed to
+ACTION_CB and SCROLLTOP_CB to avoid conflict with the IupCanvas
+callbacks also inherited by the IupMatrix.
+
+=item * IMPORTANT: You can not automatically override the KEYPRESS_CB
+callback anymore. You must save the original callback and call it from
+inside your own.
+
+=item * IMPORTANT: Now when in callback mode much less memory will be
+allocated. Also the new callbacks MARK_CB and MARKEDIT_CB can be used
+to control the selected cells in callback mode.
+
+=item * Fixed some string buffer sizes to handle very large matrices.
+
+=item * Fixed IupGetAttribute for the VALUE attribute when using
+callback mode and retrieving colum or line title values ("0:C" or
+"L:0").
+
+=item * Changed "matrx_img_cur_excel" to "IupMatrixCrossCursor". Old
+name is still available.
+
+=back
+
+=head2 IupTree
+
+=over
+
+=item * IMPORTANT: The IupTree implementation now uses the KEYPRESS_CB
+callback. The K_ANY override support was removed. The K_ANY callback
+can be used normally. If the application was using the KEYPRESS_CB, now
+it must override it manually, you must save the original callback and
+call it from inside your own.
+
+=item * Change the appearance in Windows and Motif are now the same.
+Both systems look like the previous Windows implementation with a white
+background and some small enhancements.
+
+=back
+
+=head2 IupLua
+
+=over
+
+=item * IMPORTANT: IupLua3 now supports IupLua5 names. Old IupLua3
+names still work, but now all the samples for IupLua5 also work in
+IupLua3. The documentation and the examples for the old names were
+removed from the manual pages. Old applications using IupLua3 can use
+the old names or the new names. This will make easier to old
+applications migrate their code to Lua 5. All Lua examples were
+re-tested and fixed.
+
+=item * IMPORTANT: In IupLua3 the callbacks in C are registered only
+when the application register the callback in Lua, just like in
+IupLua5.
+
+=item * IMPORTANT: IupColorBrowser name changed in IupLua3 from "iupcb"
+to "iupcolorbrowser".
+
+=item * Fixed documentation of IupGetAllDialogs and IupGetAllNames.
+Fixed implementation to match the documentation.
+
+=item * Fixed IupTimer old callback name in IupLua3.
+
+=item * Fixed DROPFILES_CB canvas callback can be now used in Lua for
+the controls based in IupCanvas, like IupMatrix and IupTree.
+
+=item * Fixed parameters of the canvas action and scroll_cb callbacks
+in Lua 5.
+
+=item * Fixed missing FILE_CB callback in Lua.
+
+=item * Changed all the additional controls now can have the K_ANY,
+GETFOCUS_CB and KILLFOCUS_CB callbacks without affecting their internal
+implementation.
+
+=item * Changed Lua 5.1 "require" can now be used for all the IupLua
+5.1 libraries, but the full library name must be used. For example:
+require"iuplua51", require"iupluacontrols51".
+
+=item * Documented the IupLua 5 architecture.
+
+=item * Reviewed and reorganized IupLua3 and IupLua5 code, also cleaned
+and simplified. In IupLua3 callbacks are now set only if they are set
+by the application.
+
+=item * Changed IupClose can now be called from Lua in Lua 5.
+
+=item * Reviewed and improved the interchange of Ihandle between C and
+Lua. The documentation was updated with all the possibilities.
+
+=back
+
+=head2 Version 2.4 (12/Dec/2005)
+
+=head2 General
+
+=over
+
+=item * New attribute ZORDER to change the zorder of any control or
+dialog.
+
+=item * New 3STATE attribute for IupToggle to enable a three state text
+toggle.
+
+=item * Reviewed and improved the creation of controls, so they can be
+added to an already created dialog.
+
+=item * Reviewed and improved the natural size estimation for each
+standard controls. The estimation now is the same for Windows and Motif
+with some minor differences for border and scrollbar sizes. All the
+controls can have sizes bigger or smaller than the natural size using
+SIZE or RASTERSIZE attributes (natural size is the size of the control
+that fits all of its contents).
+
+=item * Improved FULLSCREEN IupDialog attribute in Windows and Motif,
+so the application can set fullscreen and then restore to normal state
+any time.
+
+=item * New attribute FLAT for IupButton to create a button with mouse
+over activation (Windows and Motif).
+
+=item * New MULTISELECT_CB callback for IupList. It can replace the
+action callback for multiple selection lists.
+
+=item * Fixed names of headers, initialization functions and libraries
+that did not have the "iup" prefix. Headers "iupolecontrol.h",
+"luacontrols.h" and "luagl.h" changed to "iupole.h", "iupluacontrols.h"
+and "iupluagl.h". Private headers and declarations removed from
+"iup/include" folder. Functions controlslua_open, gllua_open and
+iupluaim_open changed to iupcontrolslua_open, iupgllua_open and
+iupimlua_open.
+
+=item * New documentation of the IupOleControl control, including a
+sample and Lua bindings. Thanks to Vinicius Almendra.
+
+=item * New function IupRefresh to update the size and layout of
+controls after changing size attributes.
+
+=item * Exported the internal functions: IupZboxv, IupHboxv, IupVboxv
+and IupMenuv.
+
+=item * Fixed several memory leaks. Thanks to L< Visual Leak
+Detector|http://www.codeproject.com/tools/visualleakdetector.asp>.
+
+=item * IupView application can now save imagens in C source code
+format.
+
+=item * New additional library with several pre-defined images for
+buttons and labels. See IupImageLib.
+
+=item * Optimization flags now are ON when building the library in all
+platforms.
+
+=item * Now all the predefined dialogs consult the global attribute
+IUP_ICON.
+
+=item * Missing key definitions: K_sDEL and K_sINS. This prevented the
+Del key to work when CAPSLOCK was active in some controls.
+
+=item * Changed IUP_QUIET environment variable now default is YES.
+
+=back
+
+=head2 Windows
+
+=over
+
+=item * Support for MDI (Multiple Document Interface). See IupDialog
+documentation.
+
+=item * Fixed IupLabel with IMAGE with invalid focus.
+
+=item * New SUNKEN attribute for IupFrame.
+
+=item * Fixed appearance of IupLabel with IMAGE when ACTIVE=NO.
+
+=item * Fixed initial value in the IupList when EDITBOX=YES.
+
+=item * Now it is not necessary anymore to use the "iup.rc" file for
+the HAND cursor. It is now build in.
+
+=item * New value for PLACEMENT attribute, FULL to position the client
+area of the dialog in fullscreen.
+
+=item * IupButton and IupToggle with images using Windows XP Visual
+Styles now uses a styled border. See IupButton documentation for
+samples.
+
+=item * Missing documentation of ENTERWINDOW_CB and LEAVEWINDOW_CB for
+IupButton.
+
+=item * Fixed button draw with BGCOLOR and empty text.
+
+=item * New COMPOSITED attribute to create a window with an automatic
+double buffer for all controls.
+
+=item * New LAYERED and LAYERALPHA attributes to set and configure
+layered windows using transparency.
+
+=item * Fixed image offset in IupButton.
+
+=item * Fixed invalid redraw for IupLabel using an IupImage when inside
+a IupTabs or IupSbox.
+
+=item * Added an "ifndef IUP_NO_ABNT" enclosing the ABNT keyboard
+management so it will be easier to ignore this code from the makefile.
+
+=item * Default FONT in Windows XP is now the Tahoma font.
+
+=item * BGCOLOR for canvas was not being updated correctly when changed
+after canvas creation.
+
+=back
+
+=head2 Motif
+
+=over
+
+=item * SHOWDROPDOWN now works also in Motif.
+
+=item * Removed horizontal scrollbar parameter from simple IupList
+(DROPDOWN=NO and EDITBOX=NO) to made it compatible with the other lists
+(including the simple IupList in Windows).
+
+=item * Fixed KILLFOCUS_CB and GETFOCUS_CB for IupList with
+DROPDOWN=YES or EDITBOX=YES.
+
+=item * Fixed invalid IupList resize when DROPDOW=Yes after inserting
+elements in the list.
+
+=item * New BACKINGSTORE IupCanvas attribute so the backing store can
+be disabled.
+
+=item * Changed IupToggle with IMAGE and IMPRESS to behave like in
+Windows, where the button border is always shown.
+
+=item * Fixed error in menu item initialization.
+
+=back
+
+=head2 IupControls
+
+=over
+
+=item * IMPORTANT: for best results CD version 4.4 should be used.
+
+=item * Fixed IupSpin keyboard response and mouse press & hold
+response.
+
+=item * New MULTISELECTION_CB callback for IupTree.
+
+=item * New IupCells control. It is an application controlled matrix.
+More simple and faster than IupMatrix. Can also span cells. Thanks to
+Andr Clinio.
+
+=item * New IupCbox control for concrete layout positioning.
+
+=item * Fixed IupTabs tab activation using mouse. It could activate a
+different tab using button press in one tab and button release in
+another tab.
+
+=item * Fixed spin buttons were not calling the user callback in
+IupGetParam.
+
+=item * Fixed IupVal non effective increment using keyboard when at
+minimum value.
+
+=item * Fixed invalid IupSetAttribute for scrollbar parameters in
+IupTree that affects navigation of two or more trees in the same
+application.
+
+=item * Fixed keyboard usage when CAPSLOCK is active for IupVal,
+IupTabs and IupDial.
+
+=item * New functions iupMaskRemove and iupmaskMatRemove to remove the
+iupMask from a control.
+
+=item * New RENAME action attribute for the IupTree.
+
+=item * New attribute TABORIENTATION to change the tab text
+orientation. The active tab text is now bold.
+
+=item * Changed CARET and SELECTION attributes of the IupTree when
+using an in-place rename text box, to RENAMECARET and RENAMESELECTION.
+This will avoid conflict with the SELECTION_CB callback in IupLua3.
+
+=back
+
+=head2 IupMatrix
+
+=over
+
+=item * Redefined REDRAW policy to a more precise and effective one. No
+redraw is done when the application sets cell, line or column graphics
+attributes attributes: B<0:0>, B<0:C>, B<L:0>, B< L:C>, B<ALIGNMENTn>,
+BGCOLORL:*, BGCOLOR*:C, BGCOLORL:C, FGCOLORL:*, FGCOLOR*:C,
+B<FGCOLORL:C>, FB<ONT>L:*, FB<ONT>*:C, B<FONTL:C>. Global and size
+attributes always automatically redraw the matrix.
+
+=item * Improved double click editing in Motif. Since OpenMotif 2.2.3
+the double click to edit the cell works fine. For previous version
+there is still a workaround to show the controls and the need to click
+again in the control so it get the focus.
+
+=item * All the edition mode code were rewritten and reorganized in a
+separated module. Any old code was removed and cleaned.
+
+=item * Small change in focus feedback, its area was reduced to two
+pixels in each cell border.
+
+=item * Cell focus management code reorganized to a more simple and
+efficient version.
+
+=item * New SORTSIGNI<C> attribute to show a sort sign (up or down
+arrow) in the column C title.
+
+=item * New drawing in double buffer mode to minimize flicker.
+
+=item * Fixed dropdown feedback drawing.
+
+=item * Fixed focus feedback after double click editing.
+
+=item * The alignment of the text in a cell with a dropdown feedback
+now considers the horizontal space occupied by the feedback.
+
+=item * The DRAW_CB callback drawing area now does not includes the
+focus feedback area if HIDEFOCUS=NO (the default).
+
+=item * NUMCOL_VISIBLE and NUMLIN_VISIBLE now when retrieved returns
+the current number of visible lines.
+
+=item * Fixed problem after trying to edit a non editable cell the
+focus gets lost.
+
+=item * Reviewed documentation and behavior of marks.
+
+=back
+
+=head2 IupLua
+
+=over
+
+=item * IupLua5 source code is now 100% compatible with Lua 5.1.
+
+=item * The iuplua binding and all its libraries can now be dinamically
+loaded in Lua 5. IupOpen will be automatically called.
+
+=item * iupkey_open can now be called from Lua 5, using iup.key_open.
+
+=item * New IupGetParam binding.
+
+=item * Changed the keys definitions (K_*) in Lua so now they are
+exactly the same as the definitions in C.
+
+=item * Fixed invalid IupGetAllNames in IupLua5. Fixed missing
+IupGetAllNames binding in IupLua5.
+
+=item * Fixed IupTree EXECUTELEAF_CB callback in IupLua5. It was
+expecting an invalid extra parameter.
+
+=item * Fixed error in IupTabs memory initialization in IupLua5.
+
+=item * Fixed missing IupGetText binding.
+
+=item * Fixed missing pre-defined masks for iupMask.
+
+=item * Fixed missing isxkey macro binding.
+
+=item * Fixed missing callback scroll_cb in IupLua3.
+
+=item * Fixed missing IupVersion documentation and binding.
+
+=item * Fixed IupSetGlobal and IupStoreGlobal in IupLua5.
+
+=back
+
+=head2 Version 2.3.1 (18/Apr/2005)
+
+=head2 General
+
+=over
+
+=item * New support for 64-bits Linux.
+
+=item * New global attribute DLGBGCOLOR.
+
+=item * Changed the KEYPRESS_CB and K_ANY callback are now compatible
+with Portuguese Brazilian ABNT keyboard layout in Windows and Linux.
+
+=item * Changed key names B<K_quoteright> and B<K_quoteleft> renamed to
+B<K_apostrophe> and B< K_grave>, but there are backward compatible
+defines.
+
+=item * Fixed IupOpen/IupClose for correct
+initialization/de-initialization.
+
+=item * Fixed IupGetGlobal to retreive first from the driver.
+
+=item * Fixed IupDestroy for correct memory deallocation.
+
+=item * Fixed IupLoadImage to include BGCOLOR information. New function
+IupSaveImage.
+
+=item * New Guide / C++ Usage section in the documentation, with
+additional C++ wrappers contributed by some users. Thanks to Danny
+Reinholds, Sergio Maffra and Frederico Abraham.
+
+=back
+
+=head2 Windows
+
+=over
+
+=item * Fixed K_ANY duplicate calls for some keys.
+
+=item * Fixed popup menu bug. Sometimes when selecting an item the
+callback was not called.
+
+=item * Changed IupText and IupMultiline now can have the ALIGNMENT
+attribute.
+
+=back
+
+=head2 Motif
+
+=over
+
+=item * Fixed use of variable parameter arguments in Motif calls to
+correct 64-bits compatibility.
+
+=item * Fixed some small bugs in IupDestroy. GETFOCUS_CB callbacks were
+called during dialog destroy. Menu bars were incorrectly destroyed.
+
+=back
+
+=head2 IupControls
+
+=over
+
+=item * Changed IupGetParam now uses only the number of lines to
+determine the number of parameters. The last 0 is not necessary
+anymore.
+
+=item * Fixed bug in IupColorBrowser destroy.
+
+=item * Fixed IupTree initialization for LED usage.
+
+=item * New IupTree feature to rename a node in place.
+
+=item * New IupColorbar control. It is a palette of colors to allow the
+selection of primary and secondary colors. Thanks to Andr Clinio.
+
+=back
+
+=head2 IupGLCanvas
+
+=over
+
+=item * New function IupGLIsCurrent.
+
+=back
+
+=head2 IupLua
+
+=over
+
+=item * Fixed callbacks for IupDial in IupLua5.
+
+=back
+
+=head2 IupView
+
+=over
+
+=item * Fixed data initialization in Motif.
+
+=item * New menu items to save images in individual LED and Lua text
+files, and in Windows ICON files.
+
+=item * New menu item to load an image using IM.
+
+=back
+
+=head2 Version 2.3 (16/Mar/2005)
+
+=head2 General
+
+=over
+
+=item * Download, Discussion List, Submission of Bugs, Support Requests
+and Feature Requests, are now available thanks to LuaForge site.
+
+=item * New organization of the documentation.
+
+=item * New MacOS X libraries using OpenMotif and gcc.
+
+=item * New CARET_CB callback for the IupText, IupMultiline and IupList
+controls. It is called every time the caret changes its position.
+
+=back
+
+=head2 Windows
+
+=over
+
+=item * IMPORTANT: Now the canvas background color is only redrawn if
+the ACTION callback is not defined. When defined the application must
+draw all the canvas contents. This will optimize the redraw of canvas
+based controls and application canvases. The TRANSPARENT value for the
+BGCOLOR is not supported anymore.
+
+=item * New attribute IMMARGIN to control the spacing between the
+border and the image in IupButton.
+
+=item * Optimized the IupButton and IupLabel drawing when IMAGE is
+specified.
+
+=item * Fixed incorrect stop for the IupTimer. Improved start and stop
+control.
+
+=item * Flicker now is significantly reduced. CLIPCHILDREN=YES is now
+default. IupFrame background drawing optimized.
+
+=item * New dialog attribute "CONTROL" that enable the embedding of the
+dialog inside another window. Used by LuaCOM to create OLE (ActiveX)
+controls implemented in Lua.
+
+=item * New IupText attribute "PASSWORD" to hide the typed character.
+
+=item * IUP is now compatible with Windows XP Visual Styles. See the
+Win32 driver documentation.
+
+=back
+
+=head2 Motif
+
+=over
+
+=item * Fixed invalid return value when retreiving the FONT attribute.
+
+=item * Added backward compatibility code for Motif 1.2. Must edit
+makefile to add the file "src/mot/ComboBox1.c".
+
+=back
+
+=head2 IupControls
+
+=over
+
+=item * Missing support for IupList with EDITBOX=YES in iupMask.
+
+=item * BGCOLOR for images were ignored in the IupTree.
+
+=item * Now some matrix cell attributes are not inherited from parent.
+Like "L:C", "ALIGNMENT*", "FGCOLOR*", "BGCOLOR*", "FONT*", "WIDTH*" and
+"HEIGHT*", for optimization reasons.
+
+=item * IupTree now uses double buffer for optimal drawing.
+
+To avoid flicker during resize in Windows, do not use it inside a
+IupFrame, and use CLIPCHILDREN=YES.
+
+=item * New utility functions: IupTreeSetAttribute,
+IupTreeStoreAttribute IupTreeGetFloat, IupTreeSetfAttribute,
+IupTreeGetAttribute, IupTreeGetInt.
+
+=item * New IupMatrix callback DRAW_CB to allow a custom drawing of the
+cell contents.
+
+=item * New IupTree DRAGDROP_CB callback.
+
+=item * New IupSpin and IupSpinbox utility functions.
+
+=back
+
+=head2 IupLua
+
+=over
+
+=item * Fixed ihandle_gettable in iuplua.lua when iupGetTable is nil
+when object is created in C.
+
+This affected the object returned by iup.LoadImage.
+
+=item * Fixed Zbox children names initialization.
+
+=item * Missing DROPFILES_CB callback management.
+
+=item * Missing FGCOLOR_CB and BGCOLOR_CB callback management for the
+IupMatrix. The returned values order was inverted.
+
+=item * Missing MAP_CB callback management for IupCanvas in IupLua3.
+
+=back
+
+=head2 Version 2.2.2 (07/Oct/2004)
+
+=head2 General
+
+=over
+
+=item * Fixed bug in IupGetFile FILTER initialization.
+
+=item * Improved IMINACTIVE automatic generation algorithm.
+
+=item * New zip package for download with iup images in LED format.
+
+=item * New application IupView to load and display LED files.
+
+=item * Fixed some attribute storage in iupMask and IupGetParam. Fixed
+bug when several masks are used in the same dialog.
+
+=item * Replaced the internal Lua4 code for a smaller hash table
+module. Thanks to Danny Reinhold.
+
+=item * Fixed IupGetParam invalid memory access.
+
+=item * IupNextField and IupPreviousField now only changes the focus
+for the checked toggle inside a radio.
+
+=item * IupGetAttributes now returns the pointer address if attribute
+is a known internal pointer data.
+
+=item * Now pressing Enter over a button activates it, even if it is
+not the DEFAULTENTER button.
+
+=item * Esc and Backspace keys now will be translated even if CapsLock
+is active.
+
+=back
+
+=head2 Windows
+
+=over
+
+=item * New ENTERWINDOW_CB and LEAVEWINDOW_CB for buttons.
+
+=item * Fixed double click for button, toggle and list were not being
+considered as two clicks.
+
+=item * removed FLAT style from toggles with IMPRESS image. Fixed size
+of toggle with image.
+
+=item * New attribute SHOWDROPDOWN to open the dropdown list
+programmatically.
+
+=item * Removed a black border around IupMultiline and IupText.
+
+=item * Removed the TABSTOP for non marked Toggles inside a Radio.
+
+=item * Fixed invalid memory access when menu item is activated and all
+dialog controls are disabled.
+
+=item * Fixed IupFileDlg ignored the x,y parameters of IupPopup.
+
+=back
+
+=head2 Motif
+
+=over
+
+=item * Enter in IupMultiline activated the DEFAULTENTER button instead
+of adding a new line.
+
+=item * Fixed invalid memory access when set FONT to NULL.
+
+=item * Fixed ACTION callback called for IupList when list contents
+were cleared.
+
+=back
+
+=head2 IupControls
+
+=over
+
+=item * IupTree and IupTabs did not propagate to the parent the K_ANY
+callback for non used keys.
+
+=back
+
+=head2 IupMatrix
+
+=over
+
+=item * The TITLEs, BGCOLORs, FGCOLORs and FONTs attributes were
+incorrectly set after a DELLIN, ADDLIN, DELCOL or ADDCOL.
+
+=item * In Windows when the user double click a dropdown list now will
+start opened.
+
+=item * The user callback scroll_cb was incorrectly registered.
+
+=item * New "HIDEFOCUS" attribute to hide the focus mark when drawing.
+
+=item * Now in MARK_MODE=CELL and MULTIPLE=YES you can click on the
+title area to mark a full line or collumn at once.
+
+=item * New BGCOLOR_CB and FGCOLOR_CB callbacks.
+
+=item * Fixed when MARKMODE=LIN/COL/LINCOL if the first cell in the
+line/column is selected the click in the title area was ignored.
+
+=back
+
+=head2 IupLua
+
+=over
+
+=item * Removed "print" debug calls in internal code.
+
+=item * IupGetAttribute/iup.GetAttribute now returns an user data if
+attribute is a known internal pointer data.
+
+=item * New IupGetAttributeData/iup.GetAttributeData that returns the
+data always as an used data.
+
+=item * Fixed incomplete initialization of image object returned by
+IupLoadImage.
+
+=back
+
+=head2 Version 2.2.1 (25/Aug/2004)
+
+=head2 General
+
+=over
+
+=item * Fixed some minor bugs introduced in version 2.2.
+
+=item * Fixed HTML help navigation.
+
+=item * For disabled buttons and toggles when the IMINACTIVE is not
+defined by IMAGE is defined, we replace the non transparent colors by a
+darker version of the background color creating the disabled effect.
+
+=item * New key K_PAUSE.
+
+=back
+
+=head2 Windows
+
+=over
+
+=item * Fixed dynamic cursor creation.
+
+=item * Toggle with inactive image could be enabled/disabled only once.
+
+=item * Fixed toggle in Radio behavior.
+
+=item * Some keys were not being treated correctly.
+
+=item * Improved key codes management.
+
+=back
+
+=head2 Motif
+
+=over
+
+=item * Fixed IupList setattribute VALUE and list items activated the
+ACTION callback.
+
+=back
+
+=head2 Controls
+
+=over
+
+=item * Circular IupDial now uses abssolute angle.
+
+=item * CARET did not work when set inside EDITION_CB in IupMatrix.
+
+=item * Check for double initialization of IupControls.
+
+=item * Better resize management for IupVal and IupDial.
+
+=item * IupControls now depends on the CD library version 4.3.3 in
+Motif.
+
+=back
+
+=head2 IupLua
+
+=over
+
+=item * Wrong implementation of DROPCHECK_CB.
+
+=back
+
+=head2 Version 2.2 (11/Aug/2004)
+
+=head2 INCOMPATIBILITIES
+
+=over
+
+=item * Definition of K_parenleft changed to K_parentleft in C and all
+Lua bindings.
+
+=item * Major IupLua5 change (see IupLua section bellow).
+
+=item * IupLua4 is not supported.
+
+=item * Motif 1.x is not supported.
+
+=back
+
+=head2 General
+
+=over
+
+=item * Documentation in Portuguese removed from the manual.
+
+=item * Changed and documented the default palette used in IupImage.
+
+=item * IupImage can now have up to 256 colors.
+
+=item * New mouse wheel callback "WHEEL_CB" for Windows and Motif. If
+not defined the wheel will automatically scroll the canvas vertically.
+
+=item * Changes on global attributes:
+
+"COMPUTERNAME", "USERNAME" - now implemented also in Motif.
+
+"COPYRIGHT" - not documented
+
+"SCREENDEPTH", "SYSTEMVERSION" - new for Windows and Motif
+
+"SYSTEM" - Implementation were different from the documentation
+
+"CURSORPOS" was documented as if it was only for Windows.
+
+"LOCKLOOP" now implemented also in Motif..
+
+=item * The definitions IUP_SBDRAGV and IUP_SBDRAGH were not
+documented.
+
+=item * Callback MENUSELECT_CB changed to HIGHLIGHT_CB. Now implemented
+also in Motif.
+
+=item * New menu callback MENUCLOSE_CB.
+
+=item * New utility functions IupMessagef and IupGetInt2.
+
+=item * Improved visual appearance of IupScanf, IupAlarm and
+IupListDialog.
+
+=item * New creation attribute "SEPARATOR" for IupLabel so you can
+create vertical or horizontal line separators.
+
+=item * New IupGetText predefined dialog.
+
+=item * Now all the predefined dialogs consult the global attribute
+IUP_PARENTDIALOG.
+
+=item * New "HELP_CB" callback for all interactive controls.
+
+=item * The "KEYPRESS_CB" callback now will be called repeatedly if the
+key is pressed and held.
+
+=item * IupList can now have an edit box associated.
+
+=item * The OLD newfocus parameter of the KILLFOCUS_CB is now NULL
+always, in Windows and Motif.
+
+=item * The BGCOLOR color for IupImage transparency was not according
+to the documentation.
+
+It was using the default background color of the dialog.
+
+Now it uses the BGCOLOR of the control where it is inserted.
+
+=back
+
+=head2 Windows
+
+=over
+
+=item * Menus for notification icons (system tray) were not working
+correctly.
+
+=item * Cursors in Windows now accept more than 2 colors and can have
+size different from 32x32.
+
+=item * IupImage was rewritten in Windows to be more simple and
+flexible. This also solved some weird button backgrounds in gcc3.
+
+=item * New global attributes "SHIFTKEY" and "CONTROLKEY" can be "ON"
+or "OFF", return the the key state (windows only).
+
+=item * The default size for buttons in Windows was increased by 2
+characters.
+
+=item * Returning IUP_CLOSE in a SHOW_CB of an IupPopup wasn't closing
+dialog.
+
+=item * IupOpen instead of initializing OLE, now only initializes COM
+(CoInitialize).
+
+=item * The border of buttons are now drawn by a system function
+instead of simulated.
+
+=item * New attribute "PLACEMENT" to show the dialog maximized or
+minimized.
+
+=item * In IupFileDlg when browsing for folder it will use a new
+interface, with a resizable dialog and other features.
+
+Also in IupFileDlg fixed start position for IupPopup. New file
+selection callback and preview area. IupFileDlg was not using the
+IUP_PARENTDIALOG attribute. Default value for IUP_NOOVERWRITEPROMPT was
+wrong. ALLOW_NEW was inconsistent with the documentation.
+
+=item * The button callback now is called only when the button is
+released inside the button area.
+
+=item * WOM callback renamed to WOM_CB.
+
+=item * New "HELPBUTTON" attribute for the dialog.
+
+=item * The menu item now accepts auxiliary bitmaps.
+
+=item * When the dialog has a multiline and the user press ESC the
+window was improperly closed.
+
+=item * Fixed comboox resize feedback. When resizing the dialog the
+combobox was temporarily opened.
+
+=item * IupCanvas was not receiving arrow keys events correctly in
+keypress_cb.
+
+=item * IupHide now can close popup dialogs.
+
+=item * Attribute TABSIZE for IupMultiline in Windows was not
+documented.
+
+=item * Default value for attribute BGCOLOR for IupCanvas in Windows
+was not documented.
+
+=item * Direction keys now are processed by the ACTION callback for
+IupText.
+
+=item * The GETFOCUS_CB and KILLFOCUS_CB management for the controls
+was reviewed and optimized.
+
+GETFOCUS_CB now works for toggle and button.
+
+=item * First RESIZE_CB of the canvas received a wrong canvas size.
+
+=item * Label alignment for images was always center.
+
+=back
+
+=head2 Motif
+
+=over
+
+=item * New global attribute: "MOTIFVERSION".
+
+=item * IUP_SBDRAGV and IUP_SBDRAGH were not implemented.
+
+=item * HIGHLIGHT_CB menu item callback.
+
+=item * "COMPUTERNAME", "USERNAME" and "LOCKLOOP" global attributes.
+
+=item * IupMessage now uses native XmMessageBox.
+
+=item * The overwrite confirmation dialog was closing the file open if
+the user answered "No".
+
+=item * Implemented the IUP_NOOVERWRITEPROMPT attribute for IupFileDlg.
+
+=item * The dropdown list now uses the Motif 2 combobox widget. So IUP
+is not compatible with Motif 1.x anymore.
+
+=item * Now the GETFOCUS callback is also invoked when the list is
+dropdown.
+
+=item * KEYPRESS_CB is now called only for IupCanvas.
+
+=back
+
+=head2 Controls
+
+=over
+
+=item * DEFAULTESC and DEFAULTENTER were missing in IupGetColor.
+
+=item * New function IupLoadImage that uses the library IM to load an
+image file (implemented in an additional library).
+
+=item * New dialog IupGetParam, similar to IupScanf but uses variable
+controls for fields.
+
+=item * IupTabs now uses the FGCOLOR for the text color.
+
+=item * ICTL_DASHED was missing in the documentation of IupGauge.
+
+The control now has the attributes MIN and MAX just like the valuator.
+
+=item * For IupVal and IupDial, new keyboard and mouse wheel support.
+
+New attribute "SHOWTICKS" to show tick marks around the valuator.
+
+New attribute "UNIT" to change the angle unit to degrees in the dial.
+
+Completely changed visual of the controls.
+
+The controls can now be deactivated and it displays focus feedback.
+
+=item * Updated visual for the IupGauge and IupTabs controls.
+
+=item * In IupTabs the popup menu to select a tab sometimes did not set
+the new tab.
+
+=back
+
+=head2 Matrix
+
+=over
+
+=item * Documentation reviewed and reorganized.
+
+=item * Returning IUP_CLOSE in CLICK_CB was not closing application.
+
+=item * The scrollbar drag will now simultaneously scroll the matrix.
+
+=item * New callback "DROPCHECK_CB" to aid the dropdown feedback in the
+cell.
+
+=item * New utility functions: IupMatSetAttribute, IupMatStoreAttribute
+IupMatGetFloat, IupMatSetfAttribute, IupMatGetAttribute, IupMatGetInt.
+
+=item * Fixed some display erros in Windows because of an error in the
+size of the scrollbar.
+
+=item * In Windows pressing a key in a menu activates the k_any of the
+last active element. In the matrix this turns into an infinit loop. The
+matrix now uses the keypress_cb instead of the k_any callback.
+
+=item * Fixed empty selection in the dropdown list if the user press a
+regular key to start editing the cell.
+
+=item * Fixed invalid dropdown value if the user changed focus to the
+scrollbars.
+
+=item * CLICK_CB was called twice in a double click (press+release).
+
+=item * In Motif, the textbox and the dropdown did not open when you
+double click a cell. But now the user still needs to click again in the
+control to put it into focus.
+
+=item * After editing the cell in the last line, now the focus goes to
+the column on the right at the last line, instead of the first line.
+
+=item * BGCOLOR now works also for titles.
+
+=item * FONT attribute now can be set/get just like BGCOLOR and
+FGCOLOR. But the cell size is calculated always from the matrix
+attribute IUP_FONT.
+
+=back
+
+=head2 Tree
+
+=over
+
+=item * Documentation reviewed and reorganized.
+
+=item * CTRL and SHIFT accepts only values IUP_YES and IUP_NO.
+
+Default value of SHIFT and CONTROL is NO, it was NULL.
+
+=item * Pressing Space without Control now activates the RENAMENODE_CB
+callback.
+
+=back
+
+=head2 IupLua
+
+=over
+
+=item * The selection callback wasn't working in Lua 5 binding.
+
+=item * MOUSEMOVE_CB in Dial control was receiving wrong angle
+parameter in Lua 5 binding.
+
+=item * IupGLCanvas wasn't working in Lua 5 binding.
+
+=item * Major IupLua5 change.
+
+It now complies to LTN7 (namespaces). All exported functions are
+accessed only through B<iup.FunctionName> (no Iup prefix anymore)
+
+All callbacks in Lua are now access through their exact name in the C
+API. Mostly add sufix "_cb" to name (most common callbacks renamed for
+ex: getfocus_cb, killfocus_cb). Also some names were fix: valuecb
+E<gt>E<gt> value_cb and mapcb E<gt>E<gt> map_cb.
+
+Numeric definitions also changed: IUP_DEFAULT E<gt>E<gt> iup.DEFAULT
+
+String definitions for values are no longer supported, use "YES", "NO",
+etc.
+
+iupcb changed to iup.colorbrowser.
+
+=item * Use LoadLibrary to load IUP from Lua.
+
+=item * There was no stack pop in color processing loop fo IupImage in
+IupLua5.
+
+=item * IupLua4 is not supported anymore.
+
+=back
+
+=head2 LEDC
+
+=over
+
+=item * Added support for IupTree and IupSbox.
+
+=item * Fixed include for IupColorBrowser.
+
+=item * Fixed small invalid memory access.
+
+=back
+
+=head2 Version 2.1 (18/Feb/2004)
+
+=head2 General
+
+=over
+
+=item * New split-panel control: IupSbox
+
+=item * IupTree and IupMatrix libraries are now part of iupcontrols
+
+=item * New functions to traverse IUP controls: IupGetNextChild,
+IupGetBrother, IupGetParent
+
+=item * IupAppend accepts elements other than predefined internal
+controls (allowing CPI containers)
+
+=item * Focus now may go to CPI controls
+
+=item * Attribute IUP_X, IUP_Y are now valid for every control that has
+a native representation (returns the position of the control in screen
+coordinates)
+
+=item * CURSORPOS global attribute is now returned from the driver
+
+=item * IupGetFile was not allowing new files and should not change
+user directories
+
+=item * IupGetFile was not accepting long directories
+
+=item * IupAlarm does not take [ENTER] as button1 click anymore
+
+=item * IupScanf does not accept "," when option is float
+
+=item * Windows 95 is no longer supported
+
+=back
+
+=head2 IupTree
+
+=over
+
+=item * Trying to get attribute NAME for and invalid ID returns NULL
+
+=item * Fixed attributes IUP_CTRL e IUP_SHIFT for mouse interaction
+
+=back
+
+=head2 IupMatrix
+
+=over
+
+=item * Special keys such as backspace, control+c, etc. are now ignored
+when not in edit mode
+
+=item * leaveitem/enteritem were not being generated when the focus was
+leaving or entering the matrix
+
+=item * leaveitem/enteritem should not being called when the cell
+enters edition mode through the mouse
+
+=back
+
+=head2 Windows
+
+=over
+
+=item * IupOpen/IupClose now initializes OLE
+(OleInitialize/OleUninitialize)
+
+=item * ENTERWINDOW/LEAVEWINDOW reimplementation. LEAVEWINDOW does not
+fail anymore
+
+=item * Mouse hook removed. Better performace
+
+=item * New attributes TRAY, TRAYTIP and TRAYIMAGE and new callback
+TRAYCLICK_CB which allows a dialog to be put in the tray
+
+=item * Action in IupText now responds to the [ENTER] key
+
+Some keys were not working with keypress callback: \ ] [ ' ; / . ,
+
+=item * New attribute NATIVEPARENT, which makes any dialog in Windows
+able to be parent of a IUP dialog (even from other toolkits)
+
+=item * Better protection dealing with other processes messages
+
+=item * IupFileDialog when used to get directory was not updating
+STATUS attribute correctly
+
+=item * IUP_APPEND small memory problem fix
+
+=item * atexit removed
+
+=item * KILLFOCUS_CB and GETFOCUS_CB were not being called when focus
+goes to the menu
+
+=item * MAP_CB in a canvas is now called before RESIZE_CB (like the
+Motif driver)
+
+=item * ALT-F4 was not working to close application
+
+=item * Images sometimes show black using Visual C: do not use option
+in Visual C 6.0 /NODEFAULTLIB:libcd
+
+=item * IUP_TIP does not show when the fade effect is on: MS fixed the
+problem, use autoupdate
+
+=back
+
+=head2 IupLua 3.2, 4.0, 5.0
+
+=over
+
+=item * Functions exported to Lua: IupGetType, IupGetParent,
+IupGetNextChild, IupGetBrother
+
+=item * IupTimer, IupSbox binding
+
+=item * IupTreeGetTable, IupTreeSetTableId, IupTreeGetTableId functions
+created
+
+=item * Several bug fixes in IupLua 5.0
+
+=item * New function iuplua_pushihandle, iuplua_dofile and
+iuplua_dostring, IupGetFromC
+
+=item * If iuplua_dofile and iuplua_dostring are used errors are
+reported through _ERRORMESSAGE function
+
+=item * Default _ERRORMESSAGE function shows a dialog with the error
+
+=item * IupLua5: Removed Lua redefinitions of dofile and dostring
+
+=item * Minor bug in IupTree function TreeSetValue
+
+=item * IupListDialog was not returning a table as it should when in
+multiple mode
+
+=back
+
+=head2 IupVal
+
+=over
+
+=item * Attribute IUP_VALUE wasn't taking effect when set before
+mapping
+
+=item * CD canvas was being altered during mouse movement event
+
+=back
+
+=head2 Manual
+
+=over
+
+=item * CPI manual revision
+
+=item * IupLua manual revision
+
+=item * Several examples revised
+
+=item * Controls section rearranged
+
+=back
+
+=head2 Distribution
+
+=over
+
+=item * README on how to compile IUP with tecmake
+
+=back
+
+=head2 Version 2.0.1 (31/Jul/2003)
+
+=head2 General
+
+=over
+
+=item * Attribute IUP_TYPENAME replaced by IupGetType function
+
+=item * minor bugs introduced in 2.0 because of internal old misuse of
+the hash table.
+
+=item * Following controls were not working with LED: val, dial, gl,
+matrix, tree.
+
+=item * New canvas attribute "DRAWSIZE" that returns the drawing area
+of the canvas (in Windows we may have an addicional border included in
+"RASTERSIZE").
+
+=back
+
+=head2 Windows
+
+=over
+
+=item * Memory invasion when eliminating an item from an IupList with
+multiple items.
+
+=item * Callback IUP_OPEN_CB sometimes was not being called.
+
+=item * New dialog attribute "BRINGFRONT" which forces dialog to be the
+window in the front. Useful for multithreaded applications.
+
+=item * Attribute ACTIVE was not working with radio control.
+
+=item * Now folder selection in IupFileDlg uses IUP_DIRECTORY as a
+start path.
+
+=item * Now when ESC or ENTER is pressed KEYPRESS_CB is generated
+
+=back
+
+=head2 Motif
+
+=over
+
+=item * Dropdown were becoming unstable when VALUE attribute is set
+after IupMap.
+
+=item * Dropdown were not being positioned accordingly.
+
+=item * IupList was not selecting the first item.
+
+=item * IupTimer callback were called only once.
+
+=item * The value "BGCOLOR" in a value of an image color table index
+appeared with erroneous color.
+
+=item * keyboard and mouse callbacks were not being called when in full
+screen.
+
+=back
+
+=head2 LEDC
+
+=over
+
+=item * Updated to reflect 2.0 changes like "iupmatrx" to "iupmatrix".
+
+=item * Now tests if name is not NULL before using IupSetHandle.
+
+=back
+
+=head2 IupLua
+
+=over
+
+=item * New binding for Lua 5. This is beta version since uses old
+notation "iuplabel" instead of "iup.label".
+
+=back
+
+=head2 Version 2.0 (23/Jun/2003)
+
+=head2 General
+
+=over
+
+=item * IUP has undergone a large internal reorganization, but no
+structural or algorithmic changes have occurred. The purpose of this
+reorganization was to standardize function, variable and module
+nomenclature. This process is not yet complete, but the few remaining
+details will be solved in the next version.
+
+=item * Table Hash was completely replaced with a modified version of
+Lua 4. This version is internal of IUP and does not affect
+applications. This has brought us a better management of the memory
+used by attributes.
+
+=item * The CPI was changed to allow the creation of native controls,
+as well as controls based on IupCanvas. The internal controls were not
+yet rewritten over the new CPI - this will be done progressively in the
+next versions.
+
+=item * The Ihandle definition changed from "void" to "typedef struct
+Ihandle_ Ihandle;". This has direct implications on C++ applications
+that did not do pointer typecast. In C++, code errors might occur and,
+in C, there might be warnings.
+
+=item * New control IupTimer. Allows creating timers in Windows and
+Motif.
+
+=item * New callback "KEYPRESS_CB". Allows intercepting any key and
+replacing all callbacks "K_xxx".
+
+=item * IupHelp was rewritten in a simpler way. In Windows, it simply
+uses the system's configuration to open a URL and, in UNIX, it directly
+runs Netscape or another executable configured by an environment
+variable.
+
+=item * New attribute "FULLSCREEN", allows creating a dialog that
+occupies exactly the whole screen.
+
+=item * Dialog IupGetFile was rewritten using IupFileDlg.
+
+=back
+
+=head2 Windows
+
+=over
+
+=item * New attribute "CURSORPOS", allows programmatically changing the
+cursor's position on the screen.
+
+=item * New attribute "NOOVERWRITEPROMPT" for IupFileDlg. It prevents
+IupFileDlg in Save mode from asking the user if s/he really wishes to
+overwrite a file.
+
+=item * Problem corrected in the file list in the use of attribute
+"MULTIPLE_FILES" for IupFileDlg. When only a folder was selected, it
+was not setting the "STATUS" attribute in a cancelled action.
+
+=item * Greater driver stability - Ihandle is no longer dependant on
+the native handle (HWND).
+
+=item * New global attributes "HINSTANCE", "SYSTEMLANGUAGE",
+"COMPUTERNAME", "USERNAME".
+
+=item * Global attribute IUP_SYSTEM now returns a more complete string.
+
+=item * Cursor now changes instantly - it only changed before returning
+to IUP.
+
+=item * In an inactive IupToggle, the IMINACTIVE image is now correct.
+
+=back
+
+=head2 Motif
+
+=over
+
+=item * The iupmot library no longer exists. Tecmake has been updated,
+but those who use their own metafiles must remove this file from the
+list of libraries in the application.
+
+=item * New attribute "AUTOREPEAT" allows turning on and off the
+automatic repetition mode of pressed keys.
+
+=back
+
+=head2 IupLua
+
+=over
+
+=item * [4/5] IupListDialog when selection type is 1 (single) was not
+returning any value.
+
+=item * [4/5] Callbacks mapcb and showcb had their names wrong: map_cb
+and show_cb
+
+=item * [3] Callback action in IupMultiline was not passing the
+parameter "after".
+
+=item * [4/5] In IupTree, callbacks "afterselection" and
+"beforeselection" were replaced with the callback "selection".
+
+=back
+
+=head2 IupControls
+
+=over
+
+=item * We have joined seven libraries in one: dial, gauge, cb, gc,
+mask, tabs and val. But neither the initialization functions nor each
+control's inclusion files were changed. The source code does not need
+to be altered, except for the makefiles. Tecmake was given a flag
+USE_IUPCONTROLS to automatically include this library.
+
+=back
+
+=head2 IupMatrix
+
+=over
+
+=item * The name of the library was changed from "iupmatrx" to
+"iupmatrix". The same for the inclusion files. Therefore, all
+applications that use IupMatrix must change the source code and the
+makefile to reflect these changes.
+
+=back
+
+=head2 IupTree
+
+=over
+
+=item * In one case, the active CD canvas was not being returned to the
+old canvas before drawing.
+
+=back
+
+=head2 IupGL
+
+=over
+
+=item * In Linux, the additional GLw library was added to the control
+library.
+
+=item * New attributes for query in UNIX: CONTEXT (GLXContext), VISUAL
+(XVisualInfo*) , COLORMAP (Colormap).
+
+=back
+
+=head2 L<History of Version 1.x|history1.html>
+
+=cut

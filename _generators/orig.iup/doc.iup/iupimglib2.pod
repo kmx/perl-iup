@@ -1,0 +1,188 @@
+=head1 IupImageLib (up to 2.x)
+
+A library of pre-defined images for buttons and labels. See L<
+IupImageLib|iupimglib.html> since IUP 3.0.
+
+=head2 Initialization
+
+To generate an application that uses this function, the program must be
+linked to the functions library (iupimglib.lib on Windows and
+libiupimglib.a on Unix). The iupcontrols.h file must also be included
+in the source code.
+
+The library is quite large because of the images. To avoid using all
+the images get the source code and extract only the image you need.
+
+=head2 Reference
+
+ void IupImageLibOpen(void); [in C]
+ iup.ImageLibOpen()  [in Lua]
+
+This function loads all the images in the library.
+
+In Lua, when require"iupluaimglib" is used this function will be
+automatically called.
+
+ void IupImageLibClose(void); [in C]
+ iup.ImageLibClose()  [in Lua]
+
+This function releases all the images of the library.
+
+=head2 Usage
+
+The following names are defined after the library initialization. The
+images do NOT include the button borders, this is just a preview for
+buttons!
+
+The "BGCOLOR" color value is set and the colors are distributed so that
+the automatic disable color algorithm works fine. Images for buttons
+have size 20x20, small images are 11x11, and label images have
+height=30.
+
+Names
+
+Images
+
+"IUP_IMGBUT_TEXT"
+
+"IUP_IMGBUT_NEW"
+
+"IUP_IMGBUT_NEWSPRITE"
+
+"IUP_IMGBUT_OPEN"
+
+"IUP_IMGBUT_CLOSE"
+
+"IUP_IMGBUT_CLOSEALL"
+
+"IUP_IMGBUT_SAVE"
+
+[IMAGE]
+
+"IUP_IMGBUT_CUT"
+
+"IUP_IMGBUT_COPY"
+
+"IUP_IMGBUT_PASTE"
+
+[IMAGE]
+
+"IUP_IMGBUT_PRINT"
+
+"IUP_IMGBUT_PREVIEW"
+
+"IUP_IMGBUT_SEARCH"
+
+"IUP_IMGBUT_HELP"
+
+[IMAGE]
+
+"IUP_IMGBUT_REDO"
+
+"IUP_IMGBUT_UNDO"
+
+"IUP_IMGBUT_ONELEFT"
+
+"IUP_IMGBUT_ONERIGHT"
+
+"IUP_IMGBUT_TENLEFT"
+
+"IUP_IMGBUT_TENRIGHT"
+
+[IMAGE]
+
+"IUP_IMGBUT_ZOOM"
+
+"IUP_IMGBUT_ZOOMIN"
+
+"IUP_IMGBUT_ZOOMOUT"
+
+"IUP_IMGBUT_NOZOOM"
+
+"IUP_IMGBUT_YZ"
+
+"IUP_IMGBUT_XY"
+
+"IUP_IMGBUT_XZ"
+
+"IUP_IMGBUT_FIT"
+
+"IUP_IMGBUT_AXIS"
+
+"IUP_IMGBUT_CUBE"
+
+[IMAGE]
+
+"IUP_IMGBUT_TILE"
+
+"IUP_IMGBUT_CASCADE"
+
+[IMAGE]
+
+"IUP_IMGBUT_STOP"
+
+"IUP_IMGBUT_PLAY"
+
+"IUP_IMGBUT_PREVIOUS"
+
+"IUP_IMGBUT_NEXT"
+
+"IUP_IMGBUT_PLAYBACKWARD"
+
+"IUP_IMGBUT_FOWARD"
+
+"IUP_IMGBUT_REWIND"
+
+[IMAGE]
+
+"IUP_IMGBUT_GREENLEFT"
+
+"IUP_IMGBUT_GREENUP"
+
+"IUP_IMGBUT_GREENRIGHT"
+
+"IUP_IMGBUT_GREENDOWN"
+
+[IMAGE]
+
+"IUP_IMGBUT_CONFIGURE"
+
+"IUP_IMGBUT_VIDEO"
+
+[IMAGE]
+
+"IUP_IMGSML_SINGLELEFT"
+
+"IUP_IMGSML_DOUBLELEFT"
+
+"IUP_IMGSML_SINGLERIGHT"
+
+"IUP_IMGSML_DOUBLERIGHT"
+
+"IUP_IMGSML_DOWN"
+
+"IUP_IMGSML_LEFT"
+
+"IUP_IMGSML_RIGHT"
+
+"IUP_IMGSML_UP"
+
+[IMAGE]
+
+"IUP_IMGLBL_TECGRAF"
+
+"IUP_IMGLBL_BR"
+
+"IUP_IMGLBL_LUA"
+
+"IUP_IMGLBL_TECGRAFPUCRIO"
+
+"IUP_IMGLBL_PETROBRAS"
+
+[IMAGE]
+
+=head2 X<SeeAlso>See Also
+
+L<IupImage|elem/iupimage.html>
+
+=cut

@@ -1,0 +1,21 @@
+=head1 FGCOLOR
+
+ElementE<rsquo>s foreground color. Usually it is the color of the
+associated text.
+
+=head2 Value
+
+The RGB components. Values should be between 0 and 255, separated by a
+blank space.
+
+Default: "0 0 0".
+
+=head2 Affects
+
+All.
+
+=head2 See Also
+
+L<BGCOLOR|iup_bgcolor.html>
+
+=cut

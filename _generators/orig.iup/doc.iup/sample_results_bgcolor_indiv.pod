@@ -1,0 +1,34 @@
+=head1 Sample Results (4)
+
+The following screenshots shows the L<sample.c|../examples/C/sample.c>
+results when the L<BGCOLOR|attrib/iup_bgcolor.html> attribute of the
+dialog children is changed, but NOT the dialog. See also the same
+sample with L<normal background|sample_results.html>, changing the
+L<dialog BACKGROUND|sample_results_background.html> and the L<dialog
+BGCOLOR|sample_results_bgcolor.html>.
+
+In this case, the BGCOLOR attribute affects only the controls. Also
+notice that the transparent area of the controls are not affected. And
+notice that on Windows the BGCOLOR is ignored for several controls.
+
+=head2 Motif in MWM
+
+[IMAGE]
+
+=head2 GTK in Gnome
+
+[IMAGE]
+
+=head2 Windows Classic
+
+[IMAGE]
+
+=head2 Windows XP Style
+
+[IMAGE]
+
+=head2 Windows Vista
+
+[IMAGE]
+
+=cut

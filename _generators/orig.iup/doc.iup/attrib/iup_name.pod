@@ -1,0 +1,24 @@
+=head1 NAME (non inheritable) (since 3.0)
+
+Name of the control inside the dialog. Not releated to
+L<IupSetHandle|../func/iupsethandle.html>.
+
+=head2 Value
+
+Text.
+
+=head2 Notes
+
+The NAME value will be used by
+L<IupGetDialogChild|../func/iupgetdialogchild.html> to find a child
+inside a dialog.
+
+=head2 Affects
+
+All controls.
+
+=head2 See Also
+
+L<IupGetDialogChild|../func/iupgetdialogchild.html>
+
+=cut

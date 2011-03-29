@@ -1,0 +1,31 @@
+=head1 DY
+
+Size of the vertical scrollbar's thumbnail in any unit.
+
+=head2 Value
+
+Any floating-point value greater than zero and smaller than the
+difference between L<YMAX|iup_ymax.html> and L<YMIN|iup_ymin.html>.
+
+Default:: "0.1".
+
+=head2 Notes
+
+LINEY, YMAX and YMIN are only updated in the scrollbar when DY is
+updated.
+
+When the canvas is visible, a change in DY can generate a redraw in the
+horizontal scrollbar on the screen.
+
+A change in these values can affect the attribute
+L<POSY|iup_posy.html>.
+
+=head2 Affects
+
+L<IupCanvas|../elem/iupcanvas.html>
+
+=head2 See Also
+
+L<SCROLLBAR|iup_scrollbar.html>
+
+=cut

@@ -1,0 +1,14 @@
+=head1 CVS
+
+The CVS repository is at B<SourceForge>. It can also be interactively
+browsed at:
+
+L<http:E<47>E<47>iup.cvs.sourceforge.netE<47>iupE<47>|http://iup.cvs.sourceforge.net/iup/>
+
+To checkout use the module name "iup" and the CVSROOT:
+
+ :pserver:anonymous@iup.cvs.sourceforge.net:/cvsroot/iup
+
+To checkout the IUP 2.x source code use the module name "iup2".
+
+=cut

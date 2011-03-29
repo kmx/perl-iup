@@ -1,0 +1,363 @@
+=head1 Gallery
+
+=head2 Standard Controls
+
+=head2 L<IupLabel|elem/iuplabel.html>
+
+[IMAGE]
+
+=head2 L<IupButton|elem/iupbutton.html>
+
+Motif
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+=head2 L<IupToggle|elem/iuptoggle.html>
+
+Motif
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+=head2 L<IupText|elem/iuptext.html>
+
+Motif
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+Using FORMATTING:
+
+[IMAGE]
+
+When SPIN=YES:
+
+Motif
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+=head2 L<IupFrame|elem/iupframe.html>
+
+Windows 2000
+
+[IMAGE]
+
+Windows XP
+
+[IMAGE]
+
+Motif
+
+[IMAGE]
+
+GTK
+
+[IMAGE]
+
+=head2 L<IupList|elem/iuplist.html>
+
+Windows 2000
+
+[IMAGE]
+
+Windows XP
+
+[IMAGE]
+
+Motif
+
+[IMAGE]
+
+GTK
+
+[IMAGE]
+
+=head2 L<IupCanvas|elem/iupcanvas.html>
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+[IMAGE]
+
+[IMAGE]
+
+Motif
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+=head2 L<IupProgressBar|elem/iupprogressbar.html>
+
+Motif
+
+[IMAGE]
+
+Windows Classic
+
+[IMAGE]
+
+Windows XP Style
+
+[IMAGE]
+
+Windows Vista
+
+[IMAGE]
+
+GTK
+
+[IMAGE]
+
+=head2 L<IupVal|elem/iupval.html>
+
+Motif
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+Windows
+
+Vista
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+=head2 L<IupTabs|elem/iuptabs.html>
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+Motif
+
+[IMAGE]
+
+[IMAGE]
+
+=head2 L<IupSplit|elem/iupsplit.html>
+
+[IMAGE]
+
+Natural Size
+
+[IMAGE]
+
+After Changing the Bar Position
+
+=head2 Resources
+
+=head2 L<IupMenu|elem/iupmenu.html>,
+L<IupSubmenu|elem/iupsubmenu.html> and L<IupItem|elem/iupitem.html>
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+[IMAGE]
+
+[IMAGE]
+
+Motif
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+The B<IupItem> check is affected by the RADIO attribute in B<IupMenu>:
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+[IMAGE]
+
+[IMAGE]
+
+Motif
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+Several Submenus:
+
+[IMAGE]
+
+=head2 L<IupImage|elem/iupmenu.html>
+
+See also the L<IupImgLib|iupimglib.html>, a library of pre-defined
+images.
+
+=cut

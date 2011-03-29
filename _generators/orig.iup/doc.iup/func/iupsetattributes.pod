@@ -1,0 +1,48 @@
+=head1 IupSetAttributes
+
+Defines a set of attributes for an interface element.
+
+=head2 Parameters/Return
+
+ Ihandle *IupSetAttributes(Ihandle *ih, const char *str); [in C]
+ iup.SetAttributes(ih: iuplua_tag, str: string) -> ih: iulua_tag [in Lua] 
+
+B<ih>: Identifier of the interface element.
+
+B<str>: string with the attributes in the format "v1=a1, v2=a2,..."
+where vi is the name of an attribute and ai is its value.
+
+Returns: B<ih> if all attributes were defined, or NULL (nil in Lua)
+otherwise.
+
+=head2 Notes
+
+Internally will call B<IupStoreAttribute>.
+
+=head2 Examples
+
+This function returns the same Ihandle it receives. This way, it is a
+lot easier to create dialogs in C. See also L<
+IupSetCallbacks|iupsetcallbacks.html>.
+
+ dialog = IupSetAttributes(IupDialog(
+     IupSetAttributes(IupHBox(
+        canvas = IupSetAttributes(IupCanvas(NULL), "BORDER=NO, RASTERSIZE=100x100"),
+        NULL), "MARGIN=10x10"),
+     "TITLE=Test");
+
+Creates a list with country names and defines Japan as the selected
+option.
+
+ Ihandle *list = IupList (NULL);
+ IupSetAttributes(list,"VALUE=3,1=Brazil,2=USA,3=Japan,4=France");
+
+=head2 See Also
+
+L<IupGetAttribute|iupgetattribute.html>,
+L<IupSetAttribute|iupsetattribute.html>,
+L<IupGetAttributes|iupgetattributes.html>,
+L<IupStoreAttribute|iupstoreattribute.html>,
+L<IupSetAtt|iupsetatt.html>
+
+=cut

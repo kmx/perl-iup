@@ -1,0 +1,94 @@
+=head1 GTK System Driver (since 3.0)
+
+This driver was designed for the GTK+ version 2. It can be compiled in
+Windows or UNIX.
+
+Although GTK has layout elements they are not used. IUP fill, vbox,
+hbox and zbox containers are implemented independent from the native
+system.
+
+The oldest GTK version that can be used is 2.4, oldest versions will
+not compile. But using versions older than 2.12 several features will
+not work. Critical features need at least version 2.8.
+
+Currently it is not available for IRIX, AIX and SunOS. But is it
+available for SunOS10 and it is not available for Linux24.
+
+=head2 Tips
+
+=head2 Dependencies
+
+GTK is in fact composed of several libraries. The GTK package contains
+the GDK library and depends on the ATK, Cairo, Glib and Pango
+libraries.
+
+=head2 UTF-8
+
+GTK uses UTF-8 as its charset for all displayed text, so IUP will
+automatically convert all strings to (SetAttribute) and from
+(GetAttribute) UTF-8. To use UTF-8 strings set the global attribute
+UTF8AUTOCONVERT to NO.
+
+=head2 Windows
+
+The GTK driver can be compiled and used in Windows, but it is not
+recommended since it is slower and much more memory consuming than the
+IUP native Windows driver.
+
+When using DLLs in Windows, the "iup.dll" uses the Win32 driver. So
+applications that dynamically load IUP will always use the "iup.dll",
+for example Lua using require. To use the IUP GTK dll in Windows you
+must rename the "iupgtk.dll" to "iup.dll", so the GTK driver will be
+loaded instead of the Win32 driver.
+
+After installing the GTK binaries, we recommend to change the default
+theme to the "MS-Windows" theme. Edit the "gtk\etc\gtk-2.0\gtkrc" file
+and change its contents to:
+
+ gtk-theme-name = "MS-Windows"
+
+=head2 MacOSX
+
+The GTK driver also compiles in MacOSX with the new GTK port available
+at
+L<http:E<47>E<47>gtk-osx.sourceforge.netE<47>|http://gtk-osx.sourceforge.net/>.
+But the B<IupGLCanvas> is not available yet. You must use the GDK base
+driver of the CD library. Some elements like B<IupTree> are not 100%
+functional because of the gtk-osx implementation. The installation of
+gtk-osx is quite complex because there are no pre-compiled binaries.
+Also if the MacOSX theme is used, several controls have problems. We
+hope that this will improve in the future. Must define GTK_MAC in the
+config.mak makefile to enable this build.
+
+So for now we are distributing binaries that use the X11 version of GTK
+2.16. They were installed using L<Fink|http://www.finkproject.org/>.
+Here is a simple guide to install fink so the pre-compiled binaries
+will work (tested in 10.5 and 10.6):
+
+ Download latest fink source: fink-0.29.10
+ tar -xvzf fink-0.29.10.tar.gz 
+ cd fink-0.29.10
+ ./bootstrap
+ 	Use all default answers, except for the second question about 64bits:
+ 	(10.5) => (1) Default (mostly 32bit)  [because gcc use 32bit as default]
+ 	(10.6) => (2) 64bit-only              [because gcc use 64bit as default]
+ /sw/bin/pathsetup.sh
+ fink install gtk+2 gtk+2-dev
+
+It will take some time to download and install everything, so have
+patience.
+
+After that you should get something like this:
+
+ fink --version
+   Package manager version: 0.29.10
+   Distribution version: selfupdate-rsync Thu Apr 29 11:51:11 2010, 10.6, x86_64  (10.6)
+   Distribution version: selfupdate-rsync Thu Apr 29 11:50:49 2010, 10.5, i386    (10.5)
+ 
+ fink list -i gtk+2
+   Information about XXXX packages read in X seconds.
+    i   gtk+2            2.16.6-3     The Gimp Toolkit
+    i   gtk+2-dev        2.16.6-3     The Gimp Toolkit
+    i   gtk+2-shlibs     2.16.6-3     The Gimp Toolkit
+
+=cut

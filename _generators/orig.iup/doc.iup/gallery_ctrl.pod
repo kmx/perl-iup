@@ -1,0 +1,35 @@
+=head1 Gallery
+
+=head2 Additional Controls
+
+=head2 L<IupGLCanvas|ctrl/iupglcanvas.html>
+
+[IMAGE]
+
+=head2 L<IupColorBrowser|ctrl/iupcolorbrowser.html>
+
+[IMAGE]
+
+=head2 L<IupDial|ctrl/iupdial.html>
+
+[IMAGE]
+
+=head2 L<IupMatrix|ctrl/iupmatrix.html>
+
+[IMAGE]
+
+=head2 L<IupPPlot|ctrl/iup_pplot.html>
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+=cut

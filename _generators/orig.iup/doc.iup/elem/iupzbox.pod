@@ -1,0 +1,104 @@
+=head1 IupZbox
+
+Creates a zbox container for composing elements. It is a box that piles
+up the children it contains, only the one child is visible.
+
+It does not have a native representation. Zbox works by changing the
+VISIBLE attribute of its children, so if any of the grand children has
+its VISIBLE attribute directly defined then Zbox will NOT change its
+state.
+
+=head2 Creation
+
+ Ihandle* IupZbox (Ihandle *child, ...); [in C]
+ Ihandle* IupZboxv (Ihandle **children); [in C]
+ iup.zbox{child, ... : ihandle} -> (elem: ihandle) [in Lua]
+ zbox(child, ...) [in LED]
+
+B<child, ... >: List of the elements that will be placed in the box.
+NULL must be used to define the end of the list in C. It can be empty.
+
+=over
+
+B<IMPORTANT>: in C, each element must have a name defined by
+L<IupSetHandle|../func/iupsethandle.html>. In Lua a name is always
+automatically created, but you can change it later.
+
+=back
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<ALIGNMENT> (non inheritable): Defines the alignment of the visible
+child. Possible values:
+
+"NORTH", "SOUTH", "WEST", "EAST",
+
+"NE", "SE", "NW", "SW",
+
+"ACENTER".
+
+Default: "NW".
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
+value is "YES".
+
+L<FLOATING|../attrib/iup_floating.html> (non inheritable) B<(at
+children only)>: If a child has FLOATING=YES then its size and position
+will be ignored by the layout processing. Default: "NO". (since 3.0)
+
+B<VALUE> (non inheritable): The visible child accessed by its name. The
+value passed must be the name of one of the children contained in the
+zbox. Use L<IupSetHandle|../func/iupsethandle.html> or
+L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
+associate a child to a name. In Lua you can also use the element
+reference directly. When the value is changed the selected child is
+made visible and all other children are made invisible, regardless
+their previous visible state.
+
+B<VALUE_HANDLE> (non inheritable): The visible child accessed by its
+handle. The value passed must be the handle of a child contained in the
+zbox. When the zbox is created, the first element inserted is set as
+the visible child. (since 3.0)
+
+B<VALUEPOS> (non inheritable): The visible child accessed by its
+position. The value passed must be the index of a child contained in
+the zbox, starting at 0. When the zbox is created, the first element
+inserted is set as the visible child. (since 3.0)
+
+L<SIZE|../attrib/iup_size.html> /
+L<RASTERSIZE|../attrib/iup_rastersize.html> (non inheritable): The
+default size is the smallest size that fits its largest child. All
+child elements are considered even invisible ones, except when
+FLOATING=YES in a child.
+
+B<WID> (read-only): returns -1 if mapped.
+
+=over
+
+----
+
+=back
+
+L<FONT|../attrib/iup_font.html>,
+L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
+
+=head2 Notes
+
+The box can be created with no elements and be dynamic filled using
+L<IupAppend|../func/iupappend.html>.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=head2 X<SeeAlso>See Also
+
+L<IupHbox|iuphbox.html>, L<IupVBox|iupvbox.html>
+
+=cut

@@ -1,0 +1,23 @@
+=head1 KILLFOCUS_CB
+
+Action generated when an element loses keyboard focus. This callback is
+called before the GETFOCUS_CB of the element that gets the focus.
+
+=head2 Callback
+
+ int function(Ihandle *ih); [in C]
+ elem:killfocus_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+=head2 Affects
+
+All elements with user interaction, except menus.
+
+=head2 See Also
+
+L<GETFOCUS_CB|iup_getfocus_cb.html>,
+L<IupGetFocus|../func/iupgetfocus.html>,
+L<IupSetFocus|../func/iupsetfocus.html>
+
+=cut

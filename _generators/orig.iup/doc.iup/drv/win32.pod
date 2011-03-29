@@ -1,0 +1,83 @@
+=head1 Win32 System Driver
+
+This driver was designed for the modern Microsoft Windows in 32 bits or
+64 bits (2000/XP/2003/Vista/7).
+
+=head2 DLL
+
+To use DLL, it is necessary to link the application with the IUP.lib
+and IUPSTUB.lib libraries (for technical reasons, these libraries
+cannot be unified). Note that IUP.lib is a library specially generated
+to work with iup.dll, and is usually distributed in the same directory
+as iup.dll. the IUP DLL depends on the MSVCRT.DLL, that it is already
+installed in Windows.
+
+For the program to work, IUP.dll must be inside a PATH directory.
+Usually the program does not need to be relinked when the DLL is
+updated.
+
+=head2 Tips
+
+=head2 Visual C++ 6
+
+Since 3.0 Visual C++6 is not supported, although we still provide
+pre-compiled binaries. To compile the IUP 3 code with VC6 you will need
+to download a new L<Platform
+SDK|http://windowssdk.msdn.microsoft.com/>, because the one included in
+the compiler is too old. But it cannot be a too new one also, because
+the compiler will report errors in the newest headers. So we recommend
+you to upgrade your compiler. L<Visual C++ Express
+Edition|http://msdn.microsoft.com/vstudio/express/visualc/> is a free
+compiler that has everything VC6 had and more.
+
+=head2 COM Initialization
+
+B<IupOpen> calls "CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);", if
+you need another concurrency model call CoInitializeEx with other
+options before calling B<IupOpen>. Be aware that some features in some
+controls require single-thread apartment, and they will stop working,
+this includes: B<IupFileDLg> when selecting a folder, and
+B<IupOleControl>.
+
+=head2 InitCommonCtrlEx Linker Error
+
+On Windows a common error occurs: "Cannot find function
+B<InitCommonCtrlEx>()" This error occurs if you forgot to add the
+comctl32.lib library to be linked with the program. This library is
+B<not> usually in the libraries list for the Visual C++, you must add
+it.
+
+=head2 Custom IupFileDlg
+
+To use some cursors and the preview area of B<IupFileDlg> you must
+include the "iup.rc" file into your makefile. Or include the contents
+of it into your resource file, you will need also to copy the cursor
+files.
+
+=head2 Windows XP/Vista/7 Visual Styles
+
+Windows Visual Styles can be enabled using a manifest file. Uncomment
+the manifest file section in "iup.rc" file or copy it to your own
+resource file, you will need also to copy the manifest file
+"iup.manifest".
+
+When using Visual C++ 8 with "iup.manifest", configure the linker
+properties of your project to do NOT generate a manifest file or the
+Windows Visual Styles won't work.
+
+If your Windows is using the Windows Classic theme or any other style,
+IUP controls appearance will follow the system appearance if you are
+using a Manifest. If not, it will always look like Windows Classic.
+
+=head2 B<Black Canvas>
+
+The IupGLCanvas does not work when inside an IupFrame, the result is a
+black canvas with no drawing. (Only in IUP 2.x)
+
+=head2 B<Help in CHM format fail to open>
+
+When you download a CHM file from the Internet Windows blocks your
+access to the file. You must unblock it manually. Right click the file
+in Explorer and select "Unblock" at the bottom of the dialog.
+
+=cut

@@ -1,0 +1,27 @@
+=head1 IupGetClassAttributes (Since 3.0)
+
+Returns the names of all registered attributes of a class.
+
+=head2 Parameters/Return
+
+ int IupGetClassAttributes(const char* classname, char** names, int max_n); [in C]
+ iup.GetClassAttributes(classname: string, max_n: number) -> (names: table, n: number) [in Lua]
+
+B<classname>: name of the class
+
+names: table receiving the names. Only the list of names need to be
+allocated. Each name will point to an internal string.
+
+B<max_n>: maximum number of names the table can receive.
+
+Returns: the number of names loaded to the table or -1 (nil) if class
+not found. If names==NULL or max_n==0 then returns the actual number of
+names.
+
+=head2 See Also
+
+L<IupGetClassName|iupgetclassname.html>,
+L<IupGetClassType|iupgetclasstype.html>,
+L<IupGetAllAttributes|iupgetallattributes.html>
+
+=cut

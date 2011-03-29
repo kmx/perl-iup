@@ -1,0 +1,57 @@
+=head1 SCROLL_CB
+
+Called when some manipulation is made to the scrollbar. The canvas is
+automatically redrawn only if this callback is NOT defined.
+
+(GTK 2.8)
+
+=head2 Callback
+
+ int function(Ihandle *ih, int op, float posx, float posy); [in C]
+ elem:scroll_cb(op, posx, posy: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<op>: indicates the operation performed on the scrollbar.
+
+=over
+
+If the manipulation was made on the vertical scrollbar, it can have the
+following values:
+
+=back
+
+ IUP_SBUP - line up
+ IUP_SBDN - line down
+ IUP_SBPGUP - page up
+ IUP_SBPGDN - page down
+ IUP_SBPOSV - vertical positioning
+ IUP_SBDRAGV - vertical drag 
+
+=over
+
+If it was on the horizontal scrollbar, the following values are valid:
+
+=back
+
+ IUP_SBLEFT - column left
+ IUP_SBRIGHT - column right
+ IUP_SBPGLEFT - page left
+ IUP_SBPGRIGHT - page right
+ IUP_SBPOSH - horizontal positioning
+ IUP_SBDRAGH - horizontal drag
+
+B<posx>, B<posy>: the same as the B<ACTION> canvas callback
+(corresponding to the values of attributes POSX and POSY).
+
+=head2 Notes
+
+IUP_SBDRAGH and IUP_SBDRAGV are not supported in GTK.
+
+=head2 Affects
+
+L<IupCanvas|../elem/iupcanvas.html>,
+L<IupGLCanvas|../ctrl/iupglcanvas.html>,
+L<SCROLLBAR|../attrib/iup_scrollbar.html>
+
+=cut

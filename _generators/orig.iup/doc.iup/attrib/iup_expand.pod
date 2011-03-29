@@ -1,0 +1,27 @@
+=head1 EXPAND (non inheritable)
+
+Allows the element to expand, fulfilling empty spaces inside its
+container.
+
+It is a non inheritable attribute, but a container can inherits its
+parents EXPAND attribute. So although EXPAND is non inheritable, it is
+inheritable for containers. So if you set it at a container it will not
+affect its children, but a child that is a container will get the same
+value if not defined at the child itself.
+
+The expansion is done equally for all expandable elements in the same
+container.
+
+See the L<Layout Guide|../layout_guide.html> for more details on sizes.
+
+=head2 Value
+
+"YES" (both directions), "HORIZONTAL", "VERTICAL" or "NO".
+
+Default: "NO". For containers the default is "YES".
+
+=head2 Affects
+
+All elements, except menus.
+
+=cut

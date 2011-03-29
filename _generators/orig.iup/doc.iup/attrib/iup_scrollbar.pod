@@ -1,0 +1,55 @@
+=head1 SCROLLBAR (creation only)
+
+Associates a horizontal and/or vertical scrollbar to the element.
+
+=head2 Value
+
+"VERTICAL", "HORIZONTAL", "YES" (both) or "NO" (none).
+
+Default: "NO"
+
+=head2 Notes
+
+The scrollbar allows you to create a virtual space associated to the
+element. In the image below, such space is marked in B<red>, as well as
+the attributes that affect the composition of this space. In B<green>
+you can see how these attributes are reflected on the scrollbar.
+
+images/scrollbar.gif (2113 bytes)
+
+Hence you can clearly deduce that POSX is limited to XMIN and XMAX-DX,
+or B<XMINE<lt>=POSXE<lt>=XMAX-DX>. When the virtual space has the same
+size as the canvas, DX equals XMAX-XMIN, the scrollbar can be
+automatically hidden. See the attribute XAUTOHIDE.
+
+The same is valid for YMIN, YMAX, DY and POSY. But remember that the Y
+axis is oriented from top to bottom in IUP. So if you want to consider
+YMIN and YMAX as bottom-up oriented, then the actual YPOS must be
+obtained using B< YMAX-DY-POSY>.
+
+Important: the LINE*, *MAX and *MIN are only updated in the scrollbar
+when the respective D* is updated.
+
+If you have to change the properties of the scrollbar (XMIN, XMAX and
+DX) but you want to keep the thumb still (if possible) in the same
+relative position, then you have to also recalculate its position
+(POSX) using the old position as reference to the new one. For example,
+you can convert it to a 0-1 interval and then scale to the new limits:
+
+ old_posx_relative = (old_posx - old_xmin)/(old_xmax - old_xmin)
+ posx = (xmax - xmin)*old_posx_relative + xmin
+
+B<IupList> and B<IupMultiline> scrollbars are automatically managed and
+do NOT have the POS, MIN, MAX and D attributes.
+
+=head2 Affects
+
+L<IupList|../elem/iuplist.html>,
+L<IupMultiline|../elem/iupmultiline.html>,
+L<IupCanvas|../elem/iupcanvas.html>, L<POSX|iup_posx.html>,
+L<XMIN|iup_xmin.html>, L<XMAX|iup_xmax.html>, L<DX|iup_dx.html>,
+L<XAUTOHIDE|../elem/iupcanvas.html#XAUTOHIDE>, L<POSY|iup_posy.html>,
+L<YMIN|iup_ymin.html>, L<YMAX|iup_ymax.html>, L<DY|iup_dy.html>,
+L<YAUTOHIDE|../elem/iupcanvas.html#YAUTOHIDE>.
+
+=cut

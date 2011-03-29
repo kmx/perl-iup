@@ -1,0 +1,54 @@
+=head1 IupGetColor
+
+Shows a modal dialog which allows the user to select a color. Based on
+L<IupColorDlg|iupcolordlg.html>.
+
+=head2 X<Creation>Creation and Show
+
+=over
+
+=over
+
+ int IupGetColor(int x, int y, unsigned char *r, unsigned char *g, unsigned char *b); [in C]
+ iup.GetColor(x, y[, r, g, b: number]) -> (r, g, b: number)  [in Lua]
+
+x, y
+
+: x, y values of the B<IupPopup> function.
+
+B<r, g, b>: Pointers to variables that will receive the color selected
+by the user if the OK button is pressed. The value in the variables at
+the moment the function is called defines the color being selected when
+the dialog is shown. If the OK button is not pressed, the r, g and b
+values are not changed. These values cannot be NULL in C, in Lua they
+are optional and used for initialization only.
+
+=back
+
+=over
+
+Returns: in C a code 1 if the OK button is pressed, or 0 otherwise. In
+Lua the code is not returned, instead the r,g,b values are returned or
+nil otherwise.
+
+=back
+
+=back
+
+=head2 Notes
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=head2 X<SeeAlso>See Also
+
+L<IupMessage|iupmessage.html>, L<IupScanf|iupscanf.html>,
+L<IupListDialog|iuplistdialog.html>, L<IupAlarm|iupalarm.html>,
+L<IupGetFile|iupgetfile.html>.
+
+=cut

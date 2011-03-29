@@ -1,0 +1,71 @@
+=head1 Pre-defined Dialogs
+
+=head2 L<IupAlarm|dlg/iupalarm.html>
+
+[IMAGE]
+
+=head2 L<IupMessageDlg|dlg/iupmessagedlg.html>
+
+Windows XP
+
+[IMAGE]
+
+Motif/Mwm
+
+[IMAGE]
+
+GTK/GNOME
+
+[IMAGE]
+
+=head2 L<IupFontDlg|dlg/iupfontdlg.html>
+
+Windows XP
+
+[IMAGE]
+
+GTK/GNOME
+
+[IMAGE]
+
+=head2 L<IupFileDlg|dlg/iupfiledlg.html>
+
+Windows XP
+
+[IMAGE]
+
+Motif/Mwm
+
+[IMAGE]
+
+GTK/GNOME
+
+[IMAGE]
+
+=head2 L<IupColorDlg|dlg/iupcolordlg.html>
+
+Windows XP
+
+[IMAGE]
+
+GTK/GNOME
+
+[IMAGE]
+
+ColorBrowser Based
+
+[IMAGE]
+
+=head2 L<IupGetText|dlg/iupgettext.html>
+
+[IMAGE]
+
+=head2 L<IupListDialog|dlg/iuplistdialog.html>
+
+[IMAGE]
+
+=head2 L<IupGetParam|dlg/iupgetparam.html>
+
+[IMAGE]
+
+=cut

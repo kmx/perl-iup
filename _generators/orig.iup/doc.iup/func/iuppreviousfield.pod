@@ -1,0 +1,20 @@
+=head1 IupPreviousField
+
+Shifts the focus to the previous element that can have the focus. It is
+relative to the given element and does not depend on the element
+currently with the focus.
+
+=head2 Parameters/Return
+
+ Ihandle* IupPreviousField(Ihandle* ih); [in C]
+ iup.PreviousField(ih: ihandle) -> (previous: ihandle) [in Lua]
+
+B<ih>: identifier of the interface element.
+
+Returns: the element that received the focus or NULL if not found.
+
+=head2 See Also
+
+L<IupNextField|iupnextfield.html>.
+
+=cut

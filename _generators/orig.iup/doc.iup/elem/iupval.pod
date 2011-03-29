@@ -1,0 +1,241 @@
+=head1 IupVal (since 3.0)
+
+Creates a Valuator control. Selects a value in a limited interval. Also
+known as Scale or Trackbar in native systems.
+
+=head2 Creation
+
+ Ihandle* IupVal(const char *type); [in C]iup.val{type: string} -> (elem: ihandle) [in Lua]val(type) [in LED] 
+
+B<type>: optional type of valuator. Can be NULL. See TYPE attribute.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+L<BGCOLOR|../attrib/iup_bgcolor.html>: transparent in all systems
+except in Motif. It will use the background color of the native parent.
+
+B<CANFOCUS> (creation only) (non inheritable): enables the focus
+traversal of the control. Default: YES. (since 3.0)
+
+B<INVERTED>: Invert the minimum and maximum positions on screen. When
+INVERTED=YES maximum is at top and left (minimum is bottom and right),
+when INVERTED=NO maximum is at bottom and right (minimum is top and
+left). The initial value depends on TYPE passed as parameter on
+creation, if TYPE=VERTICAL default is YES, if TYPE=HORIZONTAL default
+is NO. (since 3.0)
+
+B<MAX>: Contains the maximum valuator value. Default is "1". When
+changed the display will not be updated until VALUE is set.
+
+B<MIN>: Contains the minimum valuator value. Default is "0". When
+changed the display will not be updated until VALUE is set.
+
+B<PAGESTEP>: Controls the increment for pagedown and pageup keys. It is
+not the size of the increment. The increment size is
+"pagestep*(max-min)", so it must be 0E<lt>pagestepE<lt>1. Default is
+"0.1".
+
+L<RASTERSIZE|../attrib/iup_rastersize.html> (non inheritable): The
+initial size is 100 pixels along the major axis, and the handler normal
+size on the minor axis. If there are ticks then they are added to the
+natural size on the minor axis. The handler can be smaller than the
+normal size. Set to NULL to allow the automatic layout use smaller
+values.
+
+B<SHOWTICKS> [Windows and Motif Only]: The number of tick marks along
+the valuator trail. Minimum value is "2". Default is "0", in this case
+the ticks are not shown. It can not be changed to 0 from a non zero
+value, or vice-versa, after the control is mapped. GTK does not support
+ticks.
+
+B<STEP>: Controls the increment for keyboard control and the mouse
+wheel. It is not the size of the increment. The increment size is
+"step*(max-min)", so it must be 0E<lt>stepE<lt>1. Default is "0.01".
+
+B<TICKSPOS> [Windows Only] (creation only): Allows to position the
+ticks in both sides (BOTH) or in the reverse side (REVERSE). Default:
+NORMAL. The normal position for horizontal orientation is at the top of
+the control, and for vertical orientation is at the left of the
+control. In Motif, the ticks position is always normal. (since 3.0)
+
+B<TYPE >(non inheritable): Informs whether the valuator is "VERTICAL"
+or "HORIZONTAL". Vertical valuators are bottom to up, and horizontal
+valuators are left to right variations of min to max (but can be
+inverted using INVERTED). Default: "HORIZONTAL".
+
+B<VALUE >(non inheritable): Contains a number between MIN and MAX,
+indicating the valuator position. Default: "0.0".
+
+=over
+
+----
+
+=back
+
+L<ACTIVE|../attrib/iup_active.html>,
+L<EXPAND|../attrib/iup_expand.html>, L<FONT|../attrib/iup_font.html>,
+L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
+L<TIP|../attrib/iup_tip.html>, L<SIZE|../attrib/iup_size.html>,
+L<ZORDER|../attrib/iup_zorder.html>,
+L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+=head2 Callbacks
+
+B<VALUECHANGED_CB>: Called after the value was interactively changed by
+the user.
+
+ int function(Ihandle *ih); [in C]elem:valuechanged_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+=over
+
+----
+
+=back
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>,
+L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
+L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
+L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>:
+All common callbacks are supported.
+
+=head2 Notes
+
+This control replaces the old L<IupVal|../ctrl/iupval.html> implemented
+in the additional controls. The old callbacks are still supported but
+called only if the VALUECHANGED_CB callback is not defined. The
+MOUSEMOVE_CB callback is only called when the user moves the handler
+using the mouse. The BUTTON_PRESS_CB callback is called only when the
+user press a key that changes the position of the handler. The
+BUTTON_RELEASE_CB callback is called only when the user release the
+mouse button after moving the handler (except in GTK that is never
+called).
+
+In Motif, after the user clicks the handler a KILLFOCUS will be ignored
+when the control loses its focus.
+
+=head2 Keyboard Mapping
+
+This is the default mapping when INVERTED has the default value, or
+TYPE=HORIZONTAL+INVERTED=NO.
+
+Keys
+
+Action for HORIZONTAL
+
+Right Arrow
+
+move right, increment by one step
+
+Left Arrow
+
+move left, decrement by one step
+
+Ctrl+Right Arrow or PgDn
+
+move right, increment by one page step
+
+Ctrl+Left Arrow or PgUp
+
+move left, decrement by one page step
+
+Home
+
+move all left, set to minimum
+
+End
+
+move all right, set to maximum
+
+This is the default mapping when INVERTED has the default value, or
+TYPE=VERTICAL+INVERTED=YES.
+
+Keys
+
+Action for VERTICAL
+
+Up Arrow
+
+move up, increment by one step
+
+Down Arrow
+
+move down, decrement by one step
+
+Ctrl+Up Arrow or PgUp
+
+move up, increment by one page step
+
+Ctrl+Down Arrow or PgDn
+
+move down, decrement by one page step
+
+Home
+
+move all up, set to maximum
+
+End
+
+move all down, set to minimum
+
+Visually all the keys move to the same direction independent from the
+INVERTED attribute.
+
+Semantically all the keys change the value depending on the INVERTED
+attribute.
+
+This behavior is slightly different from the defined by the native
+systems (Home and End keys are different). But it is the same in all
+systems.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+Motif
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+Windows
+
+Vista
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+=cut

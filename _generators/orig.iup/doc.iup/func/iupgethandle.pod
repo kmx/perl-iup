@@ -1,0 +1,26 @@
+=head1 IupGetHandle
+
+Returns the identifier of an interface element that has an associated
+name using B<IupSetHandle> or using LED.
+
+=head2 Parameters/Return
+
+ Ihandle *IupGetHandle(const char *name); [in C]
+ iup.GetHandle(name: string) -> ih: ihandle [in Lua]
+
+B<name>: name of an interface element.
+
+=head2 Notes
+
+This function is used for integrating IUP and LED. To manipulate an
+interface element defined in LED, first capture its identifier using
+function B<IupGetHandle>, passing the name of the interface element as
+parameter, then use this identifier on the calls to IUP functions
+E<ndash> for example, a call to the function that verifies the value of
+an attribute using B<IupGetAttribute>.
+
+=head2 See Also
+
+L<IupSetHandle|iupsethandle.html>.
+
+=cut

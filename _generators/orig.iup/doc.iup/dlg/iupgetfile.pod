@@ -1,0 +1,55 @@
+=head1 IupGetFile
+
+Shows a modal dialog of the native interface system to select a
+filename. Uses the B<IupFileDlg> element.
+
+=head2 Creation and Show
+
+=over
+
+ int IupGetFile(char *filename); [in C]
+ iup.GetFile(filename: string) -> (filename: string, status: number) [in Lua]
+
+=back
+
+B<filename>: This parameter is used as an input value to define the
+default filter and directory. Example: "../docs/*.txt". As an output
+value, it is used to contain the filename entered by the user.
+
+Returns: a B<status> code, whose values can be:
+
+=over
+
+"1": New file.
+
+"0": Normal, existing file.
+
+"-1": Operation cancelled.
+
+=back
+
+=head2 Notes
+
+The B<IupGetFile> function does not allocate memory space to store the
+complete filename entered by the user. Therefore, the file parameter
+must be large enough to contain the directory and file names.
+
+The function will reuse the directory from one call to another, so in
+the next call will open in the directory of the last selected file.
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=head2 See Also
+
+L<IupFileDlg|iupfiledlg.html>, L<IupMessage|iupmessage.html>,
+L<IupScanf|iupscanf.html>, L<IupListDialog|iuplistdialog.html>,
+L<IupAlarm|iupalarm.html>,
+L<IupSetLanguage|../func/iupsetlanguage.html>.
+
+=cut

@@ -1,0 +1,10 @@
+=head1 System
+
+IUP has several global tables as together with some system tools must
+be initialized before any dialog is created. And the IupLua binding
+must be initialized also.
+
+The default system language used by predefined dialogs and messages is
+Portuguese. But it can be changed to English.
+
+=cut

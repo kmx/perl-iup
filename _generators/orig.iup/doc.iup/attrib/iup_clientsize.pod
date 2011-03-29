@@ -1,0 +1,23 @@
+=head1 CLIENTSIZE (read-only) (non inheritable) (since 3.0)
+
+Returns the container B<Current> size, in pixels, excluding the
+decorations. Usefull for B<IupFrame>, B<IupTabs> and B<IupDialog>. Can
+also be consulted in B<IupVbox> and B<IupHbox>, it will excludes the
+margins. For controls that have a native representation is only
+available when the control is mapped.
+
+=head2 Value
+
+"I<width>xI<height>", where I<width> and I<height> are integer values
+corresponding to the horizontal and vertical size, respectively, in
+pixels.
+
+=head2 Affects
+
+All elements that are containers, except menus.
+
+=head2 See Also
+
+L<SIZE|iup_size.html>, L<RASTERSIZE|iup_rastersize.html>
+
+=cut

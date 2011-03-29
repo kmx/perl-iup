@@ -1,0 +1,31 @@
+=head1 IupSetFocus
+
+Defines the interface element that will receive the keyboard focus,
+i.e., the element that will receive keyboard events. But this will be
+processed only after the con
+
+=head2 Parameters/Return
+
+ Ihandle *IupSetFocus(Ihandle *ih); [in C]
+ iup.SetFocus(ih: ihandle) -> ih: ihandle [in Lua]
+
+B<ih>: identifier of the interface element that will receive the
+keyboard focus. Only elements that can have the keyboard focus, are
+mapped, active and visible can be used, other elements are ignored.
+
+Returns: the identifier of the interface element that previously had
+the keyboard focus.
+
+=head2 Notes
+
+The value returned by B<IupGetFocus> will be updated only after the
+main loop regain the control and the control actually receive the
+focus. So if you call B<IupGetFocus> right after B<IupSetFocus> the
+return value will be different. You could call B<IupFlush> between the
+two functions to obtain the same value.
+
+=head2 See Also
+
+L<IupGetFocus|iupgetfocus.html>.
+
+=cut

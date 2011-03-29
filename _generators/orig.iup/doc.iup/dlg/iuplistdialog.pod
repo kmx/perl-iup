@@ -1,0 +1,55 @@
+=head1 IupListDialog
+
+Shows a modal dialog to select items from a simple or multiple
+selection list.
+
+=head2 Creation and Show
+
+ int IupListDialog(int type, const char *title, int size, const char** list, int op, int max_col, int max_lin, int* marks); [in C]
+ iup.ListDialog(type: number, title: string, size: number, list: table of strings, op: number, max_col: number, max_lin: number, marks: table of numbers) -> status: number [in Lua]
+
+B<type>: 1=simple selection; 2=multiple selection
+
+B<title>: Text for the dialogE<rsquo>s title
+
+B<size>: Number of options
+
+B<list>: List of options. Must have B<size> elements
+
+B<op>: Initial selected item when type=1. starts at 1 (note that this
+index is different from the return value, kept for compability reasons)
+
+B<max_col>: Maximum number of columns in the list
+
+B<max_lin>: Maximum number of lines in the list
+
+B<marks>: List of the items selection state, used only when type=2. Can
+be NULL when type=1. When type=2 must have B<size> elements
+
+Returns: When type=1, the function returns the number of the selected
+option (starts at 0), or -1 if the user cancels the operation.
+
+When type=2, the function returns -1 when the user cancels the
+operation. If the user does not cancel the operation the function
+returns 1 and the B<marks> parameter will have value 1 for the options
+selected by the user and value 0 for non-selected options. In Lua, the
+input table mark is changed.
+
+=head2 Notes
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+=head2 See Also
+
+L<IupMessage|iupmessage.html>, L<IupScanf|iupscanf.html>,
+L<IupGetFile|iupgetfile.html>, L< IupAlarm|iupalarm.html>
+
+=cut

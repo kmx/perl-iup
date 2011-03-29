@@ -1,0 +1,96 @@
+=head1 BUTTON_CB
+
+Action generated when a mouse button is pressed or released.
+
+=head2 Callback
+
+ int function(Ihandle* ih, int button, int pressed, int x, int y, char* status); [in C]
+ elem:button_cb(but, pressed, x, y: number, status: string) -> (ret: number) [in Lua]
+
+B<ih>: identifies the element that activated the event.
+
+B<button>: identifies the activated mouse button:
+
+=over
+
+IUP_BUTTON1 - left mouse button (button 1);
+
+IUP_BUTTON2 - middle mouse button (button 2);
+
+IUP_BUTTON3 - right mouse button (button 3).
+
+=back
+
+B<pressed>: boolean that indicates the state of the button:
+
+=over
+
+0 - mouse button was released;
+
+1 - mouse button was pressed.
+
+=back
+
+B<x>, B<y>: position in the canvas where the event has occurred, in
+pixels.
+
+B<status>: status of the mouse buttons and some keyboard keys at the
+moment the event is generated. The following macros must be used for
+verification:
+
+=over
+
+iup_isshift(B<status>)
+
+iup_iscontrol(B<status>)
+
+iup_isbutton1(B<status>)
+
+iup_isbutton2(B<status>)
+
+iup_isbutton3(B<status>)
+
+iup_isbutton4(status)
+
+iup_isbutton5(status)
+
+iup_isdouble(B<status>)
+
+iup_isalt(status)
+
+iup_issys(status)
+
+They return 1 if the respective key or button is pressed, and 0
+otherwise. These macros are also available in Lua, returning a boolean.
+
+=back
+
+Returns: IUP_CLOSE will be processed. On some controls if IUP_IGNORE is
+returned the action is ignored (this is system dependent).
+
+=head2 Notes
+
+This callback can be used to customize a button behavior. For a
+standard button behavior use the ACTION callback of the B<IupButton>.
+
+A double click is preceded by two single clicks, one for pressed=1 and
+one for pressed=0, and followed by a press=0, all three without the
+double click flag set. In GTK, it is preceded by an additional two
+single clicks sequence. For example, for one double click all the
+following calls are made:
+
+ BUTTON_CB(but=1 (1), x=154, y=83 [  1       ])
+ BUTTON_CB(but=1 (0), x=154, y=83 [  1       ])
+     BUTTON_CB(but=1 (1), x=154, y=83 [  1       ])     (in GTK only)
+     BUTTON_CB(but=1 (0), x=154, y=83 [  1       ])     (in GTK only)
+ BUTTON_CB(but=1 (1), x=154, y=83 [  1  D    ])
+ BUTTON_CB(but=1 (0), x=154, y=83 [  1       ])
+
+=head2 Affects
+
+L<IupCanvas|../elem/iupcanvas.html>,
+L<IupButton|../elem/iupbutton.html>, L<IupText|../elem/iuptext.html>,
+L< IupList|../elem/iuplist.html>,
+L<IupGLCanvas|../ctrl/iupglcanvas.html>
+
+=cut

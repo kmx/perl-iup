@@ -1,0 +1,156 @@
+=head1 FONT (up to 2.x)
+
+Character font of the text shown in the element. See L<
+FONT|iup_font.html> definition since IUP 3.0.
+
+=head2 Value
+
+Pre-defined font name (see L<Font Names|#Font_Names>) or a string in
+the native format.
+
+In B<Windows>, the native format is as a string with the following
+format:
+
+=over
+
+"B<name:attributes:size>"
+
+=over
+
+B<name>: The name the user will see (Times New Roman, MS Sans Serif,
+etc.).
+
+B<attributes>: Can be empty, or a list separated by commas with the
+following names: BOLD ITALIC UNDERLINE STRIKEOUT
+
+B<size>: Size in pixels
+
+=back
+
+Examples:
+
+=over
+
+"Times New Roman::10"
+
+"Ms Sans Serif:ITALIC:20"
+
+"Courier New:BOLD,STRIKEOUT:15"
+
+=back
+
+Default: "Tahoma" for Windows 2000 and Windows XP, "MS Sans Serif" for
+others. Size default is 8, or 10 if the resolution is greatter than 100
+DPI.
+
+=back
+
+In B<Motif>, the native format uses the X-Windows font string format.
+You can use program B<xfontsel> to select a font and obtain the string.
+For example:
+
+=over
+
+ "-*-times-medium-r*-*-10-*"
+ "-*-sans serif-*-o-*-*-19-*"
+ "-*-courier-*-r-*-*-14-*"
+
+Default: "-misc-fixed-bold-r-normal-*-13-*" if not defined in a user
+resource file.
+
+=back
+
+=head2 Affects
+
+All elements with an associated text.
+
+=head2 Note
+
+B<Attention>: when consulting this attribute, the user will always be
+returned the name of the driver font being used, not the name of the
+IUP font. To get the name of the IUP font, the user must use the L<
+IupUnMapFont|../func/iupunmapfont.html> function.
+
+=head2 B<X<Font_Names>Font Names>
+
+Notice that size here is in B<points> in Windows or GTK, and in
+B<pixels> in Motif.
+
+"HELVETICA_NORMAL_8"
+
+"COURIER_NORMAL_8"
+
+"TIMES_NORMAL_8"
+
+"HELVETICA_ITALIC_8"
+
+"COURIER_ITALIC_8"
+
+"TIMES_ITALIC_8"
+
+"HELVETICA_BOLD_8"
+
+"COURIER_BOLD_8"
+
+"TIMES_BOLD_8"
+
+"HELVETICA_NORMAL_10"
+
+"COURIER_NORMAL_10"
+
+"TIMES_NORMAL_10"
+
+"HELVETICA_ITALIC_10"
+
+"COURIER_ITALIC_10"
+
+"TIMES_ITALIC_10"
+
+"HELVETICA_BOLD_10"
+
+"COURIER_BOLD_10"
+
+"TIMES_BOLD_10"
+
+"HELVETICA_NORMAL_12"
+
+"COURIER_NORMAL_12"
+
+"TIMES_NORMAL_12"
+
+"HELVETICA_ITALIC_12"
+
+"COURIER_ITALIC_12"
+
+"TIMES_ITALIC_12"
+
+"HELVETICA_BOLD_12"
+
+"COURIER_BOLD_12"
+
+"TIMES_BOLD_12"
+
+"HELVETICA_NORMAL_14"
+
+"COURIER_NORMAL_14"
+
+"TIMES_NORMAL_14"
+
+"HELVETICA_ITALIC_14"
+
+"COURIER_ITALIC_14"
+
+"TIMES_ITALIC_14"
+
+"HELVETICA_BOLD_14"
+
+"COURIER_BOLD_14"
+
+"TIMES_BOLD_14"
+
+=head2 See Also
+
+L<IupMapFont|../func/iupmapfont.html>,
+L<IupUnMapFont|../func/iupunmapfont.html>.
+
+=cut

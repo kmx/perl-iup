@@ -1,0 +1,192 @@
+=head1 IupColorbar
+
+Creates a color palette to enable a color selection from several
+samples. It can select one or two colors. The primary color is selected
+with the left mouse button, and the secondary color is selected with
+the right mouse button. You can double click a cell to change its color
+and you can double click the preview area to switch between primary and
+secondary colors.
+
+This is an additional control that depends on the CD library. It is
+included in the L<Controls Library|../iupcontrols.html>.
+
+It inherits from L<IupCanvas|../elem/iupcanvas.html>.
+
+Originally implemented by AndrE<eacute> Clinio.
+
+=head2 Creation
+
+ Ihandle* IupColorbar(void); [in C]
+ iup.colorbar{} -> (elem: ihandle) [in Lua]
+ colorbar() [in LED] 
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<BUFFERIZE> (non inheritable): Disables the automatic redrawing of
+the control, so many attributes can be changed without many redraws.
+Default: "NO". When set to "NO" the control is redrawn.
+
+B<CELL>I<n>: Contains the color of the "n" cell. "n" can be from 0
+to NUM_CELLS-1.
+
+B<NUM_CELLS> (non inheritable): Contains the number of color cells.
+Default: "16". The maximum number of colors is 256. The default colors
+use the same set of IupImage.
+
+B<NUM_PARTS> (non inheritable): Contains the number of lines or
+columns. Default: "1".
+
+B<ORIENTATION:> Controls the orientation. It can be "VERTICAL" or
+"HORIZONTAL". Default: "VERTICAL".
+
+B<PREVIEW_SIZE> (non inheritable): Fixes the size of the preview
+area in pixels. The default size is dynamically calculated from the
+size of the control. The size is reset to the default when
+SHOW_PREVIEW=NO.
+
+B<SHOW_PREVIEW:> Controls the display of the preview area. Default:
+"YES".
+
+B<SHOW_SECONDARY:> Controls the existence of a secondary color
+selection. Default: "NO".
+
+L<SIZE|../attrib/iup_size.html>: there is no initial size. You must
+define SIZE or RASTERSIZE.
+
+B<PRIMARY_CELL> (non inheritable): Contains the index of the primary
+color. Default "0" (black).
+
+B<SECONDARY_CELL> (non inheritable): Contains the index of the
+secondary color. Default "15" (white).
+
+B<SQUARED>: Controls the aspect ratio of the color cells. Non square
+cells expand equally to occupy all of the control area. Default: "YES".
+
+B<SHADOWED:> Controls the 3D effect of the color cells. Default: "YES".
+
+B<TRANSPARENCY>: Contains a color that will be not rendered in the
+color palette. The color cell will have a white and gray chess pattern.
+It can be used to create a palette with less colors than the number of
+cells.
+
+=over
+
+----
+
+=back
+
+L<ACTIVE|../attrib/iup_active.html>,
+L<BGCOLOR|../attrib/iup_bgcolor.html>, L<FONT|../attrib/iup_font.html>,
+L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
+L<TIP|../attrib/iup_tip.html>, L<EXPAND|../attrib/iup_expand.html>,
+L<SIZE|../attrib/iup_size.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<ZORDER|../attrib/iup_zorder.html>,
+L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+=head2 Callbacks
+
+B<CELL_CB>: called when the user double clicks a color cell to
+change its value.
+
+ char* function(Ihandle* ih, int cell); [in C]
+ elem:cell_cb(cell: number) -> (ret: string) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<cell:> index of the selected cell. If the user double click a preview
+cell, the respective index is returned.
+
+Return: a new color or NULL (nil in Lua) to ignore the change. By
+default nothing is changed.
+
+B<EXTENDED_CB>: called when the user right click a cell with the
+Shift key pressed. It is independent of the SHOW_SECONDARY attribute.
+
+ int function(Ihandle* ih, int cell);  [in C]
+ elem:extended_cb(cell: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<cell:> index of the selected cell.
+
+Return: If IUP_IGNORE the cell is not redrawn. By default the cell is
+always redrawn.
+
+B<SELECT_CB>: called when a color is selected. The primary color is
+selected with the left mouse button, and if existent the secondary is
+selected with the right mouse button.
+
+ int function(Ihandle* ih, int cell, int type);  [in C]
+ elem:select_cb(cell, type: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<cell>: index of the selected cell.
+
+B<type>: indicates if the user selected a primary or secondary color.
+In can be: C<IUP_PRIMARY(-1)> or C<IUP_SECONDARY(-2).>
+
+Return: If IUP_IGNORE the selection is not accepted. By default the
+selection is always accepted.
+
+B<SWITCH_CB>: called when the user double clicks the preview area
+outside the preview cells to switch the primary and secondary
+selections. It is only called if SHOW_SECONDARY=YESB<.>
+
+ int function(Ihandle* ih, int prim_cell, int sec_cell);  [in C]
+ elem:switch_cb(prim_cell, sec_cell: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<prim_cell>: index of the actual primary cell.
+
+B<sec_cell>: index of the actual secondary cell.
+
+Return: If IUP_IGNORE the switch is not accepted. By default the switch
+is always accepted.
+
+=over
+
+----
+
+=back
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>,
+L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
+L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
+L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>:
+All common callbacks are supported.
+
+=head2 Notes
+
+When the control has the focus the keyboard can be used to change the
+colors and activate the callbacks. Use the arrow keys to move from cell
+to cell, B<Home> goes to the first cell, B<End> goes to the last cell.
+B<Space> will activate the B<SELECT_CB> callback for the primary color,
+B<Ctrl>+B<Space> will activate the B<SELECT_CB> callback for the
+secondary color. B<Shift>+B<Space> will activate the B<EXTENTED_CB>
+callback. B<Shift>+B<Enter> will activate the B< CELL_CB> callback.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+Creates a Colorbar for selection of two colors.
+
+iupcolorbar.gif
+
+=head2 X<SeeAlso>See Also
+
+L<IupCanvas|../elem/iupcanvas.html>, L<IupImage|../elem/iupimage.html>
+
+=cut

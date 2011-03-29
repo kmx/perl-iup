@@ -1,0 +1,22 @@
+=head1 Controls
+
+IUP contains several user interface controls. The libraryE<rsquo>s main
+characteristic is the use of native elements. This means that the
+drawing and management of a button or text box is done by the native
+interface system, not by IUP. This makes the applicationE<rsquo>s
+appearance more similar to other applications in that system. On the
+other hand, the applicationE<rsquo>s appearance can vary from one
+system to another.
+
+But this is valid only for the standard controls, many additional
+controls are drawn by IUP. Composition controls are not visible, so
+they are independent from the native system.
+
+Each control has an unique creation function, and all of its management
+is done by means of B<attributes> and B<callbacks>, using functions
+common to all the controls. This simple but powerfull approach is one
+of the advantages of using IUP.
+
+Controls are automatically destroyed when the dialog is destroyed.
+
+=cut

@@ -1,0 +1,18 @@
+=head1 Download
+
+The download site for pre-compiled binaries, documentation and sources
+is at B<SourceForge>:
+
+L<http:E<47>E<47>sourceforge.netE<47>projectsE<47>iupE<47>filesE<47>|http://sourceforge.net/projects/iup/files/>
+
+Use this link for the latest version: L<
+http:E<47>E<47>sourceforge.netE<47>projectsE<47>iupE<47>filesE<47>3.2E<47>|http://sourceforge.net/projects/iup/files/3.2/>
+
+Before downloading any precompiled binaries, you should read before the
+L<Tecgraf Library Download Tips|download_tips.html>.
+
+Some other files are available directly at the B<IUP> download folder:
+
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>downloadE<47>|http://www.tecgraf.puc-rio.br/iup/download/>
+
+=cut

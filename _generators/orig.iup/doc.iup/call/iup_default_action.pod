@@ -1,0 +1,41 @@
+=head1 DEFAULT_ACTION
+
+Predefined IUP action, generated every time an action has no associated
+function (except for the IDLE_ACTION).
+
+=head2 Callback
+
+ int function(Ihandle *ih); [in C]
+ [There is no Lua equivalent]
+
+B<ih>: identifier of the element that activated the function.
+
+=head2 Notes
+
+Often a programmer defines an action with a name and, when associating
+it to a function, he/she mistypes the action name, or vice-versa. This
+kind of mistake is very common, and IUP is not able to automatically
+detect it. This predefined action, combined with function
+B<IupGetActionName>, can help the programmer detect this problem. All
+you have to do is define a default action and verify which is the name
+of the action that activated it. For example:
+
+ IupSetFunction("myFunctionName", (Icallback)myFunction);
+ IupSetAttribute(myButton, "ACTION", "myFunctionNamr");   /* notice the typo error here */
+
+In this case the incorrect name "myFunctionNamr" (typo error here) will
+not be found, so if the DEFAULT_ACTION is defined it will be called
+when "ACTION" in invoked for the button. In fact it will be called for
+all the actions that do not have an action associated.
+
+=head2 Affects
+
+All callbacks when B<IupSetFunction> is used. If B<IupSetCallback> is
+used DEFAULT_ACTION is ignored.
+
+=head2 See Also
+
+L<IupSetFunction|../func/iupsetfunction.html>,
+L<IupGetActionName|../func/iupgetactionname.html>.
+
+=cut

@@ -1,0 +1,128 @@
+=head1 IupProgressBar (since 3.0)
+
+Creates a progress bar control. Shows a percent value that can be
+updated to simulate a progression.
+
+It is similar of B<IupGauge>, but uses native controls internally. Also
+does not have support for text inside the bar.
+
+=head2 Creation
+
+ Ihandle* IupProgressBar(void); [in C]
+ iup.progressbar{} -> (elem: ihandle) [in Lua]
+ progressbar() [in LED] 
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+L<BGCOLOR|../attrib/iup_bgcolor.html> [Windows Classic and Motif only]:
+controls the background color. Default: the global attribute
+DLGBGCOLOR.
+
+B<DASHED> (creation only in Windows) [Windows and GTK only]: Changes
+the style of the progress bar for a dashed pattern. Default is "NO".
+
+L<FGCOLOR|../attrib/iup_fgcolor.html> [Windows Classic and Motif only]:
+Controls the bar color. Default: the global attribute DLGFGCOLOR.
+
+B<MARQUEE> (creation only in Windows) [Windows XP and GTK only]:
+displays an undefined state. Default: NO. In GTK you still need to set
+VALUE using any value to update the display. In Windows the update is
+automatic, you can set the attribute after map but only to start or
+stop the animation.
+
+B<MAX >(non inheritable): Contains the maximum value. Default is "1".
+The control display is not updated, must set VALUE attribute to update.
+
+B<MIN >(non inheritable): Contains the minimum value. Default is "0".
+The control display is not updated, must set VALUE attribute to update.
+
+B<ORIENTATION> (creation only): can be "VERTICAL" or "HORIZONTAL".
+Default: "HORIZONTAL". Horizontal goes from left to right, and vertical
+from bottom to top.
+
+L<RASTERSIZE|../attrib/iup_rastersize.html>: The initial size is
+defined as "200x30". Set to NULL to allow the use of smaller values in
+the layout computation.
+
+B<VALUE >(non inheritable): Contains a number between "MIN" and "MAX",
+controlling the current position.
+
+=over
+
+----
+
+=back
+
+L<ACTIVE|../attrib/iup_active.html>,
+L<EXPAND|../attrib/iup_expand.html>, L<FONT|../attrib/iup_font.html>,
+L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
+L<TIP|../attrib/iup_tip.html>, L<SIZE|../attrib/iup_size.html>,
+L<ZORDER|../attrib/iup_zorder.html>,
+L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+=head2 Callbacks
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>: common callbacks are supported.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+DASHED=NO
+
+DASHED=YES
+
+MARQUEE=YES
+
+Motif
+
+[IMAGE]
+
+(same as DASHED=NO)
+
+(same as DASHED=NO)
+
+Windows Classic
+
+[IMAGE]
+
+[IMAGE]
+
+(same as DASHED)
+
+Windows XP Style
+
+(same as DASHED=YES)
+
+[IMAGE]
+
+[IMAGE]
+
+Windows Vista
+
+[IMAGE]
+
+(same as DASHED=NO)
+
+[IMAGE]
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+=head2 X<SeeAlso>See Also
+
+L<IupGauge|../ctrl/iupgauge.html>
+
+=cut

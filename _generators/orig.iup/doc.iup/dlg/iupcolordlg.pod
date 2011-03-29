@@ -1,0 +1,137 @@
+=head1 IupColorDlg (since 3.0)
+
+Creates the Color Dialog element. It is a predefined dialog for
+selecting a color.
+
+There are 3 versions of the dialog. One for Windows only, one for GTK
+only and one for all systems, but it is based on the B<IupColorBrowser>
+control that depends on the CD library.
+
+The Windows and GTK dialogs can be shown only with the B<IupPopup>
+function. The B<IupColorBrowser> based dialog is a B<IupDialog> that
+can be shown as any regular B< IupDialog>.
+
+B<IMPORTANT: >The B< IupColorBrowser> based dialog is included in the
+L<Controls Library|../iupcontrols.html>. When the Controls Library is
+initialized the Windows and GTK dialogs are not available anymore, i.e.
+before the Controls Library initialization only the Windows and GTK
+dialogs are available, after only the B<IupColorBrowser> based dialog
+is available.
+
+=head2 Creation
+
+ Ihandle* IupColorDlg(void); [in C]
+ iup.colordlg() -> (elem: ihandle) [in Lua]
+ colordlg() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<ALPHA> [ColorBrowser and GTK only]: if defined it will enable an
+alpha selection additional controls with its initial value. If the user
+pressed the Ok button contains the returned value. Default: no defined,
+or 255 if SHOWALPHA=YES.
+
+B<COLORTABLE>: list of colors separated by ";". In GTK and in the
+ColorBrowser based accepts 20 values and if not present the palette
+will not be visible. In Windows accepts 16 values and will be always
+visible, even if the colors are not defined (in this case are
+initialized with black). If a color is not specified then the default
+color is used. You can skip colors using ";;".
+
+L<PARENTDIALOG|../attrib/iup_parentdialog.html> (creation only): Name
+of a dialog to be used as parent. This dialog will be always in front
+of the parent dialog.
+
+B<SHOWALPHA> [ColorBrowser and GTK only]: if enabled will display the
+alpha selection controls, regardless if ALPHA is defined for the
+initial value or not.
+
+B<SHOW>B<COLORTABLE>: if enabled will display the color table,
+regardless if B<COLORTABLE> is defined or not. The default colors in
+the color table are different in GTK and in the ColorBrowser based
+dialog. In Windows the default colors are all black.
+
+B<SHOWHEX> [ColorBrowser only]: if enabled will display the Hexadecimal
+notation of the color.
+
+B<SHOWHELP> [ColorBrowser only]: if enabled will display the Help
+button. In GTK and Windows, the Help button is shown only if the
+HELP_CB callback is defined.
+
+B<STATUS> (read-only): defined to "1" if the user pressed the Ok
+button, NULL if pressed the Cancel button.
+
+L<TITLE|../attrib/iup_title.html>: Dialog title.
+
+B<VALUE>: The color value in RGB coordinates and optionally alpha. It
+is used as the initial value and contains the selected value if the
+user pressed the Ok button. Format: "R G B" or "R G B A". Each
+component range from 0 to 255.
+
+B<VALUEHSI> [ColorBrowser only]: The color value in HSI coordinates. It
+is used as the initial value and contains the selected value if the
+user pressed the Ok button. Format: "H S I". Each component range from
+0-359, 0-100 and 0-100 respectively.
+
+B<VALUEHEX> [ColorBrowser only]: The color value in RGB Hexadecimal
+notation. It is used as the initial value and contains the selected
+value if the user pressed the Ok button. Format: "#RRGGBB". Each
+component range from 0-255, but in hexadecimal notation.
+
+=head2 Callbacks
+
+L<HELP_CB|../call/iup_help_cb.html>: Action generated when the Help
+button is pressed.
+
+=head2 Notes
+
+The GTK and Windows dialogs are native pre-defined dialogs that are not
+altered by B<IupSetLanguage>. To show the dialog, use function
+B<IupPopup>. In Lua, use the B<popup> function. The dialog is mapped
+only inside B<IupPopup>, B<IupMap> does nothing.
+
+=head2 Examples
+
+ Ihandle* dlg = IupColorDlg();
+ 
+ IupSetAttribute(dlg, "VALUE", "128 0 255");
+ IupSetAttribute(dlg, "ALPHA", "142");
+ IupSetAttribute(dlg, "SHOWHEX", "YES");
+ IupSetAttribute(dlg, "SHOWCOLORTABLE", "YES");
+ IupSetAttribute(dlg, "TITLE", "IupColorDlg Test");
+ IupSetCallback(dlg, "HELP_CB", (Icallback)help_cb);
+ 
+ IupPopup(dlg, IUP_CURRENT, IUP_CURRENT);
+ 
+ if (IupGetInt(dlg, "STATUS"))
+ {
+   printf("OK\n");
+   printf("  COLOR(%s)\n", IupGetAttribute(dlg, "COLOR"));
+   printf("  COLORTABLE(%s)\n", IupGetAttribute(dlg, "COLORTABLE"));
+ }
+ else
+   printf("CANCEL\n");
+ 
+ IupDestroy(dlg);  
+
+Windows XP
+
+[IMAGE]
+
+GTK/GNOME
+
+[IMAGE]
+
+ColorBrowser Based
+
+[IMAGE]
+
+=head2 X<SeeAlso>See Also
+
+L<IupMessageDlg|iupmessagedlg.html>, L<IupFileDlg|iupgetfiledlg.html>,
+L<IupPopup|../func/iuppopup.html>
+
+=cut

@@ -1,0 +1,33 @@
+=head1 SHOW_CB
+
+Called right after the dialog is opened, minimized or restored from a
+minimization. This callback is called when those actions were performed
+by the user or programmatically by the application.
+
+=head2 Callback
+
+ int function(Ihandle *ih, int state); [in C]
+ elem:show_cb(state: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<state:> indicates which of the following situations generated the
+event:
+
+=over
+
+IUP_HIDE, IUP_SHOW, IUP_RESTORE (was minimized or maximized),
+IUP_MINIMIZE or IUP_MAXIMIZE. (IUP_HIDE and IUP_MAXIMIZE since 3.0)
+
+IUP_MAXIMIZE is not received in Motif when activated from the maximize
+button.
+
+=back
+
+Returns: IUP_CLOSE will be processed.
+
+=head2 Affects
+
+L<IupDialog|../dlg/iupdialog.html>
+
+=cut

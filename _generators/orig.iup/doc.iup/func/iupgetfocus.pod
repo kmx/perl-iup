@@ -1,0 +1,15 @@
+=head1 IupGetFocus
+
+Returns the identifier of the interface element that has the keyboard
+focus, i.e. the element that will receive keyboard events.
+
+=head2 Parameters/Return
+
+ Ihandle* IupGetFocus(void); [in C]
+ iup.GetFocus() -> elem: ihandle [in Lua]
+
+=head2 See Also
+
+L<IupSetFocus|iupsetfocus.html>
+
+=cut

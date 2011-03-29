@@ -1,0 +1,116 @@
+=head1 IupFrame
+
+Creates a Frame interface element, which draws a frame with a title
+around an interface element.
+
+=head2 Creation
+
+ Ihandle* IupFrame(Ihandle *child); [in C]
+ iup.frame{child: ihandle} -> (elem: ihandle) [in Lua]
+ frame(child) [in LED]
+
+B<child>: Identifier of an interface element which will receive the
+frame around. It can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+L<BGCOLOR|../attrib/iup_bgcolor.html>: ignored, transparent in all
+systems. Will use the background color of the native parent. Except if
+TITLE is not defined and BGCOLOR is defined before map (can be changed
+later), then the frame will have a color background.
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
+value is "YES".
+
+L<FGCOLOR|../attrib/iup_fgcolor.html>: Text title color. Not available
+in Windows when using Windows XP Visual Style. Default: the global
+attribute DLGFGCOLOR.
+
+B<SUNKEN> (creation only): When not using a title, the frame line
+defines a sunken area (lowered area). Valid values: YES or NOI<.>
+Default: NO.
+
+L<TITLE|../attrib/iup_title.html> (non inheritable): Text the user will
+see at the top of the frame. If not defined during creation it can not
+be added lately, to be changed it must be at least "" during creation.
+
+=over
+
+----
+
+=back
+
+L<ACTIVE|../attrib/iup_active.html>, L<FONT|../attrib/iup_font.html>,
+L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
+L<SIZE|../attrib/iup_size.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<ZORDER|../attrib/iup_zorder.html>,
+L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+=head2 Callbacks
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>: common callbacks are supported.
+
+=head2 Notes
+
+In Windows, a Frame with TITLE==NULL is not the same control as then
+TITLE!=NULL. When TITLE==NULL it does not have Visual Styles and uses a
+sharp rectangle border. When TITLE!=NULL it has Visual Styles and the
+border is a rounded rectangle. To always use Visual Styles set the
+title to "" before mapping, but be aware that a vertical space for the
+title will be always reserved at the top border.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+  frame1 = IupFrame
+          (
+            IupVbox
+            (
+              IupLabel("Label1"),
+              IupLabel("Label2"), 
+              IupLabel("Label3"),
+              NULL
+            )
+          );
+ 
+  frame2 = IupFrame
+          (
+            IupVbox
+            (
+              IupLabel("Label4"), 
+              IupLabel("Label5"),
+              IupLabel("Label6"),
+              NULL
+            )
+          );
+ 
+  IupSetAttribute(frame1, "TITLE", "Title Text");
+  IupSetAttribute(frame2, "SUNKEN", "YES");
+
+Windows 2000
+
+[IMAGE]
+
+Windows XP
+
+[IMAGE]
+
+Motif
+
+[IMAGE]
+
+GTK
+
+[IMAGE]
+
+=cut

@@ -1,0 +1,34 @@
+=head1 Sample Results (3)
+
+The following screenshots shows the L<sample.c|../examples/C/sample.c>
+results when the dialog L<BGCOLOR|attrib/iup_bgcolor.html> attribute is
+changed. See also the same sample with L<normal
+background|sample_results.html>, changing the L<dialog
+BACKGROUND|sample_results_background.html> and the L<children
+BGCOLOR|sample_results_bgcolor_indiv.html>.
+
+Since BGCOLOR is an inheritable attribute changing it at the dialog
+affects all controls. And notice that on Windows the BGCOLOR is ignored
+for several controls.
+
+=head2 Motif in MWM
+
+[IMAGE]
+
+=head2 GTK in Gnome
+
+[IMAGE]
+
+=head2 Windows Classic
+
+[IMAGE]
+
+=head2 Windows XP Style
+
+[IMAGE]
+
+=head2 Windows Vista
+
+[IMAGE]
+
+=cut

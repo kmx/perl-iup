@@ -1,0 +1,31 @@
+=head1 DX
+
+Size of the horizontal scrollbar's thumbnail in any unit.
+
+=head2 Value
+
+Any floating-point value greater than zero and smaller than the
+difference between L<XMAX|iup_xmax.html> and L<XMIN|iup_xmin.html>.
+
+Default:: "0.1".
+
+=head2 Notes
+
+LINEX, XMAX and XMIN are only updated in the scrollbar when DX is
+updated.
+
+When the canvas is visible, a change in DX can generate a redraw in the
+horizontal scrollbar on the screen.
+
+A change in these values can affect the attribute
+L<POSX|iup_posx.html>.
+
+=head2 Affects
+
+L<IupCanvas|../elem/iupcanvas.html>
+
+=head2 See Also
+
+L<SCROLLBAR|iup_scrollbar.html>
+
+=cut

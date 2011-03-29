@@ -1,0 +1,28 @@
+=head1 IupSetCallbacks
+
+Associates several callbacks to an event.
+
+=head2 Parameters/Return
+
+ Ihandle* IupSetCallbacks(Ihandle* ih, const char *name, Icallback func, ...); [in C]
+ [There is no equivalent in Lua]
+
+B<ih>: identifier of the interface element.
+
+B<name>: attribute name of the callback.
+
+B<func>: address of a C function. If NULL removes the association.
+
+Returns: the same B<ih> handle.
+
+=head2 Notes
+
+It is useful for setting many callbacks at once while in the creation
+of an hierarchy of elements, just like B<IupSetAttributes>.
+
+=head2 See Also
+
+L<IupSetCallback|iupsetcallback.html>,
+L<IupSetAttributes|iupsetattributes.html>
+
+=cut

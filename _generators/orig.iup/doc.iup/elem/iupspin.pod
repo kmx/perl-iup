@@ -1,0 +1,54 @@
+=head1 IupSpin and IupSpinBox
+
+This functions will create a control set with a vertical box containing
+two buttons, one with an up arrow and the other with a down arrow, to
+be used to increment and decrement values.
+
+Unlike the SPIN attribute of the B<IupText> element, the B<IupSpin>
+element can NOT automatically increment the value and it is NOT
+inserted inside the B<IupText> area.
+
+=head2 Creation
+
+B<IupSpin> inherits from a B<IupVbox>, and contains two B<IupButton>.
+
+ Ihandle* IupSpin(void); [in C]
+ iup.spin{} -> (elem: ihandle) [in Lua]
+ spin() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+B<IupSpinbox> inherits from a B<IupHbox> and contains a B<IupSpin>.
+
+ Ihandle* IupSpinbox(Ihandle* child); [in C]
+ iup.spinbox{child: ihandle} -> (elem: ihandle) [in Lua]
+ spinbox(child)  [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+B<child>: Identifier of an interface element which will receive the
+spinbox around.
+
+=head2 Callbacks
+
+B<SPIN_CB>: Called each time the user clicks in the buttons. It will
+increment 1 and decrement -1 by default. Holding the Shift key will set
+a factor of 2, holding Ctrl a factor of 10, and both a factor of 100.
+
+ int function(Ihandle *ih, int inc); [in C]
+ elem:spin_cb(inc: number) -> (ret: number) [in Lua]
+
+=head2 Examples
+
+ Ihandle* spinbox = IupSpinbox(IupText(NULL));
+
+[IMAGE]
+
+=head2 X<SeeAlso>See Also
+
+L<IupText|iuptext.html>, L<IupVbox|iupvbox.html>,
+L<IupHbox|iuphbox.html>, L<IupButton|iupbutton.html>
+
+=cut

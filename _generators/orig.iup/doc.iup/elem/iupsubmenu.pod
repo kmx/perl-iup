@@ -1,0 +1,77 @@
+=head1 IupSubmenu
+
+Creates a menu item that, when selected, opens another menu.
+
+=head2 Creation
+
+ Ihandle* IupSubmenu(const char *title, Ihandle *menu); [in C]
+ iup.submenu{menu: ihandle[; title = title: string]} -> (elem: ihandle) [in Lua]
+ submenu(title, menu) [in LED]
+
+B<title>: String containing the text to be shown on the item. It can be
+NULL. It will set the TITLE attribute.
+
+B<menu>: optional child menu identifier. Can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<IMAGE> [Windows and GTK Only] (non inheritable): Image name of the
+submenu image. In Windows, an item in a menu bar cannot have a check
+mark. Ignored if submenu in a menu bar. A recommended size would be
+16x16 to fit the image in the menu item. In Windows, if larger than the
+check mark area it will be cropped. (since 3.0)
+
+L<KEY|../attrib/iup_key.html> (non inheritable): Underlines a key
+character in the submenu title. It is updated only when TITLE is
+updated. B<Deprecated>, use the mnemonic support directly in the TITLE
+attribute.
+
+L<TITLE|../attrib/iup_title.html> (non inheritable): Submenu Text. The
+"&" character can be used to define a mnemonic, the next character will
+be used as key. Use "&&" to show the "&" character instead on defining
+a mnemonic.
+
+L<WID|../attrib/iup_wid.html> (non inheritable): In Windows, returns
+the HMENU of the parent menu and it is actually created only when its
+child menu is mapped.
+
+=over
+
+----
+
+=back
+
+L<ACTIVE|../attrib/iup_active.html>: also accepted.
+
+=head2 Callbacks
+
+L<HIGHLIGHT_CB|../call/iup_highlight_cb.html>: Action generated when
+the submenu is highlighted.
+
+----
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>: common callbacks are supported.
+
+=head2 Notes
+
+In Motif and GTK, the text font will be affected by the dialog font
+when the menu is mapped.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+See the B<IupMenu> element for more screenshots.
+
+=head2 X<SeeAlso>See Also
+
+L<IupItem|iupitem.html>, L<IupSeparator|iupseparator.html>,
+L<IupMenu|iupmenu.html>.
+
+=cut

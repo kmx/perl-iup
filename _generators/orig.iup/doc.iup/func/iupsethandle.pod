@@ -1,0 +1,50 @@
+=head1 IupSetHandle
+
+Associates a name with an interface element.
+
+=head2 Parameters/Return
+
+ Ihandle *IupSetHandle(const char *name, Ihandle *ih); [in C]
+ iup.SetHandle(name: string, ih: ihandle) -> old_ih: ihandle [in Lua]
+
+B<name>: name of the interface element.
+
+B<ih>: identifier of the interface element. Use NULL to remove the
+association.
+
+Returns: the identifier of the interface element previously associated
+to the parameter B<name>.
+
+=head2 Notes
+
+This function is used so it is possible to set attributes values that
+are in fact other elements that were created in C. For example:
+
+ IupSetHandle("test_image", image);
+ IupSetAttribute(button, "IMAGE", "test_image");
+
+But this code can be replaced by a more convenient function call:
+
+ IupSetAttributeHandle(button, "IMAGE", image);
+
+In Lua this is not necessary, you can simply do:
+
+ button.image = image
+
+that the association will be automatically made.
+
+----
+
+In fact, any pointer can be stored and retrieved with B<IupSetHandle>
+and B<IupGetHandle>.
+
+Also B<IupSetHandle> can be called several times with the same pointer
+and different names. There is no restriction for the number of names a
+pointer can have, but B<IupGetName> will return the first name found.
+
+=head2 See Also
+
+L<IupGetHandle|iupgethandle.html>,
+L<IupSetAttributeHandle|iupsetattributehandle.html>
+
+=cut

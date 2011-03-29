@@ -1,0 +1,68 @@
+=head1 IupScanf
+
+Shows a modal dialog for capturing values with a format similar to the
+scanf function in the C stdio library.
+
+B<Deprecated>: Use L<IupGetParam|iupgetparam.html> instead.
+
+=head2 Creation and Show
+
+ int IupScanf(const char *format, ...); [in C]
+ iup.Scanf(format: string, ...) -> (...) [in Lua]
+
+B<format>: Reading format
+
+...: List of variables
+
+Returns: In C the number of successfully read fields, or -1 when the
+user has canceled the operation. In Lua, the code is not returned, the
+values are returned by the function in the same order they were passed,
+or nil when the user has canceled the operation.
+
+=head2 Notes
+
+The B<fmt> format must include a title and the descriptions of the
+variable fields to be read, using the following syntax:
+
+B<- B<First line>>: Window title followed by '\n'
+
+B<- B<Following lines>>: Must be specified for each variable to be
+read, in the following format:
+
+"B<text>%B<t>.B<v>%B<f>\n", where:
+
+B<text> is a descriptive text, to be placed to the left of the text
+field in a label.
+
+B<t> is the maximum number of characters allowed
+
+B<v> is the number of visible characters in the text field
+
+B<f> is the type (char, float, etc), in the C format for I/O services
+(d,i,o,u,x,X,e,f,g,E,G,s, and the modifiers l,h)
+
+All the fields use a text box for input. If you need better control of
+what characters the user enters, you should use
+L<IupGetParam|iupgetparam.html>. This other dialog also has many other
+resources not available in B<IupScanf>.
+
+The dialog uses a global attribute called "PARENTDIALOG" as the parent
+dialog if it is defined. It also uses a global attribute called "ICON"
+as the dialog icon if it is defined.
+
+=head2 Examples
+
+Captures an integer number, a floating-point value and a character
+string.
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+=head2 See Also
+
+L<IupGetFile|iupgetfile.html>, L<IupMessage|iupmessage.html>,
+L<IupListDialog|iuplistdialog.html>, L<IupAlarm|iupalarm.html>,
+L<IupGetParam|iupgetparam.html>
+
+=cut

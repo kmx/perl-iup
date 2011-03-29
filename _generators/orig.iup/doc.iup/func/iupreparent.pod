@@ -1,0 +1,34 @@
+=head1 IupReparent (Since 3.0)
+
+Moves an interface element from one position in the hierarchy tree to
+another.
+
+Both parent and child must be mapped or unmapped at the same time.
+
+=head2 Parameters/Return
+
+ void IupReparent(Ihandle* child, Ihandle* parent); [in C]
+ iup.Reparent(child, parent: ihandle) [in Lua]
+
+B<child>: Identifier of the element to be moved.
+
+B<parent>: Identifier of the new parent.
+
+Returns: IUP_NOERROR if successfully, IUP_ERROR if failed.
+
+=head2 Notes
+
+This function is faster and easier than doing the sequence B<unmap>, B<
+detach>, B<attach> and B<map>.
+
+The elements are NOT immediately repositioned. Call B<IupRefresh> for
+the container (or any other element in the dialog) to update the dialog
+layout.
+
+=head2 See Also
+
+L<IupAppend|iupappend.html>, L<IupInsert|iupinsert.html>,
+L<IupDetach|iupdetach.html>, L<IupMap|iupmap.html>,
+L<IupUnmap|iupunmap.html>, L<IupRefresh|iuprefresh.html>
+
+=cut

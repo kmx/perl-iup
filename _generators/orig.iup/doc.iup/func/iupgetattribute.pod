@@ -1,0 +1,48 @@
+=head1 IupGetAttribute
+
+Returns the name of an interface element attribute. See also the
+L<Attributes Guide|../attrib_guide.html> section.
+
+=head2 Parameters/Return
+
+ char *IupGetAttribute(Ihandle *ih, const char *name); [in C]iup.GetAttribute(ih: ihandle, name: string) -> value: string [in Lua]
+
+B<ih>: Identifier of the interface element. If NULL will retrieve from
+the global environment.
+
+B<name>: name of the attribute.
+
+Returns: the attribute value or NULL (nil in Lua) if the attribute is
+not defined or does not exist.
+
+=head2 Notes
+
+See the L<Attributes Guide|../attrib_guide.html> for more details.
+
+This function return value is not necessarily the same pointer used by
+the application to define the attribute value. The pointers of internal
+IUP attributes returned by B<IupGetAttribute> should B<never> be freed
+or changed, except when you allocated the memory for that pointer at
+set it using B< IupSetAttribute>.
+
+=head2 IupLua
+
+In IupLua, only known internal pointer attributes are returned as
+B<user data> or as an ihandle, all other attributes are returned as
+strings. To access attribute data always as B<user data> use
+iup.GetAttributeData:
+
+ iup.GetAttributeData(ih: ihandle) -> value: userdata [in Lua]
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=head2 See Also
+
+L<IupSetAttribute|iupsetattribute.html>, L<IupGetInt|iupgetint.html>,
+L<IupGetFloat|iupgetfloat.html>,
+L<IupSetAttributes|iupsetattributes.html>,
+L<IupGetHandle|iupgethandle.html>.
+
+=cut
