@@ -4,10 +4,10 @@ This driver allows generating a Microsoft Windows Enhanced Metafile,
 the format used by 32-bit Windows systems to store graphics primitives.
 Usually, the filename has an extension "*.emf".
 
-The driver works only in the Microsoft Windows platform, but you can
-use it in other platforms without the risk of compilation error. If you
-attempt to create a canvas in another platform, function B<
-cdCreateCanvas> will return NULL.
+The driver works only with the GDI, GDI+ and Cairo base drivers, but
+you can use it in other platforms without the risk of compilation
+error. If you attempt to create a canvas in another platform, function
+B< cdCreateCanvas> will return NULL.
 
 =head2 Use
 
@@ -28,20 +28,27 @@ B<cdCreateCanvas> B<opens> the file, and a call to function L<
 B<cdKillCanvas>|../func/init.html#cdKillCanvas> is required to B<close>
 the file properly.
 
-To use this driver in Windows using GDI+ is necessary to call B<
-cdUseContextPlus>B<(1)> before creating the canvas. If you intend to
-use B<cdCanvasPlay> to interpret the EMF, then do not use GDI+ to
-generate the metafile. GDI+ extensively use internal transformations
-that will affect the B< cdCanvasPlay> interpretation. Also some
-interior style will not be correctly interpreted.
-
 =head2 Behavior of Functions
 
-This driver is greatly platform-dependent. For further detail, see the
-B< Behavior of Functions> of the L<Microsoft Windows (GDI)|win32.html>
-or L<Windows Using GDI+|gdiplus.html> platform base drivers. It has
-been noticed that EMF, when saved in the Windows 95 environment, is not
-totally compatible with EMF saved in the Windows NT environment.
+This driver is very platform-dependent.
+
+For further detail, see the B< Behavior of Functions> in each base
+driver: L<GDI|win32.html>. To use this driver with a context plus base
+driver is necessary to call B< cdUseContextPlus>B<(1)> before creating
+the canvas, see the L<GDI+|../drv/gdiplus.html> and
+L<Cairo|../drv/cairo.html> base drivers.
+
+However, it should be noted that some functions behave differently from
+the basic functions of each platform.
+
+It has been noticed that EMFs, when saved in the Windows 9x
+environment, is not totally compatible with EMFs saved in the Windows
+NT environment.
+
+If you intend to use B<cdCanvasPlay> to interpret the EMF, then do not
+use GDI+ to generate the metafile. GDI+ extensively use internal
+transformations that will affect the B< cdCanvasPlay> interpretation.
+Also some interior style will not be correctly interpreted.
 
 =head2 Control Functions
 

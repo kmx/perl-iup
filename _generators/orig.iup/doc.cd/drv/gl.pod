@@ -8,7 +8,7 @@ API functions, which it was written against the L<Free
 Type|http://www.freetype.org/> library.
 
 The driver is not dependent of system functions. It uses only the
-OpenGL portable funtions. So if the window canvas changes its size the
+OpenGL portable functions. So if the window canvas changes its size the
 attribute "SIZE" must be set with the new size or cdCanvasGetSize will
 return an incorrect value.
 
@@ -30,7 +30,7 @@ the ftgl library and the OpenGL library. The FTGL library is dependent
 also on the GLU library. In UNIX B<cdgl> is also dependent on B<iconv>.
 
 In Lua, it is necessary to call function B<cdluagl_open() > after a
-call to function B<cdlua_open()>, apart from linkediting with the
+call to function B<cdlua_open()>, apart from linking with the
 "B<cdluagl>" library. This is not necessary if you do require"cdluagl".
 
 =head2 Behavior of Functions
@@ -102,7 +102,7 @@ mapped to "Courier New", "Helvetica" is mapped to "Arial", and "Times"
 is mapped to "Times New Roman". In UNIX, "Courier" is mapped to
 "freemono", "Helvetica" is mapped to "freesans", and "Times" is mapped
 to "freeserif". Underline and Strikeout are NOT supported. If not found
-then the font file is searched used the same logic of the
+then the font file is searched using the same logic of the
 L<Simulation|sim.html> driver, but B<ADDFONTMAP> is not supported. If
 still is not found then the typeface is used as file name for the font.
 

@@ -59,29 +59,41 @@ the available binaries.
 
 =head2 X<buildlib>Building the Library
 
-In the Downloads you will ne able to find pre-compiled binaries for
+In the Downloads you will be able to find pre-compiled binaries for
 many platforms, all those binaries were built using Tecmake. Tecmake is
 a command line multi compiler build tool based on GNU make, available
 at
 L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>tecmake|http://www.tecgraf.puc-rio.br/tecmake>.
 Tecmake is used by all the Tecgraf libraries and many applications.
 
-In UNIX, you do not need to install Tecmake, a compact version of
-Tecmake for UNIX is already included in the source code package. Just
-type "make" in the command line on the "src" folder and all libraries
-and executables will be build. Set the TECTOOLS_HOME environment
-variable to the folder were the IM and Lua libraries are installed, by
-default it will assume "TECTOOLS_HOME=../..".
+In UNIX, you do not need to install Tecmake, a version for Posix
+systems is already included in the source code package. Just type
+"make" in the command line on the "src" folder and all libraries will
+be build. Set the TECTOOLS_HOME environment variable to the folder were
+the IM and Lua libraries are installed, by default it will assume
+"TECTOOLS_HOME=../..".
+
+In Linux, check the "L<Building Lua, IM, CD and IUP in
+Linux|building.html>" guide.
 
 In Windows, the easiest way to build everything is to install the
 Tecmake tool into your system. It is easy and helps a lot. The Tecmake
 configuration files (*.mak) available at the "src" folder are very easy
-to understand also. Also there are files named I<make_uname.bat> that
-build the libraries using B<Tecmake>. To build for Windows using Visual
-C 7.0 (2005) for example, just execute I<"make_uname vc7"> , or the
-DLLs with Visual C++ 9 (2008) type I<"make_uname dll9">. The Visual
-Studio workspaces with the respective projects available in the source
-package is for debugging purposes only.
+to understand also. There are files named I<make_uname.bat> that build
+the libraries using B<Tecmake>. To build for Windows using Visual C 9.0
+(2008) for example, just execute I<"make_uname vc9"> , or for the DLLs
+type I<"make_uname dll9">. The Visual Studio workspaces with the
+respective projects available in the source package is for debugging
+purposes only.
+
+If you don't want to install Tecmake you can use the version for
+Windows systems that is included in the source code package. BUt is is
+more complicated that its Posix counterpart. First the GNU make must be
+installed and in the PATH before other makes. In the command line you
+must specify the compiler path and the TEC_UNAME variable. For example:
+
+ make -f tecmakewin.mak TEC_UNAME=mingw4 MINGW4=c:/mingw 
+ make -f tecmakewin.mak TEC_UNAME=gcc4 GCC4=c:/cygwin           (Cygwin building for Win32)
 
 Make sure you have all the dependencies for the library you want
 installed, see the documentation bellow.
@@ -99,20 +111,22 @@ expect the following directory tree:
  cd -> FreeType (included as separate library)
     cdwin* -> gdi32 user32 comdlg32 (system - Windows)
     cdx11* -> X11 (system - UNIX)
-    cdgdk* -> gdk-win32-2.0 pangowin32-1.0(system - Windows)
+    cdgdk+cdcairo* -> gdk-win32-2.0 pangowin32-1.0(system - Windows)
            -> gdk-x11-2.0 pangox-1.0 (system - UNIX)
-           -> cairo-2 gdk_pixbuf-2.0 pango-1.0 gobject-2.0 gmodule-2.0 glib-2.0 (system - Windows/UNIX)
+           -> cairo gdk_pixbuf-2.0 pango-1.0 gobject-2.0 gmodule-2.0 glib-2.0 (system - Windows/UNIX)
  cdgdiplus* -> cd
            -> gdiplus (system - Windows)
  cdxrender* -> cd
            -> Xrender Xft (system - UNIX)
- cdcairo* -> cairo-2 (system - Windows/UNIX)
+ cdcairo  -> pangocairo-1.0 cairo (system - Windows/UNIX)
  cdpdf    -> pdflib (included as separate library)
  cdgl     -> opengl32 (system - Windows)
           -> GL (system - UNIX)
           -> ftgl (included as separate library)
  cdlua51  -> cd
           -> lua5.1
+ cdluacontextplus -> cdlua51
+                  -> cdcontextplus
  cdluaim51 -> cdlua51
            -> imlua51 
  cdluapdf51 -> cdlua51
@@ -120,22 +134,21 @@ expect the following directory tree:
  cdluagl51 -> cdlua51
            -> cdgl
  
- (*) In Windows, "cdwin" is called "cd". 
-     In Linux and BSD "cdgdk" is called "cd". 
-     In IRIX, AIX and SunOS "cdx11" is called "cd".
+ (*) In Windows, "cdwin" is called "cd", "cdgdiplus" is called "cdcontextplus". 
+     In Linux and BSD "cdgdk+cdcairo" is called "cd", "cdxrender" is called "cdcontextplus". 
+     In IRIX, AIX and SunOS "cdx11" is called "cd", "cdxrender" is called "cdcontextplus".
 
 As a general rule (excluding system dependencies and included third
 party libraries): CD has NO external dependencies, and CDLua depends on
 Lua and IMLua. Just notice that not all CDLua libraries depend on
 IMLua.
 
-The Lua bindings for IUP, CD and IM (Makfiles and Pre-compiled
+The Lua bindings for IUP, CD and IM (Makefiles and Pre-compiled
 binaries) depend on the L<LuaBinaries|http://luabinaries.luaforge.net/>
 distribution. So if you are going to build all use the B<LuaBinaries>
 source package also, not the B<Lua.org> original source package. If you
-like to use another location for the Lua files overwrite the LUAINC,
-LUALIB and LUABINDIR definitions before using Tecmake or Tecmake
-Compact.
+like to use another location for the Lua files define LUA_SUFFIX,
+LUA_INC, LUA_LIB and LUA_BIN before using Tecmake or Tecmake Compact.
 
 In Ubuntu you will need to install the following packages:
 

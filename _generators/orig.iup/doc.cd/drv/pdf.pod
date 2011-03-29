@@ -46,7 +46,7 @@ To use this driver, the application must be linked with the "B<cdpdf>"
 and "B<pdflib>" libraries.
 
 In Lua, it is necessary to call function B<cdluapdf_open() > after a
-call to function B<cdlua_open()>, apart from linkediting with the
+call to function B<cdlua_open()>, apart from linking with the
 "B<cdluapdf>" library. This is not necessary if you do
 require"cdluapdf".
 

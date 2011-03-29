@@ -64,7 +64,8 @@ obtained using the formula B<res=1.0/mm>.
 Allows translating the origin - for instance, to the center of the
 canvas. The function profits from the architecture of the library to
 simulate a translation of the origin, which in fact is never actually
-passed to the canvas in the respective driver. Default values: (0, 0)
+passed to the canvas in the respective driver. It is not related with
+WD nor Transformation Matrix. Default values: (0, 0)
 
  void cdCanvasGetOrigin(cdCanvas* canvas, int *x, int *y); [in C]
  void cdfCanvasGetOrigin(cdCanvas* canvas, double *x, double *y); [in C]

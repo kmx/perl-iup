@@ -1,4 +1,4 @@
-=head1 Microsoft Windows Base I<Driver> Using GDI+
+=head1 GDI+ Base I<Driver>
 
 This driver represents a base driver for all system-dependent drivers
 implemented in the Microsoft Windows system, but uses a new API called
@@ -6,6 +6,9 @@ GDI+. The drivers B<Clipboard, Native Window>, B<IUP>, B<Image>,
 B<Printer>, B<EMF> and B<Double Buffer> were implemented. The driver
 B<WMF>, and the function B<cdPlay> of the B<Clipboard> and B<EMF>
 drivers were not implemented using GDI+.
+
+It can be used only as the context plus driver of the GDI based
+drivers.
 
 The main motivation for the use of GDI+ was transparency for all the
 primitives. Beyond that we got other features like anti-aliasing,
@@ -18,25 +21,26 @@ different from GDI. It is know that GDI+ can be slower than GDI in some
 cases and faster in other cases, Microsoft does not make this clear.
 
 So we let the programmer to choose what to use. We created the function
-B< cdUseContextPlus> that allows to activate or to deactivate the use
-of GDI+ for the available Windows based drivers. This function affects
-only the B<cdCreateCanvas> function call, once created the canvas will
-be always a GDI+ canvas. In fact the function affects primary the
-definitions B<CD_NATIVEWINDOW>, B<CD_IMAGE>, B< CD_PRINTER>, B<
-CD_EMF>, B< CD_DBUFFER> and B< CD_CLIPBOARD>, because they are function
-calls and not static defines.
+B< L<cdUseContextPlus|../func/init.html#cdUseContextPlus> > that allows
+to activate or to deactivate the use of GDI+ for the GDI based drivers.
+This function affects only the B<cdCreateCanvas> function call, once
+created the canvas will be always a GDI+ canvas. In fact the function
+affects primary the definitions B<CD_NATIVEWINDOW>, B<CD_IMAGE>, B<
+CD_PRINTER>, B< CD_EMF>, B< CD_DBUFFER> and B< CD_CLIPBOARD>, because
+they are function calls and not static defines.
 
 Using GDI+ it is allowed to create more that one canvas at the same
 time for the same Window. And they can co-exist with a standard GDI
 canvas.
 
 To enable the use of GDI+ based drivers you must call the
-initialization function B< cdInitContextPlus()> once and link to the
-libraries "B<cdcontextplus.lib>" and "B<gdiplus.lib>". Also the file
-"B<gdiplus.dll>" must be available in your system. These files already
-came with Visual C++ 7 and Windows XP. For other compilers or systems
-you will need to copy the ".lib" file for you libraries area, and you
-will need to copy the DLL for the Windows\System (Win98/Me) or
+initialization function B<
+L<cdInitContextPlus|../func/init.html#cdInitContextPlus>> once and link
+to the libraries "B<cdcontextplus.lib>" and "B<gdiplus.lib>". Also the
+file "B<gdiplus.dll>" must be available in your system. These files
+already came with Visual C++ 7 and Windows XP. For other compilers or
+systems you will need to copy the ".lib" file for you libraries area,
+and you will need to copy the DLL for the Windows\System (Win98/Me) or
 Windows\System32 (Win2000/NT4-SP6) folder. The gdiplus files can be
 obtained from L<
 Microsoft|http://www.microsoft.com/downloads/details.aspx?familyid=6a63ab9c-df12-4d41-933c-be590feaa05a&displaylang=en>
@@ -105,13 +109,6 @@ for the center color. This will not affect the current interior style.
 =head2 Attributes
 
 =over
-
-=item * L<B< BackOpacity>|../func/filled.html#cdBackOpacity>: only
-changes the transparency of the background color to 0 (transparent) or
-255 (opaque).
-
-=item * L<B<Hatch>|../func/filled.html#cdHatch>: diagonal styles are
-drawn with anti-aliasing.
 
 =item * L< B< WriteMode>|../func/attributes.html#cdWriteMode>: does
 nothing. There is no support for XOR or NOT_XOR.

@@ -4,6 +4,9 @@ This driver represents a basic driver for all system-dependent drivers
 implemented in the X-Windows system using the XRender extension. The
 implementation uses the XRender and Xft API functions.
 
+It can be used only as the context plus driver of the X-Win based
+drivers.
+
 The main motivation for the use of XRender was transparency for all the
 primitives. Beyond that we got other features like anti-aliasing,
 gradient filling and transformations.
@@ -13,23 +16,25 @@ driver, because XRender does not have support for XOR and for line
 styles.
 
 So we let the programmer to choose what to use. We created the function
-B< cdUseContextPlus> that allows to activate or to deactivate the use
-of X-Render for the available X-Windows based drivers. This function
-affects only the B<cdCreateCanvas> function call, once created the
-canvas will be always a XRender canvas. In fact the function affects
-primary the definitions B<CD_NATIVEWINDOW>, B<CD_IMAGE> and B<
-CD_DBUFFER>, because they are function calls and not static defines.
+B< L<cdUseContextPlus|../func/init.html#cdUseContextPlus> > that allows
+to activate or to deactivate the use of X-Render for the available
+X-Win based drivers. This function affects only the B<cdCreateCanvas>
+function call, once created the canvas will be always a XRender canvas.
+In fact the function affects primary the definitions
+B<CD_NATIVEWINDOW>, B<CD_IMAGE> and B< CD_DBUFFER>, because they are
+function calls and not static defines.
 
 Using XRender it is allowed to create more that one canvas at the same
 time for the same Window. And they can co-exist with a standard
 X-Windows canvas.
 
 To enable the use of XRender based drivers you must call the
-initialization function B< cdInitContextPlus()> once and link to the
-libraries "B<cdcontextplus>", "B<Xrender>" and "B<Xft>". Also the
-libraries "B<Xrender>" and "B<Xft>" must be installed in your system.
-The XRender extension must be available in the X-Windows server for the
-driver to work.
+initialization function B<
+L<cdInitContextPlus|../func/init.html#cdInitContextPlus>> once and link
+to the libraries "B<cdcontextplus>", "B<Xrender>" and "B<Xft>". Also
+the libraries "B<Xrender>" and "B<Xft>" must be installed in your
+system. The XRender extension must be available in the X-Windows server
+for the driver to work.
 
 Currently, pre-compiled binaries are available for Linux and BSD. It is
 not available for the systems we have with AIX, SunOS and IRIX.
@@ -37,7 +42,7 @@ not available for the systems we have with AIX, SunOS and IRIX.
 In CDLua it is not necessary any additional initialization, but the
 application must still be linked with the B<cdcontextplus.lib> library
 or a B<require"cdluacontextplus"> can be used when using dynamic
-libraries.
+libraries. When using require, it is NOT available in Linux.
 
 =head2 Behavior of Functions
 

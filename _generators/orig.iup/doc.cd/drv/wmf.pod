@@ -18,8 +18,7 @@ B<cdCreateCanvas>|../func/init.html#cdCreateCanvas>(CD_WMF, Data),
 after which other functions in the CD library can be called as usual.
 The Data parameter string has the following format:
 
- "filename widthxheight [resolution]"     or in C "%s 
-     %dx%d %g"
+ "filename widthxheight [resolution]"     or in C "%s %dx%d %g"
 
 The file's name and dimensions are required. Width and height are
 provided in pixels (note the lowercase "x" between them). Resolution is

@@ -13,27 +13,26 @@ usual. This function B<creates> a CD canvas based on an existing system
 canvas. The parameter Data is a pointer to a handle of the canvas. It
 is system-dependent, having a different meaning in each platform:
 
-B<Microsoft Windows>: can be the handle of the Windows window (HWND),
-or the handle of a previously created Device Context (HDC), or can be a
-string in the format "hdc width height" or, in C, "%p %d %d". To get
-the entire screen use a NULL data.
+B<GDI and GDI+>: can be the handle of the Windows window (HWND), or the
+handle of a previously created Device Context (HDC), or can be a string
+in the format "hdc width height" or, in C, "%p %d %d". To get the
+entire screen use a NULL data.
 
-B<X-Windows>: It is a string in the format "display window" or, in C,
+B<X-Windows>: is a string in the format "display window" or, in C,
 "C<%p %lu>" (uses the default screen).
 
-The given parameters must exists until B<cdKillCanvas> is called. The
-HDC is released only if created inside B<cdCreateCanvas> from an HWND
-or when data is NULL.
+B<GDK and Cairo>: is a GdkDrawable* handle.
+
+The given parameters must exists until B<cdKillCanvas> is called. In
+Windows, the HDC is released only if created inside B<cdCreateCanvas>
+from an HWND or when data is NULL.
 
 Any amount of such canvases may exist simultaneously, but they should
 not use the same window, except if you are using a GDI canvas and a
 GDI+ canvas at the same time for the same window.
 
 In CDLUA, the creation parameter must be a string in X-Windows and a
-userdata in Microsoft Windows.
-
-To use this driver in Windows using GDI+ is necessary to call B<
-cdUseContextPlus>B<(1)> before creating the canvas.
+userdata in others.
 
 =head2 Exclusive Functions
 
@@ -59,12 +58,17 @@ is not necessary to have an active canvas to call this function.
 
 =head2 Behavior of Functions
 
-This driver is greatly platform-dependent. For further detail, see the
-B<Behavior of Functions> in each platform: L<Microsoft Windows
-(GDI)|win32.html>, L<Windows Using GDI+|gdiplus.html>, L<X-Windows
-(XLIB)|xwin.html>, L<GDK|gdk.html>. However, it should be noted that
-some functions behave differently from the basic functions of each
-platform.
+This driver is very platform-dependent.
+
+For further detail, see the B< Behavior of Functions> in each base
+driver: L<GDI|win32.html>, L<GDK|gdk.html> and L<X-Win|xwin.html>. To
+use this driver with a context plus base driver is necessary to call B<
+cdUseContextPlus>B<(1)> before creating the canvas, see the
+L<GDI+|../drv/gdiplus.html>, L<Cairo|../drv/cairo.html> and
+L<XRender|../drv/xrender.html> base drivers.
+
+However, it should be noted that some functions behave differently from
+the basic functions of each platform.
 
 =head2 Control
 

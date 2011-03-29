@@ -32,17 +32,19 @@ function B< L< cdCanvasActivate|../func/init.html#cdActivate>>.
 We suggest you to implement rubber bands using XOR directly on the
 front buffer.
 
-To use this driver in Windows using GDI+ is necessary to call B<
-cdUseContextPlus>B<(1)> before creating the canvas.
-
 =head2 Behavior of Functions
 
-This driver is greatly platform-dependent. For further detail, see the
-B< Behavior of Functions> in each platform: L<Microsoft Windows
-(GDI)|win32.html>, L<Windows Using GDI+|gdiplus.html>, L<X-Windows
-(XLIB)|xwin.html>, L<GDK|gdk.html>. However, it should be noted that
-some functions behave differently from the basic functions of each
-platform.
+This driver is very platform-dependent.
+
+For further detail, see the B< Behavior of Functions> in each base
+driver: L<GDI|win32.html>, L<GDK|gdk.html> and L<X-Win|xwin.html>. To
+use this driver with a context plus base driver is necessary to call B<
+cdUseContextPlus>B<(1)> before creating the canvas, see the
+L<GDI+|../drv/gdiplus.html>, L<Cairo|../drv/cairo.html> and
+L<XRender|../drv/xrender.html> base drivers.
+
+However, it should be noted that some functions behave differently from
+the basic functions of each platform.
 
 =head2 Control
 

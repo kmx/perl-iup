@@ -2,11 +2,11 @@
 
 This driver provides access to a System Default Printer.
 
-Currently, it works only in Microsoft Windows platforms, but it is
-possible to use it in other platforms without the risk of compilation
-error. If you attempt to create a canvas in another platform, the
-function L< B<cdCreateCanvas>|../func/init.html#cdCreateCanvas> will
-return NULL.
+The driver works only with the GDI, GDI+ and Cairo base drivers, but it
+is possible to use it in other platforms without the risk of
+compilation error. If you attempt to create a canvas in another
+platform, the function L<
+B<cdCreateCanvas>|../func/init.html#cdCreateCanvas> will return NULL.
 
 =head2 Use
 
@@ -18,10 +18,10 @@ has the following format:
  "name [-d]"    or in C style "%s -d"
 
 name is an optional document name that will appear in the printer
-queue. Optionally, -d displays the System Printer dialogue box before
-starting to print, allowing you to configure the printer's parameters.
-When using this parameter and the return canvas is NULL, one must
-assume that the print was canceled by the user.
+queue. Optionally, -d displays the system pre-defined printer dialog
+before starting to print, allowing you to configure the printer's
+parameters. When using this parameter and the return canvas is NULL,
+one must assume that the print was canceled by the user.
 
 Any amount of such canvases may exist simultaneously. It is important
 to note that a call to function L<
@@ -31,20 +31,21 @@ send the data to the printer.
 B<Pages -> Use L< B<Flush>|../func/control.html#cdFlush> to change to a
 new page. You can draw first on page 1, then on page 2 and so forth.
 
-To use this driver in Windows using GDI+ is necessary to call B<
-cdUseContextPlus>B<(1)> before creating the canvas.
-
 =head2 Behavior of Functions
 
-This driver is greatly platform-dependent. For further detail, see the
-B< Behavior of Functions> in each platform: L<Microsoft Windows
-(GDI)|win32.html>, L<Windows Using GDI+|gdiplus.html>, and
-L<Cairo|cairo.html> (over GDK). However, it should be noted that some
-functions behave differently from the basic functions of each platform.
+This driver is very platform-dependent.
 
-A printer created in Win32s has the same limitations as the L<WMF
-driver|wmf.html>. In Windows 95 or NT, it has the same limitations as
-the L<EMF driver|emf.html>.
+For further detail, see the B< Behavior of Functions> in each base
+driver: L<GDI|win32.html>. To use this driver with a context plus base
+driver is necessary to call B< cdUseContextPlus>B<(1)> before creating
+the canvas, see the L<GDI+|../drv/gdiplus.html> and
+L<Cairo|../drv/cairo.html> base drivers.
+
+However, it should be noted that some functions behave differently from
+the basic functions of each platform.
+
+A printer created in Windows has the same limitations as the L<EMF
+driver|emf.html>.
 
 =head2 Control
 

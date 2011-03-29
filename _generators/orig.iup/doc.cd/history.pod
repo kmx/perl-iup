@@ -1,6 +1,51 @@
 =head1 History of Changes
 
 =head2 L<Version
+5.4.1|http://sourceforge.net/projects/canvasdraw/files/5.4.1/>
+(09/Nov/2010)
+
+=over
+
+=item * B<IMPORTANT:> since the previous version CDLua dynamic
+libraries in Linux are dependent on GDK, because they depend on the
+main library, that now contains the GDK base drivers. i.e. the X-Win
+base drivers can NOT be used anymore in dynamic libraries when using
+Lua in Linux.
+
+=item * Changed: the Cairo context plus driver in Lua is now the
+default library when using "cdluacontextplus" in Linux.
+
+=item * Fixed: CD_GL static library for Visual C++ compilers were
+incorrectly using FTGL as dynamic library.
+
+=item * Fixed: CD_QUERY in B< cdCanvasNativeFont>.
+
+=item * Fixed: canvas:Transform when nil is used to reset the
+transformation.
+
+=item * Fixed: B<cdCanvasClear> not considering the transparency of the
+background color in the GDI+ base driver and in the CD_GL driver.
+
+=item * Fixed: background transparency was not being considered when
+backopacity was set to OPAQUE after the background color was set in the
+GDI+ base driver.
+
+=item * Fixed: polygon filling in CD_IMAGERGB driver when there are
+many horizontal or vertical lines in a sequence on the same polygon.
+
+=item * Fixed: locale in SVG and PS for floating point numbers, it must
+use dots "." for decimal separators.
+
+=item * Fixed: Cairo context plus base driver when used with GDK.
+
+=item * Fixed: B<PutImageRGB>, B<PutImageRGBA>, B<PutImageMap> and B<
+Pattern> when in 64bits using the Cairo context plus base driver.
+
+=item * Fixed: resources release in Win32 double buffer driver.
+
+=back
+
+=head2 L<Version
 5.4|http://sourceforge.net/projects/canvasdraw/files/5.4/>
 (24/June/2010)
 

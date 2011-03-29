@@ -1,4 +1,4 @@
-=head1 Microsoft Windows Base Driver
+=head1 GDI Base Driver
 
 This driver represents a base driver for all system-dependent drivers
 implemented in the Microsoft Windows system. The implementation uses

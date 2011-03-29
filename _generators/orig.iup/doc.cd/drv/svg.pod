@@ -27,6 +27,13 @@ to note that a call to function L<B<
 cdKillCanvas>|../func/init.html#cdKillCanvas> is required to B<close>
 the file properly.
 
+B<IMPORTANT:> because the SVG specification states that floating point
+number must use dots "." for floating point separators, we set the
+numeric locale to "C" when the canvas is created, and restore it when
+it is destroyed. But since it uses the global C function B<setlocale>
+if you use other C functions that are locale dependent while the SVG
+canvas is being used then be aware that they will be affected.
+
 =head2 Behavior of Functions
 
 =head2 Control

@@ -14,12 +14,13 @@ usual. The Data parameter string is platform-dependent and varies
 according to the metafile created. See each metafile's documentation,
 but remember to exclude parameter "filename".
 
-In the Windows environment, if the string "-b" is present, it means
-that a B<Bitmap> must be created instead of a metafile, and, if the
-string "-m" is specified, a B<CD Metafile> will be created. For a
-B<Bitmap> the remaining string must contains the bitmap size and
-optionally its resolution: I<"-b widthxheight [resolution]"> or in C
-"C<I<B<%dx%d %g">>>, the resolution default is the screen resolution.
+In the Windows environment, if the string "-b" is present at the end,
+it means that a B<Bitmap> must be created instead of a metafile, and,
+if the string "-m" is present at the end, a B<CD Metafile> will be
+created. For a B<Bitmap> the remaining string must contains the bitmap
+size and optionally its resolution: I<"widthxheight [resolution] -b">
+or in C "C<I<B<%dx%d %g -b">>>, the resolution default is the screen
+resolution.
 
 In the X-Windows environment, the Display ("%p") where the data will be
 stored must be passed as a parameter before the B<CD Metafile>
@@ -39,15 +40,15 @@ obtained. The B<cdRegisterCallback> must be called for the driver that
 will interpret the file, except for bitmaps that the B<CD_CLIPBOARD>
 driver must be used.
 
-To use this driver in Windows using GDI+ is necessary to call B<
-cdUseContextPlus>B<(1)> before creating the canvas.
-
 =head2 Behavior of Functions
 
-This driver is greatly platform-dependent. For further detail, see the
-B< Behavior of Functions> in each platform: L<Microsoft Windows
-(GDI)|win32.html>, L<X-Windows (XLIB)|xwin.html>. However, it should be
-noted that some functions behave differently from the basic functions
-of each platform.
+This driver is very platform-dependent.
+
+For further detail, see the B< Behavior of Functions> in each base
+driver: L<GDI|win32.html>, L<GDK|gdk.html> and L<X-Win|xwin.html>. To
+use this driver with a context plus base driver is necessary to call B<
+cdUseContextPlus>B<(1)> before creating the canvas, see the
+L<GDI+|../drv/gdiplus.html>, L<Cairo|../drv/cairo.html> and
+L<XRender|../drv/xrender.html> base drivers.
 
 =cut

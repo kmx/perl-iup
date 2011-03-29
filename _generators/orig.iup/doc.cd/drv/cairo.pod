@@ -2,46 +2,57 @@
 
 This driver represents a basic driver for all system-dependent drivers
 implemented in the X-Windows and MS-Windows systems. The implementation
-uses the L<Cairo|http://library.gnome.org/devel/pango/> and Pango
-functions. This driver can be compiled and used in all systems Cairo is
-supported. The drivers B<Native Window>, B<Image>, B<EMF>, B<Printer>
-and B<Double Buffer> were implemented.
+uses the L<Cairo|http://cairographics.org/> and
+L<Pango|http://library.gnome.org/devel/pango/> functions. This driver
+can be compiled and used in all systems Cairo is supported. The drivers
+B<Native Window>, B<Image>, B<EMF>, B<Printer> and B<Double Buffer>
+were implemented.
+
+It can be used as the context plus driver of the GDI, GDK and X-Win
+based drivers. But its primary focus is the GDK base driver.
 
 The main motivation for the use of Cairo was transparency for all the
 primitives. Beyond that we got other features like anti-aliasing,
 gradient filling, transformations and other back-ends (support to
 rendering: PDF, PS, SVG and IMAGERGB surfaces).
 
-This driver still does not completely replace the X-Windows and GDI
-Windows base drivers, because Cairo does not have support for bitwise
-XOR operations and for complex clipping regions.
+This driver still does not completely replace the X-Windows, GDK and
+GDI Windows base drivers, because Cairo does not have support for
+bitwise XOR operations and for complex clipping regions.
 
 So we let the programmer to choose what to use. We created the function
-B< cdUseContextPlus> that allows to activate or to deactivate the use
-of Cairo for the available GDK, Win32 or X-Windows based drivers. This
-function affects only the B<cdCreateCanvas> function call, once created
-the canvas will be always a Cairo canvas. In fact the function affects
-primary the definitions B<CD_NATIVEWINDOW>, B<CD_IMAGE>, B<CD_EMF>,
-B<CD_PRINTER> and B< CD_DBUFFER>, because they are function calls and
-not static defines. B<CD_PRINTER> can be used with the GDK base driver
-in UNIX, or with the Win32 base driver in Windows. B<CD_EMF > can be
-used in Windows only, with GDK or Win32 base drivers.
+B< L<cdUseContextPlus|../func/init.html#cdUseContextPlus>> that allows
+to activate or to deactivate the use of Cairo for the available GDK,
+Win32 or X-Win based drivers. This function affects only the
+B<cdCreateCanvas> function call, once created the canvas will be always
+a Cairo canvas. In fact the function affects primary the definitions
+B<CD_NATIVEWINDOW>, B<CD_IMAGE>, B<CD_EMF>, B<CD_PRINTER> and B<
+CD_DBUFFER>, because they are function calls and not static defines.
+B<CD_PRINTER> can be used with the GDK base driver in UNIX, or with the
+Win32 base driver in Windows. B<CD_EMF > can be used in Windows only,
+with GDK or Win32 base drivers.
 
 Using Cairo it is allowed to create more that one canvas at the same
 time for the same Window. And they can co-exist with a standard GDK,
 Win32 or X-Windows canvas.
 
 To enable the use of Cairo based drivers you must call the
-initialization function B< cdInitContextPlus()> once and link to the
-libraries "B<cdcairo>" and "B<cairo>". Also the Cairo library must be
-installed in your system. When using the GDK base driver you do not
-need to link with the "B<cdcairo>" library.
+initialization function B<
+L<cdInitContextPlus|../func/init.html#cdInitContextPlus>> once, and do
+not need to link with any additional library when using the GDK base
+driver. But when using with the GDI and X-Win base drivers you need to
+link to the libraries "B<cdcairo>" and "B<cairo>".
+
+Also the Cairo library must be installed in your system.
 
 In CDLua it is not necessary any additional initialization, and
-B<require"cdluacairo"> can be used when using dynamic libraries. But
-when using require there are some restrictions, in Win32 the GDK base
-driver can NOT be used, in Linux the X11 base driver can NOT be used,
-and in other UNICES the GDK base driver can NOT be used.
+B<require"cdluacontextplus"> can be used when using dynamic libraries.
+But it is available only in Linux and only for the GDK base driver.
+
+As an alternative you can use B<require>"B<cdluacairo">, but there are
+some restrictions: in Windows only the GDI base driver can be used; in
+Linux only the GDK base driver can be used; in other UNICES only the
+X-Win base driver can be used.
 
 =head2 Extra Drivers (cdcairo.h)
 
