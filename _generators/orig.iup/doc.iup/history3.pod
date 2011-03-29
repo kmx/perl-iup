@@ -4,6 +4,114 @@ Check the L<Migration Guide|migration_guide.html> for a summary of the
 important changes and how to proceed when migrating from version 2.x to
 version 3.x.
 
+=head2 L<Version 3.4|http://sourceforge.net/projects/iup/files/3.4/>
+(15/Feb/2011)
+
+=over
+
+=item * New: function B<IupClassMatch>.
+
+=item * New: functions B< IupPPlotInsertStrPoints>,
+B<IupPPlotInsertPoints>, B<IupPPlotAddPoints> and
+B<IupPPlotAddStrPoints> for B<IupPPlot> to add an array of samples at
+once.
+
+=item * New: common attribute SCREENPOSITION that returs the X and Y
+attributes at once.
+
+=item * New: ACTIVEWINDOW attribute for B< IupDialog> in Windows and
+GTK.
+
+=item * New: EDITNEXT attribute for B< IupMatrix> to control the next
+cell after editing.
+
+=item * New: FITTOTEXT action attribute, FITMAXHEIGHT and FITMAXWIDTH
+attributes in B< IupMatrix>.
+
+=item * New: INPUTCALLBACKS global attribute and GLOBALKEYPRESS_CB,
+GLOBALMOTION_CB, GLOBALBUTTON_CB and GLOBALWHEEL_CB global callbacks.
+
+=item * New: B<IupRecordInput> and B<IupPlayInput> functions to record
+and play back mouse and keyboard interaction. (play partially working)
+
+=item * B<New: >VALUEMASKED attribute for B<IupText>.
+
+=item * B<New:> SYSTEMLOCALE global attribute.
+
+=item * Changed: removed compatibility with old bc55, gcc3 and mingw3
+compilers in Windows. Depending on the Cygwin installation gcc3 may
+still works.
+
+=item * Changed: improved internal class inheritance so iupClassNew can
+use iupRegisterFindClass to get its parent.
+
+=item * Changed: NAVIGATE_CB callback in B<IupWebBrowser> to process
+the return value. If IUP_IGNORE is returned navigation is canceled.
+
+=item * Changed: improved compatibility with GTK 3.0.
+
+=item * Changed: improved memory management in IupLua using the new
+LDESTROY_CB callback.
+
+=item * Fixed: removed call to B< cdCanvasFlush> when
+B<IupPPlotPaintTo> is used.
+
+=item * Fixed: FILTER and EXTFILTER attributes of B<IupFileDlg> in GTK
+when more than one pattern is specified for the same filter
+("*.jpg;*.bmp").
+
+=item * Fixed: RESIZE=NO was incorrectly forcing MINBOX=NO for
+B<IupDialog> in GTK.
+
+=item * Fixed: compatibility with GTK 2.22.
+
+=item * Fixed: padding warning in GTK when using B<IupButton> with
+IMPRESS.
+
+=item * Fixed: X and Y attributes in the GTK driver for all controls. X
+and Y attributes in the Windows and Motif drivers for the B<IupDialog>.
+
+=item * Fixed: B<IupInsert> when adding the first element of a
+container.
+
+=item * Fixed: set attribute in the properties dialog of the
+B<IupLayoutDialog>.
+
+=item * Fixed: behavior of BGCOLOR, GETFOCUS_CB, KILLFOCUS_CB, and
+K_ANY for B< IupList> when DROPDOWN=Yes in GTK.
+
+=item * Fixed: parameters "o" and "n" in iup.B<GetParam> when used in
+Lua.
+
+=item * Fixed: added support for B< IupSplit>, B<IupNormalizer> and
+B<IupWebBrowser> in the ledc tool.
+
+=item * Fixed: support for WIDTH*, HEIGHT*, RASTERWIDTH* and
+RASTERHEIGHT* attributes of B<IupMatrix> when the B<IupSetAttributeId>
+functions are used.
+
+=item * Fixed: FITTOSIZE attribute in B< IupMatrix> when title column
+size is defined by WIDTH0 or RASTERWIDTH0 to be 0.
+
+=item * Fixed: WID get attribute in B< IupLua> on Windows.
+
+=item * Fixed: added missing iup.B<GetNativeHandleImage> and
+iup.B<GetImageNativeHandle> binding in IupLua.
+
+=item * Fixed: line end converting when FORMATTING=Yes in B<IupText> on
+Windows.
+
+=item * Fixed: feedback when opening/closing branches in B<IupTree> on
+Windows when SHOWDRAGDROP=YES.
+
+=item * Fixed: DRAW_CB callback in B< IupCells> when using the last
+parameter canvas.
+
+=item * Fixed: cell value when editing was stared with a character not
+valid by the current MASK in B<IupMatrix>.
+
+=back
+
 =head2 L<Version 3.3|http://sourceforge.net/projects/iup/files/3.3/>
 (release2) (18/Nov/2010)
 

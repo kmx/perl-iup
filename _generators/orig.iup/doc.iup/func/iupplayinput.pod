@@ -1,0 +1,39 @@
+=head1 IupPlayInput
+
+Reproduces all mouse and keyboard input from a given file.
+
+=head2 Parameters/Return
+
+ int IupPlayInput(const char *filename); [in C]
+ iup.PlayInput(filename: string) -> ret: number [in Lua]
+
+B<filename>: name of the file to be played. NULL will stop playing. ""
+will pause and restart a file already being played.
+
+Returns: IUP_NOERROR if successful, IUP_ERROR if failed to open the
+file for writing. If already playing
+
+=head2 Notes
+
+The file must had been saved using the B<IupRecordInput> function.
+Record mode will be automatically detected.
+
+This function will start the play and return the control to the
+application. If the file ends all internal memory used to play the file
+will be automatically released.
+
+It uses the MOUSEBUTTON global attribute to reproduce the events.
+B<IMPORTANT>: See the documentation of the
+L<MOUSEBUTTON|../attrib/iup_globals.html#MOUSEBUTTON> attribute for
+further details and current limitations.
+
+The file must had been generated in the same operating system. Screen
+size differences can exist, but if different themes are used then mouse
+precision will be affected.
+
+=head2 See Also
+
+L<MOUSEBUTTON|../attrib/iup_globals.html#MOUSEBUTTON>,
+L<IupRecordInput|iuprecordinput.html>
+
+=cut

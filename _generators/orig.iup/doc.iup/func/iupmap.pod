@@ -11,7 +11,7 @@ The element must be already B<attached> to a container if not a dialog.
 =head2 Parameters/Return
 
  int IupMap(Ihandle* ih); [in C]
- iup.Map(ih: iuplua-tag) -> ret: number [in Lua]
+ iup.Map(ih: ihandle) -> ret: number [in Lua]
 
 B<ih>: Identifier of an interface element.
 

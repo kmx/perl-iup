@@ -10,6 +10,8 @@ name using B<IupSetHandle> or using LED.
 
 B<name>: name of an interface element.
 
+Returns: the element handle or NULL if not found.
+
 =head2 Notes
 
 This function is used for integrating IUP and LED. To manipulate an

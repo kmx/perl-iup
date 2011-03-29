@@ -12,6 +12,8 @@ B<IupGetCallback> instead.
 
 B<name>: name of the action.
 
+Returns: the callback or NULL if not found.
+
 =head2 See Also
 
 L<IupSetFunction|iupsetfunction.html>,

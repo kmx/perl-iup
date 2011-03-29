@@ -6,6 +6,21 @@ B<X<CURSOR>CURSOR>: Default cursor used by the matrix. The default
 cursor is a symbol that looks like a cross. If you need to refer to
 this default cursor, use the name "IupMatrixCrossCursor".
 
+B<EDITNEXT>: controls how the next cell after editing is chosen. Can be
+LIN, COL, LINCR, COLCR. Default: LIN. (since 3.4)
+
+LIN - go to the next line, if at last line then go to the next column
+at the same line;
+
+LINCR - go to the next line, if at last line then go to the next column
+at the first line;
+
+COL - go to the next column, if at last column then go to the next line
+at the same column;
+
+COLCR - go to the next column, if at last column then go to the next
+line at the first column;
+
 X<FITTOSIZE>B<FITTOSIZE> (write-only): force lines and/or columns sizes
 so the matrix visible size fit in its current size. NUMCOL_VISIBLE and
 NUMLIN_VISIBLE are considered when fitting and they are not changed,
@@ -15,6 +30,15 @@ then they will not be changed. If the matrix is resized then it must be
 set again to obtain the same result, but before doing that set to NULL
 all the RASTERWIDTHn and RASTERHEIGHTn attributes that you want to be
 changed. Can be LINES, COLUMNS or YES (meaning both). (since 3.3)
+
+X<FITTOTEXT>B<FITTOTEXT> (write-only): set the RASTERWIDTHn or the
+RASTERHEIGHTn attribute for the given column or line, so that it will
+fit the largest text in the column or the highest text in the line. The
+number of the column or line must be preceded by a character
+identifying its type, "C" for columns and "L" for lines. For example
+"C5"=column 5 or "L3"=line 3. If FITMAXWIDTHn or FITMAXHEIGHTn are set
+for the column or line they are used as maximum limit for the size.
+(since 3.4)
 
 B<X<FOCUS_CELL>FOCUS_CELL>: Defines the current cell. Two numbers in
 the "B<I<L>>:B<I<C>>" format, (B<I<L>>E<gt>0 and B<I<C>>E<gt>0, a title
@@ -49,7 +73,7 @@ size if necessary. See WIDTHn and HEIGHTn. Default: NO. (since 3.0)
 
 L<ACTIVE|../attrib/iup_active.html>,
 L<EXPAND|../attrib/iup_expand.html>, L<FONT|../attrib/iup_font.html>,
-L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
+L<SCREENPOSITION|../attrib/iup_screenposition.html>,
 L<POSITION|../attrib/iup_position.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,

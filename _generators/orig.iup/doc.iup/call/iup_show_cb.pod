@@ -1,8 +1,9 @@
 =head1 SHOW_CB
 
-Called right after the dialog is opened, minimized or restored from a
-minimization. This callback is called when those actions were performed
-by the user or programmatically by the application.
+Called right after the dialog is showed, hidden, maximized, minimized
+or restored from minimized/maximized. This callback is called when
+those actions were performed by the user or programmatically by the
+application.
 
 =head2 Callback
 
@@ -16,11 +17,16 @@ event:
 
 =over
 
-IUP_HIDE, IUP_SHOW, IUP_RESTORE (was minimized or maximized),
-IUP_MINIMIZE or IUP_MAXIMIZE. (IUP_HIDE and IUP_MAXIMIZE since 3.0)
+IUP_HIDE (since 3.0)
 
-IUP_MAXIMIZE is not received in Motif when activated from the maximize
-button.
+IUP_SHOW
+
+IUP_RESTORE (was minimized or maximized)
+
+IUP_MINIMIZE
+
+IUP_MAXIMIZE (since 3.0) (not received in Motif when activated from the
+maximize button)
 
 =back
 

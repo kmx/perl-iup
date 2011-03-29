@@ -11,4 +11,8 @@ B<ih>: identifier of the interface element.
 
 B<children>: flag to update its children.
 
+=head2 See Also
+
+L<IupUpdate|iupupdate.html>
+
 =cut

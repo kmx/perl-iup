@@ -9,6 +9,8 @@ Returns the number of children of the given control.
 
 B<ih>: identifier of the interface element.
 
+Returns: the number of children.
+
 =head2 See Also
 
 L<IupGetChildPos|iupgetchildpos.html>, L<IupGetChild|iupgetchild.html>,

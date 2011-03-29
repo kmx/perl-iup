@@ -14,6 +14,9 @@ Since the validation process is performed key by key when the user is
 typing, an intermediate value cannot be typed if it does not follow the
 mask rules.
 
+If you set the VALUE attribute any text can be used. To set a value
+that is validated by the current MASK use VALUEMASKED.
+
 =head2 Pre-Defined Masks
 
 Definition

@@ -44,7 +44,7 @@ be added lately, to be changed it must be at least "" during creation.
 =back
 
 L<ACTIVE|../attrib/iup_active.html>, L<FONT|../attrib/iup_font.html>,
-L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
+L<SCREENPOSITION|../attrib/iup_screenposition.html>,
 L<POSITION|../attrib/iup_position.html>,
 L<CLIENTSIZE|../attrib/iup_clientsize.html>,
 L<CLIENTOFFSET|../attrib/iup_clientoffset.html>,

@@ -56,7 +56,7 @@ controlling the current position.
 
 L<ACTIVE|../attrib/iup_active.html>,
 L<EXPAND|../attrib/iup_expand.html>, L<FONT|../attrib/iup_font.html>,
-L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
+L<SCREENPOSITION|../attrib/iup_screenposition.html>,
 L<POSITION|../attrib/iup_position.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,

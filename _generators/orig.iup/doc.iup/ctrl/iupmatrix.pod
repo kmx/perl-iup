@@ -243,8 +243,6 @@ selection state of a cell.
 MARKEDIT_CB - Action generated to notify the application that the
 selection state of a cell was changed.
 
-=head2 Additional Methods in Lua
-
 =head2 Utility Functions
 
 These functions can be used to help set and get attributes from the

@@ -1,6 +1,6 @@
 =head1 IupGetChild
 
-Returns the a child of the given control given its position.
+Returns the a child of the control given its position.
 
 =head2 Parameters/Return
 
@@ -10,6 +10,8 @@ Returns the a child of the given control given its position.
 B<ih>: identifier of the interface element.
 
 B<pos>: position of the desire child.
+
+Returns: the child or NULL if there is none.
 
 =head2 Notes
 

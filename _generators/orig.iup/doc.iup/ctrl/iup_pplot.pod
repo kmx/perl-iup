@@ -65,6 +65,9 @@ position. If values are negative and positive then origin will be
 placed inside the plot. The ticks in the axis are also automatically
 distributed.
 
+PPlot implementation demands that the MARGIN* attributes must be set so
+the plot is not cropped.
+
 =head2 Interaction
 
 =head2 Zoom
@@ -126,11 +129,15 @@ error occurs.
 Prepares a dataset to receive samples. If strXdata is 1 then the X axis
 value is a string.
 
+----
+
  void IupPPlotAdd(Ihandle* ih, float x, float y); [in C]
  iup.PPlotAdd(ih: ihandle, x, y: number) [in Lua]
 
 Adds a sample to the dataset. Can only be called if B<IupPPlotBegin>
 was called with strXdata=0.
+
+----
 
  void IupPPlotAddStr(Ihandle* ih, const char* x, float y); [in C]
  iup.PPlotAddStr(ih: ihandle, x: string, y: number) [in Lua]
@@ -138,31 +145,60 @@ was called with strXdata=0.
 Same as B<IupPPlotAdd>, but allows to use a string as the X axis value.
 Can only be called if B<IupPPlotBegin> was called with strXdata=1.
 
+----
+
  int IupPPlotEnd(Ihandle* ih); [in C]
  iup.PPlotEnd(ih: ihandle) -> (index: number) [in Lua]
 
-Adds a 2D dataset to the plot and returns the dataset index. Redraw is
-NOT done until the REDRAW attribute is set. Also it will change the
-current dataset index to the return value. You can only set attributes
-of a dataset AFTER you added the dataset. Can only be called if
-B<IupPPlotBegin> was called. Whenever you create a dataset all its
-"DS_*" attributes will be set to the default values. Notice that
-DS_MODE must be set before other "DS_*" attributes.
+Adds a 2D dataset to the plot and returns the dataset B<index>. The
+data set can be empty. Redraw is NOT done until the REDRAW attribute is
+set. Also it will change the current dataset index to the return value.
+You can only set attributes of a dataset AFTER you added the dataset.
+Can only be called if B<IupPPlotBegin> was called. Whenever you create
+a dataset all its "DS_*" attributes will be set to the default values.
+Notice that DS_MODE must be set before other "DS_*" attributes.
+
+----
 
  void IupPPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y); [in C]
  void IupPPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
  iup.IupPPlotInsert(ih: ihandle, index, sample_index, x, y: number) [in Lua]
  iup.IupPPlotInsertStr(ih: ihandle, index, sample_index, x, y: number)
 
-Inserts a sample in a dataset. It is used after the dataset is added to
-the plot.
+Inserts a sample in a dataset at the given B<sample_index>. Can be used
+only after the dataset is added to the plot.
+
+----
+
+ void IupPPlotInsertPoints(Ihandle *ih, int index, int sample_index, float* x, float* y, int count); [in C]
+ void IupPPlotInsertStrPoints(Ihandle *ih, int index, int sample_index, const char** x, float* y, int count);
+ iup.IupPPlotInsertPoints(ih: ihandle, index, sample_index, x, y: table of number) [in Lua]
+ iup.IupPPlotInsertStrPoints(ih: ihandle, index, sample_index, x, y: table of number)
+
+Inserts an array of samples in a dataset at the given B<sample_index>.
+Can be used only after the dataset is added to the plot. (Since 3.4)
+
+----
+
+ void IupPPlotAddPoints(Ihandle *ih, int index, float* x, float* y, int count); [in C]
+ void IupPPlotAddStrPoints(Ihandle *ih, int index, const char** x, float* y, int count);
+ iup.IupPPlotAddPoints(ih: ihandle, index, x, y: table of number) [in Lua]
+ iup.IupPPlotAddStrPoints(ih: ihandle, index, x, y: table of number)
+
+Adds an array of samples in a dataset at the end. Can be used only
+after the dataset is added to the plot. (Since 3.4)
+
+----
 
  void IupPPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy); [in C]
  iup.PPlotTransform(ih: ihandle, x, y: number) -> (ix, iy: number) [in Lua]
 
 Converts coordinates in plot units to pixels. It should be used in
 PREDRAW_CB and POSTDRAW_CB callbacks only. Output variables can be NULL
-if not used.
+if not used. It can be used inside other callbacks, but make sure that
+the drawing after a resize is done.
+
+----
 
  void IupPPlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C]
  iup.PPlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
@@ -203,7 +239,9 @@ returned value is NULL. Set to NULL, to use the FONT attribute values.
 Style can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC".
 
 B<MARGINLEFT, MARGINRIGHT, MARGINTOP, MARGINBOTTOM >(non inheritable):
-margin of the dataset area. Default: "15", "15", "30", "15".
+margin of the dataset area. PPlot implementation demands that margins
+must be set so the plot is not cropped. Default: "15", "15", "30",
+"15".
 
 =head2 Legend Configuration (non inheritable)
 
@@ -339,8 +377,9 @@ pixels. Default is 8 when AUTOTICKSIZE is disabled.
 
 =back
 
-L<ACTIVE|../attrib/iup_active.html>, L<X|../attrib/iup_x.html>,
-L<Y|../attrib/iup_y.html>, L< POSITION|../attrib/iup_position.html>,
+L<ACTIVE|../attrib/iup_active.html>,
+L<SCREENPOSITION|../attrib/iup_screenposition.html>,
+L<POSITION|../attrib/iup_position.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
 L<TIP|../attrib/iup_tip.html>, L<SIZE|../attrib/iup_size.html>,

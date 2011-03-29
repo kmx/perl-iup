@@ -1,6 +1,6 @@
 =head1 IupGetBrother
 
-Returns the brother of a control or NULL if there is none.
+Returns the brother of an element.
 
 =head2 Parameters/Return
 
@@ -8,6 +8,8 @@ Returns the brother of a control or NULL if there is none.
  iup.GetBrother(ih: ihandle) -> brother: ihandle [in Lua]
 
 B<ih>: identifier of the interface element.
+
+Returns: the brother or NULL if there is none.
 
 =head2 See Also
 

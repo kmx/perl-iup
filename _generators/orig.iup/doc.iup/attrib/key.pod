@@ -23,7 +23,7 @@ B<iup_isCtrlXkey(key)> macro for the Ctrl modifier, the
 B<iup_isAltXkey(key)> macro for the Alt modifier, and the
 B<iup_isSysXkey(key)> macro for the Sys modifier. These macros are also
 available in Lua as a function with the same name (iup.isprint(key),
-iup.isXkey(key), and so on).
+iup.isXkey(key), and so on) and returning a boolean.
 
 In the table bellow there are the most common definitions. Change the
 definition to K_s*, K_c*, K_m* and K_y* when the respective modifier is

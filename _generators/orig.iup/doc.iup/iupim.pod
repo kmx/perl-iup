@@ -52,9 +52,9 @@ Returns: zero if failed. When failed the global attribute
 
 B<handle:> image native handle. In Win32 is a B<HANDLE> of a DIB. In
 GTK is a B<GdkPixbuf*>. In Motif is a B<Pixmap>. Its memory is released
-after the B<imImage> is created.
+after the B<imImage> is created. In Lua is a light user data.
 
-Returns: the B<imImage>* handle. Usefull when pasting data from a
+Returns: the B<imImage>* handle. Useful when pasting data from a
 B<IupClipboard>.
 
 You must include the "im_image.h" header before the "iupim.h" to enable
@@ -69,7 +69,7 @@ B<image:> the B<imImage>* handle. Must be a bitmap image.
 
 Returns: the image native handle. In Win32 is a B< HANDLE> for a DIB.
 In GTK is a B<GdkPixbuf*>. In Motif is a B<Pixmap>. Usefull when
-copying data to a B<IupClipboard>.
+copying data to a B<IupClipboard>. In Lua is a light user data.
 
 You must include the "im_image.h" header before the "iupim.h" to enable
 these functions.

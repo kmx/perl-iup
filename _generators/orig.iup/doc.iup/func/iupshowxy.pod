@@ -10,8 +10,9 @@ Displays a dialog in a given position on the screen.
 
 B<ih>: identifier of the dialog.
 
-B<x>: horizontal position of the dialog relative to the origin of the
-main screen. The following macros are valid:
+B<x>: horizontal position of the top left corner of the window,
+relative to the origin of the main screen. The following definitions
+can also be used:
 
 =over
 
@@ -32,8 +33,9 @@ the default value in Lua if the parameter is not defined. (Since 3.0)
 
 =back
 
-B<y>: vertical position of the dialog relative to the origin of the
-main screen. The following macros are valid:
+B<y>: vertical position of the top left corner of the window, relative
+to the origin of the main screen. The following definitions can also be
+used:
 
 =over
 
@@ -53,12 +55,15 @@ the default value in Lua if the parameter is not defined.(Since 3.0)
 
 =back
 
-Returns: IUP_NOERROR if sucessful. Returns IUP_INVALID if not a dialog.
-If there was an error returns IUP_ERROR.
+Returns: IUP_NOERROR if successful. Returns IUP_INVALID if not a
+dialog. If there was an error returns IUP_ERROR.
 
 =head2 Notes
 
 Will call B<IupMap> for the element.
+
+B<x> and B<y> positions are the same as returned by the
+L<SCREENPOSITION|../attrib/iup_screenposition.html> attribute.
 
 See the L<PLACEMENT|../dlg/iupdialog.html#PLACEMENT> attribute for
 other position and show options.

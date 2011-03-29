@@ -9,6 +9,12 @@ Called right before an element is destroyed.
 
 B<ih>: identifier of the element that activated the event.
 
+=head2 Notes
+
+For language binding implementations use the callback name
+"LDESTROY_CB" to release memory allocated by the binding for the
+element. This callback will be called before "DESTROY_CB".
+
 =head2 Affects
 
 All.

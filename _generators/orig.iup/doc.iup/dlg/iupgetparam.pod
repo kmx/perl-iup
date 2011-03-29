@@ -31,7 +31,8 @@ canceled or if an error occurred.
 The function will abort if there are errors in the format string as in
 the number of the expected parameters. In Lua, the values are returned
 by the function in the same order they were passed. The Lua type of
-each parameter is the equivalent C type (boolean is integer).
+each parameter is the equivalent C type (boolean is integer), except
+for the B<status> code that it is a boolean.
 
 =back
 
@@ -45,10 +46,16 @@ each parameter is the equivalent C type (boolean is integer).
 
 B<dialog>: dialog handle
 
-B<param_index>: current parameter being changed. It is -1 if the user
-pressed the B<OK> button. It is -2 after the dialog is B<mapped> and
-just before it is shown. It is -3 if the user pressed the B<Cancel>
-button. It is -4 if the user pressed the B<Help> button, if any.
+B<param_index>: current parameter being changed. Can have negative
+values to indicate specific situations:
+
+-1 = if the user pressed the B<OK> button;
+
+-2 = after the dialog is B<mapped> and just before it is shown;
+
+-3 = if the user pressed the B<Cancel> button;
+
+-4 = if the user pressed the B<Help> button, if any;
 
 B<user_data>: a user pointer that is passed in the function call.
 
@@ -158,7 +165,7 @@ B<l> = list (shows a dropdown list box, use "int" in C for the zero
 based item index selected)
 
 B<o> = list (shows a list of toggles inside a radio, use "int" in C for
-the zero based item index selected)
+the zero based item index selected) (since 3.3)
 
 B<t> = separator (shows a horizontal line separator label, in this case
 text can be an empty string, not included in parameter count)
@@ -170,7 +177,7 @@ B<c> = string (same as B<s>, but also show a color button to open a
 color selection dialog box)
 
 n = string (same as B<s>, but also show a font button to open a font
-selection dialog box)
+selection dialog box) (since 3.3)
 
 u = buttons names (allow to redefine the OK and Cancel button names,
 and to add a Help button, use [ok,cancel,help] as extra data, can omit

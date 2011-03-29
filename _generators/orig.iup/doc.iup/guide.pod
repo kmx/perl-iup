@@ -430,12 +430,11 @@ http:E<47>E<47>github.comE<47>phasis68E<47>ruby-iup|http://github.com/phasis68/r
 
 =back
 
-=head2 L<IupEu|http://jeremy.cowgar.com/cgi-bin/wiki/IupEu> by Jeremy
-Cowgar
+=head2 L<EuIup|http://jeremy.cowgar.com/euiup> by Jeremy Cowgar
 
 =over
 
-Iup wrapped for L<Euphoria|http://www.rapideuphoria.com/>.
+Iup wrapped for L<Euphoria|http://openeuphoria.org/>.
 
 =back
 

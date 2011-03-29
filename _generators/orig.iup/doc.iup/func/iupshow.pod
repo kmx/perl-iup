@@ -5,8 +5,8 @@ attribute. If the dialog needs to be mapped and the current position is
 not known then the dialog is centered.
 
 For a dialog to set the attribute VISIBLE=YES is the same as calling
-IupShow. For other controls, to call IupShow is the same as setting
-VISIBLE=YES.
+B<IupShow>. For other controls, to call B<IupShow> is the same as
+setting VISIBLE=YES.
 
 =head2 Parameters/Return
 
@@ -16,7 +16,7 @@ VISIBLE=YES.
 
 B<ih>: identifier of the interface element.
 
-Returns: IUP_NOERROR if sucessful. If there was an error returns
+Returns: IUP_NOERROR if successful. If there was an error returns
 IUP_ERROR.
 
 =head2 Notes

@@ -59,7 +59,8 @@ list when something has change. Set to NO to add many items to the list
 without updating the display. Default: "YES". (since 3.3)
 
 L<BGCOLOR|../attrib/iup_bgcolor.html>: Background color of the text.
-Default: the global attribute TXTBGCOLOR.
+Default: the global attribute TXTBGCOLOR. In GTK does nothing when
+DROPDOWN=Yes.
 
 B<CANFOCUS> (creation only) (non inheritable): enables the focus
 traversal of the control. In Windows the control will still get the
@@ -193,8 +194,9 @@ and effective only for the edit box inside the list.
 =back
 
 L<ACTIVE|../attrib/iup_active.html>, L<FONT|../attrib/iup_font.html>,
-L<EXPAND|../attrib/iup_expand.html>, L<X|../attrib/iup_x.html>,
-L<Y|../attrib/iup_y.html>, L< POSITION|../attrib/iup_position.html>,
+L<EXPAND|../attrib/iup_expand.html>,
+L<SCREENPOSITION|../attrib/iup_screenposition.html>,
+L<POSITION|../attrib/iup_position.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
 L<TIP|../attrib/iup_tip.html>,

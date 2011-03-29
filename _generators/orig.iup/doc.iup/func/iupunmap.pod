@@ -9,7 +9,7 @@ B<destroy> the IUP element.
 =head2 Parameters/Return
 
  void IupUnmap(Ihandle* ih); [in C]
- iup.Unmap(ih: iuplua-tag) [in Lua]
+ iup.Unmap(ih: ihandle) [in Lua]
 
 B<ih>: Identifier of an interface element.
 

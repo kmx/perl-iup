@@ -9,7 +9,7 @@ Returns the position of a child of the given control.
 
 B<ih>: identifier of the interface element.
 
-B<pos>: position of the desire child or -1 if child not found.
+Returns: the position of the desire child or -1 if child not found.
 
 =head2 Notes
 

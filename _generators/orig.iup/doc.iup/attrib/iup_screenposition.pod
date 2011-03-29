@@ -1,0 +1,28 @@
+=head1 SCREENPOSITION/X/Y (read-only) (non inheritable) (since 3.4)
+
+Returns the absolute horizontal and/or vertical position of the top
+left corner of the client area relative to the top left corner of the
+screen in pixels. It is similar to POSITION but relative to the top
+left corner of the screen.
+
+B<IMPORTANT>: For the dialog, it is the position of the top left corner
+of the window, NOT the client area. It is the same position used in
+L<IupShowXY|../func/iupshowxy.html> and
+L<IupPopup|../func/iuppopup.html>. In GTK, if the dialog is hidden the
+values can be outdated.
+
+=head2 Value
+
+"x,y", where I<x> and I<y> are integer values corresponding to the
+horizontal and vertical position, respectively, in pixels. When X or Y
+are used a single value is returned.
+
+=head2 Affects
+
+All controls that have visual representation.
+
+=head2 See Also
+
+L<POSITION|iup_position.html>
+
+=cut

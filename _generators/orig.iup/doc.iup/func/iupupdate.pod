@@ -14,4 +14,8 @@ to the system.
 
 B<ih>: identifier of the interface element.
 
+=head2 See Also
+
+L<IupRedraw|iupredraw.html>
+
 =cut

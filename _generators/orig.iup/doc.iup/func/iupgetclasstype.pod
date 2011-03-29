@@ -9,6 +9,8 @@ Returns the name of the native type of an interface element.
 
 B<ih>: Identifier of the interface element.
 
+Returns: the class type.
+
 =head2 Notes
 
 There are only a few pre-defined class types:

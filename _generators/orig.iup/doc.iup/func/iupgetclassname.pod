@@ -9,6 +9,8 @@ Returns the name of the class of an interface element.
 
 B<ih>: Identifier of the interface element.
 
+Returns: the name of the class.
+
 =head2 Notes
 
 The following names are known:
@@ -51,6 +53,7 @@ The following names are known:
 
 =head2 See Also
 
+L<IupClassMatch|iupclassmatch.html>,
 L<IupGetClassType|iupgetclasstype.html>,
 L<IupGetClassAttributes|iupgetclassattributes.html>
 

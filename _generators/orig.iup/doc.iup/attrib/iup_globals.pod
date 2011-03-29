@@ -40,20 +40,50 @@ When the last visible dialog is closed the B<IupExitLoop> function is
 called. To avoid that set LOCKLOOP=YES before hiding the last dialog.
 Possible values: "YES" or "NO". Default: "NO".
 
+=head2 B<X<UTF8AUTOCONVERT>UTF8AUTOCONVERT> [GTK Only]
+
+GTK uses UTF-8 as its charset for all displayed text, so IUP will
+automatically convert all strings to (SetAttribute) and from
+(GetAttribute) UTF-8. Default: YES. If the default locale is already
+UTF-8, but the given string is not UTF-8 then it will be assumed that
+the string uses the ISO8859-1 charset.
+
+=head2 B<SINGLEINSTANCE> [Windows Only] (since 3.2)
+
+Restricts the number of instances of the application by using a name to
+identify it. The value must also be a partial match to the title of a
+dialog that will receive the COPYDATA_CB callback with the command line
+of the second instance. When consulted return NULL if inside the second
+instance. So usually in the application initialization after
+B<IupOpen>, set SINGLEINSTANCE and then consult its value, if NULL
+abort the second instance by calling B< IupClose> and returning from
+I<main>.
+
+=head2 System X<Keyboard>Mouse and Keyboard
+
 =head2 B<X<cursorpos>CURSORPOS>
 
-The cursor position in absolute coordinates relative to the upper left
-corner of the screen. Accept values in the format "XB<x>Y" (in C
-"%dx%d), example "200x200". (since GTK 2.8)
+Controls and returns the cursor position in absolute coordinates
+relative to the upper left corner of the screen. Accept values in the
+format "XB<x>Y" (in C "%dx%d), example "200x200". In GTK and Motif also
+generates mouse motion messages. (since GTK 2.8)
 
 =head2 B<X<MOUSEBUTTON>MOUSEBUTTON >(write-only) (since 3.3)
 
-Simulates a mouse button press or release at the given coordinates. The
-position is in absolute coordinates relative to the upper left corner
-of the screen. Accept values in the format "XB<x>Y button state" (in C
-"%dx%d %c %d"), example "200x200 1 1". B<button> can be one of the
-IUP_BUTTON1,... definitions. B< state> can be 1=pressed, or 0=released.
-The cursor position is always updated. (since GTK 2.8)
+Simulates a mouse button press, release or motion at the given
+coordinates. The position is in absolute coordinates relative to the
+upper left corner of the screen. Accept values in the format "XB<x>Y
+button state" (in C "%dx%d %c %d"), example "200x200 1 1". B<button>
+can be one of the IUP_BUTTON1,... definitions. B< state> can be
+2=double click, 1=pressed, 0=released, or -1=motion. The cursor
+position is always updated. In Windows button can be 'W' and
+state=delta, so a wheel button scroll is simulated.
+
+B<IMPORTANT>: not fully working. In Windows and GTK, menu items are not
+activated. Although submenus open, menu items even in the menu bar are
+not activated. In Windows, inside the B< IupFileDlg> dialog, clicks in
+the folder navigation list are not correctly interpreted. In Motif
+click and drag operations are not performed.
 
 =head2 X<SHIFTKEY>B<SHIFTKEY> (read-only) (since 3.0)
 
@@ -91,34 +121,23 @@ table for a list of the possible values.
 
 =head2 B<X<AUTOREPEAT>AUTOREPEAT> [Motif Only]
 
-Turns on/off ("YES" or "NO") the autorepeat of keyboard keys in the
-whole system - may be used as an optimization in high performance
+Turns on/off ("YES" or "NO") the auto-repeat of keyboard keys in the
+whole system. May be used as an optimization in high performance
 applications.
 
-=head2 B<X<UTF8AUTOCONVERT>UTF8AUTOCONVERT> [GTK Only]
+=head2 X<INPUTCALLBACKS>INPUTCALLBACKS (since 3.4)
 
-GTK uses UTF-8 as its charset for all displayed text, so IUP will
-automatically convert all strings to (SetAttribute) and from
-(GetAttribute) UTF-8. Default: YES. If the default locale is already
-UTF-8, but the given string is not UTF-8 then it will be assumed that
-the string uses the ISO8859-1 charset.
-
-=head2 B<SINGLEINSTANCE> [Windows Only] (since 3.2)
-
-Restricts the number of instances of the application by using a name to
-identify it. The value must also be a partial match to the title of a
-dialog that will receive the COPYDATA_CB callback with the command line
-of the second instance. When consulted return NULL if inside the second
-instance. So usually in the application initialization after
-B<IupOpen>, set SINGLEINSTANCE and then consult its value, if NULL
-abort the second instance by calling B< IupClose> and returning from
-I<main>.
+Turns on/off ("YES" or "NO") the global callbacks used to intercept
+global mouse and keyboard events. The callbacks must be set using the
+L<IupSetFunction|../func/iupsetfunction.html> function using the
+following names: GLOBALL<KEYPRESS_CB|../call/iup_keypress_cb.html>,
+GLOBALL<MOTION_CB|../call/iup_motion_cb.html>,
+GLOBALL<BUTTON_CB|../call/iup_button_cb.html> and
+GLOBALL<WHEEL_CB|../call/iup_wheel_cb.html> (Windows Only). Their
+parameters are the same as the standard callbacks, but without the
+B<Ihandle>* parameter.
 
 =head2 System X<Information>Information
-
-=head2 B<SYSTEMLANGUAGE> (read-only)
-
-Return respectively a text with a description of the system language.
 
 =head2 B<SYSTEM> (read-only)
 
@@ -165,6 +184,14 @@ Informs the current operating system version number.
 On UNIX, it is equivalent to the command "uname -r" (release). On
 Windows, it identifies the system version number and service pack
 version. On MacOSX is system version.
+
+=head2 B<SYSTEMLANGUAGE> (read-only)
+
+Return a text with a description of the system language.
+
+=head2 B<SYSTEM>LOCALE (read-only) (since 3.4)
+
+Return a text with a description of the system locale.
 
 =head2 B<X<GTKVERSION>GTKVERSION> (read-only) [GTK Only]
 
@@ -231,16 +258,16 @@ Indicates if the display allows creating TrueColor (E<gt> 8bpp)
 B<IupCanvas> controls, even if PseudoColor is the default, i.e. even if
 SCREENDEPTHE<lt>=8 . Returns "YES" or "NO". Usefull in Motif.
 
-=head2 B<X<VIRTUALSCREEN>VIRTUALSCREEN> (read-only) (since 3.0) [Win32
-and GTK Only]
+=head2 B<X<VIRTUALSCREEN>VIRTUALSCREEN> (read-only) [Win32 and GTK
+Only] (since 3.0)
 
 Returns the virtual screen position and size in pixels. It is the
 virtual space defined by all monitors in the system.
 
 String in the "I<x y width height>" format.
 
-=head2 X<MONITORSINFO>MONITORSINFO (read-only) (since 3.0) [Win32 and
-GTK Only]
+=head2 X<MONITORSINFO>MONITORSINFO (read-only) [Win32 and GTK Only]
+(since 3.0)
 
 Returns the position and size in pixels of all monitors. Each monitor
 information is terminated by a "\n" character.

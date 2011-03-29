@@ -25,8 +25,9 @@ pre-compiled binaries. To compile the IUP 3 code with VC6 you will need
 to download a new L<Platform
 SDK|http://windowssdk.msdn.microsoft.com/>, because the one included in
 the compiler is too old. But it cannot be a too new one also, because
-the compiler will report errors in the newest headers. So we recommend
-you to upgrade your compiler. L<Visual C++ Express
+the compiler will report errors in the newest headers.
+
+We recommend you to upgrade your compiler. L<Visual C++ Express
 Edition|http://msdn.microsoft.com/vstudio/express/visualc/> is a free
 compiler that has everything VC6 had and more.
 

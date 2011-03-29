@@ -104,9 +104,9 @@ B<IupHide> for the dialog.
 
 L<ACTIVE|../attrib/iup_active.html>,
 L<BGCOLOR|../attrib/iup_bgcolor.html>, L<FONT|../attrib/iup_font.html>,
-L<EXPAND|../attrib/iup_expand.html>, L< X|../attrib/iup_x.html>,
-L<Y|../attrib/iup_y.html>, L<WID|../attrib/iup_wid.html>,
-L<TIP|../attrib/iup_tip.html>,
+L<EXPAND|../attrib/iup_expand.html>,
+L<SCREENPOSITION|../attrib/iup_screenposition.html>,
+L<WID|../attrib/iup_wid.html>, L< TIP|../attrib/iup_tip.html>,
 L<CLIENTSIZE|../attrib/iup_clientsize.html>,
 L<RASTERSIZE|../attrib/iup_rastersize.html>,
 L<ZORDER|../attrib/iup_zorder.html>: also accepted. Note that ACTIVE,
@@ -163,7 +163,7 @@ associate a menu to a name. See also L<IupMenu|../elem/iupmenu.html>.
 
 B<MENUBOX> (creation only): Requires a system menu box from the window
 manager. If hidden will also remove the Close button. Default: YES. In
-Motif the decorations are controled by the Window Manager and may not
+Motif the decorations are controlled by the Window Manager and may not
 be possible to be changed from IUP. In Windows if hidden will hide also
 MAXBOX and MINBOX.
 
@@ -175,11 +175,13 @@ will be just disabled.
 
 B<MINSIZE>: Minimum size for the dialog in raster units (pixels). The
 windowing system will not be able to change the size beyond this limit.
-Default: 1x1. (since 3.0)
+Default: 1x1. Some systems define a very minimum size greatter than
+this. Typically Windows has an horizontal minimum size that includes
+the window decoration buttons. (since 3.0)
 
 B<MODAL> (read-only): Returns the popup state. It is "YES" if the
-dialog was shown using IupPopup. It is "NO" if IupShow was used or it
-is not visible. (since 3.0)
+dialog was shown using B<IupPopup>. It is "NO" if B<IupShow> was used
+or it is not visible. (since 3.0)
 
 B<NATIVEPARENT> (creation only): Native handle of a dialog to be used
 as parent. Used only if PARENTDIALOG is not defined.
@@ -196,8 +198,9 @@ there is a chance that the placement won't work correctly, that depends
 on the Window Manager.
 
 B<RESIZE> (creation only): Allows interactively changing the dialogs
-size. Default: YES. In Motif the decorations are controlled by the
-Window Manager and may not be possible to be changed from IUP.
+size. Default: YES. If RESIZE=NO then MAXBOX will be set to NO. In
+Motif the decorations are controlled by the Window Manager and may not
+be possible to be changed from IUP.
 
 B<SAVEUNDER> [Windows and Motif Only] (creation only): When this
 attribute is true (YES), the dialog stores the original image of the
@@ -223,6 +226,10 @@ X-Windows Window (Drawable). Available in the Motif driver or in the
 GTK driver in UNIX.
 
 =head2 Exclusive [Windows and GTK Only]
+
+B<ACTIVEWINDOW> [Windows and GTK Only] (read-only): informs if the
+dialog is the active window (the window with focus). Can be Yes or No.
+(since 3.4)
 
 B<HIDETASKBAR> [Windows and GTK Only] (write-only): Action attribute
 that when set to "YES", hides the dialog, but does not decrement the
@@ -365,8 +372,9 @@ B<ih>: identifier of the element that activated the event.
 =back
 
 B<MOVE_CB> [Windows and GTK Only]: Called after the dialog was moved on
-screen. The coordinates are the same as the L<X|../attrib/iup_x.html>
-and L<Y|../attrib/iup_y.html> attributes. (since 3.0)
+screen. The coordinates are the same as the
+L<SCREENPOSITION|../attrib/iup_screenposition.html> attribute. (since
+3.0)
 
  int function(Ihandle *ih, int x, int y); [in C]elem:trayclick_cb(x, y: number) -> (ret: number) [in Lua]
 
@@ -379,7 +387,8 @@ dialog size is changed. If returns IUP_IGNORE the dialog layout is NOT
 recalculated. (since 3.0)
 
 L<SHOW_CB|../call/iup_show_cb.html>: Called right after the dialog is
-opened, minimized or restored from a minimization.
+showed, hidden, maximized, minimized or restored from
+minimized/maximized.
 
 B<TRAYCLICK_CB> [Windows and GTK Only]: Called right after the mouse
 button is pressed or released over the tray icon. (GTK 2.10)

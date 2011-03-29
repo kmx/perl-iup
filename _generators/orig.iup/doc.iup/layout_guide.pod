@@ -44,6 +44,10 @@ large enough to display their respective text. If the dialog size is
 increased or reduced by the size handlers in the dialog borders the
 buttons do not move or change their sizes.
 
+But notice that some controls do not have contents that can provide a
+B< Natural> size. In this case they usually have SIZE or RASTERSIZE
+pre-set.
+
  dlg = iup.dialog
  {
    iup.vbox

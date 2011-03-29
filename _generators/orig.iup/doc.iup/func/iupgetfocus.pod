@@ -8,6 +8,8 @@ focus, i.e. the element that will receive keyboard events.
  Ihandle* IupGetFocus(void); [in C]
  iup.GetFocus() -> elem: ihandle [in Lua]
 
+Returns: the element with focus or NULL if no element has the focus.
+
 =head2 See Also
 
 L<IupSetFocus|iupsetfocus.html>

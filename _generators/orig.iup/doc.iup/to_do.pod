@@ -2,9 +2,12 @@
 
 =head2 Roadmap for the Next Versions
 
+B<Working now> on IupPPlot, studding possible use of
+L<PLplot|http://plplot.sourceforge.net/> as a replacement.
+
 =over
 
-=item * IupTree, IupList, IupPPlot and IupMatrix improvements
+=item * IupTree, IupList and IupMatrix improvements
 
 =item * New controls: ScrollBox, GridBox
 
@@ -12,7 +15,7 @@
 
 =item * New dialogs: Scripter
 
-=item * Debian and LuaRocks packages
+=item * RPM, Debian and LuaRocks packages
 
 =back
 
@@ -24,14 +27,20 @@
 
 =item * B<Priority:> Images in B< IupList>.
 
-=item * B<Priority:> Lua Rocks and Debian distribution packages.
+=item * B<Priority:> RPM, Debian and LuaRocks distribution packages.
 
 =item * B<Priority:> Unicode Support (UTF-8) in Windows and Motif.
 
-=item * Drag&Drop between controls.
+=item * B<Priority:> Drag&Drop between controls.
 
-=item * A tutorial section in the documentation. One big Controls Demo
-just like GTK, wxWidgets and Qt have.
+=item * B<Priority:> A tutorial section in the documentation. One big
+Controls Demo just like GTK, wxWidgets and Qt have.
+
+=item * B<Priority:> Customization of B<IupGetParam> to add other
+applications controled elements.
+
+=item * B<Priority:> detection of the minimum size of a child inside
+B<IupSplit>.
 
 =item * A MacOS X native driver using Carbon or Cocoa.
 
@@ -48,8 +57,7 @@ cascading B< IupPopup> for menus.
 
 =item * Support for Portuguese in the B<IupView> application.
 
-=item * Support for saving global mouse and keyboard events, so they
-can be reproduced later.
+=item * Vertical text in labels and buttons.
 
 =back
 
@@ -105,15 +113,14 @@ only. This seems to be a bug or limitation in Motif.
 
 =over
 
+=item * B<Priority:> Other columns/lines fixed at start like column 0
+and line 0.
+
 =item * B<Priority: >image, check mark and gauge for cells.
 
-=item * B<Priority: >mark using the keyboard.
+=item * Mark using the keyboard.
 
-=item * B<Priority:> drag&drop of columns position.
-
-=item * Merge cells.
-
-=item * Other columns/lines fixed at start like column 0 and line 0.
+=item * Drag&drop of columns position.
 
 =back
 
@@ -154,11 +161,8 @@ removed in future versions. (since 3.0)
 
 =over
 
-=item * B<Priority: > Support for inserting a new point in an existing
-dataset programmatically and interactively.
-
-=item * B<Priority: > Allow to select multiple nodes at once dragging
-the mouse within a region.
+=item * Allow to select multiple nodes at once dragging the mouse
+within a region.
 
 =item * Add support of legend text near each dataset plot.
 
@@ -170,9 +174,6 @@ the mouse within a region.
 
 =item * PPlot force the definitions of the margins. It should have a
 way to automatic calculate the margins when doing automatic scaling.
-
-=item * PPlot has a callback mode feature that is not available in
-IupPPlot.
 
 =item * PPlot force the Grid to be automatically spaced following the
 major ticks.

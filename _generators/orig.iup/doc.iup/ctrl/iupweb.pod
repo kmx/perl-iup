@@ -1,4 +1,4 @@
-=head1 IupWebBrowser [GTK and Windows only]
+=head1 IupWebBrowser [GTK and Windows only] (since 3.3)
 
 Creates a web browser control. It is responsible for managing the
 drawing of the web browser content and forwarding of its events.
@@ -51,13 +51,13 @@ current page and loads the history item. Negative values represent
 steps backward while positive values represent steps forward.
 
 B<STATUS> (read only): returns the load status. Can be "LOADING",
-"COMPLETED" or "FAILED". (since 3.3.1)
+"COMPLETED" or "FAILED".
 
 B<STOP >(write only): stops any ongoing load in the webbrowser.
 
 B<RELOAD> (write only): reloads the page in the webbrowser.
 
-B<HTML> (write only): loads a given HTML content. (since 3.3.1)
+B<HTML> (write only): loads a given HTML content.
 
 B<BACKCOUNT> [GTK Only] (read only): gets the number of items that
 precede the current page.
@@ -77,8 +77,9 @@ represents the current item).
 =back
 
 L<ACTIVE|../attrib/iup_active.html>, L<FONT|../attrib/iup_font.html>,
-L<EXPAND|../attrib/iup_expand.html>, L<X|../attrib/iup_x.html>,
-L<Y|../attrib/iup_y.html>, L< POSITION|../attrib/iup_position.html>,
+L<EXPAND|../attrib/iup_expand.html>,
+L<SCREENPOSITION|../attrib/iup_screenposition.html>,
+L<POSITION|../attrib/iup_position.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
 L<TIP|../attrib/iup_tip.html>,
@@ -90,7 +91,7 @@ L<VISIBLE|../attrib/iup_visible.html>: also accepted.
 
 B<COMPLETED_CB>: action generated when a page successfully
 completed. Can be called multiple times when a frame set loads its
-frames, or when a page loads also other pages. (since 3.3.1)
+frames, or when a page loads also other pages.
 
  int function(Ihandle* ih, char* url);  [in C]
  elem:completed_cb(url) -> (ret: number) [in Lua]
@@ -99,7 +100,7 @@ B<ih>: identifier of the element that activated the event.
 
 B<url>: the URL address that completed.
 
-B<ERROR_CB>: action generated when page load fail. (since 3.3.1)
+B<ERROR_CB>: action generated when page load fail.
 
  int function(Ihandle* ih, char* url);  [in C]
  elem:error_cb(url) -> (ret: number) [in Lua]
@@ -119,6 +120,8 @@ page loads also other pages.
 B<ih>: identifier of the element that activated the event.
 
 B<url>: the URL address to navigate to.
+
+Returns: IUP_IGNORE will abort navigation (since 3.4).
 
 B<NEWWINDOW_CB>: action generated when the browser requests a new
 window.

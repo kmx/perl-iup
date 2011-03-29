@@ -130,7 +130,7 @@ Activates the given canvas as the current OpenGL context. All
 subsequent OpenGL commands are directed to such canvas.
 
  int IupGLIsCurrent(Ihandle* ih); [in C]
- iup.GLIsCurrent(ih: ihandle) -> status: number [in Lua]
+ iup.GLIsCurrent(ih: ihandle) -> status: boolean [in Lua]
 
 Returns a non zero value if the given canvas is the current OpenGL
 context.

@@ -83,6 +83,10 @@ attribute set. The control inside the split will not be resized with a
 size lesser than its B<Natural> size. See the L<Layout
 Guide|../layout_guide.html> for mode details on sizes.
 
+B<IupSplit> is not capable of detecting a child minimum size, so if a
+child has a minimum size, then manually set the B<MINMAX> attribute to
+avoid invalid positioning of the B<IupSplit> bar.
+
 The B<IupCanvas> bar handler is always the first child of the split. It
 can be obtained using B<IupGetChild> or B< IupGetNextChild>.
 
