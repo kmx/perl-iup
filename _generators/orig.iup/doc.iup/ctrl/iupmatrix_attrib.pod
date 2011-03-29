@@ -6,6 +6,16 @@ B<X<CURSOR>CURSOR>: Default cursor used by the matrix. The default
 cursor is a symbol that looks like a cross. If you need to refer to
 this default cursor, use the name "IupMatrixCrossCursor".
 
+X<FITTOSIZE>B<FITTOSIZE> (write-only): force lines and/or columns sizes
+so the matrix visible size fit in its current size. NUMCOL_VISIBLE and
+NUMLIN_VISIBLE are considered when fitting and they are not changed,
+only the RASTERWIDTHn and RASTERHEIGHTn attributes are changed. But if
+any of the RASTERWIDTHn and RASTERHEIGHTn attributes where already set,
+then they will not be changed. If the matrix is resized then it must be
+set again to obtain the same result, but before doing that set to NULL
+all the RASTERWIDTHn and RASTERHEIGHTn attributes that you want to be
+changed. Can be LINES, COLUMNS or YES (meaning both). (since 3.3)
+
 B<X<FOCUS_CELL>FOCUS_CELL>: Defines the current cell. Two numbers in
 the "B<I<L>>:B<I<C>>" format, (B<I<L>>E<gt>0 and B<I<C>>E<gt>0, a title
 cell can NOT be the current cell). Default: "1:1".
@@ -201,6 +211,36 @@ lower priority than HEIGHTn.
 
 =head2 Number of Cells Attributes
 
+B<X<ADDCOL>ADDCOL> (write-only): Adds a new column to the matrix after
+the specified column. To insert a column at the top of the spreadsheet,
+value 0 must be used. To add more than one column, use format
+"B<I<C-C>>", where the first number corresponds to the base column and
+the second number corresponds to the number of columns to be added. It
+is valid only in normal operation mode. Can NOT add a title column.
+Ignored if set before map.
+
+B<X<ADDLIN>ADDLIN> (write-only): Adds a new line to the matrix after
+the specified line. To insert a line at the top of the spreadsheet,
+value 0 must be used. To add more than one line, use format
+"B<I<L-L>>", where the first number corresponds to the base line and
+the second number corresponds to the number of lines to be added. It is
+valid only in normal operation mode. Can NOT add a title line. Ignored
+if set before map.
+
+B<X<DELCOL>DELCOL> (write-only): Removes the given column from the
+matrix. To remove more than one column, use format "B<I<C-C>>", where
+the first number corresponds to the base column and the second number
+corresponds to the number of columns to be removed. It is valid only in
+normal operation mode. Can NOT remove a title column, B<I<C>>E<gt>0.
+Ignored if set before map.
+
+B<X<DELLIN>DELLIN> (write-only): Removes the given line from the
+matrix. To remove more than one line, use format "B<I<L-L>>", where the
+first number corresponds to the base line and the second number
+corresponds to the number of lines to be removed. It is valid only in
+normal operation mode. Can NOT remove a title line, B<I<L>>E<gt>0.
+Ignored if set before map.
+
 B<X<NUMCOL>NUMCOL>: Defines the number of columns in the matrix. Must
 be an integer number. Default: "0". It does not include the title
 column. If changed after map will add empty cells or discard cells at
@@ -234,10 +274,10 @@ visible lines. Default: "3".
 
 =head2 Mark Attributes
 
-B<X<MARKAREA>AREA>: Defines if the area to be B<interactively> marked
-by the user must be continuous or not, valid only if MARKMULTIPLE=YES.
-Possible values: "CONTINUOUS" or "NOT_CONTINUOUS". Default:
-"CONTINUOUS".
+B<MARKX<MARKAREA>AREA>: Defines if the area to be B<interactively>
+marked by the user must be continuous or not, valid only if
+MARKMULTIPLE=YES. Possible values: "CONTINUOUS" or "NOT_CONTINUOUS".
+Default: "CONTINUOUS".
 
 B<X<MARKMODE>MARKMODE>: Defines the entity that can be marked: none,
 lines, columns, (lines or columns), and cells. Possible values: "NO",
@@ -267,41 +307,11 @@ attributes the marked cells are cleared. When setting the attribute the
 LIN and COL notation can be used even if MARKMODE=CELL. MULTIPLE and
 AREA are NOT considered when setting MARKED or MARKL:C.
 
-B<X<MARKMULTIPLE>MULTIPLE>: Defines if more than one entity defined by
-MARKMODE can be B<interactively> marked. Possible values: "YES" or
+B<MARKX<MARKMULTIPLE>MULTIPLE>: Defines if more than one entity defined
+by MARKMODE can be B<interactively> marked. Possible values: "YES" or
 "NO". Default: "NO".
 
 =head2 Action Attributes
-
-B<X<ADDCOL>ADDCOL> (write-only): Adds a new column to the matrix after
-the specified column. To insert a column at the top of the spreadsheet,
-value 0 must be used. To add more than one column, use format
-"B<I<C-C>>", where the first number corresponds to the base column and
-the second number corresponds to the number of columns to be added. It
-is valid only in normal operation mode. Can NOT add a title column.
-Ignored if set before map.
-
-B<X<ADDLIN>ADDLIN> (write-only): Adds a new line to the matrix after
-the specified line. To insert a line at the top of the spreadsheet,
-value 0 must be used. To add more than one line, use format
-"B<I<L-L>>", where the first number corresponds to the base line and
-the second number corresponds to the number of lines to be added. It is
-valid only in normal operation mode. Can NOT add a title line. Ignored
-if set before map.
-
-B<X<DELCOL>DELCOL> (write-only): Removes the given column from the
-matrix. To remove more than one column, use format "B<I<C-C>>", where
-the first number corresponds to the base column and the second number
-corresponds to the number of columns to be removed. It is valid only in
-normal operation mode. Can NOT remove a title column, B<I<C>>E<gt>0.
-Ignored if set before map.
-
-B<X<DELLIN>DELLIN> (write-only): Removes the given line from the
-matrix. To remove more than one line, use format "B<I<L-L>>", where the
-first number corresponds to the base line and the second number
-corresponds to the number of lines to be removed. It is valid only in
-normal operation mode. Can NOT remove a title line, B<I<L>>E<gt>0.
-Ignored if set before map.
 
 B<X<EDIT_MODE>EDIT_MODE>: When set to YES, programmatically puts the
 current cell in edition mode, allowing the user to modify its value.

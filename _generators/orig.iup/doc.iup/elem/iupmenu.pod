@@ -61,6 +61,10 @@ menu bar of a dialog, the previous menu is unmapped.
 Any item inside a menu bar can retrieve attributes from the dialog
 using B<IupGetAttribute>. It is not necessary to call B< IupGetDialog>.
 
+The menu can be created with no elements and be dynamic filled using
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
+
 =head2 Lua Binding
 
 Offers a "cleaner" syntax than LED for defining menu, submenu and
@@ -89,7 +93,7 @@ For example:
    },
    iup.item{title="IupItem 3"},
    iup.item{title="IupItem 4"}
- }
+ }:popup(iup.CENTER, iup.CENTER)
 
 The same example using the cleaner syntax:
 
@@ -106,7 +110,7 @@ The same example using the cleaner syntax:
    },
    {"IupItem 3"},
    {"IupItem 4"}
- }
+ }:popup(iup.CENTER, iup.CENTER)
 
 It is also possible to mix the cleaner syntax with the normal syntax or
 with already create elements.
@@ -121,7 +125,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 [IMAGE]
 

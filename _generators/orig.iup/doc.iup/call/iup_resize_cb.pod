@@ -17,8 +17,8 @@ considering the decorations (client size)
 
 =head2 Notes
 
-This action is also generated when the dialog is mapped or shown. In
-Windows and Motif, it is generated after a map and before show.
+This action is also generated when the dialog is mapped, after the map
+and before the show.
 
 =head2 Affects
 

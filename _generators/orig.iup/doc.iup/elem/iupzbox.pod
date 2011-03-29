@@ -1,12 +1,14 @@
 =head1 IupZbox
 
-Creates a zbox container for composing elements. It is a box that piles
-up the children it contains, only the one child is visible.
+Creates a void container for composing elements in hidden layers with
+only one layer visible. It is a box that piles up the children it
+contains, only the one child is visible.
 
-It does not have a native representation. Zbox works by changing the
-VISIBLE attribute of its children, so if any of the grand children has
-its VISIBLE attribute directly defined then Zbox will NOT change its
-state.
+It does not have a native representation.
+
+Zbox works by changing the VISIBLE attribute of its children, so if any
+of the grand children has its VISIBLE attribute directly defined then
+Zbox will NOT change its state.
 
 =head2 Creation
 
@@ -84,6 +86,7 @@ B<WID> (read-only): returns -1 if mapped.
 
 L<FONT|../attrib/iup_font.html>,
 L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>,
 L<POSITION|../attrib/iup_position.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
@@ -91,7 +94,8 @@ L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
 =head2 Notes
 
 The box can be created with no elements and be dynamic filled using
-L<IupAppend|../func/iupappend.html>.
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
 
 =head2 Examples
 

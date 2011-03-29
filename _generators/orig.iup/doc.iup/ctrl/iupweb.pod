@@ -1,0 +1,176 @@
+=head1 IupWebBrowser [GTK and Windows only]
+
+Creates a web browser control. It is responsible for managing the
+drawing of the web browser content and forwarding of its events.
+
+In Linux, the implementation uses the
+L<WebKitE<47>GTK+|http://webkitgtk.org/>, the new GTK+ port of the
+L<WebKit|http://webkit.org>, an open-source web content engine. More
+information about WebKit/GTK+ (building, dependencies, releases, etc)
+can be seen in L<Notes|#Notes> section. It is only available for
+Linux26g4 and Linux26g4_64 systems.
+
+In Windows, the implementation uses the B<IupOleControl> to embed an
+instance of the Internet Explorer WebBrowser control. A listener
+interface is used to capture and handle events using the Active
+Template Library
+(L<ATL|http://msdn.microsoft.com/en-us/library/t9adwcde%28v=VS.80%29.aspx>)
+classes. More information about ATL can be seen in L<Notes|#Notes>
+section. So it is only available for Visual C++ compilers.
+
+=head2 Initialization and usage
+
+The B<IupWebBrowserOpen> function must be called after B<IupOpen>. The
+iupweb.h file must also be included in the source code. The program
+must be linked to the controls library (iupweb). If static linking is
+used then in Windows must be linked with the "iupole" library and in
+Linux must be linked with the "webkit-1.0" library
+
+To make the control available in Lua use require"iupluaweb" or manually
+call the initialization function in C, B<iupweblua_open>, after calling
+B<iuplua_open>. When manually calling the function the iupluaweb.h file
+must also be included in the source code, and the program must be
+linked to the lua control library (iupluaweb).
+
+=head2 Creation
+
+ Ihandle* IupWebBrowser(); [in C]
+ iup.webbrowser{} -> (elem: ihandle) [in Lua]
+ webbrowser() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<VALUE>: sets a specified URL to load into the webbrowser, or retrieve
+the current URL.
+
+B<BACKFORWARD >(write only): sets the number of steps away from the
+current page and loads the history item. Negative values represent
+steps backward while positive values represent steps forward.
+
+B<STATUS> (read only): returns the load status. Can be "LOADING",
+"COMPLETED" or "FAILED". (since 3.3.1)
+
+B<STOP >(write only): stops any ongoing load in the webbrowser.
+
+B<RELOAD> (write only): reloads the page in the webbrowser.
+
+B<HTML> (write only): loads a given HTML content. (since 3.3.1)
+
+B<BACKCOUNT> [GTK Only] (read only): gets the number of items that
+precede the current page.
+
+B<FORWARDCOUNT> [GTK Only] (read only): gets the number of items that
+succeed the current page.
+
+B<ITEMHISTORYid> [GTK Only] (read only): Returns the URL associated
+with a specific history item. Negative "id" value represents a backward
+item while positive "id" value represents a forward item ("0"
+represents the current item).
+
+=over
+
+----
+
+=back
+
+L<ACTIVE|../attrib/iup_active.html>, L<FONT|../attrib/iup_font.html>,
+L<EXPAND|../attrib/iup_expand.html>, L<X|../attrib/iup_x.html>,
+L<Y|../attrib/iup_y.html>, L< POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
+L<TIP|../attrib/iup_tip.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<ZORDER|../attrib/iup_zorder.html>,
+L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+=head2 Callbacks
+
+B<COMPLETED_CB>: action generated when a page successfully
+completed. Can be called multiple times when a frame set loads its
+frames, or when a page loads also other pages. (since 3.3.1)
+
+ int function(Ihandle* ih, char* url);  [in C]
+ elem:completed_cb(url) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<url>: the URL address that completed.
+
+B<ERROR_CB>: action generated when page load fail. (since 3.3.1)
+
+ int function(Ihandle* ih, char* url);  [in C]
+ elem:error_cb(url) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<url>: the URL address that caused the error.
+
+B<NAVIGATE_CB>: action generated when the browser requests a
+navigation to another page. It is called before navigation occurs. Can
+be called multiple times when a frame set loads its frames, or when a
+page loads also other pages.
+
+ int function(Ihandle* ih, char* url);  [in C]
+ elem:navigate_cb(url) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<url>: the URL address to navigate to.
+
+B<NEWWINDOW_CB>: action generated when the browser requests a new
+window.
+
+ int function(Ihandle* ih, char* url);  [in C]
+ elem:newwindow_cb(url) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<url>: the URL address that is opened in the new window.
+
+=over
+
+----
+
+=back
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>,
+L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
+L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
+L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>:
+All common callbacks are supported.
+
+=head2 Notes
+
+To learn more about WebKit and WebKitGTK+:
+
+L<The WebKit Open Source Project|http://webkit.org/>
+
+L<The WebKitGTK+ web page|http://webkitgtk.org/>
+
+L<WebKitGTK+ wiki|http://live.gnome.org/WebKitGtk>
+
+L<WebKitGTK+ tracker|http://trac.webkit.org/wiki/WebKitGTK>
+
+To learn more about Internet Explorer WebBrowser control and ATL:
+
+L<WebBrowser Control from
+CE<47>C++|http://msdn.microsoft.com/en-us/library/aa752044%28VS.85%29.aspx>
+
+L<Creating ATL sinks|http://support.microsoft.com/kb/194179/en-us/>
+
+L<Examples of sinking COM
+events|http://homepage.eircom.net/~codexpert/sink/>
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+=cut

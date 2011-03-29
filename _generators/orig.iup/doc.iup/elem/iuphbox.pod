@@ -1,7 +1,7 @@
 =head1 IupHbox
 
-Creates an hbox container for composing elements. It is a box that
-arranges the elements it contains B<horizontally> and left to right.
+Creates a void container for composing elements horizontally. It is a
+box that arranges the elements it contains from left to right.
 
 It does not have a native representation.
 
@@ -71,7 +71,8 @@ or BOTH. Default: "NO". (since 3.0)
 L<SIZE|../attrib/iup_size.html> /
 L<RASTERSIZE|../attrib/iup_rastersize.html> (non inheritable): Defines
 the width of the box. When consulted behaves as the standard
-SIZE/RASTERSIZE attributes.
+SIZE/RASTERSIZE attributes. The standard format "wxh" can also be used,
+but height will be ignored (since 3.3).
 
 B<WID> (read-only): returns -1 if mapped.
 
@@ -83,6 +84,7 @@ B<WID> (read-only): returns -1 if mapped.
 
 L<FONT|../attrib/iup_font.html>,
 L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>,
 L<POSITION|../attrib/iup_position.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
@@ -90,7 +92,8 @@ L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
 =head2 Notes
 
 The box can be created with no elements and be dynamic filled using
-L<IupAppend|../func/iupappend.html>.
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
 
 The box will NOT expand its children, it will allow its children to
 expand according to the space left in the box parent. So for the

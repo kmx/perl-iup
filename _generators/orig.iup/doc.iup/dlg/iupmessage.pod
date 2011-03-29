@@ -6,7 +6,7 @@ a B<IupMessageDlg>.
 =head2 Creation and Show
 
  void IupMessage(const char *title, const char *message); [in C]
-   iup.Message(title: string, message: string) [in Lua]
+ iup.Message(title: string, message: string) [in Lua]
 
 B<title>: dialog title
 

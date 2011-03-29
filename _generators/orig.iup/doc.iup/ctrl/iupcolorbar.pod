@@ -12,7 +12,7 @@ included in the L<Controls Library|../iupcontrols.html>.
 
 It inherits from L<IupCanvas|../elem/iupcanvas.html>.
 
-Originally implemented by AndrE<eacute> Clinio.
+Originally implemented by Andr Clinio.
 
 =head2 Creation
 
@@ -34,7 +34,10 @@ to NUM_CELLS-1.
 
 B<NUM_CELLS> (non inheritable): Contains the number of color cells.
 Default: "16". The maximum number of colors is 256. The default colors
-use the same set of IupImage.
+use the same set of B<IupImage>.
+
+B<COUNT> (read-only) (non inheritable): same as B<NUM_CELLS> but it
+is read-only. (since 3.3)
 
 B<NUM_PARTS> (non inheritable): Contains the number of lines or
 columns. Default: "1".

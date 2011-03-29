@@ -7,7 +7,7 @@ IupPopup function only.
 =head2 Creation
 
  Ihandle* IupFileDlg(void); [in C]
- iup.filedlg() -> (elem: ihandle) [in Lua]
+ iup.filedlg{} -> (elem: ihandle) [in Lua]
  filedlg() [in LED]
 
 Returns: the identifier of the created element, or NULL if an error
@@ -62,7 +62,7 @@ has priority over FILTERINFO and FILTER. Must be a text with the format
 character '|'. Example: "Text files|*.txt;*.doc|Image
 files|*.gif;*.jpg;*.bmp|". In GTK there is no way how to overwrite the
 filters, so it is recommended to always add a less restrictive filter
-to the filter list.
+to the filter list, for example "All Files|*.*".
 
 B<FILE>: Name of the file initially shown in the "File Name" field in
 the dialog. If contains a path, then it is used as the initial
@@ -213,6 +213,9 @@ IupFileDlg.
 In Windows, the FILE and the DIRECTORY attributes also accept strings
 containing "/" as path separators, but the VALUE attribute will always
 return strings using the "\" character.
+
+In Windows, the dialog will be modal relative only to its parent or to
+the active dialog.
 
 =head2 Examples
 

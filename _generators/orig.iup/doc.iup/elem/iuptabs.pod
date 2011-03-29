@@ -25,6 +25,9 @@ Windows, the tab buttons background it will be always defined by the
 system. In Windows the default background is different from the dialog
 background. Default: the global attribute DLGBGCOLOR.
 
+B<COUNT> (read-only) (non inheritable): returns the number of tabs.
+Same value returned by B<IupGetChildCount>. (since 3.3)
+
 L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
 value is "YES".
 
@@ -48,9 +51,10 @@ considered even invisible ones.
 B<TABIMAGEn >(non inheritable): image name to be used in the respective
 tab. Use L< IupSetHandle|../func/iupsethandle.html> or
 L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
-associate an image to a name. See also L<IupImage|iupimage.html>. In
-Motif, the image is shown only if B<TABTITLEn> is NULL. In Windows and
-Motif set the BGCOLOR attribute before setting the image. (since 3.0)
+associate an image to a name. n starts at 0. See also
+L<IupImage|iupimage.html>. In Motif, the image is shown only if
+B<TABTITLEn> is NULL. In Windows and Motif set the BGCOLOR attribute
+before setting the image. (since 3.0)
 
 B<TABORIENTATION >(non inheritable): Indicates the orientation of tab
 text, which can be "HORIZONTAL" or "VERTICAL". Default is "HORIZONTAL".
@@ -58,8 +62,12 @@ VERTICAL is supported only in GTK and in Windows. In Windows, VERTICAL
 is only supported when TABTYPE=LEFT or TABTYPE=RIGHT. (GTK 2.6)
 
 B<TABTITLEn >(non inheritable): Contains the text to be shown in the
-respective tab title. If this value is NULL, it will remain empty.
-(since 3.0)
+respective tab title. n starts at 0. If this value is NULL, it will
+remain empty. The "&" character can be used to define a mnemonic, the
+next character will be used as key. Use "&&" to show the "&" character
+instead on defining a mnemonic. The button can be activated from any
+control in the dialog using the "Alt+key" combination. (mnemonic
+support since 3.3) (since 3.0)
 
 B<TABTITLE >(non inheritable) B<(at children)>: Same as B<TABTITLEn>
 but set in each child. Works only before the child is added to the
@@ -85,7 +93,8 @@ the visible child. (since 3.0)
 
 B<VALUEPOS >(non inheritable): Changes the active tab by its position,
 starting at 0. When the tabs is created, the first element inserted is
-set as the visible child. (since 3.0)
+set as the visible child. In GTK, inside the callback the returned
+value is still the previous one. (since 3.0)
 
 =over
 
@@ -97,8 +106,10 @@ L<ACTIVE|../attrib/iup_active.html>, L<FONT|../attrib/iup_font.html>,
 L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
 L<POSITION|../attrib/iup_position.html>,
 L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
+L<TIP|../attrib/iup_tip.html>,
 L<RASTERSIZE|../attrib/iup_rastersize.html>,
 L<ZORDER|../attrib/iup_zorder.html>,
 L<VISIBLE|../attrib/iup_visible.html>: also accepted.
@@ -106,7 +117,6 @@ L<VISIBLE|../attrib/iup_visible.html>: also accepted.
 =head2 Callbacks
 
 B<TABCHANGE_CB>: Callback called when the user shifts the active tab.
-The parameters passed are:
 
  int function(Ihandle* ih, Ihandle* new_tab, Ihandle* old_tab); [in C]
  elem:tabchange_cb(new_tab, old_tab: ihandle) -> (ret: number) [in Lua]
@@ -116,6 +126,18 @@ B<ih>: identifier of the element that activated the event.
 B<new_tab>: the new tab selected by the user
 
 B<old_tab>: the previously selected tab
+
+B<TABCHANGEPOS_CB>: Callback called when the user shifts the active
+tab. Called only when TABCHANGE_CB is not defined. (since 3.3)
+
+ int function(Ihandle* ih, int new_pos, int old_pos); [in C]
+ elem:tabchange_cb(new_pos, old_pos: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<new_pos>: the new tab position selected by the user
+
+B<old_pos>: the previously selected tab position
 
 =over
 
@@ -152,6 +174,26 @@ When you change the active tab the focus is usually not changed. If you
 want to control the focus behavior call B<IupSetFocus> in the
 TABCHANGE_CB callback.
 
+=head2 Utility Functions
+
+These functions can be used to set and get attributes from the element:
+
+ void  IupSetAttributeId(Ihandle *ih, const char* name, int id, const char* value);
+ void  IupStoreAttributeId(Ihandle *ih, const char* name, int id, const char* value);
+ char* IupGetAttributeId(Ihandle *ih, const char* name, int id);
+ int   IupGetIntId(Ihandle *ih, const char* name, int id);
+ float IupGetFloatId(Ihandle *ih, const char* name, int id);
+ void  IupSetfAttributeId(Ihandle *ih, const char* name, int id, const char* format, ...);
+
+They work just like the respective traditional set and get functions.
+But the attribute string is complemented with the id value. For ex:
+
+ IupSetAttributeId(ih, "TABTITLE", 3, value) == IupSetAttribute(ih, "TABTITLE3", value)
+
+But these functions are faster than the traditional functions because
+they do not need to parse the attribute name string and the application
+does not need to concatenate the attribute name with the id.
+
 =head2 Examples
 
 L<Browse for Example Files|../../examples/>
@@ -164,7 +206,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 [IMAGE]
 

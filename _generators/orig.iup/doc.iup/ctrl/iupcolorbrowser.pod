@@ -40,13 +40,13 @@ L<RASTERSIZE|../attrib/iup_rastersize.html> (non inheritable): the
 initial size is "181x181". Set to NULL to allow the automatic layout
 use smaller values.
 
-B<RGB> (non inheritable): the color selected in the control, in the
-E<ldquo>r g bE<rdquo> format; r, g and b are integers ranging from 0 to
-255. Default: "255 0 0".
+B<RGB> (non inheritable): the color selected in the control, in the "r
+g b"E<157> format; r, g and b are integers ranging from 0 to 255.
+Default: "255 0 0".
 
-B<HSI> (non inheritable): the color selected in the control, in the
-E<ldquo>h s iE<rdquo> format; h, s and i are floating point numbers
-ranging from 0-360, 0-1 and 0-1 respectively.
+B<HSI> (non inheritable): the color selected in the control, in the "h
+s i"E<157> format; h, s and i are floating point numbers ranging from
+0-360, 0-1 and 0-1 respectively.
 
 =over
 

@@ -1,23 +1,23 @@
 =head1 IupGetAllAttributes (Since 3.0)
 
 Returns the names of all attributes of an element that are defined in
-its intenal hash table only. The internal attributes are also returned
-(attributes prefixed with "_IUP").
+its internal hash table only.
 
 =head2 Parameters/Return
 
  int IupGetAllAttributes(Ihandle* ih, char** names, int max_n); [in C]
- iup.GetAllAttributes(ih: ihandle, max_n: number) -> (names: table, n: number) [in Lua]
+ iup.GetAllAttributes(ih: ihandle[, max_n: number]) -> (names: table, n: number) [in Lua]
 
 B<ih>: identifier of the interface element.
 
 names: table receiving the names. Only the list of names need to be
 allocated. Each name will point to an internal string.
 
-B<max_n>: maximum number of names the table can receive.
+B<max_n>: maximum number of names the table can receive. Can be omitted
+in Lua.
 
-Returns: the number of names loaded to the table. If names==NULL or
-max_n==0 then returns the actual number of names.
+Returns: the actual number of names loaded to the table. If names==NULL
+or max_n==0 then returns the maximum number of names.
 
 =head2 See Also
 

@@ -21,7 +21,7 @@ is available.
 =head2 Creation
 
  Ihandle* IupColorDlg(void); [in C]
- iup.colordlg() -> (elem: ihandle) [in Lua]
+ iup.colordlg{} -> (elem: ihandle) [in Lua]
  colordlg() [in LED]
 
 Returns: the identifier of the created element, or NULL if an error

@@ -6,12 +6,13 @@ B<IupSetHandle> or using LED. Other dialogs will not be returned.
 =head2 Parameters/Return
 
  int IupGetAllDialogs(char** names, int max_n); [in C]
- iup.GetAllDialogs(max_n: number) -> (names: table, n: number) [in Lua]
+ iup.GetAllDialogs([max_n: number]) -> (names: table, n: number) [in Lua]
 
 B<names>: table receiving the names. Only the list of names need to be
 allocated. Each name will point to an internal string.
 
-B<max_>B<n>: maximum number of names the table can receive.
+B<max_>B<n>: maximum number of names the table can receive. Can be
+omitted in Lua.
 
 Returns: the number of names loaded to the table. If names==NULL or
 max_n==0 then returns the actual number of names.

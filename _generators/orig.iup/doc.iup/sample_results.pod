@@ -18,7 +18,7 @@ BGCOLOR|sample_results_bgcolor_indiv.html>.
 
 [IMAGE]
 
-=head2 Windows XP Style
+=head2 Windows with Visual Styles
 
 [IMAGE]
 

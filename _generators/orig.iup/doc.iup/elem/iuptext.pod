@@ -30,7 +30,8 @@ B<BORDER >(creation only): Shows a border around the text. Default:
 "YES".
 
 B<CANFOCUS> (creation only) (non inheritable): enables the focus
-traversal of the control. Default: YES. (since 3.0)
+traversal of the control. In Windows the control will still get the
+focus when clicked. Default: YES. (since 3.0)
 
 B<CARET> (non inheritable): Position of the insertion point. Its format
 depends in MULTILINE=YES. The first position, B<lin> or B<col>, is "1".
@@ -226,9 +227,9 @@ for the B<Natural> B<Size>, this means that will act also as minimum
 number of visible lines. As for SIZE you can set to NULL after map to
 use it as an initial value. Default: 1 (since 3.0)
 
-B<WORDWRAP> (creation only): Valid only when MULTILINE=YES. if enabled
+B<WORDWRAP> (creation only): Valid only when MULTILINE=YES. If enabled
 will force a word wrap of lines that are greater than the with of the
-control. The horizontal scrollbar is removed. Default: NO.
+control, and the horizontal scrollbar will be removed. Default: NO.
 
 =over
 
@@ -435,7 +436,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 GTK
 
@@ -464,7 +465,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 GTK
 

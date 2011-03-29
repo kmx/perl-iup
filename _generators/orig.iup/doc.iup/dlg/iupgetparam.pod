@@ -157,6 +157,9 @@ it must have room enough for your string)
 B<l> = list (shows a dropdown list box, use "int" in C for the zero
 based item index selected)
 
+B<o> = list (shows a list of toggles inside a radio, use "int" in C for
+the zero based item index selected)
+
 B<t> = separator (shows a horizontal line separator label, in this case
 text can be an empty string, not included in parameter count)
 
@@ -165,6 +168,9 @@ selection dialog box)
 
 B<c> = string (same as B<s>, but also show a color button to open a
 color selection dialog box)
+
+n = string (same as B<s>, but also show a font button to open a font
+selection dialog box)
 
 u = buttons names (allow to redefine the OK and Cancel button names,
 and to add a Help button, use [ok,cancel,help] as extra data, can omit
@@ -206,9 +212,9 @@ There is no extra parameters for the color string. The mask is
 automatically set to capture 3 or 4 unsigned integers from 0 to 255 (R
 G B) or (R G B A) (alpha is optional).
 
-The number of lines in the format string ("\n"s) will determine the
-number of required parameters. But separators will not count as
-parameters.
+The number of lines in the format string (number of '\n') will
+determine the number of required parameters. But separators will not
+count as parameters.
 
 A integer parameter always has a spin attached to the text to increment
 and decrement the value. A real parameter only has a spin in a full
@@ -233,36 +239,40 @@ Here is an example showing many the possible parameters. We show only
 one for each type, but you can have as many parameters of the same type
 you want.
 
-  // initial values
-  int pboolean0 = 1;
-  int pinteger1 = 3456;
-  float preal2 = 3.543f;
-  int pinteger3 = 192;
-  float preal4 = 0.5f;
-  float pangle5 = 90;
-  char pstring6[100] = "string text";
-  int plist7 = 2;
-  char pfile_name8[500] = "test.jpg";
-  char pcolor9[100] = "255 0 128";
-  char pstring10[200] = "second text\nsecond line";
-   
+  int pboolean = 1;
+  int pinteger = 3456;
+  float preal = 3.543f;
+  int pinteger2 = 192;
+  float preal2 = 0.5f;
+  float pangle = 90;
+  char pstring[100] = "string text";
+  char pfont[100] = "Courier, 24";
+  char pcolor[100] = "255 0 128";
+  int plist = 2, poptions = 1;
+  char pstring2[200] = "second text\nsecond line";
+  char file_name[500] = "test.jpg";
+  
   if (!IupGetParam("Title", param_action, 0,
-                   "Boolean: %b[No,Yes]{Boolean Tip}\n"
-                   "Integer: %i{Integer Tip}\n"
-                   "Real 1: %r{Real Tip}\n"
+                   "Bt %u[, MyCancel, Help!]\n"
+                   "Boolean: %b[No,Yes]\n"
+                   "Integer: %i\n"
+                   "Real 1: %r\n"
                    "Sep1 %t\n"
-                   "Integer: %i[0,255]{Integer Tip 2}\n"
-                   "Real 2: %r[-1.5,1.5]{Real Tip 2}\n"
+                   "Integer: %i[0,255]\n"
+                   "Real 2: %r[-1.5,1.5,0.05]\n"
                    "Sep2 %t\n"
-                   "Angle: %a[0,360]{Angle Tip}\n"
-                   "String: %s{String Tip}\n"
-                   "List: %l|item1|item2|item3|{List Tip}\n" 
-                   "File: %f[OPEN|*.bmp;*.jpg|CURRENT|NO|NO]{File Tip}\n"
+                   "Angle: %a[0,360]\n"
+                   "String: %s\n"
+                   "Options: %o|item0|item1|item2|\n" 
+                   "List: %l|item0|item1|item2|item3|item4|item5|item6|\n" 
+                   "File: %f[OPEN|*.bmp;*.jpg|CURRENT|NO|NO]\n"
                    "Color: %c{Color Tip}\n"
+                   "Font: %n\n"
                    "Sep3 %t\n"
-                   "Multiline: %m{Multiline Tip}\n",
-                   &pboolean0, &pinteger1, &preal2, &pinteger3, &preal4, &pangle5, pstring6, &plist7, pfile_name8, pcolor9, pstring10, NULL))
-    return IUP_DEFAULT;
+                   "Multiline: %m\n",
+                   &pboolean, &pinteger, &preal, &pinteger2, &preal2, &pangle, pstring, 
+                   &poptions, &plist, file_name, pcolor, pfont, pstring2, NULL))
+    return;
 
 [IMAGE]
 

@@ -27,11 +27,9 @@ the style of the progress bar for a dashed pattern. Default is "NO".
 L<FGCOLOR|../attrib/iup_fgcolor.html> [Windows Classic and Motif only]:
 Controls the bar color. Default: the global attribute DLGFGCOLOR.
 
-B<MARQUEE> (creation only in Windows) [Windows XP and GTK only]:
-displays an undefined state. Default: NO. In GTK you still need to set
-VALUE using any value to update the display. In Windows the update is
-automatic, you can set the attribute after map but only to start or
-stop the animation.
+B<MARQUEE> (creation): displays an undefined state. Default: NO. You
+can set the attribute after map but only to start or stop the
+animation.
 
 B<MAX >(non inheritable): Contains the maximum value. Default is "1".
 The control display is not updated, must set VALUE attribute to update.
@@ -87,7 +85,7 @@ Motif
 
 (same as DASHED=NO)
 
-(same as DASHED=NO)
+[IMAGE]
 
 Windows Classic
 
@@ -97,7 +95,7 @@ Windows Classic
 
 (same as DASHED)
 
-Windows XP Style
+Windows w/ Styles
 
 (same as DASHED=YES)
 

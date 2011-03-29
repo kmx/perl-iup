@@ -26,7 +26,7 @@ ends the current popup level dialog.
 B<ih>: Identifier of a dialog or a menu.
 
 B<x>: horizontal position of the dialog or menu relative to the origin
-of the screen. The following macros are valid:
+of the main screen. The following macros are valid:
 
 =over
 
@@ -50,7 +50,7 @@ menus. (Since 3.0)
 =back
 
 B<y>: vertical position of the dialog or menu relative to the origin of
-the screen. The following macros are valid:
+the main screen. The following macros are valid:
 
 =over
 
@@ -86,6 +86,8 @@ is replaced by IUP_CENTER.
 
 When IUP_CURRENT is used at the first time the dialog is shown then it
 will be replaced by IUP_CENTERPARENT.
+
+The main screen size does not include additional monitors.
 
 B<IupPopup> works just like B<IupShow> and B<IupShowXY>, but it
 inhibits interaction with other dialogs and interrupts the processing

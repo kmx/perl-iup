@@ -23,9 +23,10 @@ the control can be used. The "iup_pplot.h" file must also be included
 in the source code. The program must be linked to the controls library
 (iup_pplot), and with the CD library.
 
-To make the control available in Lua, use the initialization function
-in C, B<iuppplotlua_open>, after calling B<iuplua_open>. The
-iuplua_pplot.h file must also be included in the source code. The
+To make the control available in Lua use require"iuplua_pplot" or
+manually call the initialization function in C, B<iuppplotlua_open>,
+after calling B<iuplua_open>. When manually calling the function the
+iuplua_pplot.h file must also be included in the source code and the
 program must be linked to the Lua control library (iuplua_pplot).
 
 =head2 Guide
@@ -112,7 +113,7 @@ moving the Y coordinate.
 
  Ihandle* IupPPlot(void); [in C]
  iup.pplot{} -> (elem: ihandle) [in Lua]
- pplot(action) [in LED]
+ pplot() [in LED]
 
 This function returns the identifier of the created plot, or NULL if an
 error occurs.

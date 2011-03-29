@@ -29,7 +29,8 @@ B<BORDER >(creation only): Shows a border around the canvas. Default:
 "YES".
 
 B<CANFOCUS> (creation only) (non inheritable): enables the focus
-traversal of the control. Default: YES. (since 3.0)
+traversal of the control. In Windows the canvas will respect CANFOCUS
+in opposite to the other controls. Default: YES. (since 3.0)
 
 B<CLIPRECT> [Windows and GTK Only] (only during ACTION): Specifies a
 rectangle that has its region invalidated for painting, it could be
@@ -98,6 +99,9 @@ horizontal scrollbar is hidden. Default: "YES". (since 3.0)
 
 B<X<YAUTOHIDE>YAUTOHIDE>: When enabled, if DY E<gt>= YMAX-YMIN then the
 vertical scrollbar is hidden. Default: "YES". (since 3.0)
+
+B<TOUCH> [Windows 7 Only]: enable the multi-touch events processing.
+(Since 3.3)
 
 B<XDISPLAY> [UNIX Only](non inheritable, read-only): Returns the
 X-Windows Display. Available in the Motif driver or in the GTK driver
@@ -173,6 +177,48 @@ L<SCROLL_CB|../call/iup_scroll_cb.html>: Called when the scrollbar is
 manipulated. (GTK 2.8) Also the POSX and POSY values will not be
 correctly updated for older GTK versions.
 
+B<TOUCH_CB> [Windows 7 Only]: Action generated when a touch event
+occurred. Multiple touch events will trigger several calls. Must set
+TOUCH=Yes to receive this event. (Since 3.3)
+
+ int function(Ihandle* ih, int id, int x, int y, char* state); [in C]
+ elem:touch_cb(id, x, y: number, state: string) -> (ret: number) [in Lua]
+
+B<ih>: identifies the element that activated the event.
+
+B<id>: identifies the touch point.
+
+x, B<y>: position in pixels, relative to the top-left corner of the
+canvas.
+
+B<state>: the touch point state. Can be: DOWN, MOVE or UP. If the point
+is a "primary" point then "-PRIMARY" is appended to the string.
+
+Returns: IUP_CLOSE will be processed.
+
+B<MULTITOUCH_CB> [Windows 7 Only]: Action generated when multiple touch
+events occurred. Must set TOUCH=Yes to receive this event. (Since 3.3)
+
+ int function(Ihandle *ih, int count, int* pid, int* px, int* py, int* pstate) [in C]
+ elem:multitouch_cb(count: number, pid, px, py, pstate: table) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<count>: Number of touch points in the array.
+
+B<pid>: Array of touch point ids.
+
+B<px>: Array of touch point x coordinates in pixels, relative to the
+top-left corner of the canvas.
+
+B<py>: Array of touch point y coordinates in pixels, relative to the
+top-left corner of the canvas.
+
+B<pstate>: Array of touch point states. Can be 'D' (DOWN), 'U' (UP) or
+'M' (MOVE).
+
+Returns: IUP_CLOSE will be processed.
+
 L<WHEEL_CB|../call/iup_wheel_cb.html>: Action generated when the mouse
 wheel is rotated.
 
@@ -212,7 +258,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 [IMAGE]
 

@@ -1,11 +1,11 @@
-=head1 IupGetClassAttributes (Since 3.0)
+=head1 IupGetClassCallbacks (Since 3.3)
 
-Returns the names of all registered attributes of a class.
+Returns the names of all registered callbacks of a class.
 
 =head2 Parameters/Return
 
- int IupGetClassAttributes(const char* classname, char** names, int max_n); [in C]
- iup.GetClassAttributes(classname: string[, max_n: number]) -> (names: table, n: number) [in Lua]
+ int IupGetClassCallbacks(const char* classname, char** names, int max_n); [in C]
+ iup.GetClassCallbacks(classname: string[, max_n: number]) -> (names: table, n: number) [in Lua]
 
 B<classname>: name of the class
 

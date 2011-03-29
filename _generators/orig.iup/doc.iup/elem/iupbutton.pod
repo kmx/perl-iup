@@ -36,13 +36,11 @@ attribute is ignored if text or image is defined. Default: the global
 attribute DLGBGCOLOR.
 
 B<CANFOCUS> (creation only) (non inheritable): enables the focus
-traversal of the control. Default: YES. (since 3.0)
+traversal of the control. In Windows the button will respect CANFOCUS
+in opposite to the other controls. Default: YES. (since 3.0)
 
 B<FLAT> (creation only): Hides the button borders until the mouse enter
 the button area. Can be YES or NO.
-
-B<FOCUSONCLICK >(creation only): if NO the button will not receive the
-focus when clicked. Default: YES. Useful for toolbar buttons.
 
 L<FGCOLOR|../attrib/iup_fgcolor.html>: Text color. Default: the global
 attribute DLGFGCOLOR.
@@ -63,15 +61,14 @@ the disabled effect. GTK will also change the inactive image to look
 like other inactive objects. (GTK 2.6)
 
 B<IMPRESS >(non inheritable): Image name of the pressed button. If
-IMPRESS and IMAGE are defined, the button borders are not shown, but
-the border size is always included in size computation. When the button
-has the focus, in Motif and GTK a small border is displayed. When the
-button is clicked the pressed image does not offset, except in GTK.
-(GTK 2.6)
+IMPRESS and IMAGE are defined, the button borders are not shown and not
+computed in size computation. When the button is clicked the pressed
+image does not offset. In Motif the button will lose its focus feedback
+also. (GTK 2.6)
 
 B<IMPRESSBORDER >(non inheritable): if enabled the button borders will
-be shown even if IMPRESS is defined. Can be "YES" or "NO". Default:
-"NO".
+be shown and computed even if IMPRESS is defined. Can be "YES" or "NO".
+Default: "NO".
 
 B<IMAGEPOSITION >(non inheritable): Position of the image relative to
 the text when both are displayed. Can be: LEFT, RIGHT, TOP, BOTTOM.
@@ -154,7 +151,8 @@ Buttons are activated using Enter or Space keys.
 L<Browse for Example Files|../../examples/>
 
 The buttons with image and text simultaneous have PADDING=5x5, the
-other buttons have no padding.
+other buttons have no padding. The buttons with no text and BGCOLOR
+defined have their RASTERSIZE set.
 
 Motif
 
@@ -164,9 +162,17 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
 
 [IMAGE]
 

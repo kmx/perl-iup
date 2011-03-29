@@ -14,8 +14,8 @@ they are independent from the native system.
 
 Each control has an unique creation function, and all of its management
 is done by means of B<attributes> and B<callbacks>, using functions
-common to all the controls. This simple but powerfull approach is one
-of the advantages of using IUP.
+common to all the controls. This simple but powerful approach is one of
+the advantages of using IUP.
 
 Controls are automatically destroyed when the dialog is destroyed.
 

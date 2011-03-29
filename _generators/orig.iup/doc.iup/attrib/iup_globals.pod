@@ -43,8 +43,17 @@ Possible values: "YES" or "NO". Default: "NO".
 =head2 B<X<cursorpos>CURSORPOS>
 
 The cursor position in absolute coordinates relative to the upper left
-corner of the screen. Accept values in the format "XB<x>Y", example
-"200x200". Can be set only in GTK 2.8.
+corner of the screen. Accept values in the format "XB<x>Y" (in C
+"%dx%d), example "200x200". (since GTK 2.8)
+
+=head2 B<X<MOUSEBUTTON>MOUSEBUTTON >(write-only) (since 3.3)
+
+Simulates a mouse button press or release at the given coordinates. The
+position is in absolute coordinates relative to the upper left corner
+of the screen. Accept values in the format "XB<x>Y button state" (in C
+"%dx%d %c %d"), example "200x200 1 1". B<button> can be one of the
+IUP_BUTTON1,... definitions. B< state> can be 1=pressed, or 0=released.
+The cursor position is always updated. (since GTK 2.8)
 
 =head2 X<SHIFTKEY>B<SHIFTKEY> (read-only) (since 3.0)
 
@@ -207,7 +216,8 @@ String in the "I<width>xI<height>" format.
 
 Returns the screen size in pixels available for dialogs, i.e. not
 including menu bars, task bars, etc. In Motif has the same value as the
-FULLSIZE attribute.
+FULLSIZE attribute. The main screen size does not include additional
+monitors.
 
 String in the "I<width>xI<height>" format.
 

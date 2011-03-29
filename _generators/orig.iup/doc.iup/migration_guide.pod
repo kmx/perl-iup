@@ -16,7 +16,7 @@ the IupOpen function. It was changed to include the main function
 arguments. The GTK and Motif toolkits use them. In IUP prior to version
 2.7 they were ignored for Motif. In Windows they are always ignored. If
 for some reason you do not have access to the main function arguments
-you can use NULL in IupOpen. As a general rule the change is:
+you can use NULL in B<IupOpen>. As a general rule the change is:
 
  IupOpen()  >>   IupOpen(&argc,&argv)
 
@@ -35,7 +35,7 @@ name "iupcd" and "iupluacd" - Also you will have to change your
 makefile or IDE project because we changed some library names to solve
 the cross dependencies between IUP, CD and IM libraries.
 
-=head2 Strategic Changes (from 2.7 to 3.0)
+=head2 Strategic Changes (from 2.7 to 3.x)
 
 All the changes described here are backward compatible with 2.7. So
 after doing them you will still be able to go back to 2.7.
@@ -79,7 +79,8 @@ to update those parameters.
 
 The BGCOLOR attribute is now ignored in B<IupLabel>, B<IupFrame>,
 B<IupToggle> (for the text background) and B<IupVal>. They will use the
-background color of the native parent.
+background color of the native parent. B<IupFrame> can has a color
+background when not using TITLE, and BGCOLOR is set before map.
 
 The B<IupItem> in GTK must have its VALUE attribute defined (ON or OFF)
 before mapping - so it can have the check mark, or define HIDEMARK=NO.
@@ -88,14 +89,12 @@ If not done the item will not be checkable.
 The new B<IupTabs> does not supports the inactive tab feedback. So the
 tabs will be always active, although its children will be sucessfully
 disabled. The return value of the TABCHANGE_CB callback is not
-processed anymore.
+processed anymore. The most impacting feature is the TABORIENTATION
+attribute that has limited support in the native controls.
 
-In B<IupMatrix> if the last column is not completely visible, then
-adjust the matrix size manually or let the natural size adjust it for
-you using NUMCOL_VISIBLE_LAST=YES and NUMLIN_VISIBLE_LAST=YES. Since
-the selection is made only using the mouse pressing a key will NOT
-clear the selection anymore. You can still do that setting MARKED=NULL
-in the K_ANY callback.
+In B<IupMatrix> the selection is made only using the mouse, pressing a
+key will NOT clear the selection anymore. You can still do that setting
+MARKED=NULL in the K_ANY callback.
 
 In B<IupTree> DEPTH is now a read-only attribute, use the INSERT*
 attributes to properly add nodes. The SELECTION_CB and
@@ -106,26 +105,11 @@ but will be removed in future versions.
 
 =head2 Deprecated Controls (will be removed in a future version)
 
-The controls B<IupGauge>, B<IupTabs> and B< IupVal> based on the CD
-library were replaced by native controls in IUP 3.0. But not all
-features of the old controls are available in the new controls, so the
-old ones are still available until the applications have the chance to
-migrate them to the new ones. In a future version the old ones will be
-completely removed from IUP.
-
 The B<IupGauge> was superseded by B<IupProgressBar>. The new control
 does NOT supports the display of a text inside the progress bar area.
 If you use the text in the B<IupGauge> you will have to add a label on
 top or bottom of the progress bar to obtain a similar result. A less
 critical change is the DASHED attribute which has limited support in
 the B< IupProgressBar>.
-
-The B<IupTabs> was moved to the main library under the same name
-because the new one almost have all the features of the old one. The
-most impacting feature is the TABORIENTATION attribute that has limited
-support in the native controls.
-
-The B<IupVal> follows the same idea. The only feature that it is not
-available is the use of a custom handler image.
 
 =cut

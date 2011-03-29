@@ -9,13 +9,18 @@ expanded; "NO" = The branches will be created collapsed. Default:
 "YES".
 
 B<ADDROOT> (non inheritable): automatically adds an empty branch as the
-first node when the tree is mapped. (Since 3.1)
+first node when the tree is mapped. Default: "YES". (Since 3.1)
+
+B<AUTOREDRAW> [Windows] (non inheritable): automatically redraws the
+tree when something has change. Set to NO to add many items to the tree
+without updating the display. Default: "YES". (since 3.3)
 
 L<BGCOLOR|../attrib/iup_bgcolor.html>: Background color of the tree.
 Default: the global attribute TXTBGCOLOR.
 
 B<CANFOCUS> (creation only) (non inheritable): enables the focus
-traversal of the control. Default: YES. (since 3.0)
+traversal of the control. In Windows the control will still get the
+focus when clicked. Default: YES. (since 3.0)
 
 B<COUNT> (read only) (non inheritable): returns the total number of
 nodes in the tree. (since 3.0)
@@ -24,6 +29,11 @@ B<DRAGDROP> [Windows and GTK Only] (non inheritable): Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled. This
 is NOT related to the drag&drop of nodes inside the tree. (since 3.0)
+
+B<DROPEQUALDRAG> (non inheritable): if enabled will allow a drop node
+to be equal to the drag node. Used only if SHOWDRAGDROP =Yes. In the
+case the nodes are equal the callback return value is ignored and
+nothing is done after. (since 3.3)
 
 L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
 value is "YES".
@@ -296,10 +306,6 @@ children), id is ignored
 B<EXPANDALL >(write only): expand or contracts all nodes. Can be YES
 (expand all), or NO (contract all). (since 3.0)
 
-B<FINDUSERDATAp >(read only): finds the id of the given userdata. "p"
-must be the address of a pointer formatted in the string as "%p".
-(since 3.0)
-
 B<INSERTLEAFid>, B<INSERTBRANCHid > (write only): Same as B<ADDLEAF>
 and B<ADDBRACH> but the depth of the new node is always the same of the
 reference node. If the reference node is a leaf, then the id of the new
@@ -332,8 +338,9 @@ when in-place renaming. Same as the SELECTION attribute for
 L<IupText|iuptext.html#Attributes>, but here is used only once after
 SHOWRENAME_CB is called and before the text box is shown.
 
-B<SHOWRENAME> (creation only) (non inheritable): Allows the in place
-rename of a node. Default: "NO". Since IUP 3.0, F2 and clicking twice
-only starts to rename a node if SHOWRENAME=Yes.
+B<SHOWRENAME> (creation in Windows) (non inheritable): Allows the in
+place rename of a node. Default: "NO". Since IUP 3.0, F2 and clicking
+twice only starts to rename a node if SHOWRENAME=Yes. In Windows must
+be set to YES before map, but can be changed later (since 3.3).
 
 =cut

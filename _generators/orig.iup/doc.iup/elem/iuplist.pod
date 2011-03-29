@@ -54,11 +54,16 @@ Ignored if set before map. (since 3.0)
 B<AUTOHIDE>: scrollbars are shown only if they are necessary. Default:
 "YES".
 
+B<AUTOREDRAW> [Windows] (non inheritable): automatically redraws the
+list when something has change. Set to NO to add many items to the list
+without updating the display. Default: "YES". (since 3.3)
+
 L<BGCOLOR|../attrib/iup_bgcolor.html>: Background color of the text.
 Default: the global attribute TXTBGCOLOR.
 
 B<CANFOCUS> (creation only) (non inheritable): enables the focus
-traversal of the control. Default: YES. (since 3.0)
+traversal of the control. In Windows the control will still get the
+focus when clicked. Default: YES. (since 3.0)
 
 B<COUNT> (read-only) (non inheritable): returns the number of items.
 Before mapping it counts the number of non NULL items before the first
@@ -156,8 +161,8 @@ otherwise the specified items will be deselected.
 
 =back
 
-B<VISIBLE_ITEMS>: Number of items that are visible when DROPDOWN=YES is
-used for the dropdown list. Default: 5. Ignored in GTK.
+B<VISIBLE_ITEMS >[Windows and Motif Only]: Number of items that are
+visible when DROPDOWN=YES is used for the dropdown list. Default: 5.
 
 B<VISIBLECOLUMNS>: Defines the number of visible columns for the
 B<Natural> B<Size>, this means that will act also as minimum number of
@@ -203,13 +208,13 @@ L<ACTION|../call/iup_action.html>: Action generated when the state of
 an item in the list is changed. Also provides information on the
 changed item:
 
- int function (Ihandle *ih, char *text, int pos, int state); [in C]elem:action(text: string, pos, state: number) -> (ret: number) [in Lua]
+ int function (Ihandle *ih, char *text, int item, int state); [in C]elem:action(text: string, item, state: number) -> (ret: number) [in Lua]
 
 B<ih>: identifier of the element that activated the event.
 
 B<text>: Text of the changed item.
 
-B<pos>: Number of the changed item.
+B<item>: Number of the changed item starting at 1.
 
 B<state>: Equal to 1 if the option was selected or to 0 if the option
 was deselected.
@@ -245,16 +250,16 @@ L<IupText|iuptext.html>.
 B<DBLCLICK_CB>: Action generated when the user double click an item.
 Called only when DROPDOWN=NO. (since 3.0)
 
- int function (Ihandle *ih, int pos, char *text); [in C]elem:action(pos: number, text: string) -> (ret: number) [in Lua]
+ int function (Ihandle *ih, int item, char *text); [in C]elem:action(item: number, text: string) -> (ret: number) [in Lua]
 
 B<ih>: identifier of the element that activated the event.
 
-B<pos>: Number of the selected item.
+B<item>: Number of the selected item starting at 1.
 
 B<text>: Text of the selected item.
 
 B<DROPDOWN_CB>: Action generated when the list of a dropdown is shown
-and hidden. Called only when DROPDOWN=YES. (since 3.0)
+or hidden. Called only when DROPDOWN=YES. (since 3.0)
 
  int function (Ihandle *ih, int state); [in C]elem:action(state: boolean) -> (ret: number) [in Lua]
 
@@ -371,8 +376,34 @@ attributes are not preserved if the list loses its focus, or in other
 words these attributes are only useful in Windows if the list has the
 focus.
 
+B<IMPORTANT:> In Windows when DROPDOWN=Yes the vertical size is
+controled by the system, and has the height just right to include the
+borders and the text. So the B<User> height from RASTERSIZE or SIZE
+will be always ignored.
+
 In GTK older than 2.12, the editbox of a dropdown will not follow the
 list attributes: FONT, BGCOLOR, FGCOLOR and SPACING.
+
+=head2 Utility Functions
+
+These functions can be used to set and get attributes from the element:
+
+ void  IupSetAttributeId(Ihandle *ih, const char* name, int id, const char* value);
+ void  IupStoreAttributeId(Ihandle *ih, const char* name, int id, const char* value);
+ char* IupGetAttributeId(Ihandle *ih, const char* name, int id);
+ int   IupGetIntId(Ihandle *ih, const char* name, int id);
+ float IupGetFloatId(Ihandle *ih, const char* name, int id);
+ void  IupSetfAttributeId(Ihandle *ih, const char* name, int id, const char* format, ...);
+
+They work just like the respective traditional set and get functions.
+But the attribute string is complemented with the id value. For ex:
+
+ IupSetAttributeId(ih, "", 3, value) == IupSetAttribute(ih, "3", value)
+ IupSetAttributeId(ih, "INSERTITEM", 8, value) == IupSetAttribute(ih, "INSERTITEM8", value)
+
+But these functions are faster than the traditional functions because
+they do not need to parse the attribute name string and the application
+does not need to concatenate the attribute name with the id.
 
 =head2 Examples
 

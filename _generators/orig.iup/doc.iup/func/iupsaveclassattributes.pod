@@ -16,7 +16,7 @@ native system. If the element is B<unmaped> those attributes are lost.
 So this function is useful when you want to B<unmap> the element and
 keep its attributes.
 
-It will not save variable name attributes, like those which has a
+It will not save id dependent attributes, like those which has a
 complementary number. For example: items in a B<IupList>, B< IupTree>
 or B<IupMatrix>.
 
@@ -25,6 +25,7 @@ or B<IupMatrix>.
 L<IupGetClassAttributes|iupgetclassattributes.html>,
 L<IupGetClassName|iupgetclassname.html>,
 L<IupGetClassType|iupgetclasstype.html>,
-L<IupGetAllAttributes|iupgetallattributes.html>
+L<IupGetAllAttributes|iupgetallattributes.html>,
+L<IupCopyClassAttributes|iupcopyclassattributes.html>
 
 =cut

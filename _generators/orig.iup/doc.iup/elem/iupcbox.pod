@@ -1,7 +1,9 @@
 =head1 IupCbox
 
-Creates a Cbox element. It is a B<concrete> layout container, i.e. its
-children are positioned in specified coordinates.
+Creates a void container for position elements in absolute coordinates.
+It is a B<concrete> layout container.
+
+It does not have a native representation.
 
 The B<IupCbox> is equivalent of a B<IupVbox> or B<IupHbox> where all
 the children have the L<FLOATING|../attrib/iup_floating.html> attribute
@@ -45,6 +47,7 @@ B<WID> (read-only): returns -1 if mapped.
 
 L<FONT|../attrib/iup_font.html>,
 L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>,
 L<POSITION|../attrib/iup_position.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
@@ -52,7 +55,8 @@ L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
 =head2 Notes
 
 The box can be created with no elements and be dynamic filled using
-L<IupAppend|../func/iupappend.html>.
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
 
 =head2 Examples
 

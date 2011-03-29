@@ -26,7 +26,7 @@ L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
 value is "YES".
 
 L<FGCOLOR|../attrib/iup_fgcolor.html>: Text title color. Not available
-in Windows when using Windows XP Visual Style. Default: the global
+in Windows when using Windows Visual Styles. Default: the global
 attribute DLGFGCOLOR.
 
 B<SUNKEN> (creation only): When not using a title, the frame line
@@ -47,6 +47,7 @@ L<ACTIVE|../attrib/iup_active.html>, L<FONT|../attrib/iup_font.html>,
 L<X|../attrib/iup_x.html>, L<Y|../attrib/iup_y.html>,
 L<POSITION|../attrib/iup_position.html>,
 L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|../attrib/iup_wid.html>,
 L<SIZE|../attrib/iup_size.html>,
@@ -67,6 +68,10 @@ sharp rectangle border. When TITLE!=NULL it has Visual Styles and the
 border is a rounded rectangle. To always use Visual Styles set the
 title to "" before mapping, but be aware that a vertical space for the
 title will be always reserved at the top border.
+
+The frame can be created with no elements and be dynamic filled using
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
 
 =head2 Examples
 

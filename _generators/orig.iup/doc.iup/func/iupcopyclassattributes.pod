@@ -1,0 +1,23 @@
+=head1 IupCopyClassAttributes
+
+Copies all registered attributes from one element to another. Both
+elements must be of the same class.
+
+=head2 Parameters/Return
+
+ void IupCopyClassAttributes(Ihandle* src_ih, Ihandle* dst_ih); [in C]
+ iup.CopyClassAttributes(src_ih, dst_ih: ihandle) [in Lua]
+
+B<src_ih>: identifier of the source element.
+
+B<dst_ih>: identifier of the destiny element.
+
+=head2 See Also
+
+L<IupGetClassAttributes|iupgetclassattributes.html>,
+L<IupGetClassName|iupgetclassname.html>,
+L<IupGetClassType|iupgetclasstype.html>,
+L<IupGetAllAttributes|iupgetallattributes.html>,
+L<IupSaveClassAttributes|iupsaveclassattributes.html>
+
+=cut

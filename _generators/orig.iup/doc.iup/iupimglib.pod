@@ -7,11 +7,7 @@ IupImageLib|iupimglib2.html> up to IUP 2.x.
 
 To generate an application that uses this function, the program must be
 linked to the functions library (B<iupimglib>.lib on Windows and
-B<libiupimglib>.a on Unix).
-
-The library is large and could increase the size of the executable. To
-avoid linking with the library get the source code and extract only the
-image you need.
+libB<iupimglib>.a on Unix).
 
 =head2 Reference
 
@@ -509,7 +505,7 @@ Image
 
 [IMAGE]
 
-=head2 Logo Group
+=head2 Logo Group (NOT included in the pre-compiled library, since 3.3)
 
 These logos are 48x48 pixels size (or just 48 pixels height) images
 that can be used in Labels, usually inside dialogs.
@@ -550,7 +546,7 @@ Image
 
 [IMAGE]
 
-=head2 Other
+=head2 Other (NOT included in the pre-compiled library, since 3.3)
 
 Here are other images available in the IUP stock library, commonly used
 by the respective systems. All images are 48x48 pixels size and 32bpp.
@@ -655,7 +651,7 @@ All 8bpp images are from the old ImageLib and since Motif does not have
 any stock images, we selected this set to be used in Motif. Although
 the IUP Motif driver supports 32bpp images.
 
-Not available in AIX43.
+Not available in AIX.
 
 All "Win32" images copyright Microsoft and were extracted from the
 Visual Studio 2005 Image Library. Their use B<must> be used

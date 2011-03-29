@@ -6,7 +6,7 @@ state of inheritable attributes in a tree of elements.
 
 =head2 Parameters/Return
 
- void IupResetAttribute(Ihandle *ih, const char *name); [in C]iup.ResetAttribute(ih: iulua_tag, name: string) [in Lua] 
+ void IupResetAttribute(Ihandle *ih, const char *name); [in C]iup.ResetAttribute(ih: ihandle, name: string) [in Lua] 
 
 B<ih>: Identifier of the interface element. If NULL will set in the
 global environment.

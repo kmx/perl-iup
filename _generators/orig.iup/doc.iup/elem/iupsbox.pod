@@ -1,11 +1,10 @@
 =head1 IupSbox
 
-Creates a resizeable container. Allows the provided control to be
-enclosed in a box that allows expanding and contracting the element
-B<size> in one direction.
+Creates a void container that allows its child to be resized. Allows
+expanding and contracting the child B<size> in one direction.
 
-It does not have a native representation but it uses a B<IupCanvas> to
-implement the bar handler.
+It does not have a native representation but it contains also a
+B<IupCanvas> to implement the bar handler.
 
 =head2 Creation
 
@@ -43,6 +42,7 @@ B<WID> (read-only): returns -1 if mapped.
 L<FONT|../attrib/iup_font.html>, L<SIZE|../attrib/iup_size.html>,
 L<RASTERSIZE|../attrib/iup_rastersize.html>,
 L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>,
 L<POSITION|../attrib/iup_position.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
@@ -62,6 +62,10 @@ outside the dialog area at right or bottom. In fact this is part of the
 dynamic layout default reposition of controls inside the dialog. See
 the B<IupRefresh> function. The IUP layout does not have a maximum
 limit only a minimum, except if you use the MAXSIZE common attribute.
+
+The box can be created with no elements and be dynamic filled using
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
 
 =head2 Examples
 

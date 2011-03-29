@@ -1,15 +1,13 @@
-=head1 IupGetClassAttributes (Since 3.0)
+=head1 IupGetAllClasses (Since 3.3)
 
-Returns the names of all registered attributes of a class.
+Returns the names of all registered classes.
 
 =head2 Parameters/Return
 
- int IupGetClassAttributes(const char* classname, char** names, int max_n); [in C]
- iup.GetClassAttributes(classname: string[, max_n: number]) -> (names: table, n: number) [in Lua]
+ int IupGetAllClasses(char** names, int max_n); [in C]
+ iup.GetAllClasses([max_n: number]) -> (names: table, n: number) [in Lua]
 
-B<classname>: name of the class
-
-names: table receiving the names. Only the list of names need to be
+B<names>: table receiving the names. Only the list of names need to be
 allocated. Each name will point to an internal string.
 
 B<max_n>: maximum number of names the table can receive. Can be omitted

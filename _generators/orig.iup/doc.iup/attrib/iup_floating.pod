@@ -2,16 +2,20 @@
 
 If an element has FLOATING=YES then its size and position will be
 ignored by the layout processing in B<IupVbox>, B<IupHbox> and
-B<IupZbox>.
+B<IupZbox>. But the element size and position will still be updated in
+the native system allowing the usage of B<SIZE>/B<RASTERSIZE> and
+B<POSITION> to manually position and size the element.
 
-This is usefull when you do not want that an invisible element to be
-computed in the box size. But if the element is visible it must be
-manually sized and positioned using B<SIZE>/B<RASTERSIZE> and
-B<POSITION> attributes. Default: "NO". (since 3.0)
+This is useful when you do not want that an invisible element to be
+computed in the box size.
+
+If the value IGNORE is used then it will behave as YES, but also it
+will not update the the size and position in the native system. (since
+3.3)
 
 =head2 Value
 
-"YES" or "NO".
+"YES", "IGNORE" (since 3.3) or "NO".
 
 Default: "NO".
 

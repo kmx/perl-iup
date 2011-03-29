@@ -208,6 +208,8 @@ Thanks to the people that worked and contributed to the library:
 
 =item * Neil Armstrong Rezende
 
+=item * Nicolas Noble
+
 =item * Otfried Cheong
 
 =item * Rafael Rieder

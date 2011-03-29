@@ -3,27 +3,39 @@
 Moves an interface element from one position in the hierarchy tree to
 another.
 
-Both parent and child must be mapped or unmapped at the same time.
+Both B<new_parent> and B<child> must be mapped or unmapped at the same
+time.
+
+If B<ref_child> is NULL, then it will I<append> the B<child> to the
+B<new_parent>. If B<ref_child> is NOT NULL then it will I<insert>
+B<child> before B<ref_child> inside the B< new_parent>.
 
 =head2 Parameters/Return
 
- void IupReparent(Ihandle* child, Ihandle* parent); [in C]
- iup.Reparent(child, parent: ihandle) [in Lua]
+ int IupReparent(Ihandle* child, Ihandle* new_parent, Ihandle* ref_child); [in C]
+ iup.Reparent(child, new_parent, ref_child: ihandle) -> error: number [in Lua]
 
 B<child>: Identifier of the element to be moved.
 
-B<parent>: Identifier of the new parent.
+B<new_parent>: Identifier of the new parent.
+
+B<ref_child>: Identifier of the element to be used as reference, where
+the child will be inserted before it. Can be NULL. (since 3.3)
 
 Returns: IUP_NOERROR if successfully, IUP_ERROR if failed.
 
 =head2 Notes
 
 This function is faster and easier than doing the sequence B<unmap>, B<
-detach>, B<attach> and B<map>.
+detach>, B<append/insert> and B<map>.
 
 The elements are NOT immediately repositioned. Call B<IupRefresh> for
 the container (or any other element in the dialog) to update the dialog
 layout.
+
+Motif does not support the re-parent function, but we simulate a
+re-parent doing a B<unmap>/B<map> sequence. But some attributes may be
+lost during the operation, mostly attributes that are id dependent.
 
 =head2 See Also
 

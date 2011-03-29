@@ -1,13 +1,13 @@
 =head1 IupInsert (Since 3.0)
 
-Inserts an interface element before another child of the container.
+Inserts an interface element B<before> another child of the container.
 Valid for any element that contains other elements like dialog, frame,
 hbox, vbox, zbox, menu, etc.
 
 =head2 Parameters/Return
 
  Ihandle* IupInsert(Ihandle* ih, Ihandle* ref_child, Ihandle* new_child); [in C]
- iup.Append(ih, ref_child, new_child: ihandle) -> (parent: ihandle) [in Lua]
+ iup.Insert(ih, ref_child, new_child: ihandle) -> (parent: ihandle) [in Lua]
 
 B<ih>: Identifier of a container like hbox, vbox, zbox and menu.
 
@@ -29,14 +29,12 @@ This function can be used when elements that will compose a container
 are not known I<a priori> and should be dynamically constructed.
 
 The new child can NOT be mapped. It will NOT map the new child into the
-native system.
+native system. If the parent is already mapped you must explicitly call
+B<IupMap> for the appended child.
 
 If the actual parent is a layout box (B<IupVbox>, B< IupHbox> or
 B<IupZbox>) and you try to insert a child that it is already at the
 parent child list, then the child is moved to the insert position.
-
-If the parent is already mapped you must explicitly call B<IupMap> for
-the appended children or for the main container.
 
 The elements are NOT immediately repositioned. Call B<IupRefresh> for
 the container* to update the dialog layout (* or any other element in

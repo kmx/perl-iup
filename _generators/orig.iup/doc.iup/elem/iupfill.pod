@@ -27,7 +27,9 @@ L<SIZE|../attrib/iup_size.html> /
 L<RASTERSIZE|../attrib/iup_rastersize.html> (non inheritable): Defines
 the width, if inside a B<IupHbox>, or the height, if it is inside a
 B<IupVbox>. When consulted behaves as the standard SIZE/RASTERSIZE
-attributes.
+attributes. The standard format "wxh" can also be used, but width will
+be ignored if inside a B<IupVbox >and height will be ignored if inside
+a B<IupHbox> (since 3.3).
 
 B<WID> (read-only): returns -1 if mapped.
 

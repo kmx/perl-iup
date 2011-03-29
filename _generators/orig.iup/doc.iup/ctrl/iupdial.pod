@@ -9,11 +9,12 @@ It inherits from L<IupCanvas|../elem/iupcanvas.html>.
 
 =head2 Creation
 
- Ihandle* IupDial(const char *type); [in C]
- iup.dial{type: string} -> (elem: ihandle) [in Lua]
- dial(type) [in LED] 
+ Ihandle* IupDial(const char *orientation); [in C]
+ iup.dial{orientation: string} -> (elem: ihandle) [in Lua]
+ dial(orientation) [in LED] 
 
-B<type>: optional dial type, can be NULL. See TYPE attribute.
+B<orientation>: optional dial orientation, can be NULL. See ORIENTATION
+attribute.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.
@@ -29,20 +30,21 @@ L<FGCOLOR|../attrib/iup_fgcolor.html>: foreground color. The default
 value is "64 64 64". Not used for the circular dial.
 
 L<SIZE|../attrib/iup_size.html> (non inheritable): the initial size is
-"16x80", "80x16" or "40x35" according to the dial type. Set to NULL to
-allow the automatic layout use smaller values.
+"16x80", "80x16" or "40x35" according to the dial orientation. Set to
+NULL to allow the automatic layout use smaller values.
 
-B<TYPE> (creation only) (non inheritable): dial layout configuration
-"VERTICAL", "HORIZONTAL" or "CIRCULAR". Default: "HORIZONTAL".
+B<ORIENTATION> (creation only) (non inheritable): dial layout
+configuration "VERTICAL", "HORIZONTAL" or "CIRCULAR". Default:
+"HORIZONTAL".
 
 B<UNIT>: unit of the angle. Can be "DEGREES" or "RADIANS". Default is
 "RADIANS". Used only in the callbacks.
 
 B<VALUE >(non inheritable): The dial angular value in radians. The
 value is reset to zero when the interaction is started, except for
-TYPE=CIRCULAR. When type is vertical or horizontal, the dial measures
-relative angles. When type is circular the dial measure absolute
-angles, where the origin is at 3 O'clock.
+ORIENTATION=CIRCULAR. When orientation is vertical or horizontal, the
+dial measures relative angles. When orientation is circular the dial
+measure absolute angles, where the origin is at 3 O'clock.
 
 =over
 

@@ -4,12 +4,16 @@ Defines an attribute for an interface element.
 
 =head2 Parameters/Return
 
- void IupSetfAttribute(Ihandle *ih, const char *name, const char *format, ...); [in C]
+ void IupSetfAttribute(Ihandle *ih, const char *name, const char *format, ...);  [in C]
+ void IupSetfAttributeId(Ihandle *ih, const char *name, int id, const char *format, ...);  [in C]
+ void IupSetfAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* format, ...);  [in C]
  [There is no equivalent in Lua] 
 
 B<ih>: identifier of the interface element.
 
 B<name>: name of the attribute.
+
+B<id, lin, col>: used when the attribute has additional ids.
 
 B<format>: format that describes the attribute. It follows the same
 standard as the B<sprintf> function in C .

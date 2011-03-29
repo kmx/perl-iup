@@ -80,7 +80,7 @@ information. So to match this package configuration you should select
 
 When using the "iup.manifest" from "iup.rc", configure the linker
 properties of your project to do NOT generate a manifest file or the
-Windows XP Visual Styles won't work.
+Windows Visual Styles won't work.
 
 L<[IMAGE]|msvc2005h.png>
 

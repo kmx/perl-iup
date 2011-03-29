@@ -23,7 +23,7 @@ the ones that the background is transparent.
 
 [IMAGE]
 
-=head2 Windows XP Style
+=head2 Windows with Visual Styles
 
 [IMAGE]
 

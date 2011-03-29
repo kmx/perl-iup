@@ -23,7 +23,7 @@ for several controls.
 
 [IMAGE]
 
-=head2 Windows XP Style
+=head2 Windows with Visual Styles
 
 [IMAGE]
 

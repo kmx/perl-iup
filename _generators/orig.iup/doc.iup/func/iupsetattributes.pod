@@ -5,7 +5,7 @@ Defines a set of attributes for an interface element.
 =head2 Parameters/Return
 
  Ihandle *IupSetAttributes(Ihandle *ih, const char *str); [in C]
- iup.SetAttributes(ih: iuplua_tag, str: string) -> ih: iulua_tag [in Lua] 
+ iup.SetAttributes(ih: ihandle, str: string) -> ih: ihandle [in Lua] 
 
 B<ih>: Identifier of the interface element.
 

@@ -7,7 +7,7 @@ returned as integers.
 The internal attributes are not returned (attributes prefixed with
 "_IUP").
 
-Before calling this function the applciation must ensure that there is
+Before calling this function the application must ensure that there is
 no pointer attributes set for that element, although some known
 pointers are handled.
 
@@ -16,7 +16,7 @@ This function should be avoided. Use B<IupGetAllAttributes> instead.
 =head2 Parameters/Return
 
  char* IupGetAttributes (Ihandle *ih); [in C]
- iup.GetAttributes(ih: iulua_tag) -> (ret: string) [in Lua] 
+ iup.GetAttributes(ih: ihandle) -> (ret: string) [in Lua] 
 
 B<ih>: Identifier of the interface element.
 

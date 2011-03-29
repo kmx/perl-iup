@@ -5,9 +5,10 @@ known as Scale or Trackbar in native systems.
 
 =head2 Creation
 
- Ihandle* IupVal(const char *type); [in C]iup.val{type: string} -> (elem: ihandle) [in Lua]val(type) [in LED] 
+ Ihandle* IupVal(const char *orientation); [in C]iup.val{orientation: string} -> (elem: ihandle) [in Lua]val(orientation) [in LED] 
 
-B<type>: optional type of valuator. Can be NULL. See TYPE attribute.
+B<orientation>: optional orientation of valuator. Can be NULL. See
+ORIENTATION attribute.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.
@@ -18,14 +19,15 @@ L<BGCOLOR|../attrib/iup_bgcolor.html>: transparent in all systems
 except in Motif. It will use the background color of the native parent.
 
 B<CANFOCUS> (creation only) (non inheritable): enables the focus
-traversal of the control. Default: YES. (since 3.0)
+traversal of the control. In Windows the control will still get the
+focus when clicked. Default: YES. (since 3.0)
 
 B<INVERTED>: Invert the minimum and maximum positions on screen. When
 INVERTED=YES maximum is at top and left (minimum is bottom and right),
 when INVERTED=NO maximum is at bottom and right (minimum is top and
-left). The initial value depends on TYPE passed as parameter on
-creation, if TYPE=VERTICAL default is YES, if TYPE=HORIZONTAL default
-is NO. (since 3.0)
+left). The initial value depends on ORIENTATION passed as parameter on
+creation, if ORIENTATION=VERTICAL default is YES, if
+ORIENTATION=HORIZONTAL default is NO. (since 3.0)
 
 B<MAX>: Contains the maximum valuator value. Default is "1". When
 changed the display will not be updated until VALUE is set.
@@ -61,10 +63,10 @@ NORMAL. The normal position for horizontal orientation is at the top of
 the control, and for vertical orientation is at the left of the
 control. In Motif, the ticks position is always normal. (since 3.0)
 
-B<TYPE >(non inheritable): Informs whether the valuator is "VERTICAL"
-or "HORIZONTAL". Vertical valuators are bottom to up, and horizontal
-valuators are left to right variations of min to max (but can be
-inverted using INVERTED). Default: "HORIZONTAL".
+B<ORIENTATION >(non inheritable): Informs whether the valuator is
+"VERTICAL" or "HORIZONTAL". Vertical valuators are bottom to up, and
+horizontal valuators are left to right variations of min to max (but
+can be inverted using INVERTED). Default: "HORIZONTAL".
 
 B<VALUE >(non inheritable): Contains a number between MIN and MAX,
 indicating the valuator position. Default: "0.0".
@@ -127,7 +129,7 @@ when the control loses its focus.
 =head2 Keyboard Mapping
 
 This is the default mapping when INVERTED has the default value, or
-TYPE=HORIZONTAL+INVERTED=NO.
+ORIENTATION=HORIZONTAL+INVERTED=NO.
 
 Keys
 
@@ -158,7 +160,7 @@ End
 move all right, set to maximum
 
 This is the default mapping when INVERTED has the default value, or
-TYPE=VERTICAL+INVERTED=YES.
+ORIENTATION=VERTICAL+INVERTED=YES.
 
 Keys
 
@@ -210,7 +212,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 Windows
 

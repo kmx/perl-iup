@@ -8,10 +8,10 @@ L<IupCanvas|../elem/iupcanvas.html>.
 This is an additional control that depends on the CD library. It is
 included in the L<Controls Library|../iupcontrols.html>.
 
-It has two modes of operation: normal and callback mode. In normal mode
-string values are stored in attributes for each cell. In callback mode
-these attributes are ignored and the cells are filled with strings
-returned by the "VALUE_CB" callback. So the existance of this callback
+It has two modes of operation: normal and callback mode. In normal
+mode, string values are stored in attributes for each cell. In callback
+mode these attributes are ignored and the cells are filled with strings
+returned by the "VALUE_CB" callback. So the existence of this callback
 defines the mode the matrix will operate.
 
 =head2 Creation
@@ -28,11 +28,13 @@ occurs.
 
 =head2 Attributes
 
-=head2 General Attributes
+=head2 General
 
 =over
 
 L<CURSOR|iupmatrix_attrib.html#CURSOR>
+
+L<FITTOSIZE|iupmatrix_attrib.html#FITTOSIZE>
 
 L<FOCUS_CELL|iupmatrix_attrib.html#FOCUS_CELL>
 
@@ -46,13 +48,11 @@ L<USETITLESIZE|iupmatrix_attrib.html#USETITLESIZE>
 
 =back
 
-=head2 Cell Attributes
+=head2 Cell
 
 =over
 
 L<L:C|iupmatrix_attrib.html#L:C>
-
-L<ALIGNMENTn|iupmatrix_attrib.html#ALIGNMENTn>
 
 L<BGCOLOR|iupmatrix_attrib.html#BGCOLOR>
 
@@ -66,13 +66,21 @@ L<VALUE|iupmatrix_attrib.html#VALUE>
 
 =back
 
-=head2 Column Attributes
+=head2 Column
+
+=over
+
+L<ALIGNMENTn|iupmatrix_attrib.html#ALIGNMENTn>
+
+L<SORTSIGNn|iupmatrix_attrib.html#SORTSIGNn>
+
+=back
+
+=head2 Column Size
 
 =over
 
 L<RASTERWIDTHn|iupmatrix_attrib.html#RASTERWIDTHn>
-
-L<SORTSIGNn|iupmatrix_attrib.html#SORTSIGNn>
 
 L<WIDTHn|iupmatrix_attrib.html#WIDTHn>
 
@@ -80,7 +88,7 @@ L<WIDTHDEF|iupmatrix_attrib.html#WIDTHDEF>
 
 =back
 
-=head2 Line Attributes
+=head2 Line Size
 
 =over
 
@@ -92,9 +100,17 @@ L<RASTERHEIGHTn|iupmatrix_attrib.html#RASTERHEIGHTn>
 
 =back
 
-=head2 Size Attributes
+=head2 Number of Cells
 
 =over
+
+L<ADDCOL|iupmatrix_attrib.html#ADDCOL>
+
+L<ADDLIN|iupmatrix_attrib.html#ADDLIN>
+
+L<DELCOL|iupmatrix_attrib.html#DELCOL>
+
+L<DELLIN|iupmatrix_attrib.html#DELLIN>
 
 L<NUMCOL|iupmatrix_attrib.html#NUMCOL>
 
@@ -125,14 +141,6 @@ L<MARKMULTIPLE|iupmatrix_attrib.html#MARKMULTIPLE>
 =head2 Action Attributes
 
 =over
-
-L<ADDCOL|iupmatrix_attrib.html#ADDCOL>
-
-L<ADDLIN|iupmatrix_attrib.html#ADDLIN>
-
-L<DELCOL|iupmatrix_attrib.html#DELCOL>
-
-L<DELLIN|iupmatrix_attrib.html#DELLIN>
 
 L<EDIT_MODE|iupmatrix_attrib.html#EDIT_MODE>
 
@@ -237,14 +245,6 @@ selection state of a cell was changed.
 
 =head2 Additional Methods in Lua
 
- elem:setcell(lin, col: number, value: string)
-
-Modifies the text of a cell.
-
- elem:getcell(lin, col: number) -> (cell: string)
-
-Returns the text of a cell.
-
 =head2 Utility Functions
 
 These functions can be used to help set and get attributes from the
@@ -257,16 +257,31 @@ matrix:
  float IupMatGetFloat(Ihandle* ih, const char* name, int lin, int col);
  void  IupMatSetfAttribute(Ihandle* ih, const char* name, int lin, int col, const char* format, ...);
 
-They work just like the respective tradicional set and get functions.
-But the attribute string is complemented with the L and C values. For
+They work just like the respective traditional set and get functions.
+But the attribute string is complemented with the L and C values. When
+only one value is needed then use the Iup*AttributeId functions. For
 ex:
 
- IupMatSetAttribute(ih, "" , 30, 10, value) = IupSetAttribute(n, "30:10", value)
- IupMatSetAttribute(ih, "BGCOLOR" , 30, 10, value) = IupSetAttribute(n, "BGCOLOR30:10", value)
- IupMatSetAttribute(ih, "ALIGNMENT" , 10, 0, value) = IupSetAttribute(n, "ALIGNMENT10:0", value)  (*)
-     (*) noticed that in this case the second value will be ignored.
+ IupMatSetAttribute(ih, "", 30, 10, value) == IupSetAttribute(ih, "30:10", value)
+ IupMatSetAttribute(ih, "BGCOLOR", 30, 10, value) == IupSetAttribute(ih, "BGCOLOR30:10", value)
+ IupSetAttributeId(ih, "ALIGNMENT", 10, value) == IupSetAttribute(ih, "ALIGNMENT10", value)
 
-These functions are not available in Lua, since you can simply write:
+But these functions are faster than the traditional functions because
+they do not need to parse the attribute name string and the application
+does not need to concatenate the attribute name with the id.
+
+Some of these functions are also available in Lua:
+
+ iup.MatSetAttribute(ih: ihandle, name: string, lin: number, col: number, value: string)
+ iup.MatStoreAttribute(ih: ihandle, name: string, lin: number, col: number, value: string)
+ iup.MatGetAttribute(ih: ihandle, name: string, lin: number, col: number) -> value: string
+
+They are used by the additional methods in Lua:
+
+ elem:setcell(lin, col: number, value: string)
+ elem:getcell(lin, col: number) -> (cell: string)
+
+But you can also use the traditional functions when typing:
 
  elem["bgcolor"..l..":"..c] = v
     or
@@ -280,65 +295,11 @@ Before mapped to the native system, all attributes are stored in the
 hash table, independently from the size of the matrix or its operation
 mode. The action attributes like ADDLIN and DELCOL will NOT work.
 
-When the matrix is mapped NOT in callback mode then the cell values and
-mark state are moved from the hash table to an internal storage at the
-matrix. Other cell attributes remains on the hash table. Cell values
-with indices greater than (NUMLIN,NUMCOL) are ignored. When mapped in
-callback mode cell values stored in the hash table are ignored.
-
-=head2 Size
-
-If you do not plan to use ADDLIN nor ADDCOL, and plan to set sparse
-cell values, then you must set NUMLIN and NUMCOL before mapping.
-
-If you do not plan to set SIZE or RASTERSIZE, then set NUMCOL_VISIBLE
-and NUMLIN_VISIBLE so the Natural size will give better results. The
-Natural size is calculated using only the title cells size plus the
-size of NUMCOL_VISIBLE and NUMLIN_VISIBLE cells, but it is also
-affected if SCROLBAR is enabled. The natural height is the sum of the
-line heights from line 0 to NUMLIN_VISIBLE (inclusive), or line 0 plus
-the sum from line NUMLIN-NUMLIN_VISIBLE to NUMLIN if
-NUMLIN_VISIBLE_LAST is defined. The natural width is the sum of the
-column width from column 0 to NUMCOL_VISIBLE (inclusive), or column 0
-plus the sum from column NUMCOL-NUMCOL_VISIBLE to NUMCOL if
-NUMCOL_VISIBLE_LAST is defined. Notice that since NUMCOL_VISIBLE and
-NUMLIN_VISIBLE do not include the titles then NUMCOL_VISIBLE+1 columns
-and NUMLIN_VISIBLE+1 lines are included in the sum.
-
-The height of a line L depends on several attributes, first it checks
-the HEIGHTI<L> attribute, then checks RASTERHEIGHTI<L>, then when
-USETITLESIZE=YES or not in callback mode the height of the title text
-for the line or if L=0 it searches for the heighest column title, if
-still could not define a height then if L!=0 it will use HEIGHTDEF, if
-L=0 then height will be 0. A similar approach is valid for the column
-width. The width of a column C first checks the WIDTHI<C> attribute,
-then checks RASTERWIDTHI<C>, then when USETITLESIZE=YES or not in
-callback mode the width of the title text for the column or if C=0 it
-searches for the widest line title, if still could not define a width
-then if C!=0 it will use WIDTHDEF, if C=0 then height will be 0.
-
-When the scrollbars are enabled if the matrix area is greater than the
-visible area then scrollbars will be displayed so the cells can be
-scrolled to be visible area. When dragging the scrollbar the position
-of cells is free, when clicking on its buttons it will move in cell
-steps, aligning to the left border of the cell.
-
-Any cell can have more than one text line, just use the \n control
-character. Multiple text lines will be considered when calculating the
-title cell size based on its contents. The contents of ordinary cells
-(not a title) do not affect the cell size.
-
-=head2 Titles
-
-A matrix might have titles for lines and columns. Titles are not
-scrollable, non editable and presented with a different default
-background color. A matrix will have a line of titles if an attribute
-of the "I<L>:0" type is defined, where L is a line number. It will have
-a column of titles if an attribute of the "0:I<C>" type is defined,
-where C is a column number.
-
-When allowed the width of a column can be changed holding and dragging
-its title right border, see RESIZEMATRIX.
+When the matrix is mapped, and it is NOT in callback mode, then the
+cell values and mark state are moved from the hash table to an internal
+storage at the matrix. Other cell attributes remains on the hash table.
+Cell values with indices greater than (NUMLIN,NUMCOL) are ignored. When
+in callback mode cell values stored in the hash table are ignored.
 
 =head2 Callback Mode
 
@@ -362,6 +323,68 @@ the matrix never verifies attributes of type L:C again.
 
 If VALUE_CB is defined and VALUE_EDIT_CB is not defined when the matrix
 is mapped then READONLY will be set to YES.
+
+=head2 Number of Cells
+
+If you do not plan to use ADDLIN nor ADDCOL, and plan to set sparse
+cell values, then you must set NUMLIN and NUMCOL before mapping.
+
+=head2 Titles
+
+A matrix might have titles for lines and columns. Titles are not
+scrollable, non editable and presented with a different default
+background color. A matrix will have a line of titles if an attribute
+of the "I<L>:0" type is defined, where L is a line number, or if the
+HEIGHT0 attribute is defined. It will have a column of titles if an
+attribute of the "0:I<C>" type is defined, where C is a column number,
+or if the WIDTH0 attribute is defined.
+
+When allowed the width of a column can be changed by holding and
+dragging its title right border, see RESIZEMATRIX.
+
+Any cell can have more than one text line, just use the \n control
+character. Multiple text lines will be considered when calculating the
+title cell size based on its contents. The contents of ordinary cells
+(not a title) do not affect the cell size.
+
+=head2 Natural Size
+
+The Natural size is calculated using only the title cells size plus the
+size of NUMCOL_VISIBLE and NUMLIN_VISIBLE cells, but it is also
+affected if SCROLBAR is enabled. The natural height is the sum of the
+line heights from line 0 to NUMLIN_VISIBLE (inclusive). The natural
+width is the sum of the column width from column 0 to NUMCOL_VISIBLE
+(inclusive). Notice that since NUMCOL_VISIBLE and NUMLIN_VISIBLE do not
+include the titles then NUMCOL_VISIBLE+1 columns and NUMLIN_VISIBLE+1
+lines are included in the sum.
+
+The height of a line L depends on several attributes, first it checks
+the HEIGHTI<L> attribute, then checks RASTERHEIGHTI<L>, then when
+USETITLESIZE=YES or not in callback mode the height of the title text
+for the line or if L=0 it searches for the highest column title, if
+still could not define a height then if L!=0 it will use HEIGHTDEF, if
+L=0 then height will be 0.
+
+A similar approach is valid for the column width. The width of a column
+C first checks the WIDTHI<C> attribute, then checks RASTERWIDTHI<C>,
+then when USETITLESIZE=YES or not in callback mode the width of the
+title text for the column or if C=0 it searches for the widest line
+title, if still could not define a width then if C!=0 it will use
+WIDTHDEF, if C=0 then height will be 0.
+
+=head2 Virtual Size
+
+When the scrollbars are enabled if the matrix area is greater than the
+visible area then scrollbars will be displayed so the cells can be
+scrolled to be visible area. When dragging the scrollbar the position
+of cells is free, when clicking on its buttons it will move in cell
+steps, aligning to the left border of the cell.
+
+By default EXPAND=Yes, so matrix will be automatically resized when the
+dialog is resized. So more columns and lines will be displayed. But the
+matrix Natural size will be used as minimum size. To remove the minimum
+size limitation set NUMCOL_VISIBLE and NUMLIN_VISIBLE to 0 after
+showing it for the first time.
 
 =head2 Keyboard Navigation
 

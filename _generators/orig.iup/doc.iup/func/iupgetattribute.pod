@@ -6,11 +6,14 @@ L<Attributes Guide|../attrib_guide.html> section.
 =head2 Parameters/Return
 
  char *IupGetAttribute(Ihandle *ih, const char *name); [in C]iup.GetAttribute(ih: ihandle, name: string) -> value: string [in Lua]
+ char *IupGetAttributeId(Ihandle *ih, const char *name, int id); [in C]iup.GetAttributeId(ih: ihandle, name: string, id: number) -> value: string [in Lua]
 
 B<ih>: Identifier of the interface element. If NULL will retrieve from
 the global environment.
 
 B<name>: name of the attribute.
+
+B<id>: used when the attribute has an additional id.
 
 Returns: the attribute value or NULL (nil in Lua) if the attribute is
 not defined or does not exist.

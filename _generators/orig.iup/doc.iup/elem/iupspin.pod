@@ -19,7 +19,8 @@ B<IupSpin> inherits from a B<IupVbox>, and contains two B<IupButton>.
 Returns: the identifier of the created element, or NULL if an error
 occurs.
 
-B<IupSpinbox> inherits from a B<IupHbox> and contains a B<IupSpin>.
+B<IupSpinbox> is an horizontal container that already contains a
+B<IupSpin>.
 
  Ihandle* IupSpinbox(Ihandle* child); [in C]
  iup.spinbox{child: ihandle} -> (elem: ihandle) [in Lua]
@@ -39,6 +40,12 @@ a factor of 2, holding Ctrl a factor of 10, and both a factor of 100.
 
  int function(Ihandle *ih, int inc); [in C]
  elem:spin_cb(inc: number) -> (ret: number) [in Lua]
+
+=head2 Notes
+
+The spinbox can be created with no elements and be dynamic filled using
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
 
 =head2 Examples
 

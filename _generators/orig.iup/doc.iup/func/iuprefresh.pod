@@ -44,6 +44,7 @@ mapped, so using it or using B<IupShow>, B<IupShowXY> or B<IupPopup>
 
 =head2 See Also
 
-L<SIZE|../attrib/iup_size.html>, L<IupMap|iupmap.html>
+L<SIZE|../attrib/iup_size.html>, L<IupMap|iupmap.html>,
+L<IupRefreshChildren|iuprefreshchildren.html>
 
 =cut

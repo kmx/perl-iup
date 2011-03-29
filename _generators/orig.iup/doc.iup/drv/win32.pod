@@ -13,7 +13,7 @@ as iup.dll. the IUP DLL depends on the MSVCRT.DLL, that it is already
 installed in Windows.
 
 For the program to work, IUP.dll must be inside a PATH directory.
-Usually the program does not need to be relinked when the DLL is
+Usually the program does not need to be re-linked when the DLL is
 updated.
 
 =head2 Tips
@@ -58,21 +58,22 @@ files.
 
 Windows Visual Styles can be enabled using a manifest file. Uncomment
 the manifest file section in "iup.rc" file or copy it to your own
-resource file, you will need also to copy the manifest file
-"iup.manifest".
+resource file (you will need also to copy the manifest file
+"iup.manifest").
 
-When using Visual C++ 8 with "iup.manifest", configure the linker
+When using Visual C++ 8/9/10 with "iup.manifest", configure the linker
 properties of your project to do NOT generate a manifest file or the
-Windows Visual Styles won't work.
+Windows Visual Styles from the RC file won't work.
 
-If your Windows is using the Windows Classic theme or any other style,
-IUP controls appearance will follow the system appearance if you are
-using a Manifest. If not, it will always look like Windows Classic.
+If your Windows is using the Windows Classic theme or any other theme,
+IUP controls appearance will follow the system appearance only if you
+are using the manifest. If not using the manifest, then it will always
+look like Windows Classic.
 
 =head2 B<Black Canvas>
 
-The IupGLCanvas does not work when inside an IupFrame, the result is a
-black canvas with no drawing. (Only in IUP 2.x)
+The B<IupGLCanvas> does not work when inside an B<IupFrame>, the result
+is a black canvas with no drawing. (Only in IUP 2.x)
 
 =head2 B<Help in CHM format fail to open>
 

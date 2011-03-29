@@ -1,8 +1,10 @@
 =head1 IupRadio
 
-Creates the radio element for grouping mutual exclusive toggles. Only
+Creates a void container for grouping mutual exclusive toggles. Only
 one of its descendent toggles will be active at a time. The toggles can
 be at any composition.
+
+It does not have a native representation.
 
 =head2 Creation
 
@@ -42,10 +44,17 @@ B<WID> (read-only): returns -1 if mapped.
 
 L<FONT|../attrib/iup_font.html>,
 L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>,
 L<POSITION|../attrib/iup_position.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>,
 L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+=head2 Notes
+
+The radio can be created with no elements and be dynamic filled using
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
 
 =head2 Examples
 

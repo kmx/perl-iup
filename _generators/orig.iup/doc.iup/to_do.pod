@@ -1,20 +1,16 @@
 =head1 To Do
 
-=head2 Roadmap for the Next Version
+=head2 Roadmap for the Next Versions
 
 =over
 
-=item 1. IupTree, IupList, IupPPlot and IupMatrix improvements
+=item * IupTree, IupList, IupPPlot and IupMatrix improvements
 
-=item 2. UTF-8 in all drivers and in text callbacks
+=item * New controls: ScrollBox, GridBox
 
-=back
+=item * UTF-8 in all drivers and in text callbacks
 
-=over
-
-=item * New dialogs: Scripter, LayoutBuilder
-
-=item * New controls: ScrollBox, GridBox, HTML viewer
+=item * New dialogs: Scripter
 
 =item * Debian and LuaRocks packages
 
@@ -52,6 +48,9 @@ cascading B< IupPopup> for menus.
 
 =item * Support for Portuguese in the B<IupView> application.
 
+=item * Support for saving global mouse and keyboard events, so they
+can be reproduced later.
+
 =back
 
 =head2 Windows
@@ -67,19 +66,22 @@ then inside the B< IupTabs>, so the problem does not occur.
 the B<IupVal> background is only updated after the user click on the
 control or when the control is redisplayed.
 
-=item * Known Issue: In Windows Vista the COMPOSITE=YES attribute of
+=item * Known Issue: in Windows Vista the COMPOSITE=YES attribute of
 the B<IupDialog> is not working as expected. There is still flicker
 when the dialog is resized. B<IupTabs> in Windows Vista when
 COMPOSITE=YES works only if MULTILINE=YES. (since 3.0)
 
-=item * Known Issue: The MDI Window menu is not properly updated when
+=item * Known Issue: the MDI Window menu is not properly updated when
 the child mdi is closed. (since 3.0)
 
-=item * Known Issue (Compiler): The B<IupImgLib> takes an very long
-time to compile under Visual C++. In a 2.5GHz CPU took about 5min!
-(since 3.0)
+=item * Known Issue: in Windows when CANFOCUS=NO only the Tab key
+navigation is not done, when clicked the control will still get the
+focus. The only exceptions are button and canvas.
 
-=item * Known Issue (Compiler): When building with Open Watcom the
+=item * Known Issue (Compiler): the B<IupImgLib> takes an very long
+time to compile under Visual C++. (since 3.0)
+
+=item * Known Issue (Compiler): when building with Open Watcom the
 additional controls crash. When you add debug information to the main
 IUP library the problem solves. We tried to track down this error but
 it does not occurs with debug information and our attempts without
@@ -95,7 +97,7 @@ now distributed with debug information. (since 3.0)
 =item * Known Issue: when the B<IupList> has DROPDOWN=Yes in Motif, and
 the list has items with the same string, the ACTION callback will
 return the index of the item with the first instance of the string
-only. This seems to be a bug in Motif.
+only. This seems to be a bug or limitation in Motif.
 
 =back
 
@@ -103,17 +105,15 @@ only. This seems to be a bug in Motif.
 
 =over
 
-=item * B<Priority: > Image, check mark and gauge for cells.
+=item * B<Priority: >image, check mark and gauge for cells.
 
-=item * Mark using the keyboard.
+=item * B<Priority: >mark using the keyboard.
+
+=item * B<Priority:> drag&drop of columns position.
 
 =item * Merge cells.
 
 =item * Other columns/lines fixed at start like column 0 and line 0.
-
-=item * Copy&paste from clipboard
-
-=item * New PADDINGL:C, TIPL:C and ACTIVEL:C attributes.
 
 =back
 
@@ -121,9 +121,7 @@ only. This seems to be a bug in Motif.
 
 =over
 
-=item * B<Priority: > Check mark for nodes.
-
-=item * B<Priority:> RENAMEEDIT_CB callback and RENAMEMASKid attribute.
+=item * B<Priority:> check mark for nodes.
 
 =item * Known Issue: the rubber band gets lost depending on what you do
 inside the SELECTION_CB callback in GTK. To avoid that set
@@ -132,21 +130,21 @@ RUBBERBAND=NO.
 =item * Known Issue: the SELECTION_CB callback may be called more than
 once for the same node with the same status.
 
-=item * Known Issue: In Windows XP, when using a font for an node with
+=item * Known Issue: in Windows XP, when using a font for an node with
 TITLEFONTid in B<IupTree> that is larger than the element FONT the item
 text will be cropped at right and bottom because the system uses the
 element font to calculate the item size. The only exception is when you
 just change the font to add a Bold style.
 
-=item * Important: Old NAMEid attribute conflicts with the common
+=item * Important: old NAMEid attribute conflicts with the common
 attribute NAME. Should be replaced by the new TITLEid. NAMEid will be
 removed in future versions. (since 3.0)
+
+=item * RENAMEEDIT_CB callback and RENAMEMASKid attribute.
 
 =item * Add new nomenclature option for id, for example ":2:1:4"
 
 =item * Define minimum size based on tree nodes.
-
-=item * TIP attribute for nodes
 
 =item * drag&drop of multiple selected nodes.
 
@@ -187,13 +185,8 @@ major ticks.
 
 =over
 
-=item * B<Priority: > HTML viewer
-
 =item * B<Priority: Scripter - >Project Manager/Dialog
 Editor/Integrated Debugger for IupLua
-
-=item * B<Priority: DropDownButton> - Mix between a drop down list and
-a button
 
 =item * B<Priority: ScrollBox> - a box that can scroll the elements
 inside
@@ -201,11 +194,9 @@ inside
 =item * B<Priority: GridBox >- container to distribute elements in a
 grid.
 
-=item * B<Priority: LayoutBuilder> - a dialog that shows the layout of
-another dialog and allows the user to reposition the elements
-interactively.
-
 =item * -----------------------------
+
+=item * B<DropDownButton> - Mix between a drop down list and a button
 
 =item * B<CanvasCD> - an IupCanvas with a CD canvas associated.
 
@@ -218,16 +209,14 @@ interactively.
 =item * B<UrlButton> - Button that activates a URL (looks like a flat
 label, but gives visual feedback when mouse is hover)
 
-=item * -----------------------------
+=item * B<FrameEx> - Expandable/Closeable Frames
 
-=item * FontDlg for X fonts - Motif driver
-
-=item * Expandable/Closeable Frames
-
-=item * PropertyGrid - a 2 column matrix with expandable/closeable
+=item * B<PropertyGrid> - a 2 column matrix with expandable/closeable
 items
 
-=item * LUT - Lookup Table, maps a set of values in another set using a
+=item * -----------------------------
+
+=item * Lookup Table, maps a set of values in another set using a
 curve.
 
 =item * Statusbar

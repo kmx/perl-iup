@@ -13,11 +13,11 @@ linked with the IM library and with the function library (im and iupim
 libraries). The "iupim.h" file must also be included in the source
 code.
 
-To make the function available in Lua, use require"iupluaim" or
-manually calling the initialization function in C, iupimlua_open, after
-calling B<iuplua_open> (the iupluaim.h file must also be included in
-the source code, and the program must be linked to the iupluaim
-library).
+To make the functions available in Lua use require"iupluaim" or
+manually call the initialization function in C, iupimlua_open, after
+calling B<iuplua_open>. When manually calling the function the
+iupluaim.h file must also be included in the source code and the
+program must be linked to the iupluaim library.
 
 =head2 Load
 

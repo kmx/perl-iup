@@ -6,12 +6,16 @@ internally duplicated.
 =head2 Parameters/Return
 
  void IupStoreAttribute(Ihandle *ih, const char *name, const char *value); [in C]
- iup.StoreAttribute(ih: iulua_tag, name: string, value: string) [in Lua] 
+ iup.StoreAttribute(ih: ihandle, name: string, value: string) [in Lua] 
+ void IupStoreAttributeId(Ihandle *ih, const char *name, int id, const char *value); [in C]
+ iup.StoreAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua] 
 
 B<ih>: identifier of the interface element. If NULL will set in the
 global environment.
 
 B<name>: name of the attribute.
+
+B<id>: used when the attribute has an additional id.
 
 B<value>: value of the attribute. If NULL (nil in IupLua), the
 attribute will be removed from the element.

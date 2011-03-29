@@ -16,7 +16,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 GTK
 
@@ -54,7 +54,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 GTK
 
@@ -100,7 +100,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 GTK
 
@@ -126,7 +126,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 GTK
 
@@ -182,7 +182,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 [IMAGE]
 
@@ -228,7 +228,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 Windows
 
@@ -264,7 +264,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 [IMAGE]
 
@@ -315,7 +315,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 [IMAGE]
 
@@ -337,7 +337,7 @@ Classic
 
 Windows
 
-XP Style
+w/ Styles
 
 [IMAGE]
 

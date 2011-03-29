@@ -151,6 +151,9 @@ the X-Windows bitmap. For example:
 
  IupSetAttribute(label, "IMAGE", "../etc/tecgraf.bmp");
 
+A more format independent approach can be reached using the L<IUP-IM
+Functions|../iupim.html>.
+
 =head2 Colors
 
 In Motif, the alpha channel in RGBA images is composed with the control

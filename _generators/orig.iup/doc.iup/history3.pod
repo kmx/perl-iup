@@ -4,6 +4,230 @@ Check the L<Migration Guide|migration_guide.html> for a summary of the
 important changes and how to proceed when migrating from version 2.x to
 version 3.x.
 
+=head2 L<Version 3.3|http://sourceforge.net/projects/iup/files/3.3/>
+(release2) (18/Nov/2010)
+
+We identified some limitations and problems with the new
+B<IupWebBrowser> control, so we re-released some 3.3 packages to
+include an updated version of it.
+
+=over
+
+=item * New: HTML attribute in B<IupWebBrowser> to load a string. New
+COMPLETED_CB and ERROR_CB callbacks. New STATUS attribute.
+
+=item * Changed: removed reason parameter from NAVIGATE_CB callback in
+B<IupWebBrowser>. VALUE attribute will load always on the top
+frame.
+
+=item * Fixed: VALUE attribute of B<IupWebBrowser> was write only in
+Windows. Memory allocation that affected NAVIGATE_CB and NEWWINDOW_CB
+in Windows. Added missing Lua binding pre-compiled libraries.
+
+=back
+
+=head2 L<Version 3.3|http://sourceforge.net/projects/iup/files/3.3/>
+(09/Nov/2010)
+
+=over
+
+=item * New: B<IupWebBrowser> control using an embedded Internet
+Explorer in Windows, and Webkit in Linux.
+
+=item * New: Perl binding for IUP by Kmx at
+L<GitHub|http://github.com/kmx/perl-iup>.
+
+=item * New: global attribute MOUSEBUTTON to send button press and
+button release messages.
+
+=item * New: control B< L<IupTuioClient|ctrl/iuptuio.html>> that
+connects to a L<TUIO|http://www.tuio.org> server and process
+multi-touch messages.
+
+=item * New: support for native multi-touch events in B<IupCanvas> on
+Window 7. New TOUCH_CB and MULTITOUCH_CB callbacks. New TOUCH
+attribute.
+
+=item * New: function B<IupRefreshChildren> to update the layout
+locally at children only.
+
+=item * New: IGNORE value for the FLOATING attribute.
+
+=item * New: guide for building IUP, CD and IM in Linux on the
+documentation. Scripts for installation of the precompiled binaries or
+build binaries in the system.
+
+=item * New: CLIENTOFFSET attribute for all containers.
+
+=item * New: B<IupLayoutDialog> pre-defined dialog to visually edit the
+layout of another dialog in run time.
+
+=item * New: FLAT attribute for B<IupToggle> when IMAGE is defined.
+
+=item * New: AUTOREDRAW attribute for B< IupTree> and B<IupList> so
+redraw can be disabled in Windows.
+
+=item * New: functions B<IupCopyClassAttributes>,
+B<IupGetClassCallbacks> and B<IupGetAllClasses>.
+
+=item * New: TABCHANGEPOS_CB callback in B< IupTabs>.
+
+=item * New: functions B<Iup*AttributeId> to get and set attributes
+that need an ID. These functions are faster than the traditional
+functions because they do not need to parse the attribute name string
+and the application does not need to concatenate the attribute name
+with the id. The B<IupMat*Attribute> functions also became faster than
+the traditional functions.
+
+=item * New: parameters for B<IupGetParam>, "o" to display the list in
+an array of toggles inside a radio, and "n" to select a font, similar
+to the "c" parameter that selects a color.
+
+=item * New: DROPEQUALDRAG attribute for B< IupTree>.
+
+=item * New: B<IupFontDlg> in Motif.
+
+=item * New: FITTOSIZE action attribute in B< IupMatrix>.
+
+=item * New: callbacks BUTTON_CB, DROPFILES_CB, ENTERWINDOW_CB and
+LEAVEWINDOW_CB for B<IupLabel>.
+
+=item * New: the IupLua Console application now shows Lua code with
+syntax highlighting.
+
+=item * Changed: MARQUEE attribute support in B<IupProgressBar> on GTK
+and Motif now works just like on Windows.
+
+=item * Changed: SHOWRENAME in B<IupTree> can now be changed after map.
+
+=item * Changed: CLIENTSIZE in B<IupVbox> and B<IupHbox> will not
+include margins anymore. Removed CLIENTSIZE1 and CLIENTSIZE2 from B<
+IupSplit> and added CLIENTSIZE.
+
+=item * Changed: TYPE attribute renamed to ORIENTATION in B<IupVal> and
+B< IupDial>. Old name still works.
+
+=item * Changed: DIRECTION attribute renamed to ORIENTATION in
+B<IupSplit>. Old name still works.
+
+=item * Changed: removed FOCUSONCLICK from B<IupButton>. The old name
+will set CANFOCUS.
+
+=item * Changed: now when IMPRESS is defined along with IMAGE, and
+TITLE is not defined, then the borders will not be shown neither
+computed. The buttons with this attribute are now smaller than in
+previous versions.
+
+=item * Changed: B<IupReparent> to receive one more parameter to be
+used as a reference child.
+
+=item * Changed: B<IupSpinbox>, B<IupSplit>, B<IupSbox> now can be
+dynamically constructed with B<IupAppend>/B<IupInsert>.
+
+=item * Changed: standard SIZE and RASTERSIZE format can also be used
+in B<IupHbox>, B<IupVbox> and B<IupFill>.
+
+=item * Changed: now B<IupSaveClassAttributes> and
+B<IupCopyClassAttributes> will save also id dependent attributes.
+
+=item * Changed: Patch applied. Trying to improve the ADDFORMATTAG
+behavior in order to avoid scrolling physically and destroying the
+selection. Adds the concept of BULK format tags. The SELECTION and
+SELECTIONPOS attributes of the format tag will NOT change the
+B<IupText> attributes anymore. Contribution of the Indentation library
+that adds syntax highlighting to a Lua code text. Thanks to Nicolas
+Noble.
+
+=item * Changed: removed FINDUSERDATA attribute from B<IupTree>, use B<
+IupTreeGetId> always.
+
+=item * Changed: removed images larger than 48x48 (inclusive) from the
+pre-compiled libraries of the IupImgLib, reducing its size and allowing
+more applications to use the pre-compiled binaries. The images are
+still available in the source code.
+
+=item * Fixed: callback not called in B< IupGetParam> when a file name
+or a color string are selected by the extra dialog button.
+
+=item * Fixed: LEDC to correctly include the necessary headers.
+
+=item * Fixed: FRAMEVERTCOLORL:C attribute of B<IupMatrix> for cell
+with col=0 or lin=0.
+
+=item * Fixed: avoid double calls to ACTION in B<IupButton> on Windows
+when pressing enter and a dialog is displayed.
+
+=item * Fixed: the cleaner syntax feature for separator creation in
+Lua.
+
+=item * Fixed: returned value in RASTERSIZE for the B<IupDialog> in GTK
+and Motif.
+
+=item * Fixed: missing B<IupSetCallbacks> export for "iup.dll".
+
+=item * Fixed: B<IupFileDlg> on Motif when MULTIPLEFILES=Yes and
+FILE_CB is not defined.
+
+=item * Fixed: natural height computation for B<IupList> on Windows
+when DROPDOWN=Yes.
+
+=item * Fixed: ACTION callback called an extra time when
+FOCUSONCLICK=NO and user double click in B<IupButton> on Windows.
+
+=item * Fixed: TABTITLEn attribute return value of B<IupTabs> when
+TABTITLE was set at a child.
+
+=item * Fixed: SCREENSIZE global attribute in GTK when using multiple
+monitors.
+
+=item * Fixed: MARKEDid attribute in B< IupTree> on Windows when
+MARKMODE=SINGLE, was not changing the focus node.
+
+=item * Fixed: line end converting when FORMATTING=Yes in B<IupText> on
+Windows. Thanks to Nicolas Noble.
+
+=item * Fixed: B<IupMessageDlg> modality in Windows, when PARENTDLG is
+not specified then it will be modal relative to all application
+dialogs.
+
+=item * Fixed: mnemonic support for TABTITLE in GTK and Motif.
+
+=item * Fixed: drag&drop, move and copy of nodes in B<IupTree> on GTK.
+
+=item * Fixed: mapping of standard font names to Pango names in GTK.
+
+=item * Fixed: invalid current cell in B< IupMatrix> after adding lines
+or column to a matrix that had 0 lines or 0 columns.
+
+=item * Fixed: B<IupSetFocus> was not working in GTK if the dialog does
+not has the focus.
+
+=item * Fixed: RESIZE_CB callback in B< IupCanvas> not being called
+after the canvas is mapped in GTK.
+
+=item * Fixed: removed Scrollbar warning when creating a multiline
+B<IupText> in Motif.
+
+=item * Fixed: FONT handling in B<IupText> on Windows when
+FORMATTING=Yes.
+
+=item * Fixed: Enter key processing when editing a B<IupMatrix> cell
+and IUP_IGNORE is returned in EDITION_CB, to avoid propagating that key
+press to the dialog.
+
+=item * Fixed: B<IupZbox> VALUE management when the zbox itself is not
+visible.
+
+=item * Fixed: B<IupSplit> when AUTOHIDE=Yes.
+
+=item * Fixed: an invalid focus cell in B< IupMatrix> could occur after
+NUMLIN or NUMCOL was changed to smaller values.
+
+=item * Fixed: invalid call to ACTION callback of a B<IupToggle> when
+inside a radio and VALUE is set.
+
+=back
+
 =head2 L<Version 3.2|http://sourceforge.net/projects/iup/files/3.2/>
 (26/June/2010)
 

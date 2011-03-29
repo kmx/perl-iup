@@ -11,7 +11,7 @@ Displays a dialog in a given position on the screen.
 B<ih>: identifier of the dialog.
 
 B<x>: horizontal position of the dialog relative to the origin of the
-screen. The following macros are valid:
+main screen. The following macros are valid:
 
 =over
 
@@ -33,7 +33,7 @@ the default value in Lua if the parameter is not defined. (Since 3.0)
 =back
 
 B<y>: vertical position of the dialog relative to the origin of the
-screen. The following macros are valid:
+main screen. The following macros are valid:
 
 =over
 
@@ -68,6 +68,8 @@ is replaced by IUP_CENTER.
 
 When IUP_CURRENT is used at the first time the dialog is shown then it
 will be replaced by IUP_CENTERPARENT.
+
+The main screen size does not include additional monitors.
 
 This function can be executed more than once for the same dialog. This
 will make the dialog be placed above all other dialogs in the

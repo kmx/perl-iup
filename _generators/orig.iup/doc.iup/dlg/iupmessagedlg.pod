@@ -7,7 +7,7 @@ function only.
 =head2 Creation
 
  Ihandle* IupMessageDlg(void); [in C]
- iup.messagedlg() -> (elem: ihandle) [in Lua]
+ iup.messagedlg{} -> (elem: ihandle) [in Lua]
  messagedlg() [in LED]
 
 Returns: the identifier of the created element, or NULL if an error
@@ -62,6 +62,9 @@ The B<IupMessage> function simply creates and popup a B<IupMessageDlg>.
 
 In Windows each different dialog type is always associated with a
 different beep sound.
+
+In Windows, if PARENTDIALOG is specified then it will be modal relative
+only to its parent.
 
 =head2 Examples
 

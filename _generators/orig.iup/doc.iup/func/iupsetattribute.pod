@@ -5,12 +5,15 @@ L<Attributes Guide|../attrib_guide.html> section.
 
 =head2 Parameters/Return
 
- void IupSetAttribute(Ihandle *ih, const char *name, const char *value); [in C]iup.SetAttribute(ih: iulua_tag, name: string, value: string) [in Lua] 
+ void IupSetAttribute(Ihandle *ih, const char *name, const char *value); [in C]iup.SetAttribute(ih: ihandle, name: string, value: string) [in Lua] 
+ void IupSetAttributeId(Ihandle *ih, const char *name, int id, const char *value); [in C]iup.SetAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua] 
 
 B<ih>: Identifier of the interface element. If NULL will set in the
 global environment.
 
 B<name>: name of the attribute.
+
+B<id>: used when the attribute has an additional id.
 
 B<value>: value of the attribute. If NULL (nil in Lua), the default
 value will be used.

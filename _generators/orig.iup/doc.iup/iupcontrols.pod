@@ -10,13 +10,14 @@ plan to use the control in Lua, you should also include
 B<iupluacontrols.h>.
 
 The B<IupControlsOpen> function must be called after B<IupOpen>. To
-make the controls available in Lua, use the initialization function in
-C, B<iupcontrolslua_open>, after calling B<iuplua_open>.
+make the controls available in Lua use require"iupluacontrols" or
+manually call the initialization function in C, B<iupcontrolslua_open>,
+after calling B<iuplua_open>.
 
-Your application must be linked to the CPI control library
-(B<iupcontrols>), the CD_IUP driver (B<iupcd>), and with the
-L<CD|http://www.tecgraf.puc-rio.br/cd> library (B<cd>). To use its
-bindings to Lua, the program must also be linked to the
+When manually calling the function your application must be linked to
+the CPI control library (B<iupcontrols>), the CD_IUP driver (B<iupcd>),
+and with the L<CD|http://www.tecgraf.puc-rio.br/cd> library (B<cd>). To
+use its bindings to Lua, the program must also be linked to the
 B<iupluacontrols> library.
 
 =head2 OpenGL Canvas
