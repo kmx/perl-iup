@@ -810,7 +810,41 @@ internal_cb_HIGHLIGHT_CB_ (Ihandle* ih)
 } 
 
 int
-internal_cb_ACTION_sii (Ihandle* ih,char* text,int pos,int state)
+internal_cb_DROPFILES_CB_siii (Ihandle* ih,const char* filename,int num,int x,int y)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("DROPFILES_CB", 12)));
+	XPUSHs(sv_2mortal(newSVpv(filename, 0)));
+	XPUSHs(sv_2mortal(newSViv(num)));
+	XPUSHs(sv_2mortal(newSViv(x)));
+	XPUSHs(sv_2mortal(newSViv(y)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(DROPFILES_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_ACTION_sii (Ihandle* ih,char* text,int item,int state)
 {
 	dSP;
 	int count;
@@ -824,7 +858,7 @@ internal_cb_ACTION_sii (Ihandle* ih,char* text,int pos,int state)
 	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
 	XPUSHs(sv_2mortal(newSVpvn("ACTION", 6)));
 	XPUSHs(sv_2mortal(newSVpv(text, 0)));
-	XPUSHs(sv_2mortal(newSViv(pos)));
+	XPUSHs(sv_2mortal(newSViv(item)));
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
@@ -876,7 +910,7 @@ internal_cb_CARET_CB_iii (Ihandle* ih,int lin,int col,int pos)
 } 
 
 int
-internal_cb_DBLCLICK_CB_is (Ihandle* ih,int pos,char* text)
+internal_cb_DBLCLICK_CB_is (Ihandle* ih,int item,char* text)
 {
 	dSP;
 	int count;
@@ -889,7 +923,7 @@ internal_cb_DBLCLICK_CB_is (Ihandle* ih,int pos,char* text)
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
 	XPUSHs(sv_2mortal(newSVpvn("DBLCLICK_CB", 11)));
-	XPUSHs(sv_2mortal(newSViv(pos)));
+	XPUSHs(sv_2mortal(newSViv(item)));
 	XPUSHs(sv_2mortal(newSVpv(text, 0)));
 	PUTBACK;
 
@@ -929,40 +963,6 @@ internal_cb_DROPDOWN_CB_i (Ihandle* ih,int state)
 	SPAGAIN;
 
 	if (count != 1) croak("Error: _execute_cb(DROPDOWN_CB) has not returned single scalar value!\n");
-	rv = POPi;
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_DROPFILES_CB_siii (Ihandle* ih,const char* filename,int num,int x,int y)
-{
-	dSP;
-	int count;
-	int rv;
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSVpvn("DROPFILES_CB", 12)));
-	XPUSHs(sv_2mortal(newSVpv(filename, 0)));
-	XPUSHs(sv_2mortal(newSViv(num)));
-	XPUSHs(sv_2mortal(newSViv(x)));
-	XPUSHs(sv_2mortal(newSViv(y)));
-	PUTBACK;
-
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
-
-	SPAGAIN;
-
-	if (count != 1) croak("Error: _execute_cb(DROPFILES_CB) has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2103,6 +2103,38 @@ internal_cb_SPIN_CB_i (Ihandle* ih,int inc)
 } 
 
 int
+internal_cb_TABCHANGEPOS_CB_ii (Ihandle* ih,int new_pos,int old_pos)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("TABCHANGEPOS_CB", 15)));
+	XPUSHs(sv_2mortal(newSViv(new_pos)));
+	XPUSHs(sv_2mortal(newSViv(old_pos)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(TABCHANGEPOS_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
 internal_cb_TABCHANGE_CB_nn (Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab)
 {
 	dSP;
@@ -2912,6 +2944,41 @@ internal_cb_KEYPRESS_CB_ii (Ihandle* ih,int c,int press)
 } 
 
 int
+internal_cb_MULTITOUCH_CB_iIIII (Ihandle* ih,int count_,int* pid,int* px,int* py,int* pstate)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("MULTITOUCH_CB", 13)));
+	XPUSHs(sv_2mortal(newSViv(count_)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 5) croak("Error: _execute_cb(MULTITOUCH_CB) has not returned 5 values!\n");
+	rv = POPi;
+	*pid = POPi;
+	*px = POPi;
+	*py = POPi;
+	*pstate = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
 internal_cb_SCROLL_CB_iff (Ihandle* ih,int op,float posx,float posy)
 {
 	dSP;
@@ -2935,6 +3002,40 @@ internal_cb_SCROLL_CB_iff (Ihandle* ih,int op,float posx,float posy)
 	SPAGAIN;
 
 	if (count != 1) croak("Error: _execute_cb(SCROLL_CB) has not returned single scalar value!\n");
+	rv = POPi;
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_TOUCH_CB_iiis (Ihandle* ih,int id,int x,int y,char* state)
+{
+	dSP;
+	int count;
+	int rv;
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(sv_2mortal(newSVpvn("TOUCH_CB", 8)));
+	XPUSHs(sv_2mortal(newSViv(id)));
+	XPUSHs(sv_2mortal(newSViv(x)));
+	XPUSHs(sv_2mortal(newSViv(y)));
+	XPUSHs(sv_2mortal(newSVpv(state, 0)));
+	PUTBACK;
+
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+
+	SPAGAIN;
+
+	if (count != 1) croak("Error: _execute_cb(TOUCH_CB) has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -3380,6 +3481,13 @@ _init_cb_HIGHLIGHT_CB_(ih,action)
 		IupSetCallback(ih, action, (Icallback)internal_cb_HIGHLIGHT_CB_);
 
 void
+_init_cb_DROPFILES_CB_siii(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_DROPFILES_CB_siii);
+
+void
 _init_cb_ACTION_sii(ih,action)
 		Ihandle* ih;
 		char* action;
@@ -3406,13 +3514,6 @@ _init_cb_DROPDOWN_CB_i(ih,action)
 		char* action;
 	CODE:
 		IupSetCallback(ih, action, (Icallback)internal_cb_DROPDOWN_CB_i);
-
-void
-_init_cb_DROPFILES_CB_siii(ih,action)
-		Ihandle* ih;
-		char* action;
-	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DROPFILES_CB_siii);
 
 void
 _init_cb_EDIT_CB_is(ih,action)
@@ -3660,6 +3761,13 @@ _init_cb_SPIN_CB_i(ih,action)
 		IupSetCallback(ih, action, (Icallback)internal_cb_SPIN_CB_i);
 
 void
+_init_cb_TABCHANGEPOS_CB_ii(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_TABCHANGEPOS_CB_ii);
+
+void
 _init_cb_TABCHANGE_CB_nn(ih,action)
 		Ihandle* ih;
 		char* action;
@@ -3842,11 +3950,25 @@ _init_cb_KEYPRESS_CB_ii(ih,action)
 		IupSetCallback(ih, action, (Icallback)internal_cb_KEYPRESS_CB_ii);
 
 void
+_init_cb_MULTITOUCH_CB_iIIII(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_MULTITOUCH_CB_iIIII);
+
+void
 _init_cb_SCROLL_CB_iff(ih,action)
 		Ihandle* ih;
 		char* action;
 	CODE:
 		IupSetCallback(ih, action, (Icallback)internal_cb_SCROLL_CB_iff);
+
+void
+_init_cb_TOUCH_CB_iiis(ih,action)
+		Ihandle* ih;
+		char* action;
+	CODE:
+		IupSetCallback(ih, action, (Icallback)internal_cb_TOUCH_CB_iiis);
 
 void
 _init_cb_WHEEL_CB_fiis(ih,action)

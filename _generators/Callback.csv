@@ -26,10 +26,12 @@ IUP::Dial;VALUECHANGED_CB;;int;Ihandle* ih
 IUP::FileDlg;FILE_CB;ss;int;Ihandle* ih,const char* file_name,const char* status
 IUP::Item;ACTION;;int;Ihandle* ih
 IUP::Item;HIGHLIGHT_CB;;int;Ihandle* ih
-IUP::List;ACTION;sii;int;Ihandle* ih,char* text,int pos,int state
+IUP::Label;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
+IUP::Label;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y
+IUP::List;ACTION;sii;int;Ihandle* ih,char* text,int item,int state
 IUP::List;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
 IUP::List;CARET_CB;iii;int;Ihandle* ih,int lin,int col,int pos
-IUP::List;DBLCLICK_CB;is;int;Ihandle* ih,int pos,char* text
+IUP::List;DBLCLICK_CB;is;int;Ihandle* ih,int item,char* text
 IUP::List;DROPDOWN_CB;i;int;Ihandle* ih,int state
 IUP::List;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y
 IUP::List;EDIT_CB;is;int;Ihandle* ih,int c,char* new_value
@@ -71,6 +73,7 @@ IUP::PPlot;SELECT_CB;iiffi;int;Ihandle* ih,int index,int sample_index,float x,fl
 IUP::Spin;SPIN_CB;i;int;Ihandle* ih,int inc
 IUP::Spinbox;SPIN_CB;i;int;Ihandle* ih,int inc
 IUP::Submenu;HIGHLIGHT_CB;;int;Ihandle* ih
+IUP::Tabs;TABCHANGEPOS_CB;ii;int;Ihandle* ih,int new_pos,int old_pos
 IUP::Tabs;TABCHANGE_CB;nn;int;Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
 IUP::Text;ACTION;is;int;Ihandle* ih,int c,char* new_value
 IUP::Text;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
@@ -96,7 +99,13 @@ IUP::Tree;RENAME_CB;is;int;Ihandle* ih,int id,char* title
 IUP::Tree;RIGHTCLICK_CB;i;int;Ihandle* ih,int id
 IUP::Tree;SELECTION_CB;ii;int;Ihandle* ih,int id,int status
 IUP::Tree;SHOWRENAME_CB;i;int;Ihandle* ih,int id
+IUP::TuioClient;MULTITOUCH_CB;iIIII;int;Ihandle* ih, int count, int* pid, int* px, int* py, int* pstate
+IUP::TuioClient;TOUCH_CB;iiis;int;Ihandle* ih, int id, int x, int y, char* state
 IUP::Val;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::WebBrowser;COMPLETED_CB;s;int;Ihandle* ih,char* url
+IUP::WebBrowser;ERROR_CB;s;int;Ihandle* ih,char* url
+IUP::WebBrowser;NAVIGATE_CB;s;int;Ihandle* ih,char* url
+IUP::WebBrowser;NEWWINDOW_CB;s;int;Ihandle* ih,char* url
 _base;ENTERWINDOW_CB;;int;Ihandle* ih
 _base;GETFOCUS_CB;;int;Ihandle* ih
 _base;HELP_CB;;int;Ihandle* ih
@@ -111,8 +120,10 @@ _canvas;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int
 _canvas;FOCUS_CB;i;int;Ihandle* ih,int focus
 _canvas;KEYPRESS_CB;ii;int;Ihandle* ih,int c,int press
 _canvas;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
+_canvas;MULTITOUCH_CB;iIIII;int;Ihandle* ih,int count,int* pid,int* px,int* py,int* pstate
 _canvas;RESIZE_CB;ii;int;Ihandle* ih,int width,int height
 _canvas;SCROLL_CB;iff;int;Ihandle* ih,int op,float posx,float posy
+_canvas;TOUCH_CB;iiis;int;Ihandle* ih,int id,int x,int y,char* state
 _canvas;WHEEL_CB;fiis;int;Ihandle* ih,float delta,int x,int y,char* status
 _canvas;WOM_CB;i;int;Ihandle* ih,int state
 _dialog;CLOSE_CB;;int;Ihandle* ih

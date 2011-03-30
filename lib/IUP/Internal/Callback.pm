@@ -55,6 +55,10 @@ my $cb_table = {
     ACTION => \&_init_cb_ACTION_,
     HIGHLIGHT_CB => \&_init_cb_HIGHLIGHT_CB_,
   },
+  'IUP::Label' => {
+    BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
+    DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
+  },
   'IUP::List' => {
     ACTION => \&_init_cb_ACTION_sii,
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
@@ -115,6 +119,7 @@ my $cb_table = {
     HIGHLIGHT_CB => \&_init_cb_HIGHLIGHT_CB_,
   },
   'IUP::Tabs' => {
+    TABCHANGEPOS_CB => \&_init_cb_TABCHANGEPOS_CB_ii,
     TABCHANGE_CB => \&_init_cb_TABCHANGE_CB_nn,
   },
   'IUP::Text' => {
@@ -169,8 +174,10 @@ my $cb_table = {
     FOCUS_CB => \&_init_cb_FOCUS_CB_i,
     KEYPRESS_CB => \&_init_cb_KEYPRESS_CB_ii,
     MOTION_CB => \&_init_cb_MOTION_CB_iis,
+    MULTITOUCH_CB => \&_init_cb_MULTITOUCH_CB_iIIII,
     RESIZE_CB => \&_init_cb_RESIZE_CB_ii,
     SCROLL_CB => \&_init_cb_SCROLL_CB_iff,
+    TOUCH_CB => \&_init_cb_TOUCH_CB_iiis,
     WHEEL_CB => \&_init_cb_WHEEL_CB_fiis,
     WOM_CB => \&_init_cb_WOM_CB_i,
   },

@@ -51,6 +51,14 @@ sub cb_generate1 {
     for my $a (keys %{$h->{$m}}) {  
       my $if = "internal_cb_$a\_$h->{$m}->{$a}->{type}";      
       $h->{$m}->{$a}->{xs_internal_cb} = $if;
+
+      #avoid using variable names: count
+      if ($h->{$m}->{$a}->{c_params} =~ /count/) {
+        warn "before: $h->{$m}->{$a}->{c_params}\n";
+        $h->{$m}->{$a}->{c_params} =~ s/([\s,])count([\s,])/$1count_$2/;
+	warn "after : $h->{$m}->{$a}->{c_params}\n";
+      }
+      
       $h->{$m}->{$a}->{xs_internal_cb_params} = "($h->{$m}->{$a}->{c_params})";
       $h->{$m}->{$a}->{xs_internal_cb_pfunc} = $pfunc_table->{$if} || $pfunc_default;
       

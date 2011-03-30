@@ -14,7 +14,7 @@ use Pod::Usage;
 require "$FindBin::Bin/utils.pm";
 die "###FATAL### Cannot require utils.pm\n" if $@;
 
-my $g_tag = "3.4";
+my $g_tag = "3.3";
 my $g_longoutput = 0;
 my $g_srcroot  = 'y:\IUP.Unpacked\iup-'.$g_tag;
 
@@ -159,6 +159,7 @@ sub raw2pname {
     'IUP::Iupmatrix' => 'IUP::Matrix',
     'IUP::Webbrowser' => 'IUP::WebBrowser',
     'IUP::Tuio' => 'IUP::TuioClient',
+    'IUP::Tuioclient' => 'IUP::TuioClient',
   );
   $n =~ s|^iup_||;
   $n =~ s|^iupwin_||i;
@@ -428,6 +429,14 @@ $c_list{'IUP::ColorBrowser'}->{VALUECHANGED_CB}->{rv} = 'int';
 
 $c_list{'IUP::ColorBrowser'}->{CHANGE_CB}->{par} = 'Ihandle *ih,unsigned char r,unsigned char g,unsigned char b';
 $c_list{'IUP::ColorBrowser'}->{CHANGE_CB}->{rv} = 'int';
+
+$c_list{'IUP::TuioClient'}->{MULTITOUCH_CB}->{par} = 'Ihandle *ih, int count, int* pid, int* px, int* py, int* pstate';
+$c_list{'IUP::TuioClient'}->{MULTITOUCH_CB}->{rv} = 'int';
+$c_list{'IUP::TuioClient'}->{MULTITOUCH_CB}->{type} = 'iIIII';
+
+$c_list{'IUP::TuioClient'}->{TOUCH_CB}->{par} = 'Ihandle* ih, int id, int x, int y, char* state';
+$c_list{'IUP::TuioClient'}->{TOUCH_CB}->{rv} = 'int';
+$c_list{'IUP::TuioClient'}->{TOUCH_CB}->{type} = 'iiis';
 
 $c_list{'IUP::Canvas'}->{MULTITOUCH_CB}->{type} = 'iIIII';
 
