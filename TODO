@@ -34,9 +34,6 @@ global registers:
 #IUP::Frame - missing accessor $frame->MARGIN("10x10");
 #IUP::List - IUP::List->new() items 0-based or 1-based index
 
-######## update Attributes/Callbacks according the latest iup version
-- check changes between 3.2-3.3-3.4
-
 ######## missing examples
 - no example for: Clipboard.pm ?
 - no example for: User.pm ?

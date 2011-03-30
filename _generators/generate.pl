@@ -30,6 +30,7 @@ sub file2hash {
   my @cols = split(';', $head);
   s/^#//g for (@cols);
   for (@lines) {
+    next if /^#/;
     my @items = split(';', $_);
     $rv->{$items[0]}->{$items[1]}->{valid} = 1;
     for(my $i=2; $i < scalar(@cols); $i++) {

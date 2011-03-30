@@ -14,7 +14,7 @@ use Pod::Usage;
 require "$FindBin::Bin/utils.pm";
 die "###FATAL### Cannot require utils.pm\n" if $@;
 
-my $g_tag = "3.3";
+my $g_tag = "3.4";
 my $g_longoutput = 0;
 my $g_srcroot  = 'y:\IUP.Unpacked\iup-'.$g_tag;
 
