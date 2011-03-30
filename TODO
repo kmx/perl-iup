@@ -1,6 +1,6 @@
 ################ the last time working on ################ 
 - broken examples: examples\0-basic \_*.pl
-- weaken/non-weaken questions
+- questions related to weaken/non-weaken refs
 ##########################################################
 
 ######## weaken refs in global tables - element destruction issues
@@ -14,7 +14,7 @@ global registers:
 - register classes created in GetByIhandle (similarly fo canvas)
 - or register in: new_from_cnvhandle new_from_ihandle
 
-######## misc issues
+######## misc issues to be solved before fixing API
 #IUP::PPlot - xxx TODO maybe add AddSeries to IUP::PPlot # see iupx.lua + iupxpplot.lua (see 3.4)
 #IUP::PPlot - xxx TODO maybe add AxsBounds to IUP::PPlot # see iupx.lua + iupxpplot.lua
 #IUP::PPlot - EDIT_CB handler should return (IUP_DEFAULT, $new_x, $new_y)
@@ -32,13 +32,7 @@ global registers:
 #IUP::Internal::Element - Discard() = destroy perl object without destroying iup element
 #IUP::LayoutDialog - maybe support named new params e.g. dialog=>... 
 #IUP::Frame - missing accessor $frame->MARGIN("10x10");
-#IUP::List - IUP::List->new() items 0-based or 1-based index
-
-######## missing examples
-- no example for: Clipboard.pm ?
-- no example for: User.pm ?
-- no example for: ColorDlg.pm ?
-- no example for: FontDlg.pm ?
+#IUP::List - IUP::List->new() items 0-based or 1-based index?
 
 ######## IUP::Tree
 #IUP::Tree - #NOTE: tree->TreeAddNodes(...) has to go after dialog->Show() + tree->SetAttribute(...) has to go after dialog->Show() xxx why?
@@ -67,21 +61,11 @@ global registers:
   InsertItem ($parent, $before | $previous, $text, $data)    Inserts an item after a given one (previous) or before one identified by its position (before).
   InsertContainer ($parent, $before | $previous, $text, $data)    See InsertItem().
 
-######## bugs to be reported to scuri
-- original sbox.c example boken
-
-######## OleControl.pm (big troubles)
-- $o->IUNKNOWN ... pointer created by CoCreateInstance Function http://msdn.microsoft.com/en-us/library/ms686615%28v=vs.85%29.aspx
-- perahps integrate with Win32::OLE like $o->ole->methodname(...)
-- Win32::OLE needs something like new_from_iunknown
-  IUnknown *punk = ... value from $olecontrol->IUNKNOWN;
-  HRESULT hr;
-  IDispatch *pDispatch = NULL;
-  hr = punk->QueryInterface(IID_IDispatch, (void**)&pDispatch);
-  punk->Release();
-  ST(0) = CreatePerlObject(aTHX_ stash, pDispatch, destroy);
-- see Wx+OLE/ActiveX integration http://search.cpan.org/~mdootson/Wx-ActiveX-0.15/lib/Wx/ActiveX.pm
-- missing example: notepad.wlua? olecontrol_browser.wlua?
+######## missing examples
+- no example for: Clipboard.pm ?
+- no example for: User.pm ?
+- no example for: ColorDlg.pm ?
+- no example for: FontDlg.pm ?
 
 !!Big Task!!######## doc
 - Cleanup first (in this order):
@@ -104,6 +88,19 @@ global registers:
   use Test::NeedsDisplay ':skip_all';
 - consider moving cross-check-... into xt/*
 - maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
+
+!!Big Task!! ######## OleControl.pm
+- $o->IUNKNOWN ... pointer created by CoCreateInstance Function http://msdn.microsoft.com/en-us/library/ms686615%28v=vs.85%29.aspx
+- perahps integrate with Win32::OLE like $o->ole->methodname(...)
+- Win32::OLE needs something like new_from_iunknown
+  IUnknown *punk = ... value from $olecontrol->IUNKNOWN;
+  HRESULT hr;
+  IDispatch *pDispatch = NULL;
+  hr = punk->QueryInterface(IID_IDispatch, (void**)&pDispatch);
+  punk->Release();
+  ST(0) = CreatePerlObject(aTHX_ stash, pDispatch, destroy);
+- see Wx+OLE/ActiveX integration http://search.cpan.org/~mdootson/Wx-ActiveX-0.15/lib/Wx/ActiveX.pm
+- missing example: notepad.wlua? olecontrol_browser.wlua?
 
 !!Big Task!!######## IUP::Canvas (now works without Bitmap/Image/Palette/Pattern related functions)
 - implement missing XS methods to IUP::Internal::Canvas (see notes in Canvas.xs)
