@@ -9,732 +9,750 @@ use Carp;
 # global table of available attributes per element (used for generating accessors)
 my $attrib_table = {
   'IUP::Button' => {
-    ALIGNMENT => 'NO_INHERIT',                                # src=yes doc=yes
-    BACKGROUND => 'DEFAULT',                                  # src=yes doc=no
-    BGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    FGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    FLAT => 'DEFAULT',                                        # src=yes doc=yes
-    FOCUSONCLICK => 'NO_INHERIT',                             # src=yes doc=yes
-    IMAGE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=yes
-    IMAGEPOSITION => 'NOT_MAPPED|NO_INHERIT',                 # src=yes doc=yes
-    IMINACTIVE => 'NO_DEFAULTVALUE|NO_INHERIT',               # src=yes doc=yes
-    IMPRESS => 'NO_DEFAULTVALUE|NO_INHERIT',                  # src=yes doc=yes
-    IMPRESSBORDER => 'NO_INHERIT',                            # src=yes doc=yes
-    MARKUP => 'DEFAULT',                                      # src=yes doc=yes
-    PADDING => 'NOT_MAPPED',                                  # src=yes doc=yes
-    SPACING => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=yes
-    TITLE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=yes
+    'ALIGNMENT' => 1,
+    'BACKGROUND' => 1,
+    'BGCOLOR' => 1,
+    'FGCOLOR' => 1,
+    'FLAT' => 1,
+    'FOCUSONCLICK' => 1,
+    'IMAGE' => 1,
+    'IMAGEPOSITION' => 1,
+    'IMINACTIVE' => 1,
+    'IMPRESS' => 1,
+    'IMPRESSBORDER' => 1,
+    'MARKUP' => 1,
+    'PADDING' => 1,
+    'SPACING' => 1,
+    'TITLE' => 1,
   },
   'IUP::Canvas' => {
-    BACKINGSTORE => 'NOT_MAPPED',                             # src=yes doc=yes
-    BGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    BORDER => 'DEFAULT',                                      # src=yes doc=yes
-    CLIPRECT => 'unknown',                                    # src=no doc=yes
-    CURSOR => 'NO_INHERIT',                                   # src=yes doc=yes
-    DRAGDROP => 'NO_INHERIT',                                 # src=yes doc=yes
-    DRAWABLE => 'NO_STRING',                                  # src=yes doc=no
-    DRAWSIZE => 'READONLY|NO_INHERIT',                        # src=yes doc=yes
-    DX => 'NO_INHERIT',                                       # src=yes doc=yes
-    DY => 'NO_INHERIT',                                       # src=yes doc=no
-    HDC_WMPAINT => 'unknown',                                 # src=no doc=yes
-    HWND => 'NO_STRING|NO_INHERIT',                           # src=yes doc=yes
-    LINEX => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=no
-    LINEY => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=no
-    POSX => 'NO_INHERIT',                                     # src=yes doc=no
-    POSY => 'NO_INHERIT',                                     # src=yes doc=no
-    SCROLLBAR => 'NO_INHERIT',                                # src=yes doc=yes
-    XAUTOHIDE => 'NOT_MAPPED',                                # src=yes doc=no
-    XDISPLAY => 'READONLY|NOT_MAPPED|NO_INHERIT|NO_STRING',   # src=yes doc=yes
-    XMAX => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=no
-    XMIN => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=no
-    XSCREEN => 'READONLY|NOT_MAPPED|NO_INHERIT|NO_STRING',    # src=yes doc=no
-    XWINDOW => 'NO_INHERIT|NO_STRING',                        # src=yes doc=yes
-    YAUTOHIDE => 'NOT_MAPPED',                                # src=yes doc=no
-    YMAX => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=no
-    YMIN => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=no
+    'BACKINGSTORE' => 1,
+    'BGCOLOR' => 1,
+    'BORDER' => 1,
+    'CLIPRECT' => 1,
+    'CURSOR' => 1,
+    'DRAGDROP' => 1,
+    'DRAWABLE' => 1,
+    'DRAWSIZE' => 1,
+    'DX' => 1,
+    'DY' => 1,
+    'HDC_WMPAINT' => 1,
+    'HWND' => 1,
+    'LINEX' => 1,
+    'LINEY' => 1,
+    'POSX' => 1,
+    'POSY' => 1,
+    'SCROLLBAR' => 1,
+    'XAUTOHIDE' => 1,
+    'XDISPLAY' => 1,
+    'XMAX' => 1,
+    'XMIN' => 1,
+    'XSCREEN' => 1,
+    'XWINDOW' => 1,
+    'YAUTOHIDE' => 1,
+    'YMAX' => 1,
+    'YMIN' => 1,
   },
   'IUP::CanvasGL' => {
-    ACCUM_ALPHA_SIZE => 'unknown',                            # src=no doc=yes
-    ACCUM_BLUE_SIZE => 'unknown',                             # src=no doc=yes
-    ACCUM_GREEN_SIZE => 'unknown',                            # src=no doc=yes
-    ACCUM_RED_SIZE => 'unknown',                              # src=no doc=yes
-    ALPHA_SIZE => 'unknown',                                  # src=no doc=yes
-    BLUE_SIZE => 'unknown',                                   # src=no doc=yes
-    BUFFER => 'DEFAULT',                                      # src=yes doc=yes
-    BUFFER_SIZE => 'unknown',                                 # src=no doc=yes
-    COLOR => 'DEFAULT',                                       # src=yes doc=yes
-    COLORMAP => 'READONLY|NO_STRING',                         # src=yes doc=yes
-    CONTEXT => 'READONLY|NO_STRING',                          # src=yes doc=yes
-    DEPTH_SIZE => 'unknown',                                  # src=no doc=yes
-    ERROR => 'unknown',                                       # src=no doc=yes
-    GREEN_SIZE => 'unknown',                                  # src=no doc=yes
-    RED_SIZE => 'unknown',                                    # src=no doc=yes
-    REFRESHCONTEXT => 'WRITEONLY|NO_INHERIT',                 # src=yes doc=yes
-    SHAREDCONTEXT => 'unknown',                               # src=no doc=yes
-    STENCIL_SIZE => 'unknown',                                # src=no doc=yes
-    STEREO => 'unknown',                                      # src=no doc=yes
-    VISUAL => 'READONLY|NO_STRING|NOT_MAPPED',                # src=yes doc=yes
+    'ACCUM_ALPHA_SIZE' => 1,
+    'ACCUM_BLUE_SIZE' => 1,
+    'ACCUM_GREEN_SIZE' => 1,
+    'ACCUM_RED_SIZE' => 1,
+    'ALPHA_SIZE' => 1,
+    'BLUE_SIZE' => 1,
+    'BUFFER' => 1,
+    'BUFFER_SIZE' => 1,
+    'COLOR' => 1,
+    'COLORMAP' => 1,
+    'CONTEXT' => 1,
+    'DEPTH_SIZE' => 1,
+    'ERROR' => 1,
+    'GREEN_SIZE' => 1,
+    'RED_SIZE' => 1,
+    'REFRESHCONTEXT' => 1,
+    'SHAREDCONTEXT' => 1,
+    'STENCIL_SIZE' => 1,
+    'STEREO' => 1,
+    'VISUAL' => 1,
   },
   'IUP::Cells' => {
-    BGCOLOR => 'NO_INHERIT',                                  # src=yes doc=yes
-    BOXED => 'NOT_MAPPED',                                    # src=yes doc=yes
-    BUFFERIZE => 'DEFAULT',                                   # src=yes doc=yes
-    CANVAS => 'NO_STRING|READONLY|NO_INHERIT',                # src=yes doc=yes
-    CLIPPED => 'NOT_MAPPED',                                  # src=yes doc=yes
-    FIRST_COL => 'READONLY|NO_INHERIT',                       # src=yes doc=yes
-    FIRST_LINE => 'READONLY|NO_INHERIT',                      # src=yes doc=yes
-    FULL_VISIBLE => 'NO_INHERIT',                             # src=yes doc=yes
-    IMAGE_CANVAS => 'NO_STRING|READONLY|NO_INHERIT',          # src=yes doc=yes
-    LIMITS => 'READONLY|NO_INHERIT',                          # src=yes doc=no
-    NON_SCROLLABLE_COLS => 'NOT_MAPPED',                      # src=yes doc=yes
-    NON_SCROLLABLE_LINES => 'NOT_MAPPED',                     # src=yes doc=yes
-    NO_COLOR => 'NO_INHERIT',                                 # src=yes doc=no
-    ORIGIN => 'DEFAULT',                                      # src=yes doc=yes
-    REPAINT => 'WRITEONLY|NO_INHERIT',                        # src=yes doc=yes
-    SCROLLBAR => 'unknown',                                   # src=no doc=yes
+    'BGCOLOR' => 1,
+    'BOXED' => 1,
+    'BUFFERIZE' => 1,
+    'CANVAS' => 1,
+    'CLIPPED' => 1,
+    'FIRST_COL' => 1,
+    'FIRST_LINE' => 1,
+    'FULL_VISIBLE' => 1,
+    'IMAGE_CANVAS' => 1,
+    'LIMITS' => 1,
+    'LIMITSL' => 1,
+    'NON_SCROLLABLE_COLS' => 1,
+    'NON_SCROLLABLE_LINES' => 1,
+    'NO_COLOR' => 1,
+    'ORIGIN' => 1,
+    'REPAINT' => 1,
+    'SCROLLBAR' => 1,
   },
   'IUP::Clipboard' => {
-    EMFAVAILABLE => 'READONLY|NOT_MAPPED|NO_INHERIT',         # src=yes doc=yes
-    IMAGE => 'WRITEONLY|NOT_MAPPED|NO_INHERIT',               # src=yes doc=yes
-    IMAGEAVAILABLE => 'READONLY|NOT_MAPPED|NO_INHERIT',       # src=yes doc=yes
-    NATIVEIMAGE => 'NO_STRING|NOT_MAPPED|NO_INHERIT',         # src=yes doc=yes
-    SAVEEMF => 'WRITEONLY|NOT_MAPPED|NO_INHERIT',             # src=yes doc=yes
-    SAVEWMF => 'WRITEONLY|NOT_MAPPED|NO_INHERIT',             # src=yes doc=yes
-    TEXT => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=yes
-    TEXTAVAILABLE => 'READONLY|NOT_MAPPED|NO_INHERIT',        # src=yes doc=yes
-    WMFAVAILABLE => 'READONLY|NOT_MAPPED|NO_INHERIT',         # src=yes doc=yes
+    'EMFAVAILABLE' => 1,
+    'IMAGE' => 1,
+    'IMAGEAVAILABLE' => 1,
+    'NATIVEIMAGE' => 1,
+    'SAVEEMF' => 1,
+    'SAVEWMF' => 1,
+    'TEXT' => 1,
+    'TEXTAVAILABLE' => 1,
+    'WMFAVAILABLE' => 1,
   },
   'IUP::ColorBar' => {
-    BGCOLOR => 'NO_INHERIT',                                  # src=yes doc=yes
-    BUFFERIZE => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    CELL => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=no
-    NUM_CELLS => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    NUM_PARTS => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    ORIENTATION => 'NOT_MAPPED',                              # src=yes doc=yes
-    PREVIEW_SIZE => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    PRIMARY_CELL => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    SECONDARY_CELL => 'NOT_MAPPED|NO_INHERIT',                # src=yes doc=yes
-    SHADOWED => 'NOT_MAPPED',                                 # src=yes doc=yes
-    SHOW_PREVIEW => 'NOT_MAPPED',                             # src=yes doc=yes
-    SHOW_SECONDARY => 'NOT_MAPPED',                           # src=yes doc=yes
-    SQUARED => 'NOT_MAPPED',                                  # src=yes doc=yes
-    TRANSPARENCY => 'NOT_MAPPED',                             # src=yes doc=yes
+    'BGCOLOR' => 1,
+    'BUFFERIZE' => 1,
+    'CEL' => 1,
+    'CELL' => 1,
+    'NUM_CELLS' => 1,
+    'NUM_PARTS' => 1,
+    'ORIENTATION' => 1,
+    'PREVIEW_SIZE' => 1,
+    'PRIMARY_CELL' => 1,
+    'SECONDARY_CELL' => 1,
+    'SHADOWED' => 1,
+    'SHOW_PREVIEW' => 1,
+    'SHOW_SECONDARY' => 1,
+    'SQUARED' => 1,
+    'TRANSPARENCY' => 1,
   },
   'IUP::ColorBrowser' => {
-    BGCOLOR => 'NO_INHERIT',                                  # src=yes doc=yes
-    HSI => 'NOT_MAPPED|NO_INHERIT',                           # src=yes doc=yes
-    RGB => 'NOT_MAPPED|NO_INHERIT',                           # src=yes doc=yes
+    'BGCOLOR' => 1,
+    'HSI' => 1,
+    'RGB' => 1,
   },
   'IUP::ColorDlg' => {
-    ALPHA => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=yes
-    COLORTABLE => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    SHOWALPHA => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    SHOWCOLORTABLE => 'NOT_MAPPED|NO_INHERIT',                # src=yes doc=yes
-    SHOWHELP => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
-    SHOWHEX => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=yes
-    STATUS => 'READONLY|NOT_MAPPED|NO_INHERIT',               # src=yes doc=yes
-    VALUE => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=yes
-    VALUEHEX => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
-    VALUEHSI => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
+    'ALPHA' => 1,
+    'COLORTABLE' => 1,
+    'SHOWALPHA' => 1,
+    'SHOWCOLORTABLE' => 1,
+    'SHOWHELP' => 1,
+    'SHOWHEX' => 1,
+    'STATUS' => 1,
+    'VALUE' => 1,
+    'VALUEHEX' => 1,
+    'VALUEHSI' => 1,
   },
   'IUP::Dial' => {
-    BGCOLOR => 'NO_INHERIT',                                  # src=yes doc=yes
-    DENSITY => 'NOT_MAPPED',                                  # src=yes doc=yes
-    FGCOLOR => 'NOT_MAPPED',                                  # src=yes doc=yes
-    TYPE => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=yes
-    UNIT => 'NOT_MAPPED',                                     # src=yes doc=yes
-    VALUE => 'NO_DEFAULTVALUE|NOT_MAPPED|NO_INHERIT',         # src=yes doc=yes
+    'BGCOLOR' => 1,
+    'DENSITY' => 1,
+    'FGCOLOR' => 1,
+    'TYPE' => 1,
+    'UNIT' => 1,
+    'VALUE' => 1,
   },
   'IUP::FileDlg' => {
-    ALLOWNEW => 'NO_INHERIT',                                 # src=yes doc=yes
-    DIALOGTYPE => 'NO_INHERIT',                               # src=yes doc=yes
-    DIRECTORY => 'NO_INHERIT',                                # src=yes doc=yes
-    EXTFILTER => 'NO_INHERIT',                                # src=yes doc=yes
-    FILE => 'NO_INHERIT',                                     # src=yes doc=yes
-    FILEEXIST => 'NO_INHERIT|READONLY',                       # src=yes doc=yes
-    FILTER => 'NO_INHERIT',                                   # src=yes doc=yes
-    FILTERINFO => 'NO_INHERIT',                               # src=yes doc=yes
-    FILTERUSED => 'NO_INHERIT',                               # src=yes doc=yes
-    MULTIPLEFILES => 'NO_INHERIT',                            # src=yes doc=yes
-    NOCHANGEDIR => 'NO_INHERIT',                              # src=yes doc=yes
-    NOOVERWRITEPROMPT => 'NO_INHERIT',                        # src=yes doc=yes
-    PREVIEWDC => 'NO_INHERIT|READONLY|NO_STRING',             # src=yes doc=no
-    PREVIEWHEIGHT => 'NO_INHERIT|READONLY|NO_STRING',         # src=yes doc=no
-    PREVIEWWIDTH => 'NO_INHERIT|READONLY|NO_STRING',          # src=yes doc=no
-    SHOWHIDDEN => 'NO_INHERIT',                               # src=yes doc=yes
-    SHOWPREVIEW => 'NO_INHERIT',                              # src=yes doc=yes
-    STATUS => 'NO_INHERIT|READONLY',                          # src=yes doc=yes
-    VALUE => 'NO_INHERIT|READONLY',                           # src=yes doc=yes
+    'ALLOWNEW' => 1,
+    'DIALOGTYPE' => 1,
+    'DIRECTORY' => 1,
+    'EXTFILTER' => 1,
+    'FILE' => 1,
+    'FILEEXIST' => 1,
+    'FILTER' => 1,
+    'FILTERINFO' => 1,
+    'FILTERUSED' => 1,
+    'MULTIPLEFILES' => 1,
+    'NOCHANGEDIR' => 1,
+    'NOOVERWRITEPROMPT' => 1,
+    'PREVIEWDC' => 1,
+    'PREVIEWHEIGHT' => 1,
+    'PREVIEWWIDTH' => 1,
+    'SHOWHIDDEN' => 1,
+    'SHOWPREVIEW' => 1,
+    'STATUS' => 1,
+    'VALUE' => 1,
   },
   'IUP::FontDlg' => {
-    COLOR => 'NO_INHERIT',                                    # src=yes doc=yes
-    PREVIEWTEXT => 'NO_INHERIT',                              # src=yes doc=yes
-    STATUS => 'NO_INHERIT|READONLY',                          # src=yes doc=yes
-    VALUE => 'NO_INHERIT',                                    # src=yes doc=yes
+    'COLOR' => 1,
+    'PREVIEWTEXT' => 1,
+    'STATUS' => 1,
+    'VALUE' => 1,
   },
   'IUP::Frame' => {
-    BACKGROUND => 'DEFAULT',                                  # src=yes doc=no
-    BGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    CLIENTSIZE => 'READONLY|NO_INHERIT',                      # src=yes doc=yes
-    FGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    SUNKEN => 'NO_INHERIT',                                   # src=yes doc=yes
-    TITLE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=yes
+    'BACKGROUND' => 1,
+    'BGCOLOR' => 1,
+    'CLIENTSIZE' => 1,
+    'FGCOLOR' => 1,
+    'SUNKEN' => 1,
+    'TITLE' => 1,
   },
   'IUP::Gauge' => {
-    BGCOLOR => 'NO_INHERIT',                                  # src=yes doc=yes
-    DASHED => 'NOT_MAPPED',                                   # src=yes doc=yes
-    FGCOLOR => 'NOT_MAPPED',                                  # src=yes doc=yes
-    MAX => 'NOT_MAPPED|NO_INHERIT',                           # src=yes doc=yes
-    MIN => 'NOT_MAPPED|NO_INHERIT',                           # src=yes doc=yes
-    PADDING => 'NOT_MAPPED',                                  # src=yes doc=yes
-    SHOW_TEXT => 'NOT_MAPPED',                                # src=yes doc=yes
-    TEXT => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=yes
-    VALUE => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=yes
+    'BGCOLOR' => 1,
+    'DASHED' => 1,
+    'FGCOLOR' => 1,
+    'MAX' => 1,
+    'MIN' => 1,
+    'PADDING' => 1,
+    'SHOW_TEXT' => 1,
+    'TEXT' => 1,
+    'VALUE' => 1,
   },
   'IUP::Hbox' => {
-    ALIGNMENT => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
+    'ALIGNMENT' => 1,
   },
   'IUP::Image' => {
-    BGCOLOR => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=yes
-    BPP => 'READONLY|NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    CHANNELS => 'READONLY|NOT_MAPPED|NO_INHERIT',             # src=yes doc=yes
-    HEIGHT => 'READONLY|NOT_MAPPED|NO_INHERIT',               # src=yes doc=yes
-    HOTSPOT => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=yes
-    WIDTH => 'READONLY|NOT_MAPPED|NO_INHERIT',                # src=yes doc=yes
+    '0' => 1,
+    'BGCOLOR' => 1,
+    'BPP' => 1,
+    'CHANNELS' => 1,
+    'HEIGHT' => 1,
+    'HOTSPOT' => 1,
+    'WIDTH' => 1,
   },
   'IUP::Item' => {
-    AUTOTOGGLE => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    HIDEMARK => 'unknown',                                    # src=no doc=yes
-    IMAGE => 'unknown',                                       # src=no doc=yes
-    IMPRESS => 'unknown',                                     # src=no doc=yes
-    KEY => 'NOT_MAPPED|NO_INHERIT',                           # src=yes doc=yes
-    TITLE => 'unknown',                                       # src=no doc=yes
-    TITLEIMAGE => 'unknown',                                  # src=no doc=yes
-    VALUE => 'unknown',                                       # src=no doc=yes
+    'AUTOTOGGLE' => 1,
+    'HIDEMARK' => 1,
+    'IMAGE' => 1,
+    'IMPRESS' => 1,
+    'KEY' => 1,
+    'TITLE' => 1,
+    'TITLEIMAGE' => 1,
+    'VALUE' => 1,
   },
   'IUP::Label' => {
-    ALIGNMENT => 'NO_INHERIT',                                # src=yes doc=yes
-    BACKGROUND => 'DEFAULT',                                  # src=yes doc=no
-    BGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    ELLIPSIS => 'DEFAULT',                                    # src=yes doc=yes
-    FGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    IMAGE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=yes
-    IMINACTIVE => 'NO_DEFAULTVALUE|NO_INHERIT',               # src=yes doc=yes
-    MARKUP => 'DEFAULT',                                      # src=yes doc=yes
-    PADDING => 'NOT_MAPPED',                                  # src=yes doc=yes
-    PANGOLAYOUT => 'NO_INHERIT',                              # src=yes doc=no
-    SEPARATOR => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    TITLE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=yes
-    WORDWRAP => 'DEFAULT',                                    # src=yes doc=yes
+    'ALIGNMENT' => 1,
+    'BACKGROUND' => 1,
+    'BGCOLOR' => 1,
+    'ELLIPSIS' => 1,
+    'FGCOLOR' => 1,
+    'IMAGE' => 1,
+    'IMINACTIVE' => 1,
+    'MARKUP' => 1,
+    'PADDING' => 1,
+    'PANGOLAYOUT' => 1,
+    'SEPARATOR' => 1,
+    'TITLE' => 1,
+    'WORDWRAP' => 1,
   },
   'IUP::List' => {
-    APPEND => 'WRITEONLY|NO_INHERIT',                         # src=yes doc=yes
-    APPENDITEM => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    AUTOHIDE => 'NO_INHERIT',                                 # src=yes doc=yes
-    BGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    CARET => 'NO_INHERIT',                                    # src=yes doc=yes
-    CARETPOS => 'NO_INHERIT',                                 # src=yes doc=yes
-    CLIPBOARD => 'NO_INHERIT',                                # src=yes doc=yes
-    COUNT => 'READONLY|NOT_MAPPED|NO_INHERIT',                # src=yes doc=yes
-    CUEBANNER => 'NO_INHERIT',                                # src=yes doc=yes
-    DRAGDROP => 'NO_INHERIT',                                 # src=yes doc=yes
-    DROPDOWN => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
-    DROPEXPAND => 'NO_INHERIT',                               # src=yes doc=yes
-    EDITBOX => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=yes
-    FGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    FILTER => 'NO_INHERIT',                                   # src=yes doc=yes
-    IDVALUE => 'NO_INHERIT',                                  # src=yes doc=no
-    INSERT => 'WRITEONLY|NO_INHERIT',                         # src=yes doc=yes
-    INSERTITE => 'unknown',                                   # src=no doc=yes
-    INSERTITEM => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=no
-    MASK => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=yes
-    MASKCASEI => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=no
-    MASKFLOAT => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=no
-    MASKINT => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=no
-    MULTIPLE => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
-    NC => 'NOT_MAPPED',                                       # src=yes doc=yes
-    OLD_MASK_DATA => 'READONLY|NOT_MAPPED|NO_INHERIT',        # src=yes doc=no
-    PADDING => 'NOT_MAPPED',                                  # src=yes doc=yes
-    READONLY => 'DEFAULT',                                    # src=yes doc=yes
-    REMOVEITEM => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    SCROLLBAR => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    SCROLLTO => 'WRITEONLY|NO_INHERIT',                       # src=yes doc=yes
-    SCROLLTOPOS => 'WRITEONLY|NO_INHERIT',                    # src=yes doc=yes
-    SELECTEDTEXT => 'NO_INHERIT',                             # src=yes doc=yes
-    SELECTION => 'NO_INHERIT',                                # src=yes doc=yes
-    SELECTIONPOS => 'NO_INHERIT',                             # src=yes doc=yes
-    SHOWDROPDOWN => 'WRITEONLY|NO_INHERIT',                   # src=yes doc=yes
-    SORT => 'unknown',                                        # src=no doc=yes
-    SPACING => 'NOT_MAPPED',                                  # src=yes doc=yes
-    TOPITEM => 'NO_INHERIT',                                  # src=yes doc=yes
-    VALUE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=yes
-    VISIBLECOLUMNS => 'NOT_MAPPED|NO_INHERIT',                # src=yes doc=yes
-    VISIBLELINES => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    VISIBLE_ITEMS => 'DEFAULT',                               # src=yes doc=yes
+    '1' => 1,
+    'APPEND' => 1,
+    'APPENDITEM' => 1,
+    'AUTOHIDE' => 1,
+    'BGCOLOR' => 1,
+    'CARET' => 1,
+    'CARETPOS' => 1,
+    'CLIPBOARD' => 1,
+    'COUNT' => 1,
+    'CUEBANNER' => 1,
+    'DRAGDROP' => 1,
+    'DROPDOWN' => 1,
+    'DROPEXPAND' => 1,
+    'EDITBOX' => 1,
+    'FGCOLOR' => 1,
+    'FILTER' => 1,
+    'IDVALUE' => 1,
+    'INSERT' => 1,
+    'INSERTITE' => 1,
+    'INSERTITEM' => 1,
+    'MASK' => 1,
+    'MASKCASEI' => 1,
+    'MASKFLOAT' => 1,
+    'MASKINT' => 1,
+    'MULTIPLE' => 1,
+    'NC' => 1,
+    'OLD_MASK_DATA' => 1,
+    'PADDING' => 1,
+    'READONLY' => 1,
+    'REMOVEITEM' => 1,
+    'SCROLLBAR' => 1,
+    'SCROLLTO' => 1,
+    'SCROLLTOPOS' => 1,
+    'SELECTEDTEXT' => 1,
+    'SELECTION' => 1,
+    'SELECTIONPOS' => 1,
+    'SHOWDROPDOWN' => 1,
+    'SORT' => 1,
+    'SPACING' => 1,
+    'TOPITEM' => 1,
+    'VALUE' => 1,
+    'VISIBLECOLUMNS' => 1,
+    'VISIBLELINES' => 1,
+    'VISIBLE_ITEMS' => 1,
   },
   'IUP::Matrix' => {
-    ADDCOL => 'NOT_MAPPED|WRITEONLY|NO_INHERIT',              # src=yes doc=no
-    ADDLIN => 'NOT_MAPPED|WRITEONLY|NO_INHERIT',              # src=yes doc=no
-    ALIGNMENT => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=no
-    AREA => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=no
-    BGCOLOR => 'NOT_MAPPED',                                  # src=yes doc=no
-    CARET => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=no
-    DELCOL => 'NOT_MAPPED|WRITEONLY|NO_INHERIT',              # src=yes doc=no
-    DELLIN => 'NOT_MAPPED|WRITEONLY|NO_INHERIT',              # src=yes doc=no
-    EDIT_MODE => 'NO_INHERIT',                                # src=yes doc=no
-    FGCOLOR => 'NOT_MAPPED',                                  # src=yes doc=no
-    FOCUS_CELL => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=no
-    FRAMECOLOR => 'NO_INHERIT',                               # src=yes doc=no
-    FRAMEHORIZCOLOR => 'NOT_MAPPED',                          # src=yes doc=no
-    FRAMEVERTCOLOR => 'NOT_MAPPED',                           # src=yes doc=no
-    HEIGHT => 'NOT_MAPPED|NO_INHERIT',                        # src=yes doc=no
-    HEIGHTDEF => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=no
-    HIDDENTEXTMARKS => 'NOT_MAPPED|NO_INHERIT',               # src=yes doc=no
-    HIDEFOCUS => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=no
-    IDVALUE => 'NO_INHERIT',                                  # src=yes doc=no
-    MARK => 'NO_INHERIT',                                     # src=yes doc=no
-    MARKAREA => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=no
-    MARKED => 'NO_INHERIT',                                   # src=yes doc=no
-    MARKMODE => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=no
-    MARKMULTIPLE => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=no
-    MARK_MODE => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=no
-    MASK => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=no
-    MULTILINE => 'NO_INHERIT',                                # src=yes doc=no
-    MULTIPLE => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=no
-    NUMCOL => 'NOT_MAPPED|NO_INHERIT',                        # src=yes doc=no
-    NUMCOL_VISIBLE => 'NOT_MAPPED|NO_INHERIT',                # src=yes doc=no
-    NUMCOL_VISIBLE_LAST => 'NOT_MAPPED|NO_INHERIT',           # src=yes doc=no
-    NUMLIN => 'NOT_MAPPED|NO_INHERIT',                        # src=yes doc=no
-    NUMLIN_VISIBLE => 'NOT_MAPPED|NO_INHERIT',                # src=yes doc=no
-    NUMLIN_VISIBLE_LAST => 'NOT_MAPPED|NO_INHERIT',           # src=yes doc=no
-    OLD_MASK_DATA => 'NO_STRING|READONLY|NOT_MAPPED|NO_INHERIT', # src=yes doc=no
-    ORIGIN => 'NO_INHERIT',                                   # src=yes doc=no
-    RASTERHEIGHT => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=no
-    RASTERWIDTH => 'NOT_MAPPED|NO_INHERIT',                   # src=yes doc=no
-    READONLY => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=no
-    REDRAW => 'WRITEONLY|NO_INHERIT',                         # src=yes doc=no
-    RESIZEMATRIX => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=no
-    SELECTION => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=no
-    SHOW => 'WRITEONLY|NO_INHERIT',                           # src=yes doc=no
-    SORTSIGN => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=no
-    USETITLESIZE => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=no
-    VALUE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=no
-    WIDTH => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=no
-    WIDTHDEF => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=no
+    'ADDCOL' => 1,
+    'ADDLIN' => 1,
+    'ALIGNMENT' => 1,
+    'AREA' => 1,
+    'BGCOLOR' => 1,
+    'CARET' => 1,
+    'DELCOL' => 1,
+    'DELLIN' => 1,
+    'EDIT_MODE' => 1,
+    'FGCOLOR' => 1,
+    'FOCUS_CELL' => 1,
+    'FRAMECOLOR' => 1,
+    'FRAMEHORIZCOLOR' => 1,
+    'FRAMEVERTCOLOR' => 1,
+    'HEIGHT' => 1,
+    'HEIGHTDEF' => 1,
+    'HIDDENTEXTMARKS' => 1,
+    'HIDEFOCUS' => 1,
+    'IDVALUE' => 1,
+    'MARK' => 1,
+    'MARKAREA' => 1,
+    'MARKED' => 1,
+    'MARKMODE' => 1,
+    'MARKMULTIPLE' => 1,
+    'MARK_MODE' => 1,
+    'MASK' => 1,
+    'MULTILINE' => 1,
+    'MULTIPLE' => 1,
+    'NUMCOL' => 1,
+    'NUMCOL_VISIBLE' => 1,
+    'NUMCOL_VISIBLE_LAST' => 1,
+    'NUMLIN' => 1,
+    'NUMLIN_VISIBLE' => 1,
+    'NUMLIN_VISIBLE_LAST' => 1,
+    'OLD_MASK_DATA' => 1,
+    'ORIGIN' => 1,
+    'RASTERHEIGHT' => 1,
+    'RASTERWIDTH' => 1,
+    'READONLY' => 1,
+    'REDRAW' => 1,
+    'RESIZEMATRIX' => 1,
+    'SELECTION' => 1,
+    'SHOW' => 1,
+    'SORTSIGN' => 1,
+    'USETITLESIZE' => 1,
+    'VALUE' => 1,
+    'WIDTH' => 1,
+    'WIDTHDEF' => 1,
   },
   'IUP::Menu' => {
-    BGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    FLAT_ALPHA => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=no
-    HIDEMARK => 'NOT_MAPPED',                                 # src=yes doc=no
-    IMAGE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=no
-    IMPRESS => 'NO_DEFAULTVALUE|NO_INHERIT',                  # src=yes doc=no
-    RADIO => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=yes
-    TITLE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=no
-    TITLEIMAGE => 'NO_DEFAULTVALUE|NO_INHERIT',               # src=yes doc=no
-    VALUE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=no
+    'BGCOLOR' => 1,
+    'FLAT_ALPHA' => 1,
+    'HIDEMARK' => 1,
+    'IMAGE' => 1,
+    'IMPRESS' => 1,
+    'RADIO' => 1,
+    'TITLE' => 1,
+    'TITLEIMAGE' => 1,
+    'VALUE' => 1,
   },
   'IUP::MessageDlg' => {
-    BUTTONDEFAULT => 'NO_INHERIT',                            # src=yes doc=yes
-    BUTTONRESPONSE => 'NO_INHERIT',                           # src=yes doc=yes
-    BUTTONS => 'NO_INHERIT',                                  # src=yes doc=yes
-    DIALOGTYPE => 'NO_INHERIT',                               # src=yes doc=yes
-    VALUE => 'unknown',                                       # src=no doc=yes
+    'BUTTONDEFAULT' => 1,
+    'BUTTONRESPONSE' => 1,
+    'BUTTONS' => 1,
+    'DIALOGTYPE' => 1,
+    'VALUE' => 1,
   },
   'IUP::Normalizer' => {
-    ADDCONTROL => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    ADDCONTROL_HANDLE => 'NOT_MAPPED|NO_INHERIT',             # src=yes doc=yes
-    NORMALIZE => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
+    'ADDCONTROL' => 1,
+    'ADDCONTROL_HANDLE' => 1,
+    'NORMALIZE' => 1,
   },
   'IUP::OleControl' => {
-    BGCOLOR => 'NOT_MAPPED',                                  # src=yes doc=no
-    DESIGNMODE => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    DESIGNMODE_DONT_NOTIFY => 'NOT_MAPPED|NO_INHERIT',        # src=yes doc=yes
-    IUNKNOWN => 'READONLY|NOT_MAPPED|NO_INHERIT|NO_STRING',   # src=yes doc=yes
+    'BGCOLOR' => 1,
+    'DESIGNMODE' => 1,
+    'DESIGNMODE_DONT_NOTIFY' => 1,
+    'IUNKNOWN' => 1,
   },
   'IUP::PPlot' => {
-    AXS_XAUTOMAX => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    AXS_XAUTOMIN => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    AXS_XAUTOTICK => 'NOT_MAPPED|NO_INHERIT',                 # src=yes doc=yes
-    AXS_XAUTOTICKSIZE => 'NOT_MAPPED|NO_INHERIT',             # src=yes doc=yes
-    AXS_XCOLOR => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    AXS_XCROSSORIGIN => 'NOT_MAPPED|NO_INHERIT',              # src=yes doc=yes
-    AXS_XFONTSIZE => 'NOT_MAPPED|NO_INHERIT',                 # src=yes doc=yes
-    AXS_XFONTSTYLE => 'NOT_MAPPED|NO_INHERIT',                # src=yes doc=yes
-    AXS_XLABEL => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    AXS_XLABELCENTERED => 'NOT_MAPPED|NO_INHERIT',            # src=yes doc=yes
-    AXS_XMAX => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
-    AXS_XMIN => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
-    AXS_XREVERSE => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    AXS_XSCALE => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    AXS_XTICK => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    AXS_XTICKDIVISION => 'NOT_MAPPED|NO_INHERIT',             # src=yes doc=yes
-    AXS_XTICKFONTSIZE => 'NOT_MAPPED|NO_INHERIT',             # src=yes doc=yes
-    AXS_XTICKFONTSTYLE => 'NOT_MAPPED|NO_INHERIT',            # src=yes doc=yes
-    AXS_XTICKFORMAT => 'NOT_MAPPED|NO_INHERIT',               # src=yes doc=yes
-    AXS_XTICKMAJORSIZE => 'NOT_MAPPED|NO_INHERIT',            # src=yes doc=yes
-    AXS_XTICKMAJORSPAN => 'NOT_MAPPED|NO_INHERIT',            # src=yes doc=yes
-    AXS_XTICKSIZE => 'NOT_MAPPED|NO_INHERIT',                 # src=yes doc=yes
-    AXS_YAUTOMAX => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    AXS_YAUTOMIN => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    AXS_YAUTOTICK => 'NOT_MAPPED|NO_INHERIT',                 # src=yes doc=yes
-    AXS_YAUTOTICKSIZE => 'NOT_MAPPED|NO_INHERIT',             # src=yes doc=yes
-    AXS_YCOLOR => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    AXS_YCROSSORIGIN => 'NOT_MAPPED|NO_INHERIT',              # src=yes doc=yes
-    AXS_YFONTSIZE => 'NOT_MAPPED|NO_INHERIT',                 # src=yes doc=yes
-    AXS_YFONTSTYLE => 'NOT_MAPPED|NO_INHERIT',                # src=yes doc=yes
-    AXS_YLABEL => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    AXS_YLABELCENTERED => 'NOT_MAPPED|NO_INHERIT',            # src=yes doc=yes
-    AXS_YMAX => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
-    AXS_YMIN => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
-    AXS_YREVERSE => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    AXS_YSCALE => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    AXS_YTICK => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    AXS_YTICKDIVISION => 'NOT_MAPPED|NO_INHERIT',             # src=yes doc=yes
-    AXS_YTICKFONTSIZE => 'NOT_MAPPED|NO_INHERIT',             # src=yes doc=yes
-    AXS_YTICKFONTSTYLE => 'NOT_MAPPED|NO_INHERIT',            # src=yes doc=yes
-    AXS_YTICKFORMAT => 'NOT_MAPPED|NO_INHERIT',               # src=yes doc=yes
-    AXS_YTICKMAJORSIZE => 'NOT_MAPPED|NO_INHERIT',            # src=yes doc=yes
-    AXS_YTICKMAJORSPAN => 'NOT_MAPPED|NO_INHERIT',            # src=yes doc=yes
-    AXS_YTICKSIZE => 'NOT_MAPPED|NO_INHERIT',                 # src=yes doc=yes
-    BGCOLOR => 'NOT_MAPPED',                                  # src=yes doc=yes
-    CLEAR => 'WRITEONLY|NOT_MAPPED|NO_INHERIT',               # src=yes doc=yes
-    COUNT => 'READONLY|NOT_MAPPED|NO_INHERIT',                # src=yes doc=yes
-    CURRENT => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=yes
-    DS_COLOR => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
-    DS_EDIT => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=yes
-    DS_LEGEND => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    DS_LINESTYLE => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    DS_LINEWIDTH => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    DS_MARKSIZE => 'NOT_MAPPED|NO_INHERIT',                   # src=yes doc=yes
-    DS_MARKSTYLE => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    DS_MODE => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=yes
-    DS_REMOVE => 'WRITEONLY|NOT_MAPPED|NO_INHERIT',           # src=yes doc=yes
-    DS_SHOWVALUES => 'NOT_MAPPED|NO_INHERIT',                 # src=yes doc=yes
-    FGCOLOR => 'NOT_MAPPED',                                  # src=yes doc=yes
-    GRID => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=yes
-    GRIDCOLOR => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    GRIDLINESTYLE => 'NOT_MAPPED|NO_INHERIT',                 # src=yes doc=yes
-    LEGENDFONTSIZE => 'NOT_MAPPED|NO_INHERIT',                # src=yes doc=yes
-    LEGENDFONTSTYLE => 'NOT_MAPPED|NO_INHERIT',               # src=yes doc=yes
-    LEGENDPOS => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    LEGENDSHOW => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    MARGINBOTTOM => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=yes
-    MARGINLEFT => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    MARGINRIGHT => 'NOT_MAPPED|NO_INHERIT',                   # src=yes doc=yes
-    MARGINTOP => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    REDRAW => 'WRITEONLY|NO_INHERIT',                         # src=yes doc=yes
-    REMOVE => 'WRITEONLY|NOT_MAPPED|NO_INHERIT',              # src=yes doc=yes
-    TITLE => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=yes
-    TITLEFONTSIZE => 'NOT_MAPPED|NO_INHERIT',                 # src=yes doc=yes
-    TITLEFONTSTYLE => 'NOT_MAPPED|NO_INHERIT',                # src=yes doc=yes
+    'AXS_XAUTOMAX' => 1,
+    'AXS_XAUTOMIN' => 1,
+    'AXS_XAUTOTICK' => 1,
+    'AXS_XAUTOTICKSIZE' => 1,
+    'AXS_XCOLOR' => 1,
+    'AXS_XCROSSORIGIN' => 1,
+    'AXS_XFONTSIZE' => 1,
+    'AXS_XFONTSTYLE' => 1,
+    'AXS_XLABEL' => 1,
+    'AXS_XLABELCENTERED' => 1,
+    'AXS_XMAX' => 1,
+    'AXS_XMIN' => 1,
+    'AXS_XREVERSE' => 1,
+    'AXS_XSCALE' => 1,
+    'AXS_XTICK' => 1,
+    'AXS_XTICKDIVISION' => 1,
+    'AXS_XTICKFONTSIZE' => 1,
+    'AXS_XTICKFONTSTYLE' => 1,
+    'AXS_XTICKFORMAT' => 1,
+    'AXS_XTICKMAJORSIZE' => 1,
+    'AXS_XTICKMAJORSPAN' => 1,
+    'AXS_XTICKSIZE' => 1,
+    'AXS_YAUTOMAX' => 1,
+    'AXS_YAUTOMIN' => 1,
+    'AXS_YAUTOTICK' => 1,
+    'AXS_YAUTOTICKSIZE' => 1,
+    'AXS_YCOLOR' => 1,
+    'AXS_YCROSSORIGIN' => 1,
+    'AXS_YFONTSIZE' => 1,
+    'AXS_YFONTSTYLE' => 1,
+    'AXS_YLABEL' => 1,
+    'AXS_YLABELCENTERED' => 1,
+    'AXS_YMAX' => 1,
+    'AXS_YMIN' => 1,
+    'AXS_YREVERSE' => 1,
+    'AXS_YSCALE' => 1,
+    'AXS_YTICK' => 1,
+    'AXS_YTICKDIVISION' => 1,
+    'AXS_YTICKFONTSIZE' => 1,
+    'AXS_YTICKFONTSTYLE' => 1,
+    'AXS_YTICKFORMAT' => 1,
+    'AXS_YTICKMAJORSIZE' => 1,
+    'AXS_YTICKMAJORSPAN' => 1,
+    'AXS_YTICKSIZE' => 1,
+    'BGCOLOR' => 1,
+    'CLEAR' => 1,
+    'COUNT' => 1,
+    'CURRENT' => 1,
+    'DS_COLOR' => 1,
+    'DS_EDIT' => 1,
+    'DS_LEGEND' => 1,
+    'DS_LINESTYLE' => 1,
+    'DS_LINEWIDTH' => 1,
+    'DS_MARKSIZE' => 1,
+    'DS_MARKSTYLE' => 1,
+    'DS_MODE' => 1,
+    'DS_REMOVE' => 1,
+    'DS_SHOWVALUES' => 1,
+    'FGCOLOR' => 1,
+    'GRID' => 1,
+    'GRIDCOLOR' => 1,
+    'GRIDLINESTYLE' => 1,
+    'LEGENDFONTSIZE' => 1,
+    'LEGENDFONTSTYLE' => 1,
+    'LEGENDPOS' => 1,
+    'LEGENDSHOW' => 1,
+    'MARGINBOTTOM' => 1,
+    'MARGINLEFT' => 1,
+    'MARGINRIGHT' => 1,
+    'MARGINTOP' => 1,
+    'REDRAW' => 1,
+    'REMOVE' => 1,
+    'TITLE' => 1,
+    'TITLEFONTSIZE' => 1,
+    'TITLEFONTSTYLE' => 1,
   },
   'IUP::ProgressBar' => {
-    BGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    DASHED => 'NO_INHERIT',                                   # src=yes doc=yes
-    FGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    MARQUEE => 'NO_INHERIT',                                  # src=yes doc=yes
-    MAX => 'NOT_MAPPED|NO_INHERIT',                           # src=yes doc=yes
-    MIN => 'NOT_MAPPED|NO_INHERIT',                           # src=yes doc=yes
-    ORIENTATION => 'NO_INHERIT',                              # src=yes doc=yes
-    VALUE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=yes
+    'BGCOLOR' => 1,
+    'DASHED' => 1,
+    'FGCOLOR' => 1,
+    'MARQUEE' => 1,
+    'MAX' => 1,
+    'MIN' => 1,
+    'ORIENTATION' => 1,
+    'VALUE' => 1,
   },
   'IUP::Radio' => {
-    CLIENTSIZE => 'READONLY|NOT_MAPPED|NO_INHERIT',           # src=yes doc=yes
-    VALUE => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=yes
-    VALUE_HANDLE => 'NOT_MAPPED|NO_INHERIT|NO_STRING',        # src=yes doc=yes
+    'CLIENTSIZE' => 1,
+    'VALUE' => 1,
+    'VALUE_HANDLE' => 1,
   },
   'IUP::Sbox' => {
-    CLIENTSIZE => 'READONLY|NO_INHERIT',                      # src=yes doc=yes
-    COLOR => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=yes
-    DIRECTION => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
+    'CLIENTSIZE' => 1,
+    'COLOR' => 1,
+    'DIRECTION' => 1,
   },
   'IUP::Split' => {
-    AUTOHIDE => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
-    BARSIZE => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=yes
-    CLIENTSIZE1 => 'READONLY|NO_INHERIT',                     # src=yes doc=yes
-    CLIENTSIZE2 => 'READONLY|NO_INHERIT',                     # src=yes doc=yes
-    COLOR => 'NO_INHERIT',                                    # src=yes doc=yes
-    DIRECTION => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    LAYOUTDRAG => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=yes
-    MINMAX => 'NOT_MAPPED|NO_INHERIT',                        # src=yes doc=yes
-    SHOWGRIP => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
-    VALUE => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=yes
+    'AUTOHIDE' => 1,
+    'BARSIZE' => 1,
+    'CLIENTSIZE1' => 1,
+    'CLIENTSIZE2' => 1,
+    'COLOR' => 1,
+    'DIRECTION' => 1,
+    'LAYOUTDRAG' => 1,
+    'MINMAX' => 1,
+    'SHOWGRIP' => 1,
+    'VALUE' => 1,
   },
   'IUP::Submenu' => {
-    IMAGE => 'unknown',                                       # src=no doc=yes
-    KEY => 'NOT_MAPPED|NO_INHERIT',                           # src=yes doc=yes
-    TITLE => 'unknown',                                       # src=no doc=yes
+    'IMAGE' => 1,
+    'KEY' => 1,
+    'TITLE' => 1,
   },
   'IUP::Tabs' => {
-    ALIGNMENT => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=no
-    BACKGROUND => 'DEFAULT',                                  # src=yes doc=no
-    BGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    CLIENTSIZE => 'NO_DEFAULTVALUE|READONLY|NOT_MAPPED|NO_INHERIT', # src=yes doc=yes
-    FGCOLOR => 'NOT_MAPPED',                                  # src=yes doc=yes
-    FLAT_ALPHA => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=no
-    FONT_ACTIVE => 'NOT_MAPPED|NO_INHERIT',                   # src=yes doc=no
-    FONT_INACTIVE => 'NOT_MAPPED|NO_INHERIT',                 # src=yes doc=no
-    MULTILINE => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    PADDING => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=yes
-    REPAINT => 'WRITEONLY|NOT_MAPPED|NO_INHERIT',             # src=yes doc=no
-    TABIMAGE => 'NO_INHERIT',                                 # src=yes doc=no
-    TABORIENTATION => 'NOT_MAPPED|NO_INHERIT',                # src=yes doc=yes
-    TABSIZE => 'NO_DEFAULTVALUE|NOT_MAPPED|NO_INHERIT',       # src=yes doc=no
-    TABTITLE => 'NO_DEFAULTVALUE|NOT_MAPPED|NO_INHERIT',      # src=yes doc=yes
-    TABTYPE => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=yes
-    VALUE => 'NO_DEFAULTVALUE|NOT_MAPPED|NO_INHERIT',         # src=yes doc=yes
-    VALUEPOS => 'NO_DEFAULTVALUE|NOT_MAPPED|NO_INHERIT',      # src=yes doc=yes
-    VALUE_HANDLE => 'NOT_MAPPED|NO_INHERIT|NO_STRING',        # src=yes doc=yes
+    'ALIGNMENT' => 1,
+    'BACKGROUND' => 1,
+    'BGCOLOR' => 1,
+    'CLIENTSIZE' => 1,
+    'FGCOLOR' => 1,
+    'FLAT_ALPHA' => 1,
+    'FONT_ACTIVE' => 1,
+    'FONT_INACTIVE' => 1,
+    'MULTILINE' => 1,
+    'PADDING' => 1,
+    'REPAINT' => 1,
+    'TABIMAG' => 1,
+    'TABIMAGE' => 1,
+    'TABORIENTATION' => 1,
+    'TABSIZE' => 1,
+    'TABTITL' => 1,
+    'TABTITLE' => 1,
+    'TABTYPE' => 1,
+    'VALUE' => 1,
+    'VALUEPOS' => 1,
+    'VALUE_HANDLE' => 1,
   },
   'IUP::Text' => {
-    ADDFORMATTAG => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=no
-    ADDFORMATTAG_HANDLE => 'NOT_MAPPED|NO_INHERIT',           # src=yes doc=no
-    ALIGNMENT => 'NO_INHERIT',                                # src=yes doc=yes
-    APPEND => 'NOT_MAPPED|WRITEONLY|NO_INHERIT',              # src=yes doc=yes
-    APPENDNEWLINE => 'NOT_MAPPED|NO_INHERIT',                 # src=yes doc=no
-    BGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    BORDER => 'NO_INHERIT',                                   # src=yes doc=yes
-    CARET => 'NO_INHERIT',                                    # src=yes doc=yes
-    CARETPOS => 'NO_INHERIT',                                 # src=yes doc=yes
-    CLIPBOARD => 'NO_INHERIT',                                # src=yes doc=yes
-    CUEBANNER => 'NO_INHERIT',                                # src=yes doc=yes
-    DRAGDROP => 'NO_INHERIT',                                 # src=yes doc=yes
-    FGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    FILTER => 'NO_INHERIT',                                   # src=yes doc=yes
-    FORMATTING => 'READONLY|NOT_MAPPED|NO_INHERIT',           # src=yes doc=yes
-    INSERT => 'NOT_MAPPED|WRITEONLY|NO_INHERIT',              # src=yes doc=yes
-    MASK => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=yes
-    MASKCASEI => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=no
-    MASKFLOAT => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=no
-    MASKINT => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=no
-    MULTILINE => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    NC => 'NOT_MAPPED',                                       # src=yes doc=yes
-    OLD_MASK_DATA => 'READONLY|NOT_MAPPED|NO_INHERIT',        # src=yes doc=no
-    OVERWRITE => 'NO_INHERIT',                                # src=yes doc=yes
-    PADDING => 'NOT_MAPPED',                                  # src=yes doc=yes
-    PANGOLAYOUT => 'NO_INHERIT',                              # src=yes doc=no
-    PASSWORD => 'NO_INHERIT',                                 # src=yes doc=yes
-    READONLY => 'DEFAULT',                                    # src=yes doc=yes
-    REMOVEFORMATTING => 'WRITEONLY|NO_INHERIT',               # src=yes doc=no
-    SCROLLBAR => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    SCROLLTO => 'WRITEONLY|NO_INHERIT',                       # src=yes doc=yes
-    SCROLLTOPOS => 'WRITEONLY|NO_INHERIT',                    # src=yes doc=yes
-    SELECTEDTEXT => 'NO_INHERIT',                             # src=yes doc=yes
-    SELECTION => 'NO_INHERIT',                                # src=yes doc=yes
-    SELECTIONPOS => 'NO_INHERIT',                             # src=yes doc=yes
-    SPIN => 'NO_INHERIT',                                     # src=yes doc=yes
-    SPINALIGN => 'NO_INHERIT',                                # src=yes doc=no
-    SPINAUTO => 'NO_INHERIT',                                 # src=yes doc=no
-    SPININC => 'NO_INHERIT',                                  # src=yes doc=no
-    SPINMAX => 'NO_INHERIT',                                  # src=yes doc=no
-    SPINMIN => 'NO_INHERIT',                                  # src=yes doc=no
-    SPINVALUE => 'NO_INHERIT',                                # src=yes doc=yes
-    SPINWRAP => 'NO_INHERIT',                                 # src=yes doc=no
-    TABSIZE => 'DEFAULT',                                     # src=yes doc=yes
-    VALUE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=yes
-    VISIBLECOLUMNS => 'NO_INHERIT',                           # src=yes doc=yes
-    VISIBLELINES => 'NO_INHERIT',                             # src=yes doc=yes
-    WORDWRAP => 'DEFAULT',                                    # src=yes doc=yes
+    'ADDFORMATTAG' => 1,
+    'ADDFORMATTAG_HANDLE' => 1,
+    'ALIGNMENT' => 1,
+    'APPEND' => 1,
+    'APPENDNEWLINE' => 1,
+    'BGCOLOR' => 1,
+    'BORDER' => 1,
+    'CARET' => 1,
+    'CARETPOS' => 1,
+    'CLIPBOARD' => 1,
+    'CUEBANNER' => 1,
+    'DRAGDROP' => 1,
+    'FGCOLOR' => 1,
+    'FILTER' => 1,
+    'FORMATTING' => 1,
+    'INSERT' => 1,
+    'MASK' => 1,
+    'MASKCASEI' => 1,
+    'MASKFLOAT' => 1,
+    'MASKINT' => 1,
+    'MULTILINE' => 1,
+    'NC' => 1,
+    'OLD_MASK_DATA' => 1,
+    'OVERWRITE' => 1,
+    'PADDING' => 1,
+    'PANGOLAYOUT' => 1,
+    'PASSWORD' => 1,
+    'READONLY' => 1,
+    'REMOVEFORMATTING' => 1,
+    'SCROLLBAR' => 1,
+    'SCROLLTO' => 1,
+    'SCROLLTOPOS' => 1,
+    'SELECTEDTEXT' => 1,
+    'SELECTION' => 1,
+    'SELECTIONPOS' => 1,
+    'SPIN' => 1,
+    'SPINALIGN' => 1,
+    'SPINAUTO' => 1,
+    'SPININC' => 1,
+    'SPINMAX' => 1,
+    'SPINMIN' => 1,
+    'SPINVALUE' => 1,
+    'SPINWRAP' => 1,
+    'TABSIZE' => 1,
+    'VALUE' => 1,
+    'VISIBLECOLUMNS' => 1,
+    'VISIBLELINES' => 1,
+    'WORDWRAP' => 1,
   },
   'IUP::Timer' => {
-    RUN => 'NOT_MAPPED|NO_INHERIT',                           # src=yes doc=yes
-    TIME => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=yes
+    'RUN' => 1,
+    'TIME' => 1,
   },
   'IUP::Toggle' => {
-    ALIGNMENT => 'NO_INHERIT',                                # src=yes doc=yes
-    BACKGROUND => 'DEFAULT',                                  # src=yes doc=no
-    BGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    FGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    FLAT_ALPHA => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=no
-    IMAGE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=yes
-    IMINACTIVE => 'NO_DEFAULTVALUE|NO_INHERIT',               # src=yes doc=yes
-    IMPRESS => 'NO_DEFAULTVALUE|NO_INHERIT',                  # src=yes doc=yes
-    MARKUP => 'DEFAULT',                                      # src=yes doc=yes
-    PADDING => 'NOT_MAPPED',                                  # src=yes doc=yes
-    RADIO => 'READONLY|NO_INHERIT',                           # src=yes doc=yes
-    RIGHTBUTTON => 'NO_INHERIT',                              # src=yes doc=yes
-    SELECTCOLOR => 'NO_INHERIT',                              # src=yes doc=no
-    TITLE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=yes
-    VALUE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=yes
+    '3STATE' => 1,
+    'ALIGNMENT' => 1,
+    'BACKGROUND' => 1,
+    'BGCOLOR' => 1,
+    'FGCOLOR' => 1,
+    'FLAT_ALPHA' => 1,
+    'IMAGE' => 1,
+    'IMINACTIVE' => 1,
+    'IMPRESS' => 1,
+    'MARKUP' => 1,
+    'PADDING' => 1,
+    'RADIO' => 1,
+    'RIGHTBUTTON' => 1,
+    'SELECTCOLOR' => 1,
+    'TITLE' => 1,
+    'VALUE' => 1,
   },
   'IUP::Tree' => {
-    ADDBRANCH => 'NOT_MAPPED|WRITEONLY|NO_INHERIT',           # src=yes doc=no
-    ADDEXPANDED => 'NOT_MAPPED|NO_INHERIT',                   # src=yes doc=yes
-    ADDLEAF => 'NOT_MAPPED|WRITEONLY|NO_INHERIT',             # src=yes doc=yes
-    ADDROOT => 'NO_INHERIT',                                  # src=yes doc=no
-    BGCOLOR => 'DEFAULT',                                     # src=yes doc=no
-    CHILDCOUNT => 'READONLY|NO_INHERIT',                      # src=yes doc=yes
-    COLOR => 'NO_INHERIT',                                    # src=yes doc=no
-    COPYNODE => 'NOT_MAPPED|WRITEONLY|NO_INHERIT',            # src=yes doc=no
-    COUNT => 'NO_DEFAULTVALUE|READONLY|NO_INHERIT',           # src=yes doc=no
-    CTRL => 'NOT_MAPPED',                                     # src=yes doc=no
-    DELNODE => 'NOT_MAPPED|WRITEONLY|NO_INHERIT',             # src=yes doc=no
-    DEPTH => 'READONLY|NO_DEFAULTVALUE|NO_INHERIT',           # src=yes doc=no
-    DRAGDROP => 'NO_INHERIT',                                 # src=yes doc=no
-    EXPANDALL => 'WRITEONLY||NO_INHERIT',                     # src=yes doc=no
-    FGCOLOR => 'DEFAULT',                                     # src=yes doc=no
-    FINDUSERDATA => 'READONLY|NO_INHERIT',                    # src=yes doc=no
-    FLAT_ALPHA => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=no
-    IMAGE => 'WRITEONLY|NO_INHERIT',                          # src=yes doc=no
-    IMAGEBRANCHCOLLAPSED => 'NO_INHERIT',                     # src=yes doc=no
-    IMAGEBRANCHEXPANDED => 'NO_INHERIT',                      # src=yes doc=no
-    IMAGEEXPANDED => 'WRITEONLY|NO_INHERIT',                  # src=yes doc=no
-    IMAGELEAF => 'NO_INHERIT',                                # src=yes doc=yes
-    INDENTATION => 'DEFAULT',                                 # src=yes doc=no
-    INSERTBRANCH => 'NOT_MAPPED|WRITEONLY|NO_INHERIT',        # src=yes doc=no
-    INSERTLEAF => 'NOT_MAPPED|WRITEONLY|NO_INHERIT',          # src=yes doc=no
-    KIND => 'READONLY|NO_INHERIT',                            # src=yes doc=no
-    LASTADDNODE => 'READONLY|NO_INHERIT',                     # src=yes doc=no
-    MARK => 'WRITEONLY|NO_INHERIT',                           # src=yes doc=yes
-    MARKED => 'NO_INHERIT',                                   # src=yes doc=no
-    MARKEDNODES => 'NO_DEFAULTVALUE|NO_INHERIT',              # src=yes doc=no
-    MARKMODE => 'NOT_MAPPED',                                 # src=yes doc=no
-    MARKSTART => 'NO_DEFAULTVALUE|NO_INHERIT',                # src=yes doc=no
-    MOVENODE => 'NOT_MAPPED|WRITEONLY|NO_INHERIT',            # src=yes doc=no
-    PARENT => 'READONLY|NO_INHERIT',                          # src=yes doc=no
-    RENAME => 'WRITEONLY|NO_INHERIT',                         # src=yes doc=no
-    RENAMENODE => 'unknown',                                  # src=no doc=yes
-    RUBBERBAND => 'NO_INHERIT',                               # src=yes doc=no
-    SHIFT => 'NOT_MAPPED',                                    # src=yes doc=no
-    SHOWDRAGDROP => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=no
-    SHOWRENAME => 'NOT_MAPPED|NO_INHERIT',                    # src=yes doc=no
-    SPACING => 'NOT_MAPPED',                                  # src=yes doc=no
-    STARTING => 'NO_DEFAULTVALUE|NO_INHERIT',                 # src=yes doc=no
-    STATE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=no
-    TITLE => 'NO_INHERIT',                                    # src=yes doc=no
-    TITLEFONT => 'NO_INHERIT',                                # src=yes doc=no
-    TOPITEM => 'WRITEONLY|NO_INHERIT',                        # src=yes doc=no
-    TOTALCHILDCOUNT => 'READONLY|NO_INHERIT',                 # src=yes doc=no
-    USERDATA => 'NO_STRING|NO_INHERIT',                       # src=yes doc=no
-    VALUE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=no
+    'ADDBRANCH' => 1,
+    'ADDEXPANDED' => 1,
+    'ADDLEAF' => 1,
+    'ADDROOT' => 1,
+    'BGCOLOR' => 1,
+    'CHILDCOUNT' => 1,
+    'COLOR' => 1,
+    'COPYNODE' => 1,
+    'COUNT' => 1,
+    'CTRL' => 1,
+    'DELNODE' => 1,
+    'DEPTH' => 1,
+    'DRAGDROP' => 1,
+    'EXPANDALL' => 1,
+    'FGCOLOR' => 1,
+    'FINDUSERDATA' => 1,
+    'FLAT_ALPHA' => 1,
+    'IMAGE' => 1,
+    'IMAGEBRANCHCOLLAPSED' => 1,
+    'IMAGEBRANCHEXPANDED' => 1,
+    'IMAGEEXPANDED' => 1,
+    'IMAGELEAF' => 1,
+    'INDENTATION' => 1,
+    'INSERTBRANCH' => 1,
+    'INSERTLEAF' => 1,
+    'KIND' => 1,
+    'LASTADDNODE' => 1,
+    'MARK' => 1,
+    'MARKED' => 1,
+    'MARKEDNODES' => 1,
+    'MARKMODE' => 1,
+    'MARKSTART' => 1,
+    'MOVENODE' => 1,
+    'PARENT' => 1,
+    'RENAME' => 1,
+    'RENAMENODE' => 1,
+    'RUBBERBAND' => 1,
+    'SHIFT' => 1,
+    'SHOWDRAGDROP' => 1,
+    'SHOWRENAME' => 1,
+    'SPACING' => 1,
+    'STARTING' => 1,
+    'STATE' => 1,
+    'TITLE' => 1,
+    'TITLEFONT' => 1,
+    'TOPITEM' => 1,
+    'TOTALCHILDCOUNT' => 1,
+    'USERDATA' => 1,
+    'VALU' => 1,
+    'VALUE' => 1,
   },
   'IUP::User' => {
-    CLEARATTRIBUTES => 'NOT_MAPPED|NO_INHERIT',               # src=yes doc=yes
+    'CLEARATTRIBUTES' => 1,
   },
   'IUP::Val' => {
-    BACKGROUND => 'DEFAULT',                                  # src=yes doc=no
-    BGCOLOR => 'NO_INHERIT',                                  # src=yes doc=yes
-    HANDLER_IMAGE => 'NO_DEFAULTVALUE|NOT_MAPPED',            # src=yes doc=no
-    HANDLER_IMAGE_INACTIVE => 'NO_DEFAULTVALUE|NOT_MAPPED',   # src=yes doc=no
-    INVERTED => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
-    MAX => 'NOT_MAPPED',                                      # src=yes doc=yes
-    MIN => 'NOT_MAPPED',                                      # src=yes doc=yes
-    PAGESTEP => 'NOT_MAPPED',                                 # src=yes doc=yes
-    SHOWTICKS => 'NOT_MAPPED',                                # src=yes doc=yes
-    STEP => 'NOT_MAPPED',                                     # src=yes doc=yes
-    TICKSPOS => 'NOT_MAPPED',                                 # src=yes doc=yes
-    TYPE => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=yes
-    VALUE => 'NO_DEFAULTVALUE|NOT_MAPPED|NO_INHERIT',         # src=yes doc=yes
+    'BACKGROUND' => 1,
+    'BGCOLOR' => 1,
+    'HANDLER_IMAGE' => 1,
+    'HANDLER_IMAGE_INACTIVE' => 1,
+    'INVERTED' => 1,
+    'MAX' => 1,
+    'MIN' => 1,
+    'PAGESTEP' => 1,
+    'SHOWTICKS' => 1,
+    'STEP' => 1,
+    'TICKSPOS' => 1,
+    'TYPE' => 1,
+    'VALUE' => 1,
   },
   'IUP::Vbox' => {
-    ALIGNMENT => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
+    'ALIGNMENT' => 1,
   },
   'IUP::Zbox' => {
-    ALIGNMENT => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=yes
-    VALUE => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=yes
-    VALUEPOS => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=yes
-    VALUE_HANDLE => 'NOT_MAPPED|NO_INHERIT|NO_STRING',        # src=yes doc=yes
+    'ACENTER' => 1,
+    'ALIGNMENT' => 1,
+    'EAST' => 1,
+    'NE' => 1,
+    'NORTH' => 1,
+    'NW' => 1,
+    'SE' => 1,
+    'SOUTH' => 1,
+    'SW' => 1,
+    'VALUE' => 1,
+    'VALUEPOS' => 1,
+    'VALUE_HANDLE' => 1,
+    'WEST' => 1,
   },
   '_base' => {
-    ACTIVE => 'DEFAULT',                                      # src=yes doc=no
-    CANFOCUS => 'NO_INHERIT',                                 # src=yes doc=no
-    CHARSIZE => 'NO_DEFAULTVALUE|READONLY|NOT_MAPPED|NO_INHERIT', # src=yes doc=no
-    CX => 'unknown',                                          # src=no doc=no
-    CY => 'unknown',                                          # src=no doc=no
-    EXPAND => 'NOT_MAPPED|NO_INHERIT',                        # src=yes doc=no
-    EXPANDWEIGHT => 'NOT_MAPPED|NO_INHERIT',                  # src=yes doc=no
-    FLOATING => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=no
-    FONT => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=no
-    FONTFACE => 'READONLY|NOT_MAPPED|NO_INHERIT',             # src=yes doc=no
-    FONTSIZE => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=no
-    FONTSTYLE => 'NOT_MAPPED|NO_INHERIT',                     # src=yes doc=no
-    HFONT => 'NOT_MAPPED|NO_INHERIT|NO_STRING',               # src=yes doc=no
-    MAXSIZE => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=no
-    MINSIZE => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=no
-    NAME => 'NO_DEFAULTVALUE|NOT_MAPPED|NO_INHERIT',          # src=yes doc=no
-    NORMALIZERGROUP => 'NOT_MAPPED|NO_INHERIT',               # src=yes doc=no
-    PANGOFONTDESC => 'NOT_MAPPED|NO_INHERIT|NO_STRING',       # src=yes doc=no
-    POSITION => 'NO_DEFAULTVALUE|NOT_MAPPED|NO_INHERIT',      # src=yes doc=no
-    RASTERSIZE => 'NO_DEFAULTVALUE|NOT_MAPPED|NO_INHERIT',    # src=yes doc=no
-    SIZE => 'NO_DEFAULTVALUE|NOT_MAPPED|NO_INHERIT',          # src=yes doc=no
-    STANDARDFONT => 'NOT_MAPPED',                             # src=yes doc=no
-    TIP => 'NO_DEFAULTVALUE|NO_INHERIT',                      # src=yes doc=no
-    TIPBGCOLOR => 'NOT_MAPPED',                               # src=yes doc=no
-    TIPDELAY => 'NOT_MAPPED',                                 # src=yes doc=no
-    TIPFGCOLOR => 'NOT_MAPPED',                               # src=yes doc=no
-    TIPVISIBLE => 'NO_INHERIT',                               # src=yes doc=no
-    VISIBLE => 'DEFAULT',                                     # src=yes doc=no
-    WID => 'READONLY|NO_INHERIT|NO_STRING',                   # src=yes doc=no
-    X => 'READONLY|NO_INHERIT',                               # src=yes doc=no
-    XFONTID => 'NOT_MAPPED|NO_INHERIT|NO_STRING',             # src=yes doc=no
-    XFONTSTRUCT => 'NOT_MAPPED|NO_INHERIT|NO_STRING',         # src=yes doc=no
-    XMFONTLIST => 'NOT_MAPPED|NO_INHERIT|NO_STRING',          # src=yes doc=no
-    Y => 'READONLY|NO_INHERIT',                               # src=yes doc=no
-    ZORDER => 'WRITEONLY|NO_INHERIT',                         # src=yes doc=no
+    'ACTIVE' => 1,
+    'CANFOCUS' => 1,
+    'CHARSIZE' => 1,
+    'CX' => 1,
+    'CY' => 1,
+    'EXPAND' => 1,
+    'EXPANDWEIGHT' => 1,
+    'FLOATING' => 1,
+    'FONT' => 1,
+    'FONTFACE' => 1,
+    'FONTSIZE' => 1,
+    'FONTSTYLE' => 1,
+    'HFONT' => 1,
+    'MAXSIZE' => 1,
+    'MINSIZE' => 1,
+    'NAME' => 1,
+    'NORMALIZERGROUP' => 1,
+    'PANGOFONTDESC' => 1,
+    'POSITION' => 1,
+    'RASTERSIZE' => 1,
+    'SIZE' => 1,
+    'STANDARDFONT' => 1,
+    'TIP' => 1,
+    'TIPBGCOLOR' => 1,
+    'TIPDELAY' => 1,
+    'TIPFGCOLOR' => 1,
+    'TIPVISIBLE' => 1,
+    'VISIBLE' => 1,
+    'WID' => 1,
+    'X' => 1,
+    'XFONTID' => 1,
+    'XFONTSTRUCT' => 1,
+    'XMFONTLIST' => 1,
+    'Y' => 1,
+    'ZORDER' => 1,
   },
   '_box' => {
-    CGAP => 'NOT_MAPPED',                                     # src=yes doc=no
-    CLIENTSIZE => 'READONLY|NOT_MAPPED|NO_INHERIT',           # src=yes doc=no
-    CMARGIN => 'NOT_MAPPED',                                  # src=yes doc=no
-    EXPANDCHILDREN => 'NOT_MAPPED|NO_INHERIT',                # src=yes doc=no
-    GAP => 'NOT_MAPPED',                                      # src=yes doc=no
-    HOMOGENEOUS => 'NOT_MAPPED|NO_INHERIT',                   # src=yes doc=no
-    MARGIN => 'NOT_MAPPED',                                   # src=yes doc=no
-    NCGAP => 'NOT_MAPPED|NO_INHERIT',                         # src=yes doc=no
-    NCMARGIN => 'NOT_MAPPED|NO_INHERIT',                      # src=yes doc=no
-    NGAP => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=no
-    NMARGIN => 'NOT_MAPPED|NO_INHERIT',                       # src=yes doc=no
-    NORMALIZESIZE => 'NOT_MAPPED|NO_INHERIT',                 # src=yes doc=no
+    'CGAP' => 1,
+    'CLIENTSIZE' => 1,
+    'CMARGIN' => 1,
+    'EXPANDCHILDREN' => 1,
+    'GAP' => 1,
+    'HOMOGENEOUS' => 1,
+    'MARGIN' => 1,
+    'NCGAP' => 1,
+    'NCMARGIN' => 1,
+    'NGAP' => 1,
+    'NMARGIN' => 1,
+    'NORMALIZESIZE' => 1,
   },
   '_dialog' => {
-    BACKGROUND => 'DEFAULT',                                  # src=yes doc=yes
-    BGCOLOR => 'DEFAULT',                                     # src=yes doc=yes
-    BORDER => 'NO_INHERIT',                                   # src=yes doc=yes
-    BRINGFRONT => 'NO_INHERIT',                               # src=yes doc=yes
-    CLIENTSIZE => 'NO_DEFAULTVALUE|READONLY|NO_INHERIT',      # src=yes doc=yes
-    COMPOSITED => 'NOT_MAPPED',                               # src=yes doc=yes
-    CONTROL => 'NO_INHERIT',                                  # src=yes doc=yes
-    CURSOR => 'NO_INHERIT',                                   # src=yes doc=yes
-    DEFAULTENTER => 'NO_INHERIT',                             # src=yes doc=yes
-    DEFAULTESC => 'NO_INHERIT',                               # src=yes doc=yes
-    DIALOGFRAME => 'NO_INHERIT',                              # src=yes doc=yes
-    DIALOGHINT => 'NO_INHERIT',                               # src=yes doc=yes
-    DRAGDROP => 'NO_INHERIT',                                 # src=yes doc=yes
-    FULLSCREEN => 'WRITEONLY|NO_INHERIT',                     # src=yes doc=yes
-    HELPBUTTON => 'NO_INHERIT',                               # src=yes doc=yes
-    HIDETASKBAR => 'NO_INHERIT',                              # src=yes doc=yes
-    HWND => 'NO_STRING|NO_INHERIT',                           # src=yes doc=yes
-    ICON => 'NO_INHERIT',                                     # src=yes doc=yes
-    LAYERALPHA => 'NO_INHERIT',                               # src=yes doc=no
-    MAXBOX => 'NO_INHERIT',                                   # src=yes doc=yes
-    MDIACTIVATE => 'WRITEONLY|NO_INHERIT',                    # src=yes doc=yes
-    MDIACTIVE => 'READONLY|NO_INHERIT',                       # src=yes doc=yes
-    MDIARRANGE => 'WRITEONLY|NO_INHERIT',                     # src=yes doc=yes
-    MDICHILD => 'NO_INHERIT',                                 # src=yes doc=yes
-    MDICLIENT => 'NO_INHERIT',                                # src=yes doc=yes
-    MDICLOSEALL => 'WRITEONLY|NO_INHERIT',                    # src=yes doc=yes
-    MDIFRAME => 'NO_INHERIT',                                 # src=yes doc=yes
-    MDIMENU => 'NO_INHERIT',                                  # src=yes doc=yes
-    MDINEXT => 'READONLY|NO_INHERIT',                         # src=yes doc=yes
-    MENU => 'NOT_MAPPED|NO_INHERIT',                          # src=yes doc=yes
-    MENUBOX => 'NO_INHERIT',                                  # src=yes doc=yes
-    MINBOX => 'NO_INHERIT',                                   # src=yes doc=yes
-    MODAL => 'READONLY|NO_INHERIT',                           # src=yes doc=yes
-    NATIVEPARENT => 'NO_STRING',                              # src=yes doc=yes
-    OPACITY => 'NO_INHERIT',                                  # src=yes doc=yes
-    PARENTDIALOG => 'NO_INHERIT',                             # src=yes doc=yes
-    PLACEMENT => 'NO_INHERIT',                                # src=yes doc=yes
-    RESIZE => 'NO_INHERIT',                                   # src=yes doc=yes
-    SAVEUNDER => 'NO_INHERIT',                                # src=yes doc=yes
-    SHRINK => 'NO_INHERIT',                                   # src=yes doc=yes
-    STARTFOCUS => 'NO_INHERIT',                               # src=yes doc=yes
-    TITLE => 'NO_DEFAULTVALUE|NO_INHERIT',                    # src=yes doc=yes
-    TOOLBOX => 'NO_INHERIT',                                  # src=yes doc=yes
-    TOPMOST => 'WRITEONLY|NO_INHERIT',                        # src=yes doc=yes
-    TRAY => 'NO_INHERIT',                                     # src=yes doc=yes
-    TRAYIMAGE => 'NO_INHERIT',                                # src=yes doc=yes
-    TRAYTIP => 'NO_INHERIT',                                  # src=yes doc=yes
-    XWINDOW => 'NO_INHERIT|NO_STRING',                        # src=yes doc=yes
+    'BACKGROUND' => 1,
+    'BGCOLOR' => 1,
+    'BORDER' => 1,
+    'BRINGFRONT' => 1,
+    'CLIENTSIZE' => 1,
+    'COMPOSITED' => 1,
+    'CONTROL' => 1,
+    'CURSOR' => 1,
+    'DEFAULTENTER' => 1,
+    'DEFAULTESC' => 1,
+    'DIALOGFRAME' => 1,
+    'DIALOGHINT' => 1,
+    'DRAGDROP' => 1,
+    'FULLSCREEN' => 1,
+    'HELPBUTTON' => 1,
+    'HIDETASKBAR' => 1,
+    'HWND' => 1,
+    'ICON' => 1,
+    'IMPORTANT' => 1,
+    'LAYERALPHA' => 1,
+    'MAXBOX' => 1,
+    'MDIACTIVATE' => 1,
+    'MDIACTIVE' => 1,
+    'MDIARRANGE' => 1,
+    'MDICHILD' => 1,
+    'MDICLIENT' => 1,
+    'MDICLOSEALL' => 1,
+    'MDIFRAME' => 1,
+    'MDIMENU' => 1,
+    'MDINEXT' => 1,
+    'MENU' => 1,
+    'MENUBOX' => 1,
+    'MINBOX' => 1,
+    'MODAL' => 1,
+    'NATIVEPARENT' => 1,
+    'OPACITY' => 1,
+    'PARENTDIALOG' => 1,
+    'PLACEMENT' => 1,
+    'RESIZE' => 1,
+    'SAVEUNDER' => 1,
+    'SHRINK' => 1,
+    'STARTFOCUS' => 1,
+    'TITLE' => 1,
+    'TOOLBOX' => 1,
+    'TOPMOST' => 1,
+    'TRAY' => 1,
+    'TRAYIMAGE' => 1,
+    'TRAYTIP' => 1,
+    'XWINDOW' => 1,
   },
 };
 

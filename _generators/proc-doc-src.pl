@@ -8,29 +8,24 @@ use Template;
 use HTML::TreeBuilder;
 use FindBin;
 use File::Spec;
+use Getopt::Long;
+use Pod::Usage;
+
+require "$FindBin::Bin/utils.pm";
+die "###FATAL### Cannot require utils.pm\n" if $@;
+
+my $g_tag = "3.4";
+my $g_longoutput = 0;
+my $g_srcroot  = 'y:\IUP.Unpacked\iup-'.$g_tag;
 
 my $curdir   = $FindBin::Bin;
 my $distroot = File::Spec->catfile($curdir, '..');
-my $srcroot  = 'y:\IUP\iup';
-my $docroot  = 'y:\@repos\perl-iup\_internal\doc\iup';
-die "Invalid dir '$distroot'" unless -d "$distroot/lib" && -f "$distroot/Build.PL";
+my $docroot  = $g_srcroot;
+die "###FATAL### Invalid dir '$distroot'" unless -d "$distroot/lib" && -f "$distroot/Build.PL";
 
-my @iup = glob("$srcroot/src/*.c");
-my @all_src = (
-  glob("$srcroot/src/*.c"),
-  glob("$srcroot/src/win/*.c"),
-  glob("$srcroot/src/gtk/*.c"),
-  glob("$srcroot/src/mot/*.c"),
-  glob("$srcroot/srcim/*.c"),
-  glob("$srcroot/srcimglib/*.c"),
-  glob("$srcroot/srcpplot/*.cpp"),
-  glob("$srcroot/srcole/*.cpp"),
-  glob("$srcroot/srccontrols/*.c"),
-  glob("$srcroot/srccontrols/matrix/*.c"),
-  glob("$srcroot/srccontrols/color/*.c"),
-  glob("$srcroot/srccd/*.c"),
-  glob("$srcroot/srcgl/*.c"),
-);
+my @all_src = My::Utils::find_file($g_srcroot, qr/\.(c|cpp)$/);
+@all_src = grep /\Q$g_srcroot\E[\\\/](src|srcim|srcimglib|srcpplot|srcole|srccontrols|srccd|srcgl|srcweb|srctuio)[\\\/]/i, @all_src; #nasty hack - we need just files 
+#die "###DEBUG### all_src=", Dumper(\@all_src);
 
 my @all_doc = (
   glob("$docroot/html/en/elem/iup*.html"),
@@ -147,6 +142,7 @@ sub raw2pname {
   my %trans = (
     'IUP::Filedlg' => 'IUP::FileDlg',
     'IUP::Pplot' => 'IUP::PPlot',
+    'IUP::GLCanvas' => 'IUP::CanvasGL',
     'IUP::Glcanvas' => 'IUP::CanvasGL',
     'IUP::Glcanvas_x' => 'IUP::CanvasGL',
     'IUP::Glcanvas_win' => 'IUP::CanvasGL',
@@ -161,6 +157,8 @@ sub raw2pname {
     'IUP::ColorBrowserDlg' => 'IUP::ColorDlg',
     'IUP::Olecontrol' => 'IUP::OleControl',
     'IUP::Iupmatrix' => 'IUP::Matrix',
+    'IUP::Webbrowser' => 'IUP::WebBrowser',
+    'IUP::Tuio' => 'IUP::TuioClient',
   );
   $n =~ s|^iup_||;
   $n =~ s|^iupwin_||i;
@@ -171,24 +169,33 @@ sub raw2pname {
   return $n;
 }  
 
+warn "###INFO### Going through all source codes (*.c *.cpp)\n";
 
 foreach my $f (@all_src) {
   die "File $f not exists" unless -f $f;
+
+  my $showdebug; 
+  $showdebug = 1 if $f =~ /Tuio/i;
+  
+  warn "###DEBUG### Processing file $f\n" if $showdebug;
   (my $n = $f) =~ s/\.c(pp)?$//;
-  $n =~ s|^.*?([^/]*)$|$1|;
+  $n =~ s|^.*?([^\\/]*)$|$1|;
   $n = raw2pname($n);
   open DAT, "<", $f;
   while (<DAT>) {
     s/[\r\n]*$//;
+    s/^\s*//;
     if ( /iupClassRegisterCallback[^"]*"([^"]*)"[^"]*"([^"]*)"/) {
       my $a = $1;
       my $t = $2;
+      warn "###DEBUG### Processing callback '$n|$a|$t' '$_'\n" if $showdebug;
       $t =~ s/=s//;
       $c_list{$n}->{$a}->{comment1} = 'src=yes';      
       $c_list{$n}->{$a}->{type} = $type_patch{$n}->{$a} || $t; # type patching
     }
     else {
-      warn ">>> MISSED.CB[$f]:$_" if ( /iupClassRegisterCallback/ );
+      (my $shortname = $f) =~ s/^.*?([^\\\/]+)$/$1/;
+      warn "###INFO### MISSING CB [$shortname]:$_\n" if ( /iupClassRegisterCallback/ );
     }
     
     if ( /iupClassRegisterAttribute[^"]*"([^"]*)".*?([^,")]*)\)/) {
@@ -199,7 +206,8 @@ foreach my $f (@all_src) {
       $a_list{$n}->{$o} = { type=> $x, comment1 => 'src=yes' };
     }
     else {
-      warn ">>> MISSED.AT[$f]:$_" if ( /iupClassRegisterAttribute/ );
+      (my $shortname = $f) =~ s/^.*?([^\\\/]+)$/$1/;
+      warn "###INFO### MISSING AT [$shortname]:$_\n" if ( /iupClassRegisterAttribute/ );
     }
     
     if ( /ic->name *= *"([^"]*)"/) {
@@ -208,7 +216,7 @@ foreach my $f (@all_src) {
     }
     
     if ( /iupBaseRegisterCommonCallbacks/ ) {
-      warn "[$n] iupBaseRegisterCommonCallbacks !!!";
+      warn "###INFO### [$n] iupBaseRegisterCommonCallbacks !!!\n";
       $c_list{$n}->{MAP_CB} = { type => '', comment1 => 'src=common' };
       $c_list{$n}->{UNMAP_CB} = { type => '', comment1 => 'src=common' };
       $c_list{$n}->{GETFOCUS_CB} = { type => '', comment1 => 'src=common' };
@@ -223,8 +231,10 @@ foreach my $f (@all_src) {
   if ($n eq 'IUP::Dialog') {
     $c_list{$n}->{MDIACTIVATE_CB} = { type => '', comment1 => 'src=win+gtk only' };
     $c_list{$n}->{TRAYCLICK_CB} = { type => 'iii', comment1 => 'src=win+gtk only' };
-   }
+  }
 }
+
+warn "###INFO### Going through callback related HTML files\n";
 
 foreach my $f (glob("$docroot/html/en/call/*.html")) {
   die "File $f not exists" unless -f $f;
@@ -248,13 +258,10 @@ foreach my $f (glob("$docroot/html/en/call/*.html")) {
   }
 }
 
-# xxx TODO xxx the same for attr/*.html
+warn "###INFO### Going through iuptree_attrib.html iuptree_cb.html\n";
 
-#ad hoc patching
-$common_actions{HELP_CB}->{rv}='int';
+$common_actions{HELP_CB}->{rv}='int'; #ad hoc patching
 
-#load specific: 
-# - iuptree_attrib.html iuptree_cb.html 
 my @spec_cb = ( qw(html/en/elem/iuptree_cb.html html/en/ctrl/iupmatrix_cb.html) );
 foreach (@spec_cb) {
   my $f = "$docroot/$_";
@@ -313,6 +320,7 @@ foreach (@spec_cb) {
 
 # xxx TODO xxx the same for attr/*.html
 
+warn "###INFO### Going through all_doc HTML files\n";
 foreach my $f (@all_doc) {
   my $fn = $f;
   $fn = $1 if( $f =~ /([^\/]*)\.html$/);  
@@ -409,6 +417,20 @@ $a_list{'IUP::Classbase'}->{CX}->{type}='unknown';
 $a_list{'IUP::Classbase'}->{CY}->{type}='unknown';
 
 #ad hoc patching - callbacks
+$c_list{'IUP::WebBrowser'}->{COMPLETED_CB}->{type}= 's';
+$c_list{'IUP::WebBrowser'}->{COMPLETED_CB}->{par} = 'Ihandle* ih,char* url';
+
+$c_list{'IUP::ColorBrowser'}->{DRAG_CB}->{par} = 'Ihandle *ih,unsigned char r,unsigned char g,unsigned char b';
+$c_list{'IUP::ColorBrowser'}->{DRAG_CB}->{rv} = 'int';
+
+$c_list{'IUP::ColorBrowser'}->{VALUECHANGED_CB}->{par} = 'Ihandle *ih';
+$c_list{'IUP::ColorBrowser'}->{VALUECHANGED_CB}->{rv} = 'int';
+
+$c_list{'IUP::ColorBrowser'}->{CHANGE_CB}->{par} = 'Ihandle *ih,unsigned char r,unsigned char g,unsigned char b';
+$c_list{'IUP::ColorBrowser'}->{CHANGE_CB}->{rv} = 'int';
+
+$c_list{'IUP::Canvas'}->{MULTITOUCH_CB}->{type} = 'iIIII';
+
 $c_list{'IUP::Matrix'}->{EDITION_CB}->{type}='iiii';
 $c_list{'IUP::CanvasGL'}->{RESIZE_CB}->{type}='ii';
 
@@ -445,14 +467,13 @@ $c_list{'IUP::Spinbox'}->{SPIN_CB}->{rv} = 'int';
 
 my %uniq;
 
-sub print_c1 {
+sub print_c1 {  
   my %base = %{$c_list{'IUP::Classbase'}};
   my %box = %{$c_list{'IUP::Box'}} if $c_list{'IUP::Box'}; # maybe leave out completely xxx TODO xxx
   my %menu = %{$c_list{'IUP::Menu'}};
   my %dialog = %{$c_list{'IUP::Dialog'}};
   my $file = shift;
-  open (F, ">", $file) || die "cannot open file $file";
-  print F '#module;#action;#type;#c_retval;#c_params;#c1;#c2;#c3;#c4;#c5', "\n";
+  my @output;
   for my $class (sort keys %c_list) {
     next unless $class;
     next if $class =~ /^(IUP::GetParam|IUP::MultiLine|IUP::Gauge)/; #legacy
@@ -492,7 +513,7 @@ sub print_c1 {
         }
         else {
 	  $t{$cb}->{type} = $type_patch{$class}->{$cb} || '#undef#'; # type patching
-	  warn ">>>> $class $cb $type_patch{$class}->{$cb}";
+	  warn "###WARN### class=$class cb=$cb type=$t{$cb}->{type}";
         }
       }
       $t{$cb}->{par} =~ s/ \*/* /g if defined $t{$cb}->{par};
@@ -503,29 +524,48 @@ sub print_c1 {
       $class2 = '_base' if $class2 eq 'IUP::Classbase';
       $class2 = '_box' if $class2 eq 'IUP::Box';
       $class2 = '_dialog' if $class2 eq 'IUP::Dialog';
+      $class2 = '_canvas' if $class2 eq 'IUP::Canvas';
       #$class2 = '_menu' if $class2 eq 'IUP::Menu';
       next if $class2 !~ /^_base/ && $base{$cb};
       next if $class2 !~ /^_box/ && $box{$cb} && $class2 =~ /^IUP::[CHVZ]box$/;
       next if $class2 !~ /^_dialog/ && $dialog{$cb} && $class2 =~ /^IUP::(Color|File|Font|Message)Dlg$/;
       #next if $class2 !~ /^_menu/ && $menu{$cb} && $class2 =~ /^IUP::(Submenu|Item)$/;
 
-      print F $class2, ";";
-      print F $cb, ";";
-      print F $t{$cb}->{type}, ";";
-      print F (($t{$cb}->{rv} || '#'), ";");
-      print F (($t{$cb}->{par} || '#'), ";");
-      print F (($t{$cb}->{comment1} || '#'), ";");
-      print F (($t{$cb}->{comment2} || '#'), ";");
-      print F (($t{$cb}->{comment3} || '#'), ";");
-      print F ($common_src{$class}->{$cb} || '?'), ";";
-      print F (((!defined $common_src{$class}->{$cb}) || ($common_src{$class}->{$cb} eq '') || ($t{$cb}->{type} eq $common_src{$class}->{$cb})) ? '' : 'BEWARE');
-      print F "\n";
+      push @output, [ $class2,                      
+                      $cb,
+                      $t{$cb}->{type},
+                      ($t{$cb}->{rv} || '#'),
+                      ($t{$cb}->{par} || '#'),
+                      ($t{$cb}->{comment1} || '#'),
+                      ($t{$cb}->{comment2} || '#'),
+                      ($t{$cb}->{comment3} || '#'),
+                      ($common_src{$class}->{$cb} || '?'),
+                      (((!defined $common_src{$class}->{$cb}) || ($common_src{$class}->{$cb} eq '') || ($t{$cb}->{type} eq $common_src{$class}->{$cb})) ? '' : 'BEWARE'),
+		    ];
       $uniq{"cb_$cb\_$t{$cb}->{type}"} = 1;    
     }
   }
+  @output = sort { $a->[0].';'.$a->[1].';' cmp $b->[0].';'.$b->[1].';' } @output; # ASCII-betical sort 
+  open (F, ">", $file) || die "cannot open file $file";  
+  if ($g_longoutput) {
+    print F '#module;#action;#type;#c_retval;#c_params;#c1;#c2;#c3;#c4;#c5', "\n";
+  }
+  else {
+    print F '#module;#action;#type;#c_retval;#c_params', "\n";
+  }
+  for (@output) {
+    if ($g_longoutput) {
+      print F join(';', @$_), "\n";
+    }
+    else {
+      print F $_->[0], ';', $_->[1], ';', $_->[2], ';', $_->[3], ';', $_->[4], "\n";
+    }
+  }
+  close(F);  
+
 }
 
-sub print_a1 {
+sub print_a1_xxx {
   my %seen;  
   for my $class (sort keys %a_list) {
     next unless $class;
@@ -546,7 +586,7 @@ sub print_a1 {
   
 }
 
-sub print_a2 {
+sub print_a1 {
   my $file = shift || die "undefined filename";
   my $invalid = {
     'IUP::Cbox'	    => { 'CX' => 1, 'CY' => 1 },
@@ -577,8 +617,7 @@ sub print_a2 {
   my %box = %{$a_list{'IUP::Box'}};
   my %menu = %{$a_list{'IUP::Menu'}};
   my %dialog = %{$a_list{'IUP::Dialog'}};
-  open (F, ">", $file) || die "cannot open file $file";
-  print F '#module;#attribute;#flags;#c1;#c2;#valid', "\n";
+  my @output;
   for my $class (sort keys %a_list) {
     next unless $class;
     my %t = %{$a_list{$class}};    
@@ -592,22 +631,39 @@ sub print_a2 {
       next if $class !~ /^_box/ && $box{$at} && $class =~ /^IUP::[CHVZ]box$/;
       next if $class !~ /^_dialog/ && $dialog{$at} && $class =~ /^IUP::(Color|File|Font|Message)Dlg$/;
       #next if $class !~ /^_menu/ && $menu{$at} && $class =~ /^IUP::(Submenu|Item)$/;
-      print F $class, ";";
-      print F $at, ";";
-      print F (($t{$at}->{type}     || 'unknown'), ";");
-      print F (($t{$at}->{comment1} || 'src=no'), ";");
-      print F (($t{$at}->{comment2} || 'doc=no'), ";");
-      print F ($invalid->{$class}->{$at} ? '0' : '1', ";");
-      print F "\n";  
+      push @output, [ $class,
+                      $at,
+                      ($t{$at}->{type}     || 'unknown'),
+                      ($t{$at}->{comment1} || 'src=no'),
+                      ($t{$at}->{comment2} || 'doc=no'),
+                      ($invalid->{$class}->{$at} ? '0' : '1'),
+		     ];
     };
+  }
+  @output = sort { $a->[0].';'.$a->[1].';' cmp $b->[0].';'.$b->[1].';' } @output; # ASCII-betical sort 
+  open (F, ">", $file) || die "cannot open file $file";  
+  if ($g_longoutput) {
+    print F '#module;#attribute;#flags;#c1;#c2;#valid', "\n";
+  }
+  else {
+    print F '#module;#attribute', "\n";
+  }
+  for (@output) {
+    if ($g_longoutput) {
+      print F join(';', @$_), "\n";
+    }
+    else {
+      print F $_->[0], ';', $_->[1], "\n";
+    }
   }
   close(F);  
 }
 
-print_c1('Callback_.csv');
-print_a2('Attribute_.csv');
-#print Dumper(\%a_list);
-#print "$_\n" for (keys %uniq);
+#warn "###DEBUG### c_list=", Dumper(\%c_list);
+warn "###INFO### Gonna create Callback_$g_tag.csv\n";
+print_c1("Callback_$g_tag.csv");
 
-# generate:
-# sub ACTION { return $_[1] ? $_[0]->SetAttribute('ACTION',$_[1]) : $_[0]->GetAttribute('ACTION') }
+#warn "###DEBUG### a_list=", Dumper(\%a_list);
+#print "$_\n" for (keys %uniq);
+warn "###INFO### Gonna create Attribute_$g_tag.csv\n";
+print_a1("Attribute_$g_tag.csv");

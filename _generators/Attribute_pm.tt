@@ -11,7 +11,7 @@ my $attrib_table = {
 [% FOR i IN alist -%]
   '[% i.module %]' => {
 [% FOR j IN i.attributes -%]
-    [% j.name %] => '[% j.flags %]', [% j.spaces %]# [% j.c1 %] [% j.c2 %]
+    '[% j.name %]' => [% j.valid %],
 [% END -%]
   },
 [% END -%]

@@ -26,11 +26,12 @@ sub file2hash {
   die "File '$fname' does not exist!\n" unless -f $fname;
   my ($head, @lines) = slurp($fname);
   chomp ($head);
-  chomp (@lines);
+  chomp (@lines);  
   my @cols = split(';', $head);
   s/^#//g for (@cols);
   for (@lines) {
     my @items = split(';', $_);
+    $rv->{$items[0]}->{$items[1]}->{valid} = 1;
     for(my $i=2; $i < scalar(@cols); $i++) {
       $rv->{$items[0]}->{$items[1]}->{$cols[$i]} = $items[$i];
     }
@@ -38,9 +39,15 @@ sub file2hash {
   return $rv;
 }
 
+my %type2params = (
+  'ccc'  => 'char a,char b,char c',
+  ''     => '',
+);
+
 sub cb_generate1 {
   my $h = shift;
   for my $m (keys %$h) {
+    warn "###INFO### Processing '$m'";
     for my $a (keys %{$h->{$m}}) {  
       my $if = "internal_cb_$a\_$h->{$m}->{$a}->{type}";      
       $h->{$m}->{$a}->{xs_internal_cb} = $if;
@@ -58,9 +65,26 @@ sub cb_generate1 {
 	push @l_rvname, '$rv_string';
       }
       else {
-        die "this should not happen";
+        warn "###WARNING### This should not happen m=$m a=$a c_retval=$c_retval (assuming retval='int')";
+	$c_retval = 'int';
+	$h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPi';
+	push @l_rvname, '$rv_num';
       }      
 
+      if ($h->{$m}->{$a}->{c_params} eq '#') {
+        warn "###WARNING### This should not happen m=$m a=$a c_params=#";
+	my $t = $h->{$m}->{$a}->{type};
+	my $p = 'Ihandle* ih';
+	if (defined $type2params{$t}) {
+	  $p .= ",$type2params{$t}";
+	}
+	else {
+	  warn "###WARNING### No hint in type2params for '$t'" unless $type2params{$t};	  
+	}
+	$h->{$m}->{$a}->{c_params} = $p;
+	warn "###WARNING### assuming params='$p'";	
+      }
+      
       my $pf = "_init_cb_$a\_$h->{$m}->{$a}->{type}";      
 
       my @l_name = ( '$self' );      
@@ -70,9 +94,13 @@ sub cb_generate1 {
       my @l_xslocvar = ();
       my $rv_count = 1;
       my @fp = split(',', $h->{$m}->{$a}->{c_params});
-      die "invalid value '$fp[0]'" if $fp[0] ne 'Ihandle* ih';      
+      die "###FATAL### invalid value '$fp[0]'" if $fp[0] ne 'Ihandle* ih';      
       my @tp = split('', $h->{$m}->{$a}->{type});
-      die "[$m.$a] mismatch: '$h->{$m}->{$a}->{type}' vs. '$h->{$m}->{$a}->{c_params}'" unless scalar(@tp)+1==scalar(@fp);
+      unless (scalar(@tp)+1==scalar(@fp)) {
+        warn "###WARNING### [$m|$a] mismatch: '$h->{$m}->{$a}->{type}' vs. '$h->{$m}->{$a}->{c_params}'";
+	warn "###WARNING### tp=", Dumper(\@tp);
+	warn "###WARNING### fp=", Dumper(\@fp);
+      }
       for(my $i=1; $i<scalar(@fp); $i++) {
         my $n = 'xxx';
         if ($fp[$i] =~ /^.*?([^ ]*)$/) {
@@ -115,7 +143,7 @@ sub cb_generate1 {
 	  push @l_xspush, "XPUSHs(sv_2mortal(newSVpv($n, 0)));";
 	}
 	else {
-	  die "[$m.$a] error: '$h->{$m}->{$a}->{type}' vs. '$h->{$m}->{$a}->{c_params}'";
+	  warn "###WARNING### [$m|$a] mismatch: '$h->{$m}->{$a}->{type}' vs. '$h->{$m}->{$a}->{c_params}'";
 	}
       }
       
@@ -178,7 +206,7 @@ sub at_hash2list {
   foreach my $m (sort keys %$h) {
     my @a;
     for my $a (sort keys %{$h->{$m}}) {  
-      push(@a, { name=>$a, flags=>$h->{$m}->{$a}->{flags},
+      push(@a, { name=>$a, flags=>$h->{$m}->{$a}->{flags}, valid=>1,
                  c1=>$h->{$m}->{$a}->{c1}, c2=>$h->{$m}->{$a}->{c2},
 		 spaces=>' 'x(50-length($h->{$m}->{$a}->{flags})-length($a)),
 	       }
@@ -193,6 +221,12 @@ sub at_hash2list {
 my $tt = Template->new();
 my $cb_h = file2hash($cb_csv);
 my $at_h = file2hash($at_csv);
+
+# remove unsopported items
+delete $cb_h->{'IUP::WebBrowser'};
+delete $at_h->{'IUP::WebBrowser'};
+delete $cb_h->{'IUP::TuioClient'};
+delete $at_h->{'IUP::TuioClient'};
 
 #### CALLBACKS
 cb_generate1($cb_h);
