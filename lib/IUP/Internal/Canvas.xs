@@ -77,7 +77,8 @@ _cdCreateCanvas_FILE(format, params)
 #### Original C function from <.../cd/include/cd.h>
 # char* cdVersion(void);
 char*
-cdVersion()
+cdVersion(pkg)
+		SV* pkg;
 	CODE:
 		RETVAL = cdVersion();
 	OUTPUT:
@@ -86,7 +87,8 @@ cdVersion()
 #### Original C function from <.../cd/include/cd.h>
 # char* cdVersionDate(void);
 char*
-cdVersionDate()
+cdVersionDate(pkg)
+		SV* pkg;
 	CODE:
 		RETVAL = cdVersionDate();
 	OUTPUT:
@@ -95,7 +97,8 @@ cdVersionDate()
 #### Original C function from <.../cd/include/cd.h>
 # int cdVersionNumber(void);
 int
-cdVersionNumber()
+cdVersionNumber(pkg)
+		SV* pkg;
 	CODE:
 		RETVAL = cdVersionNumber();
 	OUTPUT:
@@ -1819,10 +1822,9 @@ cdBitmapRGB2Map(bitmap_rgb,bitmap_map)
 
 #### Original C function from <.../cd/include/cd.h>
 # long cdEncodeColor(unsigned char red, unsigned char green, unsigned char blue);
-#xxxcheckthis
 long
-cdEncodeColor(canvas,red,green,blue)
-		SV* canvas;
+cdEncodeColor(pkg,red,green,blue)
+		SV* pkg;
 		unsigned char red;
 		unsigned char green;
 		unsigned char blue;
@@ -1834,18 +1836,24 @@ cdEncodeColor(canvas,red,green,blue)
 #### Original C function from <.../cd/include/cd.h>
 # void cdDecodeColor(long color, unsigned char* red, unsigned char* green, unsigned char* blue);
 void
-cdDecodeColor(color,red,green,blue)
+cdDecodeColor(pkg,color,red,green,blue)
+		SV* pkg;
 		long color;
-		unsigned char* red;
-		unsigned char* green;
-		unsigned char* blue;
+	INIT:
+		unsigned char red;
+		unsigned char green;
+		unsigned char blue;
 	CODE:
-		cdDecodeColor(color,red,green,blue);
+		cdDecodeColor(color,&red,&green,&blue);
+		XPUSHs(sv_2mortal(newSViv(red)));
+		XPUSHs(sv_2mortal(newSViv(green)));
+		XPUSHs(sv_2mortal(newSViv(blue)));
 
 #### Original C function from <.../cd/include/cd.h>
 # unsigned char cdDecodeAlpha(long color);
 unsigned char
-cdDecodeAlpha(color)
+cdDecodeAlpha(pkg,color)
+		SV* pkg;
 		long color;
 	CODE:
 		RETVAL = cdDecodeAlpha(color);
@@ -1855,7 +1863,8 @@ cdDecodeAlpha(color)
 #### Original C function from <.../cd/include/cd.h>
 # long cdEncodeAlpha(long color, unsigned char alpha);
 long
-cdEncodeAlpha(color,alpha)
+cdEncodeAlpha(pkg,color,alpha)
+		SV* pkg;
 		long color;
 		unsigned char alpha;
 	CODE:

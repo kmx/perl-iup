@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use base 'IUP::Internal::Element';
 use IUP::Internal::LibraryIup;
+use Carp;
 
 sub BEGIN {
   #warn "[DEBUG] IUP::PPlot::BEGIN() started\n";
@@ -19,17 +20,8 @@ sub PPlotBegin {
   #void IupPPlotBegin(Ihandle* ih, int strXdata); [in C]
   #iup.PPlotBegin(ih: ihandle, strXdata: number) [in Lua]
   my ($self, $strXdata) = @_;
+  $self->{____last_begin_param} = $strXdata;
   return IUP::Internal::LibraryIup::_IupPPlotBegin($self->ihandle, $strXdata);
-}
-
-sub PPlotAdd {
-  #void IupPPlotAdd(Ihandle* ih, float x, float y); [in C]
-  #iup.PPlotAdd(ih: ihandle, x, y: number) [in Lua]
-  #void IupPPlotAddStr(Ihandle* ih, const char* x, float y); [in C]
-  #iup.PPlotAddStr(ih: ihandle, x: string, y: number) [in Lua]
-  #NOTE: Add vs. AddStr autodetection based on $x type (float/string)  
-  my ($self, $x, $y) = @_;
-  return IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $x, $y);
 }
 
 sub PPlotEnd {
@@ -39,18 +31,43 @@ sub PPlotEnd {
   return IUP::Internal::LibraryIup::_IupPPlotEnd($self->ihandle);
 }
 
-sub PPlotInsert {
-  #void IupPPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y); [in C]
-  #iup.IupPPlotInsert(ih: ihandle, index, sample_index, x, y: number) [in Lua]
-  my ($self, $index, $sample_index, $x, $y) = @_;
-  return IUP::Internal::LibraryIup::_IupPPlotInsert($self->ihandle, $index, $sample_index, $x, $y);
+sub PPlotAdd {
+  # params: ($x, $y)
+  my $self = shift;
+  my $c = scalar @_;
+  if ( $c>=2 && ($c%2)==0 ) {
+    return IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $self->{____last_begin_param}, @_);
+  }
+  else {
+    carp "Warning: wrong number of parameters";
+  }
 }
 
-sub PPlotInsertStr {
-  #void IupPPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
-  #iup.IupPPlotInsertStr(ih: ihandle, index, sample_index, x, y: number)
-  my ($self, $index, $sample_index, $x, $y) = @_;
-  return IUP::Internal::LibraryIup::_IupPPlotInsertStr($self->ihandle, $index, $sample_index, $x, $y);
+sub PPlotAddPoints {
+  # params: ($index, \@xylist)
+  my $self = shift;
+  return IUP::Internal::LibraryIup::_IupPPlotAddPoints($self->ihandle, $self->{____last_begin_param}, @_);
+}
+
+sub PPlotInsert {
+  # params: ($index, $sample_index, $x, $y)
+  my $self = shift;
+  my $index = shift;
+  my $sample_index = shift;
+  my $c = scalar @_;
+  if ( $c>=2 && ($c%2)==0 ) {
+    return IUP::Internal::LibraryIup::_IupPPlotInsert($self->ihandle, $self->{____last_begin_param},
+                                                      $index, $sample_index, @_);
+  }
+  else {
+    carp "Warning: wrong number of parameters";
+  }  
+}
+
+sub PPlotInsertPoints {
+  # params: ($index, $sample_index, \@xylist)
+  my $self = shift;
+  return IUP::Internal::LibraryIup::_IupPPlotInsertPoints($self->ihandle, $self->{____last_begin_param}, @_);
 }
 
 sub PPlotTransform {

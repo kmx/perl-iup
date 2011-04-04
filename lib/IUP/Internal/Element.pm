@@ -154,11 +154,11 @@ sub SetAttribute {
     my $v = shift;
     if (!ref($v)) {      
       $v = "$v" if defined $v; #BEWARE: stringification necessary
-      IUP::Internal::LibraryIup::_IupStoreAttribute($self->ihandle, $k, $v);
+      IUP::Internal::LibraryIup::_IupStoreAttribute($self->ihandle, "$k", $v); #BEWARE: stringification necessary ($k)
     }
     elsif (blessed($v) && $v->can('ihandle')) {
       #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
-      IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
+      IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, "$k", $v->ihandle); #BEWARE: stringification necessary ($k)
       #$self->{____att_ref}->{$k} = $v; #xxx-just-idea
     }
     else {
@@ -573,23 +573,34 @@ sub _proc_child_param {
   if (defined $firstonly) {
     if (ref($firstonly) eq 'ARRAY') {
       #call func
+      #xxxFIXME check for undef
       $ih = &$func( map($_->ihandle, @$firstonly) );
       #$self->_store_child_ref(@$firstonly); #xxx-just-idea
     }
     else {
       #call func
+      #xxxFIXME check for undef
       $ih = &$func($firstonly->ihandle);
       #$self->_store_child_ref($firstonly); #xxx-just-idea
     }
   }
   elsif (defined $args && defined $args->{child}) {
     if (ref($args->{child}) eq 'ARRAY') {
-      #call func
-      $ih = &$func( map($_->ihandle, @{$args->{child}}) );
+      #call func on all items
+      my @ihlist;
+      for (@{$args->{child}}) {
+        if (!defined $_) {
+	  carp "warning: undefined item passed as child parameter of ",ref($self),"->new()";
+	  next;
+	}
+        push @ihlist, $_->ihandle;
+      }
+      $ih = &$func( @ihlist );
       #$self->_store_child_ref(@{$args->{child}}); #xxx-just-idea
     }
-    else {
+    else {      
       #call func
+      #xxxFIXME check for undef
       $ih = &$func($args->{child}->ihandle);
       #$self->_store_child_ref($args->{child}); #xxx-just-idea
     }

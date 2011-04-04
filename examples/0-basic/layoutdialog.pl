@@ -87,7 +87,7 @@ sub init_dialog {
 
 my $dialog2edit = init_dialog();
 
-my $dlg = IUP::LayoutDialog->new($dialog2edit);
+my $dlg = IUP::LayoutDialog->new(dialog=>$dialog2edit);
 $dlg->Show();
 
 IUP->MainLoop();

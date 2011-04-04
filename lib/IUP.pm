@@ -225,6 +225,11 @@ sub GetByIhandle {
   return;
 }
 
+sub GetIhClassName {
+  my ($pkg, $ih) = @_;
+  return IUP::Internal::LibraryIup::_IupGetClassName($ih);
+}
+
 sub Help {
   #int IupHelp(const char* url); [in C]
   #iup.Help(url: string) [in Lua]
@@ -407,6 +412,18 @@ sub Message {
   }
   carp('Warning: wrong params - IUP->Message($title, $msg)');
   return;
+}
+
+#### new since iup-3.4
+
+sub IupPlayInput {
+  my ($pkg, $filename) = @_;
+  return IUP::Internal::LibraryIup::_IupPlayInput($filename);
+}
+
+sub IupRecordInput {
+  my ($pkg, $filename, $mode) = @_;
+  return IUP::Internal::LibraryIup::_IupRecordInput($filename, $mode);
 }
 
 #### keyboard related macros

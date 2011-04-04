@@ -9,14 +9,16 @@ use Carp;
 
 sub _create_element {
   my ($self, $args, $firstonly) = @_;
-  carp "[warning] IUP::LayoutDialog->new() expects exactly one parameter" unless $firstonly;
-  if (blessed($firstonly) && $firstonly->can('ihandle')) {  #xxxTODO replicate this tyle to other places
-    return IUP::Internal::LibraryIup::_IupLayoutDialog($firstonly->ihandle);
+  if (defined $firstonly) {
+    return IUP::Internal::LibraryIup::_IupLayoutDialog($firstonly->ihandle) if blessed($firstonly) && $firstonly->can('ihandle');
   }
-  else {
-    carp "[warning] IUP::LayoutDialog->new() parameter is not an IUP element";
-    return undef;
+  elsif (defined $args->{dialog}) {
+    my $d = $args->{dialog};
+    delete $args->{dialog};
+    return IUP::Internal::LibraryIup::_IupLayoutDialog($d->ihandle) if blessed($d) && $d->can('ihandle');    
   }
+  carp "[warning] IUP::LayoutDialog->new() parameter mismatch";
+  return undef;
 }
 
 1;

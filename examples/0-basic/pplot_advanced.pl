@@ -27,9 +27,9 @@ sub edit_cb {
   #(Ihandle* ih, int index, int sample_index, float x, float y, float *new_x, float *new_y)
   # xxx TODO: references
   # perhaps - return (IUP_DEFAULT, $new_x, $new_y);
-  my ($self, $index, $sample_index, $x, $y, $new_x, $new_y) = @_;
-  printf("EDIT_CB(%d, %d, %g, %g, %g, %g)\n", $index, $sample_index, $x, $y, $new_x, $new_y);
-  return IUP_DEFAULT;
+  my ($self, $index, $sample_index, $x, $y) = @_;
+  printf STDERR "EDIT_CB(%d, %d, %g, %g, %g, %g)\n", $index, $sample_index, $x, $y;
+  return (IUP_DEFAULT, 5, 6);
 }
 
 sub postdraw_cb {

@@ -15,7 +15,7 @@ sub _create_element {
     delete $args->{items};
     if (defined $c) {
       if (ref($c) eq 'ARRAY') {
-        my $i = 1; #BEWARE: the first item is saved as attribute "1"
+        my $i = 1; #BEWARE: the first item is saved as attribute "1"	
         $self->SetAttribute($i++, $_) for (@$c);
       }
       else {

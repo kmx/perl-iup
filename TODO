@@ -6,7 +6,8 @@
 ######## weaken refs in global tables - element destruction issues
 GetDialogChild(ih, "mltline") + GetByName - both destroys element when going off scope
 setting callback should avoid an automatic destruction
-Destroy() should unset all registered callbacks
+#IUP::Internal::Element - Destroy() should unset all registered callbacks
+#IUP::Internal::Element - Discard() = destroy perl object without destroying iup element
 info:
 - 1: use weaken (Scalar::Util) http://stackoverflow.com/questions/2223721/common-perl-memory-reference-leak-patterns
 - 2: perl -d:TraceUse script vs. scandeps 
@@ -14,25 +15,10 @@ global registers:
 - register classes created in GetByIhandle (similarly fo canvas)
 - or register in: new_from_cnvhandle new_from_ihandle
 
-######## misc issues to be solved before fixing API
-#IUP::PPlot - xxx TODO maybe add AddSeries to IUP::PPlot # see iupx.lua + iupxpplot.lua (see 3.4)
-#IUP::PPlot - xxx TODO maybe add AxsBounds to IUP::PPlot # see iupx.lua + iupxpplot.lua
-#IUP::PPlot - EDIT_CB handler should return (IUP_DEFAULT, $new_x, $new_y)
-#IUP - IUP->SetIdle vs. IUP->GetIdle? #xxx how to check existing idle handler?
-#IUP - Idle? #xxxsomething causes progressbar3.pl to hangup/crash (after pressing accel/decel)
-#IUP - add IUP->GetClassName[FromIh] IUP::Internal::LibraryIup::_IupGetClassName
-#IUP - consider adding iupKeyCodeToName
-#IUP - consider adding iupKeyNameToCode
-#IUP - ListDialog() decide whether multiselect API (returning array, not arrayref) is OK
-#IUP::Canvas - cd methods vs functions: cdEncodeColor vs. $cnv->cdEncodeColor (perhaps turn them all into methods)
-#IUP::Canvas - add something like IUP::Canvas::EMF / SVG / DXF / ... my $cnv IUP::Canvas::EMF->new( filename=>'x.emf', resolution=>4, ...);
-#IUP::Internal::Element - list2.pl: original examples uses inheritable IUP attribute _LABEL for storing pointers for iup elements (do we want to support this in perl?)
-#IUP::Internal::Element - consider checking arg count SetAttributeId($$$) SetAttributeId2($$$$)
-#IUP::Internal::Element - passing undef to child=> ... Can't call method "ihandle" on an undefined value at Y:\@repos\perl-iup\blib\lib/IUP/Internal/Element.pm line 574. (better error message)
-#IUP::Internal::Element - Discard() = destroy perl object without destroying iup element
-#IUP::LayoutDialog - maybe support named new params e.g. dialog=>... 
-#IUP::Frame - missing accessor $frame->MARGIN("10x10");
-#IUP::List - IUP::List->new() items 0-based or 1-based index?
+######## IUP::Internal::Callbacks
+# fix callbacks returning multiple values 
+# 1/ call_pv(...,G_ARRAY) in .xs
+# 2/ @rv instead of $rv in sub _execute_cb / in .pm
 
 ######## IUP::Tree
 #IUP::Tree - #NOTE: tree->TreeAddNodes(...) has to go after dialog->Show() + tree->SetAttribute(...) has to go after dialog->Show() xxx why?
@@ -344,3 +330,28 @@ http://use.perl.org/~Alias/journal/40377
 
 (not now, maybe later)######## Callbacks generation (not a priority)
 - missing support for K_* callbacks (no hurry, lua does not implement them as well)
+
+######## unicode in filenames
+http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-perl.html
+
+######## REJECTED
+
+#IUP - consider adding iupKeyCodeToName
+#IUP - consider adding iupKeyNameToCode
+#IUP::List - IUP::List->new() items 0-based or 1-based index? (item[0] >> attribute 1)
+#IUP - ListDialog() decide whether multiselect API (returning array, not arrayref) is OK - yes for now
+#IUP - Idle? #xxxsomething causes progressbar3.pl to hangup/crash (after pressing accel/decel) - cannot reproduce
+#IUP - is GetIhClassName() func name OK - yes for now
+#IUP - IUP->GetIdle? or IUP->CheckIdle? #xxx how to check existing idle handler? - not for now
+
+#IUP::Internal::Element - list2.pl: original examples uses inheritable IUP attribute _LABEL for storing pointers for iup elements (do we want to support this in perl?)
+#IUP::Internal::Element - passing undef to child=> ... - maybe later
+  Can't call method "ihandle" on an undefined value at
+  Y:\@repos\perl-iup\blib\lib/IUP/Internal/Element.pm line 574. (better error message)
+#IUP::Internal::Element - consider checking arg count SetAttributeId($$$) SetAttributeId2($$$$) - not now
+
+#IUP::Frame - missing accessor $frame->MARGIN("10x10"); - MARGIN not in official doc for IupFrame
+
+#IUP::PPlot - maybe add AxsBounds() to IUP::PPlot # see examples\0-basic\pplot4.pl - not now
+#IUP::PPlot - maybe add AxsBoundsAuto() - not now
+#IUP::PPlot - PPlotInsertPoints - CRASHES!!! seems to be a bug iup (asked scuri)
