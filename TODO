@@ -1,6 +1,5 @@
 ################ the last time working on ################ 
-- broken examples: examples\0-basic \_*.pl
-- questions related to weaken/non-weaken refs
+- callbacks (returning multivalues) + pplot
 ##########################################################
 
 ######## weaken refs in global tables - element destruction issues
@@ -15,12 +14,7 @@ global registers:
 - register classes created in GetByIhandle (similarly fo canvas)
 - or register in: new_from_cnvhandle new_from_ihandle
 
-######## IUP::Internal::Callbacks
-# fix callbacks returning multiple values 
-# 1/ call_pv(...,G_ARRAY) in .xs
-# 2/ @rv instead of $rv in sub _execute_cb / in .pm
-
-######## IUP::Tree
+!!IMPORTANT!!######## IUP::Tree
 #IUP::Tree - #NOTE: tree->TreeAddNodes(...) has to go after dialog->Show() + tree->SetAttribute(...) has to go after dialog->Show() xxx why?
 #IUP::Tree - should it be maped before show as canvas?
 - Convert Lua interface into Perl:
@@ -47,12 +41,6 @@ global registers:
   InsertItem ($parent, $before | $previous, $text, $data)    Inserts an item after a given one (previous) or before one identified by its position (before).
   InsertContainer ($parent, $before | $previous, $text, $data)    See InsertItem().
 
-######## missing examples
-- no example for: Clipboard.pm ?
-- no example for: User.pm ?
-- no example for: ColorDlg.pm ?
-- no example for: FontDlg.pm ?
-
 !!Big Task!!######## doc
 - Cleanup first (in this order):
   - IUP.pod
@@ -66,12 +54,12 @@ global registers:
 
 !!Big Task!!######## tests
 - CHECK Test::NeedsDisplay
+  use Test::NeedsDisplay ':skip_all';
 - skip pattern
   plan skip_all => "\$ENV{RELEASE_TESTING} required fot testing", unless $ENV{RELEASE_TESTING};
   eval "use Win32::Job ()";
   plan skip_all => "Can't interrupt hung processes without Win32::Job" if $@;
   plan skip_all => "No GUI available, skipping" unless IUP->Open == IUP_OPENED;
-  use Test::NeedsDisplay ':skip_all';
 - consider moving cross-check-... into xt/*
 - maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
 
@@ -87,6 +75,8 @@ global registers:
   ST(0) = CreatePerlObject(aTHX_ stash, pDispatch, destroy);
 - see Wx+OLE/ActiveX integration http://search.cpan.org/~mdootson/Wx-ActiveX-0.15/lib/Wx/ActiveX.pm
 - missing example: notepad.wlua? olecontrol_browser.wlua?
+- missing -> add
+- conditionally only on Win32
 
 !!Big Task!!######## IUP::Canvas (now works without Bitmap/Image/Palette/Pattern related functions)
 - implement missing XS methods to IUP::Internal::Canvas (see notes in Canvas.xs)
@@ -221,7 +211,7 @@ http://use.perl.org/~Alias/journal/40377
 (cosmetics)######## IUP::Canvas
 - XS autodetection cdCanvasLine vs. cdfCanvasLine
 
-(cosmetics)######## Global
+(cosmetics)######## global
 - icon - see y:\IUP3.3\fltk\FLTK-0.532007\inc\MBX\FLTK.pm  (ACTION_code)
 - Build.PL: no_index => {directory => [qw[examples inc t]], files => [qw[xs/include/ppport.h]]
 
@@ -286,11 +276,20 @@ http://use.perl.org/~Alias/journal/40377
 - change: _create_element should set $self->ihandle value
 - Get/SetAttributeSV - via IupGet/SetAttributeHandle
 
-###################################################################################################
+### NOT NOW, MAYBE LATER ################################################################################################
 
-(not now, maybe later)######## IUP::OleControl (not a priority)
-- missing -> add
-- conditionally only on Win32
+(not now, maybe later)######## stringify values passed to XS
+- now implemented in XS via myST2STR + mySV2STR
+- remove stringification from pm code (not needed anymore)
+
+(not now, maybe later)######## unicode in filenames (cpodepage magic)
+http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-perl.html
+
+(not now, maybe later)######## missing examples
+- no example for: Clipboard.pm ?
+- no example for: User.pm ?
+- no example for: ColorDlg.pm ?
+- no example for: FontDlg.pm ?
 
 (not now, maybe later)######## IUP::LayoutDialog
 - somehow works but generaly not usable
@@ -331,14 +330,10 @@ http://use.perl.org/~Alias/journal/40377
 (not now, maybe later)######## Callbacks generation (not a priority)
 - missing support for K_* callbacks (no hurry, lua does not implement them as well)
 
-######## unicode in filenames
-http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-perl.html
-
-######## REJECTED
+### REJECTED FOR NOW ################################################################################################
 
 #IUP - consider adding iupKeyCodeToName
 #IUP - consider adding iupKeyNameToCode
-#IUP::List - IUP::List->new() items 0-based or 1-based index? (item[0] >> attribute 1)
 #IUP - ListDialog() decide whether multiselect API (returning array, not arrayref) is OK - yes for now
 #IUP - Idle? #xxxsomething causes progressbar3.pl to hangup/crash (after pressing accel/decel) - cannot reproduce
 #IUP - is GetIhClassName() func name OK - yes for now
@@ -349,6 +344,8 @@ http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-
   Can't call method "ihandle" on an undefined value at
   Y:\@repos\perl-iup\blib\lib/IUP/Internal/Element.pm line 574. (better error message)
 #IUP::Internal::Element - consider checking arg count SetAttributeId($$$) SetAttributeId2($$$$) - not now
+
+#IUP::List - IUP::List->new() items 0-based or 1-based index? (item[0] >> attribute 1)
 
 #IUP::Frame - missing accessor $frame->MARGIN("10x10"); - MARGIN not in official doc for IupFrame
 

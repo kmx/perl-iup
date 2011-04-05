@@ -28,8 +28,8 @@ sub edit_cb {
   # xxx TODO: references
   # perhaps - return (IUP_DEFAULT, $new_x, $new_y);
   my ($self, $index, $sample_index, $x, $y) = @_;
-  printf STDERR "EDIT_CB(%d, %d, %g, %g, %g, %g)\n", $index, $sample_index, $x, $y;
-  return (IUP_DEFAULT, 5, 6);
+  printf STDERR "EDIT_CB(%d, %d, %g, %g)\n", $index, $sample_index, $x, $y;  
+  return (IUP_DEFAULT, $x, $y+0.001);
 }
 
 sub postdraw_cb {

@@ -24,11 +24,11 @@ internal_cb_ACTION_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("ACTION", 6)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(ACTION) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: ACTION callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -59,11 +59,11 @@ internal_cb_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(BUTTON_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: BUTTON_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -91,11 +91,11 @@ internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
 	XPUSHs(sv_2mortal(newSViv(height)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(RESIZE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: RESIZE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -128,11 +128,11 @@ internal_cb_DRAW_CB_iiiiiiv (Ihandle* ih,int line,int column,int xmin,int xmax,i
 	XPUSHs(sv_2mortal(newSViv(PTR2IV(canvas))));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb_cnv7",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb_cnv7",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(DRAW_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: DRAW_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -159,11 +159,11 @@ internal_cb_HEIGHT_CB_i (Ihandle* ih,int line)
 	XPUSHs(sv_2mortal(newSViv(line)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(HEIGHT_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: HEIGHT_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -191,11 +191,11 @@ internal_cb_HSPAN_CB_ii (Ihandle* ih,int line,int column)
 	XPUSHs(sv_2mortal(newSViv(column)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(HSPAN_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: HSPAN_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -228,11 +228,11 @@ internal_cb_MOUSECLICK_CB_iiiiiis (Ihandle* ih,int button,int pressed,int line,i
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MOUSECLICK_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MOUSECLICK_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -263,11 +263,11 @@ internal_cb_MOUSEMOTION_CB_iiiis (Ihandle* ih,int line,int column,int x,int y,ch
 	XPUSHs(sv_2mortal(newSVpv(r, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MOUSEMOTION_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MOUSEMOTION_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -293,11 +293,11 @@ internal_cb_NCOLS_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("NCOLS_CB", 8)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(NCOLS_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: NCOLS_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -323,11 +323,11 @@ internal_cb_NLINES_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("NLINES_CB", 9)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(NLINES_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: NLINES_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -355,11 +355,11 @@ internal_cb_SCROLLING_CB_ii (Ihandle* ih,int line,int column)
 	XPUSHs(sv_2mortal(newSViv(column)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(SCROLLING_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: SCROLLING_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -387,11 +387,11 @@ internal_cb_VSPAN_CB_ii (Ihandle* ih,int line,int column)
 	XPUSHs(sv_2mortal(newSViv(column)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(VSPAN_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: VSPAN_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -418,11 +418,11 @@ internal_cb_WIDTH_CB_i (Ihandle* ih,int column)
 	XPUSHs(sv_2mortal(newSViv(column)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(WIDTH_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: WIDTH_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -449,11 +449,11 @@ internal_cb_CELL_CB_i (Ihandle* ih,int cell)
 	XPUSHs(sv_2mortal(newSViv(cell)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(CELL_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: CELL_CB callback has not returned single scalar value!\n");
 	rv = POPpx;
 
 	PUTBACK;
@@ -480,11 +480,11 @@ internal_cb_EXTENDED_CB_i (Ihandle* ih,int cell)
 	XPUSHs(sv_2mortal(newSViv(cell)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(EXTENDED_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: EXTENDED_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -512,11 +512,11 @@ internal_cb_SELECT_CB_ii (Ihandle* ih,int cell,int type)
 	XPUSHs(sv_2mortal(newSViv(type)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(SELECT_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: SELECT_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -544,11 +544,11 @@ internal_cb_SWITCH_CB_ii (Ihandle* ih,int prim_cell,int sec_cell)
 	XPUSHs(sv_2mortal(newSViv(sec_cell)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(SWITCH_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: SWITCH_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -577,11 +577,11 @@ internal_cb_CHANGE_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned 
 	XPUSHs(sv_2mortal(newSViv(b)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(CHANGE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: CHANGE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -610,11 +610,11 @@ internal_cb_DRAG_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned ch
 	XPUSHs(sv_2mortal(newSViv(b)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(DRAG_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: DRAG_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -640,11 +640,11 @@ internal_cb_VALUECHANGED_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("VALUECHANGED_CB", 15)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(VALUECHANGED_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: VALUECHANGED_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -671,11 +671,11 @@ internal_cb_BUTTON_PRESS_CB_d (Ihandle* ih,double angle)
 	XPUSHs(sv_2mortal(newSVnv(angle)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(BUTTON_PRESS_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: BUTTON_PRESS_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -702,11 +702,11 @@ internal_cb_BUTTON_RELEASE_CB_d (Ihandle* ih,double angle)
 	XPUSHs(sv_2mortal(newSVnv(angle)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(BUTTON_RELEASE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: BUTTON_RELEASE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -733,11 +733,11 @@ internal_cb_MOUSEMOVE_CB_d (Ihandle* ih,double angle)
 	XPUSHs(sv_2mortal(newSVnv(angle)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MOUSEMOVE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MOUSEMOVE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -765,11 +765,11 @@ internal_cb_FILE_CB_ss (Ihandle* ih,const char* file_name,const char* status)
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(FILE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: FILE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -795,11 +795,11 @@ internal_cb_HIGHLIGHT_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("HIGHLIGHT_CB", 12)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(HIGHLIGHT_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: HIGHLIGHT_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -829,11 +829,11 @@ internal_cb_DROPFILES_CB_siii (Ihandle* ih,const char* filename,int num,int x,in
 	XPUSHs(sv_2mortal(newSViv(y)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(DROPFILES_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: DROPFILES_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -862,11 +862,11 @@ internal_cb_ACTION_sii (Ihandle* ih,char* text,int item,int state)
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(ACTION) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: ACTION callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -895,11 +895,11 @@ internal_cb_CARET_CB_iii (Ihandle* ih,int lin,int col,int pos)
 	XPUSHs(sv_2mortal(newSViv(pos)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(CARET_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: CARET_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -927,11 +927,11 @@ internal_cb_DBLCLICK_CB_is (Ihandle* ih,int item,char* text)
 	XPUSHs(sv_2mortal(newSVpv(text, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(DBLCLICK_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: DBLCLICK_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -958,11 +958,11 @@ internal_cb_DROPDOWN_CB_i (Ihandle* ih,int state)
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(DROPDOWN_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: DROPDOWN_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -990,11 +990,11 @@ internal_cb_EDIT_CB_is (Ihandle* ih,int c,char* new_value)
 	XPUSHs(sv_2mortal(newSVpv(new_value, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(EDIT_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: EDIT_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1023,11 +1023,11 @@ internal_cb_MOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MOTION_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MOTION_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1054,11 +1054,11 @@ internal_cb_MULTISELECT_CB_s (Ihandle* ih,char* value)
 	XPUSHs(sv_2mortal(newSVpv(value, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MULTISELECT_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MULTISELECT_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1089,11 +1089,11 @@ internal_cb_ACTION_CB_iiiis (Ihandle* ih,int c,int lin,int col,int edition,char*
 	XPUSHs(sv_2mortal(newSVpv(after, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(ACTION_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: ACTION_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1121,15 +1121,15 @@ internal_cb_BGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 4) croak("Error: _execute_cb(BGCOLOR_CB) has not returned 4 values!\n");
-	rv = POPi;
-	*red = POPi;
-	*green = POPi;
+	if (count != 4) croak("Error: BGCOLOR_CB callback has not returned 4 values!\n");
 	*blue = POPi;
+	*green = POPi;
+	*red = POPi;
+	rv = POPi;
 
 	PUTBACK;
 	FREETMPS;
@@ -1157,11 +1157,11 @@ internal_cb_CLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(CLICK_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: CLICK_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1189,11 +1189,11 @@ internal_cb_DROPCHECK_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(DROPCHECK_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: DROPCHECK_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1225,11 +1225,11 @@ internal_cb_DROPSELECT_CB_iinsii (Ihandle* ih,int lin,int col,Ihandle* drop,char
 	XPUSHs(sv_2mortal(newSViv(v)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb_ih3",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb_ih3",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(DROPSELECT_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: DROPSELECT_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1258,11 +1258,11 @@ internal_cb_DROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb_ih1",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb_ih1",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(DROP_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: DROP_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1292,11 +1292,11 @@ internal_cb_EDITION_CB_iiii (Ihandle* ih,int lin,int col,int mode,int update)
 	XPUSHs(sv_2mortal(newSViv(update)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(EDITION_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: EDITION_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1324,11 +1324,11 @@ internal_cb_ENTERITEM_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(ENTERITEM_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: ENTERITEM_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1356,15 +1356,15 @@ internal_cb_FGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 4) croak("Error: _execute_cb(FGCOLOR_CB) has not returned 4 values!\n");
-	rv = POPi;
-	*red = POPi;
-	*green = POPi;
+	if (count != 4) croak("Error: FGCOLOR_CB callback has not returned 4 values!\n");
 	*blue = POPi;
+	*green = POPi;
+	*red = POPi;
+	rv = POPi;
 
 	PUTBACK;
 	FREETMPS;
@@ -1391,11 +1391,11 @@ internal_cb_FONT_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(FONT_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: FONT_CB callback has not returned single scalar value!\n");
 	rv = POPpx;
 
 	PUTBACK;
@@ -1423,11 +1423,11 @@ internal_cb_LEAVEITEM_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(LEAVEITEM_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: LEAVEITEM_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1456,11 +1456,11 @@ internal_cb_MARKEDIT_CB_iii (Ihandle* ih,int lin,int col,int marked)
 	XPUSHs(sv_2mortal(newSViv(marked)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MARKEDIT_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MARKEDIT_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1488,11 +1488,11 @@ internal_cb_MARK_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MARK_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MARK_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1520,11 +1520,11 @@ internal_cb_MOUSEMOVE_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MOUSEMOVE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MOUSEMOVE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1553,11 +1553,11 @@ internal_cb_RELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(RELEASE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: RELEASE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1585,11 +1585,11 @@ internal_cb_SCROLLTOP_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(SCROLLTOP_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: SCROLLTOP_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1617,11 +1617,11 @@ internal_cb_VALUE_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(VALUE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: VALUE_CB callback has not returned single scalar value!\n");
 	rv = POPpx;
 
 	PUTBACK;
@@ -1650,11 +1650,11 @@ internal_cb_VALUE_EDIT_CB_iis (Ihandle* ih,int lin,int col,char* newval)
 	XPUSHs(sv_2mortal(newSVpv(newval, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(VALUE_EDIT_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: VALUE_EDIT_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1680,11 +1680,11 @@ internal_cb_MENUCLOSE_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("MENUCLOSE_CB", 12)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MENUCLOSE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MENUCLOSE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1710,11 +1710,11 @@ internal_cb_OPEN_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("OPEN_CB", 7)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(OPEN_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: OPEN_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1740,11 +1740,11 @@ internal_cb_DELETEBEGIN_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("DELETEBEGIN_CB", 14)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(DELETEBEGIN_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: DELETEBEGIN_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1770,11 +1770,11 @@ internal_cb_DELETEEND_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("DELETEEND_CB", 12)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(DELETEEND_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: DELETEEND_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1804,11 +1804,11 @@ internal_cb_DELETE_CB_iiff (Ihandle* ih,int index,int sample_index,float x,float
 	XPUSHs(sv_2mortal(newSVnv(y)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(DELETE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: DELETE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1834,11 +1834,11 @@ internal_cb_EDITBEGIN_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("EDITBEGIN_CB", 12)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(EDITBEGIN_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: EDITBEGIN_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1864,11 +1864,11 @@ internal_cb_EDITEND_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("EDITEND_CB", 10)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(EDITEND_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: EDITEND_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1898,14 +1898,14 @@ internal_cb_EDIT_CB_iiffFF (Ihandle* ih,int index,int sample_index,float x,float
 	XPUSHs(sv_2mortal(newSVnv(y)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 3) croak("Error: _execute_cb(EDIT_CB) has not returned 3 values!\n");
-	rv = POPi;
-	*new_x = POPn;
+	if (count != 3) croak("Error: EDIT_CB callback has not returned 3 values!\n");
 	*new_y = POPn;
+	*new_x = POPn;
+	rv = POPi;
 
 	PUTBACK;
 	FREETMPS;
@@ -1931,11 +1931,11 @@ internal_cb_POSTDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	XPUSHs(sv_2mortal(newSViv(PTR2IV(cnv))));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb_cnv1",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb_cnv1",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(POSTDRAW_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: POSTDRAW_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1962,11 +1962,11 @@ internal_cb_PREDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	XPUSHs(sv_2mortal(newSViv(PTR2IV(cnv))));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb_cnv1",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb_cnv1",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(PREDRAW_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: PREDRAW_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -1992,11 +1992,11 @@ internal_cb_SELECTBEGIN_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("SELECTBEGIN_CB", 14)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(SELECTBEGIN_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: SELECTBEGIN_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2022,11 +2022,11 @@ internal_cb_SELECTEND_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("SELECTEND_CB", 12)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(SELECTEND_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: SELECTEND_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2057,11 +2057,11 @@ internal_cb_SELECT_CB_iiffi (Ihandle* ih,int index,int sample_index,float x,floa
 	XPUSHs(sv_2mortal(newSViv(select)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(SELECT_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: SELECT_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2088,11 +2088,11 @@ internal_cb_SPIN_CB_i (Ihandle* ih,int inc)
 	XPUSHs(sv_2mortal(newSViv(inc)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(SPIN_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: SPIN_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2120,11 +2120,11 @@ internal_cb_TABCHANGEPOS_CB_ii (Ihandle* ih,int new_pos,int old_pos)
 	XPUSHs(sv_2mortal(newSViv(old_pos)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(TABCHANGEPOS_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: TABCHANGEPOS_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2152,11 +2152,11 @@ internal_cb_TABCHANGE_CB_nn (Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab)
 	XPUSHs(sv_2mortal(newSViv(PTR2IV(old_tab))));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb_ih12",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb_ih12",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(TABCHANGE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: TABCHANGE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2184,11 +2184,11 @@ internal_cb_ACTION_is (Ihandle* ih,int c,char* new_value)
 	XPUSHs(sv_2mortal(newSVpv(new_value, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(ACTION) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: ACTION callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2214,11 +2214,11 @@ internal_cb_ACTION_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("ACTION_CB", 9)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(ACTION_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: ACTION_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2245,11 +2245,11 @@ internal_cb_ACTION_i (Ihandle* ih,int state)
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(ACTION) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: ACTION callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2276,11 +2276,11 @@ internal_cb_BRANCHCLOSE_CB_i (Ihandle* ih,int id)
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(BRANCHCLOSE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: BRANCHCLOSE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2307,11 +2307,11 @@ internal_cb_BRANCHOPEN_CB_i (Ihandle* ih,int id)
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(BRANCHOPEN_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: BRANCHOPEN_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2341,11 +2341,11 @@ internal_cb_DRAGDROP_CB_iiii (Ihandle* ih,int drag_id,int drop_id,int isshift,in
 	XPUSHs(sv_2mortal(newSViv(iscontrol)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(DRAGDROP_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: DRAGDROP_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2372,11 +2372,11 @@ internal_cb_EXECUTELEAF_CB_i (Ihandle* ih,int id)
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(EXECUTELEAF_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: EXECUTELEAF_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2404,11 +2404,11 @@ internal_cb_MULTISELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	for(loc_i=0; loc_i<n; loc_i++) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MULTISELECTION_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MULTISELECTION_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2436,11 +2436,11 @@ internal_cb_MULTIUNSELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	for(loc_i=0; loc_i<n; loc_i++) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MULTIUNSELECTION_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MULTIUNSELECTION_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2467,11 +2467,11 @@ internal_cb_NODEREMOVED_CB_s (Ihandle* ih,void* userdata)
 	XPUSHs(sv_2mortal(newSVpv(userdata, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(NODEREMOVED_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: NODEREMOVED_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2499,11 +2499,11 @@ internal_cb_RENAME_CB_is (Ihandle* ih,int id,char* title)
 	XPUSHs(sv_2mortal(newSVpv(title, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(RENAME_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: RENAME_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2530,11 +2530,11 @@ internal_cb_RIGHTCLICK_CB_i (Ihandle* ih,int id)
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(RIGHTCLICK_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: RIGHTCLICK_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2562,11 +2562,11 @@ internal_cb_SELECTION_CB_ii (Ihandle* ih,int id,int status)
 	XPUSHs(sv_2mortal(newSViv(status)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(SELECTION_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: SELECTION_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2593,11 +2593,11 @@ internal_cb_SHOWRENAME_CB_i (Ihandle* ih,int id)
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(SHOWRENAME_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: SHOWRENAME_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2623,11 +2623,11 @@ internal_cb_ENTERWINDOW_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("ENTERWINDOW_CB", 14)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(ENTERWINDOW_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: ENTERWINDOW_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2653,11 +2653,11 @@ internal_cb_GETFOCUS_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("GETFOCUS_CB", 11)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(GETFOCUS_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: GETFOCUS_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2683,11 +2683,11 @@ internal_cb_HELP_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("HELP_CB", 7)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(HELP_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: HELP_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2713,11 +2713,11 @@ internal_cb_KILLFOCUS_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("KILLFOCUS_CB", 12)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(KILLFOCUS_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: KILLFOCUS_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2744,11 +2744,11 @@ internal_cb_K_ANY_i (Ihandle* ih,int c)
 	XPUSHs(sv_2mortal(newSViv(c)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(K_ANY) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: K_ANY callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2774,11 +2774,11 @@ internal_cb_LEAVEWINDOW_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("LEAVEWINDOW_CB", 14)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(LEAVEWINDOW_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: LEAVEWINDOW_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2804,11 +2804,11 @@ internal_cb_MAP_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("MAP_CB", 6)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MAP_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MAP_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2834,11 +2834,11 @@ internal_cb_UNMAP_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("UNMAP_CB", 8)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(UNMAP_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: UNMAP_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2866,11 +2866,11 @@ internal_cb_ACTION_ff (Ihandle* ih,float posx,float posy)
 	XPUSHs(sv_2mortal(newSVnv(posy)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(ACTION) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: ACTION callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2897,11 +2897,11 @@ internal_cb_FOCUS_CB_i (Ihandle* ih,int focus)
 	XPUSHs(sv_2mortal(newSViv(focus)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(FOCUS_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: FOCUS_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2929,11 +2929,11 @@ internal_cb_KEYPRESS_CB_ii (Ihandle* ih,int c,int press)
 	XPUSHs(sv_2mortal(newSViv(press)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(KEYPRESS_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: KEYPRESS_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -2960,16 +2960,16 @@ internal_cb_MULTITOUCH_CB_iIIII (Ihandle* ih,int count_,int* pid,int* px,int* py
 	XPUSHs(sv_2mortal(newSViv(count_)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 5) croak("Error: _execute_cb(MULTITOUCH_CB) has not returned 5 values!\n");
-	rv = POPi;
-	*pid = POPi;
-	*px = POPi;
-	*py = POPi;
+	if (count != 5) croak("Error: MULTITOUCH_CB callback has not returned 5 values!\n");
 	*pstate = POPi;
+	*py = POPi;
+	*px = POPi;
+	*pid = POPi;
+	rv = POPi;
 
 	PUTBACK;
 	FREETMPS;
@@ -2997,11 +2997,11 @@ internal_cb_SCROLL_CB_iff (Ihandle* ih,int op,float posx,float posy)
 	XPUSHs(sv_2mortal(newSVnv(posy)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(SCROLL_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: SCROLL_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -3031,11 +3031,11 @@ internal_cb_TOUCH_CB_iiis (Ihandle* ih,int id,int x,int y,char* state)
 	XPUSHs(sv_2mortal(newSVpv(state, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(TOUCH_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: TOUCH_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -3065,11 +3065,11 @@ internal_cb_WHEEL_CB_fiis (Ihandle* ih,float delta,int x,int y,char* status)
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(WHEEL_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: WHEEL_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -3096,11 +3096,11 @@ internal_cb_WOM_CB_i (Ihandle* ih,int state)
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(WOM_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: WOM_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -3126,11 +3126,11 @@ internal_cb_CLOSE_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("CLOSE_CB", 8)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(CLOSE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: CLOSE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -3158,11 +3158,11 @@ internal_cb_COPYDATA_CB_si (Ihandle* ih,char* cmdLine,int size)
 	XPUSHs(sv_2mortal(newSViv(size)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(COPYDATA_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: COPYDATA_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -3188,11 +3188,11 @@ internal_cb_MDIACTIVATE_CB_ (Ihandle* ih)
 	XPUSHs(sv_2mortal(newSVpvn("MDIACTIVATE_CB", 14)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MDIACTIVATE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MDIACTIVATE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -3220,11 +3220,11 @@ internal_cb_MOVE_CB_ii (Ihandle* ih,int x,int y)
 	XPUSHs(sv_2mortal(newSViv(y)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(MOVE_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: MOVE_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -3251,11 +3251,11 @@ internal_cb_SHOW_CB_i (Ihandle* ih,int state)
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(SHOW_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: SHOW_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;
@@ -3284,11 +3284,11 @@ internal_cb_TRAYCLICK_CB_iii (Ihandle* ih,int but,int pressed,int dclick)
 	XPUSHs(sv_2mortal(newSViv(dclick)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
 
 	SPAGAIN;
 
-	if (count != 1) croak("Error: _execute_cb(TRAYCLICK_CB) has not returned single scalar value!\n");
+	if (count != 1) croak("Error: TRAYCLICK_CB callback has not returned single scalar value!\n");
 	rv = POPi;
 
 	PUTBACK;

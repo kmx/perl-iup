@@ -29,15 +29,15 @@
 [% END -%]
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::[% i.xs_internal_cb_pfunc %]",G_SCALAR);
+	count = call_pv("IUP::Internal::Callback::[% i.xs_internal_cb_pfunc %]",G_ARRAY);
 
 	SPAGAIN;
 
 	[% i.xs_internal_cb_rvcheck %]
-	rv = [% i.xs_internal_cb_pop %];
 [% FOR j IN i.xs_internal_cb_extrapop -%]
 	[% j %]
 [% END -%]
+	rv = [% i.xs_internal_cb_pop %];
 
 	PUTBACK;
 	FREETMPS;

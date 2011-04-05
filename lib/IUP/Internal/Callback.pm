@@ -201,9 +201,7 @@ sub _execute_cb { # convert just the first arg from ihandle to objref
   return -1 unless ref($ref);
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
-  my $rv = &$func($ref, @args);
-  return -1 unless defined $rv;
-  return $rv;
+  return &$func($ref, @args);
 }
 
 sub _execute_cb_ih3 {  #Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v
@@ -214,9 +212,7 @@ sub _execute_cb_ih3 {  #Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,
   return -1 unless ref($args[2]);
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
-  my $rv = &$func($ref, @args);
-  return -1 unless defined $rv;
-  return $rv;
+  return &$func($ref, @args);
 }
 
 sub _execute_cb_ih1 {  #Ihandle* ih,Ihandle* drop,int lin,int col
@@ -227,9 +223,7 @@ sub _execute_cb_ih1 {  #Ihandle* ih,Ihandle* drop,int lin,int col
   return -1 unless ref($args[0]);
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
-  my $rv = &$func($ref, @args);
-  return -1 unless defined $rv;
-  return $rv;
+  return &$func($ref, @args);
 }
 
 sub _execute_cb_ih12 { #Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
@@ -242,9 +236,7 @@ sub _execute_cb_ih12 { #Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
   return -1 unless ref($args[1]);
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
-  my $rv = &$func($ref, @args);
-  return -1 unless defined $rv;
-  return $rv;
+  return &$func($ref, @args);
 }
 
 sub _execute_cb_cnv7 { #Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas
@@ -258,9 +250,7 @@ sub _execute_cb_cnv7 { #Ihandle* ih,int line,int column,int xmin,int xmax,int ym
   #call func
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
-  my $rv = &$func($ref, @args);
-  return -1 unless defined $rv;
-  return $rv;
+  return &$func($ref, @args);
 }
 
 sub _execute_cb_cnv1 { #Ihandle* ih,cdCanvas* cnv
@@ -274,9 +264,7 @@ sub _execute_cb_cnv1 { #Ihandle* ih,cdCanvas* cnv
   #call func
   my $func = $ref->{$action};
   return -1 unless (ref($func) eq 'CODE');
-  my $rv = &$func($ref, @args);
-  return -1 unless defined $rv;
-  return $rv;
+  return &$func($ref, @args);
 }
 
 sub _get_cb_init_function {

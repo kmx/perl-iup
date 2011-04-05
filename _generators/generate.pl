@@ -157,15 +157,16 @@ sub cb_generate1 {
       }
       
       #die Dumper(\@l);
-      $h->{$m}->{$a}->{xs_init_cb} = $pf;
-      $h->{$m}->{$a}->{xs_internal_cb_push} = \@l_xspush;
+      @l_xspop = reverse @l_xspop; # return params are on stack in reverse order
       $h->{$m}->{$a}->{xs_internal_cb_extrapop} = \@l_xspop;
+      $h->{$m}->{$a}->{xs_internal_cb_push} = \@l_xspush;      
       $h->{$m}->{$a}->{xs_internal_cb_locvar} = \@l_xslocvar;
+      $h->{$m}->{$a}->{xs_init_cb} = $pf;
       if($rv_count == 1) {
-        $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != 1) croak(\"Error: _execute_cb($a) has not returned single scalar value!\\n\");";
+        $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != 1) croak(\"Error: $a callback has not returned single scalar value!\\n\");";
       }
       else {
-        $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != $rv_count) croak(\"Error: _execute_cb($a) has not returned $rv_count values!\\n\");";
+        $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != $rv_count) croak(\"Error: $a callback has not returned $rv_count values!\\n\");";
       }
             
       $h->{$m}->{$a}->{pod_sample_params} = '(' . join(', ', @l_name) . ')';
