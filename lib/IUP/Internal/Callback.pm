@@ -193,12 +193,6 @@ my $cb_table = {
   },
 };
 
-sub _execute_cb {
-  #xxxFIXME - rewrite this into XS
-  my $action = shift;
-  return &{$_[0]->{$action}}(@_);
-}
-
 sub _get_cb_init_function {
   my ($pkg, $action) = @_;  
   my $p = $cb_table->{$pkg};

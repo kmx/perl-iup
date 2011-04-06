@@ -44,22 +44,12 @@ SV* ihandle2SV(Ihandle* ih) {
   return sv_2mortal(obj);
 }
 
-SV* get_call_cb_func(SV* element, char *action) {
-  HV* hash = SvSTASH(SvRV(element));
-  SV** ref = hv_fetch(hash, action, strlen(action), 0);
-  if (ref != NULL) return sv_2mortal(*ref);
-  return &PL_sv_undef;
-}
-
 int call_cb_func(SV* element, char *action) {
   /* call_pv(element->{action},G_ARRAY) */
-  HV* hash = SvSTASH(SvRV(element));
+  HV* hash = MUTABLE_HV(SvRV(element));
   SV** ref = hv_fetch(hash, action, strlen(action), 0);
-//  if (ref != NULL) return call_sv(*ref,G_ARRAY);
-//  warn("xxxDEBUG func not found for '%s'",action);
-//  return -1; /*xxxCHECKLATER not sure if -1 is a good idea*/
-
-  return call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+  if (ref != NULL) return call_sv(*ref,G_ARRAY);
+  return -1; /*xxxCHECKLATER not sure if -1 is a good idea*/
 }
 [% FOREACH i IN xsitems %]
 [% i.c_retval %]
@@ -78,7 +68,6 @@ int call_cb_func(SV* element, char *action) {
 
 	/* push params for [% i.xs_internal_cb_pfunc %]() */
 	PUSHMARK(SP);
-	[% i.xs_internal_action_push %]
 	XPUSHs(element);
 [% FOREACH j IN i.xs_internal_cb_push -%]
 	[% j %]
@@ -86,8 +75,6 @@ int call_cb_func(SV* element, char *action) {
 	PUTBACK;
 
 	count = call_cb_func(element,"[% i.xs_internal_action_key %]");
-	/*count = call_sv(get_call_cb_func(element,"[% i.xs_internal_action_key %]"),G_ARRAY);*/
-	
 
 	SPAGAIN;
 
