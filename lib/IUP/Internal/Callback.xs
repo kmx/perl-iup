@@ -8,12 +8,67 @@
 #include <iup.h>
 #include <cd.h>
 
+SV* canvas2SV(cdCanvas* canvas) {
+  SV* ptrSV = newSViv(PTR2IV(canvas));
+  char* hkey = SvPV_nolen(ptrSV);
+  HV* globreg = get_hv("IUP::Internal::LibraryIup::ch_register", 0);
+
+  /* ### check if canvas pointer is present in global hash 'ch_register' */
+  SV** ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
+  if (ref != NULL) return *ref;
+
+  /* ### http://stackoverflow.com/questions/1497836/how-do-i-write-a-perl-constructor-in-xs */
+  /*warn("DEBUG: need to create IUP::Internal::Canvas %s\n",hkey);*/
+  HV* hash = (HV *)sv_2mortal((SV *)newHV());
+  SV* obj = sv_bless( newRV((SV*)hash), gv_stashpv("IUP::Internal::Canvas", 1) );
+  hv_store(hash, "___cnvhandle", 12, ptrSV, 0);
+  hv_store(globreg, hkey, strlen(hkey), newSVsv(obj), 0); /*store into globreg*/
+  return sv_2mortal(obj);
+}
+
+SV* ihandle2SV(Ihandle* ih) {  
+  SV* ptrSV = newSViv(PTR2IV(ih));
+  char* hkey = SvPV_nolen(ptrSV);
+  HV* globreg = get_hv("IUP::Internal::LibraryIup::ih_register", 0);
+
+  /* ### check if canvas pointer is present in global hash 'ih_register' */
+  SV** ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
+  if (ref != NULL) return *ref;
+  
+  /* ### http://stackoverflow.com/questions/1497836/how-do-i-write-a-perl-constructor-in-xs */
+  /*warn("DEBUG: need to create IUP::Internal::Element %s\n",hkey);*/
+  HV* hash = (HV *)sv_2mortal((SV *)newHV());
+  SV* obj = sv_bless( newRV((SV*)hash), gv_stashpv("IUP::Internal::Element", 1) );
+  hv_store(hash, "___ihandle", 10, ptrSV, 0);
+  hv_store(globreg, hkey, strlen(hkey), newSVsv(obj), 0); /*store into globreg*/
+  return sv_2mortal(obj);
+}
+
+SV* get_call_cb_func(SV* element, char *action) {
+  HV* hash = SvSTASH(SvRV(element));
+  SV** ref = hv_fetch(hash, action, strlen(action), 0);
+  if (ref != NULL) return sv_2mortal(*ref);
+  return &PL_sv_undef;
+}
+
+int call_cb_func(SV* element, char *action) {
+  /* call_pv(element->{action},G_ARRAY) */
+  HV* hash = SvSTASH(SvRV(element));
+  SV** ref = hv_fetch(hash, action, strlen(action), 0);
+//  if (ref != NULL) return call_sv(*ref,G_ARRAY);
+//  warn("xxxDEBUG func not found for '%s'",action);
+//  return -1; /*xxxCHECKLATER not sure if -1 is a good idea*/
+
+  return call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+}
+
 int
 internal_cb_ACTION_ (Ihandle* ih)
 {
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -21,10 +76,12 @@ internal_cb_ACTION_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("ACTION", 6)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"ACTION");
+	/*count = call_sv(get_call_cb_func(element,"ACTION"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -46,6 +103,7 @@ internal_cb_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -53,7 +111,7 @@ internal_cb_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("BUTTON_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(button)));
 	XPUSHs(sv_2mortal(newSViv(pressed)));
 	XPUSHs(sv_2mortal(newSViv(x)));
@@ -61,7 +119,9 @@ internal_cb_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"BUTTON_CB");
+	/*count = call_sv(get_call_cb_func(element,"BUTTON_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -83,6 +143,7 @@ internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -90,12 +151,14 @@ internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("RESIZE_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(width)));
 	XPUSHs(sv_2mortal(newSViv(height)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"RESIZE_CB");
+	/*count = call_sv(get_call_cb_func(element,"RESIZE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -117,6 +180,7 @@ internal_cb_DRAW_CB_iiiiiiv (Ihandle* ih,int line,int column,int xmin,int xmax,i
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -124,17 +188,19 @@ internal_cb_DRAW_CB_iiiiiiv (Ihandle* ih,int line,int column,int xmin,int xmax,i
 	/* push params for _execute_cb_cnv7() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("DRAW_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(line)));
 	XPUSHs(sv_2mortal(newSViv(column)));
 	XPUSHs(sv_2mortal(newSViv(xmin)));
 	XPUSHs(sv_2mortal(newSViv(xmax)));
 	XPUSHs(sv_2mortal(newSViv(ymin)));
 	XPUSHs(sv_2mortal(newSViv(ymax)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(canvas))));
+	XPUSHs(canvas2SV(canvas));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb_cnv7",G_ARRAY);
+	count = call_cb_func(element,"DRAW_CB");
+	/*count = call_sv(get_call_cb_func(element,"DRAW_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -156,6 +222,7 @@ internal_cb_HEIGHT_CB_i (Ihandle* ih,int line)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -163,11 +230,13 @@ internal_cb_HEIGHT_CB_i (Ihandle* ih,int line)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("HEIGHT_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(line)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"HEIGHT_CB");
+	/*count = call_sv(get_call_cb_func(element,"HEIGHT_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -189,6 +258,7 @@ internal_cb_HSPAN_CB_ii (Ihandle* ih,int line,int column)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -196,12 +266,14 @@ internal_cb_HSPAN_CB_ii (Ihandle* ih,int line,int column)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("HSPAN_CB", 8)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(line)));
 	XPUSHs(sv_2mortal(newSViv(column)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"HSPAN_CB");
+	/*count = call_sv(get_call_cb_func(element,"HSPAN_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -223,6 +295,7 @@ internal_cb_MOUSECLICK_CB_iiiiiis (Ihandle* ih,int button,int pressed,int line,i
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -230,7 +303,7 @@ internal_cb_MOUSECLICK_CB_iiiiiis (Ihandle* ih,int button,int pressed,int line,i
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MOUSECLICK_CB", 13)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(button)));
 	XPUSHs(sv_2mortal(newSViv(pressed)));
 	XPUSHs(sv_2mortal(newSViv(line)));
@@ -240,7 +313,9 @@ internal_cb_MOUSECLICK_CB_iiiiiis (Ihandle* ih,int button,int pressed,int line,i
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MOUSECLICK_CB");
+	/*count = call_sv(get_call_cb_func(element,"MOUSECLICK_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -262,6 +337,7 @@ internal_cb_MOUSEMOTION_CB_iiiis (Ihandle* ih,int line,int column,int x,int y,ch
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -269,7 +345,7 @@ internal_cb_MOUSEMOTION_CB_iiiis (Ihandle* ih,int line,int column,int x,int y,ch
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MOUSEMOTION_CB", 14)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(line)));
 	XPUSHs(sv_2mortal(newSViv(column)));
 	XPUSHs(sv_2mortal(newSViv(x)));
@@ -277,7 +353,9 @@ internal_cb_MOUSEMOTION_CB_iiiis (Ihandle* ih,int line,int column,int x,int y,ch
 	XPUSHs(sv_2mortal(newSVpv(r, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MOUSEMOTION_CB");
+	/*count = call_sv(get_call_cb_func(element,"MOUSEMOTION_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -299,6 +377,7 @@ internal_cb_NCOLS_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -306,10 +385,12 @@ internal_cb_NCOLS_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("NCOLS_CB", 8)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"NCOLS_CB");
+	/*count = call_sv(get_call_cb_func(element,"NCOLS_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -331,6 +412,7 @@ internal_cb_NLINES_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -338,10 +420,12 @@ internal_cb_NLINES_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("NLINES_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"NLINES_CB");
+	/*count = call_sv(get_call_cb_func(element,"NLINES_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -363,6 +447,7 @@ internal_cb_SCROLLING_CB_ii (Ihandle* ih,int line,int column)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -370,12 +455,14 @@ internal_cb_SCROLLING_CB_ii (Ihandle* ih,int line,int column)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("SCROLLING_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(line)));
 	XPUSHs(sv_2mortal(newSViv(column)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"SCROLLING_CB");
+	/*count = call_sv(get_call_cb_func(element,"SCROLLING_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -397,6 +484,7 @@ internal_cb_VSPAN_CB_ii (Ihandle* ih,int line,int column)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -404,12 +492,14 @@ internal_cb_VSPAN_CB_ii (Ihandle* ih,int line,int column)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("VSPAN_CB", 8)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(line)));
 	XPUSHs(sv_2mortal(newSViv(column)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"VSPAN_CB");
+	/*count = call_sv(get_call_cb_func(element,"VSPAN_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -431,6 +521,7 @@ internal_cb_WIDTH_CB_i (Ihandle* ih,int column)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -438,11 +529,13 @@ internal_cb_WIDTH_CB_i (Ihandle* ih,int column)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("WIDTH_CB", 8)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(column)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"WIDTH_CB");
+	/*count = call_sv(get_call_cb_func(element,"WIDTH_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -464,6 +557,7 @@ internal_cb_CELL_CB_i (Ihandle* ih,int cell)
 	dSP;
 	int count;
 	char* rv = NULL;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -471,11 +565,13 @@ internal_cb_CELL_CB_i (Ihandle* ih,int cell)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("CELL_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(cell)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"CELL_CB");
+	/*count = call_sv(get_call_cb_func(element,"CELL_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -497,6 +593,7 @@ internal_cb_EXTENDED_CB_i (Ihandle* ih,int cell)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -504,11 +601,13 @@ internal_cb_EXTENDED_CB_i (Ihandle* ih,int cell)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("EXTENDED_CB", 11)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(cell)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"EXTENDED_CB");
+	/*count = call_sv(get_call_cb_func(element,"EXTENDED_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -530,6 +629,7 @@ internal_cb_SELECT_CB_ii (Ihandle* ih,int cell,int type)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -537,12 +637,14 @@ internal_cb_SELECT_CB_ii (Ihandle* ih,int cell,int type)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("SELECT_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(cell)));
 	XPUSHs(sv_2mortal(newSViv(type)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"SELECT_CB");
+	/*count = call_sv(get_call_cb_func(element,"SELECT_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -564,6 +666,7 @@ internal_cb_SWITCH_CB_ii (Ihandle* ih,int prim_cell,int sec_cell)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -571,12 +674,14 @@ internal_cb_SWITCH_CB_ii (Ihandle* ih,int prim_cell,int sec_cell)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("SWITCH_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(prim_cell)));
 	XPUSHs(sv_2mortal(newSViv(sec_cell)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"SWITCH_CB");
+	/*count = call_sv(get_call_cb_func(element,"SWITCH_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -598,6 +703,7 @@ internal_cb_CHANGE_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned 
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -605,13 +711,15 @@ internal_cb_CHANGE_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned 
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("CHANGE_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(r)));
 	XPUSHs(sv_2mortal(newSViv(g)));
 	XPUSHs(sv_2mortal(newSViv(b)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"CHANGE_CB");
+	/*count = call_sv(get_call_cb_func(element,"CHANGE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -633,6 +741,7 @@ internal_cb_DRAG_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned ch
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -640,13 +749,15 @@ internal_cb_DRAG_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned ch
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("DRAG_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(r)));
 	XPUSHs(sv_2mortal(newSViv(g)));
 	XPUSHs(sv_2mortal(newSViv(b)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"DRAG_CB");
+	/*count = call_sv(get_call_cb_func(element,"DRAG_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -668,6 +779,7 @@ internal_cb_VALUECHANGED_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -675,10 +787,12 @@ internal_cb_VALUECHANGED_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("VALUECHANGED_CB", 15)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"VALUECHANGED_CB");
+	/*count = call_sv(get_call_cb_func(element,"VALUECHANGED_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -700,6 +814,7 @@ internal_cb_BUTTON_PRESS_CB_d (Ihandle* ih,double angle)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -707,11 +822,13 @@ internal_cb_BUTTON_PRESS_CB_d (Ihandle* ih,double angle)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("BUTTON_PRESS_CB", 15)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVnv(angle)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"BUTTON_PRESS_CB");
+	/*count = call_sv(get_call_cb_func(element,"BUTTON_PRESS_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -733,6 +850,7 @@ internal_cb_BUTTON_RELEASE_CB_d (Ihandle* ih,double angle)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -740,11 +858,13 @@ internal_cb_BUTTON_RELEASE_CB_d (Ihandle* ih,double angle)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("BUTTON_RELEASE_CB", 17)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVnv(angle)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"BUTTON_RELEASE_CB");
+	/*count = call_sv(get_call_cb_func(element,"BUTTON_RELEASE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -766,6 +886,7 @@ internal_cb_MOUSEMOVE_CB_d (Ihandle* ih,double angle)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -773,11 +894,13 @@ internal_cb_MOUSEMOVE_CB_d (Ihandle* ih,double angle)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MOUSEMOVE_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVnv(angle)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MOUSEMOVE_CB");
+	/*count = call_sv(get_call_cb_func(element,"MOUSEMOVE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -799,6 +922,7 @@ internal_cb_FILE_CB_ss (Ihandle* ih,const char* file_name,const char* status)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -806,12 +930,14 @@ internal_cb_FILE_CB_ss (Ihandle* ih,const char* file_name,const char* status)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("FILE_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVpv(file_name, 0)));
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"FILE_CB");
+	/*count = call_sv(get_call_cb_func(element,"FILE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -833,6 +959,7 @@ internal_cb_HIGHLIGHT_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -840,10 +967,12 @@ internal_cb_HIGHLIGHT_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("HIGHLIGHT_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"HIGHLIGHT_CB");
+	/*count = call_sv(get_call_cb_func(element,"HIGHLIGHT_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -865,6 +994,7 @@ internal_cb_DROPFILES_CB_siii (Ihandle* ih,const char* filename,int num,int x,in
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -872,14 +1002,16 @@ internal_cb_DROPFILES_CB_siii (Ihandle* ih,const char* filename,int num,int x,in
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("DROPFILES_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVpv(filename, 0)));
 	XPUSHs(sv_2mortal(newSViv(num)));
 	XPUSHs(sv_2mortal(newSViv(x)));
 	XPUSHs(sv_2mortal(newSViv(y)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"DROPFILES_CB");
+	/*count = call_sv(get_call_cb_func(element,"DROPFILES_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -901,6 +1033,7 @@ internal_cb_ACTION_sii (Ihandle* ih,char* text,int item,int state)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -908,13 +1041,15 @@ internal_cb_ACTION_sii (Ihandle* ih,char* text,int item,int state)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("ACTION", 6)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVpv(text, 0)));
 	XPUSHs(sv_2mortal(newSViv(item)));
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"ACTION");
+	/*count = call_sv(get_call_cb_func(element,"ACTION"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -936,6 +1071,7 @@ internal_cb_CARET_CB_iii (Ihandle* ih,int lin,int col,int pos)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -943,13 +1079,15 @@ internal_cb_CARET_CB_iii (Ihandle* ih,int lin,int col,int pos)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("CARET_CB", 8)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	XPUSHs(sv_2mortal(newSViv(pos)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"CARET_CB");
+	/*count = call_sv(get_call_cb_func(element,"CARET_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -971,6 +1109,7 @@ internal_cb_DBLCLICK_CB_is (Ihandle* ih,int item,char* text)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -978,12 +1117,14 @@ internal_cb_DBLCLICK_CB_is (Ihandle* ih,int item,char* text)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("DBLCLICK_CB", 11)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(item)));
 	XPUSHs(sv_2mortal(newSVpv(text, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"DBLCLICK_CB");
+	/*count = call_sv(get_call_cb_func(element,"DBLCLICK_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1005,6 +1146,7 @@ internal_cb_DROPDOWN_CB_i (Ihandle* ih,int state)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1012,11 +1154,13 @@ internal_cb_DROPDOWN_CB_i (Ihandle* ih,int state)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("DROPDOWN_CB", 11)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"DROPDOWN_CB");
+	/*count = call_sv(get_call_cb_func(element,"DROPDOWN_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1038,6 +1182,7 @@ internal_cb_EDIT_CB_is (Ihandle* ih,int c,char* new_value)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1045,12 +1190,14 @@ internal_cb_EDIT_CB_is (Ihandle* ih,int c,char* new_value)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("EDIT_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(c)));
 	XPUSHs(sv_2mortal(newSVpv(new_value, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"EDIT_CB");
+	/*count = call_sv(get_call_cb_func(element,"EDIT_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1072,6 +1219,7 @@ internal_cb_MOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1079,13 +1227,15 @@ internal_cb_MOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MOTION_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(x)));
 	XPUSHs(sv_2mortal(newSViv(y)));
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MOTION_CB");
+	/*count = call_sv(get_call_cb_func(element,"MOTION_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1107,6 +1257,7 @@ internal_cb_MULTISELECT_CB_s (Ihandle* ih,char* value)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1114,11 +1265,13 @@ internal_cb_MULTISELECT_CB_s (Ihandle* ih,char* value)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MULTISELECT_CB", 14)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVpv(value, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MULTISELECT_CB");
+	/*count = call_sv(get_call_cb_func(element,"MULTISELECT_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1140,6 +1293,7 @@ internal_cb_ACTION_CB_iiiis (Ihandle* ih,int c,int lin,int col,int edition,char*
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1147,7 +1301,7 @@ internal_cb_ACTION_CB_iiiis (Ihandle* ih,int c,int lin,int col,int edition,char*
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("ACTION_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(c)));
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
@@ -1155,7 +1309,9 @@ internal_cb_ACTION_CB_iiiis (Ihandle* ih,int c,int lin,int col,int edition,char*
 	XPUSHs(sv_2mortal(newSVpv(after, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"ACTION_CB");
+	/*count = call_sv(get_call_cb_func(element,"ACTION_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1177,6 +1333,7 @@ internal_cb_BGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1184,12 +1341,14 @@ internal_cb_BGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("BGCOLOR_CB", 10)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"BGCOLOR_CB");
+	/*count = call_sv(get_call_cb_func(element,"BGCOLOR_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1214,6 +1373,7 @@ internal_cb_CLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1221,13 +1381,15 @@ internal_cb_CLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("CLICK_CB", 8)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"CLICK_CB");
+	/*count = call_sv(get_call_cb_func(element,"CLICK_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1249,6 +1411,7 @@ internal_cb_DROPCHECK_CB_ii (Ihandle* ih,int lin,int col)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1256,12 +1419,14 @@ internal_cb_DROPCHECK_CB_ii (Ihandle* ih,int lin,int col)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("DROPCHECK_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"DROPCHECK_CB");
+	/*count = call_sv(get_call_cb_func(element,"DROPCHECK_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1283,6 +1448,7 @@ internal_cb_DROPSELECT_CB_iinsii (Ihandle* ih,int lin,int col,Ihandle* drop,char
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1290,16 +1456,18 @@ internal_cb_DROPSELECT_CB_iinsii (Ihandle* ih,int lin,int col,Ihandle* drop,char
 	/* push params for _execute_cb_ih3() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("DROPSELECT_CB", 13)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(drop))));
+	XPUSHs(ihandle2SV(drop));
 	XPUSHs(sv_2mortal(newSVpv(t, 0)));
 	XPUSHs(sv_2mortal(newSViv(i)));
 	XPUSHs(sv_2mortal(newSViv(v)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb_ih3",G_ARRAY);
+	count = call_cb_func(element,"DROPSELECT_CB");
+	/*count = call_sv(get_call_cb_func(element,"DROPSELECT_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1321,6 +1489,7 @@ internal_cb_DROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1328,13 +1497,15 @@ internal_cb_DROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
 	/* push params for _execute_cb_ih1() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("DROP_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(drop))));
+	XPUSHs(element);
+	XPUSHs(ihandle2SV(drop));
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb_ih1",G_ARRAY);
+	count = call_cb_func(element,"DROP_CB");
+	/*count = call_sv(get_call_cb_func(element,"DROP_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1356,6 +1527,7 @@ internal_cb_EDITION_CB_iiii (Ihandle* ih,int lin,int col,int mode,int update)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1363,14 +1535,16 @@ internal_cb_EDITION_CB_iiii (Ihandle* ih,int lin,int col,int mode,int update)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("EDITION_CB", 10)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	XPUSHs(sv_2mortal(newSViv(mode)));
 	XPUSHs(sv_2mortal(newSViv(update)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"EDITION_CB");
+	/*count = call_sv(get_call_cb_func(element,"EDITION_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1392,6 +1566,7 @@ internal_cb_ENTERITEM_CB_ii (Ihandle* ih,int lin,int col)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1399,12 +1574,14 @@ internal_cb_ENTERITEM_CB_ii (Ihandle* ih,int lin,int col)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("ENTERITEM_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"ENTERITEM_CB");
+	/*count = call_sv(get_call_cb_func(element,"ENTERITEM_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1426,6 +1603,7 @@ internal_cb_FGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1433,12 +1611,14 @@ internal_cb_FGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("FGCOLOR_CB", 10)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"FGCOLOR_CB");
+	/*count = call_sv(get_call_cb_func(element,"FGCOLOR_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1463,6 +1643,7 @@ internal_cb_FONT_CB_ii (Ihandle* ih,int lin,int col)
 	dSP;
 	int count;
 	char* rv = NULL;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1470,12 +1651,14 @@ internal_cb_FONT_CB_ii (Ihandle* ih,int lin,int col)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("FONT_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"FONT_CB");
+	/*count = call_sv(get_call_cb_func(element,"FONT_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1497,6 +1680,7 @@ internal_cb_LEAVEITEM_CB_ii (Ihandle* ih,int lin,int col)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1504,12 +1688,14 @@ internal_cb_LEAVEITEM_CB_ii (Ihandle* ih,int lin,int col)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("LEAVEITEM_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"LEAVEITEM_CB");
+	/*count = call_sv(get_call_cb_func(element,"LEAVEITEM_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1531,6 +1717,7 @@ internal_cb_MARKEDIT_CB_iii (Ihandle* ih,int lin,int col,int marked)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1538,13 +1725,15 @@ internal_cb_MARKEDIT_CB_iii (Ihandle* ih,int lin,int col,int marked)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MARKEDIT_CB", 11)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	XPUSHs(sv_2mortal(newSViv(marked)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MARKEDIT_CB");
+	/*count = call_sv(get_call_cb_func(element,"MARKEDIT_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1566,6 +1755,7 @@ internal_cb_MARK_CB_ii (Ihandle* ih,int lin,int col)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1573,12 +1763,14 @@ internal_cb_MARK_CB_ii (Ihandle* ih,int lin,int col)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MARK_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MARK_CB");
+	/*count = call_sv(get_call_cb_func(element,"MARK_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1600,6 +1792,7 @@ internal_cb_MOUSEMOVE_CB_ii (Ihandle* ih,int lin,int col)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1607,12 +1800,14 @@ internal_cb_MOUSEMOVE_CB_ii (Ihandle* ih,int lin,int col)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MOUSEMOVE_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MOUSEMOVE_CB");
+	/*count = call_sv(get_call_cb_func(element,"MOUSEMOVE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1634,6 +1829,7 @@ internal_cb_RELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1641,13 +1837,15 @@ internal_cb_RELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("RELEASE_CB", 10)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"RELEASE_CB");
+	/*count = call_sv(get_call_cb_func(element,"RELEASE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1669,6 +1867,7 @@ internal_cb_SCROLLTOP_CB_ii (Ihandle* ih,int lin,int col)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1676,12 +1875,14 @@ internal_cb_SCROLLTOP_CB_ii (Ihandle* ih,int lin,int col)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("SCROLLTOP_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"SCROLLTOP_CB");
+	/*count = call_sv(get_call_cb_func(element,"SCROLLTOP_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1703,6 +1904,7 @@ internal_cb_VALUE_CB_ii (Ihandle* ih,int lin,int col)
 	dSP;
 	int count;
 	char* rv = NULL;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1710,12 +1912,14 @@ internal_cb_VALUE_CB_ii (Ihandle* ih,int lin,int col)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("VALUE_CB", 8)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"VALUE_CB");
+	/*count = call_sv(get_call_cb_func(element,"VALUE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1737,6 +1941,7 @@ internal_cb_VALUE_EDIT_CB_iis (Ihandle* ih,int lin,int col,char* newval)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1744,13 +1949,15 @@ internal_cb_VALUE_EDIT_CB_iis (Ihandle* ih,int lin,int col,char* newval)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("VALUE_EDIT_CB", 13)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(lin)));
 	XPUSHs(sv_2mortal(newSViv(col)));
 	XPUSHs(sv_2mortal(newSVpv(newval, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"VALUE_EDIT_CB");
+	/*count = call_sv(get_call_cb_func(element,"VALUE_EDIT_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1772,6 +1979,7 @@ internal_cb_MENUCLOSE_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1779,10 +1987,12 @@ internal_cb_MENUCLOSE_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MENUCLOSE_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MENUCLOSE_CB");
+	/*count = call_sv(get_call_cb_func(element,"MENUCLOSE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1804,6 +2014,7 @@ internal_cb_OPEN_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1811,10 +2022,12 @@ internal_cb_OPEN_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("OPEN_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"OPEN_CB");
+	/*count = call_sv(get_call_cb_func(element,"OPEN_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1836,6 +2049,7 @@ internal_cb_DELETEBEGIN_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1843,10 +2057,12 @@ internal_cb_DELETEBEGIN_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("DELETEBEGIN_CB", 14)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"DELETEBEGIN_CB");
+	/*count = call_sv(get_call_cb_func(element,"DELETEBEGIN_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1868,6 +2084,7 @@ internal_cb_DELETEEND_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1875,10 +2092,12 @@ internal_cb_DELETEEND_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("DELETEEND_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"DELETEEND_CB");
+	/*count = call_sv(get_call_cb_func(element,"DELETEEND_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1900,6 +2119,7 @@ internal_cb_DELETE_CB_iiff (Ihandle* ih,int index,int sample_index,float x,float
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1907,14 +2127,16 @@ internal_cb_DELETE_CB_iiff (Ihandle* ih,int index,int sample_index,float x,float
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("DELETE_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(index)));
 	XPUSHs(sv_2mortal(newSViv(sample_index)));
 	XPUSHs(sv_2mortal(newSVnv(x)));
 	XPUSHs(sv_2mortal(newSVnv(y)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"DELETE_CB");
+	/*count = call_sv(get_call_cb_func(element,"DELETE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1936,6 +2158,7 @@ internal_cb_EDITBEGIN_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1943,10 +2166,12 @@ internal_cb_EDITBEGIN_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("EDITBEGIN_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"EDITBEGIN_CB");
+	/*count = call_sv(get_call_cb_func(element,"EDITBEGIN_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -1968,6 +2193,7 @@ internal_cb_EDITEND_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -1975,10 +2201,12 @@ internal_cb_EDITEND_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("EDITEND_CB", 10)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"EDITEND_CB");
+	/*count = call_sv(get_call_cb_func(element,"EDITEND_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2000,6 +2228,7 @@ internal_cb_EDIT_CB_iiffFF (Ihandle* ih,int index,int sample_index,float x,float
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2007,14 +2236,16 @@ internal_cb_EDIT_CB_iiffFF (Ihandle* ih,int index,int sample_index,float x,float
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("EDIT_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(index)));
 	XPUSHs(sv_2mortal(newSViv(sample_index)));
 	XPUSHs(sv_2mortal(newSVnv(x)));
 	XPUSHs(sv_2mortal(newSVnv(y)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"EDIT_CB");
+	/*count = call_sv(get_call_cb_func(element,"EDIT_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2038,6 +2269,7 @@ internal_cb_POSTDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2045,11 +2277,13 @@ internal_cb_POSTDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	/* push params for _execute_cb_cnv1() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("POSTDRAW_CB", 11)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(cnv))));
+	XPUSHs(element);
+	XPUSHs(canvas2SV(cnv));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb_cnv1",G_ARRAY);
+	count = call_cb_func(element,"POSTDRAW_CB");
+	/*count = call_sv(get_call_cb_func(element,"POSTDRAW_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2071,6 +2305,7 @@ internal_cb_PREDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2078,11 +2313,13 @@ internal_cb_PREDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	/* push params for _execute_cb_cnv1() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("PREDRAW_CB", 10)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(cnv))));
+	XPUSHs(element);
+	XPUSHs(canvas2SV(cnv));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb_cnv1",G_ARRAY);
+	count = call_cb_func(element,"PREDRAW_CB");
+	/*count = call_sv(get_call_cb_func(element,"PREDRAW_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2104,6 +2341,7 @@ internal_cb_SELECTBEGIN_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2111,10 +2349,12 @@ internal_cb_SELECTBEGIN_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("SELECTBEGIN_CB", 14)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"SELECTBEGIN_CB");
+	/*count = call_sv(get_call_cb_func(element,"SELECTBEGIN_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2136,6 +2376,7 @@ internal_cb_SELECTEND_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2143,10 +2384,12 @@ internal_cb_SELECTEND_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("SELECTEND_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"SELECTEND_CB");
+	/*count = call_sv(get_call_cb_func(element,"SELECTEND_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2168,6 +2411,7 @@ internal_cb_SELECT_CB_iiffi (Ihandle* ih,int index,int sample_index,float x,floa
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2175,7 +2419,7 @@ internal_cb_SELECT_CB_iiffi (Ihandle* ih,int index,int sample_index,float x,floa
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("SELECT_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(index)));
 	XPUSHs(sv_2mortal(newSViv(sample_index)));
 	XPUSHs(sv_2mortal(newSVnv(x)));
@@ -2183,7 +2427,9 @@ internal_cb_SELECT_CB_iiffi (Ihandle* ih,int index,int sample_index,float x,floa
 	XPUSHs(sv_2mortal(newSViv(select)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"SELECT_CB");
+	/*count = call_sv(get_call_cb_func(element,"SELECT_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2205,6 +2451,7 @@ internal_cb_SPIN_CB_i (Ihandle* ih,int inc)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2212,11 +2459,13 @@ internal_cb_SPIN_CB_i (Ihandle* ih,int inc)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("SPIN_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(inc)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"SPIN_CB");
+	/*count = call_sv(get_call_cb_func(element,"SPIN_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2238,6 +2487,7 @@ internal_cb_TABCHANGEPOS_CB_ii (Ihandle* ih,int new_pos,int old_pos)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2245,12 +2495,14 @@ internal_cb_TABCHANGEPOS_CB_ii (Ihandle* ih,int new_pos,int old_pos)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("TABCHANGEPOS_CB", 15)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(new_pos)));
 	XPUSHs(sv_2mortal(newSViv(old_pos)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"TABCHANGEPOS_CB");
+	/*count = call_sv(get_call_cb_func(element,"TABCHANGEPOS_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2272,6 +2524,7 @@ internal_cb_TABCHANGE_CB_nn (Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2279,12 +2532,14 @@ internal_cb_TABCHANGE_CB_nn (Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab)
 	/* push params for _execute_cb_ih12() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("TABCHANGE_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(new_tab))));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(old_tab))));
+	XPUSHs(element);
+	XPUSHs(ihandle2SV(new_tab));
+	XPUSHs(ihandle2SV(old_tab));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb_ih12",G_ARRAY);
+	count = call_cb_func(element,"TABCHANGE_CB");
+	/*count = call_sv(get_call_cb_func(element,"TABCHANGE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2306,6 +2561,7 @@ internal_cb_ACTION_is (Ihandle* ih,int c,char* new_value)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2313,12 +2569,14 @@ internal_cb_ACTION_is (Ihandle* ih,int c,char* new_value)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("ACTION", 6)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(c)));
 	XPUSHs(sv_2mortal(newSVpv(new_value, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"ACTION");
+	/*count = call_sv(get_call_cb_func(element,"ACTION"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2340,6 +2598,7 @@ internal_cb_ACTION_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2347,10 +2606,12 @@ internal_cb_ACTION_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("ACTION_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"ACTION_CB");
+	/*count = call_sv(get_call_cb_func(element,"ACTION_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2372,6 +2633,7 @@ internal_cb_ACTION_i (Ihandle* ih,int state)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2379,11 +2641,13 @@ internal_cb_ACTION_i (Ihandle* ih,int state)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("ACTION", 6)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"ACTION");
+	/*count = call_sv(get_call_cb_func(element,"ACTION"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2405,6 +2669,7 @@ internal_cb_BRANCHCLOSE_CB_i (Ihandle* ih,int id)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2412,11 +2677,13 @@ internal_cb_BRANCHCLOSE_CB_i (Ihandle* ih,int id)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("BRANCHCLOSE_CB", 14)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"BRANCHCLOSE_CB");
+	/*count = call_sv(get_call_cb_func(element,"BRANCHCLOSE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2438,6 +2705,7 @@ internal_cb_BRANCHOPEN_CB_i (Ihandle* ih,int id)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2445,11 +2713,13 @@ internal_cb_BRANCHOPEN_CB_i (Ihandle* ih,int id)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("BRANCHOPEN_CB", 13)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"BRANCHOPEN_CB");
+	/*count = call_sv(get_call_cb_func(element,"BRANCHOPEN_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2471,6 +2741,7 @@ internal_cb_DRAGDROP_CB_iiii (Ihandle* ih,int drag_id,int drop_id,int isshift,in
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2478,14 +2749,16 @@ internal_cb_DRAGDROP_CB_iiii (Ihandle* ih,int drag_id,int drop_id,int isshift,in
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("DRAGDROP_CB", 11)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(drag_id)));
 	XPUSHs(sv_2mortal(newSViv(drop_id)));
 	XPUSHs(sv_2mortal(newSViv(isshift)));
 	XPUSHs(sv_2mortal(newSViv(iscontrol)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"DRAGDROP_CB");
+	/*count = call_sv(get_call_cb_func(element,"DRAGDROP_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2507,6 +2780,7 @@ internal_cb_EXECUTELEAF_CB_i (Ihandle* ih,int id)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2514,11 +2788,13 @@ internal_cb_EXECUTELEAF_CB_i (Ihandle* ih,int id)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("EXECUTELEAF_CB", 14)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"EXECUTELEAF_CB");
+	/*count = call_sv(get_call_cb_func(element,"EXECUTELEAF_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2540,6 +2816,7 @@ internal_cb_MULTISELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 	int loc_i;
 
 	ENTER;
@@ -2548,11 +2825,13 @@ internal_cb_MULTISELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MULTISELECTION_CB", 17)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	for(loc_i=0; loc_i<n; loc_i++) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MULTISELECTION_CB");
+	/*count = call_sv(get_call_cb_func(element,"MULTISELECTION_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2574,6 +2853,7 @@ internal_cb_MULTIUNSELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 	int loc_i;
 
 	ENTER;
@@ -2582,11 +2862,13 @@ internal_cb_MULTIUNSELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MULTIUNSELECTION_CB", 19)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	for(loc_i=0; loc_i<n; loc_i++) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MULTIUNSELECTION_CB");
+	/*count = call_sv(get_call_cb_func(element,"MULTIUNSELECTION_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2608,6 +2890,7 @@ internal_cb_NODEREMOVED_CB_s (Ihandle* ih,void* userdata)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2615,11 +2898,13 @@ internal_cb_NODEREMOVED_CB_s (Ihandle* ih,void* userdata)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("NODEREMOVED_CB", 14)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVpv(userdata, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"NODEREMOVED_CB");
+	/*count = call_sv(get_call_cb_func(element,"NODEREMOVED_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2641,6 +2926,7 @@ internal_cb_RENAME_CB_is (Ihandle* ih,int id,char* title)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2648,12 +2934,14 @@ internal_cb_RENAME_CB_is (Ihandle* ih,int id,char* title)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("RENAME_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(id)));
 	XPUSHs(sv_2mortal(newSVpv(title, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"RENAME_CB");
+	/*count = call_sv(get_call_cb_func(element,"RENAME_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2675,6 +2963,7 @@ internal_cb_RIGHTCLICK_CB_i (Ihandle* ih,int id)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2682,11 +2971,13 @@ internal_cb_RIGHTCLICK_CB_i (Ihandle* ih,int id)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("RIGHTCLICK_CB", 13)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"RIGHTCLICK_CB");
+	/*count = call_sv(get_call_cb_func(element,"RIGHTCLICK_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2708,6 +2999,7 @@ internal_cb_SELECTION_CB_ii (Ihandle* ih,int id,int status)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2715,12 +3007,14 @@ internal_cb_SELECTION_CB_ii (Ihandle* ih,int id,int status)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("SELECTION_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(id)));
 	XPUSHs(sv_2mortal(newSViv(status)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"SELECTION_CB");
+	/*count = call_sv(get_call_cb_func(element,"SELECTION_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2742,6 +3036,7 @@ internal_cb_SHOWRENAME_CB_i (Ihandle* ih,int id)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2749,11 +3044,13 @@ internal_cb_SHOWRENAME_CB_i (Ihandle* ih,int id)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("SHOWRENAME_CB", 13)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"SHOWRENAME_CB");
+	/*count = call_sv(get_call_cb_func(element,"SHOWRENAME_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2775,6 +3072,7 @@ internal_cb_ENTERWINDOW_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2782,10 +3080,12 @@ internal_cb_ENTERWINDOW_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("ENTERWINDOW_CB", 14)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"ENTERWINDOW_CB");
+	/*count = call_sv(get_call_cb_func(element,"ENTERWINDOW_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2807,6 +3107,7 @@ internal_cb_GETFOCUS_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2814,10 +3115,12 @@ internal_cb_GETFOCUS_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("GETFOCUS_CB", 11)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"GETFOCUS_CB");
+	/*count = call_sv(get_call_cb_func(element,"GETFOCUS_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2839,6 +3142,7 @@ internal_cb_HELP_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2846,10 +3150,12 @@ internal_cb_HELP_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("HELP_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"HELP_CB");
+	/*count = call_sv(get_call_cb_func(element,"HELP_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2871,6 +3177,7 @@ internal_cb_KILLFOCUS_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2878,10 +3185,12 @@ internal_cb_KILLFOCUS_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("KILLFOCUS_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"KILLFOCUS_CB");
+	/*count = call_sv(get_call_cb_func(element,"KILLFOCUS_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2903,6 +3212,7 @@ internal_cb_K_ANY_i (Ihandle* ih,int c)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2910,11 +3220,13 @@ internal_cb_K_ANY_i (Ihandle* ih,int c)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("K_ANY", 5)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(c)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"K_ANY");
+	/*count = call_sv(get_call_cb_func(element,"K_ANY"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2936,6 +3248,7 @@ internal_cb_LEAVEWINDOW_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2943,10 +3256,12 @@ internal_cb_LEAVEWINDOW_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("LEAVEWINDOW_CB", 14)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"LEAVEWINDOW_CB");
+	/*count = call_sv(get_call_cb_func(element,"LEAVEWINDOW_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -2968,6 +3283,7 @@ internal_cb_MAP_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -2975,10 +3291,12 @@ internal_cb_MAP_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MAP_CB", 6)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MAP_CB");
+	/*count = call_sv(get_call_cb_func(element,"MAP_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3000,6 +3318,7 @@ internal_cb_UNMAP_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3007,10 +3326,12 @@ internal_cb_UNMAP_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("UNMAP_CB", 8)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"UNMAP_CB");
+	/*count = call_sv(get_call_cb_func(element,"UNMAP_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3032,6 +3353,7 @@ internal_cb_ACTION_ff (Ihandle* ih,float posx,float posy)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3039,12 +3361,14 @@ internal_cb_ACTION_ff (Ihandle* ih,float posx,float posy)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("ACTION", 6)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVnv(posx)));
 	XPUSHs(sv_2mortal(newSVnv(posy)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"ACTION");
+	/*count = call_sv(get_call_cb_func(element,"ACTION"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3066,6 +3390,7 @@ internal_cb_FOCUS_CB_i (Ihandle* ih,int focus)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3073,11 +3398,13 @@ internal_cb_FOCUS_CB_i (Ihandle* ih,int focus)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("FOCUS_CB", 8)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(focus)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"FOCUS_CB");
+	/*count = call_sv(get_call_cb_func(element,"FOCUS_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3099,6 +3426,7 @@ internal_cb_KEYPRESS_CB_ii (Ihandle* ih,int c,int press)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3106,12 +3434,14 @@ internal_cb_KEYPRESS_CB_ii (Ihandle* ih,int c,int press)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("KEYPRESS_CB", 11)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(c)));
 	XPUSHs(sv_2mortal(newSViv(press)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"KEYPRESS_CB");
+	/*count = call_sv(get_call_cb_func(element,"KEYPRESS_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3133,6 +3463,7 @@ internal_cb_MULTITOUCH_CB_iIIII (Ihandle* ih,int count_,int* pid,int* px,int* py
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3140,11 +3471,13 @@ internal_cb_MULTITOUCH_CB_iIIII (Ihandle* ih,int count_,int* pid,int* px,int* py
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MULTITOUCH_CB", 13)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(count_)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MULTITOUCH_CB");
+	/*count = call_sv(get_call_cb_func(element,"MULTITOUCH_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3170,6 +3503,7 @@ internal_cb_SCROLL_CB_iff (Ihandle* ih,int op,float posx,float posy)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3177,13 +3511,15 @@ internal_cb_SCROLL_CB_iff (Ihandle* ih,int op,float posx,float posy)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("SCROLL_CB", 9)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(op)));
 	XPUSHs(sv_2mortal(newSVnv(posx)));
 	XPUSHs(sv_2mortal(newSVnv(posy)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"SCROLL_CB");
+	/*count = call_sv(get_call_cb_func(element,"SCROLL_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3205,6 +3541,7 @@ internal_cb_TOUCH_CB_iiis (Ihandle* ih,int id,int x,int y,char* state)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3212,14 +3549,16 @@ internal_cb_TOUCH_CB_iiis (Ihandle* ih,int id,int x,int y,char* state)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("TOUCH_CB", 8)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(id)));
 	XPUSHs(sv_2mortal(newSViv(x)));
 	XPUSHs(sv_2mortal(newSViv(y)));
 	XPUSHs(sv_2mortal(newSVpv(state, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"TOUCH_CB");
+	/*count = call_sv(get_call_cb_func(element,"TOUCH_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3241,6 +3580,7 @@ internal_cb_WHEEL_CB_fiis (Ihandle* ih,float delta,int x,int y,char* status)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3248,14 +3588,16 @@ internal_cb_WHEEL_CB_fiis (Ihandle* ih,float delta,int x,int y,char* status)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("WHEEL_CB", 8)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVnv(delta)));
 	XPUSHs(sv_2mortal(newSViv(x)));
 	XPUSHs(sv_2mortal(newSViv(y)));
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"WHEEL_CB");
+	/*count = call_sv(get_call_cb_func(element,"WHEEL_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3277,6 +3619,7 @@ internal_cb_WOM_CB_i (Ihandle* ih,int state)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3284,11 +3627,13 @@ internal_cb_WOM_CB_i (Ihandle* ih,int state)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("WOM_CB", 6)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"WOM_CB");
+	/*count = call_sv(get_call_cb_func(element,"WOM_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3310,6 +3655,7 @@ internal_cb_CLOSE_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3317,10 +3663,12 @@ internal_cb_CLOSE_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("CLOSE_CB", 8)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"CLOSE_CB");
+	/*count = call_sv(get_call_cb_func(element,"CLOSE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3342,6 +3690,7 @@ internal_cb_COPYDATA_CB_si (Ihandle* ih,char* cmdLine,int size)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3349,12 +3698,14 @@ internal_cb_COPYDATA_CB_si (Ihandle* ih,char* cmdLine,int size)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("COPYDATA_CB", 11)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVpv(cmdLine, 0)));
 	XPUSHs(sv_2mortal(newSViv(size)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"COPYDATA_CB");
+	/*count = call_sv(get_call_cb_func(element,"COPYDATA_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3376,6 +3727,7 @@ internal_cb_MDIACTIVATE_CB_ (Ihandle* ih)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3383,10 +3735,12 @@ internal_cb_MDIACTIVATE_CB_ (Ihandle* ih)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MDIACTIVATE_CB", 14)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MDIACTIVATE_CB");
+	/*count = call_sv(get_call_cb_func(element,"MDIACTIVATE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3408,6 +3762,7 @@ internal_cb_MOVE_CB_ii (Ihandle* ih,int x,int y)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3415,12 +3770,14 @@ internal_cb_MOVE_CB_ii (Ihandle* ih,int x,int y)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("MOVE_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(x)));
 	XPUSHs(sv_2mortal(newSViv(y)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"MOVE_CB");
+	/*count = call_sv(get_call_cb_func(element,"MOVE_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3442,6 +3799,7 @@ internal_cb_SHOW_CB_i (Ihandle* ih,int state)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3449,11 +3807,13 @@ internal_cb_SHOW_CB_i (Ihandle* ih,int state)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("SHOW_CB", 7)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"SHOW_CB");
+	/*count = call_sv(get_call_cb_func(element,"SHOW_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 
@@ -3475,6 +3835,7 @@ internal_cb_TRAYCLICK_CB_iii (Ihandle* ih,int but,int pressed,int dclick)
 	dSP;
 	int count;
 	int rv = IUP_DEFAULT;
+	SV* element = ihandle2SV(ih);
 
 	ENTER;
 	SAVETMPS;
@@ -3482,13 +3843,15 @@ internal_cb_TRAYCLICK_CB_iii (Ihandle* ih,int but,int pressed,int dclick)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(sv_2mortal(newSVpvn("TRAYCLICK_CB", 12)));
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(but)));
 	XPUSHs(sv_2mortal(newSViv(pressed)));
 	XPUSHs(sv_2mortal(newSViv(dclick)));
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+	count = call_cb_func(element,"TRAYCLICK_CB");
+	/*count = call_sv(get_call_cb_func(element,"TRAYCLICK_CB"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 

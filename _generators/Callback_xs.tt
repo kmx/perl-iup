@@ -7,6 +7,60 @@
 
 #include <iup.h>
 #include <cd.h>
+
+SV* canvas2SV(cdCanvas* canvas) {
+  SV* ptrSV = newSViv(PTR2IV(canvas));
+  char* hkey = SvPV_nolen(ptrSV);
+  HV* globreg = get_hv("IUP::Internal::LibraryIup::ch_register", 0);
+
+  /* ### check if canvas pointer is present in global hash 'ch_register' */
+  SV** ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
+  if (ref != NULL) return *ref;
+
+  /* ### http://stackoverflow.com/questions/1497836/how-do-i-write-a-perl-constructor-in-xs */
+  /*warn("DEBUG: need to create IUP::Internal::Canvas %s\n",hkey);*/
+  HV* hash = (HV *)sv_2mortal((SV *)newHV());
+  SV* obj = sv_bless( newRV((SV*)hash), gv_stashpv("IUP::Internal::Canvas", 1) );
+  hv_store(hash, "___cnvhandle", 12, ptrSV, 0);
+  hv_store(globreg, hkey, strlen(hkey), newSVsv(obj), 0); /*store into globreg*/
+  return sv_2mortal(obj);
+}
+
+SV* ihandle2SV(Ihandle* ih) {  
+  SV* ptrSV = newSViv(PTR2IV(ih));
+  char* hkey = SvPV_nolen(ptrSV);
+  HV* globreg = get_hv("IUP::Internal::LibraryIup::ih_register", 0);
+
+  /* ### check if canvas pointer is present in global hash 'ih_register' */
+  SV** ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
+  if (ref != NULL) return *ref;
+  
+  /* ### http://stackoverflow.com/questions/1497836/how-do-i-write-a-perl-constructor-in-xs */
+  /*warn("DEBUG: need to create IUP::Internal::Element %s\n",hkey);*/
+  HV* hash = (HV *)sv_2mortal((SV *)newHV());
+  SV* obj = sv_bless( newRV((SV*)hash), gv_stashpv("IUP::Internal::Element", 1) );
+  hv_store(hash, "___ihandle", 10, ptrSV, 0);
+  hv_store(globreg, hkey, strlen(hkey), newSVsv(obj), 0); /*store into globreg*/
+  return sv_2mortal(obj);
+}
+
+SV* get_call_cb_func(SV* element, char *action) {
+  HV* hash = SvSTASH(SvRV(element));
+  SV** ref = hv_fetch(hash, action, strlen(action), 0);
+  if (ref != NULL) return sv_2mortal(*ref);
+  return &PL_sv_undef;
+}
+
+int call_cb_func(SV* element, char *action) {
+  /* call_pv(element->{action},G_ARRAY) */
+  HV* hash = SvSTASH(SvRV(element));
+  SV** ref = hv_fetch(hash, action, strlen(action), 0);
+//  if (ref != NULL) return call_sv(*ref,G_ARRAY);
+//  warn("xxxDEBUG func not found for '%s'",action);
+//  return -1; /*xxxCHECKLATER not sure if -1 is a good idea*/
+
+  return call_pv("IUP::Internal::Callback::_execute_cb",G_ARRAY);
+}
 [% FOREACH i IN xsitems %]
 [% i.c_retval %]
 [% i.xs_internal_cb %] [% i.xs_internal_cb_params %]
@@ -14,6 +68,7 @@
 	dSP;
 	int count;
 	[% i.c_retval %] rv = [% i.xs_internal_default_rv %];
+	SV* element = ihandle2SV(ih);
 [% FOR j IN i.xs_internal_cb_locvar -%]
 	[% j %]
 [% END -%]
@@ -24,13 +79,15 @@
 	/* push params for [% i.xs_internal_cb_pfunc %]() */
 	PUSHMARK(SP);
 	[% i.xs_internal_action_push %]
-	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
+	XPUSHs(element);
 [% FOREACH j IN i.xs_internal_cb_push -%]
 	[% j %]
 [% END -%]
 	PUTBACK;
 
-	count = call_pv("IUP::Internal::Callback::[% i.xs_internal_cb_pfunc %]",G_ARRAY);
+	count = call_cb_func(element,"[% i.xs_internal_action_key %]");
+	/*count = call_sv(get_call_cb_func(element,"[% i.xs_internal_action_key %]"),G_ARRAY);*/
+	
 
 	SPAGAIN;
 

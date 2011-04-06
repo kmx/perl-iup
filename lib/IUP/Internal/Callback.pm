@@ -193,68 +193,9 @@ my $cb_table = {
   },
 };
 
-#xxxCHECKLATER: 
-# maybe return something else then -1 in case of error
-# GetByIhandle seems to be quite slow - try to optimize
-# slow callback performance can be observed at examples\0-basic\cells_numbering.pl
-
-sub _execute_cb { # convert just the first arg from ihandle to objref
-  # keep as simple as possible, performace matters
-  # params: ($action, $ih, ...)
+sub _execute_cb {
+  #xxxFIXME - rewrite this into XS
   my $action = shift;
-  $_[0] = $IUP::Internal::LibraryIup::ih_register{$_[0]} || IUP::Internal::Element->new_from_ihandle($_[0]);
-  #xxxCHECKLATER (hits performance): return -1 unless $_[0];
-  return &{$_[0]->{$action}}(@_);
-}
-
-sub _execute_cb_ih3 {  #Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v
-  # keep as simple as possible, performace matters
-  # params: ($action, $ih, $lin, $col, $ih_drop, $i, $v)
-  my $action = shift;
-  $_[0] = $IUP::Internal::LibraryIup::ih_register{$_[0]} || IUP::Internal::Element->new_from_ihandle($_[0]);
-  $_[3] = $IUP::Internal::LibraryIup::ih_register{$_[3]} || IUP::Internal::Element->new_from_ihandle($_[3]);
-  #xxxCHECKLATER (hits performance): return -1 unless $_[0];
-  return &{$_[0]->{$action}}(@_);
-}
-
-sub _execute_cb_ih1 {  #Ihandle* ih,Ihandle* drop,int lin,int col
-  # keep as simple as possible, performace matters
-  # params: ($action, $ih, $ih_drop, $lin, $col)
-  my $action = shift;
-  $_[0] = $IUP::Internal::LibraryIup::ih_register{$_[0]} || IUP::Internal::Element->new_from_ihandle($_[0]);
-  $_[1] = $IUP::Internal::LibraryIup::ih_register{$_[1]} || IUP::Internal::Element->new_from_ihandle($_[1]);
-  #xxxCHECKLATER (hits performance): return -1 unless $_[0];
-  return &{$_[0]->{$action}}(@_);
-}
-
-sub _execute_cb_ih12 { #Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
-  # keep as simple as possible, performace matters
-  # params: ($action, $ih, $ih_newtab, $ih_oldtab)
-  my $action = shift;
-  $_[0] = $IUP::Internal::LibraryIup::ih_register{$_[0]} || IUP::Internal::Element->new_from_ihandle($_[0]);
-  $_[1] = $IUP::Internal::LibraryIup::ih_register{$_[1]} || IUP::Internal::Element->new_from_ihandle($_[1]);
-  $_[2] = $IUP::Internal::LibraryIup::ih_register{$_[2]} || IUP::Internal::Element->new_from_ihandle($_[2]);
-  #xxxCHECKLATER (hits performance): return -1 unless $_[0];
-  return &{$_[0]->{$action}}(@_);
-}
-
-sub _execute_cb_cnv7 { #Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas
-  # keep as simple as possible, performace matters
-  # params: ($action, $ih, $line, $column, $xmin, $xmax, $ymin, $ymax, $ch_canvas)
-  my $action = shift;
-  $_[0] = $IUP::Internal::LibraryIup::ih_register{$_[0]} || IUP::Internal::Element->new_from_ihandle($_[0]);
-  $_[7] = $IUP::Internal::LibraryIup::ch_register{$_[7]} || IUP::Internal::Canvas->new_from_cnvhandle($_[7]);
-  #xxxCHECKLATER (hits performance): return -1 unless $_[0];
-  return &{$_[0]->{$action}}(@_);
-}
-
-sub _execute_cb_cnv1 { #Ihandle* ih,cdCanvas* cnv
-  # keep as simple as possible, performace matters
-  # params: ($action, $ih, $ch_canvas)
-  my $action = shift;
-  $_[0] = $IUP::Internal::LibraryIup::ih_register{$_[0]} || IUP::Internal::Element->new_from_ihandle($_[0]);
-  $_[1] = $IUP::Internal::LibraryIup::ch_register{$_[1]} || IUP::Internal::Canvas->new_from_cnvhandle($_[1]);  
-  #xxxCHECKLATER (hits performance): return -1 unless $_[0];
   return &{$_[0]->{$action}}(@_);
 }
 

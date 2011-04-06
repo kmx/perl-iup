@@ -113,6 +113,7 @@ sub cb_generate1 {
       my @l_name = ( '$self' );      
       
       $h->{$m}->{$a}->{xs_internal_action_push} = "XPUSHs(sv_2mortal(newSVpvn(\"$a\", ".length($a).")));";      
+      $h->{$m}->{$a}->{xs_internal_action_key} = $a;
       my @l_xspush = ();
       my @l_xspop = ();
       my @l_xslocvar = ();
@@ -137,9 +138,13 @@ sub cb_generate1 {
 	  push @l_name, "\$$n";
 	  push @l_xspush, "XPUSHs(sv_2mortal(newSViv($n)));";	  
 	}
-	elsif ($tp[$i-1] =~ /^(n|v)$/) {
+	elsif ($tp[$i-1] =~ /^(n)$/) {
 	  push @l_name, "\$$n";
-	  push @l_xspush, "XPUSHs(sv_2mortal(newSViv(PTR2IV($n))));";
+	  push @l_xspush, "XPUSHs(ihandle2SV($n));";
+	}
+	elsif ($tp[$i-1] =~ /^(v)$/) {
+	  push @l_name, "\$$n";
+	  push @l_xspush, "XPUSHs(canvas2SV($n));";
 	}
 	elsif ($tp[$i-1] =~ /^(I)$/) {
 	  push @l_xspop, "*$n = POPi;"; # xxx TODO needs testing + pod update
