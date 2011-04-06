@@ -23,6 +23,7 @@
 
 	/* push params for [% i.xs_internal_cb_pfunc %]() */
 	PUSHMARK(SP);
+	[% i.xs_internal_action_push %]
 	XPUSHs(sv_2mortal(newSViv(PTR2IV(ih))));
 [% FOREACH j IN i.xs_internal_cb_push -%]
 	[% j %]

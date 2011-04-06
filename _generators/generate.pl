@@ -112,7 +112,8 @@ sub cb_generate1 {
 
       my @l_name = ( '$self' );      
       
-      my @l_xspush = ( "XPUSHs(sv_2mortal(newSVpvn(\"$a\", ".length($a).")));" );
+      $h->{$m}->{$a}->{xs_internal_action_push} = "XPUSHs(sv_2mortal(newSVpvn(\"$a\", ".length($a).")));";      
+      my @l_xspush = ();
       my @l_xspop = ();
       my @l_xslocvar = ();
       my $rv_count = 1;

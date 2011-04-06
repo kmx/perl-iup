@@ -8,8 +8,10 @@ use Scalar::Util 'weaken';
 bootstrap IUP::Internal::LibraryIup;
 
 #xxxTODO: maybe something more thread safe
-my %ih_register; #global table mapping IUP Ihandles to perl objrefs
-my %ch_register; #global table mapping CD Canvas handles to perl objrefs
+our %ih_register; #global table mapping IUP Ihandles to perl objrefs
+our %ch_register; #global table mapping CD Canvas handles to perl objrefs
+
+#xxxCHECKLATER: for performance reasons we access directly these global variables from _execute_cb()
 
 ###IHANDLE
 
