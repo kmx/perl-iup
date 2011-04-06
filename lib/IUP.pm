@@ -313,7 +313,7 @@ sub SetGlobal {
   #void IupStoreGlobal(const char *name, const char *value); [in C]
   #iup.StoreGlobal(name: string, value: string) [in Lua] 
   my ($pkg, $name, $value) = @_;
-  #xxx-consider-later SetGlobal vs. StoreGlobal
+  #xxxCHECKLATER SetGlobal vs. StoreGlobal
   IUP::Internal::LibraryIup::_IupStoreGlobal($name, $value);
 }
 
@@ -405,10 +405,10 @@ sub Alarm {
 sub Message {
   my $pkg = shift;
   if (scalar @_ == 1) {
-    return IUP::Internal::LibraryIup::_IupMessage('', "$_[0]"); #BEWARE: stringification necessary
+    return IUP::Internal::LibraryIup::_IupMessage('', $_[0]); #xxxBEWARE: stringification necessary
   }
   elsif (scalar @_ == 2) {
-    return IUP::Internal::LibraryIup::_IupMessage("$_[0]", "$_[1]"); #BEWARE: stringification necessary
+    return IUP::Internal::LibraryIup::_IupMessage($_[0], $_[1]); #xxxBEWARE: stringification necessary
   }
   carp('Warning: wrong params - IUP->Message($title, $msg)');
   return;
@@ -433,7 +433,7 @@ sub isCtrlXkey  { shift; return IUP::Internal::LibraryIup::_isCtrlXkey(@_); };
 sub isAltXkey   { shift; return IUP::Internal::LibraryIup::_isAltXkey(@_); };
 sub isSysXkey   { shift; return IUP::Internal::LibraryIup::_isSysXkey(@_); };
 sub isPrintable { shift; return IUP::Internal::LibraryIup::_isPrintable(@_); };
-#xxx-consider-later
+#xxxCHECKLATER
 #sub xCODE       { shift; return IUP::Internal::LibraryIup::_xCODE(@_); };
 #sub sxCODE      { shift; return IUP::Internal::LibraryIup::_sxCODE(@_); };
 #sub cxCODE      { shift; return IUP::Internal::LibraryIup::_cxCODE(@_); };

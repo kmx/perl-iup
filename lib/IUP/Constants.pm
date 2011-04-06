@@ -744,7 +744,7 @@ use constant IUP_SECONDARY => -2;
 
 ##TAG: keys ##
 
-#xxx-consider-later
+#xxxCHECKLATER
 #use constant IUP_NUMMAXCODES => 1280; # 5*256=1280  Normal+Shift+Ctrl+Alt+Sys
 
 # from 32 to 126, all character sets are equal, the key code is the same as the character code.

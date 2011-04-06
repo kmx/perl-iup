@@ -193,78 +193,77 @@ my $cb_table = {
   },
 };
 
-#xxx-consider-later: maybe return something else then -1 in case of error
+#xxxCHECKLATER: 
+# maybe return something else then -1 in case of error
+# GetByIhandle seems to be quite slow - try to optimize
+# slow callback performance can be observed at examples\0-basic\cells_numbering.pl
 
 sub _execute_cb { # convert just the first arg from ihandle to objref
-  my ($ih, $action, @args) = @_;
+  # keep as simple as possible, performace matters
+  # params: ($ih, $action, ...)
+  my ($ih, $action) = (shift, shift);
   my $ref = IUP->GetByIhandle($ih);
-  return -1 unless ref($ref);
-  my $func = $ref->{$action};
-  return -1 unless (ref($func) eq 'CODE');
-  return &$func($ref, @args);
+  return -1 unless $ref;
+  return &{$ref->{$action}}($ref, @_);
 }
 
 sub _execute_cb_ih3 {  #Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v
-  my ($ih, $action, @args) = @_;
+  # keep as simple as possible, performace matters
+  # params: ($ih, $action, $lin, $col, $ih_drop, $i, $v)
+  my ($ih, $action) = (shift, shift);
   my $ref = IUP->GetByIhandle($ih);
-  return -1 unless ref($ref);
-  $args[2] = IUP->GetByIhandle($args[2]);
-  return -1 unless ref($args[2]);
-  my $func = $ref->{$action};
-  return -1 unless (ref($func) eq 'CODE');
-  return &$func($ref, @args);
+  return -1 unless $ref;
+  $_[2] = IUP->GetByIhandle($_[2]);
+  #xxxCHECKLATER (skipped for performace reasons) return -1 unless $_[2];
+  return &{$ref->{$action}}($ref, @_);
 }
 
 sub _execute_cb_ih1 {  #Ihandle* ih,Ihandle* drop,int lin,int col
-  my ($ih, $action, @args) = @_;
+  # keep as simple as possible, performace matters
+  # params: ($ih, $action, $ih_drop, $lin, $col)
+  my ($ih, $action) = (shift, shift);
   my $ref = IUP->GetByIhandle($ih);
-  return -1 unless ref($ref);
-  $args[0] = IUP->GetByIhandle($args[0]);
-  return -1 unless ref($args[0]);
-  my $func = $ref->{$action};
-  return -1 unless (ref($func) eq 'CODE');
-  return &$func($ref, @args);
+  return -1 unless $ref;
+  $_[0] = IUP->GetByIhandle($_[0]);
+  #xxxCHECKLATER (skipped for performace reasons) return -1 unless $_[0];
+  return &{$ref->{$action}}($ref, @_);
 }
 
 sub _execute_cb_ih12 { #Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
-  my ($ih, $action, @args) = @_;
+  # keep as simple as possible, performace matters
+  # params: ($ih, $action, $ih_newtab, $ih_oldtab)
+  my ($ih, $action) = (shift, shift);
   my $ref = IUP->GetByIhandle($ih);
-  return -1 unless ref($ref);
-  $args[0] = IUP->GetByIhandle($args[0]);
-  return -1 unless ref($args[0]);
-  $args[1] = IUP->GetByIhandle($args[1]);
-  return -1 unless ref($args[1]);
-  my $func = $ref->{$action};
-  return -1 unless (ref($func) eq 'CODE');
-  return &$func($ref, @args);
+  return -1 unless $ref;
+  $_[0] = IUP->GetByIhandle($_[0]);
+  #xxxCHECKLATER (skipped for performace reasons) return -1 unless $_[0];
+  $_[1] = IUP->GetByIhandle($_[1]);
+  #xxxCHECKLATER (skipped for performace reasons) return -1 unless $_[1];
+  return &{$ref->{$action}}($ref, @_);
 }
 
 sub _execute_cb_cnv7 { #Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas
-  my ($ih, $action, @args) = @_;
-  #ihandle
+  # keep as simple as possible, performace matters
+  # params: ($ih, $action, $line, $column, $xmin, $xmax, $ymin, $ymax, $ch_canvas)
+  my ($ih, $action) = (shift, shift);
   my $ref = IUP->GetByIhandle($ih);
-  return -1 unless ref($ref);
-  #cnvhandle - #xxx-consider-later IUP->GetByCnvhandle
-  $args[6] = IUP::Internal::LibraryIup::_translate_ch($args[6]) || IUP::Internal::Canvas->new_from_cnvhandle($args[6]);  
-  return -1 unless ref($args[6]);
-  #call func
-  my $func = $ref->{$action};
-  return -1 unless (ref($func) eq 'CODE');
-  return &$func($ref, @args);
+  return -1 unless $ref;
+  #xxxCHECKLATER use something like IUP->GetByCnvhandle
+  $_[6] = IUP::Internal::LibraryIup::_translate_ch($_[6]) || IUP::Internal::Canvas->new_from_cnvhandle($_[6]);  
+  #xxxCHECKLATER (skipped for performace reasons) return -1 unless $_[6];
+  return &{$ref->{$action}}($ref, @_);
 }
 
 sub _execute_cb_cnv1 { #Ihandle* ih,cdCanvas* cnv
-  my ($ih, $action, @args) = @_;
-  #ihandle
+  # keep as simple as possible, performace matters
+  # params: ($ih, $action, $ch_canvas)
+  my ($ih, $action) = (shift, shift);
   my $ref = IUP->GetByIhandle($ih);
   return -1 unless ref($ref);
-  #cnvhandle - #xxx-consider-later IUP->GetByCnvhandle
-  $args[0] = IUP::Internal::LibraryIup::_translate_ch($args[6]) || IUP::Internal::Canvas->new_from_cnvhandle($args[0]);  
-  return -1 unless ref($args[0]);
-  #call func
-  my $func = $ref->{$action};
-  return -1 unless (ref($func) eq 'CODE');
-  return &$func($ref, @args);
+  #xxxCHECKLATER use something like IUP->GetByCnvhandle
+  $_[0] = IUP::Internal::LibraryIup::_translate_ch($_[0]) || IUP::Internal::Canvas->new_from_cnvhandle($_[0]);  
+  #xxxCHECKLATER (skipped for performace reasons) return -1 unless ref($_[0]);
+  return &{$ref->{$action}}($ref, @_);
 }
 
 sub _get_cb_init_function {

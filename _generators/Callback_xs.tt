@@ -13,7 +13,7 @@
 {
 	dSP;
 	int count;
-	[% i.c_retval %] rv;
+	[% i.c_retval %] rv = [% i.xs_internal_default_rv %];
 [% FOR j IN i.xs_internal_cb_locvar -%]
 	[% j %]
 [% END -%]
@@ -34,10 +34,12 @@
 	SPAGAIN;
 
 	[% i.xs_internal_cb_rvcheck %]
+	else {
 [% FOR j IN i.xs_internal_cb_extrapop -%]
-	[% j %]
+	  [% j %]
 [% END -%]
-	rv = [% i.xs_internal_cb_pop %];
+	  rv = [% i.xs_internal_cb_pop %];
+	}
 
 	PUTBACK;
 	FREETMPS;

@@ -4,6 +4,17 @@ use warnings;
 use File::Slurp 'slurp';
 use Template;
 use Data::Dumper;
+use Getopt::Long;
+use Pod::Usage;
+
+# processing commandline options
+my $g_help    = 0;
+my $g_dst     = '.';
+my $getopt_rv = GetOptions(
+  'help|?'   => \$g_help,
+  'dst=s'    => \$g_dst,
+);
+pod2usage(-exitstatus=>0, -verbose=>2) if $g_help || !$getopt_rv;
 
 my $cb_csv = 'Callback.csv';
 my $at_csv = 'Attribute.csv';
@@ -67,16 +78,19 @@ sub cb_generate1 {
       my $c_retval = $h->{$m}->{$a}->{c_retval};
       if ($c_retval eq 'int') {
         $h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPi';
+	$h->{$m}->{$a}->{xs_internal_default_rv} = 'IUP_DEFAULT';
 	push @l_rvname, '$rv_num';
       }
       elsif ($c_retval eq 'char*') {
         $h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPpx';
+	$h->{$m}->{$a}->{xs_internal_default_rv} = 'NULL';
 	push @l_rvname, '$rv_string';
       }
       else {
         warn "###WARNING### This should not happen m=$m a=$a c_retval=$c_retval (assuming retval='int')";
 	$c_retval = 'int';
 	$h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPi';
+	$h->{$m}->{$a}->{xs_internal_default_rv} = '0';
 	push @l_rvname, '$rv_num';
       }      
 
@@ -163,10 +177,12 @@ sub cb_generate1 {
       $h->{$m}->{$a}->{xs_internal_cb_locvar} = \@l_xslocvar;
       $h->{$m}->{$a}->{xs_init_cb} = $pf;
       if($rv_count == 1) {
-        $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != 1) croak(\"Error: $a callback has not returned single scalar value!\\n\");";
+        $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != 1) { /* no warning, use default retval */ }";
+	#warn(\"Warning: $a callback has not returned single scalar value (count=%d)!\\n\",count);
+	                                           
       }
       else {
-        $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != $rv_count) croak(\"Error: $a callback has not returned $rv_count values!\\n\");";
+        $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != $rv_count) { warn(\"Warning: $a callback has not returned $rv_count values (count=%d)!\\n\",count); }";
       }
             
       $h->{$m}->{$a}->{pod_sample_params} = '(' . join(', ', @l_name) . ')';
@@ -245,13 +261,28 @@ my $cb_data1 = {
   pmitems => cb_hash2pmitems($cb_h),
 };
 #die Dumper($cb_data1);
-$tt->process('Callback_xs.tt', $cb_data1, 'Callback.xs') || die $tt->error();
-$tt->process('Callback_pm.tt', $cb_data1, 'Callback.pm') || die $tt->error();
+$tt->process('Callback_xs.tt', $cb_data1, $g_dst.'/Callback.xs') || die $tt->error();
+$tt->process('Callback_pm.tt', $cb_data1, $g_dst.'/Callback.pm') || die $tt->error();
 
 #### ATTRIBUTES
 my $at_data1 = {
   alist => at_hash2list($at_h),
 };
 #die Dumper($at_data1);
-$tt->process('Attribute_pm.tt', $at_data1, 'Attribute.pm') || die $tt->error();
+$tt->process('Attribute_pm.tt', $at_data1, $g_dst.'/Attribute.pm') || die $tt->error();
 
+__END__
+
+=head1 USAGE
+
+generate.pl [options]
+
+ Options:
+   -help       help message
+   -dst=<dir>  directory for storing generated filer (default: '.')
+
+=head1 DESCRIPTION
+
+ Creates: Callback.pm  from Callback_pm.tt
+          Callback.xs  from Callback_xs.tt
+          Attribute.pm from Attribute_pm.tt 

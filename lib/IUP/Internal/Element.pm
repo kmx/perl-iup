@@ -144,7 +144,6 @@ sub SetAttribute {
   #iup.SetAttribute(ih: iulua_tag, name: string, value: string) [in Lua]   
   #void IupStoreAttribute(Ihandle *ih, const char *name, const char *value); [in C]
   #iup.StoreAttribute(ih: iulua_tag, name: string, value: string) [in Lua] 
-  #xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
   my $self = shift;
 
   #BEWARE: we need to keep the order of attribute assignment - thus cannot use for (keys %args) {...}
@@ -153,16 +152,14 @@ sub SetAttribute {
     last unless defined $k;
     my $v = shift;
     if (!ref($v)) {      
-      $v = "$v" if defined $v; #BEWARE: stringification necessary
-      IUP::Internal::LibraryIup::_IupStoreAttribute($self->ihandle, "$k", $v); #BEWARE: stringification necessary ($k)
+      IUP::Internal::LibraryIup::_IupStoreAttribute($self->ihandle, $k, $v);
     }
     elsif (blessed($v) && $v->can('ihandle')) {
       #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
-      IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, "$k", $v->ihandle); #BEWARE: stringification necessary ($k)
+      IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
       #$self->{____att_ref}->{$k} = $v; #xxx-just-idea
     }
     else {
-#xxxTODO tune up this
       carp "[warning] cannot set attribute '$k' to '$v'";
     }
   }
@@ -173,17 +170,13 @@ sub SetAttributeId {
   #iup.SetAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua] 
   #void IupStoreAttributeId(Ihandle *ih, const char *name, int id, const char *value); [in C]
   #iup.StoreAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua] 
-  # xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
   my ($self, $name, $id, $v) = @_;  
-  $v = "$v" if defined $v; #BEWARE: stringification necessary
   IUP::Internal::LibraryIup::_IupStoreAttributeId($self->ihandle, $name, $id, $v);
 }
   
 sub SetAttributeId2 {
   #void  IupStoreAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* value);
-  # xxx TODO SetAttribute vs. StoreAttribute see attrib_guide.html
   my ($self, $name, $lin, $col, $v) = @_;  
-  $v = "$v" if defined $v; #BEWARE: stringification necessary
   IUP::Internal::LibraryIup::_IupStoreAttributeId2($self->ihandle, $name, $lin, $col, $v);
 }
 
@@ -194,7 +187,7 @@ sub GetAttribute {
   my ($self, @names) = @_;
   my @rv = ();  
   push(@rv, IUP::Internal::LibraryIup::_IupGetAttribute($self->ihandle, $_)) for (@names);    
-  return (scalar(@names) == 1) ? $rv[0] : @rv; #xxxTODO: not sure if this is a good idea
+  return (scalar(@names) == 1) ? $rv[0] : @rv; #xxxFIXME: not sure if this is a good idea
 }
 
 sub GetAttributeId {
@@ -203,7 +196,7 @@ sub GetAttributeId {
   my ($self, $name, @ids) = @_;
   my @rv = ();
   push(@rv, IUP::Internal::LibraryIup::_IupGetAttributeId($self->ihandle, $name, $_)) for (@ids);
-  return (scalar(@ids) == 1) ? $rv[0] : @rv; #xxxTODO: not sure if this is a good idea
+  return (scalar(@ids) == 1) ? $rv[0] : @rv; #xxxFIXME: not sure if this is a good idea
 }
 
 sub GetAttributeId2 {
@@ -218,7 +211,7 @@ sub SetCallback {
     my ($action, $func) = ($_, $args{$_});    
     my $cb_init_func = IUP::Internal::Callback::_get_cb_init_function(ref($self), $action);
     if (ref($cb_init_func) eq 'CODE') {
-      $self->{$action} = $func; #xxxFIXME maybe $self->{___callbacks}->{$action} = $func;
+      $self->{$action} = $func; #xxxFIXME maybe $self->{"____CB_$action"} = $func;
       &$cb_init_func($self->ihandle,$action);
     }
     else {
@@ -238,7 +231,7 @@ sub HasValidClassName {
   $c = 'image' if $c eq 'imagergb';
   $c = 'image' if $c eq 'imagergba';
   $c = 'canvasgl' if $c eq 'glcanvas';
-  $p = 'iup::dialog' if ($p eq 'iup::layoutdialog') && ($c eq 'dialog'); #xxx-consider-later seems like a bug
+  $p = 'iup::dialog' if ($p eq 'iup::layoutdialog') && ($c eq 'dialog'); #xxxCHECKLATER seems like a bug
   return lc($p) eq "iup::$c" ? 1 : 0;
 }
 
@@ -295,7 +288,6 @@ sub GetAttributes {
   my $self = shift;
   my $result = { };    
   $result->{$_} = $self->GetAttribute($_) for ($self->GetAllAttributes);
-  #xxx-consider-later returning hash vs. hashref
   return $result;
 }
 
@@ -360,7 +352,7 @@ sub Reparent {
   #int IupReparent(Ihandle* ih, Ihandle* new_parent, Ihandle* ref_child);
   #iup.Reparent(child, parent: ihandle) [in Lua]
   my ($self, $child, $parent) = @_;
-  #xxxcheckthis
+  #xxxFIXME checkthis (see lua implementation)
   return IUP::Internal::LibraryIup::_IupReparent($self->ihandle, $child->ihandle, $parent->ihandle);
 }
 
@@ -446,7 +438,7 @@ sub GetNextChild {
   #iup.GetNextChild(ih, child: ihandle) -> next_child: ihandle [in Lua]
   my ($self, $child) = @_; 
   my $ih;  
-  #xxxTODO check this - kind of a hack
+  #xxxCHECKLATER check this - kind of a hack (now more or less works)
   if (defined $child) {
     $ih = IUP::Internal::LibraryIup::_IupGetNextChild($self->ihandle, $child->ihandle);
   }
@@ -494,18 +486,17 @@ sub GetParamParam {
   my $param_str = sprintf("PARAM%d", $param_index);
   my $ih = IUP::Internal::LibraryIup::_IupGetAttributeIH($self->ihandle, $param_str);  
   my $ct = IUP::Internal::LibraryIup::_IupGetAttributeIH($ih, "CONTROL");
-  # xxx TODO xxx decide how to handle GetParamParam
+  #xxxFIXME decide how to handle GetParamParam
   return IUP->GetByIhandle($ih);
   #return IUP->GetByIhandle($ct);
 }
 
-#xxx not in standard iup, extra function
 sub GetParamValue {
+  # extra function - not in standard iup C API
   my ($self, $param_index, $newval) = @_;
   my $param_str = sprintf("PARAM%d", $param_index);
   my $ih = IUP::Internal::LibraryIup::_IupGetAttributeIH($self->ihandle, $param_str);  
   if (defined $newval) {
-    $newval = "$newval"; #BEWARE: stringification necessary
     my $ct = IUP::Internal::LibraryIup::_IupGetAttributeIH($ih, "CONTROL");    
     IUP::Internal::LibraryIup::_IupStoreAttribute($ih, "VALUE", $newval);
     IUP::Internal::LibraryIup::_IupStoreAttribute($ct, "VALUE", $newval);    
@@ -514,7 +505,6 @@ sub GetParamValue {
     return IUP::Internal::LibraryIup::_IupGetAttribute($ih, "VALUE");
   }  
 }
-
 
 sub GetChild {
   #Ihandle *IupGetChild(Ihandle* ih, int pos); [in C]
@@ -550,8 +540,7 @@ sub NextField {
 
 sub DESTROY {
   #xxx TODO see http://perldoc.perl.org/perlobj.html
-  #warn "XXX DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";
-  
+  #warn "XXX DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";  
   #xxxFIXME not a good idea
   #$_[0]->Destroy; #handles also _unregister_ih
 }
@@ -568,82 +557,64 @@ sub _store_child_ref {
 }
 
 sub _proc_child_param {
-  my ($self, $func, $args, $firstonly) = @_;
-  my $ih;
+  my ($self, $func, $args, $firstonly) = @_;  
+  my @list;
+  my @ihlist;
+  
   if (defined $firstonly) {
-    if (ref($firstonly) eq 'ARRAY') {
-      #call func
-      #xxxFIXME check for undef
-      $ih = &$func( map($_->ihandle, @$firstonly) );
-      #$self->_store_child_ref(@$firstonly); #xxx-just-idea
-    }
-    else {
-      #call func
-      #xxxFIXME check for undef
-      $ih = &$func($firstonly->ihandle);
-      #$self->_store_child_ref($firstonly); #xxx-just-idea
-    }
+    @list = (ref($firstonly) eq 'ARRAY') ? @$firstonly : ($firstonly);
   }
   elsif (defined $args && defined $args->{child}) {
     if (ref($args->{child}) eq 'ARRAY') {
-      #call func on all items
-      my @ihlist;
-      for (@{$args->{child}}) {
-        if (!defined $_) {
-	  carp "warning: undefined item passed as child parameter of ",ref($self),"->new()";
-	  next;
-	}
-        push @ihlist, $_->ihandle;
-      }
-      $ih = &$func( @ihlist );
-      #$self->_store_child_ref(@{$args->{child}}); #xxx-just-idea
+      @list = @{$args->{child}};
     }
-    else {      
-      #call func
-      #xxxFIXME check for undef
-      $ih = &$func($args->{child}->ihandle);
-      #$self->_store_child_ref($args->{child}); #xxx-just-idea
+    elsif (blessed($args->{child}) && $args->{child}->can('ihandle')) {      
+      @list = ($args->{child});
+    }
+    else {
+      carp "Warning: 'child' parameter has to be a reference to IUP element";
     }
     delete $args->{child};
   }
-  else {
-    #call func
-    $ih = &$func();
+  
+  for (@list) {
+    if (blessed($_) && $_->can('ihandle')) {
+      push @ihlist, $_->ihandle;
+    }
+    else {
+      carp "warning: undefined item passed as 'child' parameter of ",ref($self),"->new()";
+    }        
   }
-  return $ih;
+  #call func
+  return &$func(@ihlist);
 }
 
 sub _proc_child_param_single {
   my ($self, $func, $args, $firstonly) = @_;
   my $ih;
   if (defined $firstonly) {
-    if (ref($firstonly) && $firstonly->can('ihandle')) {
-      #call func
-      $ih = &$func($firstonly->ihandle);
+    if (blessed($firstonly) && $firstonly->can('ihandle')) {      
+      $ih = &$func($firstonly->ihandle); #call func
       #$self->_store_child_ref($firstonly); #xxx-just-idea
     }
-    else {
-      #call func
-      $ih = &$func(undef);
-      carp "Warning: parameter has to be a reference to IUP element";
+    else {      
+      carp "Warning: parameter 'child' has to be a reference to IUP element";
+      $ih = &$func(undef); #call func
     }
   }
   elsif (defined $args && defined $args->{child}) {
-    if (ref($args->{child}) && $args->{child}->can('ihandle')) {
-      #call func
-      $ih = &$func($args->{child}->ihandle);
+    if (blessed($args->{child}) && $args->{child}->can('ihandle')) {      
+      $ih = &$func($args->{child}->ihandle); #call func
       #$self->_store_child_ref($args->{child}); #xxx-just-idea
     }
     else {
-      carp "Warning: 'child' parameter has to be a reference to IUP element";
-      #call func
-      $ih = &$func(undef);
+      carp "Warning: 'child' parameter has to be a reference to IUP element";      
+      $ih = &$func(undef); #call func
     }
     delete $args->{child};
   }
-  else {
-    #call func
-    $ih = &$func(undef);
+  else {    
+    $ih = &$func(undef); #call func
   }  
   return $ih;
 }
