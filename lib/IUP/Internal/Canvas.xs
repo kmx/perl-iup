@@ -26,7 +26,7 @@ cdCanvas* ref2cnv(SV* ref) {
   HV* h;
   SV** s;
   if ((h = (HV*)(SvRV(ref))) == NULL) return NULL;
-  if ((s = hv_fetchs(h, "___cnvhandle", 0)) != NULL) return INT2PTR(cdCanvas*,SvIVX(*s));
+  if ((s = hv_fetchs(h, "!int!cnvhandle", 0)) != NULL) return INT2PTR(cdCanvas*,SvIVX(*s));
   return NULL;
 }
 

@@ -113,7 +113,7 @@ sub cb_generate1 {
       my @l_name = ( '$self' );      
       
       $h->{$m}->{$a}->{xs_internal_action_push} = "XPUSHs(sv_2mortal(newSVpvn(\"$a\", ".length($a).")));";      
-      $h->{$m}->{$a}->{xs_internal_action_key} = $a;
+      $h->{$m}->{$a}->{xs_internal_action_key} = "!int!cb!$a";
       my @l_xspush = ();
       my @l_xspop = ();
       my @l_xslocvar = ();
@@ -184,8 +184,6 @@ sub cb_generate1 {
       $h->{$m}->{$a}->{xs_init_cb} = $pf;
       if($rv_count == 1) {
         $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != 1) { /* no warning, use default retval */ }";
-	#warn(\"Warning: $a callback has not returned single scalar value (count=%d)!\\n\",count);
-	                                           
       }
       else {
         $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != $rv_count) { warn(\"Warning: $a callback has not returned $rv_count values (count=%d)!\\n\",count); }";

@@ -15,10 +15,10 @@ bootstrap IUP::Internal::Canvas;
 sub cnvhandle {
   if ($_[1]) {
     IUP::Internal::LibraryIup::_register_ch($_[1], $_[0]);    
-    return $_[0]->{___cnvhandle} = $_[1]    
+    return $_[0]->{'!int!cnvhandle'} = $_[1]    
   }
   else {
-    return $_[0]->{___cnvhandle};
+    return $_[0]->{'!int!cnvhandle'};
   }
 }
 

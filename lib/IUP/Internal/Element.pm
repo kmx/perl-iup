@@ -86,10 +86,10 @@ sub new_from_ihandle {
 sub ihandle {
   if ($_[1]) {
     IUP::Internal::LibraryIup::_register_ih($_[1], $_[0]);    
-    return $_[0]->{___ihandle} = $_[1]
+    return $_[0]->{'!int!ihandle'} = $_[1]
   }
   else {
-    return $_[0]->{___ihandle};
+    return $_[0]->{'!int!ihandle'};
   }
 }
 
@@ -157,7 +157,7 @@ sub SetAttribute {
     elsif (blessed($v) && $v->can('ihandle')) {
       #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
       IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
-      #$self->{____att_ref}->{$k} = $v; #xxx-just-idea
+      #$self->{'!int!att_ref'}->{$k} = $v; #xxx-just-idea
     }
     else {
       carp "[warning] cannot set attribute '$k' to '$v'";
@@ -211,7 +211,7 @@ sub SetCallback {
     my ($action, $func) = ($_, $args{$_});    
     my $cb_init_func = IUP::Internal::Callback::_get_cb_init_function(ref($self), $action);
     if (ref($cb_init_func) eq 'CODE') {
-      $self->{$action} = $func; #xxxFIXME maybe $self->{"____CB_$action"} = $func;
+      $self->{"!int!cb!$action"} = $func;
       &$cb_init_func($self->ihandle,$action);
     }
     else {
@@ -552,7 +552,7 @@ sub _store_child_ref {
   my $self = shift;
   for (@_) {
     next unless blessed($_);
-    $self->{____child}->{$_->ihandle} = $_;
+    $self->{'!int!child'}->{$_->ihandle} = $_;
   }
 }
 

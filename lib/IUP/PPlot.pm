@@ -20,7 +20,7 @@ sub PPlotBegin {
   #void IupPPlotBegin(Ihandle* ih, int strXdata); [in C]
   #iup.PPlotBegin(ih: ihandle, strXdata: number) [in Lua]
   my ($self, $strXdata) = @_;
-  $self->{____last_begin_param} = $strXdata;
+  $self->{'!int!last_begin_param'} = $strXdata;
   return IUP::Internal::LibraryIup::_IupPPlotBegin($self->ihandle, $strXdata);
 }
 
@@ -36,7 +36,7 @@ sub PPlotAdd {
   my $self = shift;
   my $c = scalar @_;
   if ( $c>=2 && ($c%2)==0 ) {
-    return IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $self->{____last_begin_param}, @_);
+    return IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $self->{'!int!last_begin_param'}, @_);
   }
   else {
     carp "Warning: wrong number of parameters";
@@ -46,7 +46,7 @@ sub PPlotAdd {
 sub PPlotAddPoints {
   # params: ($index, \@xylist)
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupPPlotAddPoints($self->ihandle, $self->{____last_begin_param}, @_);
+  return IUP::Internal::LibraryIup::_IupPPlotAddPoints($self->ihandle, $self->{'!int!last_begin_param'}, @_);
 }
 
 sub PPlotInsert {
@@ -56,7 +56,7 @@ sub PPlotInsert {
   my $sample_index = shift;
   my $c = scalar @_;
   if ( $c>=2 && ($c%2)==0 ) {
-    return IUP::Internal::LibraryIup::_IupPPlotInsert($self->ihandle, $self->{____last_begin_param},
+    return IUP::Internal::LibraryIup::_IupPPlotInsert($self->ihandle, $self->{'!int!last_begin_param'},
                                                       $index, $sample_index, @_);
   }
   else {
@@ -67,7 +67,7 @@ sub PPlotInsert {
 sub PPlotInsertPoints {
   # params: ($index, $sample_index, \@xylist)
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupPPlotInsertPoints($self->ihandle, $self->{____last_begin_param}, @_);
+  return IUP::Internal::LibraryIup::_IupPPlotInsertPoints($self->ihandle, $self->{'!int!last_begin_param'}, @_);
 }
 
 sub PPlotTransform {

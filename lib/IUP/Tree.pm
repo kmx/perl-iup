@@ -18,12 +18,12 @@ sub TreeSetUserId {
   my ($self, $id, $userdata) = @_;
   my $pointer = IUP::Internal::LibraryIup::_IupTreeGetUserId($self->ihandle, $id);
   if (!defined($userdata)) {
-    delete $self->{____treedata}->{$pointer} if $pointer; #delete the old data
+    delete $self->{'!int!treedata'}->{$pointer} if $pointer; #delete the old data
   }
   elsif (ref($userdata)) {
-    delete $self->{____treedata}->{$pointer} if $pointer; #delete the old data
+    delete $self->{'!int!treedata'}->{$pointer} if $pointer; #delete the old data
     $pointer = refaddr($userdata);
-    $self->{____treedata}->{$pointer} = $userdata;
+    $self->{'!int!treedata'}->{$pointer} = $userdata;
     IUP::Internal::LibraryIup::_IupTreeSetUserId($self->ihandle, $id, $pointer);
   }
   else {
@@ -36,8 +36,8 @@ sub TreeGetUserId {
   #iup.TreeGetUserId(ih: ihandle, id: number) -> (ret: userdata/table) [in Lua]
   my ($self, $id) = @_;
   my $pointer = IUP::Internal::LibraryIup::_IupTreeGetUserId($self->ihandle, $id);  
-  return undef unless defined $self->{____treedata};
-  return $self->{____treedata}->{$pointer};
+  return undef unless defined $self->{'!int!treedata'};
+  return $self->{'!int!treedata'}->{$pointer};
 }
 
 sub TreeGetId {
