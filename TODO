@@ -1,5 +1,5 @@
 ################ the last time working on ################ 
-- callbacks (returning multivalues) + pplot
+- callbacks XS + pplot_advanced not working
 ##########################################################
 
 ######## weaken refs in global tables - element destruction issues
@@ -13,6 +13,13 @@ info:
 global registers:
 - register classes created in GetByIhandle (similarly fo canvas)
 - or register in: new_from_cnvhandle new_from_ihandle
+
+!!IMPORTANT!!######## pplot_avanced example - zooming not working
+
+!!IMPORTANT!!######## change internal prefix from ____ to 
+- !int!cb!XXXXXXX
+- !int!ihandle
+- !int!cvnhandle
 
 !!IMPORTANT!!######## IUP::Tree
 #IUP::Tree - #NOTE: tree->TreeAddNodes(...) has to go after dialog->Show() + tree->SetAttribute(...) has to go after dialog->Show() xxx why?

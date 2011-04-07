@@ -15,7 +15,8 @@ SV* canvas2SV(cdCanvas* canvas) {
 
   /* ### check if canvas pointer is present in global hash 'ch_register' */
   SV** ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
-  if (ref != NULL) return *ref;
+  if (ref != NULL) 
+    if (SvOK(*ref)) return *ref;
 
   /* ### http://stackoverflow.com/questions/1497836/how-do-i-write-a-perl-constructor-in-xs */
   /*warn("DEBUG: need to create IUP::Internal::Canvas %s\n",hkey);*/
@@ -33,7 +34,8 @@ SV* ihandle2SV(Ihandle* ih) {
 
   /* ### check if canvas pointer is present in global hash 'ih_register' */
   SV** ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
-  if (ref != NULL) return *ref;
+  if (ref != NULL)
+    if (SvOK(*ref)) return *ref;
   
   /* ### http://stackoverflow.com/questions/1497836/how-do-i-write-a-perl-constructor-in-xs */
   /*warn("DEBUG: need to create IUP::Internal::Element %s\n",hkey);*/
@@ -48,7 +50,9 @@ int call_cb_func(SV* element, char *action) {
   /* call_pv(element->{action},G_ARRAY) */
   HV* hash = MUTABLE_HV(SvRV(element));
   SV** ref = hv_fetch(hash, action, strlen(action), 0);
-  if (ref != NULL) return call_sv(*ref,G_ARRAY);
+  /*if (ref != NULL) if (sv_isobject(*ref)) return call_sv(*ref,G_ARRAY);*/
+  if (ref != NULL)
+    if (SvOK(*ref)) return call_sv(*ref,G_ARRAY); /*xxxCHECKLATER better would be to test blessed(*ref)*/
   return -1; /*xxxCHECKLATER not sure if -1 is a good idea*/
 }
 [% FOREACH i IN xsitems %]
