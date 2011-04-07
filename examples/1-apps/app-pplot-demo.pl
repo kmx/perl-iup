@@ -72,24 +72,13 @@ sub InitPlot {
 # show/hide V grid
 sub tgg3_cb {
   my ($self, $v) = @_;
-
   if ($v) {
     #checked
-    if ($tgg4->GetAttribute("VALUE") eq 'ON') {
-      $mainplot->SetAttribute("GRID", "YES");
-    }
-    else {
-      $mainplot->SetAttribute("GRID", "VERTICAL");
-    }
+    $mainplot->GRID( ($tgg4->VALUE eq 'ON') ? "YES" : "VERTICAL" );
   }
   else {
-    # unchecked
-    if ($tgg4->GetAttribute("VALUE") eq 'OFF') {
-      $mainplot->SetAttribute("GRID", "NO");
-    }
-    else {
-      $mainplot->SetAttribute("GRID", "HORIZONTAL");
-    }
+    #unchecked
+    $mainplot->GRID( ($tgg4->VALUE eq 'OFF') ? "NO" : "HORIZONTAL" );
   }
   $mainplot->REDRAW(1);
   return IUP_DEFAULT;
@@ -101,26 +90,15 @@ sub tgg4_cb {
   my ($self, $v) = @_;  
   if ($v) {
     #checked
-    if ($tgg3->GetAttribute("VALUE") eq 'ON') {
-      $mainplot->SetAttribute("GRID", "YES");
-    }
-    else {
-      $mainplot->SetAttribute("GRID", "HORIZONTAL");
-    }
+    $mainplot->GRID( ($tgg3->VALUE eq 'ON') ? "YES" : "HORIZONTAL" );
   }
   else {
-    # unchecked
-    if ($tgg3->GetAttribute("VALUE") eq 'OFF') {
-      $mainplot->SetAttribute("GRID", "NO");
-    }
-    else {
-      $mainplot->SetAttribute("GRID", "VERTICAL");
-    }
+    #unchecked
+    $mainplot->GRID( ($tgg3->VALUE eq 'OFF') ? "NO" : "VERTICAL" );
   }
   $mainplot->REDRAW(1);
   return IUP_DEFAULT;
 }
-
 
 # show/hide legend
 sub tgg5_cb {
@@ -129,7 +107,6 @@ sub tgg5_cb {
   $mainplot->REDRAW(1);
   return IUP_DEFAULT;
 }
-
 
 # autoscale Y
 sub tgg1_cb {
@@ -148,7 +125,6 @@ sub tgg1_cb {
   $mainplot->REDRAW(1);
   return IUP_DEFAULT;
 }
-
 
 # autoscale X
 sub tgg2_cb {
@@ -172,6 +148,7 @@ sub tgg2_cb {
 # Y zoom
 sub dial1_btndown_cb {
   my ($self, $angle) = @_;
+  warn "xxxDEBUG: dial1_btndown_cb: ", $mainplot->GetAttribute("AXS_YMIN"), ":", $mainplot->GetAttribute("AXS_YMAX"), "\n";
   $mainplot->SetAttribute("OLD_YMIN", $mainplot->GetAttribute("AXS_YMIN"));
   $mainplot->SetAttribute("OLD_YMAX", $mainplot->GetAttribute("AXS_YMAX"));
   return IUP_DEFAULT;

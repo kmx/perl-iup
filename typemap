@@ -27,9 +27,10 @@ T_PTR_OR_NULL
 	else sv_setiv($arg, PTR2IV($var));
 
 ### string (char*) with automatic NULL<->undef conversion on input/output
+# old approach: $var = (SvPOK($arg)) ? SvPVX($arg) : NULL; (this does not stringify numeric values)
 INPUT
 T_STR_OR_NULL
-	$var = (SvPOK($arg)) ? SvPVX($arg) : NULL;
+	$var = (SvOK($arg)) ? SvPV_nolen($arg) : NULL;
 
 OUTPUT
 T_STR_OR_NULL
