@@ -31,7 +31,7 @@ sub new_from_cnvhandle {
 }
 
 sub DESTROY {
-  #xxx todo
+  #xxxFIXME handle canvas destruction
 }
 
 #Note: all canvas related methods implemented directly in XS

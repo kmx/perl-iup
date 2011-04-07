@@ -109,11 +109,12 @@ sub cb_generate1 {
       }
       
       my $pf = "_init_cb_$a\_$h->{$m}->{$a}->{type}";      
+      my $pf_a = $a;
 
       my @l_name = ( '$self' );      
       
       $h->{$m}->{$a}->{xs_internal_action_push} = "XPUSHs(sv_2mortal(newSVpvn(\"$a\", ".length($a).")));";      
-      $h->{$m}->{$a}->{xs_internal_action_key} = "!int!cb!$a";
+      $h->{$m}->{$a}->{xs_internal_action_key} = "!int!cb!$a!func";
       my @l_xspush = ();
       my @l_xspop = ();
       my @l_xslocvar = ();
@@ -182,6 +183,7 @@ sub cb_generate1 {
       $h->{$m}->{$a}->{xs_internal_cb_push} = \@l_xspush;      
       $h->{$m}->{$a}->{xs_internal_cb_locvar} = \@l_xslocvar;
       $h->{$m}->{$a}->{xs_init_cb} = $pf;
+      $h->{$m}->{$a}->{xs_init_cb_action} = $pf_a;
       if($rv_count == 1) {
         $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != 1) { /* no warning, use default retval */ }";
       }

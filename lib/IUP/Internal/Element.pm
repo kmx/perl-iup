@@ -9,11 +9,13 @@ use IUP::Internal::Attribute;
 use IUP::Constants qw(IUP_CURRENT);
 use Carp;
 use Scalar::Util 'blessed';
+
 sub BEGIN {
-  #warn "[DEBUG] IUP::Internal::Element::BEGIN() started\n";
+  #warn "xxxDEBUG IUP::Internal::Element::BEGIN() started\n";
   IUP::Internal::LibraryIup::_IupControlsOpen();
 }
 
+# constructor
 sub new {
   my $class = shift;
   my $argc = scalar @_;
@@ -63,6 +65,7 @@ sub new {
   return $self;
 }
 
+# constructor
 sub new_no_ihandle {
   my $class = shift;
   my $self = { class => $class };
@@ -70,6 +73,7 @@ sub new_no_ihandle {
   return $self;
 }
 
+# constructor
 sub new_from_ihandle {
   my ($class, $ih) = @_;
   my $self = { class => $class };
@@ -92,20 +96,6 @@ sub ihandle {
     return $_[0]->{'!int!ihandle'};
   }
 }
-
-# accessor
-#sub name {
-#  if ($_[1]) {
-#    #Ihandle *IupSetHandle(const char *name, Ihandle *ih); [in C]
-#    #iup.SetHandle(name: string, ih: ihandle) -> old_ih: ihandle [in Lua]
-#    return IUP::Internal::LibraryIup::_IupSetHandle($_[1], $_[0]->ihandle);    
-#  }
-#  else {
-#    #char* IupGetName(Ihandle* ih); [in C]
-#    #iup.GetName(ih: ihandle) -> (name: string) [in Lua]
-#    return IUP::Internal::LibraryIup::_IupGetName($_[0]->ihandle);    
-#  }
-#}
 
 sub import {
   my $p = shift;
@@ -157,7 +147,9 @@ sub SetAttribute {
     elsif (blessed($v) && $v->can('ihandle')) {
       #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
       IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
-      #$self->{'!int!att_ref'}->{$k} = $v; #xxx-just-idea
+      #xxx-just-idea
+      #assuming any element ref stored into iup attribute to be a child
+      #$self->_store_child_ref($v); 
     }
     else {
       carp "[warning] cannot set attribute '$k' to '$v'";
@@ -211,8 +203,20 @@ sub SetCallback {
     my ($action, $func) = ($_, $args{$_});    
     my $cb_init_func = IUP::Internal::Callback::_get_cb_init_function(ref($self), $action);
     if (ref($cb_init_func) eq 'CODE') {
-      $self->{"!int!cb!$action"} = $func;
-      &$cb_init_func($self->ihandle,$action);
+      if (defined $func) {
+        #set callback
+        $self->{"!int!cb!$action!func"} = $func;
+        $self->{'!int!cb!$action!self'} = $self; #xxxCHECKLATER intentional circular dependency #xxx-just-idea
+        &$cb_init_func($self->ihandle);
+      }
+      else {
+        #clear (unset) callback
+        IUP::Internal::Callback::_clear_cb($self->ihandle,$action);
+	for (keys %$self) {    
+	  #clear all related values
+          $self->{$_} = undef if /^!int!cb!\Q$action\E!/;
+        }
+      }
     }
     else {
       carp "Warning: ignoring unknown callback '$action' (".ref($self).")";
@@ -235,11 +239,6 @@ sub HasValidClassName {
   return lc($p) eq "iup::$c" ? 1 : 0;
 }
 
-sub _create_element {
-  my ($self, @args) = @_;
-  die "Function _create_element() not implemented in IUP::Internal::Element";
-}
-
 sub Append {
   #Ihandle* IupAppend(Ihandle* ih, Ihandle* new_child); [in C]
   #iup.Append(ih, new_child: ihandle) -> (parent: ihandle) [in Lua]
@@ -260,10 +259,13 @@ sub Destroy {
   #void IupDestroy(Ihandle *ih); [in C]
   #iup.Destroy(ih: ihandle) [in Lua]
   my $self = shift;
-  my $ih = $self->ihandle;
-  #xxxFIXME what to do with callbacks?
-  $self->ihandle(undef);
-  IUP::Internal::LibraryIup::_unregister_ih($ih);
+  my $ih = $self->ihandle;  
+  
+  #destroy all perl related stuff on element + its children
+  $self->_internal_destroy();
+  #BEWARE: at this point $self->ihandle is undef
+  
+  IUP::Internal::LibraryIup::_unregister_ih($ih); #xxxCHECKLATER not necessary if weaken refs stored in global register
   return IUP::Internal::LibraryIup::_IupDestroy($ih);
 }
 
@@ -539,15 +541,18 @@ sub NextField {
 }
 
 sub DESTROY {
-  #xxx TODO see http://perldoc.perl.org/perlobj.html
-  #warn "XXX DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";  
-  #xxxFIXME not a good idea
-  #$_[0]->Destroy; #handles also _unregister_ih
+  #IMPORTANT: do not automatically destroy iup elements - xxxCHECKLATER
+  #warn "xxxDEBUG: DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";  
 }
 
-#helper funcs for handling child=>... params
+###### INTERNAL HELPER FUNCTIONS
 
-sub _store_child_ref {
+sub _create_element {
+  my ($self, @args) = @_;
+  die "Function _create_element() not implemented in IUP::Internal::Element";
+}
+
+sub _store_child_ref { #xxxCHECKTHIS
   #xxx-just-idea
   my $self = shift;
   for (@_) {
@@ -556,7 +561,24 @@ sub _store_child_ref {
   }
 }
 
+sub _internal_destroy { #xxxCHECKTHIS  
+  my $self = shift;
+  #unset all callbacks
+  for (keys %$self) {    
+    if (/^!int!cb!([^!]+)!func$/) {
+      $self->SetCallback($1, undef);
+    }
+  }
+  #go through all children #xxx-just-idea
+  for (keys %{$self->{'!int!child'}}) {
+    $self->{'!int!child'}->{$_}->_internal_destroy()
+  }
+  #in the last step destroy $self->ihandle
+  $self->ihandle(undef);
+}
+
 sub _proc_child_param {
+  #handling new(child=>$child) or new(child=>[...]) of new($child) or new([...])
   my ($self, $func, $args, $firstonly) = @_;  
   my @list;
   my @ihlist;
@@ -580,16 +602,18 @@ sub _proc_child_param {
   for (@list) {
     if (blessed($_) && $_->can('ihandle')) {
       push @ihlist, $_->ihandle;
+      #$self->_store_child_ref($_); #xxx-just-idea
     }
     else {
       carp "warning: undefined item passed as 'child' parameter of ",ref($self),"->new()";
     }        
   }
-  #call func
   return &$func(@ihlist);
 }
 
+#internal helper func
 sub _proc_child_param_single {
+  #handling new(child=>$child, ...) or new($child)
   my ($self, $func, $args, $firstonly) = @_;
   my $ih;
   if (defined $firstonly) {

@@ -24,6 +24,7 @@ SV* canvas2SV(cdCanvas* canvas) {
   SV* obj = sv_bless( newRV((SV*)hash), gv_stashpv("IUP::Internal::Canvas", 1) );
   hv_store(hash, "!int!cnvhandle", 12, ptrSV, 0);
   hv_store(globreg, hkey, strlen(hkey), newSVsv(obj), 0); /*store into globreg*/
+  /*xxxFIXME perhaps implement the same dark magic as in ihandle2SV*/
   return sv_2mortal(obj);
 }
 
@@ -42,7 +43,10 @@ SV* ihandle2SV(Ihandle* ih) {
   HV* hash = (HV *)sv_2mortal((SV *)newHV());
   SV* obj = sv_bless( newRV((SV*)hash), gv_stashpv("IUP::Internal::Element", 1) );
   hv_store(hash, "!int!ihandle", 10, ptrSV, 0);
-  hv_store(globreg, hkey, strlen(hkey), newSVsv(obj), 0); /*store into globreg*/
+  hv_store(globreg, hkey, strlen(hkey), newSVsv(obj), 0); /*store 'weaken' into global register*/
+  /*xxxFIXME we need additional params: ihandle2SV(ih, cb_elem_SV, cb_action_STR) */  
+  /*xxxFIXME hv_store(cb_elem, "int!action!ih".hkey, strlen(...), newSVsv(obj), 0); */ /*store 'non-weaken' into cb_element - to avoid releasing */
+  /*xxxFIXME making SV weaken - sv_rvweaken(sv); */
   return sv_2mortal(obj);
 }
 
@@ -104,11 +108,17 @@ MODULE = IUP::Internal::Callback	PACKAGE = IUP::Internal::Callback
 BOOT:
 /* empty boot */
 
-[% FOREACH i IN xsitems %]
 void
-[% i.xs_init_cb %](ih,action)
+_clear_cb(ih,action)
 		Ihandle* ih;
 		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)[% i.xs_internal_cb %]);
+		IupSetCallback(ih, action, NULL);
+
+[% FOREACH i IN xsitems %]
+void
+[% i.xs_init_cb %](ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "[% i.xs_init_cb_action %]", (Icallback)[% i.xs_internal_cb %]);
 [% END %]

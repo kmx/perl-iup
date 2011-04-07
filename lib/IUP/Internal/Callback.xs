@@ -42,7 +42,10 @@ SV* ihandle2SV(Ihandle* ih) {
   HV* hash = (HV *)sv_2mortal((SV *)newHV());
   SV* obj = sv_bless( newRV((SV*)hash), gv_stashpv("IUP::Internal::Element", 1) );
   hv_store(hash, "!int!ihandle", 10, ptrSV, 0);
-  hv_store(globreg, hkey, strlen(hkey), newSVsv(obj), 0); /*store into globreg*/
+  hv_store(globreg, hkey, strlen(hkey), newSVsv(obj), 0); /*store 'weaken' into global register*/
+  /*xxxFIXME we need additional params: ihandle2SV(ih, cb_elem_SV, cb_action_STR) {  
+  /*xxxFIXME weaken(entry in global register) */
+  /*xxxFIXME hv_store(cb_elem, "int!action!ih".hkey, strlen(...), newSVsv(obj), 0); /*store 'non-weaken' into cb_element - to avoid releasing */
   return sv_2mortal(obj);
 }
 
@@ -73,7 +76,7 @@ internal_cb_ACTION_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!ACTION");
+	count = call_cb_func(element,"!int!cb!ACTION!func");
 
 	SPAGAIN;
 
@@ -110,7 +113,7 @@ internal_cb_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!BUTTON_CB");
+	count = call_cb_func(element,"!int!cb!BUTTON_CB!func");
 
 	SPAGAIN;
 
@@ -144,7 +147,7 @@ internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
 	XPUSHs(sv_2mortal(newSViv(height)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!RESIZE_CB");
+	count = call_cb_func(element,"!int!cb!RESIZE_CB!func");
 
 	SPAGAIN;
 
@@ -183,7 +186,7 @@ internal_cb_DRAW_CB_iiiiiiv (Ihandle* ih,int line,int column,int xmin,int xmax,i
 	XPUSHs(canvas2SV(canvas));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!DRAW_CB");
+	count = call_cb_func(element,"!int!cb!DRAW_CB!func");
 
 	SPAGAIN;
 
@@ -216,7 +219,7 @@ internal_cb_HEIGHT_CB_i (Ihandle* ih,int line)
 	XPUSHs(sv_2mortal(newSViv(line)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!HEIGHT_CB");
+	count = call_cb_func(element,"!int!cb!HEIGHT_CB!func");
 
 	SPAGAIN;
 
@@ -250,7 +253,7 @@ internal_cb_HSPAN_CB_ii (Ihandle* ih,int line,int column)
 	XPUSHs(sv_2mortal(newSViv(column)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!HSPAN_CB");
+	count = call_cb_func(element,"!int!cb!HSPAN_CB!func");
 
 	SPAGAIN;
 
@@ -289,7 +292,7 @@ internal_cb_MOUSECLICK_CB_iiiiiis (Ihandle* ih,int button,int pressed,int line,i
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MOUSECLICK_CB");
+	count = call_cb_func(element,"!int!cb!MOUSECLICK_CB!func");
 
 	SPAGAIN;
 
@@ -326,7 +329,7 @@ internal_cb_MOUSEMOTION_CB_iiiis (Ihandle* ih,int line,int column,int x,int y,ch
 	XPUSHs(sv_2mortal(newSVpv(r, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MOUSEMOTION_CB");
+	count = call_cb_func(element,"!int!cb!MOUSEMOTION_CB!func");
 
 	SPAGAIN;
 
@@ -358,7 +361,7 @@ internal_cb_NCOLS_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!NCOLS_CB");
+	count = call_cb_func(element,"!int!cb!NCOLS_CB!func");
 
 	SPAGAIN;
 
@@ -390,7 +393,7 @@ internal_cb_NLINES_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!NLINES_CB");
+	count = call_cb_func(element,"!int!cb!NLINES_CB!func");
 
 	SPAGAIN;
 
@@ -424,7 +427,7 @@ internal_cb_SCROLLING_CB_ii (Ihandle* ih,int line,int column)
 	XPUSHs(sv_2mortal(newSViv(column)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!SCROLLING_CB");
+	count = call_cb_func(element,"!int!cb!SCROLLING_CB!func");
 
 	SPAGAIN;
 
@@ -458,7 +461,7 @@ internal_cb_VSPAN_CB_ii (Ihandle* ih,int line,int column)
 	XPUSHs(sv_2mortal(newSViv(column)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!VSPAN_CB");
+	count = call_cb_func(element,"!int!cb!VSPAN_CB!func");
 
 	SPAGAIN;
 
@@ -491,7 +494,7 @@ internal_cb_WIDTH_CB_i (Ihandle* ih,int column)
 	XPUSHs(sv_2mortal(newSViv(column)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!WIDTH_CB");
+	count = call_cb_func(element,"!int!cb!WIDTH_CB!func");
 
 	SPAGAIN;
 
@@ -524,7 +527,7 @@ internal_cb_CELL_CB_i (Ihandle* ih,int cell)
 	XPUSHs(sv_2mortal(newSViv(cell)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!CELL_CB");
+	count = call_cb_func(element,"!int!cb!CELL_CB!func");
 
 	SPAGAIN;
 
@@ -557,7 +560,7 @@ internal_cb_EXTENDED_CB_i (Ihandle* ih,int cell)
 	XPUSHs(sv_2mortal(newSViv(cell)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!EXTENDED_CB");
+	count = call_cb_func(element,"!int!cb!EXTENDED_CB!func");
 
 	SPAGAIN;
 
@@ -591,7 +594,7 @@ internal_cb_SELECT_CB_ii (Ihandle* ih,int cell,int type)
 	XPUSHs(sv_2mortal(newSViv(type)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!SELECT_CB");
+	count = call_cb_func(element,"!int!cb!SELECT_CB!func");
 
 	SPAGAIN;
 
@@ -625,7 +628,7 @@ internal_cb_SWITCH_CB_ii (Ihandle* ih,int prim_cell,int sec_cell)
 	XPUSHs(sv_2mortal(newSViv(sec_cell)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!SWITCH_CB");
+	count = call_cb_func(element,"!int!cb!SWITCH_CB!func");
 
 	SPAGAIN;
 
@@ -660,7 +663,7 @@ internal_cb_CHANGE_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned 
 	XPUSHs(sv_2mortal(newSViv(b)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!CHANGE_CB");
+	count = call_cb_func(element,"!int!cb!CHANGE_CB!func");
 
 	SPAGAIN;
 
@@ -695,7 +698,7 @@ internal_cb_DRAG_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned ch
 	XPUSHs(sv_2mortal(newSViv(b)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!DRAG_CB");
+	count = call_cb_func(element,"!int!cb!DRAG_CB!func");
 
 	SPAGAIN;
 
@@ -727,7 +730,7 @@ internal_cb_VALUECHANGED_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!VALUECHANGED_CB");
+	count = call_cb_func(element,"!int!cb!VALUECHANGED_CB!func");
 
 	SPAGAIN;
 
@@ -760,7 +763,7 @@ internal_cb_BUTTON_PRESS_CB_d (Ihandle* ih,double angle)
 	XPUSHs(sv_2mortal(newSVnv(angle)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!BUTTON_PRESS_CB");
+	count = call_cb_func(element,"!int!cb!BUTTON_PRESS_CB!func");
 
 	SPAGAIN;
 
@@ -793,7 +796,7 @@ internal_cb_BUTTON_RELEASE_CB_d (Ihandle* ih,double angle)
 	XPUSHs(sv_2mortal(newSVnv(angle)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!BUTTON_RELEASE_CB");
+	count = call_cb_func(element,"!int!cb!BUTTON_RELEASE_CB!func");
 
 	SPAGAIN;
 
@@ -826,7 +829,7 @@ internal_cb_MOUSEMOVE_CB_d (Ihandle* ih,double angle)
 	XPUSHs(sv_2mortal(newSVnv(angle)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MOUSEMOVE_CB");
+	count = call_cb_func(element,"!int!cb!MOUSEMOVE_CB!func");
 
 	SPAGAIN;
 
@@ -860,7 +863,7 @@ internal_cb_FILE_CB_ss (Ihandle* ih,const char* file_name,const char* status)
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!FILE_CB");
+	count = call_cb_func(element,"!int!cb!FILE_CB!func");
 
 	SPAGAIN;
 
@@ -892,7 +895,7 @@ internal_cb_HIGHLIGHT_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!HIGHLIGHT_CB");
+	count = call_cb_func(element,"!int!cb!HIGHLIGHT_CB!func");
 
 	SPAGAIN;
 
@@ -928,7 +931,7 @@ internal_cb_DROPFILES_CB_siii (Ihandle* ih,const char* filename,int num,int x,in
 	XPUSHs(sv_2mortal(newSViv(y)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!DROPFILES_CB");
+	count = call_cb_func(element,"!int!cb!DROPFILES_CB!func");
 
 	SPAGAIN;
 
@@ -963,7 +966,7 @@ internal_cb_ACTION_sii (Ihandle* ih,char* text,int item,int state)
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!ACTION");
+	count = call_cb_func(element,"!int!cb!ACTION!func");
 
 	SPAGAIN;
 
@@ -998,7 +1001,7 @@ internal_cb_CARET_CB_iii (Ihandle* ih,int lin,int col,int pos)
 	XPUSHs(sv_2mortal(newSViv(pos)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!CARET_CB");
+	count = call_cb_func(element,"!int!cb!CARET_CB!func");
 
 	SPAGAIN;
 
@@ -1032,7 +1035,7 @@ internal_cb_DBLCLICK_CB_is (Ihandle* ih,int item,char* text)
 	XPUSHs(sv_2mortal(newSVpv(text, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!DBLCLICK_CB");
+	count = call_cb_func(element,"!int!cb!DBLCLICK_CB!func");
 
 	SPAGAIN;
 
@@ -1065,7 +1068,7 @@ internal_cb_DROPDOWN_CB_i (Ihandle* ih,int state)
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!DROPDOWN_CB");
+	count = call_cb_func(element,"!int!cb!DROPDOWN_CB!func");
 
 	SPAGAIN;
 
@@ -1099,7 +1102,7 @@ internal_cb_EDIT_CB_is (Ihandle* ih,int c,char* new_value)
 	XPUSHs(sv_2mortal(newSVpv(new_value, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!EDIT_CB");
+	count = call_cb_func(element,"!int!cb!EDIT_CB!func");
 
 	SPAGAIN;
 
@@ -1134,7 +1137,7 @@ internal_cb_MOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MOTION_CB");
+	count = call_cb_func(element,"!int!cb!MOTION_CB!func");
 
 	SPAGAIN;
 
@@ -1167,7 +1170,7 @@ internal_cb_MULTISELECT_CB_s (Ihandle* ih,char* value)
 	XPUSHs(sv_2mortal(newSVpv(value, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MULTISELECT_CB");
+	count = call_cb_func(element,"!int!cb!MULTISELECT_CB!func");
 
 	SPAGAIN;
 
@@ -1204,7 +1207,7 @@ internal_cb_ACTION_CB_iiiis (Ihandle* ih,int c,int lin,int col,int edition,char*
 	XPUSHs(sv_2mortal(newSVpv(after, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!ACTION_CB");
+	count = call_cb_func(element,"!int!cb!ACTION_CB!func");
 
 	SPAGAIN;
 
@@ -1238,7 +1241,7 @@ internal_cb_BGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!BGCOLOR_CB");
+	count = call_cb_func(element,"!int!cb!BGCOLOR_CB!func");
 
 	SPAGAIN;
 
@@ -1276,7 +1279,7 @@ internal_cb_CLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!CLICK_CB");
+	count = call_cb_func(element,"!int!cb!CLICK_CB!func");
 
 	SPAGAIN;
 
@@ -1310,7 +1313,7 @@ internal_cb_DROPCHECK_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!DROPCHECK_CB");
+	count = call_cb_func(element,"!int!cb!DROPCHECK_CB!func");
 
 	SPAGAIN;
 
@@ -1348,7 +1351,7 @@ internal_cb_DROPSELECT_CB_iinsii (Ihandle* ih,int lin,int col,Ihandle* drop,char
 	XPUSHs(sv_2mortal(newSViv(v)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!DROPSELECT_CB");
+	count = call_cb_func(element,"!int!cb!DROPSELECT_CB!func");
 
 	SPAGAIN;
 
@@ -1383,7 +1386,7 @@ internal_cb_DROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!DROP_CB");
+	count = call_cb_func(element,"!int!cb!DROP_CB!func");
 
 	SPAGAIN;
 
@@ -1419,7 +1422,7 @@ internal_cb_EDITION_CB_iiii (Ihandle* ih,int lin,int col,int mode,int update)
 	XPUSHs(sv_2mortal(newSViv(update)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!EDITION_CB");
+	count = call_cb_func(element,"!int!cb!EDITION_CB!func");
 
 	SPAGAIN;
 
@@ -1453,7 +1456,7 @@ internal_cb_ENTERITEM_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!ENTERITEM_CB");
+	count = call_cb_func(element,"!int!cb!ENTERITEM_CB!func");
 
 	SPAGAIN;
 
@@ -1487,7 +1490,7 @@ internal_cb_FGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!FGCOLOR_CB");
+	count = call_cb_func(element,"!int!cb!FGCOLOR_CB!func");
 
 	SPAGAIN;
 
@@ -1524,7 +1527,7 @@ internal_cb_FONT_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!FONT_CB");
+	count = call_cb_func(element,"!int!cb!FONT_CB!func");
 
 	SPAGAIN;
 
@@ -1558,7 +1561,7 @@ internal_cb_LEAVEITEM_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!LEAVEITEM_CB");
+	count = call_cb_func(element,"!int!cb!LEAVEITEM_CB!func");
 
 	SPAGAIN;
 
@@ -1593,7 +1596,7 @@ internal_cb_MARKEDIT_CB_iii (Ihandle* ih,int lin,int col,int marked)
 	XPUSHs(sv_2mortal(newSViv(marked)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MARKEDIT_CB");
+	count = call_cb_func(element,"!int!cb!MARKEDIT_CB!func");
 
 	SPAGAIN;
 
@@ -1627,7 +1630,7 @@ internal_cb_MARK_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MARK_CB");
+	count = call_cb_func(element,"!int!cb!MARK_CB!func");
 
 	SPAGAIN;
 
@@ -1661,7 +1664,7 @@ internal_cb_MOUSEMOVE_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MOUSEMOVE_CB");
+	count = call_cb_func(element,"!int!cb!MOUSEMOVE_CB!func");
 
 	SPAGAIN;
 
@@ -1696,7 +1699,7 @@ internal_cb_RELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!RELEASE_CB");
+	count = call_cb_func(element,"!int!cb!RELEASE_CB!func");
 
 	SPAGAIN;
 
@@ -1730,7 +1733,7 @@ internal_cb_SCROLLTOP_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!SCROLLTOP_CB");
+	count = call_cb_func(element,"!int!cb!SCROLLTOP_CB!func");
 
 	SPAGAIN;
 
@@ -1764,7 +1767,7 @@ internal_cb_VALUE_CB_ii (Ihandle* ih,int lin,int col)
 	XPUSHs(sv_2mortal(newSViv(col)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!VALUE_CB");
+	count = call_cb_func(element,"!int!cb!VALUE_CB!func");
 
 	SPAGAIN;
 
@@ -1799,7 +1802,7 @@ internal_cb_VALUE_EDIT_CB_iis (Ihandle* ih,int lin,int col,char* newval)
 	XPUSHs(sv_2mortal(newSVpv(newval, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!VALUE_EDIT_CB");
+	count = call_cb_func(element,"!int!cb!VALUE_EDIT_CB!func");
 
 	SPAGAIN;
 
@@ -1831,7 +1834,7 @@ internal_cb_MENUCLOSE_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MENUCLOSE_CB");
+	count = call_cb_func(element,"!int!cb!MENUCLOSE_CB!func");
 
 	SPAGAIN;
 
@@ -1863,7 +1866,7 @@ internal_cb_OPEN_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!OPEN_CB");
+	count = call_cb_func(element,"!int!cb!OPEN_CB!func");
 
 	SPAGAIN;
 
@@ -1895,7 +1898,7 @@ internal_cb_DELETEBEGIN_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!DELETEBEGIN_CB");
+	count = call_cb_func(element,"!int!cb!DELETEBEGIN_CB!func");
 
 	SPAGAIN;
 
@@ -1927,7 +1930,7 @@ internal_cb_DELETEEND_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!DELETEEND_CB");
+	count = call_cb_func(element,"!int!cb!DELETEEND_CB!func");
 
 	SPAGAIN;
 
@@ -1963,7 +1966,7 @@ internal_cb_DELETE_CB_iiff (Ihandle* ih,int index,int sample_index,float x,float
 	XPUSHs(sv_2mortal(newSVnv(y)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!DELETE_CB");
+	count = call_cb_func(element,"!int!cb!DELETE_CB!func");
 
 	SPAGAIN;
 
@@ -1995,7 +1998,7 @@ internal_cb_EDITBEGIN_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!EDITBEGIN_CB");
+	count = call_cb_func(element,"!int!cb!EDITBEGIN_CB!func");
 
 	SPAGAIN;
 
@@ -2027,7 +2030,7 @@ internal_cb_EDITEND_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!EDITEND_CB");
+	count = call_cb_func(element,"!int!cb!EDITEND_CB!func");
 
 	SPAGAIN;
 
@@ -2063,7 +2066,7 @@ internal_cb_EDIT_CB_iiffFF (Ihandle* ih,int index,int sample_index,float x,float
 	XPUSHs(sv_2mortal(newSVnv(y)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!EDIT_CB");
+	count = call_cb_func(element,"!int!cb!EDIT_CB!func");
 
 	SPAGAIN;
 
@@ -2098,7 +2101,7 @@ internal_cb_POSTDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	XPUSHs(canvas2SV(cnv));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!POSTDRAW_CB");
+	count = call_cb_func(element,"!int!cb!POSTDRAW_CB!func");
 
 	SPAGAIN;
 
@@ -2131,7 +2134,7 @@ internal_cb_PREDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	XPUSHs(canvas2SV(cnv));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!PREDRAW_CB");
+	count = call_cb_func(element,"!int!cb!PREDRAW_CB!func");
 
 	SPAGAIN;
 
@@ -2163,7 +2166,7 @@ internal_cb_SELECTBEGIN_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!SELECTBEGIN_CB");
+	count = call_cb_func(element,"!int!cb!SELECTBEGIN_CB!func");
 
 	SPAGAIN;
 
@@ -2195,7 +2198,7 @@ internal_cb_SELECTEND_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!SELECTEND_CB");
+	count = call_cb_func(element,"!int!cb!SELECTEND_CB!func");
 
 	SPAGAIN;
 
@@ -2232,7 +2235,7 @@ internal_cb_SELECT_CB_iiffi (Ihandle* ih,int index,int sample_index,float x,floa
 	XPUSHs(sv_2mortal(newSViv(select)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!SELECT_CB");
+	count = call_cb_func(element,"!int!cb!SELECT_CB!func");
 
 	SPAGAIN;
 
@@ -2265,7 +2268,7 @@ internal_cb_SPIN_CB_i (Ihandle* ih,int inc)
 	XPUSHs(sv_2mortal(newSViv(inc)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!SPIN_CB");
+	count = call_cb_func(element,"!int!cb!SPIN_CB!func");
 
 	SPAGAIN;
 
@@ -2299,7 +2302,7 @@ internal_cb_TABCHANGEPOS_CB_ii (Ihandle* ih,int new_pos,int old_pos)
 	XPUSHs(sv_2mortal(newSViv(old_pos)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!TABCHANGEPOS_CB");
+	count = call_cb_func(element,"!int!cb!TABCHANGEPOS_CB!func");
 
 	SPAGAIN;
 
@@ -2333,7 +2336,7 @@ internal_cb_TABCHANGE_CB_nn (Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab)
 	XPUSHs(ihandle2SV(old_tab));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!TABCHANGE_CB");
+	count = call_cb_func(element,"!int!cb!TABCHANGE_CB!func");
 
 	SPAGAIN;
 
@@ -2367,7 +2370,7 @@ internal_cb_ACTION_is (Ihandle* ih,int c,char* new_value)
 	XPUSHs(sv_2mortal(newSVpv(new_value, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!ACTION");
+	count = call_cb_func(element,"!int!cb!ACTION!func");
 
 	SPAGAIN;
 
@@ -2399,7 +2402,7 @@ internal_cb_ACTION_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!ACTION_CB");
+	count = call_cb_func(element,"!int!cb!ACTION_CB!func");
 
 	SPAGAIN;
 
@@ -2432,7 +2435,7 @@ internal_cb_ACTION_i (Ihandle* ih,int state)
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!ACTION");
+	count = call_cb_func(element,"!int!cb!ACTION!func");
 
 	SPAGAIN;
 
@@ -2465,7 +2468,7 @@ internal_cb_BRANCHCLOSE_CB_i (Ihandle* ih,int id)
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!BRANCHCLOSE_CB");
+	count = call_cb_func(element,"!int!cb!BRANCHCLOSE_CB!func");
 
 	SPAGAIN;
 
@@ -2498,7 +2501,7 @@ internal_cb_BRANCHOPEN_CB_i (Ihandle* ih,int id)
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!BRANCHOPEN_CB");
+	count = call_cb_func(element,"!int!cb!BRANCHOPEN_CB!func");
 
 	SPAGAIN;
 
@@ -2534,7 +2537,7 @@ internal_cb_DRAGDROP_CB_iiii (Ihandle* ih,int drag_id,int drop_id,int isshift,in
 	XPUSHs(sv_2mortal(newSViv(iscontrol)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!DRAGDROP_CB");
+	count = call_cb_func(element,"!int!cb!DRAGDROP_CB!func");
 
 	SPAGAIN;
 
@@ -2567,7 +2570,7 @@ internal_cb_EXECUTELEAF_CB_i (Ihandle* ih,int id)
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!EXECUTELEAF_CB");
+	count = call_cb_func(element,"!int!cb!EXECUTELEAF_CB!func");
 
 	SPAGAIN;
 
@@ -2601,7 +2604,7 @@ internal_cb_MULTISELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	for(loc_i=0; loc_i<n; loc_i++) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MULTISELECTION_CB");
+	count = call_cb_func(element,"!int!cb!MULTISELECTION_CB!func");
 
 	SPAGAIN;
 
@@ -2635,7 +2638,7 @@ internal_cb_MULTIUNSELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	for(loc_i=0; loc_i<n; loc_i++) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MULTIUNSELECTION_CB");
+	count = call_cb_func(element,"!int!cb!MULTIUNSELECTION_CB!func");
 
 	SPAGAIN;
 
@@ -2668,7 +2671,7 @@ internal_cb_NODEREMOVED_CB_s (Ihandle* ih,void* userdata)
 	XPUSHs(sv_2mortal(newSVpv(userdata, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!NODEREMOVED_CB");
+	count = call_cb_func(element,"!int!cb!NODEREMOVED_CB!func");
 
 	SPAGAIN;
 
@@ -2702,7 +2705,7 @@ internal_cb_RENAME_CB_is (Ihandle* ih,int id,char* title)
 	XPUSHs(sv_2mortal(newSVpv(title, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!RENAME_CB");
+	count = call_cb_func(element,"!int!cb!RENAME_CB!func");
 
 	SPAGAIN;
 
@@ -2735,7 +2738,7 @@ internal_cb_RIGHTCLICK_CB_i (Ihandle* ih,int id)
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!RIGHTCLICK_CB");
+	count = call_cb_func(element,"!int!cb!RIGHTCLICK_CB!func");
 
 	SPAGAIN;
 
@@ -2769,7 +2772,7 @@ internal_cb_SELECTION_CB_ii (Ihandle* ih,int id,int status)
 	XPUSHs(sv_2mortal(newSViv(status)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!SELECTION_CB");
+	count = call_cb_func(element,"!int!cb!SELECTION_CB!func");
 
 	SPAGAIN;
 
@@ -2802,7 +2805,7 @@ internal_cb_SHOWRENAME_CB_i (Ihandle* ih,int id)
 	XPUSHs(sv_2mortal(newSViv(id)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!SHOWRENAME_CB");
+	count = call_cb_func(element,"!int!cb!SHOWRENAME_CB!func");
 
 	SPAGAIN;
 
@@ -2834,7 +2837,7 @@ internal_cb_ENTERWINDOW_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!ENTERWINDOW_CB");
+	count = call_cb_func(element,"!int!cb!ENTERWINDOW_CB!func");
 
 	SPAGAIN;
 
@@ -2866,7 +2869,7 @@ internal_cb_GETFOCUS_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!GETFOCUS_CB");
+	count = call_cb_func(element,"!int!cb!GETFOCUS_CB!func");
 
 	SPAGAIN;
 
@@ -2898,7 +2901,7 @@ internal_cb_HELP_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!HELP_CB");
+	count = call_cb_func(element,"!int!cb!HELP_CB!func");
 
 	SPAGAIN;
 
@@ -2930,7 +2933,7 @@ internal_cb_KILLFOCUS_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!KILLFOCUS_CB");
+	count = call_cb_func(element,"!int!cb!KILLFOCUS_CB!func");
 
 	SPAGAIN;
 
@@ -2963,7 +2966,7 @@ internal_cb_K_ANY_i (Ihandle* ih,int c)
 	XPUSHs(sv_2mortal(newSViv(c)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!K_ANY");
+	count = call_cb_func(element,"!int!cb!K_ANY!func");
 
 	SPAGAIN;
 
@@ -2995,7 +2998,7 @@ internal_cb_LEAVEWINDOW_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!LEAVEWINDOW_CB");
+	count = call_cb_func(element,"!int!cb!LEAVEWINDOW_CB!func");
 
 	SPAGAIN;
 
@@ -3027,7 +3030,7 @@ internal_cb_MAP_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MAP_CB");
+	count = call_cb_func(element,"!int!cb!MAP_CB!func");
 
 	SPAGAIN;
 
@@ -3059,7 +3062,7 @@ internal_cb_UNMAP_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!UNMAP_CB");
+	count = call_cb_func(element,"!int!cb!UNMAP_CB!func");
 
 	SPAGAIN;
 
@@ -3093,7 +3096,7 @@ internal_cb_ACTION_ff (Ihandle* ih,float posx,float posy)
 	XPUSHs(sv_2mortal(newSVnv(posy)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!ACTION");
+	count = call_cb_func(element,"!int!cb!ACTION!func");
 
 	SPAGAIN;
 
@@ -3126,7 +3129,7 @@ internal_cb_FOCUS_CB_i (Ihandle* ih,int focus)
 	XPUSHs(sv_2mortal(newSViv(focus)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!FOCUS_CB");
+	count = call_cb_func(element,"!int!cb!FOCUS_CB!func");
 
 	SPAGAIN;
 
@@ -3160,7 +3163,7 @@ internal_cb_KEYPRESS_CB_ii (Ihandle* ih,int c,int press)
 	XPUSHs(sv_2mortal(newSViv(press)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!KEYPRESS_CB");
+	count = call_cb_func(element,"!int!cb!KEYPRESS_CB!func");
 
 	SPAGAIN;
 
@@ -3193,7 +3196,7 @@ internal_cb_MULTITOUCH_CB_iIIII (Ihandle* ih,int count_,int* pid,int* px,int* py
 	XPUSHs(sv_2mortal(newSViv(count_)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MULTITOUCH_CB");
+	count = call_cb_func(element,"!int!cb!MULTITOUCH_CB!func");
 
 	SPAGAIN;
 
@@ -3232,7 +3235,7 @@ internal_cb_SCROLL_CB_iff (Ihandle* ih,int op,float posx,float posy)
 	XPUSHs(sv_2mortal(newSVnv(posy)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!SCROLL_CB");
+	count = call_cb_func(element,"!int!cb!SCROLL_CB!func");
 
 	SPAGAIN;
 
@@ -3268,7 +3271,7 @@ internal_cb_TOUCH_CB_iiis (Ihandle* ih,int id,int x,int y,char* state)
 	XPUSHs(sv_2mortal(newSVpv(state, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!TOUCH_CB");
+	count = call_cb_func(element,"!int!cb!TOUCH_CB!func");
 
 	SPAGAIN;
 
@@ -3304,7 +3307,7 @@ internal_cb_WHEEL_CB_fiis (Ihandle* ih,float delta,int x,int y,char* status)
 	XPUSHs(sv_2mortal(newSVpv(status, 0)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!WHEEL_CB");
+	count = call_cb_func(element,"!int!cb!WHEEL_CB!func");
 
 	SPAGAIN;
 
@@ -3337,7 +3340,7 @@ internal_cb_WOM_CB_i (Ihandle* ih,int state)
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!WOM_CB");
+	count = call_cb_func(element,"!int!cb!WOM_CB!func");
 
 	SPAGAIN;
 
@@ -3369,7 +3372,7 @@ internal_cb_CLOSE_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!CLOSE_CB");
+	count = call_cb_func(element,"!int!cb!CLOSE_CB!func");
 
 	SPAGAIN;
 
@@ -3403,7 +3406,7 @@ internal_cb_COPYDATA_CB_si (Ihandle* ih,char* cmdLine,int size)
 	XPUSHs(sv_2mortal(newSViv(size)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!COPYDATA_CB");
+	count = call_cb_func(element,"!int!cb!COPYDATA_CB!func");
 
 	SPAGAIN;
 
@@ -3435,7 +3438,7 @@ internal_cb_MDIACTIVATE_CB_ (Ihandle* ih)
 	XPUSHs(element);
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MDIACTIVATE_CB");
+	count = call_cb_func(element,"!int!cb!MDIACTIVATE_CB!func");
 
 	SPAGAIN;
 
@@ -3469,7 +3472,7 @@ internal_cb_MOVE_CB_ii (Ihandle* ih,int x,int y)
 	XPUSHs(sv_2mortal(newSViv(y)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!MOVE_CB");
+	count = call_cb_func(element,"!int!cb!MOVE_CB!func");
 
 	SPAGAIN;
 
@@ -3502,7 +3505,7 @@ internal_cb_SHOW_CB_i (Ihandle* ih,int state)
 	XPUSHs(sv_2mortal(newSViv(state)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!SHOW_CB");
+	count = call_cb_func(element,"!int!cb!SHOW_CB!func");
 
 	SPAGAIN;
 
@@ -3537,7 +3540,7 @@ internal_cb_TRAYCLICK_CB_iii (Ihandle* ih,int but,int pressed,int dclick)
 	XPUSHs(sv_2mortal(newSViv(dclick)));
 	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!TRAYCLICK_CB");
+	count = call_cb_func(element,"!int!cb!TRAYCLICK_CB!func");
 
 	SPAGAIN;
 
@@ -3559,725 +3562,629 @@ MODULE = IUP::Internal::Callback	PACKAGE = IUP::Internal::Callback
 BOOT:
 /* empty boot */
 
-
 void
-_init_cb_ACTION_(ih,action)
+_clear_cb(ih,action)
 		Ihandle* ih;
 		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_ACTION_);
+		IupSetCallback(ih, action, NULL);
 
+
 void
-_init_cb_BUTTON_CB_iiiis(ih,action)
+_init_cb_ACTION_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_BUTTON_CB_iiiis);
+		IupSetCallback(ih, "ACTION", (Icallback)internal_cb_ACTION_);
 
 void
-_init_cb_RESIZE_CB_ii(ih,action)
+_init_cb_BUTTON_CB_iiiis(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_RESIZE_CB_ii);
+		IupSetCallback(ih, "BUTTON_CB", (Icallback)internal_cb_BUTTON_CB_iiiis);
 
 void
-_init_cb_DRAW_CB_iiiiiiv(ih,action)
+_init_cb_RESIZE_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DRAW_CB_iiiiiiv);
+		IupSetCallback(ih, "RESIZE_CB", (Icallback)internal_cb_RESIZE_CB_ii);
 
 void
-_init_cb_HEIGHT_CB_i(ih,action)
+_init_cb_DRAW_CB_iiiiiiv(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_HEIGHT_CB_i);
+		IupSetCallback(ih, "DRAW_CB", (Icallback)internal_cb_DRAW_CB_iiiiiiv);
 
 void
-_init_cb_HSPAN_CB_ii(ih,action)
+_init_cb_HEIGHT_CB_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_HSPAN_CB_ii);
+		IupSetCallback(ih, "HEIGHT_CB", (Icallback)internal_cb_HEIGHT_CB_i);
 
 void
-_init_cb_MOUSECLICK_CB_iiiiiis(ih,action)
+_init_cb_HSPAN_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MOUSECLICK_CB_iiiiiis);
+		IupSetCallback(ih, "HSPAN_CB", (Icallback)internal_cb_HSPAN_CB_ii);
 
 void
-_init_cb_MOUSEMOTION_CB_iiiis(ih,action)
+_init_cb_MOUSECLICK_CB_iiiiiis(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MOUSEMOTION_CB_iiiis);
+		IupSetCallback(ih, "MOUSECLICK_CB", (Icallback)internal_cb_MOUSECLICK_CB_iiiiiis);
 
 void
-_init_cb_NCOLS_CB_(ih,action)
+_init_cb_MOUSEMOTION_CB_iiiis(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_NCOLS_CB_);
+		IupSetCallback(ih, "MOUSEMOTION_CB", (Icallback)internal_cb_MOUSEMOTION_CB_iiiis);
 
 void
-_init_cb_NLINES_CB_(ih,action)
+_init_cb_NCOLS_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_NLINES_CB_);
+		IupSetCallback(ih, "NCOLS_CB", (Icallback)internal_cb_NCOLS_CB_);
 
 void
-_init_cb_SCROLLING_CB_ii(ih,action)
+_init_cb_NLINES_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SCROLLING_CB_ii);
+		IupSetCallback(ih, "NLINES_CB", (Icallback)internal_cb_NLINES_CB_);
 
 void
-_init_cb_VSPAN_CB_ii(ih,action)
+_init_cb_SCROLLING_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_VSPAN_CB_ii);
+		IupSetCallback(ih, "SCROLLING_CB", (Icallback)internal_cb_SCROLLING_CB_ii);
 
 void
-_init_cb_WIDTH_CB_i(ih,action)
+_init_cb_VSPAN_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_WIDTH_CB_i);
+		IupSetCallback(ih, "VSPAN_CB", (Icallback)internal_cb_VSPAN_CB_ii);
 
 void
-_init_cb_CELL_CB_i(ih,action)
+_init_cb_WIDTH_CB_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_CELL_CB_i);
+		IupSetCallback(ih, "WIDTH_CB", (Icallback)internal_cb_WIDTH_CB_i);
 
 void
-_init_cb_EXTENDED_CB_i(ih,action)
+_init_cb_CELL_CB_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_EXTENDED_CB_i);
+		IupSetCallback(ih, "CELL_CB", (Icallback)internal_cb_CELL_CB_i);
 
 void
-_init_cb_SELECT_CB_ii(ih,action)
+_init_cb_EXTENDED_CB_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SELECT_CB_ii);
+		IupSetCallback(ih, "EXTENDED_CB", (Icallback)internal_cb_EXTENDED_CB_i);
 
 void
-_init_cb_SWITCH_CB_ii(ih,action)
+_init_cb_SELECT_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SWITCH_CB_ii);
+		IupSetCallback(ih, "SELECT_CB", (Icallback)internal_cb_SELECT_CB_ii);
 
 void
-_init_cb_CHANGE_CB_ccc(ih,action)
+_init_cb_SWITCH_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_CHANGE_CB_ccc);
+		IupSetCallback(ih, "SWITCH_CB", (Icallback)internal_cb_SWITCH_CB_ii);
 
 void
-_init_cb_DRAG_CB_ccc(ih,action)
+_init_cb_CHANGE_CB_ccc(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DRAG_CB_ccc);
+		IupSetCallback(ih, "CHANGE_CB", (Icallback)internal_cb_CHANGE_CB_ccc);
 
 void
-_init_cb_VALUECHANGED_CB_(ih,action)
+_init_cb_DRAG_CB_ccc(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_VALUECHANGED_CB_);
+		IupSetCallback(ih, "DRAG_CB", (Icallback)internal_cb_DRAG_CB_ccc);
 
 void
-_init_cb_BUTTON_PRESS_CB_d(ih,action)
+_init_cb_VALUECHANGED_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_BUTTON_PRESS_CB_d);
+		IupSetCallback(ih, "VALUECHANGED_CB", (Icallback)internal_cb_VALUECHANGED_CB_);
 
 void
-_init_cb_BUTTON_RELEASE_CB_d(ih,action)
+_init_cb_BUTTON_PRESS_CB_d(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_BUTTON_RELEASE_CB_d);
+		IupSetCallback(ih, "BUTTON_PRESS_CB", (Icallback)internal_cb_BUTTON_PRESS_CB_d);
 
 void
-_init_cb_MOUSEMOVE_CB_d(ih,action)
+_init_cb_BUTTON_RELEASE_CB_d(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MOUSEMOVE_CB_d);
+		IupSetCallback(ih, "BUTTON_RELEASE_CB", (Icallback)internal_cb_BUTTON_RELEASE_CB_d);
 
 void
-_init_cb_FILE_CB_ss(ih,action)
+_init_cb_MOUSEMOVE_CB_d(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_FILE_CB_ss);
+		IupSetCallback(ih, "MOUSEMOVE_CB", (Icallback)internal_cb_MOUSEMOVE_CB_d);
 
 void
-_init_cb_HIGHLIGHT_CB_(ih,action)
+_init_cb_FILE_CB_ss(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_HIGHLIGHT_CB_);
+		IupSetCallback(ih, "FILE_CB", (Icallback)internal_cb_FILE_CB_ss);
 
 void
-_init_cb_DROPFILES_CB_siii(ih,action)
+_init_cb_HIGHLIGHT_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DROPFILES_CB_siii);
+		IupSetCallback(ih, "HIGHLIGHT_CB", (Icallback)internal_cb_HIGHLIGHT_CB_);
 
 void
-_init_cb_ACTION_sii(ih,action)
+_init_cb_DROPFILES_CB_siii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_ACTION_sii);
+		IupSetCallback(ih, "DROPFILES_CB", (Icallback)internal_cb_DROPFILES_CB_siii);
 
 void
-_init_cb_CARET_CB_iii(ih,action)
+_init_cb_ACTION_sii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_CARET_CB_iii);
+		IupSetCallback(ih, "ACTION", (Icallback)internal_cb_ACTION_sii);
 
 void
-_init_cb_DBLCLICK_CB_is(ih,action)
+_init_cb_CARET_CB_iii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DBLCLICK_CB_is);
+		IupSetCallback(ih, "CARET_CB", (Icallback)internal_cb_CARET_CB_iii);
 
 void
-_init_cb_DROPDOWN_CB_i(ih,action)
+_init_cb_DBLCLICK_CB_is(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DROPDOWN_CB_i);
+		IupSetCallback(ih, "DBLCLICK_CB", (Icallback)internal_cb_DBLCLICK_CB_is);
 
 void
-_init_cb_EDIT_CB_is(ih,action)
+_init_cb_DROPDOWN_CB_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_EDIT_CB_is);
+		IupSetCallback(ih, "DROPDOWN_CB", (Icallback)internal_cb_DROPDOWN_CB_i);
 
 void
-_init_cb_MOTION_CB_iis(ih,action)
+_init_cb_EDIT_CB_is(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MOTION_CB_iis);
+		IupSetCallback(ih, "EDIT_CB", (Icallback)internal_cb_EDIT_CB_is);
 
 void
-_init_cb_MULTISELECT_CB_s(ih,action)
+_init_cb_MOTION_CB_iis(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MULTISELECT_CB_s);
+		IupSetCallback(ih, "MOTION_CB", (Icallback)internal_cb_MOTION_CB_iis);
 
 void
-_init_cb_ACTION_CB_iiiis(ih,action)
+_init_cb_MULTISELECT_CB_s(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_ACTION_CB_iiiis);
+		IupSetCallback(ih, "MULTISELECT_CB", (Icallback)internal_cb_MULTISELECT_CB_s);
 
 void
-_init_cb_BGCOLOR_CB_iiIII(ih,action)
+_init_cb_ACTION_CB_iiiis(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_BGCOLOR_CB_iiIII);
+		IupSetCallback(ih, "ACTION_CB", (Icallback)internal_cb_ACTION_CB_iiiis);
 
 void
-_init_cb_CLICK_CB_iis(ih,action)
+_init_cb_BGCOLOR_CB_iiIII(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_CLICK_CB_iis);
+		IupSetCallback(ih, "BGCOLOR_CB", (Icallback)internal_cb_BGCOLOR_CB_iiIII);
 
 void
-_init_cb_DROPCHECK_CB_ii(ih,action)
+_init_cb_CLICK_CB_iis(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DROPCHECK_CB_ii);
+		IupSetCallback(ih, "CLICK_CB", (Icallback)internal_cb_CLICK_CB_iis);
 
 void
-_init_cb_DROPSELECT_CB_iinsii(ih,action)
+_init_cb_DROPCHECK_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DROPSELECT_CB_iinsii);
+		IupSetCallback(ih, "DROPCHECK_CB", (Icallback)internal_cb_DROPCHECK_CB_ii);
 
 void
-_init_cb_DROP_CB_nii(ih,action)
+_init_cb_DROPSELECT_CB_iinsii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DROP_CB_nii);
+		IupSetCallback(ih, "DROPSELECT_CB", (Icallback)internal_cb_DROPSELECT_CB_iinsii);
 
 void
-_init_cb_EDITION_CB_iiii(ih,action)
+_init_cb_DROP_CB_nii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_EDITION_CB_iiii);
+		IupSetCallback(ih, "DROP_CB", (Icallback)internal_cb_DROP_CB_nii);
 
 void
-_init_cb_ENTERITEM_CB_ii(ih,action)
+_init_cb_EDITION_CB_iiii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_ENTERITEM_CB_ii);
+		IupSetCallback(ih, "EDITION_CB", (Icallback)internal_cb_EDITION_CB_iiii);
 
 void
-_init_cb_FGCOLOR_CB_iiIII(ih,action)
+_init_cb_ENTERITEM_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_FGCOLOR_CB_iiIII);
+		IupSetCallback(ih, "ENTERITEM_CB", (Icallback)internal_cb_ENTERITEM_CB_ii);
 
 void
-_init_cb_FONT_CB_ii(ih,action)
+_init_cb_FGCOLOR_CB_iiIII(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_FONT_CB_ii);
+		IupSetCallback(ih, "FGCOLOR_CB", (Icallback)internal_cb_FGCOLOR_CB_iiIII);
 
 void
-_init_cb_LEAVEITEM_CB_ii(ih,action)
+_init_cb_FONT_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_LEAVEITEM_CB_ii);
+		IupSetCallback(ih, "FONT_CB", (Icallback)internal_cb_FONT_CB_ii);
 
 void
-_init_cb_MARKEDIT_CB_iii(ih,action)
+_init_cb_LEAVEITEM_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MARKEDIT_CB_iii);
+		IupSetCallback(ih, "LEAVEITEM_CB", (Icallback)internal_cb_LEAVEITEM_CB_ii);
 
 void
-_init_cb_MARK_CB_ii(ih,action)
+_init_cb_MARKEDIT_CB_iii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MARK_CB_ii);
+		IupSetCallback(ih, "MARKEDIT_CB", (Icallback)internal_cb_MARKEDIT_CB_iii);
 
 void
-_init_cb_MOUSEMOVE_CB_ii(ih,action)
+_init_cb_MARK_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MOUSEMOVE_CB_ii);
+		IupSetCallback(ih, "MARK_CB", (Icallback)internal_cb_MARK_CB_ii);
 
 void
-_init_cb_RELEASE_CB_iis(ih,action)
+_init_cb_MOUSEMOVE_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_RELEASE_CB_iis);
+		IupSetCallback(ih, "MOUSEMOVE_CB", (Icallback)internal_cb_MOUSEMOVE_CB_ii);
 
 void
-_init_cb_SCROLLTOP_CB_ii(ih,action)
+_init_cb_RELEASE_CB_iis(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SCROLLTOP_CB_ii);
+		IupSetCallback(ih, "RELEASE_CB", (Icallback)internal_cb_RELEASE_CB_iis);
 
 void
-_init_cb_VALUE_CB_ii(ih,action)
+_init_cb_SCROLLTOP_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_VALUE_CB_ii);
+		IupSetCallback(ih, "SCROLLTOP_CB", (Icallback)internal_cb_SCROLLTOP_CB_ii);
 
 void
-_init_cb_VALUE_EDIT_CB_iis(ih,action)
+_init_cb_VALUE_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_VALUE_EDIT_CB_iis);
+		IupSetCallback(ih, "VALUE_CB", (Icallback)internal_cb_VALUE_CB_ii);
 
 void
-_init_cb_MENUCLOSE_CB_(ih,action)
+_init_cb_VALUE_EDIT_CB_iis(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MENUCLOSE_CB_);
+		IupSetCallback(ih, "VALUE_EDIT_CB", (Icallback)internal_cb_VALUE_EDIT_CB_iis);
 
 void
-_init_cb_OPEN_CB_(ih,action)
+_init_cb_MENUCLOSE_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_OPEN_CB_);
+		IupSetCallback(ih, "MENUCLOSE_CB", (Icallback)internal_cb_MENUCLOSE_CB_);
 
 void
-_init_cb_DELETEBEGIN_CB_(ih,action)
+_init_cb_OPEN_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DELETEBEGIN_CB_);
+		IupSetCallback(ih, "OPEN_CB", (Icallback)internal_cb_OPEN_CB_);
 
 void
-_init_cb_DELETEEND_CB_(ih,action)
+_init_cb_DELETEBEGIN_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DELETEEND_CB_);
+		IupSetCallback(ih, "DELETEBEGIN_CB", (Icallback)internal_cb_DELETEBEGIN_CB_);
 
 void
-_init_cb_DELETE_CB_iiff(ih,action)
+_init_cb_DELETEEND_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DELETE_CB_iiff);
+		IupSetCallback(ih, "DELETEEND_CB", (Icallback)internal_cb_DELETEEND_CB_);
 
 void
-_init_cb_EDITBEGIN_CB_(ih,action)
+_init_cb_DELETE_CB_iiff(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_EDITBEGIN_CB_);
+		IupSetCallback(ih, "DELETE_CB", (Icallback)internal_cb_DELETE_CB_iiff);
 
 void
-_init_cb_EDITEND_CB_(ih,action)
+_init_cb_EDITBEGIN_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_EDITEND_CB_);
+		IupSetCallback(ih, "EDITBEGIN_CB", (Icallback)internal_cb_EDITBEGIN_CB_);
 
 void
-_init_cb_EDIT_CB_iiffFF(ih,action)
+_init_cb_EDITEND_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_EDIT_CB_iiffFF);
+		IupSetCallback(ih, "EDITEND_CB", (Icallback)internal_cb_EDITEND_CB_);
 
 void
-_init_cb_POSTDRAW_CB_v(ih,action)
+_init_cb_EDIT_CB_iiffFF(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_POSTDRAW_CB_v);
+		IupSetCallback(ih, "EDIT_CB", (Icallback)internal_cb_EDIT_CB_iiffFF);
 
 void
-_init_cb_PREDRAW_CB_v(ih,action)
+_init_cb_POSTDRAW_CB_v(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_PREDRAW_CB_v);
+		IupSetCallback(ih, "POSTDRAW_CB", (Icallback)internal_cb_POSTDRAW_CB_v);
 
 void
-_init_cb_SELECTBEGIN_CB_(ih,action)
+_init_cb_PREDRAW_CB_v(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SELECTBEGIN_CB_);
+		IupSetCallback(ih, "PREDRAW_CB", (Icallback)internal_cb_PREDRAW_CB_v);
 
 void
-_init_cb_SELECTEND_CB_(ih,action)
+_init_cb_SELECTBEGIN_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SELECTEND_CB_);
+		IupSetCallback(ih, "SELECTBEGIN_CB", (Icallback)internal_cb_SELECTBEGIN_CB_);
 
 void
-_init_cb_SELECT_CB_iiffi(ih,action)
+_init_cb_SELECTEND_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SELECT_CB_iiffi);
+		IupSetCallback(ih, "SELECTEND_CB", (Icallback)internal_cb_SELECTEND_CB_);
 
 void
-_init_cb_SPIN_CB_i(ih,action)
+_init_cb_SELECT_CB_iiffi(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SPIN_CB_i);
+		IupSetCallback(ih, "SELECT_CB", (Icallback)internal_cb_SELECT_CB_iiffi);
 
 void
-_init_cb_TABCHANGEPOS_CB_ii(ih,action)
+_init_cb_SPIN_CB_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_TABCHANGEPOS_CB_ii);
+		IupSetCallback(ih, "SPIN_CB", (Icallback)internal_cb_SPIN_CB_i);
 
 void
-_init_cb_TABCHANGE_CB_nn(ih,action)
+_init_cb_TABCHANGEPOS_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_TABCHANGE_CB_nn);
+		IupSetCallback(ih, "TABCHANGEPOS_CB", (Icallback)internal_cb_TABCHANGEPOS_CB_ii);
 
 void
-_init_cb_ACTION_is(ih,action)
+_init_cb_TABCHANGE_CB_nn(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_ACTION_is);
+		IupSetCallback(ih, "TABCHANGE_CB", (Icallback)internal_cb_TABCHANGE_CB_nn);
 
 void
-_init_cb_ACTION_CB_(ih,action)
+_init_cb_ACTION_is(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_ACTION_CB_);
+		IupSetCallback(ih, "ACTION", (Icallback)internal_cb_ACTION_is);
 
 void
-_init_cb_ACTION_i(ih,action)
+_init_cb_ACTION_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_ACTION_i);
+		IupSetCallback(ih, "ACTION_CB", (Icallback)internal_cb_ACTION_CB_);
 
 void
-_init_cb_BRANCHCLOSE_CB_i(ih,action)
+_init_cb_ACTION_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_BRANCHCLOSE_CB_i);
+		IupSetCallback(ih, "ACTION", (Icallback)internal_cb_ACTION_i);
 
 void
-_init_cb_BRANCHOPEN_CB_i(ih,action)
+_init_cb_BRANCHCLOSE_CB_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_BRANCHOPEN_CB_i);
+		IupSetCallback(ih, "BRANCHCLOSE_CB", (Icallback)internal_cb_BRANCHCLOSE_CB_i);
 
 void
-_init_cb_DRAGDROP_CB_iiii(ih,action)
+_init_cb_BRANCHOPEN_CB_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_DRAGDROP_CB_iiii);
+		IupSetCallback(ih, "BRANCHOPEN_CB", (Icallback)internal_cb_BRANCHOPEN_CB_i);
 
 void
-_init_cb_EXECUTELEAF_CB_i(ih,action)
+_init_cb_DRAGDROP_CB_iiii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_EXECUTELEAF_CB_i);
+		IupSetCallback(ih, "DRAGDROP_CB", (Icallback)internal_cb_DRAGDROP_CB_iiii);
 
 void
-_init_cb_MULTISELECTION_CB_Ai(ih,action)
+_init_cb_EXECUTELEAF_CB_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MULTISELECTION_CB_Ai);
+		IupSetCallback(ih, "EXECUTELEAF_CB", (Icallback)internal_cb_EXECUTELEAF_CB_i);
 
 void
-_init_cb_MULTIUNSELECTION_CB_Ai(ih,action)
+_init_cb_MULTISELECTION_CB_Ai(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MULTIUNSELECTION_CB_Ai);
+		IupSetCallback(ih, "MULTISELECTION_CB", (Icallback)internal_cb_MULTISELECTION_CB_Ai);
 
 void
-_init_cb_NODEREMOVED_CB_s(ih,action)
+_init_cb_MULTIUNSELECTION_CB_Ai(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_NODEREMOVED_CB_s);
+		IupSetCallback(ih, "MULTIUNSELECTION_CB", (Icallback)internal_cb_MULTIUNSELECTION_CB_Ai);
 
 void
-_init_cb_RENAME_CB_is(ih,action)
+_init_cb_NODEREMOVED_CB_s(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_RENAME_CB_is);
+		IupSetCallback(ih, "NODEREMOVED_CB", (Icallback)internal_cb_NODEREMOVED_CB_s);
 
 void
-_init_cb_RIGHTCLICK_CB_i(ih,action)
+_init_cb_RENAME_CB_is(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_RIGHTCLICK_CB_i);
+		IupSetCallback(ih, "RENAME_CB", (Icallback)internal_cb_RENAME_CB_is);
 
 void
-_init_cb_SELECTION_CB_ii(ih,action)
+_init_cb_RIGHTCLICK_CB_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SELECTION_CB_ii);
+		IupSetCallback(ih, "RIGHTCLICK_CB", (Icallback)internal_cb_RIGHTCLICK_CB_i);
 
 void
-_init_cb_SHOWRENAME_CB_i(ih,action)
+_init_cb_SELECTION_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SHOWRENAME_CB_i);
+		IupSetCallback(ih, "SELECTION_CB", (Icallback)internal_cb_SELECTION_CB_ii);
 
 void
-_init_cb_ENTERWINDOW_CB_(ih,action)
+_init_cb_SHOWRENAME_CB_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_ENTERWINDOW_CB_);
+		IupSetCallback(ih, "SHOWRENAME_CB", (Icallback)internal_cb_SHOWRENAME_CB_i);
 
 void
-_init_cb_GETFOCUS_CB_(ih,action)
+_init_cb_ENTERWINDOW_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_GETFOCUS_CB_);
+		IupSetCallback(ih, "ENTERWINDOW_CB", (Icallback)internal_cb_ENTERWINDOW_CB_);
 
 void
-_init_cb_HELP_CB_(ih,action)
+_init_cb_GETFOCUS_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_HELP_CB_);
+		IupSetCallback(ih, "GETFOCUS_CB", (Icallback)internal_cb_GETFOCUS_CB_);
 
 void
-_init_cb_KILLFOCUS_CB_(ih,action)
+_init_cb_HELP_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_KILLFOCUS_CB_);
+		IupSetCallback(ih, "HELP_CB", (Icallback)internal_cb_HELP_CB_);
 
 void
-_init_cb_K_ANY_i(ih,action)
+_init_cb_KILLFOCUS_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_K_ANY_i);
+		IupSetCallback(ih, "KILLFOCUS_CB", (Icallback)internal_cb_KILLFOCUS_CB_);
 
 void
-_init_cb_LEAVEWINDOW_CB_(ih,action)
+_init_cb_K_ANY_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_LEAVEWINDOW_CB_);
+		IupSetCallback(ih, "K_ANY", (Icallback)internal_cb_K_ANY_i);
 
 void
-_init_cb_MAP_CB_(ih,action)
+_init_cb_LEAVEWINDOW_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MAP_CB_);
+		IupSetCallback(ih, "LEAVEWINDOW_CB", (Icallback)internal_cb_LEAVEWINDOW_CB_);
 
 void
-_init_cb_UNMAP_CB_(ih,action)
+_init_cb_MAP_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_UNMAP_CB_);
+		IupSetCallback(ih, "MAP_CB", (Icallback)internal_cb_MAP_CB_);
 
 void
-_init_cb_ACTION_ff(ih,action)
+_init_cb_UNMAP_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_ACTION_ff);
+		IupSetCallback(ih, "UNMAP_CB", (Icallback)internal_cb_UNMAP_CB_);
 
 void
-_init_cb_FOCUS_CB_i(ih,action)
+_init_cb_ACTION_ff(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_FOCUS_CB_i);
+		IupSetCallback(ih, "ACTION", (Icallback)internal_cb_ACTION_ff);
 
 void
-_init_cb_KEYPRESS_CB_ii(ih,action)
+_init_cb_FOCUS_CB_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_KEYPRESS_CB_ii);
+		IupSetCallback(ih, "FOCUS_CB", (Icallback)internal_cb_FOCUS_CB_i);
 
 void
-_init_cb_MULTITOUCH_CB_iIIII(ih,action)
+_init_cb_KEYPRESS_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MULTITOUCH_CB_iIIII);
+		IupSetCallback(ih, "KEYPRESS_CB", (Icallback)internal_cb_KEYPRESS_CB_ii);
 
 void
-_init_cb_SCROLL_CB_iff(ih,action)
+_init_cb_MULTITOUCH_CB_iIIII(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SCROLL_CB_iff);
+		IupSetCallback(ih, "MULTITOUCH_CB", (Icallback)internal_cb_MULTITOUCH_CB_iIIII);
 
 void
-_init_cb_TOUCH_CB_iiis(ih,action)
+_init_cb_SCROLL_CB_iff(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_TOUCH_CB_iiis);
+		IupSetCallback(ih, "SCROLL_CB", (Icallback)internal_cb_SCROLL_CB_iff);
 
 void
-_init_cb_WHEEL_CB_fiis(ih,action)
+_init_cb_TOUCH_CB_iiis(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_WHEEL_CB_fiis);
+		IupSetCallback(ih, "TOUCH_CB", (Icallback)internal_cb_TOUCH_CB_iiis);
 
 void
-_init_cb_WOM_CB_i(ih,action)
+_init_cb_WHEEL_CB_fiis(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_WOM_CB_i);
+		IupSetCallback(ih, "WHEEL_CB", (Icallback)internal_cb_WHEEL_CB_fiis);
 
 void
-_init_cb_CLOSE_CB_(ih,action)
+_init_cb_WOM_CB_i(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_CLOSE_CB_);
+		IupSetCallback(ih, "WOM_CB", (Icallback)internal_cb_WOM_CB_i);
 
 void
-_init_cb_COPYDATA_CB_si(ih,action)
+_init_cb_CLOSE_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_COPYDATA_CB_si);
+		IupSetCallback(ih, "CLOSE_CB", (Icallback)internal_cb_CLOSE_CB_);
 
 void
-_init_cb_MDIACTIVATE_CB_(ih,action)
+_init_cb_COPYDATA_CB_si(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MDIACTIVATE_CB_);
+		IupSetCallback(ih, "COPYDATA_CB", (Icallback)internal_cb_COPYDATA_CB_si);
 
 void
-_init_cb_MOVE_CB_ii(ih,action)
+_init_cb_MDIACTIVATE_CB_(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_MOVE_CB_ii);
+		IupSetCallback(ih, "MDIACTIVATE_CB", (Icallback)internal_cb_MDIACTIVATE_CB_);
 
 void
-_init_cb_SHOW_CB_i(ih,action)
+_init_cb_MOVE_CB_ii(ih)
 		Ihandle* ih;
-		char* action;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_SHOW_CB_i);
+		IupSetCallback(ih, "MOVE_CB", (Icallback)internal_cb_MOVE_CB_ii);
 
 void
-_init_cb_TRAYCLICK_CB_iii(ih,action)
+_init_cb_SHOW_CB_i(ih)
 		Ihandle* ih;
-		char* action;
+	CODE:
+		IupSetCallback(ih, "SHOW_CB", (Icallback)internal_cb_SHOW_CB_i);
+
+void
+_init_cb_TRAYCLICK_CB_iii(ih)
+		Ihandle* ih;
 	CODE:
-		IupSetCallback(ih, action, (Icallback)internal_cb_TRAYCLICK_CB_iii);
+		IupSetCallback(ih, "TRAYCLICK_CB", (Icallback)internal_cb_TRAYCLICK_CB_iii);
 
