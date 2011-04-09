@@ -29,7 +29,7 @@ sub _register_ih {
   #params: ih, objref
   if ($_[0]) {
     $ih_register{$_[0]} = $_[1];
-    #BEWARE: circular references may happen XXX-FIXME
+    #BEWARE: circular references avoided by using weaken
     weaken $ih_register{$_[0]}; #xxx-just-idea
     $ih_register{$_[0]};
   }
@@ -51,7 +51,7 @@ sub _register_ch {
   #params: ch, objref
   if ($_[0]) {
     $ch_register{$_[0]} = $_[1];
-    #BEWARE: circular references may happen XXX-FIXME
+    #BEWARE: circular references avoided by using weaken
     weaken $ch_register{$_[0]}; #xxx-just-idea
     $ch_register{$_[0]};
   }

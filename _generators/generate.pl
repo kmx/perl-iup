@@ -6,6 +6,7 @@ use Template;
 use Data::Dumper;
 use Getopt::Long;
 use Pod::Usage;
+use FindBin;
 
 # processing commandline options
 my $g_help    = 0;
@@ -16,9 +17,9 @@ my $getopt_rv = GetOptions(
 );
 pod2usage(-exitstatus=>0, -verbose=>2) if $g_help || !$getopt_rv;
 
-my $cb_csv = 'Callback.csv';
-my $at_csv = 'Attribute.csv';
-my $ky_csv = 'Key.csv';
+my $cb_csv = $FindBin::Bin.'/Callback.csv';
+my $at_csv = $FindBin::Bin.'/Attribute.csv';
+my $ky_csv = $FindBin::Bin.'/Key.csv';
 
 my $pfunc_default = '_execute_cb';
 my $pfunc_table = {
@@ -137,15 +138,15 @@ sub cb_generate1 {
 	}	
         if ($tp[$i-1] =~ /^(i|c)$/) {
 	  push @l_name, "\$$n";
-	  push @l_xspush, "XPUSHs(sv_2mortal(newSViv($n)));";	  
+	  push @l_xspush, "XPUSHs(sv_2mortal(newSViv($n)));";
 	}
 	elsif ($tp[$i-1] =~ /^(n)$/) {
 	  push @l_name, "\$$n";
-	  push @l_xspush, "XPUSHs(ihandle2SV($n));";
+	  push @l_xspush, "XPUSHs(ihandle2SV($n, element, \"!int!cb!$a!related\"));";
 	}
 	elsif ($tp[$i-1] =~ /^(v)$/) {
 	  push @l_name, "\$$n";
-	  push @l_xspush, "XPUSHs(canvas2SV($n));";
+	  push @l_xspush, "XPUSHs(canvas2SV($n, element, \"!int!cb!$a!related\"));";
 	}
 	elsif ($tp[$i-1] =~ /^(I)$/) {
 	  push @l_xspop, "*$n = POPi;"; # xxx TODO needs testing + pod update
@@ -188,7 +189,7 @@ sub cb_generate1 {
         $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != 1) { /* no warning, use default retval */ }";
       }
       else {
-        $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != $rv_count) { warn(\"Warning: $a callback has not returned $rv_count values (count=%d)!\\n\",count); }";
+        $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != $rv_count) { warn(\"Warning: callback $a has returned %d instead of $rv_count values!\\n\",count); }";
       }
             
       $h->{$m}->{$a}->{pod_sample_params} = '(' . join(', ', @l_name) . ')';
@@ -250,7 +251,7 @@ sub at_hash2list {
   return \@rv;
 }
 
-my $tt = Template->new();
+my $tt = Template->new(ABSOLUTE=>1);
 my $cb_h = file2hash($cb_csv);
 my $at_h = file2hash($at_csv);
 
@@ -267,15 +268,15 @@ my $cb_data1 = {
   pmitems => cb_hash2pmitems($cb_h),
 };
 #die Dumper($cb_data1);
-$tt->process('Callback_xs.tt', $cb_data1, $g_dst.'/Callback.xs') || die $tt->error();
-$tt->process('Callback_pm.tt', $cb_data1, $g_dst.'/Callback.pm') || die $tt->error();
+$tt->process($FindBin::Bin.'/Callback_xs.tt', $cb_data1, $g_dst.'/Callback.xs') || die $tt->error();
+$tt->process($FindBin::Bin.'/Callback_pm.tt', $cb_data1, $g_dst.'/Callback.pm') || die $tt->error();
 
 #### ATTRIBUTES
 my $at_data1 = {
   alist => at_hash2list($at_h),
 };
 #die Dumper($at_data1);
-$tt->process('Attribute_pm.tt', $at_data1, $g_dst.'/Attribute.pm') || die $tt->error();
+$tt->process($FindBin::Bin.'/Attribute_pm.tt', $at_data1, $g_dst.'/Attribute.pm') || die $tt->error();
 
 __END__
 

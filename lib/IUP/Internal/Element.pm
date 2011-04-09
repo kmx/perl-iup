@@ -146,10 +146,13 @@ sub SetAttribute {
     }
     elsif (blessed($v) && $v->can('ihandle')) {
       #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
-      IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
-      #xxx-just-idea
-      #assuming any element ref stored into iup attribute to be a child
-      #$self->_store_child_ref($v); 
+      IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);      
+      #assuming any element ref stored into iup attribute to be a child      
+      unless($self->_get_child_ref($v)) {
+        #xxxFIXME - happens for: MENU, MDIMENU, IMAGE*, PARENTDIALOG (can cause memory leaks)
+        #warn "xxxDEBUG Unexpected situation elem='".ref($self)."' attr='$k'"; 
+        $self->_store_child_ref($v); #xxx-just-idea
+      }
     }
     else {
       carp "[warning] cannot set attribute '$k' to '$v'";
@@ -206,15 +209,16 @@ sub SetCallback {
       if (defined $func) {
         #set callback
         $self->{"!int!cb!$action!func"} = $func;
-        $self->{'!int!cb!$action!self'} = $self; #xxxCHECKLATER intentional circular dependency #xxx-just-idea
+        $self->{"!int!cb!$action!related"}->{$self->ihandle} = $self; #intentional circular dependency #xxx-just-idea
         &$cb_init_func($self->ihandle);
       }
       else {
         #clear (unset) callback
+	#warn("xxxDEBUG gonna unset callback '$action'\n");
         IUP::Internal::Callback::_clear_cb($self->ihandle,$action);
 	for (keys %$self) {    
 	  #clear all related values
-          $self->{$_} = undef if /^!int!cb!\Q$action\E!/;
+	  delete $self->{$_} if (/^!int!cb!\Q$action\E!/);
         }
       }
     }
@@ -552,9 +556,16 @@ sub _create_element {
   die "Function _create_element() not implemented in IUP::Internal::Element";
 }
 
+sub _get_child_ref {
+  #xxx-just-idea
+  my ($self, $ih) = @_;
+  return $self->{'!int!child'}->{$ih};
+}
+
 sub _store_child_ref { #xxxCHECKTHIS
   #xxx-just-idea
   my $self = shift;
+  #warn("xxxDEBUG _store_child_ref started\n");
   for (@_) {
     next unless blessed($_);
     $self->{'!int!child'}->{$_->ihandle} = $_;
@@ -564,22 +575,23 @@ sub _store_child_ref { #xxxCHECKTHIS
 sub _internal_destroy { #xxxCHECKTHIS  
   my $self = shift;
   #unset all callbacks
-  for (keys %$self) {    
-    if (/^!int!cb!([^!]+)!func$/) {
-      $self->SetCallback($1, undef);
-    }
+  #warn("xxxDEBUG _internal_destroy ".$self->ihandle." started\n");
+  for (keys %$self) {
+    $self->SetCallback($1, undef) if (/^!int!cb!([^!]+)!func$/);
   }
   #go through all children #xxx-just-idea
   for (keys %{$self->{'!int!child'}}) {
     $self->{'!int!child'}->{$_}->_internal_destroy()
   }
   #in the last step destroy $self->ihandle
-  $self->ihandle(undef);
+  #warn("xxxDEBUG _internal_destroy ".$self->ihandle." finished\n");
+  $self->ihandle(undef);  
 }
 
 sub _proc_child_param {
   #handling new(child=>$child) or new(child=>[...]) of new($child) or new([...])
-  my ($self, $func, $args, $firstonly) = @_;  
+  #warn "xxxDEBUG _proc_child_param started\n";
+  my ($self, $func, $args, $firstonly) = @_;    
   my @list;
   my @ihlist;
   
@@ -602,7 +614,7 @@ sub _proc_child_param {
   for (@list) {
     if (blessed($_) && $_->can('ihandle')) {
       push @ihlist, $_->ihandle;
-      #$self->_store_child_ref($_); #xxx-just-idea
+      $self->_store_child_ref($_); #xxx-just-idea
     }
     else {
       carp "warning: undefined item passed as 'child' parameter of ",ref($self),"->new()";
@@ -614,12 +626,13 @@ sub _proc_child_param {
 #internal helper func
 sub _proc_child_param_single {
   #handling new(child=>$child, ...) or new($child)
+  #warn "xxxDEBUG _proc_child_param_single started\n";
   my ($self, $func, $args, $firstonly) = @_;
   my $ih;
   if (defined $firstonly) {
     if (blessed($firstonly) && $firstonly->can('ihandle')) {      
       $ih = &$func($firstonly->ihandle); #call func
-      #$self->_store_child_ref($firstonly); #xxx-just-idea
+      $self->_store_child_ref($firstonly); #xxx-just-idea
     }
     else {      
       carp "Warning: parameter 'child' has to be a reference to IUP element";
@@ -629,7 +642,7 @@ sub _proc_child_param_single {
   elsif (defined $args && defined $args->{child}) {
     if (blessed($args->{child}) && $args->{child}->can('ihandle')) {      
       $ih = &$func($args->{child}->ihandle); #call func
-      #$self->_store_child_ref($args->{child}); #xxx-just-idea
+      $self->_store_child_ref($args->{child}); #xxx-just-idea
     }
     else {
       carp "Warning: 'child' parameter has to be a reference to IUP element";      

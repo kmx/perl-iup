@@ -1,11 +1,6 @@
 ################ the last time working on ################ 
-- pplot (addpoints) questions
+- destruction / avoiding memleaks / optimizing callbacks
 ##########################################################
-
-######## memory leaks - destroying objects does not work well
-*/ XS inserts into global registers needs to be fixed
-*/ check all #xxx-just-idea
-*/ see http://stackoverflow.com/questions/2223721/common-perl-memory-reference-leak-patterns
 
 !!IMPORTANT!!######## IUP::Tree
 #IUP::Tree - #NOTE: tree->TreeAddNodes(...) has to go after dialog->Show() + tree->SetAttribute(...) has to go after dialog->Show() xxx why?
@@ -193,13 +188,7 @@ cd.KillImageRGB
 cd.KillImageRGBA
 cd.KillImageMap
 
-###################################################################################################
-
-(info)######## threads+Wx
-http://use.perl.org/~Alias/journal/40377
-
-(info)######## XS hint
-- ST(0) = &PL_sv_undef;
+### COSMETICS ################################################################################################
 
 (cosmetics)######## IUP::Canvas
 - XS autodetection cdCanvasLine vs. cdfCanvasLine
@@ -208,16 +197,6 @@ http://use.perl.org/~Alias/journal/40377
 - icon - see y:\IUP3.3\fltk\FLTK-0.532007\inc\MBX\FLTK.pm  (ACTION_code)
 - Build.PL: no_index => {directory => [qw[examples inc t]], files => [qw[xs/include/ppport.h]]
 
-(cosmetics)######## global
-- somehow check memory leaks - http://use.perl.org/~jozef/journal/40411
-- somehow check memory consumption - Devel::Size, Devel::Peak, PerlBench 
-  - http://stackoverflow.com/questions/1359771/perl-memory-usage-profiling-and-leak-detection
-  - http://www252.pair.com/comdog/mastering_perl/Chapters/06.benchmarking.html
-- check speed - http://perldoc.perl.org/Benchmark.html (cmpthese, timethese)
-
-(cosmetics)######## IUP::Internal::Element
-- tune up destroy() & co. (handle circular references) - check refaddr() trick in LibraryIup.pm
-
 (cosmetics)######## Check this:
 - consider return; vs. return undef;
   return IUP::Internal::LibraryIup::_voidfunc; == return;
@@ -225,12 +204,6 @@ http://use.perl.org/~Alias/journal/40377
   SUGGESTION: always call: return IUP::Internal::LibraryIup::_func; (even for void functions)
 - http://stackoverflow.com/questions/3435122/whats-the-difference-between-return-and-return-undef-in-perl
 - "Perl Best Practices" (and Perl::Critic) suggest not using return undef
-
-(cosmetics)######## IUP::Internal::Canvas
-- consider moving 'my %ch_register' from Internal::LibraryIup to Internal::Canvas
-
-(cosmetics)######## IUP::PPlot  
-- PPlotPaintTo - maybe not needed: Plots to the given CD canvas instead of the display canvas (does not make much sense)
 
 (cosmetics)######## IUP::Matrix (same as with common attributes)
 - try to implement:
@@ -247,8 +220,9 @@ http://use.perl.org/~Alias/journal/40377
 - ??? better detection of initialized gui than (IUP->Open == IUP_OPENED)?
 - ??? detection of codepage used in GUI
 
-(cosmetics)######## all XSs
+(cosmetics)######## LibraryIUP.xs + Canvas.xs
 - consider IUP::Internal::AllInOneLib.xs
+- should save 2-3MB
 
 (cosmetics)######## IUP::Submenu
 - consider using $firstonly param of new()
@@ -259,21 +233,23 @@ http://use.perl.org/~Alias/journal/40377
 (cosmetics)######## IUP::Split
 - maybe support new($child1, $child2) instead of new(child1=>$child1, child2=>$child2)
 
-(cosmetics)######## IUP::Frame
-- maybe duplicate its style to other IUP::*box*
-- maybe some common helper function 
-  _create_element_child_single($self, $args, $firstonly, \&fucname)
-  _create_element_child_multi($self, $args, $firstonly, \&fucname)
-
 (cosmetics)######## IUP::Internal::Element
 - change: _create_element should set $self->ihandle value
-- Get/SetAttributeSV - via IupGet/SetAttributeHandle
+- SetAttribute("ATT", $elem) vs. $elem = GetAttribute("ATT") (now Get does not work)
 
 ### NOT NOW, MAYBE LATER ################################################################################################
 
-(not now, maybe later)######## stringify values passed to XS
-- now implemented in XS via myST2STR + mySV2STR
-- remove stringification from pm code (not needed anymore)
+(not now, maybe later)######## implement threads demo
+- threads+Wx - http://use.perl.org/~Alias/journal/40377
+
+(not now, maybe later)######## memory issues
+- moustly should be handled, some corner cases may occur
+- see http://stackoverflow.com/questions/2223721/common-perl-memory-reference-leak-patterns
+- somehow check memory leaks - http://use.perl.org/~jozef/journal/40411
+- somehow check memory consumption - Devel::Size, Devel::Peak, PerlBench 
+  - http://stackoverflow.com/questions/1359771/perl-memory-usage-profiling-and-leak-detection
+  - http://www252.pair.com/comdog/mastering_perl/Chapters/06.benchmarking.html
+- check memleaks by storing SetAttribute("ATTR", $ref)
 
 (not now, maybe later)######## unicode in filenames (cpodepage magic)
 http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-perl.html

@@ -10,7 +10,7 @@ sub _create_element {
   if (defined $args) {
     $c1 = $args->{child1}->ihandle if defined $args->{child1};
     $c2 = $args->{child2}->ihandle if defined $args->{child2};
-    #$self->_store_child_ref($args->{child1}, $args->{child2}); #xxx-just-idea
+    $self->_store_child_ref($args->{child1}, $args->{child2}); #xxx-just-idea
     delete $args->{child1};
     delete $args->{child2};
   }

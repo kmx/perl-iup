@@ -12,7 +12,7 @@ sub _create_element {
   my $ih;
   if (defined $c && blessed $c && $c->can('ihandle')) {
     $ih = IUP::Internal::LibraryIup::_IupDialog($c->ihandle);
-    #$self->_store_child_ref($c); #xxx-just-idea
+    $self->_store_child_ref($c); #xxx-just-idea
   }
   elsif (defined $c) {
     carp "Warning: parameter 'child' has to be a reference to IUP element";
