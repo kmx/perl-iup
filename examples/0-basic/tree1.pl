@@ -5,8 +5,6 @@
 use strict;
 use warnings;
 
-#IUP->Message("This example is slightly broken!"); #XXX-FIXME
-
 use IUP ':all';
 
 my $t_singleroot = {
@@ -39,7 +37,7 @@ my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new([
 
 $dlg->ShowXY(IUP_CENTER,IUP_CENTER);
 
-#NOTE: tree->TreeAddNodes(...) has to go after dialog->Show() xxx why?
+#NOTE: all tree->SetAttribute(...) has to go after dialog->Show() or after dialog->Map()
 
 warn "Creating [top-left] rootless tree\n";
 $tree_tleft->TreeAddNodes($t_rootless,-1);
