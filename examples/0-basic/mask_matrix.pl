@@ -10,7 +10,7 @@ $mat->MatCell(1, 1, "Only numbers");
 
 for my $i (1..3) {
   for my $j (1..3) {
-    $mat->SetAttributeId2("MASK", $i, $j, '/d+'); # xxx TODO does not work well - ASK    
+    $mat->SetAttributeId2("MASK", $i, $j, '/d+'); # xxxTODO does not work well - ASK    
   }
 }
 

@@ -23,7 +23,7 @@ sub select_cb {
 }
 
 sub edit_cb {
-  # xxx TODO: references
+  # xxxTODO: references
   # perhaps - return (IUP_DEFAULT, $new_x, $new_y);
   my ($self, $index, $sample_index, $x, $y, $new_x, $new_y) = @_;
   printf STDERR "EDIT_CB(%d, %d, %g, %g, %g, %g)\n", $index, $sample_index, $x, $y, $new_x, $new_y;
@@ -148,7 +148,7 @@ sub tgg2_cb {
 # Y zoom
 sub dial1_btndown_cb {
   my ($self, $angle) = @_;
-  warn "xxxDEBUG: dial1_btndown_cb: ", $mainplot->GetAttribute("AXS_YMIN"), ":", $mainplot->GetAttribute("AXS_YMAX"), "\n";
+  warn "***DEBUG*** dial1_btndown_cb: ", $mainplot->GetAttribute("AXS_YMIN"), ":", $mainplot->GetAttribute("AXS_YMAX"), "\n";
   $mainplot->SetAttribute("OLD_YMIN", $mainplot->GetAttribute("AXS_YMIN"));
   $mainplot->SetAttribute("OLD_YMAX", $mainplot->GetAttribute("AXS_YMAX"));
   return IUP_DEFAULT;

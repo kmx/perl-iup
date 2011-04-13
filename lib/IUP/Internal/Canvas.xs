@@ -164,7 +164,7 @@ cdDeactivate(canvas)
 
 #### Original C function from <.../cd/include/cd.h>
 # int cdUseContextPlus(int use);
-#xxx TODO - support later, add some ifdefs
+#xxxTODO - support later, add some ifdefs
 #int
 #cdUseContextPlus(use)
 #		int use;
@@ -175,7 +175,7 @@ cdDeactivate(canvas)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdInitContextPlus(void); 
-#xxx TODO - support later, add some ifdefs
+#xxxTODO - support later, add some ifdefs
 #void
 #cdInitContextPlus()
 #	CODE:
@@ -184,7 +184,7 @@ cdDeactivate(canvas)
 #### Original C function from <.../cd/include/cd.h>
 # int cdContextRegisterCallback(cdContext *context, int cb, cdCallback func);
 # cd.ContextRegisterCallback(ctx, cb: number, func: function) -> (status: number) [in Lua]
-#xxx TODO - cd callbacks? maybe later
+#xxxTODO - cd callbacks? maybe later
 #int
 #cdContextRegisterCallback(context,cb,func)
 #		cdContext* context;
@@ -508,7 +508,7 @@ cdfGetOrigin(canvas)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasTransform(cdCanvas* canvas, const double* matrix);
 # canvas:Transform(matrix: table) [in Lua]
-#xxx TODO/important (matrix)
+#xxxTODO/important (matrix)
 void
 cdTransform(canvas,matrix)
 		SV* canvas;
@@ -516,14 +516,14 @@ cdTransform(canvas,matrix)
 	INIT:
 		double tmpmatrix[6];
 	CODE:
-		/* xxx TODO call:SV2transf_matrix(matrix,&tmpmatrix) */
-		/* xxx TODO matrix -> tmpmatrix (how will be 2x3 matrix represented?) */
+		/* xxxTODO call:SV2transf_matrix(matrix,&tmpmatrix) */
+		/* xxxTODO matrix -> tmpmatrix (how will be 2x3 matrix represented?) */
 		cdCanvasTransform(ref2cnv(canvas),tmpmatrix);
 
 #### Original C function from <.../cd/include/cd.h>
 # double* cdCanvasGetTransform(cdCanvas* canvas);
 # canvas:GetTransformation() -> (matrix: table) [in Lua]
-#xxx TODO/important (matrix)
+#xxxTODO/important (matrix)
 void
 cdGetTransform(canvas)
 		SV* canvas;
@@ -531,13 +531,13 @@ cdGetTransform(canvas)
 		double *matrix;
 	PPCODE:
 		matrix = cdCanvasGetTransform(ref2cnv(canvas));
-		/* xxx TODO matrix > retval array (how will be 2x3 matrix represented?) */
-		/* xxx TODO call:transf_matrix2SV(matrix) */
+		/* xxxTODO matrix > retval array (how will be 2x3 matrix represented?) */
+		/* xxxTODO call:transf_matrix2SV(matrix) */
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasTransformMultiply(cdCanvas* canvas, const double* matrix);
 # canvas:TransformMultiply(matrix: table) [in Lua]
-#xxx TODO/important (matrix)
+#xxxTODO/important (matrix)
 void
 cdTransformMultiply(canvas,matrix)
 		SV* canvas;
@@ -545,8 +545,8 @@ cdTransformMultiply(canvas,matrix)
 	INIT:
 		double tmpmatrix[6];
 	CODE:
-		/* xxx TODO matrix -> tmpmatrix (how will be 2x3 matrix represented?) */
-		/* xxx TODO call:SV2transf_matrix(matrix,&tmpmatrix) */
+		/* xxxTODO matrix -> tmpmatrix (how will be 2x3 matrix represented?) */
+		/* xxxTODO call:SV2transf_matrix(matrix,&tmpmatrix) */
 		cdCanvasTransformMultiply(ref2cnv(canvas),tmpmatrix);
 
 #### Original C function from <.../cd/include/cd.h>
@@ -1064,7 +1064,7 @@ cdLineStyle(canvas,style)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasLineStyleDashes(cdCanvas* canvas, const int* dashes, int count);
 # canvas:LineStyleDashes(dashes: table, count: number) -> (old_style: number) [in Lua]
-#xxx TODO/important (table)
+#xxxTODO/important (table)
 void
 cdLineStyleDashes(canvas,dashes,count)
 		SV* canvas;
@@ -1073,8 +1073,8 @@ cdLineStyleDashes(canvas,dashes,count)
 	INIT:
 		int tmpdashes[4];
 	CODE:
-		/* xxx TODO dashes>tmpdashes */
-		/* xxx TODO call:SV2int_array(dashes,&tmpdashes,count) */
+		/* xxxTODO dashes>tmpdashes */
+		/* xxxTODO call:SV2int_array(dashes,&tmpdashes,count) */
 		cdCanvasLineStyleDashes(ref2cnv(canvas),tmpdashes,count);
 
 #### Original C function from <.../cd/include/cd.h>
@@ -1134,7 +1134,7 @@ cdHatch(canvas,style)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasStipple(cdCanvas* canvas, int w, int h, const unsigned char* stipple);
-#xxx TODO/important (cdStipple)
+#xxxTODO/important (cdStipple)
 void
 cdStipple(canvas,stipple)
 		SV* canvas;
@@ -1144,14 +1144,14 @@ cdStipple(canvas,stipple)
 		int h;
 		unsigned char* tmpstipple;
 	CODE:
-		/* xxx TODO cdstipple > rawdata */
-		/* xxx TODO call:SV2r_c_cdata(stipple,&w,&h,&tmpstipple) */
+		/* xxxTODO cdstipple > rawdata */
+		/* xxxTODO call:SV2r_c_cdata(stipple,&w,&h,&tmpstipple) */
 		cdCanvasStipple(ref2cnv(canvas),w,h,tmpstipple);
 
 #### Original C function from <.../cd/include/cd.h>
 # unsigned char* cdCanvasGetStipple(cdCanvas* canvas, int *n, int *m);
 # canvas:GetStipple() - > (stipple: cdStipple) [in Lua]
-#xxx TODO/important (cdStipple)
+#xxxTODO/important (cdStipple)
 SV*
 cdGetStipple(canvas,n,m)
 		SV* canvas;
@@ -1161,15 +1161,15 @@ cdGetStipple(canvas,n,m)
 		unsigned char* stipple;
 	CODE:
 		stipple = cdCanvasGetStipple(ref2cnv(canvas),&n,&m);
-		/* xxx TODO call:r_c_cdata2SV(n,m,stipple) */
-		/* xxx TODO rawdata > cdstipple */
+		/* xxxTODO call:r_c_cdata2SV(n,m,stipple) */
+		/* xxxTODO rawdata > cdstipple */
 	OUTPUT:
 		RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPattern(cdCanvas* canvas, int w, int h, long const int *pattern);
 # canvas:Pattern(pattern: cdPattern) [in Lua]
-#xxx TODO/important (cdPattern)
+#xxxTODO/important (cdPattern)
 void
 cdPattern(canvas,pattern)
 		SV* canvas;
@@ -1180,13 +1180,13 @@ cdPattern(canvas,pattern)
 		long int* tmppattern; /* xxx maybe size of [100] will be enough - ruby is wrong */
 	CODE:
 		/* xxx pattern > raw data (w/h/tmppaterrn) */
-		/* xxx TODO call:SV2r_c_ldata(pattern,&w,&h,&tmppattern) */
+		/* xxxTODO call:SV2r_c_ldata(pattern,&w,&h,&tmppattern) */
 		cdCanvasPattern(ref2cnv(canvas),w,h,tmppattern);
 
 #### Original C function from <.../cd/include/cd.h>
 # long* cdCanvasGetPattern(cdCanvas* canvas, int* n, int* m);
 # canvas:GetPattern() - > (pattern: cdPattern) [in Lua]
-#xxx TODO/important (cdPattern)
+#xxxTODO/important (cdPattern)
 void
 cdGetPattern(canvas,n,m)
 		SV* canvas;
@@ -1196,7 +1196,7 @@ cdGetPattern(canvas,n,m)
 		long *data;
 	PPCODE:
 		data = cdCanvasGetPattern(ref2cnv(canvas),&n,&m);
-		/* xxx TODO call:r_c_ldata2SV(n,m,data) */
+		/* xxxTODO call:r_c_ldata2SV(n,m,data) */
 		/* xxx data > retval stucture */
 
 #### Original C function from <.../cd/include/cd.h>
@@ -1343,7 +1343,7 @@ cdVectorTextDirection(canvas,x1,y1,x2,y2)
 #### Original C function from <.../cd/include/cd.h>
 # double* cdCanvasVectorTextTransform(cdCanvas* canvas, const double* matrix);
 # canvas:VectorTextTransform(matrix: table) -> (old_matrix: table) [in Lua] 
-#xxx TODO/important (matrix)
+#xxxTODO/important (matrix)
 void
 cdVectorTextTransform(canvas,matrix)
 		SV* canvas;
@@ -1353,9 +1353,9 @@ cdVectorTextTransform(canvas,matrix)
 		double *rv;
 	PPCODE:
 		/* xxx matrix array > tmpmatrix */
-		/* xxx TODO call:SV2transf_matrix(matrix,&tmpmatrix) */
+		/* xxxTODO call:SV2transf_matrix(matrix,&tmpmatrix) */
 		rv = cdCanvasVectorTextTransform(ref2cnv(canvas),tmpmatrix);
-		/* xxx TODO call:transf_matrix2SV(rv) */
+		/* xxxTODO call:transf_matrix2SV(rv) */
 		/* xxx rv > matrix array */
 
 #### Original C function from <.../cd/include/cd.h>
@@ -1559,7 +1559,7 @@ cdGetColorPlanes(canvas)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPalette(cdCanvas* canvas, int n, const long *palette, int mode);
 # canvas:Palette(palette: cdPalette; mode: number) [in Lua]
-#xxx TODO/important (cdPallete)
+#xxxTODO/important (cdPallete)
 #!!!NOTE!!!
 # cd.CreatePalette(size: number) -> (palette: cdPalette) [in Lua Only]
 # palette[index] = cd.EncodeColor(r, g, b)
@@ -1574,13 +1574,13 @@ cdPalette(canvas,n,palette,mode)
 		long* tmppalette;
 	CODE:
 		/* xxx convert: palette > n+tmppalette */
-		/* xxx TODO call:SV2n_ldata(palette,&n,tmppalette) */
+		/* xxxTODO call:SV2n_ldata(palette,&n,tmppalette) */
 		cdCanvasPalette(ref2cnv(canvas),n,tmppalette,mode);
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetImageRGB(cdCanvas* canvas, unsigned char* r, unsigned char* g, unsigned char* b, int x, int y, int w, int h);
 # canvas:GetImageRGB(imagergb: cdImageRGB; x, y: number) [in Lua]
-#xxx TODO/important (cdImageRGB)
+#xxxTODO/important (cdImageRGB)
 void
 cdGetImageRGB(canvas,r,g,b,x,y,w,h)
 		SV* canvas;
@@ -1597,7 +1597,7 @@ cdGetImageRGB(canvas,r,g,b,x,y,w,h)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPutImageRectRGB(cdCanvas* canvas, int iw, int ih, const unsigned char* r, const unsigned char* g, const unsigned char* b, int x, int y, int w, int h, int xmin, int xmax, int ymin, int ymax);
 # canvas:PutImageRectRGB(imagergb: cdImageRGB; x, y, w, h, xmin, xmax, ymin, ymax: number) [in Lua]
-#xxx TODO/important (cdImageRGB)
+#xxxTODO/important (cdImageRGB)
 #void
 #cdPutImageRectRGB(canvas,iw,ih,r,g,b,x,y,w,h,xmin,xmax,ymin,ymax)
 #		SV* canvas;
@@ -1620,7 +1620,7 @@ cdGetImageRGB(canvas,r,g,b,x,y,w,h)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPutImageRectRGBA(cdCanvas* canvas, int iw, int ih, const unsigned char* r, const unsigned char* g, const unsigned char* b, const unsigned char* a, int x, int y, int w, int h, int xmin, int xmax, int ymin, int ymax);
 # canvas:PutImageRectRGBA(imagergba: cdImageRGBA; x, y, w, h, xmin, xmax, ymin, ymax: number) [in Lua]
-#xxx TODO/important (cdImageRGBA)
+#xxxTODO/important (cdImageRGBA)
 #void
 #cdPutImageRectRGBA(canvas,iw,ih,r,g,b,a,x,y,w,h,xmin,xmax,ymin,ymax)
 #		SV* canvas;
@@ -1644,7 +1644,7 @@ cdGetImageRGB(canvas,r,g,b,x,y,w,h)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPutImageRectMap(cdCanvas* canvas, int iw, int ih, const unsigned char* index, const long* colors, int x, int y, int w, int h, int xmin, int xmax, int ymin, int ymax);
 # canvas:PutImageRectMap(imagemap: cdImageMap; palette: cdPalette; x, y, w, h, xmin, xmax, ymin, ymax: number) [in Lua]
-#xxx TODO/important (cdImageMap, cdPalette)
+#xxxTODO/important (cdImageMap, cdPalette)
 #void
 #cdPutImageRectMap(canvas,iw,ih,index,colors,x,y,w,h,xmin,xmax,ymin,ymax)
 #		SV* canvas;
@@ -1725,7 +1725,7 @@ cdScrollArea(canvas,xmin,xmax,ymin,ymax,dx,dy)
 
 #### Original C function from <.../cd/include/cd.h>
 # cdBitmap* cdCreateBitmap(int w, int h, int type);
-#xxx TODO/important (cdBitmap) - maybe OK (no need to be Canvas method)
+#xxxTODO/important (cdBitmap) - maybe OK (no need to be Canvas method)
 cdBitmap*
 cdCreateBitmap(w,h,type)
 		int w;
@@ -1738,7 +1738,7 @@ cdCreateBitmap(w,h,type)
 
 #### Original C function from <.../cd/include/cd.h>
 # cdBitmap* cdInitBitmap(int w, int h, int type, ...);
-#xxx TODO/important (cdBitmap) - variable arg list? (no need to be Canvas method) what is the diff cdCreateBitmap vs. cdInitBitmap?
+#xxxTODO/important (cdBitmap) - variable arg list? (no need to be Canvas method) what is the diff cdCreateBitmap vs. cdInitBitmap?
 cdBitmap*
 cdInitBitmap(w,h,type,...)
 		int w;
@@ -1751,7 +1751,7 @@ cdInitBitmap(w,h,type,...)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdKillBitmap(cdBitmap* bitmap);
-#xxx TODO/important (cdBitmap) - maybe OK (no need to be Canvas method)
+#xxxTODO/important (cdBitmap) - maybe OK (no need to be Canvas method)
 void
 cdKillBitmap(bitmap)
 		cdBitmap* bitmap;
@@ -1760,7 +1760,7 @@ cdKillBitmap(bitmap)
 
 #### Original C function from <.../cd/include/cd.h>
 # unsigned char* cdBitmapGetData(cdBitmap* bitmap, int dataptr);
-#xxx TODO/important (cdBitmap / dataptr) (no need to be Canvas method)
+#xxxTODO/important (cdBitmap / dataptr) (no need to be Canvas method)
 void
 cdBitmapGetData(bitmap,dataptr)
 		cdBitmap* bitmap;
@@ -1773,7 +1773,7 @@ cdBitmapGetData(bitmap,dataptr)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdBitmapSetRect(cdBitmap* bitmap, int xmin, int xmax, int ymin, int ymax);
-#xxx TODO/important (cdBitmap) - maybe OK (no need to be Canvas method)
+#xxxTODO/important (cdBitmap) - maybe OK (no need to be Canvas method)
 void
 cdBitmapSetRect(bitmap,xmin,xmax,ymin,ymax)
 		cdBitmap* bitmap;
@@ -1786,7 +1786,7 @@ cdBitmapSetRect(bitmap,xmin,xmax,ymin,ymax)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPutBitmap(cdCanvas* canvas, cdBitmap* bitmap, int x, int y, int w, int h);
-#xxx TODO/important (cdBitmap) - maybe OK
+#xxxTODO/important (cdBitmap) - maybe OK
 void
 cdPutBitmap(canvas,bitmap,x,y,w,h)
 		SV* canvas;
@@ -1800,7 +1800,7 @@ cdPutBitmap(canvas,bitmap,x,y,w,h)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetBitmap(cdCanvas* canvas, cdBitmap* bitmap, int x, int y);
-#xxx TODO/important (cdBitmap) - maybe OK
+#xxxTODO/important (cdBitmap) - maybe OK
 void
 cdGetBitmap(canvas,bitmap,x,y)
 		SV* canvas;
@@ -1812,7 +1812,7 @@ cdGetBitmap(canvas,bitmap,x,y)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdBitmapRGB2Map(cdBitmap* bitmap_rgb, cdBitmap* bitmap_map);
-#xxx TODO/important (cdBitmap) (no need to be Canvas method)
+#xxxTODO/important (cdBitmap) (no need to be Canvas method)
 void
 cdBitmapRGB2Map(bitmap_rgb,bitmap_map)
 		cdBitmap* bitmap_rgb;
@@ -1875,7 +1875,7 @@ cdEncodeAlpha(pkg,color,alpha)
 #### Original C function from <.../cd/include/cd.h>
 # void cdRGB2Map(int width, int height, const unsigned char* red, const unsigned char* green, const unsigned char* blue, unsigned char* index, int pal_size, long *color);
 # cd.RGB2Map(imagergb: cdImageRGB, imagemap: cdImageMap, palette: cdPalette) [in Lua]
-#xxx TODO/important (cdPalette - cdImageRGB related)
+#xxxTODO/important (cdPalette - cdImageRGB related)
 #void
 #cdRGB2Map(width,height,red,green,blue,index,pal_size,color)
 #		int width;
@@ -2134,7 +2134,7 @@ wdGetRegionBox(canvas,xmin,xmax,ymin,ymax)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasHardcopy(cdCanvas* canvas, cdContext* ctx, void *data, void(*draw_func)(cdCanvas *canvas_copy));
 # canvas:wCanvasHardcopy(ctx: number, data: string or userdata, draw_func: function) [in Lua]
-#xxx TODO/important (cdContext)
+#xxxTODO/important (cdContext)
 #void
 #wdHardcopy(canvas,ctx,data,draw_func)
 #		SV* canvas;
@@ -2281,7 +2281,7 @@ wdPutImageRect(canvas,image,x,y,xmin,xmax,ymin,ymax)
 
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasPutImageRectRGB(cdCanvas* canvas, int iw, int ih, const unsigned char* r, const unsigned char* g, const unsigned char* b, double x, double y, double w, double h, int xmin, int xmax, int ymin, int ymax);
-#xxx TODO/important params (cdImage... related)
+#xxxTODO/important params (cdImage... related)
 #void
 #wdPutImageRectRGB(canvas,iw,ih,r,g,b,x,y,w,h,xmin,xmax,ymin,ymax)
 #		SV* canvas;
@@ -2303,7 +2303,7 @@ wdPutImageRect(canvas,image,x,y,xmin,xmax,ymin,ymax)
 
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasPutImageRectRGBA(cdCanvas* canvas, int iw, int ih, const unsigned char* r, const unsigned char* g, const unsigned char* b, const unsigned char* a, double x, double y, double w, double h, int xmin, int xmax, int ymin, int ymax);
-#xxx TODO/important params (cdImage... related)
+#xxxTODO/important params (cdImage... related)
 #void
 #wdPutImageRectRGBA(canvas,iw,ih,r,g,b,a,x,y,w,h,xmin,xmax,ymin,ymax)
 #		SV* canvas;
@@ -2327,7 +2327,7 @@ wdPutImageRect(canvas,image,x,y,xmin,xmax,ymin,ymax)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasPutImageRectMap(cdCanvas* canvas, int iw, int ih, const unsigned char* index, const long* colors, double x, double y, double w, double h, int xmin, int xmax, int ymin, int ymax);
 # canvas:wPutImageRectMap(imagemap: cdImageMap; palette: cdPalette; x, y, w, h, xmin, xmax, ymin, ymax: number) (WC) [in Lua]
-#xxx TODO/important (cdImageMap, cdPalette)
+#xxxTODO/important (cdImageMap, cdPalette)
 #void
 #wdPutImageRectMap(canvas,iw,ih,index,colors,x,y,w,h,xmin,xmax,ymin,ymax)
 #		SV* canvas;
@@ -2348,7 +2348,7 @@ wdPutImageRect(canvas,image,x,y,xmin,xmax,ymin,ymax)
 
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasPutBitmap(cdCanvas* canvas, cdBitmap* bitmap, double x, double y, double w, double h);
-#xxx TODO/important (cdBitmap) - maybe OK
+#xxxTODO/important (cdBitmap) - maybe OK
 void
 wdPutBitmap(canvas,bitmap,x,y,w,h)
 		SV* canvas;
@@ -2494,7 +2494,7 @@ wdGetTextBounds(canvas,x,y,s,rect)
 
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasStipple(cdCanvas* canvas, int w, int h, const unsigned char*fgbg, double w_mm, double h_mm);
-#xxx TODO/important (cdStipple)
+#xxxTODO/important (cdStipple)
 void
 wdStipple(canvas,stipple,w_mm,h_mm)
 		SV* canvas;
@@ -2506,13 +2506,13 @@ wdStipple(canvas,stipple,w_mm,h_mm)
 		int h;
 		unsigned char* fgbg;
 	CODE:
-		/* xxx TODO cdstipple > rawdata */
+		/* xxxTODO cdstipple > rawdata */
 		wdCanvasStipple(ref2cnv(canvas),w,h,fgbg,w_mm,h_mm);
 
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasPattern(cdCanvas* canvas, int w, int h, const long *color, double w_mm, double h_mm);
 # canvas:wPattern(pattern: cdPattern, w_mm, h_mm: number) [in Lua]
-#xxx TODO/important (cdPattern)
+#xxxTODO/important (cdPattern)
 void
 wdPattern(canvas,pattern,w_mm,h_mm)
 		SV* canvas;

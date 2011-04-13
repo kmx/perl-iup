@@ -319,7 +319,7 @@ foreach (@spec_cb) {
   }
 }
 
-# xxx TODO xxx the same for attr/*.html
+# xxxTODO xxx the same for attr/*.html
 
 warn "###INFO### Going through all_doc HTML files\n";
 foreach my $f (@all_doc) {
@@ -478,7 +478,7 @@ my %uniq;
 
 sub print_c1 {  
   my %base = %{$c_list{'IUP::Classbase'}};
-  my %box = %{$c_list{'IUP::Box'}} if $c_list{'IUP::Box'}; # maybe leave out completely xxx TODO xxx
+  my %box = %{$c_list{'IUP::Box'}} if $c_list{'IUP::Box'}; # maybe leave out completely xxxTODO xxx
   my %menu = %{$c_list{'IUP::Menu'}};
   my %dialog = %{$c_list{'IUP::Dialog'}};
   my $file = shift;
@@ -528,7 +528,7 @@ sub print_c1 {
       $t{$cb}->{par} =~ s/ \*/* /g if defined $t{$cb}->{par};
       $common_src{$class}->{$cb} ||= '';
       
-      #xxx TODO xxx not tested yet
+      #xxxTODO xxx not tested yet
       my $class2 = $class;
       $class2 = '_base' if $class2 eq 'IUP::Classbase';
       $class2 = '_box' if $class2 eq 'IUP::Box';

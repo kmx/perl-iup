@@ -376,7 +376,7 @@ names always have a native system name equivalent. If you use those
 names IUP will automatically map to the native system equivalent. See
 the table bellow:
 
-xxx TODO table xxx
+xxxTODO table xxx
 
 B<Notes: Font - Auxiliary Attributes>
 
@@ -425,7 +425,7 @@ control characters were replaced to include more display characters,
 this new charset is named Windows-1252. These characters are marked in
 the table bellow with thick borders.
 
-xxx TODO xxx table
+xxxTODO xxx table
 
 Adapted from L<http:E<47>E<47>en.wikipedia.orgE<47>wikiE<47>Windows-1252|http://en.wikipedia.org/wiki/Windows-1252>.
 
@@ -910,7 +910,7 @@ Defines the element's cursor.
 
 It will check first for the following predefined names:
 
-[IMAGE] xxx TODO html xxx
+[IMAGE] xxxTODO html xxx
 
 [% h.at_default %] "ARROW"
 

@@ -75,7 +75,7 @@ my $imgdata2 = [
 
 sub myaction {
   my $self = shift;
-  # xxx TODO xxx some better callback
+  # xxxTODO xxx some better callback
   #IUP->Message("Hello", $self->name);
 }
 

@@ -8,7 +8,7 @@ use warnings;
 
 use IUP ':all';
 
-# xxx TODO.ASKIUP xxx iuplabel does not accept attribute TYPE
+# xxxTODO.ASKIUP xxx iuplabel does not accept attribute TYPE
 my $lbl_v = IUP::Label->new( TITLE=>"VALUE=n.a.", SIZE=>70, TYPE=>"1" );
 my $lbl_h = IUP::Label->new( TITLE=>"VALUE=n.a.", SIZE=>70, TYPE=>"2" );
 

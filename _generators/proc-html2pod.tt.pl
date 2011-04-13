@@ -148,7 +148,7 @@ sub proc_at {
   my $file = shift;
   my $pod = read_file($file, {binmode=>1} );
   
-  #xxx TODO
+  #xxxTODO
   $pod =~ s/=head1/=head3/g;
   $pod =~ s/=head2/=head4/g;
   $pod .= "\n\n";
@@ -160,7 +160,7 @@ sub proc_cb {
   my $file = shift;
   my $pod = read_file($file, {binmode=>1} );
   
-  #xxx TODO
+  #xxxTODO
   $pod =~ s/=head1/=head3/g;
   $pod =~ s/=head2/=head4/g;
   $pod .= "\n\n";
@@ -172,7 +172,7 @@ sub proc_func {
   my $file = shift;  
   my $pod = read_file($file, {binmode=>1} );
   
-  #xxx TODO
+  #xxxTODO
   $pod =~ s/=head1/=head3/g;
   $pod =~ s/=head2/=head4/g;
   $pod .= "\n\n";

@@ -25,7 +25,7 @@ my ($self, $index, $sample_index, $x, $y, $select) = @_;
 
 sub edit_cb {
   #(Ihandle* ih, int index, int sample_index, float x, float y, float *new_x, float *new_y)
-  # xxx TODO: references
+  # xxxTODO: references
   # perhaps - return (IUP_DEFAULT, $new_x, $new_y);
   my ($self, $index, $sample_index, $x, $y) = @_;
   printf STDERR "EDIT_CB(%d, %d, %g, %g)\n", $index, $sample_index, $x, $y;  

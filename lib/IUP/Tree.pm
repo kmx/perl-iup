@@ -127,13 +127,13 @@ sub _proc_node_definition {
   $h = { TITLE=>"$h", KIND=>'LEAF' } if ref($h) ne 'HASH'; #autoconvert any scalar value into leaf title
   if ( ($h->{KIND} && $h->{KIND} eq 'BRANCH') || $h->{child} ) {
     #add branch
-    warn "xxxDEBUG SetAttributeId('ADDBRANCH', $id, '$h->{TITLE}');\n";
-    #warn "xxxDEBUG [b]PARENT$id=", defined $self->GetAttributeId("PARENT", $id) ? $self->GetAttributeId("PARENT", $id) : 'undef';
+    #warn "***DEBUG*** SetAttributeId('ADDBRANCH', $id, '$h->{TITLE}');\n";
+    #warn "***DEBUG*** [b]PARENT$id=", defined $self->GetAttributeId("PARENT", $id) ? $self->GetAttributeId("PARENT", $id) : 'undef';
 
     $self->SetAttributeId("ADDBRANCH", $id, $h->{TITLE});        
     #my $newid = $id+1; # faster
     my $newid = $self->LASTADDNODE;
-    warn "xxxDEBUG [b] newid=$newid id=$id\n" if $newid != ($id+1);
+    #warn "***DEBUG*** [b] newid=$newid id=$id\n" if $newid != ($id+1);
     $self->TreeSetNodeAttributes($newid, $h);
     
     my $ch = $h->{child};
@@ -148,13 +148,13 @@ sub _proc_node_definition {
   }
   else {
     #add leaf
-    warn "xxxDEBUG SetAttributeId('ADDLEAF', $id, '$h->{TITLE}');\n";
-    #warn "xxxDEBUG [l]PARENT$id=", defined $self->GetAttributeId("PARENT", $id) ? $self->GetAttributeId("PARENT", $id) : 'undef';
+    #warn "***DEBUG*** SetAttributeId('ADDLEAF', $id, '$h->{TITLE}');\n";
+    #warn "***DEBUG*** [l]PARENT$id=", defined $self->GetAttributeId("PARENT", $id) ? $self->GetAttributeId("PARENT", $id) : 'undef';
 
     $self->SetAttributeId("ADDLEAF", $id, $h->{TITLE});
     #my $newid = $id+1; # faster
     my $newid = $self->LASTADDNODE;
-    warn "xxxDEBUG [l] newid=$newid id=$id\n" if $newid != ($id+1);
+    #warn "***DEBUG*** [l] newid=$newid id=$id\n" if $newid != ($id+1);
     $self->TreeSetNodeAttributes($newid, $h);
   }
 }

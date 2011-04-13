@@ -6,7 +6,7 @@ use warnings;
 use IUP ':all';
 use Scalar::Util 'looks_like_number';
 
-#xxx TODO maybe add AxsBounds to IUP::PPlot
+#xxxTODO maybe add AxsBounds to IUP::PPlot
 sub AxsBounds {
   my ($self, $axs_xmin, $axs_xmax, $axs_ymin, $axs_ymax) = @_;
   if (defined $axs_xmin) {
@@ -27,7 +27,7 @@ sub AxsBounds {
   }
 }
 
-#xxx TODO maybe add AddSeries to IUP::PPlot
+#xxxTODO maybe add AddSeries to IUP::PPlot
 sub AddSeries {
   my ($plot, @values) = @_;
   # are we given strings for the x values?

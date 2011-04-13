@@ -11,7 +11,7 @@ use Carp;
 use Scalar::Util qw(blessed looks_like_number);
 
 sub BEGIN {
-  #warn "xxxDEBUG IUP::Internal::Element::BEGIN() started\n";
+  #warn "***DEBUG*** IUP::Internal::Element::BEGIN() started\n";
   IUP::Internal::LibraryIup::_IupControlsOpen();
 }
 
@@ -151,7 +151,7 @@ sub SetAttribute {
       unless($self->_get_child_ref($v)) {
         #xxxFIXME - happens for: MENU, MDIMENU, IMAGE*, PARENTDIALOG (can cause memory leaks)
 	#during Destroy() we might destroy elements shared by more dialogs
-        #warn "xxxDEBUG Unexpected situation elem='".ref($self)."' attr='$k'"; 
+        #warn "***DEBUG*** Unexpected situation elem='".ref($self)."' attr='$k'"; 
         $self->_store_child_ref($v); #xxx(ANTI)DESTROY-MAGIC
       }
     }
@@ -215,7 +215,7 @@ sub SetCallback {
       }
       else {
         #clear (unset) callback
-	#warn("xxxDEBUG gonna unset callback '$action'\n");
+	#warn("***DEBUG*** gonna unset callback '$action'\n");
         IUP::Internal::Callback::_clear_cb($self->ihandle,$action);
 	for (keys %$self) {    
 	  #clear all related values
@@ -548,7 +548,7 @@ sub NextField {
 
 sub DESTROY {
   #IMPORTANT: do not automatically destroy iup elements
-  #warn "xxxDEBUG: DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";  
+  #warn "***DEBUG*** DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";  
 }
 
 ###### INTERNAL HELPER FUNCTIONS
@@ -567,7 +567,7 @@ sub _get_child_ref {
 sub _store_child_ref {
   #xxx(ANTI)DESTROY-MAGIC
   my $self = shift;
-  #warn("xxxDEBUG _store_child_ref started\n");
+  #warn("***DEBUG*** _store_child_ref started\n");
   for (@_) {
     next unless blessed($_);
     $self->{'!int!child'}->{$_->ihandle} = $_;
@@ -577,7 +577,7 @@ sub _store_child_ref {
 sub _internal_destroy {
   my $self = shift;
   #unset all callbacks
-  #warn("xxxDEBUG _internal_destroy ".$self->ihandle." started\n");
+  #warn("***DEBUG*** _internal_destroy ".$self->ihandle." started\n");
   for (keys %$self) {
     $self->SetCallback($1, undef) if (/^!int!cb!([^!]+)!func$/);
   }
@@ -586,13 +586,13 @@ sub _internal_destroy {
     $self->{'!int!child'}->{$_}->_internal_destroy()
   }
   #in the last step destroy $self->ihandle
-  #warn("xxxDEBUG _internal_destroy ".$self->ihandle." finished\n");
+  #warn("***DEBUG*** _internal_destroy ".$self->ihandle." finished\n");
   $self->ihandle(undef);  
 }
 
 sub _proc_child_param {
   #handling new(child=>$child) or new(child=>[...]) of new($child) or new([...])
-  #warn "xxxDEBUG _proc_child_param started\n";
+  #warn "***DEBUG*** _proc_child_param started\n";
   my ($self, $func, $args, $firstonly) = @_;    
   my @list;
   my @ihlist;
@@ -628,7 +628,7 @@ sub _proc_child_param {
 #internal helper func
 sub _proc_child_param_single {
   #handling new(child=>$child, ...) or new($child)
-  #warn "xxxDEBUG _proc_child_param_single started\n";
+  #warn "***DEBUG*** _proc_child_param_single started\n";
   my ($self, $func, $args, $firstonly) = @_;
   my $ih;
   if (defined $firstonly) {

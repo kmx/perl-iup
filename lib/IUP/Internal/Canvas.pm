@@ -26,7 +26,7 @@ sub new_from_cnvhandle {
 
 sub DESTROY {
   #xxxFIXME handle canvas destruction
-  #warn "xxxDEBUG: DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";  
+  #warn "***DEBUG*** DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";  
 }
 
 #Note: all canvas related methods implemented directly in XS

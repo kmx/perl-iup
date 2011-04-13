@@ -23,7 +23,7 @@ $tree->K_ANY( sub {
   $tree->SetAttribute("DELNODE", "MARKED") if ( $c == K_DEL );
 } );
 
-#xxx TODO check tree.c example + tree1.wlua
+#xxxTODO check tree.c example + tree1.wlua
 sub init_tree_nodes4 {  
   $tree->SetAttribute('INSERTLEAF-1', 'item 3');
   $tree->SetAttribute('INSERTLEAF-1', 'item 2');

@@ -38,7 +38,7 @@ $dlg->ShowXY(IUP_CENTER, IUP_CENTER);
 sub cb_list_multiple {
   my ($self, $t, $i, $v) = @_;
   if ( $v == 0 ) {
-    $self->{_STATE}='deselected'; # xxx TODO some best practice about strong user data into IUP object
+    $self->{_STATE}='deselected'; # xxxTODO some best practice about strong user data into IUP object
   }
   else {
     $self->{_STATE}='selected';

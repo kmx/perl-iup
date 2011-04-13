@@ -26,7 +26,7 @@ SV* ihandle2SV_nocreate(Ihandle* ih) {
   return &PL_sv_undef;
 }
 
-SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKLATER should be OK but was not tested yet*/
+SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxFIXME should be OK but was not tested yet*/
   SV *ptrSV, *obj, **ref;
   HV *globreg, *newhash, *element_hash, *element_cbrelated_hash;
   char* hkey; /*string with numeric representation of canvas pointer*/
@@ -40,7 +40,7 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKL
   if (ref != NULL)
     if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ch_register{$hkey} */
   
-  /*warn("xxxDEBUG: need to create IUP::Internal::Element %s\n",hkey);*/
+  /*warn("***DEBUG*** need to create IUP::Internal::Element %s\n",hkey);*/
   
   /*### create new IUP::Internal::Element object based on given ihandle*/
   /* see http://stackoverflow.com/questions/1497836/how-do-i-write-a-perl-constructor-in-xs */
@@ -78,7 +78,7 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
   if (ref != NULL) 
     if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ch_register{<hkey>} */
   
-  /*warn("xxxDEBUG need to create IUP::Internal::Canvas %s\n",hkey);*/
+  /*warn("***DEBUG*** need to create IUP::Internal::Canvas %s\n",hkey);*/
   
   /*### create new IUP::Internal::Canvas object based on given canvas handle*/
   /* see http://stackoverflow.com/questions/1497836/how-do-i-write-a-perl-constructor-in-xs */
