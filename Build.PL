@@ -10,8 +10,8 @@ die "You need to have Alien::IUP installed\n" if $@;
 my $class = Module::Build->subclass(
   class => "Module::Build::Custom",
   code => 'sub ACTION_doc {'.
-          '  system($^X, qw[_generators/proc-pod.tt2pod.pl -podtt _generators/pod.tt -pod doc]);'.
-	  '  system($^X, qw[_generators/proc-pod2cpan.html.pl -html doc.html.tmp -pod doc]);'.
+          '  system($^X, qw[_generators/proc-pod.tt2pod.pl -podtt _generators/pod.tt -pod lib]);'.
+	  '  system($^X, qw[_generators/proc-pod2cpan.html.pl -html doc.html.tmp -pod lib]);'.
           '}',
 );
 

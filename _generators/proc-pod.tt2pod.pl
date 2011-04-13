@@ -158,8 +158,9 @@ sub load_htmlinc {
 }
 
 sub procfile {
-  my $podtt = shift;
+  my $podtt = shift;  
   my $rel = File::Spec->abs2rel($podtt, $g_podtt);
+  $rel =~ s|_|/|g;
   my $pod = File::Spec->rel2abs(File::Spec->catfile($g_pod, $rel));    
   
   warn "[INFO] input='$podtt'\n";
