@@ -5,12 +5,13 @@ use warnings;
 
 use IUP ':all';
 
-IUP->Message("This example is slightly broken!"); #XXX-FIXME
+#xxxFIXME not finished yet but somehow works
 
 sub text2multiline {
   my ($self, $attribute) = @_;
   my $mltline = $self->GetDialogChild("mltline");
   my $text = $self->GetDialogChild("text");
+  warn "t2m: $attribute=", $text->VALUE, "\n";
   $mltline->SetAttribute($attribute, $text->VALUE);
 }
 
@@ -45,14 +46,15 @@ sub btn_key_cb {
   my $text = $self->GetDialogChild("text");
   $mltline->SetFocus();
   IUP->Flush();
-  #xxxIupSetfAttribute(NULL, "KEY", "%d", iupKeyNameToCode(IupGetAttribute(text, "VALUE")));
+  #xxxFIXME
+  #IupSetfAttribute(NULL, "KEY", "%d", iupKeyNameToCode(IupGetAttribute(text, "VALUE")));
   return IUP_DEFAULT;
 }
 
 sub btn_caret_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
-  if ($opt->VALUE) {
+  if ($opt->VALUE eq 'ON') {
     text2multiline($self, "CARET"); 
   }
   else {
@@ -64,7 +66,7 @@ sub btn_caret_cb {
 sub btn_readonly_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
-  if ($opt->VALUE) {
+  if ($opt->VALUE eq 'ON') {
     text2multiline($self, "READONLY"); 
   }
   else {
@@ -76,7 +78,7 @@ sub btn_readonly_cb {
 sub btn_selection_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
-  if ($opt->VALUE) {
+  if ($opt->VALUE eq 'ON') {
     text2multiline($self, "SELECTION"); 
   }
   else {
@@ -88,7 +90,7 @@ sub btn_selection_cb {
 sub btn_selectedtext_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
-  if ($opt->VALUE) {
+  if ($opt->VALUE eq 'ON') {
     text2multiline($self, "SELECTEDTEXT"); 
   }
   else {
@@ -100,7 +102,7 @@ sub btn_selectedtext_cb {
 sub btn_overwrite_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
-  if ($opt->VALUE) {
+  if ($opt->VALUE eq 'ON') {
     text2multiline($self, "OVERWRITE"); 
   }
   else {
@@ -112,7 +114,7 @@ sub btn_overwrite_cb {
 sub btn_active_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
-  if ($opt->VALUE) {
+  if ($opt->VALUE eq 'ON') {
     text2multiline($self, "ACTIVE"); 
   }
   else {
@@ -130,7 +132,7 @@ sub btn_remformat_cb {
 sub btn_nc_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
-  if ($opt->VALUE) {
+  if ($opt->VALUE eq 'ON') {
     text2multiline($self, "NC"); 
   }
   else {
@@ -142,7 +144,7 @@ sub btn_nc_cb {
 sub btn_value_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
-  if ($opt->VALUE) {
+  if ($opt->VALUE eq 'ON') {
     text2multiline($self, "VALUE"); 
   }
   else {
@@ -154,7 +156,7 @@ sub btn_value_cb {
 sub btn_tabsize_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
-  if ($opt->VALUE) {
+  if ($opt->VALUE eq 'ON') {
     text2multiline($self, "TABSIZE"); 
   }
   else {
@@ -169,37 +171,35 @@ sub k_f2 {
 }
 
 sub file_open {
-  my $filename = IUP->GetFile();
-  print "$filename";
+  my ($rv, $filename) = IUP->GetFile();
+  warn "filename=$filename\n";
   return IUP_DEFAULT;
 }
 
 sub k_any {
   my ($self, $c) = @_;
-  if (IUP->isprint($c)) {
-    printf "K_ANY(%d = %s \'%c\')\n", $c, IUP->KeyCodeToName($c), $c;
-  }
-  else {
-    printf "K_ANY(%d = %s)\n", $c, IUP->KeyCodeToName($c);
-  }
-  printf "  CARET(%s)\n", $self->GetAttribute("CARET");
+  warn "K_ANY (c=$c, printable=", IUP->isPrintable($c), ")\n";
+  printf ">> CARET(%s)\n", $self->GetAttribute("CARET");
   if ($c == K_cA) {
-    return IUP_IGNORE;   # Sound a beep in Windows
+    return IUP_IGNORE;
   }
-  if ($c == K_cP) {
+  elsif ($c == K_F2) {
+    k_f2();
+    return IUP_IGNORE;
+  }
+  elsif ($c == K_cO) {
     file_open();
-    return IUP_IGNORE;   # Sound a beep in Windows
+    return IUP_IGNORE;
   }
   return IUP_CONTINUE;
 }
 
 sub action {
+  # unsed at the moment
   my ($self, $c, $after) = @_;
-  if (IUP->isprint($c)) {
-    printf("ACTION(%d = %s \'%c\', %s)\n", $c, IUP->KeyCodeToName($c), $c, $after);
-  }
-  else {
-    printf("ACTION(%d = %s, %s)\n", $c, IUP->KeyCodeToName($c), $after);
+  warn "ACTION (c=$c, after=$after)\n";
+  if (IUP->isPrintable($c)) {
+    printf "ACTION (printable '%s')\n", IUP->KeyCodeToName($c); #xxxCHECKLATER we do not support KeyCodeToName
   }
   if ($c == K_i) {
     return IUP_IGNORE;   # OK
@@ -215,120 +215,119 @@ sub action {
 
 sub caret_cb {
   my ($self, $lin, $col, $pos) = @_;
-  printf "CARET_CB(%d, %d - %d)\n", $lin, $col, $pos;
-  printf "  CARET(%s - %s)\n", $self->CARET, $self->CARETPOS;
+  warn "CARET_CB ($lin, $col, $pos)\n";
+  printf ">> CARET(%s - %s)\n", $self->CARET, $self->CARETPOS;
   return IUP_DEFAULT;
 }
 
 sub getfocus_cb {
-  print "GETFOCUS_CB()\n";
+  warn "GETFOCUS_CB\n";
   return IUP_DEFAULT;
 }
 
 sub help_cb {
-  print "HELP_CB()\n";
+  warn "HELP_CB\n";
   return IUP_DEFAULT;
 }
      
 sub killfocus_cb {
-  print "KILLFOCUS_CB()\n";
+  warn "KILLFOCUS_CB\n";
   return IUP_DEFAULT;
 }
 
 sub leavewindow_cb {
-  print "LEAVEWINDOW_CB()\n";
+  warn "LEAVEWINDOW_CB\n";
   return IUP_DEFAULT;
 }
 
 sub enterwindow_cb {
-  print "ENTERWINDOW_CB()\n";
+  warn "ENTERWINDOW_CB\n";
   return IUP_DEFAULT;
 }
 
 sub btn_def_esc_cb {
-  print "DEFAULTESC\n";
+  warn "DEFAULTESC\n";
   return IUP_DEFAULT;
 }
 
 sub btn_def_enter_cb {
-  print "DEFAULTENTER\n";
+  warn "DEFAULTENTER\n";
   return IUP_DEFAULT;
 }
 
 sub dropfiles_cb {
   my ($self, $filename, $num, $x, $y) = @_;
-  printf "DROPFILES_CB(%s, %d, x=%d, y=%d)\n", $filename, $num, $x, $y;
+  printf "DROPFILES_CB (%s, %d, x=%d, y=%d)\n", $filename, $num, $x, $y;
   return IUP_DEFAULT;
 }
 
 sub button_cb {
   my ($self, $but, $pressed, $x, $y, $status) = @_;
-  printf "BUTTON_CB(but=%c (%d), x=%d, y=%d [%s])\n", $but, $pressed, $x, $y, $status;
+  printf "BUTTON_CB (but=%c (%d), x=%d, y=%d [%s])\n", $but, $pressed, $x, $y, $status;
   my $pos = $self->ConvertXYToPos($x, $y);
   my ($lin, $col) = $self->TextConvertPosToLinCol($pos);
-  printf "         (lin=%d, col=%d, pos=%d)\n", $lin, $col, $pos;
+  printf ">> (lin=%d, col=%d, pos=%d)\n", $lin, $col, $pos;
   return IUP_DEFAULT;
 }
 
 sub motion_cb {
   my ($self, $x, $y, $status) = @_;
-  printf "MOTION_CB(x=%d, y=%d [%s])\n", $x, $y, $status;
+  printf "MOTION_CB (x=%d, y=%d [%s])\n", $x, $y, $status;
   my $pos = $self->ConvertXYToPos($x, $y);
   my ($lin, $col) = $self->TextConvertPosToLinCol($pos);  
-  printf "         (lin=%d, col=%d, pos=%d)\n", $lin, $col, $pos;
+  printf ">> (lin=%d, col=%d, pos=%d)\n", $lin, $col, $pos;
   return IUP_DEFAULT;
 }
 
 sub TextTest {
 
-# Iup->SetGlobal("UTF8AUTOCONVERT", "NO");
+#?  Iup->SetGlobal("UTF8AUTOCONVERT", "NO");
 
   my $text = IUP::Text->new();
   $text->SetAttribute("EXPAND", "HORIZONTAL");
-  #$text->SetAttribute("VALUE", "Single Line Text");
+#?  $text->SetAttribute("VALUE", "Single Line Text");
   $text->SetAttribute("CUEBANNER", "Enter Attribute Value Here");
   $text->SetAttribute("NAME", "text");
   $text->SetAttribute("TIP", "Attribute Value");
 
-  my $opt = IUP::Toggle->new( TITLE=>"Set/Get", VALUE=>"ON" );
-#xxxIupSetHandle ("text2multi", opt);
+  my $opt = IUP::Toggle->new( TITLE=>"Set/Get", VALUE=>"ON", name=>"text2multi" );
 
   my $mltline = IUP::Text->new( MULTILINE=>"YES", NAME=>"mltline" );
 
   $mltline->SetCallback("DROPFILES_CB",   \&dropfiles_cb);
   $mltline->SetCallback("BUTTON_CB",      \&button_cb);
-  #$mltline->SetCallback("MOTION_CB",      \&motion_cb);
+#? $mltline->SetCallback("MOTION_CB",      \&motion_cb);
   $mltline->SetCallback("HELP_CB",        \&help_cb);
   $mltline->SetCallback("GETFOCUS_CB",    \&getfocus_cb); 
   $mltline->SetCallback("KILLFOCUS_CB",   \&killfocus_cb);
   $mltline->SetCallback("ENTERWINDOW_CB", \&enterwindow_cb);
   $mltline->SetCallback("LEAVEWINDOW_CB", \&leavewindow_cb);
-  #$mltline->SetCallback("ACTION",         \&action);
+#?  $mltline->SetCallback("ACTION",         \&action);
   $mltline->SetCallback("K_ANY",          \&k_any);
-#xxx$mltline->SetCallback("K_F2", \&k_f2);
+  #$mltline->SetCallback("K_F2", \&k_f2); #xxxCHECKLATER we do not support K_xxx callbacks
   $mltline->SetCallback("CARET_CB",       \&caret_cb);
-  #$mltline->SetAttribute("WORDWRAP", "YES");
-  #$mltline->SetAttribute("BORDER", "NO");
-  #$mltline->SetAttribute("AUTOHIDE", "YES");
-  #$mltline->SetAttribute("BGCOLOR", "255 0 128");
-  #$mltline->SetAttribute("FGCOLOR", "0 128 192");
-  #$mltline->SetAttribute("PADDING", "15x15");
-  #$mltline->SetAttribute("VALUE", "First Line\nSecond Line Big Big Big\nThird Line\nmore\nmore\nÃ§Ã£ÃµÃ¡Ã³Ã©"); # UTF-8
+#?  $mltline->SetAttribute("WORDWRAP", "YES");
+#?  $mltline->SetAttribute("BORDER", "NO");
+#?  $mltline->SetAttribute("AUTOHIDE", "YES");
+#?  $mltline->SetAttribute("BGCOLOR", "255 0 128");
+#?  $mltline->SetAttribute("FGCOLOR", "0 128 192");
+#?  $mltline->SetAttribute("PADDING", "15x15");
+#?  $mltline->SetAttribute("VALUE", "First Line\nSecond Line Big Big Big\nThird Line\nmore\nmore\nÃ§Ã£ÃµÃ¡Ã³Ã©"); # UTF-8
   $mltline->SetAttribute("VALUE", "First Line\nSecond Line Big Big Big\nThird Line\nmore\nmore\nçãõáóé"); # Windows-1252
   $mltline->SetAttribute("TIP", "First Line\nSecond Line\nThird Line");
-  #$mltline->SetAttribute("FONT", "Helvetica, 14");
-  #$mltline->SetAttribute("MASK", IUP_MASK_FLOAT);
-  #$mltline->SetAttribute("FILTER", "UPPERCASE");
-  #$mltline->SetAttribute("ALIGNMENT", "ACENTER");
-  #$mltline->SetAttribute("CANFOCUS", "NO");
+#?  $mltline->SetAttribute("FONT", "Helvetica, 14");
+#?  $mltline->SetAttribute("MASK", IUP_MASK_FLOAT);
+#?  $mltline->SetAttribute("FILTER", "UPPERCASE");
+#?  $mltline->SetAttribute("ALIGNMENT", "ACENTER");
+#?  $mltline->SetAttribute("CANFOCUS", "NO");
 
   # Turns on multiline expand and text horizontal expand
   $mltline->SetAttribute("SIZE", "80x40");
   $mltline->SetAttribute("EXPAND", "YES");
 
-  #$mltline->SetAttribute("FONT", "Courier, 16");
-  #$mltline->SetAttribute("FONT", "Arial, 12");
-  #$mltline->SetAttribute("FORMATTING", "YES");
+#?  $mltline->SetAttribute("FONT", "Courier, 16");
+#?  $mltline->SetAttribute("FONT", "Arial, 12");
+#?  $mltline->SetAttribute("FORMATTING", "YES");
 
   my $formatting = 0;
   if ($formatting) { # just to make easier to comment this section
@@ -351,8 +350,8 @@ sub TextTest {
   }
 
   # Creates buttons
-  #my $btn_append = IUP::Button->new( TITLE=>"APPEND çãõáóé" )   # Windows-1252
-  #my $btn_append = IUP::Button->new( TITLE=>"APPEND Ã§Ã£ÃµÃ¡Ã³Ã©" );  # UTF-8
+#?  my $btn_append = IUP::Button->new( TITLE=>"APPEND çãõáóé" )   # Windows-1252
+#?  my $btn_append = IUP::Button->new( TITLE=>"APPEND Ã§Ã£ÃµÃ¡Ã³Ã©" );  # UTF-8
   my $btn_append = IUP::Button->new( TITLE=>"&APPEND" );
   my $btn_insert = IUP::Button->new( TITLE=>"INSERT" );
   my $btn_caret = IUP::Button->new( TITLE=>"CARET" );
@@ -406,8 +405,7 @@ sub TextTest {
   			      GAP=>5,
   			      DEFAULTENTER=>$btn_def_enter,
   			      DEFAULTESC=>$btn_def_esc,
-  			      SHRINK=>"YES" );
-  #xxx$dlg->SetCallback("K_cO", \&file_open);
+  			      SHRINK=>"YES" );  
 
   if ($formatting) { # just to make easier to comment this section
     $dlg->Map(); # formatting after Map

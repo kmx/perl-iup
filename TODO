@@ -1,35 +1,11 @@
 ################ the last time working on ################ 
-- TreeAddNotes - rootless trees not working
+- TreeAddNotes - rootless trees not working (unfinished)
+- fixing text_format.pl (unfinished)
 ##########################################################
 
 !!IMPORTANT!!######## IUP::Tree
-#IUP::Tree - #NOTE: tree->TreeAddNodes(...) has to go after dialog->Show() + tree->SetAttribute(...) has to go after dialog->Show() xxx why?
-#IUP::Tree - should it be maped before show as canvas?
-- Convert Lua interface into Perl:
-  TreeAddNodes($newnodes, [$id])                #some draft is already in Tree.pm    
-  TreeSetNodeAttributes($id, $attrs)            #some draft is already in Tree.pm
-  TreeSetAncestorsAttributes($startid, $attrs)	#some draft is already in Tree.pm
-  TreeSetDescentsAttributes($startid, $attrs)   #some draft is already in Tree.pm 
-  TreeRemoveNodes
-	
-  TreeSetAttributeHandle($name, $value)         #some draft is already in Tree.pm 
-- examples:
-  http://www.wxpython.org/docs/api/wx.TreeCtrl-class.html
-  root = self.tree.AddRoot("Example")
-  items = [ "test1", "test2", "test3",]
-  self.AddTreeNodes(root, items) #not in a lib
-  self.tree.Expand(root)
-  tree.AppendItem(parentItem, item)
-  tree.GetItemText(item)   
-- examples Wx
-  Convert (Wx::TreeCtrl, HASHREF)
-  AddRoot ($text, $data) Add a root to the control. Returns root id.
-  AppendItem ($parent, $text, $data)   Add an item to the control as the last child of $parent. Returns item id.
-  AppendContainer ($parent, $text, $data)    Add a container to the control as the last child of $parent. This does the same as AppendItem() but marks the node as a container.
-  PrependItem ($parent, $text, $data)    Add an item to the control as the first child of $parent. Returns item id.
-  PrependContainer ($parent, $text, $data)    Add a container to the control as the first child of $parent.
-  InsertItem ($parent, $before | $previous, $text, $data)    Inserts an item after a given one (previous) or before one identified by its position (before).
-  InsertContainer ($parent, $before | $previous, $text, $data)    See InsertItem().
+  TreeAddNodes() - needs to fix
+  TreeInsertNodes() - maybe
 
 !!Big Task!!######## doc
 - Cleanup first (in this order):

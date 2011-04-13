@@ -1222,7 +1222,7 @@ _IupTextConvertLinColToPos(ih,lin,col,pos)
 #### Original C function from <iup.h>
 # void IupTextConvertPosToLinCol(Ihandle* ih, int pos, int *lin, int *col);
 void
-_IupTextConvertPosToLinCol(ih,pos,lin,col)
+_IupTextConvertPosToLinCol(ih,pos)
 		Ihandle* ih;
 		int pos;
 	INIT:
@@ -1419,7 +1419,7 @@ _IupGetFile(arq)
 		char tmp[MAXPATHLEN];		
 		/* somehow handle the situation when arq is longer then MAXPATHLEN-1 */		
 		tmp[MAXPATHLEN-1] = 0;
-		strncpy(tmp,arq,MAXPATHLEN-1);
+		if (arq) strncpy(tmp,arq,MAXPATHLEN-1);
 	PPCODE:
 		rv = IupGetFile(tmp);
 		warn("rv=%d a=%s", rv, tmp);
