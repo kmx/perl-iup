@@ -9,12 +9,16 @@
 #include <cd.h>
 
 SV* ihandle2SV_nocreate(Ihandle* ih) {  
-  SV* ptrSV = newSViv(PTR2IV(ih));
-  char* hkey = SvPV_nolen(ptrSV);
-  HV* globreg = get_hv("IUP::Internal::LibraryIup::ih_register", 0);
+  SV *ptrSV, **ref;
+  HV* globreg;
+  char* hkey; /*string with numeric representation of canvas pointer*/
 
+  ptrSV = newSViv(PTR2IV(ih)); 
+  hkey = SvPV_nolen(ptrSV); /*xxxCHECKLATER find more effective way of converting ih > hkey*/
+  
+  globreg = get_hv("IUP::Internal::LibraryIup::ih_register", 0);
   /*### check if canvas pointer is present in global hash 'ih_register' */
-  SV** ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
+  ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
   if (ref != NULL)
     if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ih_register{$hkey} */
   
@@ -23,13 +27,12 @@ SV* ihandle2SV_nocreate(Ihandle* ih) {
 }
 
 SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxFIXME should be OK but was not tested yet*/
-  SV *ptrSV, *obj;
-  SV **ref;
+  SV *ptrSV, *obj, **ref;
   HV *globreg, *newhash, *element_hash, *element_cbrelated_hash;
-  char* hkey;
+  char* hkey; /*string with numeric representation of canvas pointer*/
 
   ptrSV = newSViv(PTR2IV(ih));
-  hkey = SvPV_nolen(ptrSV);
+  hkey = SvPV_nolen(ptrSV); /*xxxCHECKLATER find more effective way of converting ih > hkey*/
   globreg = get_hv("IUP::Internal::LibraryIup::ih_register", 0);
 
   /*### check if canvas pointer is present in global hash 'ih_register' */
@@ -44,7 +47,7 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxFIXME 
   newhash = (HV *)sv_2mortal((SV *)newHV());
   obj = sv_bless( newRV((SV*)newhash), gv_stashpv("IUP::Internal::Element", 1) );
   hv_store(newhash, "!int!ihandle", 12, ptrSV, 0);
-  if (!SvOK(obj)) { warn("xxxDEBUG This shouldn't happen ih1\n"); return &PL_sv_undef; }
+  if (!SvOK(obj)) { warn("Warning: This shouldn't happen ih1\n"); return &PL_sv_undef; }
 
   /*### $IUP::Internal::LibraryIup::ch_register{<hkey>} = newSVsv(obj) */
   /*### weaken($IUP::Internal::LibraryIup::ch_register{<hkey>}) */
@@ -53,8 +56,8 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxFIXME 
   /*### $element->{'!int!cb!<action>!related'}->{<hkey>} = newSVsv(obj) */
   element_hash = MUTABLE_HV(SvRV(element));
   ref = hv_fetch(element_hash, action_related_key, strlen(action_related_key), 0);
-  if (ref == NULL) { warn("xxxDEBUG This shouldn't happen ih2\n"); return sv_2mortal(obj); }
-  if (!SvOK(*ref)) { warn("xxxDEBUG This shouldn't happen ih3\n"); return sv_2mortal(obj); }
+  if (ref == NULL) { warn("Warning: This shouldn't happen ih2\n"); return sv_2mortal(obj); }
+  if (!SvOK(*ref)) { warn("Warning: This shouldn't happen ih3\n"); return sv_2mortal(obj); }
   element_cbrelated_hash = MUTABLE_HV(SvRV(*ref));
   hv_store(element_cbrelated_hash, hkey, strlen(hkey), newSVsv(obj), 0); /* nonweaken */
   
@@ -62,13 +65,12 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxFIXME 
 }
 
 SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
-  SV *ptrSV, *obj;
-  SV **ref;
+  SV *ptrSV, *obj, **ref;
   HV *globreg, *newhash, *element_hash, *element_cbrelated_hash;
-  char* hkey;
+  char* hkey; /*string with numeric representation of canvas pointer*/
   
   ptrSV = newSViv(PTR2IV(canvas));
-  hkey = SvPV_nolen(ptrSV); /*string with numeric representation of canvas pointer*/
+  hkey = SvPV_nolen(ptrSV); /*xxxCHECKLATER find more effective way of converting ih > hkey*/
   globreg = get_hv("IUP::Internal::LibraryIup::ch_register", 0);
 
   /*### check if canvas pointer is present in global hash 'ch_register' */  
@@ -83,7 +85,7 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
   newhash = (HV *)sv_2mortal((SV *)newHV());
   obj = sv_bless( newRV((SV*)newhash), gv_stashpv("IUP::Internal::Canvas", 1) );
   hv_store(newhash, "!int!cnvhandle", 14, ptrSV, 0);
-  if (!SvOK(obj)) { warn("xxxDEBUG This shouldn't happen cv1\n"); return &PL_sv_undef; }
+  if (!SvOK(obj)) { warn("Warning: This shouldn't happen cv1\n"); return &PL_sv_undef; }
 
   /*### $IUP::Internal::LibraryIup::ch_register{<hkey>} = newSVsv(obj) */
   /*### weaken($IUP::Internal::LibraryIup::ch_register{<hkey>}) */
@@ -92,8 +94,8 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
   /*### $element->{'!int!cb!<action>!related'}->{<hkey>} = newSVsv(obj) */
   element_hash = MUTABLE_HV(SvRV(element));
   ref = hv_fetch(element_hash, action_related_key, strlen(action_related_key), 0);
-  if (ref == NULL) { warn("xxxDEBUG This shouldn't happen cv2\n"); return sv_2mortal(obj); }
-  if (!SvOK(*ref)) { warn("xxxDEBUG This shouldn't happen cv3\n"); return sv_2mortal(obj); }
+  if (ref == NULL) { warn("Warning: This shouldn't happen cv2\n"); return sv_2mortal(obj); }
+  if (!SvOK(*ref)) { warn("Warning: This shouldn't happen cv3\n"); return sv_2mortal(obj); }
   element_cbrelated_hash = MUTABLE_HV(SvRV(*ref));
   hv_store(element_cbrelated_hash, hkey, strlen(hkey), newSVsv(obj), 0); /* nonweaken */
 
@@ -101,10 +103,12 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
 }
 
 int call_cb_func(SV* element, char *actionkey) {
+  HV *hash;
+  SV **ref;
+
   /* call_pv(element->{actionkey},G_ARRAY) */
-  HV* hash = MUTABLE_HV(SvRV(element));
-  SV** ref = hv_fetch(hash, actionkey, strlen(actionkey), 0);
-  /*if (ref != NULL) if (sv_isobject(*ref)) return call_sv(*ref,G_ARRAY);*/
+  hash = MUTABLE_HV(SvRV(element));
+  ref = hv_fetch(hash, actionkey, strlen(actionkey), 0);
   if (ref != NULL)
     if (SvOK(*ref)) return call_sv(*ref,G_ARRAY); /*xxxCHECKLATER better would be to test blessed(*ref)*/
   warn("Warning: callback failed, $element->{'%s'} undefined\n");
@@ -116,8 +120,11 @@ int call_cb_func(SV* element, char *actionkey) {
 {
 	dSP;
 	int count;
-	[% i.c_retval %] rv = [% i.xs_internal_default_rv %];
-	SV* element = ihandle2SV_nocreate(ih);
+	[% i.c_retval %] rv;
+	SV* element;
+	
+	rv = [% i.xs_internal_default_rv %];
+	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback [%xs_init_cb_action%] - cannot convert ihandle!\n");
 	  return rv;

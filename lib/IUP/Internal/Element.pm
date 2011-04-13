@@ -150,6 +150,7 @@ sub SetAttribute {
       #assuming any element ref stored into iup attribute to be a child      
       unless($self->_get_child_ref($v)) {
         #xxxFIXME - happens for: MENU, MDIMENU, IMAGE*, PARENTDIALOG (can cause memory leaks)
+	#during Destroy() we might destroy elements shared by more dialogs
         #warn "xxxDEBUG Unexpected situation elem='".ref($self)."' attr='$k'"; 
         $self->_store_child_ref($v); #xxx(ANTI)DESTROY-MAGIC
       }
@@ -357,9 +358,8 @@ sub RefreshChildren {
 sub Reparent {
   #int IupReparent(Ihandle* ih, Ihandle* new_parent, Ihandle* ref_child);
   #iup.Reparent(child, parent: ihandle) [in Lua]
-  my ($self, $child, $parent) = @_;
-  #xxxFIXME checkthis (see lua implementation)
-  return IUP::Internal::LibraryIup::_IupReparent($self->ihandle, $child->ihandle, $parent->ihandle);
+  my ($self, $new_parent, $ref_child) = @_;
+  return IUP::Internal::LibraryIup::_IupReparent($self->ihandle, $new_parent->ihandle, $ref_child->ihandle);
 }
 
 sub ResetAttribute {

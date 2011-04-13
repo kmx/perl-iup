@@ -94,7 +94,7 @@ static int cb_param_action(Ihandle* dialog, int param_index, void* user_data) {
   return ret;
 }
 
-/* xxx TODO xxx is not thread safe */
+/* xxxCHECKLATER is not thread safe */
 static SV* idle_action = (SV*)NULL;;
 
 static int cb_idle_action() {  
@@ -127,7 +127,7 @@ SV*
 _SetIdle(func)
 		SV* func;
 	CODE:		
-		RETVAL=newSVsv(idle_action); /* xxx TODO not sure if this is OK xxx */
+		RETVAL=newSVsv(idle_action); /* xxxCHECKLATER not sure if this is OK */
 		if (idle_action==(SV*)NULL)
 		  idle_action = newSVsv(func);
 		else
@@ -151,7 +151,7 @@ _IupClose()
 		IupClose();
 
 #### Original C function from <iup.h>
-# IupOpen(NULL, NULL); xxxTODO not sure if this is a good idea
+# IupOpen(NULL, NULL);
 int
 _IupOpen()
 	CODE:
@@ -233,16 +233,6 @@ _IupUpdateChildren(ih)
 		Ihandle* ih;
 	CODE:
 		IupUpdateChildren(ih);
-
-#### Original C function from <iup.h>
-# int IupReparent(Ihandle* ih, Ihandle* new_parent, Ihandle* ref_child);
-void
-_IupReparent(ih,child,parent)
-		Ihandle* ih;
-		Ihandle* child;
-		Ihandle* parent;
-	CODE:
-		IupReparent(ih,child,parent);
 
 #### Original C function from <iup.h>
 # void IupRedraw (Ihandle* ih, int children);
@@ -466,17 +456,18 @@ _IupGetDialogChild(ih,name)
 	OUTPUT:
 		RETVAL
 
-#xxx changed between iup3.2 and iup 3.3
 #### Original C function from <iup.h>
-# int IupReparent (Ihandle* ih, Ihandle* new_parent);
-#int
-#_IupReparent(ih,new_parent)
-#		Ihandle* ih;
-#		Ihandle* new_parent;
-#	CODE:
-#		RETVAL = IupReparent(ih,new_parent);
-#	OUTPUT:
-#		RETVAL
+#NOTE: changed between iup3.2 and iup 3.3
+# int IupReparent(Ihandle* child, Ihandle* new_parent, Ihandle* ref_child);
+int
+_IupReparent(ih,new_parent,ref_child)
+		Ihandle* ih;
+		Ihandle* new_parent;
+		Ihandle* ref_child;
+	CODE:
+		RETVAL = IupReparent(ih,new_parent,ref_child);
+	OUTPUT:
+		RETVAL
 
 #### Original C function from <iup.h>
 # int IupPopup (Ihandle* ih, int x, int y);
