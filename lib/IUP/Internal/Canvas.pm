@@ -5,12 +5,6 @@ require DynaLoader;
 
 bootstrap IUP::Internal::Canvas;
 
-#xxxTODO: maybe move here from LibraryIup.pm
-#my %ch_register; #global table mapping IUP Ihandles to perl objrefs
-#sub _translate_ch  { $ch_register{$_[0]} if $_[0] }         #params: ch
-#sub _unregister_ch { delete $ch_register{$_[0]} if $_[0] }  #params: ch
-#sub _register_ch   { $ch_register{$_[0]} = $_[1] if $_[0] } #params: ch, objref
-
 # accessor
 sub cnvhandle {
   if ($_[1]) {

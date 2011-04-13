@@ -6,6 +6,7 @@ use IUP::Internal::LibraryIup;
 
 use Scalar::Util 'refaddr'; # http://stackoverflow.com/questions/4064001/how-should-i-compare-perl-references
 use Carp;
+use Data::Dump 'pp'; #xxxREMOVE
 
 sub _create_element {
   #my ($self, $args, $firstonly) = @_;
@@ -51,11 +52,11 @@ sub TreeGetId {
 sub TreeSetAncestorsAttributes {
   my ($self, $ini, $attrs) = @_;
   #iup.TreeSetAncestorsAttributes(ih: ihandle, id: number, attrs: table) [in Lua]
-  $ini = $self->GetAttribute("PARENT$ini");
+  $ini = $self->GetAttributeId("PARENT",$ini);
   my @stack = ();  
   while (defined $ini) {
     push @stack, $ini;
-    $ini = $self->GetAttribute("PARENT$ini");
+    $ini = $self->GetAttributeId("PARENT",$ini);
   }
   $self->TreeSetNodeAttributes($_, $attrs) for (@stack);
 }
@@ -64,86 +65,97 @@ sub TreeSetDescentsAttributes {
   my ($self, $ini, $attrs) = @_;
   #iup.TreeSetDescentsAttributes(ih: ihandle, id: number, attrs: table) [in Lua] 
   my $id = $ini;
-  my $count = $self->GetAttribute("CHILDCOUNT$ini");
+  my $count = $self->GetAttributeId("CHILDCOUNT",$ini);
   for(my $i=0; $i<$count; $i++) {
     $id++;
     $self->TreeSetNodeAttributes($id, $attrs);
-    if ($self->GetAttribute("KIND$id") eq "BRANCH") {
+    if ($self->GetAttributeId("KIND", $id) eq "BRANCH") {
       $id = $self->TreeSetDescentsAttributes($id, $attrs);
     }
   }
   return $id;
 }
 
-sub TreeSetNodeAttributes {
-  my ($self, $id, $attrs) = @_;
-  #iup.TreeSetNodeAttributes(ih: ihandle, id: number, attrs: table) [in Lua]  
-  while (my ($attr, $val) = each %$attrs) {
-    $self->SetAttribute("$attr$id", $val);
+sub TreeSetNodeAttributes {  
+  my ($self, $id, $attrhash) = @_;
+  while (my ($attr, $val) = each %$attrhash) {
+    next unless $attr =~ /^[A-Z_0-9]+$/;    
+    next if $attr =~ /^(KIND|PARENT|DEPTH|CHILDCOUNT|TOTALCHILDCOUNT)$/; #skip read only attributes
+    if ($attr eq 'USERDATA') {
+      $self->TreeSetUserId($id, $val); #special handling of USERDATA
+    }
+    else {
+      $self->SetAttributeId($attr, $id, $val);
+    }
   }
 }
+
+#xxxCHECKLATER
+#sub TreeInsertNodes {
+#  #maybe later
+#}
 
 sub TreeAddNodes {
   #iup.TreeAddNodes(ih: ihandle, tree: table, [id: number]) [in Lua]
-  my ($self, $t, $id) = @_;
+  #xxxFIXME does not work well with rootless trees
+  my ($self, $t, $id) = @_;  
   return unless defined $t;
-  if (! defined $id) {
-    $id = 0; # default is the root
-    $self->SetAttribute("TITLE0", $t->{branchname}) if defined $t->{branchname};
-    $self->TreeSetNodeAttrib($t, 0)
+  $id = -1 unless defined $id;
+  if ($id == -1) {
+    #adding into an empty tree        
+    my $tc = $self->GetAttribute("TOTALCHILDCOUNT0");
+    my $ti = $self->GetAttribute("TITLE0");  
+    #workaround for handling "strange" default ADDROOT='YES'    
+    if (defined $tc && $tc==0 && defined $ti && $ti eq '') {
+      #the tree is empty, but was created with ADDROOT='YES' - therefore deleting node 0
+      #xxxCHECKLATER not sure if it is a good idea
+      $self->SetAttributeId('DELNODE', 0, 'SELECTED'); 
+    }
   }
-  $self->TreeAddNodesRec($t, $id);
-  $self->TreeSetState($t, 0) if $id == 0;
-}
-
-#xxxNo idea what is this good for xxx UNTESTED xxx
-sub TreeSetAttributeHandle {
-  my ($self, $name, $value) = @_;
-  if (IUP->GetClass($value) eq "iup handle") {
-    $value = IUP->SetHandleName($value);
+  if (ref($t) eq 'ARRAY') {
+    $self->_proc_node_definition($_, $id) for (reverse @$t);
   }
-  $self->SetAttribute($name, $value);
-}
-
-#xxxmaybe private
-sub TreeSetState {
-  my ($self, $tnode, $id) = @_;
-  if ($tnode->{state}) {
-    $self->SetAttribute("STATE$id", $tnode->{state})
+  else {
+    $self->_proc_node_definition($t, $id);
   }
 }
 
-#xxxmaybe private
-sub TreeSetNodeAttrib {  
-  my ($self, $tnode, $id) = @_;
-  $self->SetAttribute("COLOR$id", $tnode->{color})                           if $tnode->{color};
-  $self->SetAttribute("TITLEFONT$id", $tnode->{titlefont})                   if $tnode->{titlefont};
-  $self->SetAttribute("MARKED$id", $tnode->{marked})                         if $tnode->{marked};
-  $self->TreeSetAttributeHandle("IMAGE$id", $tnode->{image})                 if $tnode->{image};
-  $self->TreeSetAttributeHandle("IMAGEEXPANDED$id", $tnode->{imageexpanded}) if $tnode->{imageexpanded};
-  $self->TreeSetUserId($id, $tnode->{userid})                                if $tnode->{userid};
-}
+sub _proc_node_definition { 
+  my ($self, $h, $id) = @_;
+  #NOTE: $h is expected to be a hashref or scalar value (not arrayref!)
+  return unless defined $h;
+  $h = { TITLE=>"$h", KIND=>'LEAF' } if ref($h) ne 'HASH'; #autoconvert any scalar value into leaf title
+  if ( ($h->{KIND} && $h->{KIND} eq 'BRANCH') || $h->{child} ) {
+    #add branch
+    warn "xxxDEBUG SetAttributeId('ADDBRANCH', $id, '$h->{TITLE}');\n";
+    #warn "xxxDEBUG [b]PARENT$id=", defined $self->GetAttributeId("PARENT", $id) ? $self->GetAttributeId("PARENT", $id) : 'undef';
 
-#xxxmaybe private
-sub TreeAddNodesRec {
-  my ($self, $t, $id) = @_;
-  return unless defined $t;
-  foreach my $tt (@{$t->{child}}) {
-    if (ref $tt) {
-      if ($tt->{branchname}) {
-        $self->SetAttribute("ADDBRANCH$id", $tt->{branchname});
-        $self->TreeSetNodeAttrib($tt, $id+1);
-        $self->TreeAddNodesRec($tt, $id+1);
-        $self->TreeSetState($tt, $id+1);
+    $self->SetAttributeId("ADDBRANCH", $id, $h->{TITLE});        
+    #my $newid = $id+1; # faster
+    my $newid = $self->LASTADDNODE;
+    warn "xxxDEBUG [b] newid=$newid id=$id\n" if $newid != ($id+1);
+    $self->TreeSetNodeAttributes($newid, $h);
+    
+    my $ch = $h->{child};
+    if (defined $ch) {      
+      if (ref($ch) eq 'ARRAY') {
+        $self->_proc_node_definition($_, $newid) for (reverse @$ch);
       }
-      elsif ($tt->{leafname}) {
-        $self->SetAttribute("ADDLEAF$id", $tt->{leafname});
-        $self->TreeSetNodeAttrib($tt, $id+1);
+      else {
+        $self->_proc_node_definition($ch, $newid);
       }
     }
-    else {
-      $self->SetAttribute("ADDLEAF".$id, $tt);
-    }
+  }
+  else {
+    #add leaf
+    warn "xxxDEBUG SetAttributeId('ADDLEAF', $id, '$h->{TITLE}');\n";
+    #warn "xxxDEBUG [l]PARENT$id=", defined $self->GetAttributeId("PARENT", $id) ? $self->GetAttributeId("PARENT", $id) : 'undef';
+
+    $self->SetAttributeId("ADDLEAF", $id, $h->{TITLE});
+    #my $newid = $id+1; # faster
+    my $newid = $self->LASTADDNODE;
+    warn "xxxDEBUG [l] newid=$newid id=$id\n" if $newid != ($id+1);
+    $self->TreeSetNodeAttributes($newid, $h);
   }
 }
 

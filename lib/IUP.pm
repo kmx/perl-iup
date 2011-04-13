@@ -34,9 +34,9 @@ sub import {
      ':basic' => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg Dial Dialog FileDlg Fill FontDlg Frame
                      Hbox Image Item Label LayoutDialog List Menu MessageDlg Normalizer OleControl ProgressBar Radio 
                      Sbox Separator Spin Spinbox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox OleControl/], 
-		     #xxx add OleControl conditionally
+		     #xxxFIXME add OleControl conditionally
      ':extended' => [qw/Matrix Cells Canvas CanvasGL PPlot/],
-                     #xxx add CanvasGL conditionally
+                     #xxxFIXME add CanvasGL conditionally
      ':all' => [],
   );  
   @{$tags{':all'}} = ( @{$tags{':basic'}}, @{$tags{':extended'}} );
@@ -126,7 +126,6 @@ sub Open {
   #int IupOpen(int *argc, char ***argv); [in C]
   #[There is no equivalent in Lua]
   IUP::Internal::LibraryIup::_IupOpen();
-  #xxxTODO what about other opens (iupcontrol, canvas, ...)
 }
 
 sub GetAllDialogs {
@@ -313,7 +312,6 @@ sub SetGlobal {
   #void IupStoreGlobal(const char *name, const char *value); [in C]
   #iup.StoreGlobal(name: string, value: string) [in Lua] 
   my ($pkg, $name, $value) = @_;
-  #xxxCHECKLATER SetGlobal vs. StoreGlobal
   IUP::Internal::LibraryIup::_IupStoreGlobal($name, $value);
 }
 
@@ -405,10 +403,10 @@ sub Alarm {
 sub Message {
   my $pkg = shift;
   if (scalar @_ == 1) {
-    return IUP::Internal::LibraryIup::_IupMessage('', $_[0]); #xxxBEWARE: stringification necessary
+    return IUP::Internal::LibraryIup::_IupMessage('', $_[0]);
   }
   elsif (scalar @_ == 2) {
-    return IUP::Internal::LibraryIup::_IupMessage($_[0], $_[1]); #xxxBEWARE: stringification necessary
+    return IUP::Internal::LibraryIup::_IupMessage($_[0], $_[1]);
   }
   carp('Warning: wrong params - IUP->Message($title, $msg)');
   return;

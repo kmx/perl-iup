@@ -9,7 +9,7 @@ sub _special_initial_map_cb {
   if (!$self->cnvhandle) {
     my $ch = IUP::Internal::Canvas::_cdCreateCanvas_CD_IUP($self->ihandle);  
     $self->cnvhandle($ch);
-    # xxx TODO xxx perhaps deactivate callback here
+    $self->MAP_CB(undef); #deactivate callback    
   }
 }
 

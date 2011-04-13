@@ -9,7 +9,7 @@ sub BEGIN {
   IUP::Internal::LibraryIup::_IupOleControlOpen();
 }
 
-# xxx TODO we need some integration with Win32::OLE
+#xxxFIXME we need some integration with Win32::OLE
 
 sub _create_element {
   my ($self, $args, $firstonly) = @_;

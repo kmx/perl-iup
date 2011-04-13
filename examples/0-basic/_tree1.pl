@@ -5,25 +5,49 @@
 use strict;
 use warnings;
 
-IUP->Message("This example is slightly broken!"); #XXX-FIXME
+#IUP->Message("This example is slightly broken!"); #XXX-FIXME
 
 use IUP ':all';
 
-#xxx TODO xxx decide about TreeAddNodes syntax
-my $t = {
-  branchname=>"Animals", child=>[
-    { branchname => "Mammals",     child=>["Horse",  "Whale"] },
-    { branchname => "Crustaceans", child=>["Shrimp", "Lobster"] },
-  ]
+my $t_singleroot = {
+  TITLE=>"Animals", child=>[
+    "0.Extra",
+    { TITLE=>"1.Mammals",     child=>["Horse",  "Whale"] },
+    "2.Extra",
+    { TITLE=>"3.Crustaceans", child=>["Shrimp", "Lobster"] },
+    "4.Extra",
+  ],
 };
 
-my $tree = IUP::Tree->new();
+my $t_rootless = [
+    "0.Extra",
+    { TITLE=>"1.Mammals",     child=>["Horse",  "Whale"] },
+    { TITLE=>"2.Crustaceans", child=>["Shrimp", "Lobster"] },
+    "3.Extra",
+    "4.Extra",
+];
 
-my $dlg = IUP::Dialog->new( child=>$tree, TITLE=>"IUP::Tree Animals", SIZE=>"200x200" );
+my $tree_tleft = IUP::Tree->new();
+my $tree_tright = IUP::Tree->new();
+my $tree_bleft = IUP::Tree->new( ADDROOT=>'NO' );
+my $tree_bright = IUP::Tree->new( ADDROOT=>'NO' );
+
+my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new([
+                              IUP::Hbox->new([$tree_tleft,$tree_tright]), 
+			      IUP::Hbox->new([$tree_bleft,$tree_bright]), 
+			    ]), TITLE=>"IUP::Tree Animals", SIZE=>"600x300" );
 
 $dlg->ShowXY(IUP_CENTER,IUP_CENTER);
 
 #NOTE: tree->TreeAddNodes(...) has to go after dialog->Show() xxx why?
-$tree->TreeAddNodes($t);
+
+warn "Creating [top-left] rootless tree\n";
+$tree_tleft->TreeAddNodes($t_rootless,-1);
+warn "Creating [top-right] singleroot tree\n";
+$tree_tright->TreeAddNodes($t_singleroot,-1);
+warn "Creating [bottom-left] rootless tree\n";
+$tree_bleft->TreeAddNodes($t_rootless,-1);
+warn "Creating [bottom-right] singleroot tree\n";
+$tree_bright->TreeAddNodes($t_singleroot,-1);
 
 IUP->MainLoop();

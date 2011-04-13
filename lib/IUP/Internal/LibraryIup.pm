@@ -7,11 +7,10 @@ use Scalar::Util 'weaken';
 
 bootstrap IUP::Internal::LibraryIup;
 
-#xxxTODO: maybe something more thread safe
+#xxxCHECKLATER maybe something more thread safe
 our %ih_register; #global table mapping IUP Ihandles to perl objrefs
 our %ch_register; #global table mapping CD Canvas handles to perl objrefs
-
-#xxxCHECKLATER: for performance reasons we access directly these global variables from _execute_cb()
+#NOTE: for performance reasons we access directly these global variables from _execute_cb()
 
 ###IHANDLE
 
@@ -30,7 +29,7 @@ sub _register_ih {
   if ($_[0]) {
     $ih_register{$_[0]} = $_[1];
     #BEWARE: circular references avoided by using weaken
-    weaken $ih_register{$_[0]}; #xxx-just-idea
+    weaken $ih_register{$_[0]}; #xxx(ANTI)DESTROY-MAGIC
     $ih_register{$_[0]};
   }
 }
@@ -52,7 +51,7 @@ sub _register_ch {
   if ($_[0]) {
     $ch_register{$_[0]} = $_[1];
     #BEWARE: circular references avoided by using weaken
-    weaken $ch_register{$_[0]}; #xxx-just-idea
+    weaken $ch_register{$_[0]}; #xxx(ANTI)DESTROY-MAGIC
     $ch_register{$_[0]};
   }
 }

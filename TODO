@@ -1,15 +1,17 @@
 ################ the last time working on ################ 
-- destruction / avoiding memleaks / optimizing callbacks
+- TreeAddNotes - rootless trees not working
 ##########################################################
 
 !!IMPORTANT!!######## IUP::Tree
 #IUP::Tree - #NOTE: tree->TreeAddNodes(...) has to go after dialog->Show() + tree->SetAttribute(...) has to go after dialog->Show() xxx why?
 #IUP::Tree - should it be maped before show as canvas?
 - Convert Lua interface into Perl:
-  TreeAddNodes($newnodes, [$id])                #some draft is already in Tree.pm
+  TreeAddNodes($newnodes, [$id])                #some draft is already in Tree.pm    
   TreeSetNodeAttributes($id, $attrs)            #some draft is already in Tree.pm
   TreeSetAncestorsAttributes($startid, $attrs)	#some draft is already in Tree.pm
   TreeSetDescentsAttributes($startid, $attrs)   #some draft is already in Tree.pm 
+  TreeRemoveNodes
+	
   TreeSetAttributeHandle($name, $value)         #some draft is already in Tree.pm 
 - examples:
   http://www.wxpython.org/docs/api/wx.TreeCtrl-class.html

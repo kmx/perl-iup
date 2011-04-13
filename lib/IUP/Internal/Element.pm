@@ -8,7 +8,7 @@ use IUP::Internal::Callback;
 use IUP::Internal::Attribute;
 use IUP::Constants qw(IUP_CURRENT);
 use Carp;
-use Scalar::Util 'blessed';
+use Scalar::Util qw(blessed looks_like_number);
 
 sub BEGIN {
   #warn "xxxDEBUG IUP::Internal::Element::BEGIN() started\n";
@@ -151,7 +151,7 @@ sub SetAttribute {
       unless($self->_get_child_ref($v)) {
         #xxxFIXME - happens for: MENU, MDIMENU, IMAGE*, PARENTDIALOG (can cause memory leaks)
         #warn "xxxDEBUG Unexpected situation elem='".ref($self)."' attr='$k'"; 
-        $self->_store_child_ref($v); #xxx-just-idea
+        $self->_store_child_ref($v); #xxx(ANTI)DESTROY-MAGIC
       }
     }
     else {
@@ -182,7 +182,7 @@ sub GetAttribute {
   my ($self, @names) = @_;
   my @rv = ();  
   push(@rv, IUP::Internal::LibraryIup::_IupGetAttribute($self->ihandle, $_)) for (@names);    
-  return (scalar(@names) == 1) ? $rv[0] : @rv; #xxxFIXME: not sure if this is a good idea
+  return (scalar(@names) == 1) ? $rv[0] : @rv; #xxxCHECKLATER not sure if this is a good idea
 }
 
 sub GetAttributeId {
@@ -191,7 +191,7 @@ sub GetAttributeId {
   my ($self, $name, @ids) = @_;
   my @rv = ();
   push(@rv, IUP::Internal::LibraryIup::_IupGetAttributeId($self->ihandle, $name, $_)) for (@ids);
-  return (scalar(@ids) == 1) ? $rv[0] : @rv; #xxxFIXME: not sure if this is a good idea
+  return (scalar(@ids) == 1) ? $rv[0] : @rv; #xxxCHECKLATER not sure if this is a good idea
 }
 
 sub GetAttributeId2 {
@@ -209,7 +209,7 @@ sub SetCallback {
       if (defined $func) {
         #set callback
         $self->{"!int!cb!$action!func"} = $func;
-        $self->{"!int!cb!$action!related"}->{$self->ihandle} = $self; #intentional circular dependency #xxx-just-idea
+        $self->{"!int!cb!$action!related"}->{$self->ihandle} = $self; #intentional circular dependency #xxx(ANTI)DESTROY-MAGIC
         &$cb_init_func($self->ihandle);
       }
       else {
@@ -489,23 +489,25 @@ sub GetDialogChild {
 sub GetParamParam {
   #iup.GetParamParam(dialog: ihandle, param_index: number)-> (param: ihandle) [in Lua]
   my ($self, $param_index) = @_;
-  my $param_str = sprintf("PARAM%d", $param_index);
-  my $ih = IUP::Internal::LibraryIup::_IupGetAttributeIH($self->ihandle, $param_str);  
-  my $ct = IUP::Internal::LibraryIup::_IupGetAttributeIH($ih, "CONTROL");
-  #xxxFIXME decide how to handle GetParamParam
+  my $ih = IUP::Internal::LibraryIup::_IupGetAttributeIH($self->ihandle, "PARAM" . $param_index);  
   return IUP->GetByIhandle($ih);
-  #return IUP->GetByIhandle($ct);
 }
 
 sub GetParamValue {
   # extra function - not in standard iup C API
+  #iup.GetParamParam(dialog: ihandle, param_index: number)-> (param: ihandle) [in Lua]
   my ($self, $param_index, $newval) = @_;
-  my $param_str = sprintf("PARAM%d", $param_index);
-  my $ih = IUP::Internal::LibraryIup::_IupGetAttributeIH($self->ihandle, $param_str);  
+  my $ih = IUP::Internal::LibraryIup::_IupGetAttributeIH($self->ihandle, "PARAM" . $param_index);
   if (defined $newval) {
+    #xxxWORKAROUND
+    #when setting listindex values there is a mismatch 0-based vs 1-based indexes
+    #setting VALUE to 1 selects the first item - there seems not to be an easy workaround
+    my $t = IUP::Internal::LibraryIup::_IupGetAttribute($ih, "TYPE");
+    $newval++ if ($t && $t eq 'LIST' && looks_like_number($newval) && $newval >=0);
+    #xxxWORKAROUND-FINISHED
     my $ct = IUP::Internal::LibraryIup::_IupGetAttributeIH($ih, "CONTROL");    
     IUP::Internal::LibraryIup::_IupStoreAttribute($ih, "VALUE", $newval);
-    IUP::Internal::LibraryIup::_IupStoreAttribute($ct, "VALUE", $newval);    
+    IUP::Internal::LibraryIup::_IupStoreAttribute($ct, "VALUE", $newval); 
   }
   else {
     return IUP::Internal::LibraryIup::_IupGetAttribute($ih, "VALUE");
@@ -545,7 +547,7 @@ sub NextField {
 }
 
 sub DESTROY {
-  #IMPORTANT: do not automatically destroy iup elements - xxxCHECKLATER
+  #IMPORTANT: do not automatically destroy iup elements
   #warn "xxxDEBUG: DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";  
 }
 
@@ -557,13 +559,13 @@ sub _create_element {
 }
 
 sub _get_child_ref {
-  #xxx-just-idea
+  #xxx(ANTI)DESTROY-MAGIC
   my ($self, $ih) = @_;
   return $self->{'!int!child'}->{$ih};
 }
 
-sub _store_child_ref { #xxxCHECKTHIS
-  #xxx-just-idea
+sub _store_child_ref {
+  #xxx(ANTI)DESTROY-MAGIC
   my $self = shift;
   #warn("xxxDEBUG _store_child_ref started\n");
   for (@_) {
@@ -572,14 +574,14 @@ sub _store_child_ref { #xxxCHECKTHIS
   }
 }
 
-sub _internal_destroy { #xxxCHECKTHIS  
+sub _internal_destroy {
   my $self = shift;
   #unset all callbacks
   #warn("xxxDEBUG _internal_destroy ".$self->ihandle." started\n");
   for (keys %$self) {
     $self->SetCallback($1, undef) if (/^!int!cb!([^!]+)!func$/);
   }
-  #go through all children #xxx-just-idea
+  #go through all children #xxx(ANTI)DESTROY-MAGIC
   for (keys %{$self->{'!int!child'}}) {
     $self->{'!int!child'}->{$_}->_internal_destroy()
   }
@@ -614,7 +616,7 @@ sub _proc_child_param {
   for (@list) {
     if (blessed($_) && $_->can('ihandle')) {
       push @ihlist, $_->ihandle;
-      $self->_store_child_ref($_); #xxx-just-idea
+      $self->_store_child_ref($_); #xxx(ANTI)DESTROY-MAGIC
     }
     else {
       carp "warning: undefined item passed as 'child' parameter of ",ref($self),"->new()";
@@ -632,7 +634,7 @@ sub _proc_child_param_single {
   if (defined $firstonly) {
     if (blessed($firstonly) && $firstonly->can('ihandle')) {      
       $ih = &$func($firstonly->ihandle); #call func
-      $self->_store_child_ref($firstonly); #xxx-just-idea
+      $self->_store_child_ref($firstonly); #xxx(ANTI)DESTROY-MAGIC
     }
     else {      
       carp "Warning: parameter 'child' has to be a reference to IUP element";
@@ -642,7 +644,7 @@ sub _proc_child_param_single {
   elsif (defined $args && defined $args->{child}) {
     if (blessed($args->{child}) && $args->{child}->can('ihandle')) {      
       $ih = &$func($args->{child}->ihandle); #call func
-      $self->_store_child_ref($args->{child}); #xxx-just-idea
+      $self->_store_child_ref($args->{child}); #xxx(ANTI)DESTROY-MAGIC
     }
     else {
       carp "Warning: 'child' parameter has to be a reference to IUP element";      

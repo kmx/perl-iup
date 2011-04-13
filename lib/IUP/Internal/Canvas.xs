@@ -59,7 +59,7 @@ _cdCreateCanvas_FILE(format, params)
 		else if (strcmp(format,"PS" ) == 0) RETVAL = cdCreateCanvas(CD_PS, params);
 		else if (strcmp(format,"EMF") == 0) RETVAL = cdCreateCanvas(CD_EMF, params);
 		else if (strcmp(format,"DXF") == 0) RETVAL = cdCreateCanvas(CD_DXF, params);
-		/* xxx TODO add all file formats */
+		/*xxxCHECKLATER add all file formats */
 		/* WMF */
 		/* DGN */
 		/* CGM */

@@ -17,7 +17,10 @@ sub param_action {
     warn "Cancel\n";
   }
   else {
-    print "PARAM[$param_index] = ", $self->GetParamValue($param_index), "\n";
+    print "PARAM[$param_index]",
+          " typ=", $self->GetParamParam($param_index)->GetAttribute('TYPE'),
+          " val=", $self->GetParamValue($param_index),
+	  "\n";
   }
   return 1;
 }
