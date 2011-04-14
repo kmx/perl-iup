@@ -1,6 +1,8 @@
 use strict;
 use warnings;
 
+use Test::More tests => 1;
+
 use Test::More;
 use FindBin;
 use File::Slurp;
@@ -24,10 +26,10 @@ my $root = File::Spec->catdir($FindBin::Bin, '..');
 
 my $all_code = '';
 $all_code .= read_file($_) . "\n" for find_file ("$root/lib", qr/\.pm$/);
-$all_code =~ s/(IUP::Internal::LibraryIup::[^\(\s]+)/\n$1\n/sg;
+$all_code =~ s/(IUP::Internal::LibraryIup::[^\(\s,]+)/\n$1\n/sg;
 
 my @pm_calls = grep(/^IUP::Internal::LibraryIup::/, (split "\n", $all_code));
-@pm_calls = map { $1 if(/^IUP::Internal::LibraryIup::([^\(\s]+)/) } @pm_calls;
+@pm_calls = map { $1 if(/^IUP::Internal::LibraryIup::([^\(\s,]+)/) } @pm_calls;
 @pm_calls = grep(!/^(_register_(ch|ih)|_translate_(ch|ih)|_unregister_(ch|ih))$/, @pm_calls);
 
 my @xs_funcs = grep(/^_/, read_file("$root/lib/IUP/Internal/LibraryIup.xs"));
@@ -54,3 +56,6 @@ for my $i (sort keys %{$data}) {
 printf STDERR ">>>>> XS-FUNCS - cross-check finished\n$result\n";
 
 #print Data::Dump::dump($data);
+
+### do the actual test ###
+isnt($result,'FAIL');

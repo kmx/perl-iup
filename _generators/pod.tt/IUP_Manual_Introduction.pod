@@ -42,6 +42,8 @@ different way from other toolkits.
 
 =item B<Fourth is the callback system.> Because of the LED resource files IUP has an indirect form to associate a callback to a control. You associate a C function with a name using IupSetFunction, and then associate the callback attribute with that name using IupSetAttribute. But applications now should use the IupSetCallback function to directly associate a callback for a control. 
 
+=back
+
 =head1 IUP ELEMENTS
 
 IUP contains several user interface controls. The libraryE<rsquo>s main

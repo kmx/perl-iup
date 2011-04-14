@@ -1,6 +1,8 @@
 use strict;
 use warnings;
 
+use Test::More tests => 1;
+
 use FindBin;
 use File::Slurp;
 use File::Spec;
@@ -40,5 +42,7 @@ for my $i (sort keys %{$data}) {
 }
 
 printf STDERR ">>>>> METHODS - cross-check finished\n$result\n";
-
 #print Data::Dump::dump($data);
+
+### do the actual test ###
+isnt($result,'FAIL');

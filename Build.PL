@@ -9,10 +9,13 @@ die "You need to have Alien::IUP installed\n" if $@;
 #hack for generating *.pod documentation via './Build doc'
 my $class = Module::Build->subclass(
   class => "Module::Build::Custom",
-  code => 'sub ACTION_doc {'.
-          '  system($^X, qw[_generators/proc-pod.tt2pod.pl -podtt _generators/pod.tt -pod lib]);'.
-	  '  system($^X, qw[_generators/proc-pod2cpan.html.pl -html doc.html.tmp -pod lib]);'.
-          '}',
+  code =>
+   q[sub ACTION_doc {].
+   q[  system($^X, qw[_generators/proc-pod.tt2pod.pl -podtt _generators/pod.tt -pod lib]);].
+   q[  system($^X, qw[_generators/proc-pod2cpan.html.pl -html doc.html.tmp -pod lib]);].
+   q[}].
+   q[sub ACTION_gen { system($^X, qw[_generators/generate.pl -dst lib/IUP/Internal]) }].
+   q[sub ACTION_xt  { system(qw[prove -blv xt/*.t]) }],
 );
 
 my $lflags = Alien::IUP->config('LIBS');

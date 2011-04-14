@@ -1283,86 +1283,6 @@ _IupTreeGetId(ih,userid)
 		RETVAL
 
 #### Original C function from <iup.h>
-# void IupTreeSetAttribute (Ihandle* ih, const char* name, int id, const char* value);
-void
-_IupTreeSetAttribute(ih,name,id,value)
-		Ihandle* ih;
-		const char* name;
-		int id;
-		const char* value;
-	CODE:
-		IupTreeSetAttribute(ih,name,id,value);
-
-#### Original C function from <iup.h>
-# void IupTreeStoreAttribute(Ihandle* ih, const char* name, int id, const char* value);
-void
-_IupTreeStoreAttribute(ih,name,id,value)
-		Ihandle* ih;
-		const char* name;
-		int id;
-		const char* value;
-	CODE:
-		IupTreeStoreAttribute(ih,name,id,value);
-
-#### Original C function from <iup.h>
-# char* IupTreeGetAttribute (Ihandle* ih, const char* name, int id);
-char*
-_IupTreeGetAttribute(ih,name,id)
-		Ihandle* ih;
-		const char* name;
-		int id;
-	CODE:
-		RETVAL = IupTreeGetAttribute(ih,name,id);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# int IupTreeGetInt (Ihandle* ih, const char* name, int id);
-int
-_IupTreeGetInt(ih,name,id)
-		Ihandle* ih;
-		const char* name;
-		int id;
-	CODE:
-		RETVAL = IupTreeGetInt(ih,name,id);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# float IupTreeGetFloat (Ihandle* ih, const char* name, int id);
-float
-_IupTreeGetFloat(ih,name,id)
-		Ihandle* ih;
-		const char* name;
-		int id;
-	CODE:
-		RETVAL = IupTreeGetFloat(ih,name,id);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup.h>
-# void IupTreeSetfAttribute (Ihandle* ih, const char* name, int id, const char* format, ...);
-void
-_IupTreeSetfAttribute(ih,name,id,format,...)
-		Ihandle* ih;
-		const char* name;
-		int id;
-		const char* format;
-	CODE:
-		IupTreeSetfAttribute(ih,name,id,format);
-
-#### Original C function from <iup.h>
-# void IupTreeSetAttributeHandle(Ihandle* ih, const char* a, int id, Ihandle* ih_named);
-void
-_IupTreeSetAttributeHandle(ih,a,id,ih_named)
-		Ihandle* ih;
-		const char* a;
-		int id;
-		Ihandle* ih_named;
-	CODE:
-		IupTreeSetAttributeHandle(ih,a,id,ih_named);
-
-#### Original C function from <iup.h>
 # Ihandle* IupLayoutDialog(Ihandle* dialog);
 Ihandle*
 _IupLayoutDialog(dialog)
@@ -2050,46 +1970,6 @@ _IupPPlotAdd(ih,xaxis,...)
 # void IupPPlotAddPoints(Ihandle* ih, int index, float *x, float *y, int count);
 # void IupPPlotAddStrPoints(Ihandle* ih, int index, const char** x, float* y, int count);
 void
-_xxx_IupPPlotAddPoints(ih,xaxis,index,...)
-		Ihandle* ih;
-		int xaxis;
-		int index;
-	INIT:
-		int pcount, i;
-		float * fxpointers;
-		const char ** sxpointers;
-		float * ypointers;
-		SV *tmp;
-	CODE:
-#ifdef HAVELIB_IUP_PPLOT
-		pcount = (items-3)/2;
-		ypointers = malloc( pcount*sizeof(float) );
-		if(xaxis==0) fxpointers = malloc( pcount*sizeof(float) );
-		else         sxpointers = malloc( pcount*sizeof(char*) );		
-		for(i=0; i<pcount; i++) { 
-		  ypointers[i] = myST2FLT(3+2*i+1);
-		  if(xaxis==0) {
-		    fxpointers[i] = myST2FLT(3+2*i);
-		  }
-		  else {
-		    sxpointers[i] = myST2STR(3+2*i);
-		  }
-		}
-		if(xaxis==0) {
-		  IupPPlotAddPoints(ih,index,fxpointers,ypointers,pcount);
-		  free(fxpointers);
-		}
-		else {
-		  IupPPlotAddStrPoints(ih,index,sxpointers,ypointers,pcount);
-		  free(sxpointers);
-		}
-		free(ypointers);
-#endif
-
-#### Original C function from <iup_pplot.h>
-# void IupPPlotAddPoints(Ihandle* ih, int index, float *x, float *y, int count);
-# void IupPPlotAddStrPoints(Ihandle* ih, int index, const char** x, float* y, int count);
-void
 _IupPPlotAddPoints(ih,xaxis,index,xylist)
 		Ihandle* ih;
 		int xaxis;
@@ -2554,60 +2434,20 @@ _isSys(s)
 		RETVAL = iup_issys(s);
 	OUTPUT:
 		RETVAL
-
-
-void
-_SV2ptrvalue(param)
-		SV* param;
-	INIT:
-		int rv;
-	PPCODE:
-		fprintf(stderr,"sv2ptr p=%p\n",param);
-		if (SvOK(param))
-		  XPUSHs(sv_2mortal(newSViv(PTR2IV(param))));
-		else
-		  XPUSHs(sv_2mortal(newSVpv(NULL,0))); /* undef */
 		
-char*
-_Testing(p)
-		SV* p;
-	CODE:
-		int r = 1000000;
-		if SvOK(p) {
-		  printf("SvOK - yes");
-		  if SvIOK(p) {
-		    printf("SvIOK - yes");
-		  }
-		  if SvNOK(p) {
-		    printf("SvNOK - yes");
-		  }
-		  if SvPOK(p) {
-		    printf("SvPOK - yes");
-		  }
-		  if SvROK(p) {
-		    printf("SvROK - yes");
-		    if (SvTYPE(SvRV(p)) == SVt_IV)   printf(" ref:IV");
-		    if (SvTYPE(SvRV(p)) == SVt_NV)   printf(" ref:NV");
-		    if (SvTYPE(SvRV(p)) == SVt_PV)   printf(" ref:PV");
-		    if (SvTYPE(SvRV(p)) == SVt_RV)   printf(" ref:RV");
-		    if (SvTYPE(SvRV(p)) == SVt_PVAV) printf(" ref:PVAV");
-		    if (SvTYPE(SvRV(p)) == SVt_PVHV) printf(" ref:PVHV");
-		    if (SvTYPE(SvRV(p)) == SVt_PVCV) printf(" ref:PVCV");
-		    if (SvTYPE(SvRV(p)) == SVt_PVGV) printf(" ref:PVGV");
-		    if (SvTYPE(SvRV(p)) == SVt_PVMG) printf(" ref:PVMG");
-		    printf(" obj:%d", sv_isobject(p));
-		    printf(" isa:%d", sv_isa(p,"IUP::Dialog"));
-		    printf(" element:%d", sv_derived_from(p,"IUP::Internal::Element"));
-		    printf(" canvas:%d", sv_derived_from(p,"IUP::Internal::Canvas"));
-		  }
-		  printf("\n");
-		}
-		else {
-		  printf("SvOK - no\n");
-		}
-		RETVAL = NULL;
-	OUTPUT:
-		RETVAL
+#char*
+#_Testing(p)
+#		SV* p;
+#	CODE:
+#		if SvOK(p) {
+#		  printf("SvOK - yes");
+#		}
+#		else {
+#		  printf("SvOK - no\n");
+#		}
+#		RETVAL = NULL;
+#	OUTPUT:
+#		RETVAL
 
 #### Original C function from <iupcontrols.h>
 # void IupControlsClose(void); 
@@ -2639,4 +2479,10 @@ _Testing(p)
 # void IupMessagef(const char *title, const char *format, ...);
 # int IupScanf(const char *format, ...);
 # Ihandle* IupMultiLine (const char* action);
-# Ihandle* IupGetAttributeHandle(Ihandle* ih, const char* name);
+# void IupTreeSetAttribute (Ihandle* ih, const char* name, int id, const char* value);
+# void IupTreeStoreAttribute(Ihandle* ih, const char* name, int id, const char* value);
+# char* IupTreeGetAttribute (Ihandle* ih, const char* name, int id);
+# int IupTreeGetInt (Ihandle* ih, const char* name, int id);
+# float IupTreeGetFloat (Ihandle* ih, const char* name, int id);
+# void IupTreeSetfAttribute (Ihandle* ih, const char* name, int id, const char* format, ...);
+# void IupTreeSetAttributeHandle(Ihandle* ih, const char* a, int id, Ihandle* ih_named);

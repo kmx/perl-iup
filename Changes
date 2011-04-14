@@ -1,5 +1,10 @@
-Revision history for IUP
+=head1 Revision history for IUP
 
-0.01    Date/time
-        First version, released on an unsuspecting world.
+=head2 NEXT - 0.001
 
+ - the first CPAN release
+
+=head2 15/09/2010 - 0.000
+
+ - initial proof-of-concept version uploaded to github
+ - https://github.com/kmx/perl-iup/commit/e8cb0bb10e4ce6e7a342f65a6b933bbd90c1fb6d
