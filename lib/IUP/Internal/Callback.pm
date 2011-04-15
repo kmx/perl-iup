@@ -112,7 +112,7 @@ my $cb_table = {
   'IUP::Spin' => {
     SPIN_CB => \&_init_cb_SPIN_CB_i,
   },
-  'IUP::Spinbox' => {
+  'IUP::SpinBox' => {
     SPIN_CB => \&_init_cb_SPIN_CB_i,
   },
   'IUP::Submenu' => {

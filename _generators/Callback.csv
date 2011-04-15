@@ -72,7 +72,7 @@ IUP::PPlot;SELECTBEGIN_CB;;int;Ihandle* ih
 IUP::PPlot;SELECTEND_CB;;int;Ihandle* ih
 IUP::PPlot;SELECT_CB;iiffi;int;Ihandle* ih,int index,int sample_index,float x,float y,int select
 IUP::Spin;SPIN_CB;i;int;Ihandle* ih,int inc
-IUP::Spinbox;SPIN_CB;i;int;Ihandle* ih,int inc
+IUP::SpinBox;SPIN_CB;i;int;Ihandle* ih,int inc
 IUP::Submenu;HIGHLIGHT_CB;;int;Ihandle* ih
 IUP::Tabs;TABCHANGEPOS_CB;ii;int;Ihandle* ih,int new_pos,int old_pos
 IUP::Tabs;TABCHANGE_CB;nn;int;Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab

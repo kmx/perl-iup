@@ -33,7 +33,7 @@ sub import {
      #UPDATE when element list change
      ':basic' => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg Dial Dialog FileDlg Fill FontDlg Frame
                      Hbox Image Item Label LayoutDialog List Menu MessageDlg Normalizer OleControl ProgressBar Radio 
-                     Sbox Separator Spin Spinbox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox OleControl/], 
+                     Sbox Separator Spin SpinBox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox OleControl/], 
 		     #xxxFIXME add OleControl conditionally
      ':extended' => [qw/Matrix Cells Canvas CanvasGL PPlot/],
                      #xxxFIXME add CanvasGL conditionally
@@ -197,7 +197,7 @@ sub GetByIhandle {
     sbox         => "IUP::Sbox",
     separator    => "IUP::Separator",
     spin         => "IUP::Spin",
-    spinbox      => "IUP::Spinbox",
+    spinbox      => "IUP::SpinBox",
     split        => "IUP::Split",
     submenu      => "IUP::Submenu",
     tabs         => "IUP::Tabs",

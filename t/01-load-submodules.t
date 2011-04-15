@@ -34,7 +34,7 @@ use_ok('IUP::Radio');
 use_ok('IUP::Sbox');
 use_ok('IUP::Separator');
 use_ok('IUP::Spin');
-use_ok('IUP::Spinbox');
+use_ok('IUP::SpinBox');
 use_ok('IUP::Split');
 use_ok('IUP::Submenu');
 use_ok('IUP::Tabs');

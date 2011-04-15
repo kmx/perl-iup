@@ -39,7 +39,7 @@ isnt(IUP::Radio->new(),undef,'Testing IUP::Radio->new()');
 isnt(IUP::Sbox->new(),undef,'Testing IUP::Sbox->new()');
 isnt(IUP::Separator->new(),undef,'Testing IUP::Separator->new()');
 isnt(IUP::Spin->new(),undef,'Testing IUP::Spin->new()');
-isnt(IUP::Spinbox->new(),undef,'Testing IUP::Spinbox->new()');
+isnt(IUP::SpinBox->new(),undef,'Testing IUP::SpinBox->new()');
 isnt(IUP::Split->new(),undef,'Testing IUP::Split->new()');
 isnt(IUP::Submenu->new(),undef,'Testing IUP::Submenu->new()');
 isnt(IUP::Tabs->new(),undef,'Testing IUP::Tabs->new()');

@@ -1,4 +1,4 @@
-package IUP::Spinbox;
+package IUP::SpinBox;
 use strict;
 use warnings;
 use base 'IUP::Internal::Element';

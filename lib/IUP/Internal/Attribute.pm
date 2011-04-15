@@ -470,7 +470,7 @@ my $attrib_table = {
     'COLOR' => 1,
     'DIRECTION' => 1,
   },
-  'IUP::Spinbox' => {
+  'IUP::SpinBox' => {
     'CLIENTOFFSET' => 1,
     'CLIENTSIZE' => 1,
   },
