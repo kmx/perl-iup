@@ -2435,19 +2435,19 @@ _isSys(s)
 	OUTPUT:
 		RETVAL
 		
-#char*
-#_Testing(p)
-#		SV* p;
-#	CODE:
-#		if SvOK(p) {
-#		  printf("SvOK - yes");
-#		}
-#		else {
-#		  printf("SvOK - no\n");
-#		}
-#		RETVAL = NULL;
-#	OUTPUT:
-#		RETVAL
+##char*
+##_Testing(p)
+##		SV* p;
+##	CODE:
+##		if SvOK(p) {
+##		  printf("SvOK - yes");
+##		}
+##		else {
+##		  printf("SvOK - no\n");
+##		}
+##		RETVAL = NULL;
+##	OUTPUT:
+##		RETVAL
 
 #### Original C function from <iupcontrols.h>
 # void IupControlsClose(void); 

@@ -1260,6 +1260,24 @@ L<IUP::MessageDlg|IUP::MessageDlg> (pre-defined dialog).
 
 =back
 
+=head2 Recording and Re-playing User Input
+
+=head3 PlayInput()
+
+=over
+
+xxTODO
+
+=back
+
+=head3 RecordInput()
+	      
+=over
+
+xxTODO
+
+=back
+
 =head2 Other helper functions
 
 =head3 CopyClassAttributes()
@@ -1449,6 +1467,14 @@ focus, i.e. the element that will receive keyboard events.
 
 [% h.at_see %]
 L<SetFocus|[%m.elem%]/"SetFocus()"> (element method).
+
+=back
+
+=head3 GetIhClassName()
+
+=over
+
+xxxTODO
 
 =back
 

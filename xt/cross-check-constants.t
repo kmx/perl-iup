@@ -23,16 +23,16 @@ $data->{$_}++ for @exported;
 $def->{$_}++ for @defined;
 $exp->{$_}++ for @exported;
 
-printf STDERR ">>>>> CONSTANTS - cross-check:\n";
+diag ">>>>> CONSTANTS - cross-check";
 my $result = 'OK';
 for my $i (sort keys %{$data}) {
   next if $data->{$i} == 2;
-  print STDERR "missing definition: $i\n" unless $def->{$i};
-  print STDERR "missing export    : $i\n" unless $exp->{$i};
+  diag "missing definition: $i" unless $def->{$i};
+  diag "missing export    : $i" unless $exp->{$i};
   $result = 'FAIL';  
 }
 
-printf STDERR ">>>>> CONSTANTS - cross-check finished\n$result\n";
+#diag ">>>>> CONSTANTS - cross-check finished - $result";
 #print Data::Dump::dump($data);
 
 ### do the actual test ###

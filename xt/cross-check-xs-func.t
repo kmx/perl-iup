@@ -44,17 +44,23 @@ $data->{$_}++ for @pm_calls;
 $pm->{$_}++ for @pm_calls;
 $xs->{$_}++ for @xs_funcs;
 
-printf STDERR ">>>>> XS-FUNCS - cross-check:\n";
+diag ">>>>> XS-FUNCS - cross-check";
 my $result = 'OK';
 for my $i (sort keys %{$data}) {
   next if $data->{$i} == 2;
-  print STDERR "missing in xs: $i\n" unless $xs->{$i};
-  print STDERR "missing in pm: $i\n" unless $pm->{$i};
+  if (!$pm->{$i} && $i =~ /^_Iup(GetAttributeHandle|OleControl|OleControlOpen)$/) {
+    diag "intentionally missing in pm: $i";
+    next;
+  }
+  elsif ($pm->{$i} && $xs->{$i}) {
+    next;
+  }
+  diag "missing in xs: $i" unless $xs->{$i};
+  diag "missing in pm: $i" unless $pm->{$i}; 
   $result = 'FAIL';  
 }
 
-printf STDERR ">>>>> XS-FUNCS - cross-check finished\n$result\n";
-
+#diag ">>>>> XS-FUNCS - cross-check finished - $result";
 #print Data::Dump::dump($data);
 
 ### do the actual test ###

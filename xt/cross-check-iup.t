@@ -32,16 +32,16 @@ $data->{$_}->{e0mod}  = 1 for (@elemall_pm);
 
 delete $data->{$_} for (qw/BEGIN() DESTROY() END() import()/);
 
-printf STDERR ">>>>> METHODS - cross-check:\n";
+diag ">>>>> METHODS - cross-check";
 my $result = 'OK';
 for my $i (sort keys %{$data}) {
   next if  $data->{$i}->{g0doc} &&  $data->{$i}->{g0mod} && !$data->{$i}->{e0doc} && !$data->{$i}->{e0mod};
   next if !$data->{$i}->{g0doc} && !$data->{$i}->{g0mod} &&  $data->{$i}->{e0doc} &&  $data->{$i}->{e0mod};
-  printf STDERR "% 30s %s\n", $i, Data::Dump::dump($data->{$i});
+  diag sprintf "% 30s %s\n", $i, Data::Dump::dump($data->{$i});
   $result = 'FAIL';  
 }
 
-printf STDERR ">>>>> METHODS - cross-check finished\n$result\n";
+#diag ">>>>> METHODS - cross-check finished - $result";
 #print Data::Dump::dump($data);
 
 ### do the actual test ###

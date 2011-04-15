@@ -20,8 +20,8 @@ die "Cannot require utils.pm\n" if $@;
 # global variables
 my $g_help    = 0;
 my $g_iupdoc  = 'y:\IUP.Unpacked\iup-cvs';
-my $g_podraw  = "$FindBin::Bin/xxpod.raw.cd5.4.1";
-my $g_podtt   = "$FindBin::Bin/xxtmp.pod.cd.tt";
+my $g_podraw  = "$FindBin::Bin/xxpod.raw.iup-cvs";
+my $g_podtt   = "$FindBin::Bin/xxtmp.pod.iup-cvs";
 # processing commandline options
 my $getopt_rv = GetOptions(
   'help|?' => \$g_help,

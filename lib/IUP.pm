@@ -414,12 +414,12 @@ sub Message {
 
 #### new since iup-3.4
 
-sub IupPlayInput {
+sub PlayInput {
   my ($pkg, $filename) = @_;
   return IUP::Internal::LibraryIup::_IupPlayInput($filename);
 }
 
-sub IupRecordInput {
+sub RecordInput {
   my ($pkg, $filename, $mode) = @_;
   return IUP::Internal::LibraryIup::_IupRecordInput($filename, $mode);
 }
