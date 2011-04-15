@@ -1,0 +1,223 @@
+=head1 NAME
+
+IUP::Val - [GUI element] selects a value in a limited interval (aka scale, trackbar)
+
+=head1 DESCRIPTION 
+
+Creates a Valuator control. Selects a value in a limited interval. Also
+known as Scale or Trackbar in native systems.
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ Ihandle* IUP::Val(const char *orientation); [in C]iup.val{orientation: string} -> (elem: ihandle) [in Lua]val(orientation) [in LED] 
+
+B<orientation>: optional orientation of valuator. Can be NULL. See
+ORIENTATION attribute.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item * L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
+
+transparent in all systems
+except in Motif. It will use the background color of the native parent.
+
+=item * B<CANFOCUS> (creation only) (non inheritable)
+
+enables the focus
+traversal of the control. In Windows the control will still get the
+focus when clicked. Default: YES. 
+
+=item * B<INVERTED>
+
+Invert the minimum and maximum positions on screen. When
+INVERTED=YES maximum is at top and left (minimum is bottom and right),
+when INVERTED=NO maximum is at bottom and right (minimum is top and
+left). The initial value depends on ORIENTATION passed as parameter on
+creation, if ORIENTATION=VERTICAL default is YES, if
+ORIENTATION=HORIZONTAL default is NO. 
+
+=item * B<MAX>
+
+Contains the maximum valuator value. Default is "1". When
+changed the display will not be updated until VALUE is set.
+
+=item * B<MIN>
+
+Contains the minimum valuator value. Default is "0". When
+changed the display will not be updated until VALUE is set.
+
+=item * B<PAGESTEP>
+
+Controls the increment for pagedown and pageup keys. It is
+not the size of the increment. The increment size is
+"pagestep*(max-min)", so it must be 0E<lt>pagestepE<lt>1. Default is
+"0.1".
+
+=item * L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE> (non inheritable)
+
+The
+initial size is 100 pixels along the major axis, and the handler normal
+size on the minor axis. If there are ticks then they are added to the
+natural size on the minor axis. The handler can be smaller than the
+normal size. Set to NULL to allow the automatic layout use smaller
+values.
+
+=item * B<SHOWTICKS> [Windows and Motif Only]
+
+The number of tick marks along
+the valuator trail. Minimum value is "2". Default is "0", in this case
+the ticks are not shown. It can not be changed to 0 from a non zero
+value, or vice-versa, after the control is mapped. GTK does not support
+ticks.
+
+=item * B<STEP>
+
+Controls the increment for keyboard control and the mouse
+wheel. It is not the size of the increment. The increment size is
+"step*(max-min)", so it must be 0E<lt>stepE<lt>1. Default is "0.01".
+
+=item * B<TICKSPOS> [Windows Only] (creation only)
+
+Allows to position the
+ticks in both sides (BOTH) or in the reverse side (REVERSE). Default:
+NORMAL. The normal position for horizontal orientation is at the top of
+the control, and for vertical orientation is at the left of the
+control. In Motif, the ticks position is always normal. 
+
+=item * B<ORIENTATION >(non inheritable)
+
+Informs whether the valuator is
+"VERTICAL" or "HORIZONTAL". Vertical valuators are bottom to up, and
+horizontal valuators are left to right variations of min to max (but
+can be inverted using INVERTED). Default: "HORIZONTAL".
+
+=item * B<VALUE >(non inheritable)
+
+Contains a number between MIN and MAX,
+indicating the valuator position. Default: "0.0".
+
+=back
+
+The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+
+=over
+
+=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
+L<EXPAND|IUP::Manual::03_Attributes/EXPAND>, L<FONT|IUP::Manual::03_Attributes/FONT>,
+L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
+L<POSITION|IUP::Manual::03_Attributes/POSITION>,
+L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
+L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>, L<WID|IUP::Manual::03_Attributes/WID>,
+L<TIP|IUP::Manual::03_Attributes/TIP>, L<SIZE|IUP::Manual::03_Attributes/SIZE>,
+L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
+L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+
+also accepted.
+
+=back
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item * B<VALUECHANGED_CB>
+
+Called after the value was interactively changed by
+the user.
+
+ int function(Ihandle *ih); [in C]elem:valuechanged_cb() -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+=back
+
+=back
+
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
+
+=item * L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>,
+L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
+L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
+L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
+
+All common callbacks are supported.
+
+=back
+
+=head1 NOTES
+
+This control replaces the old L<IUP::Val|IUP::Val> implemented
+in the additional controls. The old callbacks are still supported but
+called only if the VALUECHANGED_CB callback is not defined. The
+MOUSEMOVE_CB callback is only called when the user moves the handler
+using the mouse. The BUTTON_PRESS_CB callback is called only when the
+user press a key that changes the position of the handler. The
+BUTTON_RELEASE_CB callback is called only when the user release the
+mouse button after moving the handler.
+
+In Motif, after the user clicks the handler a KILLFOCUS will be ignored
+when the control loses its focus.
+
+=head2 Keyboard Mapping
+
+This is the default mapping when INVERTED has the default value, or
+ORIENTATION=HORIZONTAL+INVERTED=NO.
+
+ Keys                       Action for HORIZONTAL
+ -----------------------------------------------------------------
+ Right Arrow                move right, increment by one step
+ Left Arrow                 move left, decrement by one step
+ Ctrl+Right Arrow or PgDn   move right, increment by one page step
+ Ctrl+Left Arrow or PgUp    move left, decrement by one page step
+ Home                       move all left, set to minimum
+ End                        move all right, set to maximum
+
+This is the default mapping when INVERTED has the default value, or
+ORIENTATION=VERTICAL+INVERTED=YES.
+
+ Keys                       Action for VERTICAL
+ -----------------------------------------------------------------
+ Up Arrow                   move up, increment by one step
+ Down Arrow                 move down, decrement by one step
+ Ctrl+Up Arrow or PgUp      move up, increment by one page step
+ Ctrl+Down Arrow or PgDn    move down, decrement by one page step
+ Home                       move all up, set to maximum
+ End                        move all down, set to minimum
+
+Visually all the keys move to the same direction independent from the
+INVERTED attribute.
+
+Semantically all the keys change the value depending on the INVERTED
+attribute.
+
+This behavior is slightly different from the defined by the native
+systems (Home and End keys are different). But it is the same in all
+systems.
+
+=head1 EXAMPLES
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+=cut

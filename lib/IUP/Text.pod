@@ -1,0 +1,581 @@
+=head1 NAME
+
+IUP::Text - [GUI element] editable text field (single/multi-line, plain/rich-text)
+
+=head1 DESCRIPTION
+
+Creates an editable text field.
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ Ihandle* IUP::Text(const char *action); [in C]iup.text{} -> (elem: ihandle) [in Lua]text(action) [in LED]
+
+B<action>: name of the action generated when the user types something.
+It can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item * B<ALIGNMENT> [Windows and GTK Only] (non inheritable)
+
+text alignment.
+Possible values: "ALEFT", "ARIGHT", "ACENTER". Default: "ALEFT". In
+Motif, text is always left aligned.
+
+=item * B<APPEND> (write-only)
+
+Inserts a text at the end of the current text.
+In the Multiline, if APPENDNEWLINE=YES, a "\n" character will be
+automatically inserted before the appended text if the current text is
+not empty(APPENDNEWLINE default is YES). Ignored if set before map.
+
+=item * L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
+
+Background color of the text.
+Default: the global attribute TXTBGCOLOR.
+
+=item * B<BORDER >(creation only)
+
+Shows a border around the text. Default:
+"YES".
+
+=item * B<CANFOCUS> (creation only) (non inheritable)
+
+enables the focus
+traversal of the control. In Windows the control will still get the
+focus when clicked. Default: YES. 
+
+=item * B<CARET> (non inheritable)
+
+Position of the insertion point. Its format
+depends in MULTILINE=YES. The first position, B<lin> or B<col>, is "1".
+
+=item * B<For multiple lines>
+
+a string with the "B<lin>,B<col>" format, where
+=item * B<lin> and B<col> are integer numbers corresponding to the caret's
+position.
+
+B<For single line>
+
+a string in the "B<col>" format, where B<col> is an
+integer number corresponding to the caret's position.
+
+When B<lin> is greater than the number of lines, the caret is placed at
+the last line. When B<col> is greater than the number of characters in
+the given line, the caret is placed after the last character of the
+line.
+
+If the caret is not visible the text is scrolled to make it visible.
+
+In Windows, if the element does not have the focus the returned value
+is the position of the first character of the current selection. The
+caret is only displayed if the element has the keyboard focus, but its
+position can be changed even if not visible. When changed it will also
+change the selection but the text will be scrolled only when it
+receives the focus.
+
+See the Notes below if using UTF-8 strings in GTK.
+
+=item * B<CARETPOS> (non inheritable)
+
+Also the position of the insertion
+point, but using a zero based character unique index "pos". Useful for
+indexing the VALUE string. See the Notes below if using UTF-8 strings
+in GTK. 
+
+=item * B<CLIPBOARD> (write-only)
+
+clear, cut, copy or paste the selection to
+or from the clipboard. Values: "CLEAR", "CUT", "COPY" or "PASTE". In
+Windows UNDO is also available, and REDO is available when
+FORMATTING=YES. 
+
+=item * B<COUNT> (read-only)
+
+returns the number of characters in the text.
+(since 3.5)
+
+=item * B<CUEBANNER> [Windows Only] (non inheritable)
+
+a text that is displayed
+when there is no text at the control. It works as a textual cue, or tip
+to prompt the user for input. Valid only for MULTILINE=NO, and it is
+not available for Windows 2000. 
+
+=item * B<DRAGDROP> [Windows and GTK Only] (non inheritable)
+
+Enable or disable
+the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
+when the element is mapped then it will be automatically enabled.
+
+
+=item * L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
+
+Text color. Default: the global
+attribute TXTFGCOLOR.
+
+=item * B<FILTER> [Windows Only] (non inheritable)
+
+allows a custom filter to
+process the characters: Can be LOWERCASE, UPPERCASE or NUMBER (only
+numbers allowed). 
+
+=item * L<FORMATTING|IUP::Manual::03_Attributes/FORMATTING> [Windows and GTK Only] (non
+inheritable)
+
+When enabled allow the use of text formatting attributes.
+In GTK is always enabled, but only when MULTILINE=YES. Default: NO.
+
+
+=item * B<INSERT> (write-only)
+
+Inserts a text in the caret's position, also
+replaces the current selection if any. Ignored if set before map.
+
+=item * B<LINECOUNT> (read-only)
+
+returns the number of characters in the line
+where the caret is. When MULTILINE=NO returns always "1". (since 3.5)
+
+=item * B<LINEVALUE> (read-only)
+
+returns the text of the line where the caret
+is. It does not include the "\n" character. When MULTILINE=NO returns
+the same as VALUE. (since 3.5)
+
+=item * L<MASK|IUP::Manual::03_Attributes/MASK> (non inheritable)
+
+Defines a mask that
+will filter interactive text input.
+
+=item * B<MULTILINE> (creation only) (non inheritable)
+
+allows the edition of
+multiple lines. In single line mode some characters are invalid, like
+"\t", "\r" and "\n". Default: NO.
+
+=item * B<NC>
+
+Maximum number of characters allowed for keyboard input, larger
+text can still be set using attributes. The maximum value is the limit
+of the VALUE attribute. The "0" value is the same as maximum. Default:
+maximum.
+
+=item * B<OVERWRITE> [Windows and GTK Only] (non inheritable)
+
+turns the
+overwrite mode ON or OFF. Works only when FORMATTING=YES. 
+
+=item * B<PADDING>
+
+internal margin. Works just like the MARGIN attribute of
+the L<IUP::Hbox|IUP::Hbox> and L<IUP::Vbox|IUP::Vbox> containers, but uses a different name to
+avoid inheritance problems. Default value: "0x0". In Windows, only the
+horizontal value is used.  (GTK 2.10 for single line)
+
+=item * B<PASSWORD >(creation only) [Windows and GTK Only] (non inheritable)
+
+Hide the typed character using an "*". Default: "NO".
+
+=item * B<READONLY>
+
+Allows the user only to read the contents, without
+changing it. Restricts keyboard input only, text value can still be
+changed using attributes. Navigation keys are still available. Possible
+values: "YES", "NO". Default: NO.
+
+=item * B<SCROLLBAR> (creation only)
+
+Valid only when MULTILINE=YES. Associates
+an automatic horizontal and/or vertical scrollbar to the multiline. Can
+be: "VERTICAL", "HORIZONTAL", "YES" (both) or "NO" (none). Default:
+"YES". For all systems, when SCROLLBAR!=NO the natural size will always
+include its size even if the native system hides the scrollbar. If
+=item * B<AUTOHIDE>=YES scrollbars are visible only if they are necessary, by
+default AUTOHIDE=NO. In Windows when FORMATTING=NO, AUTOHIDE is not
+supported. In Motif AUTOHIDE is not supported.
+
+B<SCROLLTO> (non inheritable, write only)
+
+Scroll the text to make the
+given position visible. It uses the same format and reference of the
+CARET attribute ("lin:col" or "col" starting at 1). 
+
+=item * B<SCROLLTOPOS> (non inheritable, write only)
+
+Scroll the text to make
+the given position visible. It uses the same format and reference of
+the CARETPOS attribute ("pos" starting at 0).
+
+=item * B<SELECTEDTEXT> (non inheritable)
+
+Selection text. Returns NULL if
+there is no selection. When changed replaces the current selection.
+Similar to INSERT, but does nothing if there is no selection.
+
+=item * B<X<SELECTION>SELECTION> (non inheritable)
+
+Selection interval. Returns
+NULL if there is no selection. Its format depends in MULTILINE=YES. The
+first position, B<lin> or B<col>, is "1".
+
+=item * B<For multiple lines>
+
+a string in the
+"B<lin1>,B<col1>:B<lin2>,B<col2>" format, where B<lin1>, B<col1>,
+=item * B<lin2> and B<col2> are integer numbers corresponding to the
+selection's interval. B<col2> correspond to the character after the
+last selected character.
+
+B<For single line>
+
+a string in the "B<col1>:B<col2>" format, where
+=item * B<col1> and B<col2> are integer numbers corresponding to the
+selection's interval. B<col2> correspond to the character after the
+last selected character.
+
+In Windows, when changing the selection the caret position is also
+changed.
+
+The values ALL and NONE are also accepted independently of MULTILINE
+.
+
+See the Notes below if using UTF-8 strings in GTK.
+
+B<SELECTIONPOS> (non inheritable)
+
+Same as SELECTION but using a zero
+based character index "B<pos1>:B<pos2>". Useful for indexing the VALUE
+string. The values ALL and NONE are also accepted. See the Notes below
+if using UTF-8 strings in GTK. 
+
+=item * L<SIZE|IUP::Manual::03_Attributes/SIZE> (non inheritable)
+
+Since the contents
+can be changed by the user, the B<Natural> B<Size> is not affected by
+the text contents . In IUP 2.x the B<Natural> B<Size> was
+defined by the number of lines in the text and the with of the largest
+line. For IUP 3, use VISIBLECOLUMNS and VISIBLELINES to control the
+=item * B<Natural Size>.
+
+B<SPIN> (non inheritable, creation only)
+
+enables a spin control
+attached to the element. Default: NO. The spin increments and
+decrements an integer number. The editing in the element is still
+available. 
+
+=item * B<SPINVALUE >(non inheritable)
+
+the current value of the spin. The
+value is limited to the minimum and maximum values.
+
+=item * B<SPINMAX >(non inheritable)
+
+the maximum value. Default: 100.
+
+=item * B<SPINMIN >(non inheritable)
+
+the minimum value. Default: 0.
+
+=item * B<SPININC >(non inheritable)
+
+the increment value. Default: 1.
+
+=item * B<SPINALIGN> (creation only)
+
+the position of the spin. Can be LEFT or
+RIGHT. Default: RIGHT. In GTK is always RIGHT.
+
+=item * B<SPINWRAP> (creation only)
+
+if the position reach a limit it continues
+from the opposite limit. Default: NO.
+
+=item * B<SPINAUTO> (creation only)
+
+enables the automatic update of the text
+contents. Default: YES. Use SPINAUTO=NO and the VALUE attribute during
+SPIN_CB to control the text contents when the spin is incremented.
+
+In Windows, the increment is multiplied by 5 after 2 seconds and
+multiplied by 20 after 5 seconds of a spin button pressed. In GTK, the
+increment change is progressively accelerated when a spin button is
+pressed.
+
+=item * B<TABSIZE> [Windows and GTK Only]
+
+Valid only when MULTILINE=YES.
+Controls the number of characters for a tab stop. Default: 8.
+
+=item * B<VALUE >(non inheritable)
+
+Text entered by the user. The '\n'
+character indicates a new line, valid only when MULTILINE=YES. After
+the element is mapped and if there is no text will return the empty
+string "".
+
+=item * B<VALUEMASKED >(non inheritable) (write-only)
+
+sets VALUE but first
+checks if it is validated by MASK. If not does nothing. (since 3.4)
+
+=item * B<VISIBLECOLUMNS>
+
+Defines the number of visible columns for the
+=item * B<Natural> B<Size>, this means that will act also as minimum number of
+visible columns. It uses a wider character size then the one used for
+the SIZE attribute so strings will fit better without the need of extra
+columns. As for SIZE you can set to NULL after map to use it as an
+initial value. Default
+
+5 
+
+=item * B<VISIBLELINES>
+
+When MULTILINE=YES defines the number of visible lines
+for the B<Natural> B<Size>, this means that will act also as minimum
+number of visible lines. As for SIZE you can set to NULL after map to
+use it as an initial value. Default: 1 
+
+=item * B<WORDWRAP> (creation only)
+
+Valid only when MULTILINE=YES. If enabled
+will force a word wrap of lines that are greater than the with of the
+control, and the horizontal scrollbar will be removed. Default: NO.
+
+=back
+
+The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+
+=over
+
+=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>, L<FONT|IUP::Manual::03_Attributes/FONT>,
+L<EXPAND|IUP::Manual::03_Attributes/EXPAND>,
+L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
+L<POSITION|IUP::Manual::03_Attributes/POSITION>,
+L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
+L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>, L<WID|IUP::Manual::03_Attributes/WID>,
+L<TIP|IUP::Manual::03_Attributes/TIP>,
+L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
+L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
+L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+
+also accepted.
+
+=back
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item * L<ACTION|IUP::Manual::04_Callbacks/ACTION>
+
+Action generated when the text is
+edited, but before its value is actually changed. Can be generated when
+using the keyboard, undo system or from the clipboard.
+
+ int function(Ihandle *ih, int c, char *new_value); [in C]elem:action(c: number, new_value: string) -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+=item * B<c> - valid alpha numeric character or 0.
+
+=item * B<new_value> - Represents the new text value.
+
+Returns: IUP_CLOSE will be processed, but the change will be ignored.
+If IUP_IGNORE, the system will ignore the new value. If B<c> is valid
+and returns a valid alpha numeric character, this new character will be
+used instead. The VALUE attribute can be changed only if IUP_IGNORE is
+returned.
+
+=back
+
+=item * L<BUTTON_CB|../call/iup_button_cb.html>
+
+Action generated when any
+mouse button is pressed or released. Use
+=back
+
+=item * L<IUP::ConvertXYToPos|IUP::ConvertXYToPos> to convert (x,y)
+coordinates in character positioning. 
+
+=item * B<CARET_CB>
+
+Action generated when the caret/cursor position is
+changed.
+
+ int function(Ihandle *ih, int lin, int col, int pos); [in C]elem - caret_cb(lin, col, pos: number) -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+=item * B<lin, col> - line and column number (start at 1).
+
+=item * B<pos> - 0 based character position.
+
+For single line controls B<lin> is always 1, and B<pos> is always
+"B<col>-1".
+
+=back
+
+=item * L<DROPFILES_CB|../call/iup_dropfiles_cb.html> [Windows and GTK Only]
+
+Action generated when one or more files are dropped in the element.
+
+=item * L<MOTION_CB|../call/iup_motion_cb.html>
+
+Action generated when the
+mouse is moved. Use L<IUP::ConvertXYToPos|IUP::ConvertXYToPos>
+to convert (x,y) coordinates in character positioning. 
+
+=item * B<SPIN_CB>
+
+Action generated when a spin button is pressed. Valid only
+when SPIN=YES. When this callback is called the ACTION callback is not
+called. The VALUE attribute can be changed during this callback only if
+SPINAUTO=NO. 
+
+ int function(Ihandle *ih, int pos); [in C]elem:spin_cb(pos: number) -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+=item * B<pos> - the value of the spin (after it was incremented).
+
+Returns: IUP_IGNORE is processed in Windows and Motif.
+
+=back
+
+=item * B<VALUECHANGED_CB>
+
+Called after the value was interactively changed by
+the user. 
+
+ int function(Ihandle *ih); [in C]elem:valuechanged_cb() -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+=back
+
+=back
+
+xxxTODO also common
+
+=over
+
+=item * L<MAP_CB|../call/iup_map_cb.html>, L<UNMAP_CB|../call/iup_unmap_cb.html>,
+L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
+L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
+L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
+
+All common callbacks are supported.
+
+=back
+
+=head2 Auxiliary Functions
+
+=over
+
+=item * TextConvertLinColToPos()
+
+ void IUP::TextConvertLinColToPos(Ihandle* ih, int lin, int col, int *pos); [in C]iup.TextConvertLinColToPos(ih - ihandle, lin, col: number) -> pos: number [in Lua]
+
+Converts a (lin, col) character positioning into an absolute position.
+For single line controls B<pos> is always "B<col>-1". 
+
+=item * TextConvertPosToLinCol()
+
+ void IUP::TextConvertPosToLinCol(Ihandle* ih, int pos, int *lin, int *col); [in C]iup.TextConvertPosToLinCol(ih: ihandle, pos: number) -> lin, col: number [in Lua]
+
+Converts an absolute position into a (lin, col) character positioning.
+For single line controls B<lin> is always 1, and B<col> is always
+"B<pos>+1". 
+
+=back
+
+=head1 NOTES
+
+When MULTILINE=YES the Enter key will add a new line, and the Tab key
+will insert a Tab. So the "DEFAULTENTER" button will not be processed
+when the element has the keyboard focus, also to change focus to the
+next element press E<lt>CtrlE<gt>+E<lt>TabE<gt>.
+
+In Windows, if you press a Ctrl+key combination that is not supported
+by the control, then a beep is sound.
+
+When using UTF-8 strings in GTK be aware that all attributes are
+indexed by characters, NOT by byte index, because some characters in
+UTF-8 can use more than one byte. This also applies to Windows if
+FORMATTING=YES depending on the Windows codepage (for example East
+Asian codepage where some characters take two bytes).
+
+=head2 Navigation, Selection and Clipboard Keys
+
+Here is a list of the common keys for all drivers. Other keys are
+available depending on the driver.
+
+ Keys                             Navigation Action 
+ --------------------------------------------------------------------
+ Arrows                           move by individual characters/lines
+ Ctrl+Arrows                      move by words/paragraphs
+ Home/End                         move to begin/end line
+ Ctrl+Home/End                    move to begin/end text
+ PgUp/PgDn                        move vertically by pages
+ Ctrl+PgUp/PgDn                   move horizontally by pages
+
+ Keys                             Selection Action
+ --------------------------------------------------------------------
+ Shift+Arrows                     select charaters
+ Ctrl+A                           select all
+
+ Keys                             Deleting Action
+ --------------------------------------------------------------------
+ Del                              delete the character at right
+ Backspace                        delete the character at left
+
+ Keys                             Clipboard Action
+ --------------------------------------------------------------------
+ Ctrl+C                           copy
+ Ctrl+X                           cut
+ Ctrl+V                           paste
+
+=head1 EXAMPLES
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+When FORMATTING=YES in Windows or GTK (formatting attributes are set to
+a formatag object that it is a L<IUP::User|IUP::User>):
+
+ "ALIGNMENT" = "CENTER""SPACEAFTER" = "10""FONTSIZE" = "24""SELECTION" = "3,1:3,50""ADDFORMATTAG""BGCOLOR" = "255 128 64""UNDERLINE" = "SINGLE""WEIGHT" = "BOLD""SELECTION" = "3,7:3,11""ADDFORMATTAG"    "ITALIC" = "YES""STRIKEOUT" = "YES""SELECTION" = "2,1:2,12""ADDFORMATTAG"
+
+[IMAGE]
+
+=head1 SEE ALSO
+
+L<IUP::List|IUP::List>, L<IUP::MultiLine|IUP::MultiLine>
+
+=cut

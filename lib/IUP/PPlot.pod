@@ -1,0 +1,704 @@
+=head1 NAME
+
+IUP::PPlot - [GUI element] xxx creating plots that
+
+=head1 DESCRIPTION
+
+Creates a PPlot plot. It inherits from
+L<IUP::Canvas|IUP::Canvas>.
+
+PPlot is a library for creating plots that is system independent. It is
+maintained by Pier Philipsen (pierphil@xs4all.nl) and available at
+SourceForge
+L<http:E<47>E<47>pplot.sourceforge.netE<47>|http://pplot.sourceforge.net/>
+with a very flexible license (L<BSD
+License|http://sourceforge.net/softwaremap/trove_list.php?form_cat=187>).
+IUP::PPlot library includes the PPlot source code so no external
+references are needed. Also the standard PPlot distribution source code
+was changed to improve features and visual appearance.
+
+IUP::PPlot first implementation was written by Marian Trifon
+(mtrif@katamail.com), then completed and documented by the IUP team.
+
+=head2 Initialization and Usage
+
+The L<IUP::PPlotOpen|IUP::PPlotOpen> function must be called after a L<IUP::Open|IUP::Open>, so that
+the control can be used. The "iup_pplot.h" file must also be included
+in the source code. The program must be linked to the controls library
+(iup_pplot), and with the CD library.
+
+To make the control available in Lua use require"iuplua_pplot" or
+manually call the initialization function in C, B<iuppplotlua_open>,
+after calling B<iuplua_open>. When manually calling the function the
+iuplua_pplot.h file must also be included in the source code and the
+program must be linked to the Lua control library (iuplua_pplot).
+
+=head2 Guide
+
+Each plot can contain 2 B<axis> (X and Y), a B<title>, a B< legend>
+B<box>, a B<grid>, a B<dataset> B<area> and as many B<datasets> you
+want.
+
+Each data set is added using the L<IUP::PPlotAdd |IUP::PPlotAdd >function. All other
+plot parameters are configured by attributes.
+
+If no attribute is set, the default values were selected to best
+display the plot.
+
+When setting attributes the plot is NOT redrawn until the REDRAW
+attribute is set or a redraw event occurs.
+
+The B<dataset area> is delimited by a margin. Data is only plotted
+inside the dataset area. Axis and main title are positioned independent
+of this margin. It is very important to set the margins when using axis
+automatic scaling or the axis maybe hidden.
+
+The B<legend box> is a list of the dataset names, each one drawn with
+the same color of the correspondent dataset. The box is located in one
+of the four corners of the dataset area.
+
+The B<grid> is automatically spaced accordingly the current axis
+displayed values.
+
+The B<title> is always centered in the top of the plot.
+
+The B<axis> are always positioned at the origin, except when
+CrossOrigin is disabled, then it is positioned at the left-bottom. If
+values are only positive then the origin will be placed in left bottom
+position. If values are negative and positive then origin will be
+placed inside the plot. The ticks in the axis are also automatically
+distributed.
+
+PPlot implementation demands that the MARGIN* attributes must be set so
+the plot is not cropped.
+
+=head2 Interaction
+
+=head2 Zoom
+
+Zoom in can be done selecting a region using the left mouse button.
+Zoom out is done with a single click of the left mouse button. If the
+B<Ctrl+X> key combination is pressed the zoom selection is restricted
+to the X axis, the Y axis will be left unchanged. If the B<Ctrl+Y> key
+combination is pressed the zoom selection is restricted to the Y axis,
+the X axis will be left unchanged. If the B<Ctrl+R> key combination is
+pressed the zoom selection is restored to a free rectangle.
+
+Each zoom in operation is stacked, so each zoom out operation goes back
+the the previous zoom selection.
+
+Zoom operates on B<AXS_XMAX, AXS_XMIN, AXS_YMAX, AXS_YMIN> even if B<
+AUTOMIN/MAX> is enabled. The axis may be hidden depending on the
+selected rectangle.
+
+=head2 CrossHair Cursor
+
+If you press the B<Ctrl+Shift> key combination, while holding the left
+mouse button down, a cross hair cursor will be displayed for each
+dataset in the plot. The X coordinate will control the cursor, the Y
+coordinate will reflect each dataset correspondent value.
+
+=head2 Selection and Editing
+
+Selection and editing of a dataset can be enabled using the B<DS_EDIT>
+attribute.
+
+To select all the samples in the dataset press the B<Shift> key while
+clicking with the left mouse button near a sample in the dataset. To
+deselect all samples press the B<Shift> key while clicking with the
+left mouse button in the background.
+
+To select or deselect individual samples press the B<Ctrl> key while
+clicking with the left mouse button near the sample in the dataset.
+
+After selecting samples use the B<Del> key to remove the selected
+samples. Also use the arrow keys to move the Y coordinate of the
+selected samples. Press the B<Ctrl> key to increase the step size when
+moving the Y coordinate.
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ Ihandle* IUP::PPlot(void); [in C]
+ iup.pplot{} -> (elem: ihandle) [in Lua]
+ pplot() [in LED]
+
+This function returns the identifier of the created plot, or NULL if an
+error occurs.
+
+=head2 Auxiliary Functions
+
+=over
+
+=item * PPlotBegin()
+
+ void IUP::PPlotBegin(Ihandle* ih, int strXdata); [in C]
+ iup.PPlotBegin(ih: ihandle, strXdata: number) [in Lua]
+
+Prepares a dataset to receive samples. If strXdata is 1 then the X axis
+value is a string.
+
+=item * PPlotAdd()
+
+ void IUP::PPlotAdd(Ihandle* ih, float x, float y); [in C]
+ iup.PPlotAdd(ih: ihandle, x, y: number) [in Lua]
+
+Adds a sample to the dataset. Can only be called if L<IUP::PPlotBegin|IUP::PPlotBegin>
+was called with strXdata=0.
+
+=item * PPlotAddStr()
+
+ void IUP::PPlotAddStr(Ihandle* ih, const char* x, float y); [in C]
+ iup.PPlotAddStr(ih: ihandle, x: string, y: number) [in Lua]
+
+Same as L<IUP::PPlotAdd|IUP::PPlotAdd>, but allows to use a string as the X axis value.
+Can only be called if L<IUP::PPlotBegin|IUP::PPlotBegin> was called with strXdata=1.
+
+=item * PPlotEnd()
+
+ int IUP::PPlotEnd(Ihandle* ih); [in C]
+ iup.PPlotEnd(ih: ihandle) -> (index: number) [in Lua]
+
+Adds a 2D dataset to the plot and returns the dataset B<index>. The
+data set can be empty. Redraw is NOT done until the REDRAW attribute is
+set. Also it will change the current dataset index to the return value.
+You can only set attributes of a dataset AFTER you added the dataset.
+Can only be called if L<IUP::PPlotBegin|IUP::PPlotBegin> was called. Whenever you create
+a dataset all its "DS_*" attributes will be set to the default values.
+Notice that DS_MODE must be set before other "DS_*" attributes.
+
+=item * PPlotInsert()
+
+ void IUP::PPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y); [in C]
+ void IUP::PPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
+ iup.IUP::PPlotInsert(ih: ihandle, index, sample_index, x, y: number) [in Lua]
+ iup.IUP::PPlotInsertStr(ih: ihandle, index, sample_index, x, y: number)
+
+Inserts a sample in a dataset at the given B<sample_index>. Can be used
+only after the dataset is added to the plot.
+
+=item * PPlotInsertPoints()
+
+ void IUP::PPlotInsertPoints(Ihandle *ih, int index, int sample_index, float* x, float* y, int count); [in C]
+ void IUP::PPlotInsertStrPoints(Ihandle *ih, int index, int sample_index, const char** x, float* y, int count);
+ iup.IUP::PPlotInsertPoints(ih: ihandle, index, sample_index, x, y: table of number) [in Lua]
+ iup.IUP::PPlotInsertStrPoints(ih: ihandle, index, sample_index, x, y: table of number)
+
+Inserts an array of samples in a dataset at the given B<sample_index>.
+Can be used only after the dataset is added to the plot. (Since 3.4)
+
+=item * PPlotAddPoints()
+
+ void IUP::PPlotAddPoints(Ihandle *ih, int index, float* x, float* y, int count); [in C]
+ void IUP::PPlotAddStrPoints(Ihandle *ih, int index, const char** x, float* y, int count);
+ iup.IUP::PPlotAddPoints(ih: ihandle, index, x, y: table of number) [in Lua]
+ iup.IUP::PPlotAddStrPoints(ih: ihandle, index, x, y: table of number)
+
+Adds an array of samples in a dataset at the end. Can be used only
+after the dataset is added to the plot. (Since 3.4)
+
+=item * PPlotTransform()
+
+ void IUP::PPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy); [in C]
+ iup.PPlotTransform(ih: ihandle, x, y: number) -> (ix, iy: number) [in Lua]
+
+Converts coordinates in plot units to pixels. It should be used in
+PREDRAW_CB and POSTDRAW_CB callbacks only. Output variables can be NULL
+if not used. It can be used inside other callbacks, but make sure that
+the drawing after a resize is done.
+
+=item * PPlotPaintTo()
+
+ void IUP::PPlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C]
+ iup.PPlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
+
+Plots to the given CD canvas instead of the display canvas.
+
+=back
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item * B<REDRAW> (write-only) (non inheritable)
+
+redraw the plot and update
+the display. Value is ignored. All other attributes will B<NOT> update
+the display, so you can set many attributes without visual output.
+
+=item * B<USE_IMAGERGB >(non inheritable)
+
+defines if the double buffer will
+use standard driver image (NO - faster) or an RGB image (YES - slower).
+Default: NO. The IMAGERGB driver has anti-aliasing which can improve
+the line drawing.
+
+=item * B<USE_GDI>+ [Windows Only] (non inheritable)
+
+defines if the double
+buffer will use GDI+ (YES) for drawing or standard GDI (NO). Default:
+NO. The GDI+ driver has anti-aliasing which can improve the line
+drawing.
+
+=item * B<L<FONT|IUP::Manual::03_Attributes/FONT>>
+
+the font used in all text elements
+of the plot: title, legend and labels.
+
+=item * B<L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>>
+
+the background color. The
+default value is white "255 255 255".
+
+=item * B<L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>>
+
+the title color. The default
+value is black "0 0 0".
+
+=item * B<TITLE >(non inheritable)
+
+the title. Located always at the top center
+area.
+
+=item * B<TITLEFONTSIZE, TITLEFONTSTYLE >(non inheritable)
+
+the title font size
+and style. The default values depends on the FONT attribute and the
+returned value is NULL. Set to NULL, to use the FONT attribute values.
+Style can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC".
+
+=item * B<MARGINLEFT, MARGINRIGHT, MARGINTOP, MARGINBOTTOM >(non inheritable)
+
+margin of the dataset area. PPlot implementation demands that margins
+must be set so the plot is not cropped. Default: "15", "15", "30",
+"15".
+
+=back
+
+=head2 Legend Configuration (non inheritable)
+
+=over
+
+=item * B<LEGENDSHOW>
+
+shows or hides the legend box. Can be YES or NO.
+Default: NO.
+
+=item * B<LEGENDPOS>
+
+legend box position. Can be: "TOPLEFT", "TOPRIGHT",
+"BOTTOMLEFT", or "BOTTOMRIGHT. Default: "TOPRIGHT".
+
+=item * B<LEGENDFONTSIZE, LEGENDFONTSTYLE>
+
+the legend box text font size and
+style.
+
+=back
+
+=head2 Grid Configuration (non inheritable)
+
+=over
+
+=item * B<GRIDLINESTYLE>
+
+line style of the grid. Can be: "CONTINUOUS",
+"DASHED", "DOTTED", "DASH_DOT", "DASH_DOT_DOT". Default is
+"CONTINUOUS".
+
+=item * B<GRIDCOLOR>
+
+grid color. Default: "200 200 200".
+
+=item * B<GRID>
+
+shows or hides the grid in both or a specific axis. Can be:
+YES (both), HORIZONTAL, VERTICAL or NO. Default: NO.
+
+=back
+
+=head2 Dataset Management (non inheritable)
+
+=over
+
+=item * B<REMOVE> (write-only)
+
+removes a dataset given its index.
+
+=item * B<CLEAR> (write-only)
+
+removes all datasets. Value is ignored.
+
+=item * B<COUNT> [read-only]
+
+total number of datasets.
+
+=item * B<CURRENT>
+
+current dataset index. Default is -1. When a dataset is
+added it becomes the current dataset. The index starts at 0. All "DS_*"
+attributes are dependent on this value.
+
+=item * B<DS_LEGEND>
+
+legend text of the current dataset. Default is
+dynamically generated: "plot 0", "plot 1", "plot 2", ...
+
+=item * B<DS_COLOR>
+
+color of the current dataset and it legend text. Default
+is dynamically generated for the 6 first datasets, others are default
+to black "0 0 0". The first 6 are: 0="255 0 0", 1="0 0 255", 2="0 255
+0", 3="0 255 255", 4="255 0 255", 5="255 255 0".
+
+=item * B<DS_MODE>
+
+drawing mode of the current dataset. Can be: "LINE", "BAR",
+"MARK" or "MARKLINE". Default: "LINE". This must be set before other
+"DS_*" attributes.
+
+=item * B<DS_LINESTYLE>
+
+line style of the current dataset. Can be:
+"CONTINUOUS", "DASHED", "DOTTED", "DASH_DOT", "DASH_DOT_DOT". Default
+is "CONTINUOUS".
+
+=item * B<DS_LINEWIDTH>
+
+line width of the current dataset. Default: 1.
+
+=item * B<DS_MARKSTYLE>
+
+mark style of the current dataset. Can be: "PLUS",
+"STAR", "CIRCLE", "X", "BOX", "DIAMOND", "HOLLOW_CIRCLE", "HOLLOW_BOX",
+"HOLLOW_DIAMOND". Default is "X".
+
+=item * B<DS_MARKSIZE>
+
+mark size of the current dataset. Default: 7.
+
+=item * B<DS_SHOWVALUES>
+
+enable or disable the display of the values near each
+sample. Can be YES or NO. Default: NO.
+
+=item * B<DS_REMOVE> (write-only)
+
+removes a sample from the current dataset
+given its index.
+
+=item * B<DS_EDIT>
+
+enable or disable the current dataset selection and
+editing. Can be YES or NO. Default: NO.
+
+=back
+
+=head2 Axis Configuration (non inheritable)
+
+=over
+
+=item * B<AXS_XCOLOR, AXS_YCOLOR>
+
+axis, ticks and label color. Default: "0 0
+0".
+
+=item * B<AXS_XMAX, AXS_XMIN, AXS_YMAX, AXS_YMIN>
+
+minimum and maximum
+displayed values of the respective axis. Automatically calculated
+values when AUTOMIN or AUTOMAX are enabled.
+
+=item * B<AXS_XAUTOMIN, AXS_XAUTOMAX, AXS_YAUTOMIN, AXS_YAUTOMAX>
+
+configures
+the automatic scaling of the minimum and maximum display values. Can be
+YES or NO. Default: YES.
+
+=item * B<AXS_XLABEL, AXS_YLABEL>
+
+text label of the respective axis.
+
+=item * B<AXS_XLABELCENTERED>, B<AXS_YLABELCENTERED>
+
+text label position at
+center (YES) or at top/right (NO). Default: YES.
+
+=item * B<AXS_XREVERSE, AXS_YREVERSE>
+
+reverse the axis direction. Can be YES
+or NO. Default: NO. Default is Y oriented bottom to top, and X oriented
+from left to right.
+
+=item * B<AXS_XCROSSORIGIN, AXS_YCROSSORIGIN>
+
+allow the axis to cross the
+origin and to be placed inside the dataset area. Can be YES or NO.
+Default: YES.
+
+=item * B<AXS_XSCALE, AXS_YSCALE>
+
+configures the scale of the respective axis.
+Can be: LIN (liner), LOG10 (base 10), LOG2 (base 2) and LOGN (base e).
+Default: LIN.
+
+=item * B<AXS_XFONTSIZE, AXS_YFONTSIZE, AXS_XFONTSTYLE, AXS_YFONTSTYLE>
+
+axis
+label text font size and style. See TITLEFONTSIZE and TITLEFONTSTYLE.
+
+=item * B<AXS_XTICK, AXS_YTICK>
+
+enable or disable the axis tick display. Can
+be YES or NO. Default: YES.
+
+=item * B<AXS_XTICKFORMAT, AXS_YTICKFORMAT>
+
+axis tick number C format string.
+Default: "%.0f".
+
+=item * B<AXS_XTICKFONTSIZE, AXS_YTICKFONTSIZE, AXS_XTICKFONTSTYLE,
+AXS_YTICKFONTSTYLE>
+
+axis tick number font size and style. See
+TITLEFONTSIZE and TITLEFONTSTYLE.
+
+=item * B<AXS_XAUTOTICK>, B<AXS_YAUTOTICK>
+
+configures the automatic tick
+spacing. Can be YES or NO. Default: YES.
+
+=item * B<AXS_XTICKMAJORSPAN>, B<AXS_YTICKMAJORSPAN>
+
+The spacing between major
+ticks. Default is 1 when AUTOTICK is disabled.
+
+=item * B<AXS_XTICKDIVISION>, B<AXS_YTICKDIVISION>
+
+number of ticks between
+each major tick. Default is 5 when AUTOTICK is disabled.
+
+=item * B<AXS_XAUTOTICKSIZE, AXS_YAUTOTICKSIZE>
+
+configures the automatic tick
+size. Can be YES or NO. Default: YES.
+
+=item * B<AXS_XTICKSIZE, AXS_YTICKSIZE>
+
+size of ticks in pixels. Default is 5
+when AUTOTICKSIZE is disabled.
+
+=item * B<AXS_XTICKMAJORSIZE, AXS_YTICKMAJORSIZE>
+
+size of major ticks in
+pixels. Default is 8 when AUTOTICKSIZE is disabled.
+
+=back
+
+The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+
+=over
+
+=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
+L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
+L<POSITION|IUP::Manual::03_Attributes/POSITION>,
+L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
+L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>, L<WID|IUP::Manual::03_Attributes/WID>,
+L<TIP|IUP::Manual::03_Attributes/TIP>, L<SIZE|IUP::Manual::03_Attributes/SIZE>,
+L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
+L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
+L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+
+also accepted.
+
+=back
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item * B<DELETE_CB>
+
+Action generated when the Del key is pressed to removed a
+sample from a dataset. If multiple points are selected it is called
+once for each selected point.
+
+ int function(Ihandle *ih, int index, int sample_index, float x, float y); [in C]
+ elem:delete_cb(index, sample_index, x, y: number) -> (ret: number) [in Lua]
+
+=over
+
+=item * B<index> - index of the dataset
+
+=item * B<sample_index> - index of the sample in the dataset
+
+=item * x: X coordinate value of the sample
+
+=item * B<y> - Y coordinate value of the sample
+
+Returns: If IUP_IGNORE then the sample is not deleted.
+
+=back
+
+=item * B<DELETEBEGIN_CB, DELETEEND_CB>
+
+Actions generated when a delete
+operation will begin or end. But they are called only if DELETE_CB is
+also defined.
+
+ int function(Ihandle *ih); [in C]
+ elem:deletebegin_cb() -> (ret: number) [in Lua]
+ elem:deleteend_cb() -> (ret: number) [in Lua]
+
+=over
+
+Returns: If DELETEBEGIN_CB returns IUP_IGNORE the delete operation for
+all the selected samples are aborted.
+
+=back
+
+=item * B<SELECT_CB>
+
+Action generated when a sample is selected. If multiple
+points are selected it is called once for each new selected point. It
+is called only if the selection state of the sample is about to be
+changed.
+
+ int function(Ihandle *ih, int index, int sample_index, float x, float y, int select); [in C]
+ elem:select_cb(index, sample_index, x, y, select: number) -> (ret: number) [in Lua]
+
+=over
+
+=item * B<index> - index of the dataset
+
+=item * B<sample_index> - index of the sample in the dataset
+
+=item * x: X coordinate value of the sample
+
+=item * B<y> - Y coordinate value of the sample
+
+=item * B<select> - boolean value that a non zero value indicates if the point
+is to be selected.
+
+Returns: If IUP_IGNORE then the sample is not selected.
+
+=back
+
+=item * B<SELECTBEGIN_CB, SELECTEND_CB>
+
+Actions generated when a selection
+operation will begin or end. But they are called only if SELECT_CB is
+also defined.
+
+ int function(Ihandle *ih); [in C]
+ elem:selectbegin_cb() -> (ret: number) [in Lua]
+ elem:selectend_cb() -> (ret: number) [in Lua]
+
+=over
+
+Returns: If SELECTBEGIN_CB returns IUP_IGNORE the selection operation
+is aborted.
+
+=back
+
+=item * B<EDIT_CB>
+
+Action generated when a sample is selected. If multiple
+points are selected it is called once for each new selected point. It
+is called only if the selection state of the sample is about to be
+changed.
+
+ int function(Ihandle *ih, int index, int sample_index, float x, float y, float *new_x, float *new_y); [in C]
+ elem:edit_cb(index, sample_index, x, y, new_x, new_y: number) -> (new_x, new_y, ret: number) [in Lua]
+
+=over
+
+=item * B<index> - index of the dataset
+
+=item * B<sample_index> - index of the sample in the dataset
+
+=item * x: X coordinate value of the sample
+
+=item * B<y> - Y coordinate value of the sample
+
+=item * B<new_x> - the new X coordinate value of the sample
+
+=item * B<new_y> - the new Y coordinate value of the sample
+
+Returns: If IUP_IGNORE then the sample is not edited. The application
+can changed the new value before it is edited.
+
+=back
+
+=item * B<EDITBEGIN_CB, EDITEND_CB>
+
+Actions generated when an editing
+operation will begin or end. But they are called only if EDIT_CB is
+also defined.
+
+ int function(Ihandle *ih); [in C]
+ elem:editbegin_cb() -> (ret: number) [in Lua]
+ elem:editend_cb() -> (ret: number) [in Lua]
+
+=over
+
+Returns: If EDITBEGIN_CB returns IUP_IGNORE the editing operation is
+aborted.
+
+=back
+
+=item * B<PREDRAW_CB, POSTDRAW_CB>
+
+Actions generated before and after the
+redraw operation. Predraw can be used to draw a different background
+and Postdraw can be used to draw additional information in the plot.
+Predraw has no restrictions, but Postdraw is clipped to the dataset
+area. To position elements in plot units, use the L<IUP::PPlotTransform|IUP::PPlotTransform>
+function.
+
+ int function(Ihandle *ih, cdCanvas* cnv); [in C]
+ elem:predraw_cb(cnv: cdCanvas) -> (ret: number) [in Lua]
+ elem:postdraw_cb(cnv: cdCanvas) -> (ret: number) [in Lua]
+
+=over
+
+=item * B<cnv> - the CD canvas where the draw operation occurs.
+
+=back
+
+=back
+
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
+
+=item * L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>,
+L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
+L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
+L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
+
+All common callbacks are supported.
+
+=back
+
+=head1 EXAMPLES
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+=head1 SEE ALSO
+
+L<IUP::Canvas|IUP::Canvas>
+
+=cut

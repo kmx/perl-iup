@@ -1,0 +1,15 @@
+=pod
+
+=head1 NAME
+
+IUP::Canvas::SVG
+
+xxxTODO
+
+=head1 DESCRIPTION 
+
+=head1 USAGE
+
+=head1 SEE ALSO
+
+=cut

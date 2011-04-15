@@ -1,0 +1,315 @@
+=head1 NAME
+
+IUP::FileDlg - [pre-defined dialog] selecting files or a directory
+
+=head1 DESCRIPTION
+
+Creates the File Dialog element. It is a predefined dialog for
+selecting files or a directory. The dialog can be shown with the
+IUP::Popup function only.
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ Ihandle* IUP::FileDlg(void); [in C]
+ iup.filedlg{} -> (elem: ihandle) [in Lua]
+ filedlg() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item * B<ALLOWNEW>
+
+Indicates if non-existent file names are accepted. If
+equals "NO" and the user specifies a non-existing file, an alert dialog
+is shown. Default: if the dialog is of type "OPEN", default is "NO"; if
+the dialog is of type "SAVE", default is "YES". Not used when
+DIALOGTYPE=DIR.
+
+=item * B<DIALOGTYPE>
+
+Type of dialog (Open, Save or Directory). Can have
+values "OPEN", "SAVE" or "DIR". Default: "OPEN".
+
+=over
+
+In Windows, when DIALOGTYPE=DIR the dialog shown is not the same dialog
+for OPEN and SAVE, this new dialog does not have the Help button
+neither filters. Also this new dialog needs CoInitializeEx with
+COINIT_APARTMENTTHREADED (done in L<IUP::Open|IUP::Open>), if the COM library was
+initialized with COINIT_MULTITHREADED prior to L<IUP::Open|IUP::Open> then the new
+dialog will have limited functionality. In Motif or GTK the dialog is
+the same, but it only allows the user to select a directory.
+
+=back
+
+=item * B<DIRECTORY>
+
+Initial directory. When consulted after the dialog is
+closed and the user pressed the OK button, it will contain the
+directory of the selected file.
+
+=over
+
+In Motif or GTK, if not defined the dialog opens in the current
+directory.
+
+In Windows, if not defined and the application has used the dialog in
+the past, the path most recently used is selected as the initial
+directory. However, if an application is not run for a long time, its
+saved selected path is discarded. Also if not defined and the current
+directory contains any files of the specified filter types, the initial
+directory is the current directory. Otherwise, the initial directory is
+the "My Documents" directory of the current user. Otherwise, the
+initial directory is the Desktop folder.
+
+=back
+
+=item * B<EXTFILTER> [Windows and GTK Only]
+
+Defines several file filters. It
+has priority over FILTERINFO and FILTER. Must be a text with the format
+"FilterInfo1|Filter1|FilterInfo2|Filter2|...". The list ends with
+character '|'. Example: "Text files|*.txt;*.doc|Image
+files|*.gif;*.jpg;*.bmp|". In GTK there is no way how to overwrite the
+filters, so it is recommended to always add a less restrictive filter
+to the filter list, for example "All Files|*.*".
+
+=item * B<FILE>
+
+Name of the file initially shown in the "File Name" field in
+the dialog. If contains a path, then it is used as the initial
+directory and B<DIRECTORY> is ignored.
+
+=item * B<FILEEXIST> (read-only)
+
+Indicates if the file defined by the FILE
+attribute exists or not. It is only valid if the user has pressed OK in
+the dialog. Not set when DIALOGTYPE=DIR or B<MULTIPLEFILES=YES>.
+
+=item * B<FILTER>
+
+String containing a list of file filters separated by ';'
+without spaces. Example: "*.C;*.LED;test.*". In Motif only the first
+filter is used.
+
+=item * B<FILTERINFO> [Windows and GTK Only]
+
+Filter's description. If not
+defined the filter itself will be used as its description.
+
+=item * B<FILTERUSED> [Windows and GTK Only]
+
+the index of the filter in
+EXTFILTER to use starting at 1. It returns the selection made by the
+user. Set only if EXTFILTER is defined.
+
+=item * B<MULTIPLEFILES>
+
+When "YES", this attribute allows the user to select
+multiple files when DIALOGTYPE=OPEN. The value returned by VALUE is to
+be changed the following way: the directory and the files are passed
+separately, in this order. The character used for separating the
+directory and the files is '|'. The file list ends with character '|'.
+When the user selects just one file, the directory and the file are not
+separated by '|'. For example:
+
+ "/tecgraf/iup/test|a.txt|b.txt|c.txt|" or
+ "/tecgraf/iup/test/a.txt" (only one file is selected)
+
+In Windows the maximum size allowed for file name returned is 65Kb.
+
+=item * B<NOCHANGEDIR>
+
+Indicates if the current working directory must be
+restored after the user navigation. Default: "YES".
+
+=item * B<NOOVERWRITEPROMPT>
+
+do not prompt to overwrite an existent file when
+in "SAVE" dialog. Default is "NO", i.e. prompt before overwrite. (GTK
+2.8)
+
+=item * B<L<PARENTDIALOG|IUP::Manual::03_Attributes/PARENTDIALOG>>
+
+Makes the dialog be
+treated as a child of the specified dialog.
+
+=item * B<SHOWHIDDEN>
+
+Show hidden files. Default: NO.  (GTK 2.6)
+
+=item * B<SHOWPREVIEW>
+
+A preview area is shown inside the File Dialog. Can
+have values "YES" or "NO". Default: "NO". In Windows, you must link
+with the "iup.rc" resource file so the preview area can be enabled (not
+necessary if using "iup.dll"). Valid only if the FILE_CB callback is
+defined, use it to retrieve the file name and the necessary attributes
+to paint the preview area. (in Motif since 3.0)
+
+xxxTODO (check original)??? Read only attributes that are valid inside the FILE_CB callback when
+status="PAINT":
+
+=item * B<PREVIEWDC>
+
+Returns the Device Context (HDC in Windows and GC in
+UNIX)
+
+=item * B<PREVIEWWIDTH >and B<PREVIEWHEIGHT>
+
+Returns the width and the height
+of the client rectangle for the preview area.
+
+ Also the attributes WID, HWND, XWINDOW and XDISPLAY are valid and
+are relative to the preview area.
+
+If the attribute PREVIEWGLCANVAS is defined then it is used as the name
+of an existent IUP::GLCanvas control to be mapped internally to the
+preview canvas. Notice that this is not a fully implemented IUP::GLCanvas
+that inherits from IUP::Canvas. This does the minimum necessary so you
+can use IUP::GLCanvas auxiliary functions for the preview canvas and call
+OpenGL functions. No IUP::Canvas attributes or callbacks are available.
+
+=item * B<STATUS> (read-only)
+
+Indicates the status of the selection made:
+
+=over
+
+"1": New file.
+
+"0": Normal, existing file or directory.
+
+"-1": Operation cancelled.
+
+=back
+
+=item * B<L<TITLE|IUP::Manual::03_Attributes/TITLE>>
+
+Dialog's title.
+
+=item * B<VALUE> (read-only)
+
+Name of the selected file(s), or NULL if no file
+was selected. If FILE is not defined this is used as the initial value.
+In Windows there is a limit of 32Kb for this string.
+
+=back
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item * B<FILE_CB>
+
+Action generated when a file is selected. Not called when
+DIALOGTYPE=DIR. When MULTIPLEFILES=YES it is called only for one file.
+Can be used with SHOWPREVIEW=NO also. (Windows only in 2.x)
+
+ int function(Ihandle *ih, const char* file_name, const char* status); [in C]elem:file_cb(file_name, status: string) -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+=item * B<file_name> - name of the file selected.
+
+=item * B<status> - describes the action. Can be:
+
+=over
+
+=over
+
+=item * "INIT" - when the dialog has started. file_name is NULL.
+
+=item * "FINISH" - when the dialog is closed. file_name is NULL.
+
+=item * "SELECT" - a file has been selected.
+
+=item * "OTHER" - an invalid file or a directory is selected. file_name
+is the one selected. (Since 3.0)
+
+=item * "OK" - the user pressed the OK button. If returns IUP_IGNORE
+the action is refused and the dialog is not closed.
+
+=item * "PAINT" - the preview area must be redrawn. Used only when
+SHOWPREVIEW=YES. If an invalid file or a directory is selected,
+file_name is NULL.
+
+=back
+
+=back
+
+=back
+
+=item * L<HELP_CB|../call/iup_help_cb.html>
+
+Action generated when the Help
+button is pressed.
+
+=back
+
+=head1 NOTES
+
+The L<IUP::FileDlg|IUP::FileDlg> is a native pre-defined dialog that is not altered by
+L<IUP::SetLanguage|IUP::SetLanguage>.
+
+To show the dialog, use function L<IUP::Popup|IUP::Popup>. In
+Lua, use the popup function.
+
+The dialog is mapped only inside L<IUP::Popup|IUP::Popup>, L<IUP::Map|IUP::Map> does nothing.
+
+The L< IUP::GetFile|iupgetfile.html> function simply creates and popup a
+IUP::FileDlg.
+
+In Windows, the FILE and the DIRECTORY attributes also accept strings
+containing "/" as path separators, but the VALUE attribute will always
+return strings using the "\" character.
+
+In Windows, the dialog will be modal relative only to its parent or to
+the active dialog.
+
+=head1 EXAMPLES
+
+ Ihandle *dlg = IUP::FileDlg(); 
+ 
+ IUP::SetAttribute(dlg, "DIALOGTYPE", "OPEN");
+ IUP::SetAttribute(dlg, "TITLE", "IUP::FileDlg Test");
+ IUP::SetAttributes(dlg, "FILTER = \"*.bmp\", FILTERINFO = \"Bitmap Files\"");
+ IUP::SetCallback(dlg, "HELP_CB", (Icallback)help_cb);
+ 
+ IUP::Popup(dlg, IUP_CURRENT, IUP_CURRENT); 
+ 
+ if (IUP::GetInt(dlg, "STATUS"))
+ {
+   printf("OK\n");
+   printf("  VALUE(%s)\n", IUP::GetAttribute(dlg, "VALUE")); 
+ }
+ else
+   printf("CANCEL\n");
+ 
+ IUP::Destroy(dlg); 
+
+[IMAGE]
+
+L<Browse for Example Files|../../examples/>
+
+=head1 SEE ALSO
+
+L<IUP::Message|IUP::Message>, L<IUP::Scanf|IUP::Scanf>,
+L<IUP::ListDialog|IUP::ListDialog>, L<IUP::Alarm|IUP::Alarm>,
+L<IUP::GetFile|IUP::GetFile>, L<IUP::Popup|IUP::Popup>
+
+=cut

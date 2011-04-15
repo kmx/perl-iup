@@ -1,0 +1,82 @@
+=head1 NAME
+
+IUP::Spin - [GUI element] vertical box containing 2 buttons for incrementing/decrementing values
+
+=head1 DESCRIPTION and IUP::SpinBox
+
+This functions will create a control set with a vertical box containing
+two buttons, one with an up arrow and the other with a down arrow, to
+be used to increment and decrement values.
+
+Unlike the SPIN attribute of the L<IUP::Text|IUP::Text> element, the L<IUP::Spin|IUP::Spin>
+element can NOT automatically increment the value and it is NOT
+inserted inside the L<IUP::Text|IUP::Text> area.
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+L<IUP::Spin|IUP::Spin> inherits from a L<IUP::Vbox|IUP::Vbox>, and contains two L<IUP::Button|IUP::Button>.
+
+ Ihandle* IUP::Spin(void); [in C]
+ iup.spin{} -> (elem: ihandle) [in Lua]
+ spin() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+L<IUP::Spinbox|IUP::Spinbox> is an horizontal container that already contains a
+L<IUP::Spin|IUP::Spin>.
+
+ Ihandle* IUP::Spinbox(Ihandle* child); [in C]
+ iup.spinbox{child: ihandle} -> (elem: ihandle) [in Lua]
+ spinbox(child)  [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+B<child>: Identifier of an interface element which will receive the
+spinbox around.
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item * B<SPIN_CB>
+
+Called each time the user clicks in the buttons. It will
+increment 1 and decrement -1 by default. Holding the Shift key will set
+a factor of 2, holding Ctrl a factor of 10, and both a factor of 100.
+
+ int function(Ihandle *ih, int inc); [in C]
+ elem:spin_cb(inc: number) -> (ret: number) [in Lua]
+
+=over
+
+=item * xxxTODO
+
+=back
+
+=back
+
+=head1 NOTES
+
+The spinbox can be created with no elements and be dynamic filled using
+L<IUP::Append|IUP::Append> or
+L<IUP::Insert|IUP::Insert>.
+
+=head1 EXAMPLES
+
+ Ihandle* spinbox = IUP::Spinbox(IUP::Text(NULL));
+
+[IMAGE]
+
+=head1 SEE ALSO
+
+L<IUP::Text|IUP::Text>, L<IUP::Vbox|IUP::Vbox>,
+L<IUP::Hbox|IUP::Hbox>, L<IUP::Button|IUP::Button>
+
+=cut

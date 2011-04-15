@@ -1,0 +1,149 @@
+=head1 NAME
+
+IUP::Split - [GUI element] container that split its client area in two
+
+=head1 DESCRIPTION (since 3.1)
+
+Creates a void container that split its client area in two. Allows the
+provided controls to be enclosed in a box that allows expanding and
+contracting the element B<size> in one direction, but when one is
+expanded the other is contracted.
+
+It does not have a native representation, but it contains also a
+L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ Ihandle* IUP::Split(Ihandle* child1, Ihandle* child2); [in C]
+ iup.split{child1, child2: ihandle} -> (elem: ihandle) [in Lua]
+ split(child1, child2) [in LED]
+
+B<child1>: Identifier of an interface element that will be at left or
+top. It can be NULL.
+
+B<child2>: Identifier of an interface element that will be at right or
+bottom. It can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item * B<AUTOHIDE> (non inheritable)
+
+if the child client area is smaller than
+the bar size, then automatically hide the child. Default: NO.
+
+=item * B<BARSIZE> (non inheritable)
+
+controls the size of the bar handler.
+Default: 5.
+
+=item * B<COLOR>
+
+Changes the color of the bar grip affordance. The value
+should be given in "R G B" color style. Default: "192 192 192".
+
+=item * B<ORIENTATION> (creation only)
+
+Indicates the orientation of the bar
+handler. The direction of the resize is perpendicular to the
+orientation. Possible values are "VERTICAL" or "HORIZONTAL". Default:
+"VERTICAL".
+
+=item * L<EXPAND|IUP::Manual::03_Attributes/EXPAND> (non inheritable)
+
+The default
+value is "YES".
+
+=item * B<LAYOUTDRAG> (non inheritable)
+
+When the bar is moved automatically
+update the children layout. Default: YES. If set to NO then the layout
+will be updated only when the mouse drag is released.
+
+=item * B<MINMAX> (non inheritable)
+
+sets minimum and maximum crop values for
+VALUE, in the format "%d:%d" [min:max]. The min value can not be less
+than 0, and the max value can not be larger than 1000. This will
+constrain the interactive change of the bar handler. Default: "0:1000".
+(Since 3.2)
+
+=item * B<SHOWGRIP> (non inheritable)
+
+Shows the bar grip affordance. Default:
+YES. When set to NO, the BARSIZE is changed from 5 to 3.
+
+=item * B<VALUE> (non inheritable)
+
+The proportion of the left or top (child1)
+client area relative to the full available area. It is an integer
+between 0 and 1000. If not defined or set to NULL, the Native size of
+the two children will define its initial size.
+
+=item * B<WID> (read-only)
+
+returns -1 if mapped.
+
+=back
+
+The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+
+=over
+
+=item * L<FONT|IUP::Manual::03_Attributes/FONT>, L<SIZE|IUP::Manual::03_Attributes/SIZE>,
+L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
+L<CLIENTSIZE|IUP::Manual::03_Attributes/CLIENTSIZE>,
+L<CLIENTOFFSET|IUP::Manual::03_Attributes/CLIENTOFFSET>,
+L<POSITION|IUP::Manual::03_Attributes/POSITION>,
+L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
+L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>
+
+also accepted.
+
+=back
+
+=head1 NOTES
+
+The controls that you want to be resized must have the EXPAND=YES
+attribute set. The control inside the split will not be resized with a
+size lesser than its B<Natural> size. See the L<Layout
+Guide|../layout_guide.html> for mode details on sizes.
+
+L<IUP::Split|IUP::Split> is not capable of detecting a child minimum size, so if a
+child has a minimum size, then manually set the B<MINMAX> attribute to
+avoid invalid positioning of the L<IUP::Split|IUP::Split> bar.
+
+The L<IUP::Canvas|IUP::Canvas> bar handler is always the first child of the split. It
+can be obtained using L<IUP::GetChild|IUP::GetChild> or B< IUP::GetNextChild>.
+
+The L<IUP::Split|IUP::Split> control looks just like the L<IUP::Sbox|IUP::Sbox>, but internally
+is very different. While sbox controls only one element and can push
+other elements outside the dialog, split balance its internal size and
+never push other elements outside its boundaries.
+
+The container can be created with no elements and be dynamic filled
+using L<IUP::Append|IUP::Append> or
+L<IUP::Insert|IUP::Insert>.
+
+=head1 EXAMPLES
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+Natural Size
+
+[IMAGE]
+
+After Moving the Split Bar
+
+=cut

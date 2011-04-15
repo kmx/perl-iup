@@ -1,0 +1,76 @@
+=head1 NAME
+
+IUP::Fill - [GUI element] dynamically occupies empty spaces always trying to expand itself
+
+=head1 DESCRIPTION
+
+Creates a Fill composition element, which dynamically occupies empty
+spaces always trying to expand itself. Its parent B<must> be an
+L<IUP::Hbox|IUP::Hbox> or an L<IUP::Vbox|IUP::Vbox>. If an EXPAND is set on at least one of the
+other children of the box, then the Fill is ignored.
+
+It does not have a native representation.
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ Ihandle* IUP::Fill(void); [in C]
+ iup.fill{} -> elem: ihandle [in Lua]
+ fill() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item * L<EXPAND|IUP::Manual::03_Attributes/EXPAND> (non inheritable)
+
+Ignored. If
+=item * B<User> size is not defined, then when inside a L<IUP::Hbox|IUP::Hbox> EXPAND is
+HORIZONTAL, when inside a IUP::Vbox EXPAND is VERTICAL. If B<User> size
+is defined then EXPAND is NO.
+
+L<SIZE|IUP::Manual::03_Attributes/SIZE> /
+L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE> (non inheritable)
+
+Defines
+the width, if inside a L<IUP::Hbox|IUP::Hbox>, or the height, if it is inside a
+=item * L<IUP::Vbox|IUP::Vbox>. When consulted behaves as the standard SIZE/RASTERSIZE
+attributes. The standard format "wxh" can also be used, but width will
+be ignored if inside a L<IUP::Vbox |IUP::Vbox >and height will be ignored if inside
+a L<IUP::Hbox|IUP::Hbox> (since 3.3).
+
+B<WID> (read-only)
+
+returns -1 if mapped.
+
+=back
+
+The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+
+=over
+
+=item * L<FONT|IUP::Manual::03_Attributes/FONT>,
+L<POSITION|IUP::Manual::03_Attributes/POSITION>,
+L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
+L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>
+
+also accepted.
+
+=back
+
+=head1 EXAMPLES
+
+L<Browse for Example Files|../../examples/>
+
+=head1 SEE ALSO
+
+L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>.
+
+=cut

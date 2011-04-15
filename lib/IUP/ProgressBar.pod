@@ -1,0 +1,166 @@
+=head1 NAME
+
+IUP::ProgressBar - [GUI element] shows a percent value that can be updated to simulate a progression
+
+=head1 DESCRIPTION 
+
+Creates a progress bar control. Shows a percent value that can be
+updated to simulate a progression.
+
+It is similar of L<IUP::Gauge|IUP::Gauge>, but uses native controls internally. Also
+does not have support for text inside the bar.
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ Ihandle* IUP::ProgressBar(void); [in C]
+ iup.progressbar{} -> (elem: ihandle) [in Lua]
+ progressbar() [in LED] 
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item * L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR> [Windows Classic and Motif only]
+
+controls the background color. Default: the global attribute
+DLGBGCOLOR.
+
+=item * B<DASHED> (creation only in Windows) [Windows and GTK only]
+
+Changes
+the style of the progress bar for a dashed pattern. Default is "NO".
+
+=item * L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR> [Windows Classic and Motif only]
+
+Controls the bar color. Default: the global attribute DLGFGCOLOR.
+
+=item * B<MARQUEE> (creation)
+
+displays an undefined state. Default: NO. You
+can set the attribute after map but only to start or stop the
+animation.
+
+=item * B<MAX >(non inheritable)
+
+Contains the maximum value. Default is "1".
+The control display is not updated, must set VALUE attribute to update.
+
+=item * B<MIN >(non inheritable)
+
+Contains the minimum value. Default is "0".
+The control display is not updated, must set VALUE attribute to update.
+
+=item * B<ORIENTATION> (creation only)
+
+can be "VERTICAL" or "HORIZONTAL".
+Default: "HORIZONTAL". Horizontal goes from left to right, and vertical
+from bottom to top.
+
+=item * L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>
+
+The initial size is
+defined as "200x30". Set to NULL to allow the use of smaller values in
+the layout computation.
+
+=item * B<VALUE >(non inheritable)
+
+Contains a number between "MIN" and "MAX",
+controlling the current position.
+
+=back
+
+The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+
+=over
+
+=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
+L<EXPAND|IUP::Manual::03_Attributes/EXPAND>, L<FONT|IUP::Manual::03_Attributes/FONT>,
+L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
+L<POSITION|IUP::Manual::03_Attributes/POSITION>,
+L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
+L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>, L<WID|IUP::Manual::03_Attributes/WID>,
+L<TIP|IUP::Manual::03_Attributes/TIP>, L<SIZE|IUP::Manual::03_Attributes/SIZE>,
+L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
+L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+
+also accepted.
+
+=back
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item * L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>
+
+common callbacks are supported.
+
+=back
+
+=head1 EXAMPLES
+
+L<Browse for Example Files|../../examples/>
+
+DASHED=NO
+
+DASHED=YES
+
+MARQUEE=YES
+
+Motif
+
+[IMAGE]
+
+(same as DASHED=NO)
+
+[IMAGE]
+
+Windows Classic
+
+[IMAGE]
+
+[IMAGE]
+
+(same as DASHED)
+
+Windows w/ Styles
+
+(same as DASHED=YES)
+
+[IMAGE]
+
+[IMAGE]
+
+Windows Vista
+
+[IMAGE]
+
+(same as DASHED=NO)
+
+[IMAGE]
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+=head1 SEE ALSO
+
+L<IUP::Gauge|IUP::Gauge>
+
+=cut

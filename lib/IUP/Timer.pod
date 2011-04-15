@@ -1,0 +1,75 @@
+=head1 NAME
+
+IUP::Timer - [special] periodicaly invokes a callback when the time is up
+
+=head1 DESCRIPTION
+
+Creates a timer which periodicaly invokes a callback when the time is
+up. Each timer should be destroyed using
+L<IUP::Destroy|IUP::Destroy>.
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ Ihandle* IUP::Timer(void); [in C]
+ iup.timer{} -> (elem: ihandle) [in Lua] 
+ timer() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item * B<TIME>
+
+The time interval in milliseconds. In Windows the minimum
+value is 10ms.
+
+=item * B<RUN>
+
+Starts and stops the timer. Possible values: "YES" or "NO".
+Returns the current timer state. If you have multiple threads start the
+timer in the main thread.
+
+=item * B<WID> (read-only)
+
+Returns the native serial number of the timer.
+Returns -1 if not running. A timer is mapped only when it is running.
+
+=back
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item * B<ACTION_CB>
+
+Called when the time is up.
+
+ int function(Ihandle *ih); [in C]
+ elem:action_cb() -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+Returns: IUP_CLOSE will be processed.
+
+=back
+
+=back
+
+=head1 EXAMPLES
+
+L<Browse for Example Files|../../examples/>
+
+=cut
