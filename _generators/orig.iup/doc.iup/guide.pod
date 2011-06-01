@@ -203,7 +203,7 @@ L<OpenGL|http://www.opengl.org>, L<Canvas Draw
 (CD)|http://www.tecgraf.puc-rio.br/cd> and L<Lua|http://www.lua.org>.
 You have to install some these libraries to build the secondary IUP
 libraries. Make sure you have all the dependencies for the library you
-want installed, see the documentation bellow.
+want installed, see the documentation below.
 
 If you are going to build all the libraries, the makefiles and projects
 expect the following directory tree:

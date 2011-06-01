@@ -405,7 +405,7 @@ B<pressed>: indicates the state of the button. Always 1 in GTK.
 
 B<dclick>: indicates a double click. In GTK double click is simulated.
 
-Return: IUP_CLOSE will be processed.
+Returns: IUP_CLOSE will be processed.
 
 =over
 

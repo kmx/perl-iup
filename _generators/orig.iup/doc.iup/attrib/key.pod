@@ -25,7 +25,7 @@ B<iup_isSysXkey(key)> macro for the Sys modifier. These macros are also
 available in Lua as a function with the same name (iup.isprint(key),
 iup.isXkey(key), and so on) and returning a boolean.
 
-In the table bellow there are the most common definitions. Change the
+In the table below there are the most common definitions. Change the
 definition to K_s*, K_c*, K_m* and K_y* when the respective modifier is
 pressed (Shift, Control, Alt and Sys). Sys in Windows is the Windows
 key and in Mac is the Apple key. Check the "iupkey.h" file header for

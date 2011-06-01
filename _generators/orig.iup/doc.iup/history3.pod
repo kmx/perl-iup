@@ -4,6 +4,109 @@ Check the L<Migration Guide|migration_guide.html> for a summary of the
 important changes and how to proceed when migrating from version 2.x to
 version 3.x.
 
+=head2 L<Version 3.5|http://sourceforge.net/projects/iup/files/3.5/>
+(26/Apr/2011)
+
+=over
+
+=item * New: attributes COUNT, LINECOUNT and LINEVALUE for B<IupText>.
+
+=item * New: dialog B< IupElementPropertiesDialog> used internally at
+B< IupLayoutDialog> now can be used by applications to inspect any
+element.
+
+=item * New: common callback TIPS_CB called before a tooltip is
+displayed.
+
+=item * New: CELLOFFSETI<L>:I<C> and CELLSIZEI<L>:C attributes for
+B<IupMatrix>.
+
+=item * New: LIMITEXPAND attribute for B< IupMatrix>.
+
+=item * New: IUP_Webcam image in the IupImageLib.
+
+=item * New: global attribute SHOWMENUIMAGES in GTK, with default value
+"Yes".
+
+=item * New: NUMCOL_NOSCROLL and NUMLIN_NOSCROLL attributes for the
+B<IupMatrix> that add more non scrollable cells.
+
+=item * New: ORIGINOFFSET attribute for B< IupMatrix>.
+
+=item * B<Changed: >TIPVISIBLE will now return the current visible
+state of the tip window.
+
+=item * B<Changed:> B< IupConvertXYToPos> will now work for
+B<IupMatrix> also.
+
+=item * B<Changed:> optimized redrawing of B<IupCells> when
+SCROLLING_CB is not defined.
+
+=item * B<Changed:> removed "P" from B<IupPPlot> additional API
+functions, because they will be used also for other plot controls. Old
+names still exists for compatibility.
+
+=item * B<Changed:> FRAMEVERTCOLOR*:C and FRAMEHORIZCOLORL:* are now
+also accepted in B< IupMatrix>.
+
+=item * Fixed: function iuplua_pushihandle when the element was not
+created in Lua, that cause a crash when destroying the Lua element.
+
+=item * Fixed: destruction of the spin in a B<IupText> element on
+Windows.
+
+=item * Fixed: SELECTION and SELECTIONPOS attributes in B<IupText> on
+Motif.
+
+=item * Fixed: VALUE attribute returned in B<IupFontDlg> on Motif.
+
+=item * Fixed: DRAWSIZE attribute in B< IupCanvas> on GTK when the
+canvas is hidden.
+
+=item * Fixed: B<IupColorBrowser> documentation was corrupted.
+
+=item * Fixed: ACTION_CB callback not being called in B<IupMatrix> when
+editing the cell and a non character key was pressed.
+
+=item * Fixed: IUP_IGNORE is now processed in SPIN_CB in B<IupText> on
+GTK.
+
+=item * Fixed: VALUECHANGED_CB callback being called too many times in
+B<IupText> on Windows and GTK.
+
+=item * Fixed: the old BUTTON_RELEASE_CB callback in B<IupVal> on GTK
+not being called.
+
+=item * Fixed: multiline text size computation in Windows and Motif
+when the last line is empty.
+
+=item * Fixed: VALUE* attributes in B< IupTabs> on Motif when the new
+value is equal to the current value.
+
+=item * Fixed: Ctrl+V, Ctrl+C, Ctrl+X and Ctrl+A key strokes were being
+inserted in the text in B<IupText> on Motif.
+
+=item * Fixed: CLIPBOARD attribute in B< IupText> and B<IupList> on
+Motif.
+
+=item * Fixed: LEDC tool for B<IupImageRGB> and B<IupImageRGBA>.
+
+=item * Fixed: TIP attribute in B<IupTree> on Windows.
+
+=item * Fixed: balloon tip attributes names to TIPBALLOON,
+TIPBALLOONTITLE and TIPBALLOONTITLEICON in Windows.
+
+=item * Fixed: functions B< IupPPlotInsertStrPoints> and
+B<IupPPlotInsertPoints>.
+
+=item * Fixed: invalid editing when using clipboard in B<IupText> on
+Motif when READONLY=Yes.
+
+=item * Fixed: invalid return value of READONLY attribute in B<IupText>
+on Motif.
+
+=back
+
 =head2 L<Version 3.4|http://sourceforge.net/projects/iup/files/3.4/>
 (15/Feb/2011)
 

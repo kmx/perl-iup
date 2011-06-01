@@ -35,8 +35,8 @@ Each plot can contain 2 B<axis> (X and Y), a B<title>, a B< legend>
 B<box>, a B<grid>, a B<dataset> B<area> and as many B<datasets> you
 want.
 
-Each data set is added using the B<IupPPlotAdd >function. All other
-plot parameters are configured by attributes.
+Each data set is added using the B<IupPlotAdd >function. All other plot
+parameters are configured by attributes.
 
 If no attribute is set, the default values were selected to best
 display the plot.
@@ -123,75 +123,75 @@ error occurs.
 
 =head2 Auxiliary Functions
 
- void IupPPlotBegin(Ihandle* ih, int strXdata); [in C]
- iup.PPlotBegin(ih: ihandle, strXdata: number) [in Lua]
+ void IupPlotBegin(Ihandle* ih, int strXdata); [in C]
+ iup.PlotBegin(ih: ihandle, strXdata: number) [in Lua]
 
 Prepares a dataset to receive samples. If strXdata is 1 then the X axis
 value is a string.
 
 ----
 
- void IupPPlotAdd(Ihandle* ih, float x, float y); [in C]
- iup.PPlotAdd(ih: ihandle, x, y: number) [in Lua]
+ void IupPlotAdd(Ihandle* ih, float x, float y); [in C]
+ iup.PlotAdd(ih: ihandle, x, y: number) [in Lua]
 
-Adds a sample to the dataset. Can only be called if B<IupPPlotBegin>
-was called with strXdata=0.
-
-----
-
- void IupPPlotAddStr(Ihandle* ih, const char* x, float y); [in C]
- iup.PPlotAddStr(ih: ihandle, x: string, y: number) [in Lua]
-
-Same as B<IupPPlotAdd>, but allows to use a string as the X axis value.
-Can only be called if B<IupPPlotBegin> was called with strXdata=1.
+Adds a sample to the dataset. Can only be called if B<IupPlotBegin> was
+called with strXdata=0.
 
 ----
 
- int IupPPlotEnd(Ihandle* ih); [in C]
- iup.PPlotEnd(ih: ihandle) -> (index: number) [in Lua]
+ void IupPlotAddStr(Ihandle* ih, const char* x, float y); [in C]
+ iup.PlotAddStr(ih: ihandle, x: string, y: number) [in Lua]
+
+Same as B<IupPlotAdd>, but allows to use a string as the X axis value.
+Can only be called if B<IupPlotBegin> was called with strXdata=1.
+
+----
+
+ int IupPlotEnd(Ihandle* ih); [in C]
+ iup.PlotEnd(ih: ihandle) -> (index: number) [in Lua]
 
 Adds a 2D dataset to the plot and returns the dataset B<index>. The
 data set can be empty. Redraw is NOT done until the REDRAW attribute is
 set. Also it will change the current dataset index to the return value.
 You can only set attributes of a dataset AFTER you added the dataset.
-Can only be called if B<IupPPlotBegin> was called. Whenever you create
-a dataset all its "DS_*" attributes will be set to the default values.
+Can only be called if B<IupPlotBegin> was called. Whenever you create a
+dataset all its "DS_*" attributes will be set to the default values.
 Notice that DS_MODE must be set before other "DS_*" attributes.
 
 ----
 
- void IupPPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y); [in C]
- void IupPPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
- iup.IupPPlotInsert(ih: ihandle, index, sample_index, x, y: number) [in Lua]
- iup.IupPPlotInsertStr(ih: ihandle, index, sample_index, x, y: number)
+ void IupPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y); [in C]
+ void IupPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
+ iup.IupPlotInsert(ih: ihandle, index, sample_index, x, y: number) [in Lua]
+ iup.IupPlotInsertStr(ih: ihandle, index, sample_index, x, y: number)
 
 Inserts a sample in a dataset at the given B<sample_index>. Can be used
 only after the dataset is added to the plot.
 
 ----
 
- void IupPPlotInsertPoints(Ihandle *ih, int index, int sample_index, float* x, float* y, int count); [in C]
- void IupPPlotInsertStrPoints(Ihandle *ih, int index, int sample_index, const char** x, float* y, int count);
- iup.IupPPlotInsertPoints(ih: ihandle, index, sample_index, x, y: table of number) [in Lua]
- iup.IupPPlotInsertStrPoints(ih: ihandle, index, sample_index, x, y: table of number)
+ void IupPlotInsertPoints(Ihandle *ih, int index, int sample_index, float* x, float* y, int count); [in C]
+ void IupPlotInsertStrPoints(Ihandle *ih, int index, int sample_index, const char** x, float* y, int count);
+ iup.IupPlotInsertPoints(ih: ihandle, index, sample_index, x, y: table of number) [in Lua]
+ iup.IupPlotInsertStrPoints(ih: ihandle, index, sample_index, x, y: table of number)
 
 Inserts an array of samples in a dataset at the given B<sample_index>.
 Can be used only after the dataset is added to the plot. (Since 3.4)
 
 ----
 
- void IupPPlotAddPoints(Ihandle *ih, int index, float* x, float* y, int count); [in C]
- void IupPPlotAddStrPoints(Ihandle *ih, int index, const char** x, float* y, int count);
- iup.IupPPlotAddPoints(ih: ihandle, index, x, y: table of number) [in Lua]
- iup.IupPPlotAddStrPoints(ih: ihandle, index, x, y: table of number)
+ void IupPlotAddPoints(Ihandle *ih, int index, float* x, float* y, int count); [in C]
+ void IupPlotAddStrPoints(Ihandle *ih, int index, const char** x, float* y, int count);
+ iup.IupPlotAddPoints(ih: ihandle, index, x, y: table of number) [in Lua]
+ iup.IupPlotAddStrPoints(ih: ihandle, index, x, y: table of number)
 
 Adds an array of samples in a dataset at the end. Can be used only
 after the dataset is added to the plot. (Since 3.4)
 
 ----
 
- void IupPPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy); [in C]
- iup.PPlotTransform(ih: ihandle, x, y: number) -> (ix, iy: number) [in Lua]
+ void IupPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy); [in C]
+ iup.PlotTransform(ih: ihandle, x, y: number) -> (ix, iy: number) [in Lua]
 
 Converts coordinates in plot units to pixels. It should be used in
 PREDRAW_CB and POSTDRAW_CB callbacks only. Output variables can be NULL
@@ -200,8 +200,8 @@ the drawing after a resize is done.
 
 ----
 
- void IupPPlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C]
- iup.PPlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
+ void IupPlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C]
+ iup.PlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
 
 Plots to the given CD canvas instead of the display canvas.
 
@@ -404,7 +404,7 @@ x: X coordinate value of the sample
 
 B<y>: Y coordinate value of the sample
 
-If the return value is IUP_IGNORE then the sample is not deleted.
+Returns: If IUP_IGNORE then the sample is not deleted.
 
 B<DELETEBEGIN_CB, DELETEEND_CB>: Actions generated when a delete
 operation will begin or end. But they are called only if DELETE_CB is
@@ -414,8 +414,8 @@ also defined.
  elem:deletebegin_cb() -> (ret: number) [in Lua]
  elem:deleteend_cb() -> (ret: number) [in Lua]
 
-If the DELETEBEGIN_CB callback returns IUP_IGNORE the delete operation
-for all the selected samples are aborted.
+Returns: If DELETEBEGIN_CB returns IUP_IGNORE the delete operation for
+all the selected samples are aborted.
 
 B<SELECT_CB>: Action generated when a sample is selected. If multiple
 points are selected it is called once for each new selected point. It
@@ -436,7 +436,7 @@ B<y>: Y coordinate value of the sample
 B<select>: boolean value that a non zero value indicates if the point
 is to be selected.
 
-If the return value is IUP_IGNORE then the sample is not selected.
+Returns: If IUP_IGNORE then the sample is not selected.
 
 B<SELECTBEGIN_CB, SELECTEND_CB>: Actions generated when a selection
 operation will begin or end. But they are called only if SELECT_CB is
@@ -446,8 +446,8 @@ also defined.
  elem:selectbegin_cb() -> (ret: number) [in Lua]
  elem:selectend_cb() -> (ret: number) [in Lua]
 
-If the SELECTBEGIN_CB callback returns IUP_IGNORE the selection
-operation is aborted.
+Returns: If SELECTBEGIN_CB returns IUP_IGNORE the selection operation
+is aborted.
 
 B<EDIT_CB>: Action generated when a sample is selected. If multiple
 points are selected it is called once for each new selected point. It
@@ -469,8 +469,8 @@ B<new_x>: the new X coordinate value of the sample
 
 B<new_y>: the new Y coordinate value of the sample
 
-If the return value is IUP_IGNORE then the sample is not edited. The
-application can changed the new value before it is edited.
+Returns: If IUP_IGNORE then the sample is not edited. The application
+can changed the new value before it is edited.
 
 B<EDITBEGIN_CB, EDITEND_CB>: Actions generated when an editing
 operation will begin or end. But they are called only if EDIT_CB is
@@ -480,8 +480,8 @@ also defined.
  elem:editbegin_cb() -> (ret: number) [in Lua]
  elem:editend_cb() -> (ret: number) [in Lua]
 
-If the EDITBEGIN_CB callback returns IUP_IGNORE the editing operation
-is aborted.
+Returns: If EDITBEGIN_CB returns IUP_IGNORE the editing operation is
+aborted.
 
 B<PREDRAW_CB, POSTDRAW_CB>: Actions generated before and after the
 redraw operation. Predraw can be used to draw a different background

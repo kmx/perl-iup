@@ -8,8 +8,8 @@ representation is only available when the control is mapped.
 
 In GTK and Motif, for the B<IupDialog>, the dy value is negative when
 there is a menu. This occours because in those systems the menu is
-placed inside the Client Area and all children must be placed bellow
-the menu.
+placed inside the Client Area and all children must be placed below the
+menu.
 
 In Windows, for the B<IupFrame>, the value is always "0x0" because it
 actually does not have a B<Client> area, so the child is manually

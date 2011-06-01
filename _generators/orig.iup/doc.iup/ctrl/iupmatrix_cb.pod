@@ -5,32 +5,37 @@
 B<X<IUP_ACTION>ACTION_CB>: Action generated when a keyboard event
 occurs.
 
- int function(Ihandle *ih, int c, int lin, int col, int edition, char* after); [in C]
- elem:action_cb(c, lin, col, edition, after: number) -> (ret: number) [in Lua]
+ int function(Ihandle *ih, int key, int lin, int col, int edition, char* value); [in C]
+ elem:action_cb(key, lin, col, edition: number, value: string) -> (ret: number) [in Lua]
 
 B<ih>: Identifier of the matrix where the user typed something.
 
-B<c>: Identifier of the typed key. Please refer to the L<Keyboard
+B<key>: Identifier of the typed key. Please refer to the L<Keyboard
 Codes|../attrib/key.html> table for a list of possible values.
 
-lin, B<col>: Coordinates of the selected cell.
+B<lin>, B<col>: Coordinates of the selected cell.
 
 B<edition>: 1 if the cell is in edition mode, and 0 if it is not.
 
-B<after>: The new value of the text in case the key is validated (see
-return values). Notice that this value can be NULL if the cell does not
-have a value and the key pressed is not a character.
+B<value>: When EDIT_MODE=NO is the cell current value, but if the type
+key is a valid character then contains a string with that character.
+When EDIT_MODE=Yes depends on the editing field type. If a dropdown,
+then it is an empty string (""). If a text, and the type key is a valid
+character then it is the future value of the text field, if not a valid
+character then it is the cell current value. Notice that this value can
+be NULL if the cell does not have a value and the key pressed is not a
+character.
 
-Possible return values are: IUP_DEFAULT validates the key, IUP_IGNORE
-ignores the key, IUP_CONTINUE forwards the key to IUPs conventional
-processing, or the identifier of the key to be treated by the matrix.
+Returns: IUP_DEFAULT validates the key, IUP_IGNORE ignores the key,
+IUP_CONTINUE forwards the key to IUPs conventional processing, or the
+identifier of the key to be treated by the matrix.
 
 B<X<CLICK_CB>CLICK_CB>: Action generated when any mouse button is
 pressed over a cell. This callback is always called after other
 callbacks.
 
  int function(Ihandle *ih, int lin, int col, char *status); [in C]
- elem:click_cb(lin, col: number, status:string) -> (ret: number) [in Lua]
+ elem:click_cb(lin, col: number, status: string) -> (ret: number) [in Lua]
 
 B<ih>: Identifier of the matrix interacting with the user.
 
@@ -42,14 +47,14 @@ B<status>: Status of the mouse buttons and some keyboard keys at the
 moment the event is generated. The same macros used for
 L<BUTTON_CB|../call/iup_button_cb.html> can be used for this status.
 
-To avoid the display update return IUP_IGNORE.
+Returns: To avoid the display update return IUP_IGNORE.
 
 B<X<RELEASE_CB>RELEASE_CB>: Action generated when any mouse button is
 released over a cell. This callback is always called after other
 callbacks.
 
  int function(Ihandle *ih, int lin, int col, char *status); [in C]
- elem:click_cb(lin, col: number, status:string) -> (ret: number) [in Lua]
+ elem:click_cb(lin, col: number, status: string) -> (ret: number) [in Lua]
 
 B<ih>: Identifier of the matrix interacting with the user.
 
@@ -61,7 +66,7 @@ B<status>: Status of the mouse buttons and some keyboard keys at the
 moment the event is generated. The same macros used for
 L<BUTTON_CB|../call/iup_button_cb.html> can be used for this status.
 
-To avoid the display update return IUP_IGNORE.
+Returns: To avoid the display update return IUP_IGNORE.
 
 B<X<MOUSEMOVE_CB>MOUSEMOVE_CB>: Action generated to notify the
 application that the mouse has moved over the matrix.
@@ -75,7 +80,8 @@ B<lin>, B<col>: Coordinates of the cell that the mouse cursor is
 currently on.
 
 B<X<ENTERITEM_CB>ENTERITEM_CB>: Action generated when a matrix cell is
-selected, becoming the current cell.
+selected, becoming the current cell. Also called when matrix is getting
+focus.
 
  int function(Ihandle *ih, int lin, int col); [in C]
  elem:enteritem_cb(lin, col: number) -> (ret: number) [in Lua]
@@ -84,11 +90,8 @@ B<ih>: Identifier of the matrix interacting with the user.
 
 B<lin>, B<col>: Coordinates of the selected cell.
 
-The user must return IUP_DEFAULT. This callback is also called when
-matrix is getting focus.
-
 B<X<LEAVEITEM_CB>LEAVEITEM_CB>: Action generated when a cell is no
-longer the current cell.
+longer the current cell. Also called when the matrix is losing focus.
 
  int function(Ihandle *ih, int lin, int col); [in C]
  elem:leaveitem_cb(lin, col: number) -> (ret: number) [in Lua]
@@ -98,17 +101,15 @@ B<ih>: Identifier of the matrix interacting with the user.
 B<lin>, B<col>: Coordinates of the cell which is no longer the current
 cell.
 
-The user must return either IUP_DEFAULT or IUP_IGNORE. This callback is
-also called when the matrix is losing focus. Returning IUP_IGNORE
-prevents the current cell from changing, but this will not work when
-the matrix is losing focus. If you try to move to beyond matrix borders
-the cell will lose focus and then get it again, so leaveitem and
-enteritem will be called.
+Returns: IUP_IGNORE prevents the current cell from changing, but this
+will not work when the matrix is losing focus. If you try to move to
+beyond matrix borders the cell will lose focus and then get it again,
+so leaveitem_cb and enteritem_cb will be called.
 
 B<X<SCROLLTOP_CB>SCROLLTOP_CB>: Action generated when the matrix is
 scrolled with the scrollbars or with the keyboard. Can be used together
-with the "ORIGIN" attribute to synchronize the movement of two or more
-matrices.
+with the ORIGIN and ORIGINOFFSET attributes to synchronize the movement
+of two or more matrices.
 
  int function(Ihandle *ih, int lin, int col); [in C]
  elem:scrolltop_cb(lin, col: number) -> (ret: number) [in Lua]
@@ -117,8 +118,6 @@ B<ih>: Identifier of the matrix interacting with the user.
 
 B<lin>, B<col>: Coordinates of the cell currently in the upper left
 corner of the matrix.
-
-The user must return IUP_DEFAULT.
 
 =head2 Drawing
 
@@ -130,13 +129,13 @@ background color of a cell when it needs to be redrawn.
 
 B<ih>: Identifier of the matrix where the user typed something.
 
-lin, B<col>: Coordinates of the cell.
+B<lin>, B<col>: Coordinates of the cell.
 
-red, green, blue: the cell background color.
+B<red>, B<green>, B<blue>: the cell background color.
 
-If the function return IUP_IGNORE, the return values are ignored and
-the attribute defined background color will be used. If returns
-IUP_DEFAULT the returned values will be used as the background color.
+Returns: If IUP_IGNORE, the values are ignored and the attribute
+defined background color will be used. If returns IUP_DEFAULT the
+returned values will be used as the background color.
 
 X<FGCOLOR_CB>B<FGCOLOR_CB> - Action generated to retrieve the
 foreground color of a cell when it needs to be redrawn.
@@ -150,9 +149,9 @@ B<lin>, B<col>: Coordinates of the cell.
 
 red, green, blue: the cell foreground color.
 
-If the function return IUP_IGNORE, the return values are ignored and
-the attribute defined foreground color will be used. If returns
-IUP_DEFAULT the returned values will be used as the foreground color.
+Returns: If IUP_IGNORE, the values are ignored and the attribute
+defined foreground color will be used. If returns IUP_DEFAULT the
+returned values will be used as the foreground color.
 
 B<X<FONT_CB>FONT_CB>: Action generated to verify the font of a cell.
 Called both for common cells and for line and column titles. (since
@@ -165,11 +164,15 @@ B<ih>: Identifier of the matrix interacting with the user.
 
 B<lin>, B<col>: Coordinates of the cell.
 
-Must return a font or NULL to use the the attribute defined font.
+Returns: Must return a font or NULL to use the the attribute defined
+font.
 
 B<X<DRAW_CB>DRAW_CB>: Action generated before a cell is drawn. Allows
 to draw a custom cell contents. You must use the
-L<CD|http://www.tecgraf.puc-rio.br/cd/> library primitives.
+L<CD|http://www.tecgraf.puc-rio.br/cd/> library primitives. The
+clipping is set for the bounding rectangle. The callback is called
+after the cell background has been filled with the background color.
+The focus feedback area is not included in the decoration size.
 
  int function(Ihandle *ih, int lin, int col, int x1, int x2, int y1, int y2, cdCanvas* cnv); [in C]
  elem:draw_cb(lin, col, x1, x2, y1, y2: number, cnv: cdCanvas) -> (ret: number) [in Lua]
@@ -179,15 +182,11 @@ B<ih>: Identifier of the matrix interacting with the user.
 B<lin>, B<col>: Coordinates of the current cell.
 
 B<x1>, B<x2>, B<y1>, B<y2>: Bounding rectangle of the current cell in
-pixels.
+pixels, excluding the decorations.
 
 B<cnv>: internal canvas CD used to draw the matrix.
 
-If this function return IUP_IGNORE the normal text drawing will take
-place. The clipping is set for the bounding rectangle. The callback is
-called after the cell background has been filled with the background
-color. If HIDEFOCUS=NO (the default) the drawing area will not include
-the focus area, if HIDEFOCUS=YES the complete cell is available.
+Returns: If IUP_IGNORE the normal text drawing will take place.
 
 B<X<DROPCHECK_CB>DROPCHECK_CB>: Action generated before the current
 cell is redrawn to determine if a dropdown feedback should be shown. If
@@ -200,8 +199,8 @@ B<ih>: Identifier of the matrix interacting with the user.
 
 B<lin>, B<col>: Coordinates of the cell.
 
-This function must return IUP_DEFAULT to show a dropdown field
-feedback, or IUP_IGNORE to ignore the dropdown feedback.
+Returns: IUP_DEFAULT will show a dropdown field feedback, or IUP_IGNORE
+to NOT draw the dropdown feedback.
 
 =head2 Editing
 
@@ -227,8 +226,8 @@ user.
 
 lin, B<col>: Coordinates of the current cell.
 
-This function must return IUP_IGNORE to show a text-edition field, or
-IUP_DEFAULT to show a dropdown field.
+Returns: IUP_IGNORE to show a text-edition field, or IUP_DEFAULT to
+show a dropdown field.
 
 B<X<DROPSELECT_CB>DROPSELECT_CB>: Action generated when an element in
 the dropdown list is selected. If returns IUP_CONTINUE the value is
@@ -240,7 +239,7 @@ item is selected and editing remains.
 
 B<ih>: Identifier of the matrix interacting with the user.
 
-lin, B<col>: Coordinates of the current cell.
+B<lin>, B<col>: Coordinates of the current cell.
 
 B<drop>: Identifier of the dropdown list shown to the user.
 
@@ -258,13 +257,15 @@ enters or leaves the edition mode. Not called if READONLY=YES.
 
 B<ih>: Identifier of the matrix interacting with the user.
 
-lin, B<col>: Coordinates of the current cell.
+B<lin>, B<col>: Coordinates of the current cell.
 
 B<mode>: 1 if the cell has entered the edition mode, or 0 if the cell
 has left the edition mode.
 
 B<update>: used when mode=0 to identify if the value will be updated
 whe the callback returns with IUP_DEFAULT. (since 3.0)
+
+Returns: can be IUP_DEFAULT, IUP_IGNORE or IUP_CONTINUE.
 
 When B<mode>=1 editing is allowed if the callback returns IUP_DEFAULT,
 so to make the cell read-only return IUP_IGNORE.
@@ -299,7 +300,7 @@ B<ih>: Identifier of the matrix interacting with the user.
 
 B<lin>, B<col>: Coordinates of the cell.
 
-Must return the string to be redrawn.
+Returns: the string to be redrawn.
 
 B<IMPORTANT>: The existance of this callback defines the callback
 operation mode of the matrix when it is mapped.
@@ -316,7 +317,7 @@ mode.
 
 B<ih>: Identifier of the matrix interacting with the user.
 
-lin, B<col>: Coordinates of the cell.
+B<lin>, B<col>: Coordinates of the cell.
 
 B<newval>: String containing the new cell value
 
@@ -334,8 +335,8 @@ B<ih>: Identifier of the matrix interacting with the user.
 
 B<lin>, B<col>: Coordinates of the cell.
 
-Must return the selection state (marked=1, not marked 0). If not
-defined the attribute "B<MARKI<L>>B<:I<C>>" will be returned.
+Returns: the selection state (marked=1, not marked 0). If not defined
+the attribute "B<MARKI<L>>B<:I<C>>" will be returned.
 
 B<X<MARKEDIT_CB>MARKEDIT_CB>: Action generated to notify the
 application that the selection state of a cell was changed. Since it is
@@ -361,10 +362,16 @@ callback.
 ----
 
 The canvas callbacks L<ACTION|../call/iup_action.html>,
-L<SCROLL_CB|../call/iup_scroll_cb.html>, KEYPRESS_CB, MOTION_CB,
-MAP_CB, RESIZE_CB and L<BUTTON_CB|../call/iup_button_cb.html> can be
-changed but you should save and call the original definitions or the
-matrix will not correctly work. This can not be done in Lua.
+L<SCROLL_CB|../call/iup_scroll_cb.html>,
+L<KEYPRESS_CB|../call/iup_keypress_cb.html>,
+L<MOTION_CB|../call/iup_motion_cb.html>,
+L<MAP_CB|../call/iup_map_cb.html>,
+L<RESIZE_CB|../call/iup_resize_cb.html> and
+L<BUTTON_CB|../call/iup_button_cb.html> can be changed but you should
+save and call the original definition from inside your own callback, or
+the matrix will not correctly work. This can not be done in Lua. Use
+L<IupConvertXYToPos|../func/iupconvertxytopos.html> to convert (x,y)
+coordinates in the cell position (pos=lin*numcol + col).
 
 See L<IupCanvas|../elem/iupcanvas.html>.
 

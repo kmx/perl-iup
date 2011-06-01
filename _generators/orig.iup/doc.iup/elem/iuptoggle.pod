@@ -123,7 +123,7 @@ L<ACTION|../call/iup_action.html>: Action generated when the toggle's
 state (on/off) was changed. The callback also receives the toggle's
 state.
 
- int funcion(Ihandle* ih, int state); [in C]elem:action(state: number) -> (ret: number) [in Lua]
+ int function(Ihandle* ih, int state); [in C]elem:action(state: number) -> (ret: number) [in Lua]
 
 B<ih>: identifier of the element that activated the event.
 

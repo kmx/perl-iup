@@ -113,9 +113,6 @@ only. This seems to be a bug or limitation in Motif.
 
 =over
 
-=item * B<Priority:> Other columns/lines fixed at start like column 0
-and line 0.
-
 =item * B<Priority: >image, check mark and gauge for cells.
 
 =item * Mark using the keyboard.

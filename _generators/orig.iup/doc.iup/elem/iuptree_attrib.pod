@@ -307,11 +307,12 @@ B<EXPANDALL >(write only): expand or contracts all nodes. Can be YES
 (expand all), or NO (contract all). (since 3.0)
 
 B<INSERTLEAFid>, B<INSERTBRANCHid > (write only): Same as B<ADDLEAF>
-and B<ADDBRACH> but the depth of the new node is always the same of the
-reference node. If the reference node is a leaf, then the id of the new
-node will be the id of the reference node + 1. If the reference node is
-a branch the id of the new node will be the id of the reference node +
-1 + the total number of child nodes of the reference node. (since 3.0)
+and B<ADDBRANCH> but the depth of the new node is always the same of
+the reference node. If the reference node is a leaf, then the id of the
+new node will be the id of the reference node + 1. If the reference
+node is a branch the id of the new node will be the id of the reference
+node + 1 + the total number of child nodes of the reference node.
+(since 3.0)
 
 B<MOVENODEid >(write only): Moves a node and its children, where id is
 the specified node identifier. If id is empty, then the focus node is

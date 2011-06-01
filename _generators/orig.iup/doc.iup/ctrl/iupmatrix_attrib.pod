@@ -6,8 +6,13 @@ B<X<CURSOR>CURSOR>: Default cursor used by the matrix. The default
 cursor is a symbol that looks like a cross. If you need to refer to
 this default cursor, use the name "IupMatrixCrossCursor".
 
-B<EDITNEXT>: controls how the next cell after editing is chosen. Can be
-LIN, COL, LINCR, COLCR. Default: LIN. (since 3.4)
+B<X<EDIT_MODE>EDIT_MODE>: When set to YES, programmatically puts the
+current cell in edition mode, allowing the user to modify its value.
+When consulted informs if the the current cell is being edited.
+Possible values: "YES" or "NO".
+
+B<X<EDITNEXT>EDITNEXT>: controls how the next cell after editing is
+chosen. Can be LIN, COL, LINCR, COLCR. Default: LIN. (since 3.4)
 
 LIN - go to the next line, if at last line then go to the next column
 at the same line;
@@ -21,25 +26,6 @@ at the same column;
 COLCR - go to the next column, if at last column then go to the next
 line at the first column;
 
-X<FITTOSIZE>B<FITTOSIZE> (write-only): force lines and/or columns sizes
-so the matrix visible size fit in its current size. NUMCOL_VISIBLE and
-NUMLIN_VISIBLE are considered when fitting and they are not changed,
-only the RASTERWIDTHn and RASTERHEIGHTn attributes are changed. But if
-any of the RASTERWIDTHn and RASTERHEIGHTn attributes where already set,
-then they will not be changed. If the matrix is resized then it must be
-set again to obtain the same result, but before doing that set to NULL
-all the RASTERWIDTHn and RASTERHEIGHTn attributes that you want to be
-changed. Can be LINES, COLUMNS or YES (meaning both). (since 3.3)
-
-X<FITTOTEXT>B<FITTOTEXT> (write-only): set the RASTERWIDTHn or the
-RASTERHEIGHTn attribute for the given column or line, so that it will
-fit the largest text in the column or the highest text in the line. The
-number of the column or line must be preceded by a character
-identifying its type, "C" for columns and "L" for lines. For example
-"C5"=column 5 or "L3"=line 3. If FITMAXWIDTHn or FITMAXHEIGHTn are set
-for the column or line they are used as maximum limit for the size.
-(since 3.4)
-
 B<X<FOCUS_CELL>FOCUS_CELL>: Defines the current cell. Two numbers in
 the "B<I<L>>:B<I<C>>" format, (B<I<L>>E<gt>0 and B<I<C>>E<gt>0, a title
 cell can NOT be the current cell). Default: "1:1".
@@ -47,10 +33,23 @@ cell can NOT be the current cell). Default: "1:1".
 B<X<HIDEFOCUS>HIDEFOCUS>: do not show the focus mark when drawing the
 matrix. Default is NO.
 
-B<HIDDENTEXTMARKS>: when text is greater than cell space, it is
-normally cropped, but when set to YES a "..." mark will be added at the
-crop point to indicate that there is more text not visible. Default:
-NO. (since 3.1)
+B<X<HIDDENTEXTMARKS>HIDDENTEXTMARKS>: when text is greater than cell
+space, it is normally cropped, but when set to YES a "..." mark will be
+added at the crop point to indicate that there is more text not
+visible. Default: NO. (since 3.1)
+
+B<LIMITEXPAND>: limit expansion to the maximum size that shows all
+cells. (since 3.5)
+
+B<X<ORIGIN>ORIGIN>: Scroll the visible area to the given cell. Returns
+the cell at the upper left corner. To scroll to a line or a column, use
+a value such as "B<I<L>>:*" or "*:B<I<C>>" (where I<B<L>>E<gt>0 and
+B<I<C>>E<gt>0). L and C can not be a non scrollable cell either.
+
+B<X<ORIGINOFFSET>ORIGINOFFSET>: complements the ORIGIN attribute by
+specifying the drag offset of the top left cell. Returns the current
+value. Has the format "XxY" or "%dx%d" in C. Used only the ORIGIN is
+set. (since 3.5)
 
 B<X<READONLY>READONLY>: disables the editing of all cells. EDITION_CB
 and VALUE_EDIT_CB will not be called anymore. The L:C attribute will
@@ -152,10 +151,16 @@ B<FRAMEVERTCOLORI<L:C>>: Color of the vertical right frame of the cell.
 When not defined the FRAMECOLOR is used. For a title cell defines right
 and left frames. If value is "BGCOLOR" the frame line is not drawn.
 
+B<FRAMEVERTCOLORI<*:C>>: same as FRAMEVERTCOLORI<L:C> but for all the
+cells of the column C. (since 3.5)
+
 B<FRAMEHORIZCOLORI<L:C>>: Color of the horizontal bottom frame of the
 cell. When not defined the FRAMECOLOR is used. For a title cell defines
 bottom and top frames. If value is "BGCOLOR" the frame line is not
 drawn.
+
+B<FRAMEHORIZCOLORI<L:*>>:same as FRAMEHORIZCOLORI<L:C > but for all the
+cells of the line L. (since 3.5)
 
 B<X<VALUE>VALUE>: Allows setting or verifying the value of the current
 cell. Is the same as obtaining the current cell from FOCUS_CELL value
@@ -164,6 +169,23 @@ retrieved during cell editing, the edit control will be updated or
 consulted instead of the matrix cell. When retrieved inside the
 EDITION_CB callback when mode is 0, then the return value is the new
 value that will be updated in the cell.
+
+----
+
+B<X<CELLOFFSET>CELLOFFSETI<L>:I<C>> (read-only): Returns the cell
+computed offset in pixels from the top-left corner of the matrix, in
+the format "XxY" or "%dx%d" in C. Returns NULL if the cell does not
+exists, or it is not visible, or the element is not mapped. It will
+only return a valid result if the cell has already been displayed. They
+are similar to the parameters of the DRAW_CB callback but they do NOT
+include the decorations. (since 3.5)
+
+B<X<CELLSIZE>CELLSIZEI<L>:I<C>> (read-only): Returns the cell computed
+size in pixels, in the format "WxH" or "%dx%d" in C. Returns NULL if
+the cell does not exists, or the element is not mapped. It will only
+return a valid result if the cell has already been displayed. They are
+similar to the parameters of the DRAW_CB callback but they do NOT
+include the decorations. (since 3.5)
 
 =head2 Column Attributes (no redraw)
 
@@ -279,7 +301,16 @@ without the need to resize the matrix. Also it will always use the
 first columns of the matrix, except if B<NUMCOL_VISIBLE_LAST>=YES then
 it will use the last columns. The remaining columns will be accessible
 only by using the scrollbar. IMPORTANT: When retrieved returns the
-current number of visible lines. Default: "4".
+current number of visible columns, not including the non scrollable
+columns. Default: "4".
+
+X<NUMCOL_NOSCROLL>B<NUMCOL_NOSCROLL>: Number of columns that are non
+scrollable, not counting the title column. Default: "0". It does not
+affect the NUMCOL_VISIBLE attribute behavior nor Natural size
+computation. It will always use the first columns of the matrix. The
+cells appearance will be the same of ordinary cells, and they can also
+receive the focus and be edited. Must be less than the total number of
+columns. (since 3.5)
 
 B<X<NUMLIN>NUMLIN>: Defines the number of lines in the matrix. Must be
 an integer number. Default: "0". It does not include the title line. If
@@ -294,7 +325,15 @@ the need to resize the matrix. Also it will always use the first lines
 of the matrix, except if B<NUMLIN_VISIBLE_LAST>=YES then it will use
 the last lines. The remaining lines will be accessible only by using
 the scrollbar. IMPORTANT: When retrieved returns the current number of
-visible lines. Default: "3".
+visible lines, not including the non scrollable lines. Default: "3".
+
+X<NUMLIN_NOSCROLL>B<NUMLIN_NOSCROLL>: Number of lines that are non
+scrollable, not counting the title line. Default: "0". It does not
+affect the NUMLIN_VISIBLE attribute behavior nor Natural size
+computation. It will always use the first lines of the matrix. The
+cells appearance will be the same of ordinary cells, and they can also
+receive the focus and be edited. Must be less than the total number of
+lines. (since 3.5)
 
 =head2 Mark Attributes
 
@@ -337,15 +376,24 @@ by MARKMODE can be B<interactively> marked. Possible values: "YES" or
 
 =head2 Action Attributes
 
-B<X<EDIT_MODE>EDIT_MODE>: When set to YES, programmatically puts the
-current cell in edition mode, allowing the user to modify its value.
-When consulted informs if the the current cell is being edited.
-Possible values: "YES" or "NO".
+X<FITTOSIZE>B<FITTOSIZE> (write-only): force lines and/or columns sizes
+so the matrix visible size fit in its current size. NUMCOL_VISIBLE and
+NUMLIN_VISIBLE are considered when fitting and they are not changed,
+only the RASTERWIDTHn and RASTERHEIGHTn attributes are changed. But if
+any of the RASTERWIDTHn and RASTERHEIGHTn attributes where already set,
+then they will not be changed. If the matrix is resized then it must be
+set again to obtain the same result, but before doing that set to NULL
+all the RASTERWIDTHn and RASTERHEIGHTn attributes that you want to be
+changed. Can be LINES, COLUMNS or YES (meaning both). (since 3.3)
 
-B<X<ORIGIN>ORIGIN>: Scroll the visible area to the given cell. Returns
-the cell at the upper left corner. To scroll to a line or a column, use
-a value such as "B<I<L>>:*" or "*:B<I<C>>" (where I<B<L>>E<gt>0 and
-B<I<C>>E<gt>0).
+X<FITTOTEXT>B<FITTOTEXT> (write-only): set the RASTERWIDTHn or the
+RASTERHEIGHTn attribute for the given column or line, so that it will
+fit the largest text in the column or the highest text in the line. The
+number of the column or line must be preceded by a character
+identifying its type, "C" for columns and "L" for lines. For example
+"C5"=column 5 or "L3"=line 3. If FITMAXWIDTHn or FITMAXHEIGHTn are set
+for the column or line they are used as maximum limit for the size.
+(since 3.4)
 
 B<X<SHOW>SHOW> (write-only): If necessary scroll the visible area to
 make the given cell visible. To scroll to a line or a column, use a
@@ -371,7 +419,7 @@ No redraw is done when the application sets the attributes: L:C,
 ALIGNMENTn, BGCOLOR*, FGCOLOR*, FONT*, VALUE, FRAME*COLOR. Global and
 size attributes always automatically redraw the matrix.
 
-=head2 Text Edition Attributes
+=head2 Text Editing Attributes
 
 B<X<CARET>CARET>: Allows specifying and verifying the caret position of
 the text box in edition mode.

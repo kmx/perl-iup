@@ -9,7 +9,7 @@ See the L<Layout Guide|../layout_guide.html> for more details on sizes.
 
 "I<width>xI<height>", where width and height are integer values
 corresponding to the horizontal and vertical size, respectively, in
-characters fraction unit (see Notes bellow).
+characters fraction unit (see Notes below).
 
 You can also set only one of the parameters by removing the other one
 and maintaining the separator "x", but this is equivalent of setting

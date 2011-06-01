@@ -18,9 +18,9 @@ places:
 
 =over
 
-=item * In the Tools list, click on ILINK32. Then bellow select the
-Path and Defines tab - there you are going to add the path of the
-libraries you use, for example:
+=item * In the Tools list, click on ILINK32. Then below select the Path
+and Defines tab - there you are going to add the path of the libraries
+you use, for example:
 
 =back
 
@@ -42,7 +42,7 @@ L<[IMAGE]|cppbx2.gif>
 
 =over
 
-=item * In the Tools list, click on IBCC32. Then bellow select the Path
+=item * In the Tools list, click on IBCC32. Then below select the Path
 and Defines tab - there you are going to list the include path, for
 example:
 

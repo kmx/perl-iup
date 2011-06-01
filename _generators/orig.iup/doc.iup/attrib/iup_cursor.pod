@@ -162,7 +162,7 @@ Cursors.
 If no system cursors were found then the value will be used to try to
 find an IUP image with the same name. Use B<IupSetHandle> to define a
 name for an B<IupImage>. But the image will need an extra attribute and
-some specific characteristics, see notes bellow.
+some specific characteristics, see notes below.
 
 =head2 Notes
 

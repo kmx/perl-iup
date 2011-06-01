@@ -57,17 +57,20 @@ position can be changed even if not visible. When changed it will also
 change the selection but the text will be scrolled only when it
 receives the focus.
 
-See the Notes bellow if using UTF-8 strings in GTK.
+See the Notes below if using UTF-8 strings in GTK.
 
 B<CARETPOS> (non inheritable): Also the position of the insertion
 point, but using a zero based character unique index "pos". Useful for
-indexing the VALUE string. See the Notes bellow if using UTF-8 strings
+indexing the VALUE string. See the Notes below if using UTF-8 strings
 in GTK. (since 3.0)
 
 B<CLIPBOARD> (write-only): clear, cut, copy or paste the selection to
 or from the clipboard. Values: "CLEAR", "CUT", "COPY" or "PASTE". In
 Windows UNDO is also available, and REDO is available when
 FORMATTING=YES. (since 3.0)
+
+B<COUNT> (read-only): returns the number of characters in the text.
+(since 3.5)
 
 B<CUEBANNER> [Windows Only] (non inheritable): a text that is displayed
 when there is no text at the control. It works as a textual cue, or tip
@@ -93,6 +96,13 @@ In GTK is always enabled, but only when MULTILINE=YES. Default: NO.
 
 B<INSERT> (write-only): Inserts a text in the caret's position, also
 replaces the current selection if any. Ignored if set before map.
+
+B<LINECOUNT> (read-only): returns the number of characters in the line
+where the caret is. When MULTILINE=NO returns always "1". (since 3.5)
+
+B<LINEVALUE> (read-only): returns the text of the line where the caret
+is. It does not include the "\n" character. When MULTILINE=NO returns
+the same as VALUE. (since 3.5)
 
 L<MASK|../attrib/iup_mask.html> (non inheritable): Defines a mask that
 will filter interactive text input.
@@ -164,11 +174,11 @@ changed.
 The values ALL and NONE are also accepted independently of MULTILINE
 (since 3.0).
 
-See the Notes bellow if using UTF-8 strings in GTK.
+See the Notes below if using UTF-8 strings in GTK.
 
 B<SELECTIONPOS> (non inheritable): Same as SELECTION but using a zero
 based character index "B<pos1>:B<pos2>". Useful for indexing the VALUE
-string. The values ALL and NONE are also accepted. See the Notes bellow
+string. The values ALL and NONE are also accepted. See the Notes below
 if using UTF-8 strings in GTK. (since 3.0)
 
 L<SIZE|../attrib/iup_size.html> (non inheritable): Since the contents
@@ -309,8 +319,7 @@ B<ih>: identifier of the element that activated the event.
 
 B<pos>: the value of the spin (after it was incremented).
 
-Returns: IUP_IGNORE is processed in Windows and Motif. It is ignored in
-GTK.
+Returns: IUP_IGNORE is processed in Windows and Motif.
 
 B<VALUECHANGED_CB>: Called after the value was interactively changed by
 the user. (since 3.0)

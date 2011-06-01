@@ -9,9 +9,9 @@ Converts a (x,y) coordinate in an item position.
 
 B<ih>: Identifier of the element.
 
-B<x>: X coordinate of the left corner of the interface element.
+B<x>: X coordinate relative to the left corner of the element.
 
-B<y>: Y coordinate of the upper part of the interface element.
+B<y>: Y coordinate relative to the top corner of the element.
 
 Returns: the position starting at 0 (except for B<IupList> that starts
 at 1). If fails returns -1.
@@ -19,7 +19,8 @@ at 1). If fails returns -1.
 =head2 Notes
 
 It can be used for B<IupText> (returns a position in the string),
-B<IupList> (returns an item) or B<IupTree> (returns a node identifier).
+B<IupList> (returns an item), B<IupTree> (returns a node identifier) or
+IupMatrix (returns a cell position, where pos=lin*numcol + col).
 
 =head2 See Also
 

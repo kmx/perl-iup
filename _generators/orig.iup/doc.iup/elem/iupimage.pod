@@ -25,10 +25,10 @@ B<width>: Image width in pixels.
 B<height>: Image height in pixels.
 
 B<pixels>: Vector containing the value of each pixel. B< IupImage> uses
-1 value per pixel, B<IupImageRGB> uses 2 values and B< IupImageRGBA>
-uses 3 values per pixel. Each value is always 8 bit. Origin is at the
+1 value per pixel, B<IupImageRGB> uses 3 values and B< IupImageRGBA>
+uses 4 values per pixel. Each value is always 8 bit. Origin is at the
 top-left corner and data is oriented top to bottom, and left to right.
-The pixels array is duplicated internally so you can discart it after
+The pixels array is duplicated internally so you can discard it after
 the call.
 
 B<pixel0>, B<pixel1>, B<pixel2>, ...: Value of the pixels. But for
@@ -37,10 +37,10 @@ color channel (pixel_r_0, pixel_g_0, pixel_b_0, pixel_r_1, pixel_g_1,
 pixel_b_1, pixel_r_2, pixel_g_2, pixel_b_2, ...).
 
 B<line0>, B<line1>: unnamed tables, one for each line containing pixels
-values. See Notes bellow.
+values. See Notes below.
 
 B<colors>: table named colors containing the colors indices. See Notes
-bellow.
+below.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.

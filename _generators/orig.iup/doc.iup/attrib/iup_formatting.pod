@@ -97,7 +97,7 @@ numbering or bullet to the paragraph text.
 
 B<SPACEAFTER>: distance left empty above the paragraph.
 
-B<SPACEBEFORE>: distance left empty bellow the paragraph.
+B<SPACEBEFORE>: distance left empty below the paragraph.
 
 B<TABSARRAY>: a sequence of tab positions and alignment up to 32 tabs.
 It uses the format:"pos align pos align pos align...". Position is the

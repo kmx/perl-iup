@@ -48,13 +48,17 @@ automatically convert all strings to (SetAttribute) and from
 UTF-8, but the given string is not UTF-8 then it will be assumed that
 the string uses the ISO8859-1 charset.
 
+=head2 SHOWMENUIMAGES [GTK Only] (since 3.5)
+
+Force the display of images in menus. Default: Yes
+
 =head2 B<SINGLEINSTANCE> [Windows Only] (since 3.2)
 
 Restricts the number of instances of the application by using a name to
 identify it. The value must also be a partial match to the title of a
 dialog that will receive the COPYDATA_CB callback with the command line
-of the second instance. When consulted return NULL if inside the second
-instance. So usually in the application initialization after
+of the second instance. When consulted returns NULL if inside the
+second instance. So usually in the application initialization after
 B<IupOpen>, set SINGLEINSTANCE and then consult its value, if NULL
 abort the second instance by calling B< IupClose> and returning from
 I<main>.
@@ -187,11 +191,11 @@ version. On MacOSX is system version.
 
 =head2 B<SYSTEMLANGUAGE> (read-only)
 
-Return a text with a description of the system language.
+Returns a text with a description of the system language.
 
 =head2 B<SYSTEM>LOCALE (read-only) (since 3.4)
 
-Return a text with a description of the system locale.
+Returns a text with a description of the system locale.
 
 =head2 B<X<GTKVERSION>GTKVERSION> (read-only) [GTK Only]
 

@@ -1420,7 +1420,7 @@ Motif.
 =item * Definition of K_parenleft changed to K_parentleft in C and all
 Lua bindings.
 
-=item * Major IupLua5 change (see IupLua section bellow).
+=item * Major IupLua5 change (see IupLua section below).
 
 =item * IupLua4 is not supported.
 

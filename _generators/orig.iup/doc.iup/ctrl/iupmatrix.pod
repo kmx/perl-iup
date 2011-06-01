@@ -34,11 +34,19 @@ occurs.
 
 L<CURSOR|iupmatrix_attrib.html#CURSOR>
 
-L<FITTOSIZE|iupmatrix_attrib.html#FITTOSIZE>
+L<EDIT_MODE|iupmatrix_attrib.html#EDIT_MODE>
+
+L<EDITNEXT|iupmatrix_attrib.html#EDITNEXT>
 
 L<FOCUS_CELL|iupmatrix_attrib.html#FOCUS_CELL>
 
 L<HIDEFOCUS|iupmatrix_attrib.html#HIDEFOCUS>
+
+L<HIDDENTEXTMARKS|iupmatrix_attrib.html#HIDDENTEXTMARKS>
+
+L<ORIGIN|iupmatrix_attrib.html#ORIGIN>
+
+L<ORIGINOFFSET|iupmatrix_attrib.html#ORIGINOFFSET>
 
 L<READONLY|iupmatrix_attrib.html#READONLY>
 
@@ -63,6 +71,10 @@ L<FONT|iupmatrix_attrib.html#FONT>
 L<FRAMECOLOR|iupmatrix_attrib.html#FRAMECOLOR>
 
 L<VALUE|iupmatrix_attrib.html#VALUE>
+
+L<CELLOFFSET|iupmatrix_attrib.html#CELLOFFSET>
+
+L<CELLSIZE|iupmatrix_attrib.html#CELLSIZE>
 
 =back
 
@@ -116,9 +128,13 @@ L<NUMCOL|iupmatrix_attrib.html#NUMCOL>
 
 L<NUMCOL_VISIBLE|iupmatrix_attrib.html#NUMCOL_VISIBLE>
 
+L<NUMCOL_NOSCROLL|iupmatrix_attrib.html#NUMCOL_NOSCROLL>
+
 L<NUMLIN|iupmatrix_attrib.html#NUMLIN>
 
 L<NUMLIN_VISIBLE|iupmatrix_attrib.html#NUMLIN_VISIBLE>
+
+L<NUMLIN_NOSCROLL|iupmatrix_attrib.html#NUMLIN_NOSCROLL>
 
 =back
 
@@ -142,9 +158,9 @@ L<MARKMULTIPLE|iupmatrix_attrib.html#MARKMULTIPLE>
 
 =over
 
-L<EDIT_MODE|iupmatrix_attrib.html#EDIT_MODE>
+L<FITTOSIZE|iupmatrix_attrib.html#FITTOSIZE>
 
-L<ORIGIN|iupmatrix_attrib.html#ORIGIN>
+L<FITTOTEXT|iupmatrix_attrib.html#FITTOTEXT>
 
 L<SHOW|iupmatrix_attrib.html#SHOW>
 
@@ -152,7 +168,7 @@ L<REDRAW|iupmatrix_attrib.html#REDRAW>
 
 =back
 
-=head2 Text Edition Attributes
+=head2 Text Editing Attributes
 
 =over
 
@@ -329,7 +345,7 @@ cell values, then you must set NUMLIN and NUMCOL before mapping.
 
 =head2 Titles
 
-A matrix might have titles for lines and columns. Titles are not
+A matrix might have titles for lines and columns. Titles are always non
 scrollable, non editable and presented with a different default
 background color. A matrix will have a line of titles if an attribute
 of the "I<L>:0" type is defined, where L is a line number, or if the
@@ -443,7 +459,7 @@ the focus accordingly. The value is confirmed.
 accordingly independent of caret position. The value is confirmed.
 
 =item * B<Enter>: leave the edition mode. The value is confirmed. Moves
-the focus to the cell bellow.
+the focus to the cell below.
 
 =item * B<Esc>: leave the edition mode. The new value is ignored and
 the old value remains.
@@ -453,7 +469,7 @@ the old value remains.
 The cell will also leave the edition mode if the user clicked in
 another cell or in another control, then the value will be confirmed.
 When pressing B<Enter> to confirm the value the focus goes to the cell
-bellow the current cell, if at the last line then the focus goes to the
+below the current cell, if at the last line then the focus goes to the
 cell on the left. The value confirmation depends on the EDITION_CB
 callback return code.
 

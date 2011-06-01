@@ -24,7 +24,7 @@ automatically called.
 =head2 Usage
 
 The following names can be used after the library initialization. The
-name are NOT registered using B<IupSetHandle>, they will be
+names are NOT registered using B<IupSetHandle>, they will be
 automatically loaded when associated with a control.
 
 =head2 Bitmap Group
@@ -401,6 +401,14 @@ Image
 [IMAGE]
 
 "IUP_ViewFullScreen"
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+"IUP_Webcam"
 
 [IMAGE]
 

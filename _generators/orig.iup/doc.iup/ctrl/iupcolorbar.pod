@@ -106,7 +106,7 @@ B<ih>: identifier of the element that activated the event.
 B<cell:> index of the selected cell. If the user double click a preview
 cell, the respective index is returned.
 
-Return: a new color or NULL (nil in Lua) to ignore the change. By
+Returns: a new color or NULL (nil in Lua) to ignore the change. By
 default nothing is changed.
 
 B<EXTENDED_CB>: called when the user right click a cell with the
@@ -119,7 +119,7 @@ B<ih>: identifier of the element that activated the event.
 
 B<cell:> index of the selected cell.
 
-Return: If IUP_IGNORE the cell is not redrawn. By default the cell is
+Returns: If IUP_IGNORE the cell is not redrawn. By default the cell is
 always redrawn.
 
 B<SELECT_CB>: called when a color is selected. The primary color is
@@ -136,7 +136,7 @@ B<cell>: index of the selected cell.
 B<type>: indicates if the user selected a primary or secondary color.
 In can be: C<IUP_PRIMARY(-1)> or C<IUP_SECONDARY(-2).>
 
-Return: If IUP_IGNORE the selection is not accepted. By default the
+Returns: If IUP_IGNORE the selection is not accepted. By default the
 selection is always accepted.
 
 B<SWITCH_CB>: called when the user double clicks the preview area
@@ -152,8 +152,8 @@ B<prim_cell>: index of the actual primary cell.
 
 B<sec_cell>: index of the actual secondary cell.
 
-Return: If IUP_IGNORE the switch is not accepted. By default the switch
-is always accepted.
+Returns: If IUP_IGNORE the switch is not accepted. By default the
+switch is always accepted.
 
 =over
 

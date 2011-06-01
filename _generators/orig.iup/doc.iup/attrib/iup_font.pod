@@ -36,7 +36,7 @@ format definition.
 
 =head2 Windows
 
-The DEFAULTFONT is retrieved from the System Settings (see bellow), if
+The DEFAULTFONT is retrieved from the System Settings (see below), if
 this failed then "Tahoma, 10" is assumed.
 
 The native handle can be obtained using the "B<HFONT>" attribute.
@@ -48,7 +48,7 @@ Appearance", then "Open Classic Appearance", then Advanced.
 
 =head2 Motif
 
-The DEFAULTFONT is retrieved from the user resource file (see bellow),
+The DEFAULTFONT is retrieved from the user resource file (see below),
 if failed then "Fixed, 11" is assumed.
 
 The X-Windows Logical Font Description format (XLFD) is also supported.
@@ -70,7 +70,7 @@ appearance features in Motif.
 =head2 GTK
 
 The DEFAULTFONT is retrieved from the style defined by GNOME (see
-bellow), if failed "Sans, 10" is assumed.
+below), if failed "Sans, 10" is assumed.
 
 The X-Windows Logical Font Description format (XLFD) is also supported.
 
@@ -108,7 +108,7 @@ portability. If you want to use names that work for all systems we
 recommend using: Courier, Times and Helvetica (same as Motif). Those
 names always have a native system name equivalent. If you use those
 names IUP will automatically map to the native system equivalent. See
-the table bellow:
+the table below:
 
 Motif
 
@@ -210,7 +210,7 @@ contains accented characters needed for Western languages other than
 English. In Windows, the ISO8859-1 charset was changed, and some
 control characters were replaced to include more display characters,
 this new charset is named Windows-1252. These characters are marked in
-the table bellow with thick borders.
+the table below with thick borders.
 
 32
 

@@ -225,12 +225,15 @@ NOT be opened.
 
 =head2 User Data
 
-The node Id does not always correspond to the same node as the tree is
-modified. For example, a id=2 will always refer to the third node in
-the tree. For that reason, there is also the B<USERDATAid>, which
-allows identifying a specific node. The B<USERDATAid >always refers to
-the same node. The B< USERDATAid> may contain a user-created structure
-with other information for the node.
+The node id does not always correspond to the same node as the tree is
+modified. For example, an id=2 will always refer to the third node in
+the tree, so if you add a node before the third node, the node with
+id=2 will now refer to the new node, and the old node will now have
+id=3. For that reason, each node can store an user data pointer
+uniquely identifying the node. To set or retrieve the user data of a
+node use the B<USERDATAid> attribute, or the B<L<Extra
+Functions|#Extra_Functions>> below to associate a user data to a node
+and to find a node given its user data.
 
 =head2 Images
 
@@ -342,14 +345,14 @@ a simple K_ANY callback:
    return IUP_CONTINUE;
  }
 
-=head2 Extra Functions
+=head2 X<Extra_Functions>Extra Functions
 
 IupTree has functions that allow associating a pointer (or a user
 defined id) to a node. In order to do that, you provide the id of the
 node and the pointer (userid); even if the node's id changes later on,
 the userid will still be associated with the given node. In IupLua,
 instead of a pointer the same functions are defined for table and
-userdata.
+userdata. These functions use the B<USERDATAid> attribute.
 
 ----
 

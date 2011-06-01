@@ -120,9 +120,10 @@ to paint the preview area. (in Motif since 3.0)
 Read only attributes that are valid inside the FILE_CB callback when
 status="PAINT":
 
-B<PREVIEWDC>: Return the Device Context (HDC in Windows and GC in UNIX)
+B<PREVIEWDC>: Returns the Device Context (HDC in Windows and GC in
+UNIX)
 
-B<PREVIEWWIDTH >and B<PREVIEWHEIGHT>: Return the width and the height
+B<PREVIEWWIDTH >and B<PREVIEWHEIGHT>: Returns the width and the height
 of the client rectangle for the preview area.
 
  Also the attributes WID, HWND, XWINDOW and XDISPLAY are valid and

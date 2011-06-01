@@ -119,7 +119,7 @@ L<ACTION|../call/iup_action.html>: Action generated when the button 1
 (usually left) is selected. This callback is called only after the
 mouse is released and when it is released inside the button area.
 
- int funcion(Ihandle* ih); [in C]elem:action() -> (ret: number) [in Lua]
+ int function(Ihandle* ih); [in C]elem:action() -> (ret: number) [in Lua]
 
 B<ih>: identifier of the element that activated the event.
 

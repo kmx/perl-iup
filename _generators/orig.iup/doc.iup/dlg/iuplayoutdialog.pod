@@ -2,8 +2,8 @@
 
 Creates a Layout Dialog. It is a predefined dialog to visually edit the
 layout of another dialog in run time. It is a standard B<IupDialog>
-constructed with other IUP elements inside. The dialog can be shown
-with any of the show functions B<IupShow>, B<IupShowXY> or B<IupPopup>.
+constructed with other IUP elements. The dialog can be shown with any
+of the show functions B<IupShow>, B<IupShowXY> or B<IupPopup>.
 
 Any existent dialog can be selected. It does not need to be mapped on
 the native system nor visible. It could have been created in C, LED or
@@ -21,7 +21,7 @@ their dialogs in other ways.
  iup.LayoutDialog(dialog: ihandle) -> (elem: ihandle) [in Lua]
  [NOT available in LED]
 
-B<dialog>: identifier of the dialog to display the layout.
+B<dialog>: identifier of the dialog to display the layout. Can be NULL.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.
@@ -127,7 +127,8 @@ attributes of the element, one for custom attributes set at the hash
 table, and one for the callbacks. The callbacks are just for
 inspection, and custom attribute should be handled carefully because
 they may be not strings. Registered attributes values are shown in red
-when they were changed by the application.
+when they were changed by the application. It uses the
+L<IupElementPropertiesDialog|iupelementpropdialog.html>.
 
 =head2 Examples
 
@@ -138,8 +139,6 @@ This will create an empty layout with a new dialog.
  iup.Show(iup.LayoutDialog(nil))    [in Lua]
 
 The following dialog layout is displayed next.
-
-[IMAGE]
 
 [IMAGE]
 

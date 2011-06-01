@@ -1,7 +1,6 @@
 =head1 Motif System Driver
 
-Driver for the X-Windows/Motif 2.x environment. But it can run in Motif
-1.x.
+Driver for the X-Windows/Motif 2.x environment.
 
 =head2 Environment Variables
 
@@ -34,11 +33,14 @@ appearance of all applications that use Motif and Intrinsics.
 =head2 Dynamic Libraries in Linux
 
 When using dynamic libraries in Linux, the "libiup.so" uses the GTK
-driver. So applications that dynamically load IUP will always use the
-"libiup.so", for example Lua using require. To use the IUP Motif
-dynamic library in Linux you must rename the "libiupmot.so" to
-"libiup.so", so the Motif driver will be loaded instead of the GTK
-driver.
+driver for newer systems (Linux26g4). So applications that dynamically
+load IUP will always use the "libiup.so", for example Lua using
+require. To use the IUP Motif dynamic library in Linux you must rename
+the "libiupmot.so" to "libiup.so", so the Motif driver will be loaded
+instead of the GTK driver.
+
+In older systems (E<lt>=Linux26 with gcc 3) the "libiup.so" already
+contains the Motif driver.
 
 =head2 During linking in the Solaris environment: Can not find
 B<libresolv.so.2>
@@ -111,13 +113,12 @@ initialization, and it aborts, this usually means that you are using a
 Motif with a different version than the Motif used to build IUP.
 Reinstall Motif or rebuild IUP using your Motif.
 
-=head2 Some Control Sizes are wrong
+=head2 Some Control Sizes are wrong (IUP 2.x only)
 
 Sometimes the control initialization is incomplete and its size is
 miscalculated. To solve this call IupMap(dialog) and set the dialog
 size to NULL "IupSetAttribute(dlg, IUP_SIZE, NULL);" before calling
-IupShow. This will fix the sizes. We hope to solve this problem in
-future versions.
+IupShow. This will fix the sizes.
 
 =head2 Indigo Magic look in Sgi
 
