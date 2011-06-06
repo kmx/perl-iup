@@ -23,6 +23,12 @@ my $t_rootless = [
     { TITLE=>"2.Crustaceans", child=>["Shrimp", "Lobster"] },
     "3.Extra",
     "4.Extra",
+    { TITLE=>"5.Extra", child=>["Dog", "Cat"] },
+];
+
+my $t_folders = [
+  { TITLE=>"A", child=>["A1", "A2"] },
+  { TITLE=>"B", child=>["B1", "B2"] },
 ];
 
 my $tree_tleft = IUP::Tree->new();
@@ -41,10 +47,12 @@ $dlg->ShowXY(IUP_CENTER,IUP_CENTER);
 
 warn "Creating [top-left] rootless tree\n";
 $tree_tleft->TreeAddNodes($t_rootless,-1);
+$tree_tleft->TreeAddNodes({ TITLE=>"5.1.Extra", child=>["51"] },9);
 warn "Creating [top-right] singleroot tree\n";
 $tree_tright->TreeAddNodes($t_singleroot,-1);
 warn "Creating [bottom-left] rootless tree\n";
 $tree_bleft->TreeAddNodes($t_rootless,-1);
+$tree_bleft->TreeInsertNodes({ TITLE=>"6.Extra", child=>["6"] },9);
 warn "Creating [bottom-right] singleroot tree\n";
 $tree_bright->TreeAddNodes($t_singleroot,-1);
 

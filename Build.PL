@@ -4,19 +4,10 @@ use warnings;
 use Module::Build;
 
 eval { require Alien::IUP };
-die "You need to have Alien::IUP installed\n" if $@;
-
-#hack for generating *.pod documentation via './Build doc'
-my $class = Module::Build->subclass(
-  class => "Module::Build::Custom",
-  code =>
-   q[sub ACTION_doc {].
-   q[  system($^X, qw[_generators/proc-pod.tt2pod.pl -podtt _generators/pod.tt -pod lib]);].
-   q[  system($^X, qw[_generators/proc-pod2cpan.html.pl -html doc.html.tmp -pod lib]);].
-   q[}].
-   q[sub ACTION_gen { system($^X, qw[_generators/generate.pl -dst lib/IUP/Internal]) }].
-   q[sub ACTION_xt  { system(qw[prove -blv xt/*.t]) }],
-);
+if ($@) {
+  warn "You need to have Alien::IUP installed\n";
+  exit 0;
+}
 
 my $lflags = Alien::IUP->config('LIBS');
 my $cflags = Alien::IUP->config('INC');
@@ -33,6 +24,26 @@ $cflags .= ' -DHAVELIB_IUPOLE'      if Alien::IUP->havelib('iupole');
 $cflags .= ' -DHAVELIB_IUPCONTROLS' if Alien::IUP->havelib('iupcontrols');
 $cflags .= ' -DHAVELIB_IUP_PPLOT'   if Alien::IUP->havelib('iup_pplot');
 $cflags .= ' -DHAVELIB_IUPIMGLIB'   if Alien::IUP->havelib('iupimglib');
+
+my $class = 'Module::Build';
+if (-d '.git') { #adding some custom actions relevant only for module development
+  $class = Module::Build->subclass( class => "Module::Build::Custom", code => <<'SUBCLASS', );
+
+  sub ACTION_xt {
+    system(qw[prove -bl xt/*.t]);
+  }
+
+  sub ACTION_gen {
+    system($^X, qw[_generators/generate.pl -dst lib/IUP/Internal]);
+  }
+
+  sub ACTION_doc {
+    system($^X, qw[_generators/proc-pod.tt2pod.pl -podtt _generators/pod.tt -pod lib]);
+    system($^X, qw[_generators/proc-pod2cpan.html.pl -html doc.html.tmp -pod lib]);
+  }
+
+SUBCLASS
+}
 
 my $builder = $class->new(
   module_name          => 'IUP',

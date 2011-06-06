@@ -1,11 +1,7 @@
 ################ the last time working on ################ 
 - POD draft
-- TreeAddNotes - rootless trees not working (unfinished)
+- IUP::Tree - finished
 ##########################################################
-
-!!IMPORTANT!!######## IUP::Tree
-  TreeAddNodes() - needs to fix
-  TreeInsertNodes() - maybe
 
 !!Big Task!!######## doc
 - Cleanup first (in this order):

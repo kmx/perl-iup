@@ -30,3 +30,4 @@ pod2htm*.tmp
 ^Build\.bat$
 ^MYMETA\.yml$
 ^MANIFEST\.SKIP$
+^DEVEL*

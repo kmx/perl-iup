@@ -90,50 +90,59 @@ sub TreeSetNodeAttributes {
   }
 }
 
-#xxxCHECKLATER
-#sub TreeInsertNodes {
-#  #maybe later
-#}
-
 sub TreeAddNodes {
-  #iup.TreeAddNodes(ih: ihandle, tree: table, [id: number]) [in Lua]
-  #xxxFIXME does not work well with rootless trees
   my ($self, $t, $id) = @_;  
   return unless defined $t;
   $id = -1 unless defined $id;
-  if ($id == -1) {
-    #adding into an empty tree        
-    my $tc = $self->GetAttribute("TOTALCHILDCOUNT0");
-    my $ti = $self->GetAttribute("TITLE0");  
-    #workaround for handling "strange" default ADDROOT='YES'    
-    if (defined $tc && $tc==0 && defined $ti && $ti eq '') {
-      #the tree is empty, but was created with ADDROOT='YES' - therefore deleting node 0
-      #xxxCHECKLATER not sure if it is a good idea
-      $self->SetAttributeId('DELNODE', 0, 'SELECTED'); 
-    }
-  }
+  $self->_delete_root_if_empty if ($id == -1);
   if (ref($t) eq 'ARRAY') {
-    $self->_proc_node_definition($_, $id) for (reverse @$t);
+    $self->_proc_node_definition($_, $id, 'add') for (reverse @$t);
   }
   else {
-    $self->_proc_node_definition($t, $id);
+    $self->_proc_node_definition($t, $id, 'add');
+  }
+}
+
+sub TreeInsertNodes {
+  #XXX unfinished
+  my ($self, $t, $id) = @_;  
+  return unless defined $t;
+  $id = -1 unless defined $id;
+  $self->_delete_root_if_empty if ($id == -1); # xxxCHECKLATER not sure if it is a good idea
+  if (ref($t) eq 'ARRAY') {
+    $self->_proc_node_definition($_, $id, 'ins') for (reverse @$t);
+  }
+  else {
+    $self->_proc_node_definition($t, $id, 'ins');
+  }
+}
+
+sub _delete_root_if_empty {
+  my $self = shift;
+  my $tc = $self->GetAttribute("TOTALCHILDCOUNT0");
+  my $ti = $self->GetAttribute("TITLE0");  
+  #workaround for handling ADDROOT='YES' but empty TITLE
+  if (defined $tc && $tc==0 && defined $ti && $ti eq '') {
+    #the tree is empty, but was created with ADDROOT='YES' - therefore deleting node 0     
+    $self->SetAttributeId('DELNODE', 0, 'SELECTED'); 
   }
 }
 
 sub _proc_node_definition { 
-  my ($self, $h, $id) = @_;
+  my ($self, $h, $id, $ins_or_add) = @_;
   #NOTE: $h is expected to be a hashref or scalar value (not arrayref!)
   return unless defined $h;
   $h = { TITLE=>"$h", KIND=>'LEAF' } if ref($h) ne 'HASH'; #autoconvert any scalar value into leaf title
   if ( ($h->{KIND} && $h->{KIND} eq 'BRANCH') || $h->{child} ) {
     #add branch
-    #warn "***DEBUG*** SetAttributeId('ADDBRANCH', $id, '$h->{TITLE}');\n";
-    #warn "***DEBUG*** [b]PARENT$id=", defined $self->GetAttributeId("PARENT", $id) ? $self->GetAttributeId("PARENT", $id) : 'undef';
-
-    $self->SetAttributeId("ADDBRANCH", $id, $h->{TITLE});        
-    #my $newid = $id+1; # faster
+    if (defined $ins_or_add && $ins_or_add eq 'ins') {
+      $self->SetAttributeId("INSERTBRANCH", $id, $h->{TITLE});
+    }
+    else {
+      $self->SetAttributeId("ADDBRANCH", $id, $h->{TITLE});        
+    }    
+    
     my $newid = $self->LASTADDNODE;
-    #warn "***DEBUG*** [b] newid=$newid id=$id\n" if $newid != ($id+1);
     $self->TreeSetNodeAttributes($newid, $h);
     
     my $ch = $h->{child};
@@ -148,13 +157,14 @@ sub _proc_node_definition {
   }
   else {
     #add leaf
-    #warn "***DEBUG*** SetAttributeId('ADDLEAF', $id, '$h->{TITLE}');\n";
-    #warn "***DEBUG*** [l]PARENT$id=", defined $self->GetAttributeId("PARENT", $id) ? $self->GetAttributeId("PARENT", $id) : 'undef';
+    if (defined $ins_or_add && $ins_or_add eq 'ins') {
+      $self->SetAttributeId("INSERTLEAF", $id, $h->{TITLE});
+    }
+    else {
+      $self->SetAttributeId("ADDLEAF", $id, $h->{TITLE});
+    }    
 
-    $self->SetAttributeId("ADDLEAF", $id, $h->{TITLE});
-    #my $newid = $id+1; # faster
     my $newid = $self->LASTADDNODE;
-    #warn "***DEBUG*** [l] newid=$newid id=$id\n" if $newid != ($id+1);
     $self->TreeSetNodeAttributes($newid, $h);
   }
 }
