@@ -15,21 +15,29 @@ require "$FindBin::Bin/utils.pm";
 die "Cannot require utils.pm\n" if $@;
 
 # global variables
-my $g_help    = 0;
-my $g_htmlinc = "$FindBin::Bin/pod.htmlinc";
-my $g_podtt   = "$FindBin::Bin/tmp.pod.tt";
-my $g_pod     = "$FindBin::Bin/tmp.pod";
-#my $g_pod     = "$FindBin::Bin/../doc";
+my $g_help     = 0;
+my $g_htmlinc  = "$FindBin::Bin/pod.htmlinc";
+my $g_examples = "$FindBin::Bin/../examples";
+my $g_podtt    = "$FindBin::Bin/tmp.pod.tt";
+my $g_pod      = "$FindBin::Bin/tmp.pod";
+#my $g_pod      = "$FindBin::Bin/../doc";
 # processing commandline options
+
+#kind of a hack
+use Module::Extract::VERSION;
+my $iupver = Module::Extract::VERSION->parse_version_safely("$FindBin::Bin/../lib/IUP.pm");
+my $g_disturlroot = "http://cpansearch.perl.org/src/KMX/IUP-$iupver/";
+
 my $getopt_rv = GetOptions(
   'help|?' => \$g_help,
   'podtt=s' => \$g_podtt,
   'pod=s' => \$g_pod,
   'htmlinc=s' => \$g_htmlinc,
+  'examples=s' => \$g_examples,
 );
 pod2usage(-exitstatus=>0, -verbose=>2) if $g_help || !$getopt_rv;
 
-my $ttdata = {
+my $ttdata = {  
   h => {
     name       => '=head1 NAME',
     synopsis   => '=head1 SYNOPSIS',
@@ -96,7 +104,7 @@ my $ttdata = {
     iupsbox         =>         'IUP::Sbox - [GUI element] container for expanding/contracting the child size in one direction',
     iupseparator    =>    'IUP::Separator - [GUI element] shows a line between two menu items',
     iupspin         =>         'IUP::Spin - [GUI element] vertical box containing 2 buttons for incrementing/decrementing values',
-    iupspinbox      =>      'IUP::Spinbox - [GUI element] horizontal container that already contains a IUP::Spin',
+    iupspinbox      =>      'IUP::SpinBox - [GUI element] horizontal container that already contains a IUP::Spin',
     iupsplit        =>        'IUP::Split - [GUI element] container that split its client area in two',
     iupsubmenu      =>      'IUP::Submenu - [GUI element] menu item that, when selected, opens another menu',
     iuptabs         =>         'IUP::Tabs - [GUI element] allows a single dialog to have several screens, grouping options',
@@ -114,12 +122,12 @@ my $ttdata = {
     elem     => 'IUP::Manual::02_Elements',
     at       => 'IUP::Manual::03_Attributes',
     cb       => 'IUP::Manual::04_Callbacks',
-    keys     => 'IUP::Manual::05_HandlingKeyboard',
-    dlg      => 'IUP::Manual::06_DialogLayout',
-    led      => 'IUP::Manual::06_UsingLED',
-    examples => 'IUP::Manual::07_Examples',
+    dlg      => 'IUP::Manual::05_DialogLayout',
+    keys     => 'IUP::Manual::06_HandlingKeyboard',
+    imglib   => 'IUP::Manual::07_UsingImageLibrary',
+    led      => 'IUP::Manual::08_UsingLED',
+    examples => 'IUP::Manual::09_Examples',
     
-    imglib   => 'IUP::Manual::06_BuiltInImageLibrary',
     predlg   => 'IUP::Manual::07_PredefinedDialogs',
     asimple  => 'IUP::Manual::09_SimpleApplication',
     acomplex => 'IUP::Manual::10_ComplexApplication',
@@ -127,8 +135,9 @@ my $ttdata = {
     galery   => 'IUP::Manual::12_ScreenshotGalery',
   },
   txt => {
-    new_attr  => "B<Note:> You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> pairs relevant\n" .
+    new_attr  => "NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\\&func> pairs relevant\n" .
                  "to this element - see L<[%m.elem%]|[%m.elem%]>.",
+    new_ret   => "The reference to the created element, or C<undef> if an error occurs.",
     at_intro  => "For more info about concept of attributes (setting/getting values etc.)\n" .
                  "see L<[%m.at%]|[%m.at%]>. Attributes specific to this element:",
     at_common => "The following L<common attributes|[%m.at%]/Common Attributes> are also accepted:",
@@ -138,12 +147,29 @@ my $ttdata = {
     cb_ih     => 'B<$self:> reference to the element that activated the event.',
   },
   url => {
-    examples => 'https://github.com/kmx/perl-iup/tree/master/examples',
+    gitroot  => 'https://github.com/kmx/perl-iup/tree/master',
+    distroot => $g_disturlroot,
+    examples => $g_disturlroot."examples/",
+    iuporigdoc => 'http://www.tecgraf.puc-rio.br/iup/en/',
+  },
+  flags => {
+    gennerate_origdoc => 0, #xxx
   },
   html => { }, #this is loaded via load_htmlinc()
 };
 
 my %pod_all = map {$_=>1} My::Utils::find_file($g_pod, qr/\.pod$/);
+
+my %pod_specconvert;
+for (values %{$ttdata->{m}}) {
+  my $realname = "$_.pod";
+  my $draftname = $realname;  
+  $draftname =~ s/^IUP::Manual::([^A-Za-z]*)(.+)/IUP::Manual::$2/;
+  $realname =~ s/::/\//g;
+  $draftname =~ s/::/\//g;
+  #warn ">>> $draftname = $realname\n";
+  $pod_specconvert{$draftname} = $realname;
+}
 
 sub load_htmlinc {
   my $htmlinc = shift;
@@ -157,13 +183,45 @@ sub load_htmlinc {
   }  
 }
 
+sub load_examples {
+  my $exdir = shift;
+  my $allelems;
+  #fill elemlist somehow at this point
+  for my $k (keys %{$ttdata->{n}}) {
+    if ($ttdata->{n}->{$k} =~ /^(IUP::[^\s-]+)/) {
+      $allelems->{$1} = $k;
+    }
+  }
+  die "non-existing dir '$exdir'\n" unless -d $exdir;
+  for my $pl (My::Utils::find_file($exdir, qr/\.pl$/)) {
+    my $content = read_file($pl) or die "No content for '$pl'\n";
+    my $desc = '';
+    if ($content =~ /#\s*([^\r\n]+)/) {
+      $desc = " - $1";
+    }
+    my $plshort = File::Spec->abs2rel($pl, $exdir);    
+    $plshort =~ s|\\|/|;
+    for my $e (keys %$allelems) {  
+      my $nick = $allelems->{$e};
+      if ($content =~ /\Q$e\E\->new/s) {
+        push @{$ttdata->{examples}->{$nick}}, { pl=>$plshort, desc=>$desc };
+#        warn "$nick => $plshort, $desc\n";
+      }
+    }
+  }  
+}
+
 sub procfile {
   my $podtt = shift;  
-  my $rel = File::Spec->abs2rel($podtt, $g_podtt);
+  my $rel = File::Spec->abs2rel($podtt, $g_podtt);  
   $rel =~ s|_|/|g;
+  if ($pod_specconvert{$rel}) {
+    warn "[info] oldrel=$rel newrel=$pod_specconvert{$rel}\n";
+    $rel = $pod_specconvert{$rel};    
+  }
   my $pod = File::Spec->rel2abs(File::Spec->catfile($g_pod, $rel));    
   
-  warn "[INFO] input='$podtt'\n";
+  warn "[info] input='$podtt'\n";
   my $pod_orig = -f $pod ? read_file($pod) : 'EMPTY: random content='.rand(999);  
   my $pod_new;
   my $pod_tmp;
@@ -184,8 +242,13 @@ sub procfile {
 warn ">>>>[$0] Started!\n";
 
 load_htmlinc($g_htmlinc);
+load_examples($g_examples);
+#warn Dumper($ttdata->{examples}->{iupcbox});
 procfile($_) for (My::Utils::find_file($g_podtt, qr/\.pod$/));
-warn "[WARN] Unexpected extra pod file: '$_'\n" for keys(%pod_all);
+for (keys(%pod_all)) {
+  warn "[WARN] Unexpected extra pod file: '$_' (GONNA DELETE!!!!)\n";
+  unlink $_;
+}
 
 warn ">>>>[$0] Finished!\n";
 

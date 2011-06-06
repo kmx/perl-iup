@@ -60,16 +60,16 @@ my %type2params = (
 sub cb_generate1 {
   my $h = shift;
   for my $m (keys %$h) {
-    warn "###INFO### Processing '$m'";
+    warn "[info] Processing '$m'\n";
     for my $a (keys %{$h->{$m}}) {  
       my $if = "internal_cb_$a\_$h->{$m}->{$a}->{type}";      
       $h->{$m}->{$a}->{xs_internal_cb} = $if;
 
       #avoid using variable names: count
       if ($h->{$m}->{$a}->{c_params} =~ /count/) {
-        warn "before: $h->{$m}->{$a}->{c_params}\n";
+        warn "[info] before: $h->{$m}->{$a}->{c_params}\n";
         $h->{$m}->{$a}->{c_params} =~ s/([\s,])count([\s,])/$1count_$2/;
-	warn "after : $h->{$m}->{$a}->{c_params}\n";
+	warn "[info] after : $h->{$m}->{$a}->{c_params}\n";
       }
       
       $h->{$m}->{$a}->{xs_internal_cb_params} = "($h->{$m}->{$a}->{c_params})";
@@ -251,6 +251,8 @@ sub at_hash2list {
   return \@rv;
 }
 
+warn ">>>>[$0] Started!\n";
+
 my $tt = Template->new(ABSOLUTE=>1);
 my $cb_h = file2hash($cb_csv);
 my $at_h = file2hash($at_csv);
@@ -277,6 +279,8 @@ my $at_data1 = {
 };
 #die Dumper($at_data1);
 $tt->process($FindBin::Bin.'/Attribute_pm.tt', $at_data1, $g_dst.'/Attribute.pm') || die $tt->error();
+
+warn ">>>>[$0] Finished!\n";
 
 __END__
 

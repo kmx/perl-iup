@@ -16,6 +16,10 @@ presentation can contain a text and/or an image.
 
 =end HTML
 
+NOTE: The buttons with image and text simultaneous have PADDING '5x5', the
+other buttons have no padding. The buttons with no text and BGCOLOR
+defined have their RASTERSIZE set.
+
 [% h.usage %]
 
 [% h.create %]
@@ -62,7 +66,7 @@ also accepted, like "ARIGHT" or ":ATOP", the other value will be used
 from the current alignment. In Motif, vertical alignment is restricted
 to "ACENTER". 
 
-=item * B<L<BGCOLOR|IUP::Manual::Attributes::BGCOLOR>>
+=item * L<BGCOLOR|[%m.at%]/BGCOLOR>
 
 Background color. 
 BGCOLOR is ignored always when FLAT=YES because it will inherit from the
@@ -84,7 +88,7 @@ in opposite to the other controls. Default: YES.
 Hides the button borders until the mouse enter
 the button area. Can be YES or NO.
 
-=item * B<L<FGCOLOR|IUP::Manual::Attributes::FGCOLOR>>
+=item * L<FGCOLOR|[%m.at%]/FGCOLOR>
 
 Text color. Default: the global attribute DLGFGCOLOR.
 
@@ -143,7 +147,7 @@ avoid inheritance problems. Default value: "0x0".
 defines the spacing between the image
 associated and the button's text. Default: "2".
 
-=item * B<L<TITLE|IUP::Manual::Attributes::TITLE>> (non inheritable)
+=item * L<TITLE|[%m.at%]/TITLE> (non inheritable)
 
 Button's text. If
 IMAGE is not defined before map, then the default behavior is to
@@ -178,7 +182,7 @@ L<VISIBLE|IUP:Manual::Attributes::VISIBLE>
 
 =over
 
-=item * B<L<ACTION|Manual::Attributes/ACTION>>
+=item * L<ACTION|[%m.at%]/ACTION>
 
 Action generated when the button 1
 (usually left) is selected. This callback is called only after the
@@ -191,9 +195,9 @@ mouse is released and when it is released inside the button area.
 
 =over
 
-=item * B<$self:> reference to the element (IUP::Button) that activated the event
+B<$self:> reference to the element (IUP::Button) that activated the event
 
-=item * B<Returns:> IUP_CLOSE will be processed.
+B<Returns:> IUP_CLOSE will be processed.
 
 =back
 
@@ -230,14 +234,25 @@ Buttons are activated using Enter or Space keys.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
+[% IF examples.iupbutton %]
+The element B<IUP::Button> is used in the following sample scripts:
 
-The buttons with image and text simultaneous have PADDING=5x5, the
-other buttons have no padding. The buttons with no text and BGCOLOR
-defined have their RASTERSIZE set.
+=over
+[%FOREACH e IN examples.iupbutton %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 
 L<IUP::Image|IUP::Image>, L<IUP::Toggle|IUP::Toggle>, L<IUP::Button|IUP::Button>
+[%IF flags.gennerate_origdoc %] 
+The original doc: L<iupbutton.html|[%url.iuporigdoc%]elem/iupbutton.html>
+[%END%]
 
 =cut

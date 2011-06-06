@@ -104,7 +104,6 @@ sub TreeAddNodes {
 }
 
 sub TreeInsertNodes {
-  #XXX unfinished
   my ($self, $t, $id) = @_;  
   return unless defined $t;
   $id = -1 unless defined $id;

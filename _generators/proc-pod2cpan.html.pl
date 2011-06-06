@@ -34,7 +34,7 @@ sub procfile {
   my $html = File::Spec->rel2abs(File::Spec->catfile($g_html, $rel));    
   $html =~ s/\.pod$/\.html/;
   
-  warn "[INFO] input='$pod'\n";
+  warn "[info] input='$pod'\n";
   my $html_orig = -f $html ? read_file($html) : 'EMPTY: random content='.rand(999);  
   my $html_new;  
   my $p = My::Pod::Simple::HTML->new();
@@ -54,7 +54,10 @@ sub procfile {
 
 warn ">>>>[$0] Started!\n";
 procfile($_) for (My::Utils::find_file($g_pod, qr/\.pod$/));
-warn "[WARN] Unexpected extra html file: '$_'\n" for keys(%html_all);
+for (keys(%html_all)) {
+  warn "[WARN] Unexpected extra html file: '$_' (GONNA DELETE!!!!)\n";
+  unlink $_;
+}
 warn ">>>>[$0] Finished!\n";
 
 __END__
