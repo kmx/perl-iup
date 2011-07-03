@@ -4,7 +4,7 @@ use warnings;
 use IUP ':all';
 
 my $MAXPLOT = 6;
-my @plot = ();        # PPlot controls
+my @plot = ();        # Plot controls
 my ($dial1, $dial2);  # dials for zooming
 my ($tgg1, $tgg2);    # auto scale on|off toggles
 my ($tgg3, $tgg4);    # grid show|hide toggles
@@ -35,7 +35,7 @@ sub edit_cb {
 sub postdraw_cb {
   #(Ihandle* ih, cdCanvas* cnv)
   my ($self, $cnv) = @_;
-  my ($ix, $iy) = $self->PPlotTransform(0.003, 0.02);  
+  my ($ix, $iy) = $self->PlotTransform(0.003, 0.02);  
   $cnv->cdFont(undef, CD_BOLD, 10);
   $cnv->cdTextAlignment(CD_SOUTH);
   $cnv->cdText($ix, $iy, "My Inline Legend");
@@ -72,33 +72,33 @@ sub InitPlots {
 #  IupSetAttribute(plot[0], "USE_GDI+", "YES");
 
   $theFac = 1.0/(100*100*100);
-  $plot[0]->PPlotBegin(0);
+  $plot[0]->PlotBegin(0);
   for (my $theI=-100; $theI<=100; $theI++) {
     my $x = $theI+50;
     my $y = $theFac*$theI*$theI*$theI;
-    $plot[0]->PPlotAdd($x, $y);
+    $plot[0]->PlotAdd($x, $y);
   }
-  $plot[0]->PPlotEnd();
+  $plot[0]->PlotEnd();
   $plot[0]->SetAttribute("DS_LINEWIDTH", "3");
   $plot[0]->SetAttribute("DS_LEGEND", "Line");
 
   $theFac = 2.0/100;
-  $plot[0]->PPlotBegin(0);
+  $plot[0]->PlotBegin(0);
   for (my $theI=-100; $theI<=100; $theI++) {
     my $x = $theI;
     my $y = -$theFac*$theI;
-    $plot[0]->PPlotAdd($x, $y);
+    $plot[0]->PlotAdd($x, $y);
   }
-  $plot[0]->PPlotEnd();
+  $plot[0]->PlotEnd();
   $plot[0]->SetAttribute("DS_LEGEND", "Curve 1");
 
-  $plot[0]->PPlotBegin(0);
+  $plot[0]->PlotBegin(0);
   for (my $theI=-100; $theI<=100; $theI++)  {
     my $x = (0.01*$theI*$theI-30);
     my $y = 0.01*$theI;
-    $plot[0]->PPlotAdd($x, $y);
+    $plot[0]->PlotAdd($x, $y);
   }
-  $plot[0]->PPlotEnd();
+  $plot[0]->PlotEnd();
   $plot[0]->SetAttribute("DS_LEGEND", "Curve 2");
 
   # PLOT 1 - MakeExamplePlot2
@@ -129,22 +129,22 @@ sub InitPlots {
   $plot[1]->SetAttribute("LEGENDSHOW", "YES");
 
   $theFac = 1.0/(100*100*100);
-  $plot[1]->PPlotBegin(0);
+  $plot[1]->PlotBegin(0);
   for (my $theI=0; $theI<=100; $theI++) {
     my $x = $theI;
     my $y = $theFac*$theI*$theI*$theI;
-    $plot[1]->PPlotAdd($x, $y);
+    $plot[1]->PlotAdd($x, $y);
   }
-  $plot[1]->PPlotEnd();
+  $plot[1]->PlotEnd();
 
   $theFac = 2.0/100;
-  $plot[1]->PPlotBegin(0);
+  $plot[1]->PlotBegin(0);
   for (my $theI=0; $theI<=100; $theI++) {
     my $x = $theI;
     my $y = -$theFac*$theI;
-    $plot[1]->PPlotAdd($x, $y);
+    $plot[1]->PlotAdd($x, $y);
   }
-  $plot[1]->PPlotEnd();
+  $plot[1]->PlotEnd();
 
   # PLOT 2 - MakeExamplePlot4
   $plot[2]->SetAttribute("TITLE", "Log Scale");
@@ -161,13 +161,13 @@ sub InitPlots {
   $plot[2]->SetAttribute("AXS_YFONTSTYLE", "BOLD");
 
   $theFac = 100.0/(100*100*100);
-  $plot[2]->PPlotBegin(0);
+  $plot[2]->PlotBegin(0);
   for (my $theI=0; $theI<=100; $theI++) {
     my $x = (0.0001+$theI*0.001);
     my $y = (0.01+$theFac*$theI*$theI*$theI);
-    $plot[2]->PPlotAdd($x, $y);
+    $plot[2]->PlotAdd($x, $y);
   }
-  $plot[2]->PPlotEnd();
+  $plot[2]->PlotEnd();
   $plot[2]->SetAttribute("DS_COLOR", "100 100 200");
 
   # PLOT 3 - MakeExamplePlot5
@@ -179,11 +179,11 @@ sub InitPlots {
   my @kLables = ("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec");
   my @kData = (1,2,3,4,5,6,7,8,9,0,1,2);
 
-  $plot[3]->PPlotBegin(1);
+  $plot[3]->PlotBegin(1);
   for (my $theI=0; $theI<12; $theI++) { 
-    $plot[3]->PPlotAdd($kLables[$theI], $kData[$theI]);
+    $plot[3]->PlotAdd($kLables[$theI], $kData[$theI]);
   }
-  $plot[3]->PPlotEnd();
+  $plot[3]->PlotEnd();
   $plot[3]->SetAttribute("DS_COLOR", "100 100 200");
   $plot[3]->SetAttribute("DS_MODE", "BAR");
 
@@ -208,23 +208,23 @@ sub InitPlots {
   $plot[4]->SetAttribute("LEGENDPOS", "BOTTOMRIGHT");
 
   $theFac = 100.0/(100*100*100);
-  $plot[4]->PPlotBegin(0);
+  $plot[4]->PlotBegin(0);
   for (my $theI=0; $theI<=10; $theI++) {
     my $x = (0.0001+$theI*0.001);
     my $y = (0.01+$theFac*$theI*$theI);
-    $plot[4]->PPlotAdd($x, $y);
+    $plot[4]->PlotAdd($x, $y);
   }
-  $plot[4]->PPlotEnd();
+  $plot[4]->PlotEnd();
   $plot[4]->SetAttribute("DS_MODE", "MARKLINE");
   $plot[4]->SetAttribute("DS_SHOWVALUES", "YES");
 
-  $plot[4]->PPlotBegin(0);
+  $plot[4]->PlotBegin(0);
   for (my $theI=0; $theI<=10; $theI++) {
     my $x = (0.0001+$theI*0.001);
     my $y = (0.2-$theFac*$theI*$theI);
-    $plot[4]->PPlotAdd($x, $y);
+    $plot[4]->PlotAdd($x, $y);
   }
-  $plot[4]->PPlotEnd();
+  $plot[4]->PlotEnd();
   $plot[4]->SetAttribute("DS_MODE", "MARK");
   $plot[4]->SetAttribute("DS_MARKSTYLE", "HOLLOW_CIRCLE");
   
@@ -234,13 +234,13 @@ sub InitPlots {
   $plot[5]->SetAttribute("MARGINTOP", "40");
 
   $theFac = 100.0/(100*100*100);
-  $plot[5]->PPlotBegin(0);
+  $plot[5]->PlotBegin(0);
   for (my $theI=-10; $theI<=10; $theI++) {
     my $x = (0.001*$theI);
     my $y = (0.01+$theFac*$theI*$theI*$theI);
-    $plot[5]->PPlotAdd($x, $y);
+    $plot[5]->PlotAdd($x, $y);
   }
-  $plot[5]->PPlotEnd();
+  $plot[5]->PlotEnd();
   $plot[5]->SetAttribute("DS_COLOR", "100 100 200");
   $plot[5]->SetAttribute("DS_EDIT", "YES");
   $plot[5]->SetCallback("DELETE_CB", \&delete_cb);
@@ -538,7 +538,7 @@ sub bt1_cb {
   #my $cnv = IUP::Internal::Canvas->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_FILE("PS", "$filename.ps"));
   #my $cnv = IUP::Internal::Canvas->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_FILE("DXF", "$filename.dxf 300x200"));
   my $cnv = IUP::Internal::Canvas->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_FILE("EMF", "$filename.emf 800x600"));
-  $plot[$ii]->PPlotPaintTo($cnv);
+  $plot[$ii]->PlotPaintTo($cnv);
   $cnv->cdKillCanvas();
   
   IUP->Message("Warning", "Exported to '$filename.emf'!");
@@ -552,7 +552,7 @@ my ($dlg, $vboxl, $hbox, $lbl1, $lbl2, $lbl3, $bt1, $boxinfo, $boxdial1, $boxdia
 
 # create plots
 for (my $ii=0; $ii<$MAXPLOT; $ii++) {
-  $plot[$ii] = IUP::PPlot->new();
+  $plot[$ii] = IUP::Plot->new();
 }
 
 # left panel: plot control
@@ -607,7 +607,7 @@ $tabs = IUP::Tabs->new( child=>\@vboxr, TABCHANGE_CB=>\&tabs_tabchange_cb ); # c
 $hbox = IUP::Hbox->new( child=>[$vboxl, $tabs] );
 $hbox->SetAttribute( MARGIN=>"4x4", GAP=>"10" );
   
-$dlg = IUP::Dialog->new( child=>$hbox, SIZE=>"500x240", TITLE=>"IupPPlot Example" );
+$dlg = IUP::Dialog->new( child=>$hbox, SIZE=>"500x240", TITLE=>"IupPlot Example" );
 
 InitPlots(); # It must be able to be done independent of dialog Mapping
 

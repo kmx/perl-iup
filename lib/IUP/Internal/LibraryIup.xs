@@ -1920,24 +1920,24 @@ _IupPPlot()
 		RETVAL
 
 #### Original C function from <iup_pplot.h>
-# void IupPPlotBegin(Ihandle *ih, int strXdata);
+# void IupPlotBegin(Ihandle *ih, int strXdata);
 void
-_IupPPlotBegin(ih,strXdata)
+_IupPlotBegin(ih,strXdata)
 		Ihandle* ih;
 		int strXdata;
 	CODE:
 #ifdef HAVELIB_IUP_PPLOT
-		IupPPlotBegin(ih,strXdata);
+		IupPlotBegin(ih,strXdata);
 #endif
 
 #### Original C function from <iup_pplot.h>
-# int IupPPlotEnd(Ihandle *ih);
+# int IupPlotEnd(Ihandle *ih);
 int
-_IupPPlotEnd(ih)
+_IupPlotEnd(ih)
 		Ihandle* ih;
 	CODE:
 #ifdef HAVELIB_IUP_PPLOT
-		RETVAL=IupPPlotEnd(ih);		
+		RETVAL=IupPlotEnd(ih);		
 #else
 		RETVAL=0;
 #endif
@@ -1945,10 +1945,10 @@ _IupPPlotEnd(ih)
 		RETVAL
 
 #### Original C function from <iup_pplot.h>
-# void IupPPlotAdd(Ihandle *ih, float x, float y);
-# void IupPPlotAddStr(Ihandle *ih, const char* x, float y);
+# void IupPlotAdd(Ihandle *ih, float x, float y);
+# void IupPlotAddStr(Ihandle *ih, const char* x, float y);
 void
-_IupPPlotAdd(ih,xaxis,...)
+_IupPlotAdd(ih,xaxis,...)
 		Ihandle* ih;
 		int xaxis;
 	INIT:
@@ -1960,17 +1960,17 @@ _IupPPlotAdd(ih,xaxis,...)
 		for(i=0; i<pcount; i++) {
 		  y = myST2FLT(2+2*i+1);
 		  if (xaxis==0)
-  		    IupPPlotAdd(ih,myST2FLT(2+2*i),y);
+  		    IupPlotAdd(ih,myST2FLT(2+2*i),y);
 		  else
-  		    IupPPlotAddStr(ih,myST2STR(2+2*i),y);
+  		    IupPlotAddStr(ih,myST2STR(2+2*i),y);
 		}		
 #endif
 
 #### Original C function from <iup_pplot.h>
-# void IupPPlotAddPoints(Ihandle* ih, int index, float *x, float *y, int count);
-# void IupPPlotAddStrPoints(Ihandle* ih, int index, const char** x, float* y, int count);
+# void IupPlotAddPoints(Ihandle* ih, int index, float *x, float *y, int count);
+# void IupPlotAddStrPoints(Ihandle* ih, int index, const char** x, float* y, int count);
 void
-_IupPPlotAddPoints(ih,xaxis,index,xylist)
+_IupPlotAddPoints(ih,xaxis,index,xylist)
 		Ihandle* ih;
 		int xaxis;
 		int index;
@@ -1997,21 +1997,21 @@ _IupPPlotAddPoints(ih,xaxis,index,xylist)
 		  }
 		}
 		if(xaxis==0) {
-		  IupPPlotAddPoints(ih,index,fxpointers,ypointers,pcount);
+		  IupPlotAddPoints(ih,index,fxpointers,ypointers,pcount);
 		  free(fxpointers);
 		}
 		else {
-		  IupPPlotAddStrPoints(ih,index,sxpointers,ypointers,pcount);
+		  IupPlotAddStrPoints(ih,index,sxpointers,ypointers,pcount);
 		  free(sxpointers);
 		}
 		free(ypointers);
 #endif
 
 #### Original C function from <iup_pplot.h>
-# void IupPPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
-# void IupPPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y);
+# void IupPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
+# void IupPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y);
 void
-_IupPPlotInsert(ih,xaxis,index,sample_index,...)
+_IupPlotInsert(ih,xaxis,index,sample_index,...)
 		Ihandle* ih;
 		int xaxis;
 		int index;
@@ -2027,17 +2027,17 @@ _IupPPlotInsert(ih,xaxis,index,sample_index,...)
 		for(i=0; i<pcount; i++) {
 		  y = myST2FLT(4+2*i+1);
 		  if (xaxis==0)
-  		    IupPPlotInsert(ih,index,sample_index,myST2FLT(4+2*i),y);
+  		    IupPlotInsert(ih,index,sample_index,myST2FLT(4+2*i),y);
 		  else
-  		    IupPPlotInsertStr(ih,index,sample_index,myST2STR(4+2*i),y);
+  		    IupPlotInsertStr(ih,index,sample_index,myST2STR(4+2*i),y);
 		}
 #endif
 
 #### Original C function from <iup_pplot.h>
-# void IupPPlotInsertStrPoints(Ihandle* ih, int index, int sample_index, const char** x, float* y, int count);
-# void IupPPlotInsertPoints(Ihandle* ih, int index, int sample_index, float *x, float *y, int count);
+# void IupPlotInsertStrPoints(Ihandle* ih, int index, int sample_index, const char** x, float* y, int count);
+# void IupPlotInsertPoints(Ihandle* ih, int index, int sample_index, float *x, float *y, int count);
 void
-_IupPPlotInsertPoints(ih,xaxis,index,sample_index,xylist)
+_IupPlotInsertPoints(ih,xaxis,index,sample_index,xylist)
 		Ihandle* ih;
 		int xaxis;
 		int index;
@@ -2064,20 +2064,20 @@ _IupPPlotInsertPoints(ih,xaxis,index,sample_index,xylist)
 		  }
 		}
 		if(xaxis==0) {
-		  IupPPlotInsertPoints(ih,index,sample_index,fxpointers,ypointers,pcount);
+		  IupPlotInsertPoints(ih,index,sample_index,fxpointers,ypointers,pcount);
 		  free(fxpointers);
 		}
 		else {
-		  IupPPlotInsertStrPoints(ih,index,sample_index,sxpointers,ypointers,pcount);
+		  IupPlotInsertStrPoints(ih,index,sample_index,sxpointers,ypointers,pcount);
 		  free(sxpointers);
 		}
 		free(ypointers);
 #endif
 
 #### Original C function from <iup_pplot.h>
-# void IupPPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy);
+# void IupPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy);
 void
-_IupPPlotTransform(ih,x,y);
+_IupPlotTransform(ih,x,y);
 		Ihandle* ih;
 		float x;
 		float y
@@ -2086,20 +2086,20 @@ _IupPPlotTransform(ih,x,y);
 		int iy;
 	PPCODE:
 #ifdef HAVELIB_IUP_PPLOT
-		IupPPlotTransform(ih,x,y,&ix,&iy);
+		IupPlotTransform(ih,x,y,&ix,&iy);
 		XPUSHs(sv_2mortal(newSViv(ix)));
 		XPUSHs(sv_2mortal(newSViv(iy)));
 #endif
 
 #### Original C function from <iup_pplot.h>
-# void IupPPlotPaintTo(Ihandle *ih, void *cnv);
+# void IupPlotPaintTo(Ihandle *ih, void *cnv);
 void
-_IupPPlotPaintTo(ih,cnv)
+_IupPlotPaintTo(ih,cnv)
 		Ihandle *ih;
 		void *cnv;
 	CODE:
 #ifdef HAVELIB_IUP_PPLOT
-		IupPPlotPaintTo(ih,cnv);
+		IupPlotPaintTo(ih,cnv);
 #endif
 
 ################################################################################ iupole.h 

@@ -32,7 +32,7 @@ sub edit_cb {
 
 sub postdraw_cb {
   my ($self, $cnv) = @_;
-  #my ($ix, $iy) = $self->PPlotTransform(0.003, 0.02);  
+  #my ($ix, $iy) = $self->PlotTransform(0.003, 0.02);  
   #$cnv->cdFont(undef, CD_BOLD, 10);
   #$cnv->cdTextAlignment(CD_SOUTH);
   #$cnv->cdText($ix, $iy, "My Inline Legend");
@@ -53,13 +53,13 @@ sub InitPlot {
   $mainplot->SetAttribute("MARGINTOP", "40");
 
   $theFac = 100.0/(100*100*100);
-  $mainplot->PPlotBegin(0);
+  $mainplot->PlotBegin(0);
   for (my $theI=-10; $theI<=10; $theI++) {
     my $x = (0.001*$theI);
     my $y = (0.01+$theFac*$theI*$theI*$theI);
-    $mainplot->PPlotAdd($x, $y);
+    $mainplot->PlotAdd($x, $y);
   }
-  $mainplot->PPlotEnd();
+  $mainplot->PlotEnd();
   #$mainplot->SetAttribute("DS_COLOR", "100 100 200");
   #$mainplot->SetAttribute("DS_EDIT", "YES");
   $mainplot->SetCallback("DELETE_CB", \&delete_cb);
@@ -236,11 +236,11 @@ sub bt1_cb {
   use IUP::Canvas::SVG;
   
   my $cnv1 = IUP::Canvas::SVG->new(filename=>"$filename.svg", width=>300, height=>210, resolution=>4);
-  $mainplot->PPlotPaintTo($cnv1);
+  $mainplot->PlotPaintTo($cnv1);
   $cnv1->cdKillCanvas();
   
   my $cnv2 = IUP::Canvas::EMF->new(filename=>"$filename.emf", width=>'800', height=>600);
-  $mainplot->PPlotPaintTo($cnv2);
+  $mainplot->PlotPaintTo($cnv2);
   $cnv2->cdKillCanvas();
   
   IUP->Message("Warning", "Exported to '$filename.emf' + '$filename.svg'!");
@@ -272,9 +272,9 @@ sub bt3_cb {
   }
 
   $mainplot->CLEAR(1);
-  $mainplot->PPlotBegin(0);
-  my $index = $mainplot->PPlotEnd();
-  $mainplot->PPlotAddPoints($index, \@values);  
+  $mainplot->PlotBegin(0);
+  my $index = $mainplot->PlotEnd();
+  $mainplot->PlotAddPoints($index, \@values);  
   
   $mainplot->SetAttribute("TITLE", 'func: $y='.$mainfunc->VALUE);
   $mainplot->SetAttribute("AXS_XAUTOMIN", "YES");
@@ -331,7 +331,7 @@ my $bt2 = IUP::Button->new( TITLE=>"Autofocus", ACTION=>\&bt2_cb );
 my $vboxl = IUP::Vbox->new( child=>[$f1, $f2, $lbl1, $tgg3, $tgg4, $lbl2, $tgg5, $lbl3, $bt1, $bt2], GAP=>"4", EXPAND=>"NO" );
 
 ### right panel: plot control
-$mainplot = IUP::PPlot->new();
+$mainplot = IUP::Plot->new();
 $mainfunc = IUP::Text->new( VALUE=>'sin($x)', VISIBLECOLUMNS=>50, VISIBLELINES=>3, MULTILINE=>'YES', EXPAND=>'YES');
 
 ### the main dialog
@@ -342,7 +342,7 @@ my $hbox2 = IUP::Hbox->new( child=>[
 	 		      IUP::Button->new( TITLE=>"Draw", ACTION=>\&bt3_cb ),
                            ], MARGIN=>"4x4", GAP=>"2" );
  
-my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new([$hbox1, $hbox2]), SIZE=>"500x300", TITLE=>"IupPPlot Example" );
+my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new([$hbox1, $hbox2]), SIZE=>"500x300", TITLE=>"IupPlot Example" );
 
 InitPlot(); # It must be able to be done independent of dialog Mapping
 

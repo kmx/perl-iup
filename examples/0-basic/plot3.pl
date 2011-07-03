@@ -1,11 +1,11 @@
-# IUP::PPlot example
+# IUP::Plot example
 
 use strict;
 use warnings;
 
 use IUP ':all';
 
-my $plot = IUP::PPlot->new(
+my $plot = IUP::Plot->new(
              TITLE        => "Sine and Cosine",
              MARGINBOTTOM => 40,
              MARGINLEFT   => 40,
@@ -18,17 +18,17 @@ my $plot = IUP::PPlot->new(
 	     AXS_YAUTOMAX => "NO",
 );
 
-$plot->PPlotBegin(0);
+$plot->PlotBegin(0);
 for (my $x=-2; $x<=2; $x+=0.01) {
-  $plot->PPlotAdd($x, sin($x))
+  $plot->PlotAdd($x, sin($x))
 }
-$plot->PPlotEnd();
+$plot->PlotEnd();
 
-$plot->PPlotBegin(0);
+$plot->PlotBegin(0);
 for (my $x=-2; $x<=2; $x+=0.01) {
-  $plot->PPlotAdd($x, cos($x))
+  $plot->PlotAdd($x, cos($x))
 }
-$plot->PPlotEnd();
+$plot->PlotEnd();
 
 $plot->DS_LINEWIDTH(3);
 #$plot->REDRAW("YES");

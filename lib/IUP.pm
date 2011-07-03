@@ -35,7 +35,7 @@ sub import {
                      Hbox Image Item Label LayoutDialog List Menu MessageDlg Normalizer OleControl ProgressBar Radio 
                      Sbox Separator Spin SpinBox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox OleControl/], 
 		     #xxxFIXME add OleControl conditionally
-     ':extended' => [qw/Matrix Cells Canvas CanvasGL PPlot/],
+     ':extended' => [qw/Matrix Cells Canvas CanvasGL Plot/],
                      #xxxFIXME add CanvasGL conditionally
      ':all' => [],
   );  

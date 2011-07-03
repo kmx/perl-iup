@@ -1,4 +1,4 @@
-# IUP::PPlot example
+# IUP::Plot example
 
 use strict;
 use warnings;
@@ -6,7 +6,7 @@ use warnings;
 use IUP ':all';
 use Scalar::Util 'looks_like_number';
 
-#xxxTODO maybe add AxsBounds to IUP::PPlot
+#xxxTODO maybe add AxsBounds to IUP::Plot
 sub AxsBounds {
   my ($self, $axs_xmin, $axs_xmax, $axs_ymin, $axs_ymax) = @_;
   if (defined $axs_xmin) {
@@ -27,17 +27,17 @@ sub AxsBounds {
   }
 }
 
-#xxxTODO maybe add AddSeries to IUP::PPlot
+#xxxTODO maybe add AddSeries to IUP::Plot
 sub AddSeries {
   my ($plot, @values) = @_;
   # are we given strings for the x values?
-  $plot->PPlotBegin(looks_like_number($values[0]->[0]) ? 0 : 1);
-  $plot->PPlotAdd($values[$_]->[0],$values[$_]->[1]) for (0..scalar(@values)-1);
-  $plot->PPlotEnd();
+  $plot->PlotBegin(looks_like_number($values[0]->[0]) ? 0 : 1);
+  $plot->PlotAdd($values[$_]->[0],$values[$_]->[1]) for (0..scalar(@values)-1);
+  $plot->PlotEnd();
 }
 
 
-my $plot = IUP::PPlot->new( TITLE=>"Simple Data", MARGINBOTTOM=>30, MARGINLEFT=>30 );
+my $plot = IUP::Plot->new( TITLE=>"Simple Data", MARGINBOTTOM=>30, MARGINLEFT=>30 );
 AxsBounds($plot, 0,100,0,100);
 AddSeries($plot, [0,0],[10,10],[20,30],[30,45] );
 AddSeries($plot, [40,40],[50,55],[60,60],[70,65] );

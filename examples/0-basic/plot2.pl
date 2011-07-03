@@ -1,4 +1,4 @@
-# IUP::PPlot example
+# IUP::Plot example
 
 use strict;
 use warnings;
@@ -13,15 +13,15 @@ sub create_pplot {
   $args{AXS_YAUTOMAX} = "NO" if defined $args{AXS_YMAX};
   $args{AXS_XAUTOMIN} = "NO" if defined $args{AXS_XMIN};
   $args{AXS_XAUTOMAX} = "NO" if defined $args{AXS_XMAX};
-  return IUP::PPlot->new(%args);  
+  return IUP::Plot->new(%args);  
 }
 
 sub add_series {
   my ($plot, $xvalues, $yvalues, $options) = @_;
   # are we given strings for the x values?
-  $plot->PPlotBegin(looks_like_number($xvalues->[1]) ? 0 : 1);
-  $plot->PPlotAdd($xvalues->[$_],$yvalues->[$_]) for (0..scalar(@$xvalues)-1);
-  $plot->PPlotEnd();
+  $plot->PlotBegin(looks_like_number($xvalues->[1]) ? 0 : 1);
+  $plot->PlotAdd($xvalues->[$_],$yvalues->[$_]) for (0..scalar(@$xvalues)-1);
+  $plot->PlotEnd();
   # set any series-specific plot attributes
   if ($options) {
     # mode must be set before any other attributes!

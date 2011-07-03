@@ -1,0 +1,31 @@
+# IUP::Plot example
+
+use strict;
+use warnings;
+
+use IUP ':all';
+
+my $plot = IUP::Plot->new(
+  TITLE=>"Simple Line",
+  MARGINBOTTOM=>"65",
+  MARGINLEFT=>"65",
+  AXS_XLABEL=>"X",
+  AXS_YLABEL=>"Y",
+  LEGENDSHOW=>"YES",
+  LEGENDPOS=>"TOPLEFT",  
+);
+
+$plot->PlotBegin(0);
+$plot->PlotAdd(0, 0);
+$plot->PlotAdd(1, 0.4);
+$plot->PlotAdd(2, 2);
+$plot->PlotEnd();
+
+# note: DS_nnn attributes have to be set after PlotEnd()
+$plot->DS_LEGEND("test line");
+$plot->DS_LINEWIDTH(2);
+
+my $d = IUP::Dialog->new( child=>$plot, SIZE=>"300x200", TITLE=>"IUP::Plot" );
+$d->Show();
+
+IUP->MainLoop;
