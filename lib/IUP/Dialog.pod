@@ -27,9 +27,9 @@ occurs.
 For more info about concept of attributes (setting/getting values etc.)
 see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
 
-=head3 Common
-
 =over
+
+=head2 Common
 
 =item * B<BACKGROUND >(non inheritable)
 
@@ -141,11 +141,7 @@ L<ZORDER|IUP::Manual::03_Attributes/ZORDER>
 also accepted. Note that ACTIVE,
 BGCOLOR and FONT will also affect all the controls inside the dialog.
 
-=back
-
-=head3 Exclusive
-
-=over
+=head2 Exclusive
 
 =item * B<DEFAULTENTER>
 
@@ -298,11 +294,7 @@ Returns the
 X-Windows Window (Drawable). Available in the Motif driver or in the
 GTK driver in UNIX.
 
-=back
-
-=head3 Exclusive [Windows and GTK Only]
-
-=over
+=head2 Exclusive [Windows and GTK Only]
 
 =item * B<ACTIVEWINDOW> [Windows and GTK Only] (read-only)
 
@@ -347,22 +339,14 @@ the tray icon. (GTK 2.10)
 
 Tray icon's tooltip text. (GTK 2.10)
 
-=back
-
-=head3 Exclusive [GTK Only]
-
-=over
+=head2 Exclusive [GTK Only]
 
 =item * B<DIALOGHINT> (creation-only)
 
 if enabled sets the window type hint to
 a dialog hint.
 
-=back
-
-=head3 Exclusive [Windows Only]
-
-=over
+=head2 Exclusive [Windows Only]
 
 =item * B<BRINGFRONT> [Windows Only] (write-only)
 
@@ -396,11 +380,7 @@ makes the dialog look like a
 toolbar. It is only valid if the PARENTDIALOG or NATIVEPARENT attribute
 is also defined. Default: NO.
 
-=back
-
-=head3 Exclusive MDI [Windows Only]
-
-=over
+=head2 Exclusive MDI [Windows Only]
 
 =item * B<I<--- For the MDI Frame --->>
 
@@ -484,6 +464,8 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 Called right before the dialog
 is closed.
 
+=back
+
 =item * B<COPYDATA_CB> [Windows Only]
 
 Called at the first instance, when a
@@ -506,6 +488,8 @@ SINGLEINSTANCE to be called. (since 3.2)
 
 Action generated when one or more files are dropped in the dialog.
 
+=back
+
 =item * B<MDIACTIVATE_CB> [Windows Only]
 
 Called when a MDI child window is
@@ -516,22 +500,28 @@ when the child is shown for the first time.
 
 =over
 
+=over
+
 =item * B<ih> - identifier of the element that activated the event.
+
+=back
 
 =back
 
 =item * B<MOVE_CB> [Windows and GTK Only]
 
 Called after the dialog was moved on
-screen. The coordinates are the same as the ???xxxTODO
+screen. The coordinates are the same as the
+=back
 
 =item * L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION> attribute. (since
 3.0)
 
- int function(Ihandle *ih, int x, int y); [in C]
- elem trayclick_cb(x, y: number) -> (ret: number) [in Lua]
+ int function(Ihandle *ih, int x, int y); [in C]elem
 
 =over
+
+trayclick_cb(x, y: number) -> (ret: number) [in Lua]
 
 =item * B<ih> - identifier of the element that activated the event.
 
@@ -545,11 +535,15 @@ Action generated when the
 dialog size is changed. If returns IUP_IGNORE the dialog layout is NOT
 recalculated. 
 
+=back
+
 =item * L<SHOW_CB|../call/iup_show_cb.html>
 
 Called right after the dialog is
 showed, hidden, maximized, minimized or restored from
 minimized/maximized.
+
+=back
 
 =item * B<TRAYCLICK_CB> [Windows and GTK Only]
 
@@ -571,8 +565,6 @@ GTK does not get button=2 messages.
 =item * B<dclick> - indicates a double click. In GTK double click is simulated.
 
 Returns: IUP_CLOSE will be processed.
-
-=back
 
 =back
 

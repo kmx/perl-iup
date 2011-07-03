@@ -56,10 +56,6 @@ a factor of 2, holding Ctrl a factor of 10, and both a factor of 100.
 
 =over
 
-=item * xxxTODO
-
-=back
-
 =back
 
 =head1 NOTES

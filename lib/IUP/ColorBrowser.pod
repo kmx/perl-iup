@@ -141,8 +141,6 @@ also be called, it is just called after them.
 
 =back
 
-=back
-
 The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
 
 =over

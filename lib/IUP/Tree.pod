@@ -33,6 +33,8 @@ occurs.
 For more info about concept of attributes (setting/getting values etc.)
 see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
 
+=over
+
 =head2 L<General|iuptree_attrib.html#global>
 
 ADDEXPANDED
@@ -95,7 +97,7 @@ IMAGEEXPANDEDid
 
 =head2 L<Focus Node|iuptree_attrib.html#focus>
 
-VALUE
+=item * B<VALUE>
 
 =head2 L<Marks|iuptree_attrib.html#marks>
 
@@ -137,9 +139,7 @@ SHOWRENAME
 
 =head2 L<Callbacks|iuptree_cb.html>
 
-=over
-
-=item * B<SELECTION_CB>
+B<SELECTION_CB>
 
 Action generated when an node is selected or
 deselected.
@@ -387,9 +387,7 @@ the userid will still be associated with the given node. In IUP::Lua,
 instead of a pointer the same functions are defined for table and
 userdata. These functions use the B<USERDATAid> attribute.
 
-=over
-
-=item * TreeSetUserId()
+----
 
  int IUP::TreeSetUserId(Ihandle *ih, int id, void *userid); [in C]
  iup.TreeSetUserId(ih: ihandle, id: number, userid: userdata/table) [in Lua]
@@ -415,8 +413,6 @@ different nodes (neither in the same nor across different trees.)
 It is similar of setting the B<USERDATAid> attribute, but with the
 additional feature of storing the Lua object in the registry.
 
-=item * TreeGetUserId()
-
  void* IUP::TreeGetUserId(Ihandle *ih, int id); [in C] 
  iup.TreeGetUserId(ih: ihandle, id: number) -> (ret: userdata/table) [in Lua]
 
@@ -431,8 +427,6 @@ the given id.
 It is similar of retrieving the B<USERDATAid> attribute, but the Lua
 object is retrieved from the REGISTRY.
 
-=item * TreeGetId()
-
  int IUP::TreeGetId(Ihandle *ih, void *userid); [in C] 
  iup.TreeGetId(ih: ihandle, userid: userdata/table) -> (ret: number) [in Lua]
 
@@ -443,7 +437,9 @@ B<userid>: Pointer or Lua table associated to the node.
 Returns the id of the node that has the userid on success or -1 (nil)
 if not found. B<SetUserId> must have been called with the same userid.
 
-=item * TreeAddNodes()
+----
+
+Here are some utilities exclusive for Lua.
 
  iup.TreeAddNodes(ih: ihandle, tree: table, [id: number]) [in Lua]
 
@@ -494,8 +490,6 @@ B<imageexpanded>; without specifying the node id. You can also use
 B<userid> to associate an userdata or table just like in B<
 iup.TreeSetUserId>. 
 
-=item * TreeSetNodeAttributes()
-
  iup.TreeSetNodeAttributes(ih: ihandle, id: number, attrs: table) [in Lua]
 
 B<ih>: Identifier of the interface element.
@@ -506,8 +500,6 @@ B<tree>: table of attributes.
 
 Sets a group of attributes stored in a table in the form attrs = {name
 = value, ...}.
-
-=item * TreeSetAncestorsAttributes()
 
  iup.TreeSetAncestorsAttributes(ih: ihandle, id: number, attrs: table) [in Lua]
 
@@ -520,8 +512,6 @@ B<tree>: table of attributes.
 Calls B<iup.TreeSetNodeAttributes> for all ancestors of the given node
 (not including the node).
 
-=item * TreeSetDescentsAttributes()
-
  iup.TreeSetDescentsAttributes(ih: ihandle, id: number, attrs: table) [in Lua]
 
 B<ih>: Identifier of the interface element.
@@ -532,8 +522,6 @@ B<tree>: table of attributes.
 
 Calls B<iup.TreeSetNodeAttributes> for all descendents of the given
 node (not including the node).
-
-=back
 
 =head2 Utility Functions
 
