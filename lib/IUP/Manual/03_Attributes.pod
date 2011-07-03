@@ -16,9 +16,9 @@ IUP::Manual::03_Attributes - Attribute concept, using attributes, common + globa
 
 =item * L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>
 
-=item * L<IUP::Manual::05_HandlingKeyboard|IUP::Manual::05_HandlingKeyboard>
+=item * L<IUP::Manual::06_HandlingKeyboard|IUP::Manual::06_HandlingKeyboard>
 
-=item * L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout>
+=item * L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>
 
 =back
 
@@ -156,7 +156,7 @@ pixels.
 
 =item B<CLIENTOFFSET> (read-only, non inheritable)
 
-Returns the container offset to the B<Client> area, see the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout>.
+Returns the container offset to the B<Client> area, see the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>.
 Useful for L<IUP::Frame|IUP::Frame>, L<IUP::Tabs|IUP::Tabs> and
 L<IUP::Dialog|IUP::Dialog> that have decorations. Can also be consulted in other
 containers, it will return "0x0". For controls that have a native
@@ -186,7 +186,7 @@ L<CLIENTSIZE|/CLIENTSIZE>, L< POSITION|iup_position.html>
 =item B<CLIENTSIZE> (read-only**, non inheritable)
 
 Returns the container B<Current> size, in pixels, excluding the
-decorations, i.e. the size of the B<Client> area, see the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout>.
+decorations, i.e. the size of the B<Client> area, see the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>.
 Useful for L<IUP::Frame|IUP::Frame>, L<IUP::Tabs|IUP::Tabs> and
 L<IUP::Dialog|IUP::Dialog> that have decorations. Can also be consulted in other
 containers, it will return the B<Current> size. For controls that have
@@ -220,7 +220,7 @@ value if not defined at the child itself.
 The expansion is done equally for all expandable elements in the same
 container.
 
-See the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout> for more details on sizes.
+See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for more details on sizes.
 
 B<Value:> "YES" (both directions), "HORIZONTAL", "VERTICAL" or "NO".
 
@@ -454,7 +454,7 @@ before setting the FONT attribute.
 
 Specifies the element maximum size in pixels during the layout process.
 
-See the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout> for more details on sizes.
+See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for more details on sizes.
 
 B<Value:> C<< "<width>x<height>" >>, where C<< <width> >> and C<< <height> >> are integer
 values corresponding to the horizontal and vertical size, respectively, in
@@ -478,7 +478,7 @@ Natural size and the Current size.
 If the element can be expanded, then its empty space will NOT be
 occupied by other controls although its size will be limited.
 
-See the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout> for mode details on sizes.
+See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for mode details on sizes.
 
 B<See Also:> L<RASTERSIZE|/RASTERSIZE>, L< MINSIZE|iup_minsize.html>
 
@@ -486,7 +486,7 @@ B<See Also:> L<RASTERSIZE|/RASTERSIZE>, L< MINSIZE|iup_minsize.html>
 
 Specifies the element minimum size in pixels during the layout process.
 
-See the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout> for more details on sizes.
+See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for more details on sizes.
 
 B<Value:> C<< "<width>x<height>" >>, where C<< <width> >> and C<< <height> >> are integer
 values corresponding to the horizontal and vertical size, respectively, in
@@ -510,7 +510,7 @@ Natural size and the Current size.
 If the element can be expanded, then its empty space will NOT be
 occupied by other controls although its size will be limited.
 
-See the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout> for mode details on sizes.
+See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for mode details on sizes.
 
 B<See Also:> L<RASTERSIZE|/RASTERSIZE>, L< MAXSIZE|iup_maxsize.html>
 
@@ -536,7 +536,7 @@ B<See Also:> L<IUP::GetDialogChild|IUP::GetDialogChild>
 The position of the element relative to the origin of the B<Client>
 area of the native parent. If you add the CLIENTOFFSET attribute of the
 native parent, you can obtain the coordinates relative to the B<Window>
-area of the native parent. See the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout>.
+area of the native parent. See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>.
 
 It is normally read-only, but if FLOATING=YES then it can be set.
 
@@ -554,7 +554,7 @@ L<FLOATING|/FLOATING>, L<CLIENTOFFSET|/CLIENTOFFSET>
 Specifies the element B<User> size, and returns the B<Current> size, in
 pixels.
 
-See the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout> for more details on sizes.
+See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for more details on sizes.
 
 B<Value:> C<< "<width>x<height>" >>, where C<< <width> >> and C<< <height> >> are integer
 values corresponding to the horizontal and vertical size, respectively, in
@@ -589,7 +589,7 @@ L<IUP::Map|IUP::Map> also updates the dialog layout even if it is already mapped
 so calling it or calling L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup>
 (they all call L<IUP::Map|IUP::Map>) will also update the dialog layout.
 
-See the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout> for mode details on sizes.
+See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for mode details on sizes.
 
 B<See Also:> L<SIZE|/SIZE>, L<FONT|/FONT>
 
@@ -598,7 +598,7 @@ B<See Also:> L<SIZE|/SIZE>, L<FONT|/FONT>
 Specifies the element B<User> size, and returns the B<Current> size, in
 units proportional to the size of a character.
 
-See the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout> for more details on sizes.
+See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for more details on sizes.
 
 B<Value:> C<< "<width>x<height>" >>, where C<< <width> >> and C<< <height> >> are integer
 values corresponding to the horizontal and vertical size, respectively, in
@@ -658,7 +658,7 @@ L<IUP::Map|IUP::Map> also updates the dialog layout even if it is already mapped
 so calling it or calling L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup>
 (they all call L<IUP::Map|IUP::Map>) will also update the dialog layout.
 
-See the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout> for mode details on sizes.
+See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for mode details on sizes.
 
 B<Affects:> All, except menus.
 
@@ -1298,7 +1298,7 @@ If this attribute is defined, the elements inside the dialog will try
 to adjust their sizes even when the dialog's size is smaller than its
 natural size.
 
-See the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout> for more details on sizes.
+See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for more details on sizes.
 
 B<Value:> "YES" or "NO".
 
@@ -1321,7 +1321,7 @@ the elements continue to rearrange, even if they must overlap.
 The results of this new rearrangement may vary according to the
 elements' distribution on the dialog.
 
-See the L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout> for more details on sizes.
+See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for more details on sizes.
 
 B<Affects:> L<IUP::Dialog|IUP::Dialog>
 

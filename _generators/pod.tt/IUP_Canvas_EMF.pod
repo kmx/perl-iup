@@ -1,0 +1,15 @@
+=pod
+
+[% h.name %]
+
+IUP::Canvas::EMF
+
+xxxTODO
+
+[% h.desc %] 
+
+[% h.usage %]
+
+[% h.see %]
+
+=cut

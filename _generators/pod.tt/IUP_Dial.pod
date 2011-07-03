@@ -1,0 +1,211 @@
+[% h.name %]
+
+[% n.iupdial %]
+
+[% h.desc %]
+
+Creates a dial for regulating a given angular variable.
+
+This is an additional control that depends on the CD library. It is
+included in the L<Controls Library|../iupcontrols.html>.
+
+It inherits from L<IUP::Canvas|IUP::Canvas>.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::Dial(const char *orientation); [in C]
+ iup.dial{orientation: string} -> (elem: ihandle) [in Lua]
+ dial(orientation) [in LED] 
+
+B<orientation>: optional dial orientation, can be NULL. See ORIENTATION
+attribute.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * B<DENSITY>
+
+number of lines per pixel in the handle of the dial.
+Default is "0.2".
+
+=item * L<EXPAND|[%m.at%]/EXPAND>
+
+the default is "NO".
+
+=item * L<FGCOLOR|[%m.at%]/FGCOLOR>
+
+foreground color. The default
+value is "64 64 64". Not used for the circular dial.
+
+=item * L<SIZE|[%m.at%]/SIZE> (non inheritable)
+
+the initial size is
+"16x80", "80x16" or "40x35" according to the dial orientation. Set to
+NULL to allow the automatic layout use smaller values.
+
+=item * B<ORIENTATION> (creation only) (non inheritable)
+
+dial layout
+configuration "VERTICAL", "HORIZONTAL" or "CIRCULAR". Default:
+"HORIZONTAL".
+
+=item * B<UNIT>
+
+unit of the angle. Can be "DEGREES" or "RADIANS". Default is
+"RADIANS". Used only in the callbacks.
+
+=item * B<VALUE >(non inheritable)
+
+The dial angular value in radians. The
+value is reset to zero when the interaction is started, except for
+ORIENTATION=CIRCULAR. When orientation is vertical or horizontal, the
+dial measures relative angles. When orientation is circular the dial
+measure absolute angles, where the origin is at 3 O'clock.
+
+=back
+
+[%txt.at_common%]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<BGCOLOR|[%m.at%]/BGCOLOR>, L<FONT|[%m.at%]/FONT>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>, L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+also accepted.
+
+=back
+
+[% h.cb %]
+
+[%txt.cb_intro%]
+
+=over
+
+=item * B<BUTTON_PRESS_CB>
+
+Called when the user presses the left mouse button
+over the dial. The angle here is always zero, except for the circular
+dial.
+
+ int function(Ihandle *ih, double angle)
+ elem:button_press_cb(angle: number) -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+=item * B<angle> - the dial value converted according to UNIT.
+
+=back
+
+=item * B<BUTTON_RELEASE_CB>
+
+Called when the user releases the left mouse
+button after pressing it over the dial.
+
+ int function(Ihandle *ih, double angle)
+ elem:button_release_cb(angle: number) -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+=item * B<angle> - the dial value converted according to UNIT.
+
+=back
+
+=item * B<MOUSEMOVE_CB>
+
+Called each time the user moves the dial with the
+mouse button pressed. The angle the dial rotated since it was
+initialized is passed as a parameter.
+
+ int function(Ihandle *ih, double angle); [in C]
+ elem:mousemove_cb(angle: number) -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+=item * B<angle> - the dial value converted according to UNIT.
+
+=back
+
+=item * B<VALUECHANGED_CB>
+
+Called after the value was interactively changed by
+the user. It is called whenever a B<BUTTON_PRESS_CB>, a ???xxxTODO
+
+=item * B<BUTTON_RELEASE_CB> or aB< MOUSEMOVE_CB> would also be called, but if
+defined those callbacks will not be called. 
+
+ int function(Ihandle *ih); [in C]
+ elem valuechanged_cb() -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+=back
+
+=back
+
+[%txt.cb_common%]
+
+=over
+
+=item * L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>,
+L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
+L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
+L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
+
+All common callbacks are supported.
+
+=back
+
+[% h.notes %]
+
+When the keyboard arrows are pressed and released the mouse press and
+the mouse release callbacks are called in this order. If you hold the
+key down the mouse move callback is also called for every repetition.
+
+When the wheel is rotated only the mouse move callback is called, and
+it increments the last angle the dial was rotated.
+
+In all cases the value is incremented or decremented by PI/10 (18
+degrees).
+
+If you press Shift while using the arrow keys the increment is reduced
+to PI/100 (1.8 degrees). Press the Home key in the circular dial to
+reset to 0. 
+
+[% h.examples %]
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+[% h.see %]
+
+L<IUP::Canvas|IUP::Canvas>
+
+=cut

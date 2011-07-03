@@ -1,0 +1,164 @@
+[% h.name %]
+
+[% n.iupprogressbar %]
+
+[% h.desc %] 
+
+Creates a progress bar control. Shows a percent value that can be
+updated to simulate a progression.
+
+It is similar of L<IUP::Gauge|IUP::Gauge>, but uses native controls internally. Also
+does not have support for text inside the bar.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::ProgressBar(void); [in C]
+ iup.progressbar{} -> (elem: ihandle) [in Lua]
+ progressbar() [in LED] 
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * L<BGCOLOR|[%m.at%]/BGCOLOR> [Windows Classic and Motif only]
+
+controls the background color. Default: the global attribute
+DLGBGCOLOR.
+
+=item * B<DASHED> (creation only in Windows) [Windows and GTK only]
+
+Changes
+the style of the progress bar for a dashed pattern. Default is "NO".
+
+=item * L<FGCOLOR|[%m.at%]/FGCOLOR> [Windows Classic and Motif only]
+
+Controls the bar color. Default: the global attribute DLGFGCOLOR.
+
+=item * B<MARQUEE> (creation)
+
+displays an undefined state. Default: NO. You
+can set the attribute after map but only to start or stop the
+animation.
+
+=item * B<MAX >(non inheritable)
+
+Contains the maximum value. Default is "1".
+The control display is not updated, must set VALUE attribute to update.
+
+=item * B<MIN >(non inheritable)
+
+Contains the minimum value. Default is "0".
+The control display is not updated, must set VALUE attribute to update.
+
+=item * B<ORIENTATION> (creation only)
+
+can be "VERTICAL" or "HORIZONTAL".
+Default: "HORIZONTAL". Horizontal goes from left to right, and vertical
+from bottom to top.
+
+=item * L<RASTERSIZE|[%m.at%]/RASTERSIZE>
+
+The initial size is
+defined as "200x30". Set to NULL to allow the use of smaller values in
+the layout computation.
+
+=item * B<VALUE >(non inheritable)
+
+Contains a number between "MIN" and "MAX",
+controlling the current position.
+
+=back
+
+[%txt.at_common%]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<EXPAND|[%m.at%]/EXPAND>, L<FONT|[%m.at%]/FONT>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>, L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>, L<SIZE|[%m.at%]/SIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+also accepted.
+
+=back
+
+[% h.cb %]
+
+[%txt.cb_intro%]
+
+=over
+
+=item * L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>
+
+common callbacks are supported.
+
+=back
+
+[% h.examples %]
+
+L<Browse for Example Files|../../examples/>
+
+DASHED=NO
+
+DASHED=YES
+
+MARQUEE=YES
+
+Motif
+
+[IMAGE]
+
+(same as DASHED=NO)
+
+[IMAGE]
+
+Windows Classic
+
+[IMAGE]
+
+[IMAGE]
+
+(same as DASHED)
+
+Windows w/ Styles
+
+(same as DASHED=YES)
+
+[IMAGE]
+
+[IMAGE]
+
+Windows Vista
+
+[IMAGE]
+
+(same as DASHED=NO)
+
+[IMAGE]
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[% h.see %]
+
+L<IUP::Gauge|IUP::Gauge>
+
+=cut

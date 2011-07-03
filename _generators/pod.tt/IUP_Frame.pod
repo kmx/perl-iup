@@ -1,0 +1,153 @@
+[% h.name %]
+
+[% n.iupframe %]
+
+[% h.desc %]
+
+Creates a Frame interface element, which draws a frame with a title
+around an interface element.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::Frame(Ihandle *child); [in C]
+ iup.frame{child: ihandle} -> (elem: ihandle) [in Lua]
+ frame(child) [in LED]
+
+B<child>: Identifier of an interface element which will receive the
+frame around. It can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * L<BGCOLOR|[%m.at%]/BGCOLOR>
+
+ignored, transparent in all
+systems. Will use the background color of the native parent. Except if
+TITLE is not defined and BGCOLOR is defined before map (can be changed
+later), then the frame will have a color background.
+
+=item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+
+The default
+value is "YES".
+
+=item * L<FGCOLOR|[%m.at%]/FGCOLOR>
+
+Text title color. Not available
+in Windows when using Windows Visual Styles. Default: the global
+attribute DLGFGCOLOR.
+
+=item * B<SUNKEN> (creation only)
+
+When not using a title, the frame line
+defines a sunken area (lowered area). Valid values: YES or NOI<.>
+Default: NO.
+
+=item * L<TITLE|[%m.at%]/TITLE> (non inheritable)
+
+Text the user will
+see at the top of the frame. If not defined during creation it can not
+be added lately, to be changed it must be at least "" during creation.
+
+=back
+
+[%txt.at_common%]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>, L<FONT|[%m.at%]/FONT>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<CLIENTSIZE|[%m.at%]/CLIENTSIZE>,
+L<CLIENTOFFSET|[%m.at%]/CLIENTOFFSET>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>, L<WID|[%m.at%]/WID>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+also accepted.
+
+=back
+
+[% h.cb %]
+
+[%txt.cb_intro%]
+
+=over
+
+=item * L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>
+
+common callbacks are supported.
+
+=back
+
+[% h.notes %]
+
+In Windows, a Frame with TITLE==NULL is not the same control as then
+TITLE!=NULL. When TITLE==NULL it does not have Visual Styles and uses a
+sharp rectangle border. When TITLE!=NULL it has Visual Styles and the
+border is a rounded rectangle. To always use Visual Styles set the
+title to "" before mapping, but be aware that a vertical space for the
+title will be always reserved at the top border.
+
+The frame can be created with no elements and be dynamic filled using
+L<IUP::Append|IUP::Append> or
+L<IUP::Insert|IUP::Insert>.
+
+[% h.examples %]
+
+L<Browse for Example Files|../../examples/>
+
+  frame1 = IUP::Frame
+          (
+            IUP::Vbox
+            (
+              IUP::Label("Label1"),
+              IUP::Label("Label2"), 
+              IUP::Label("Label3"),
+              NULL
+            )
+          );
+ 
+  frame2 = IUP::Frame
+          (
+            IUP::Vbox
+            (
+              IUP::Label("Label4"), 
+              IUP::Label("Label5"),
+              IUP::Label("Label6"),
+              NULL
+            )
+          );
+ 
+  IUP::SetAttribute(frame1, "TITLE", "Title Text");
+  IUP::SetAttribute(frame2, "SUNKEN", "YES");
+
+Windows 2000
+
+[IMAGE]
+
+Windows XP
+
+[IMAGE]
+
+Motif
+
+[IMAGE]
+
+GTK
+
+[IMAGE]
+
+=cut

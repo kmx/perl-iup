@@ -42,7 +42,7 @@ On all platform it uses native GUI widgets.
 
 =end html
 
-B<Source code:> see L<sample.pl|https://github.com/kmx/perl-iup/tree/master/examples/sample.pl>
+B<Source code:> see L<sample.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples//sample.pl>
 
 =head2 IUP's Strengths
 
@@ -99,8 +99,8 @@ they are handled by separate L<Alien::IUP|Alien::IUP> module.
 
 At this point we show just basic ideas behind IUP based GUI applications.
 For more details see L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>.
-Or if you wanna skip the theory you can go directly to L<examples|https://github.com/kmx/perl-iup/tree/master/examples>
-directory of IUP distribution or look at L<IUP::Manual::07_Examples|IUP::Manual::07_Examples>.
+Or if you wanna skip the theory you can go directly to L<examples|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/>
+directory of IUP distribution or look at L<IUP::Manual::09_Examples|IUP::Manual::09_Examples>.
 
 =head3 Simple GUI Dialogs
 
@@ -278,7 +278,7 @@ L<IUP::MessageDlg|IUP::MessageDlg>.
 =end html
 
 The main GUI element (the main application window) is always
-L<IUP::Dialog|IUP::Dialog> - for more info see L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout>.
+L<IUP::Dialog|IUP::Dialog> - for more info see L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>.
 
 =head1 USING IUP
 
@@ -1642,7 +1642,7 @@ parameter, then use this reference on the calls to IUP element methods - for exa
 B<See Also:>
 L<SetName|IUP::Manual::02_Elements/"SetName()"> (element method),
 L<LoadLED|/"LoadLED"> (global function),
-L<IUP::Manual::06_UsingLED|IUP::Manual::06_UsingLED>.
+L<IUP::Manual::08_UsingLED|IUP::Manual::08_UsingLED>.
 
 =back
 

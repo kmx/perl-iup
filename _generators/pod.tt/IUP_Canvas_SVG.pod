@@ -1,0 +1,15 @@
+=pod
+
+[% h.name %]
+
+IUP::Canvas::SVG
+
+xxxTODO
+
+[% h.desc %] 
+
+[% h.usage %]
+
+[% h.see %]
+
+=cut

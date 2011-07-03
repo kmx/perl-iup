@@ -1,0 +1,137 @@
+[% h.name %]
+
+[% n.iupmessagedlg %]
+
+[% h.desc %] 
+
+Creates the Message Dialog element. It is a predefined dialog for
+displaying a message. The dialog can be shown with the IUP::Popup
+function only.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::MessageDlg(void); [in C]
+ iup.messagedlg{} -> (elem: ihandle) [in Lua]
+ messagedlg() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * B<BUTTONDEFAULT>
+
+Number of the default button. Can be "1" or "2". "2"
+is valid only for "OKCANCEL" and "YESNO" button configurations.
+Default: "1".
+
+=item * B<BUTTONRESPONSE>
+
+Number of the pressed button. Can be "1" or "2".
+Default: "1".
+
+=item * B<BUTTONS>
+
+Buttons configuration. Can have values: "OK", "OKCANCEL" or
+"YESNO". Default: "OK". Additionally the "Help" button is displayed if
+the HELP_CB callback is defined.
+
+=item * B<DIALOGTYPE>
+
+Type of dialog defines which icon will be displayed
+besides the message text. Can have values: "MESSAGE" (No Icon), "ERROR"
+(Stop-sign), "WARNING" (Exclamation-point), "QUESTION" (Question-mark)
+or "INFORMATION" (Letter "i"). Default: "MESSAGE".
+
+=item * L<PARENTDIALOG|[%m.at%]/PARENTDIALOG> (creation only)
+
+Name
+of a dialog to be used as parent. This dialog will be always in front
+of the parent dialog. If not defined in Motif the dialog could not be
+modal.
+
+=item * L<TITLE|[%m.at%]/TITLE>
+
+Dialog title.
+
+=item * B<VALUE>
+
+Message text.
+
+=back
+
+[% h.cb %]
+
+[%txt.cb_intro%]
+
+=over
+
+=item * L<HELP_CB|../call/iup_help_cb.html>
+
+Action generated when the Help
+button is pressed.
+
+=back
+
+[% h.notes %]
+
+The L<IUP::MessageDlg|IUP::MessageDlg> is a native pre-defined dialog not altered by
+L<IUP::SetLanguage|IUP::SetLanguage>.
+
+To show the dialog, use function L<IUP::Popup|IUP::Popup>. In Lua, use the B<popup>
+function.
+
+The dialog is mapped only inside L<IUP::Popup|IUP::Popup>, L<IUP::Map|IUP::Map> does nothing.
+
+In Windows the position (x,y) used in L<IUP::Popup|IUP::Popup> is ignored and the
+dialog is always centered on screen.
+
+The L<IUP::Message|IUP::Message> function simply creates and popup a L<IUP::MessageDlg|IUP::MessageDlg>.
+
+In Windows each different dialog type is always associated with a
+different beep sound.
+
+In Windows, if PARENTDIALOG is specified then it will be modal relative
+only to its parent.
+
+[% h.examples %]
+
+ Ihandle* dlg = IUP::MessageDlg();
+ 
+ IUP::SetAttribute(dlg, "DIALOGTYPE", "WARNING");
+ IUP::SetAttribute(dlg, "TITLE", "IUP::MessageDlg Test");
+ IUP::SetAttribute(dlg, "BUTTONS", "OKCANCEL");
+ IUP::SetAttribute(dlg, "VALUE", "Message Text\nSecond Line");
+ IUP::SetCallback(dlg, "HELP_CB", (Icallback)help_cb);
+ 
+ IUP::Popup(dlg, IUP_CURRENT, IUP_CURRENT);
+ 
+ printf("BUTTONRESPONSE(%s)\n", IUP::GetAttribute(dlg, "BUTTONRESPONSE"));
+ 
+ IUP::Destroy(dlg);  
+
+Windows XP
+
+[IMAGE]
+
+Motif/Mwm
+
+[IMAGE]
+
+GTK/GNOME
+
+[IMAGE]
+
+[% h.see %]
+
+L<IUP::Message|IUP::Message>, L<IUP::Scanf|IUP::Scanf>,
+L<IUP::ListDialog|IUP::ListDialog>, L<IUP::Alarm|IUP::Alarm>,
+L<IUP::GetFile|IUP::GetFile>, L<IUP::Popup|IUP::Popup>
+
+=cut

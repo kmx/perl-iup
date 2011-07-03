@@ -1,3 +1,5 @@
+=pod
+
 =head1 NAME
 
 IUP::Cbox - [GUI element] container for position elements in absolute coordinates
@@ -18,16 +20,35 @@ POSITION attribute.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Cbox(Ihandle* child, ...); [in C]
- Ihandle* IUP::Cboxv(Ihandle** children); [in C]
- iup.cbox{child, ...: ihandle} -> (elem: ihandle) [in Lua]
- cbox(child, ...) [in LED]
+ #standard way
+ my $cbox = IUP::Cbox->new( child=>[$elem1, $elem2], XXX=>XXX );
+ 
+ #or with just a single child
+ my $cbox = IUP::Cbox->new( child=>$elem, XXX=>XXX );
+ 
+ #or with just 1 parameter (arrayref)
+ my $cbox = IUP::Cbox->new( [$elem1, $elem2] );
+ 
+ #or with just 1 parameter (reference to child elements)
+ my $cbox = IUP::Cbox->new( $elem );
 
-B<child>, ... : List of the identifiers that will be placed in the box.
-NULL must be used to define the end of the list in C. It can be empty.
+=over 
 
-Returns: the identifier of the created element, or NULL if an error
+B<child:> (named parameter) List of the references to elements (or just a single element) that 
+will be placed in the box. It can be ommited (see note below).
+
+B<Returns:> The reference to the created element, or C<udnef> if an error
 occurs.
+
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+NOTE: IUP::Cbox can be created with no elements (no child params passed to C<new()> constructor)
+and be dynamic filled later using
+L<C<< $element->Append() >>|IUP::Manual::02_Elements/"Append()"> and/or
+L<C<< $element->Insert() >>|IUP::Manual::02_Elements/"Insert()"> methods.
+
+=back
 
 =head2 ATTRIBUTES
 
@@ -71,22 +92,23 @@ L<POSITION|IUP::Manual::03_Attributes/POSITION>,
 L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
 L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>
 
-also accepted.
-
 =back
-
-=head1 NOTES
-
-The box can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or
-L<IUP::Insert|IUP::Insert>.
 
 =head1 EXAMPLES
 
-L<Browse for Example Files|../../examples/>
+
+The element B<IUP::Cbox> is used in the following sample scripts:
+
+=over
+
+=item * L<0-basic/cbox.pl|0-basic/cbox.pl> - IUP::Cbox example
+
+=back 
+
+
 
 =head1 SEE ALSO
 
-L<IUP::Vbox|IUP::Vbox>, L< IUP::Hbox|iuphbox.html>
+L<IUP::Vbox|IUP::Vbox>, L<IUP::Hbox|IUP::Hbox>
 
 =cut

@@ -16,9 +16,9 @@ IUP::Manual::04_Callbacks - Common callbacks, reference guide
 
 =item * IUP::Manual::04_Callbacks E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
 
-=item * L<IUP::Manual::05_HandlingKeyboard|IUP::Manual::05_HandlingKeyboard>
+=item * L<IUP::Manual::06_HandlingKeyboard|IUP::Manual::06_HandlingKeyboard>
 
-=item * L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout>
+=item * L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>
 
 =back
 

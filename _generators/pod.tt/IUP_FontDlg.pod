@@ -1,0 +1,128 @@
+[% h.name %]
+
+[% n.iupfontdlg %]
+
+[% h.desc %] 
+
+Creates the Font Dialog element. It is a predefined dialog for
+selecting a font. The dialog can be shown with the L<IUP::Popup|IUP::Popup> function
+only.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::FontDlg(void); [in C]
+ iup.fontdlg{} -> (elem: ihandle) [in Lua]
+ fontdlg() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * B<PREVIEWTEXT> [GTK and Motif only]
+
+the text shown in the preview
+area. If not defined the system will provide a default text.
+
+=item * B<COLOR> [Windows Only]
+
+The initial color value and the returned
+selected value if the user pressed the Ok button. In Windows the Choose
+Font dialog allows the user to select a color from a pre-defined list
+of colors.
+
+=item * L<PARENTDIALOG|[%m.at%]/PARENTDIALOG> (creation only)
+
+Name
+of a dialog to be used as parent. This dialog will be always in front
+of the parent dialog.
+
+=item * B<STATUS> (read-only)
+
+defined to "1" if the user pressed the Ok
+button, NULL if pressed the Cancel button.
+
+=item * L<TITLE|[%m.at%]/TITLE>
+
+Dialog title.
+
+=item * B<VALUE>
+
+The initial font value and the returned selected value if the
+user pressed the Ok button. Has the same format of the
+L<FONT|[%m.at%]/FONT> attribute.
+
+=back
+
+[% h.cb %]
+
+[%txt.cb_intro%]
+
+=over
+
+=item * L<HELP_CB|../call/iup_help_cb.html>
+
+Action generated when the Help
+button is pressed.
+
+=back
+
+[% h.notes %]
+
+The L<IUP::FontDlg|IUP::FontDlg> is a native pre-defined dialog not altered by
+L<IUP::SetLanguage|IUP::SetLanguage>.
+
+To show the dialog, use function L<IUP::Popup|IUP::Popup>. In Lua, use the B<popup>
+function.
+
+The dialog is mapped only inside L<IUP::Popup|IUP::Popup>, L<IUP::Map|IUP::Map> does nothing.
+
+In Windows, the dialog will be modal relative only to its parent or to
+the active dialog.
+
+[% h.examples %]
+
+ Ihandle* dlg = IUP::FontDlg();
+ 
+ IUP::SetAttribute(dlg, "COLOR", "128 0 255");
+ IUP::SetAttribute(dlg, "VALUE", "Times New Roman, Bold 20");
+ IUP::SetAttribute(dlg, "TITLE", "IUP::FontDlg Test");
+ IUP::SetCallback(dlg, "HELP_CB", (Icallback)help_cb);
+ 
+ IUP::Popup(dlg, IUP_CURRENT, IUP_CURRENT);
+ 
+ if (IUP::GetInt(dlg, "STATUS"))
+ {
+   printf("OK\n");
+   printf("  VALUE(%s)\n", IUP::GetAttribute(dlg, "VALUE"));
+   printf("  COLOR(%s)\n", IUP::GetAttribute(dlg, "COLOR"));
+ }
+ else
+   printf("CANCEL\n");
+ 
+ IUP::Destroy(dlg); 
+
+Windows XP
+
+[IMAGE]
+
+GTK/GNOME
+
+[IMAGE]
+
+Motif/MWM
+
+[IMAGE]
+
+[% h.see %]
+
+L<IUP::MessageDlg|IUP::MessageDlg>, L<IUP::FileDlg|IUP::FileDlg>,
+L<IUP::Popup|IUP::Popup>
+
+=cut

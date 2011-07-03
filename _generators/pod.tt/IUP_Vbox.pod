@@ -1,0 +1,173 @@
+[% h.name %]
+
+[% n.iupvbox %]
+
+[% h.desc %]
+
+Creates a void container for composing elements vertically. It is a box
+that arranges the elements it contains from top to bottom.
+
+It does not have a native representation.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::Vbox(Ihandle *child, ...); [in C]
+ Ihandle* IUP::Vboxv(Ihandle **children); [in C]
+ iup.vbox{child, ...: ihandle} -> (elem: ihandle) [in Lua]
+ vbox(child, ...) [in LED]
+
+B<child>, ... : List of the identifiers that will be placed in the box.
+NULL must be used to define the end of the list in C. It can be empty.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * B<ALIGNMENT> (non inheritable)
+
+Horizontally aligns the elements.
+Possible values: "ALEFT", "ACENTER", "ARIGHT". Default: "ALEFT".
+
+=item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable*)
+
+The default
+value is "YES". See the documentation of the attribute for EXPAND
+inheritance.
+
+=item * B<EXPANDCHILDREN> (non inheritable)
+
+forces all children to expand
+horizontally. Default: "NO". This has the same effect as setting
+EXPAND=HORIZONTAL on each child, but their vertical expansion will be
+preserved. 
+
+=item * B<EXPANDWEIGHT> (non inheritable) B<(at children only)>
+
+If a child
+defines the expand weight, then it is used to multiply the free space
+used for expansion. (since 3.1)
+
+=item * L<FLOATING|[%m.at%]/FLOATING> (non inheritable) B<(at
+children only)>
+
+If a child has FLOATING=YES then its size and position
+will be ignored by the layout processing. Default: "NO". 
+
+=item * B<GAP, CGAP>
+
+Defines a vertical space in pixels between the children,
+=item * B<CGAP> is in the same units of the B<SIZE> attribute for the height.
+Default
+
+"0". (CGAP since 3.0)
+
+=item * B<NGAP, NCGAP> (non inheritable)
+
+Same as B< GAP> but are non
+inheritable. 
+
+=item * B<HOMOGENEOUS> (non inheritable)
+
+forces all children to get equal
+vertical space. The natural size height will be based on the highest
+child. Default: "NO". Notice that this does not changes the children
+size, only the available space for each one of them to expand. (since
+3.0)
+
+=item * B<MARGIN, CMARGIN>
+
+Defines a margin in pixels, B<CMARGIN >is in the
+same units of the B< SIZE> attribute. Its value has the format
+"I<width>xI<height>", where I< width> and I<height> are integer values
+corresponding to the horizontal and vertical margins, respectively.
+Default: "0x0" (no margin). (CMARGIN since 3.0)
+
+=item * B<NMARGIN, NCMARGIN> (non inheritable)
+
+Same as B<MARGIN> but are non
+inheritable. 
+
+=item * B<NORMALIZESIZE> (non inheritable)
+
+normalizes all children natural
+size to be the biggest natural size among them. All natural width will
+be set to the biggest width, and all natural height will be set to the
+biggest height according to is value. Can be NO, HORIZONTAL, VERTICAL
+or BOTH. Default: "NO". 
+
+=item * L<SIZE|[%m.at%]/SIZE> /
+L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
+
+Defines
+the height of the box. When consulted behaves as the standard
+SIZE/RASTERSIZE attributes. The standard format "wxh" can also be used,
+but width will be ignored (since 3.3).
+
+=item * B<WID> (read-only)
+
+returns -1 if mapped.
+
+=back
+
+[%txt.at_common%]
+
+=over
+
+=item * L<FONT|[%m.at%]/FONT>,
+L<CLIENTSIZE|[%m.at%]/CLIENTSIZE>,
+L<CLIENTOFFSET|[%m.at%]/CLIENTOFFSET>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>
+
+also accepted.
+
+=back
+
+[% h.notes %]
+
+The box can be created with no elements and be dynamic filled using
+L<IUP::Append|IUP::Append> or
+L<IUP::Insert|IUP::Insert>.
+
+The box will NOT expand its children, it will allow its children to
+expand according to the space left in the box parent. So for the
+expansion to occur, the children must be expandable with EXPAND!=NO,
+and there must be room in the box parent.
+
+[% h.examples %]
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+[IMAGE]
+
+HOMOGENEOUS=YES
+
+[IMAGE]
+
+EXPANDCHILDREN=YES
+
+[IMAGE]
+
+VISIBLE=NO
+
+[IMAGE]
+
++FLOATING=NO
+
+[IMAGE]
+
+[% h.see %]
+
+L<IUP::Zbox|IUP::Zbox>, L<IUP::Hbox|IUP::Hbox>
+
+=cut

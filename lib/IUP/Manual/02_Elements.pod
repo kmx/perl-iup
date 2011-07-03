@@ -16,9 +16,9 @@ IUP::Manual::Elements - Manuals element guide
 
 =item * L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>
 
-=item * L<IUP::Manual::05_HandlingKeyboard|IUP::Manual::05_HandlingKeyboard>
+=item * L<IUP::Manual::06_HandlingKeyboard|IUP::Manual::06_HandlingKeyboard>
 
-=item * L<IUP::Manual::06_DialogLayout|IUP::Manual::06_DialogLayout>
+=item * L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>
 
 =back
 

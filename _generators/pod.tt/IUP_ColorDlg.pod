@@ -1,0 +1,181 @@
+[% h.name %]
+
+[% n.iupcolordlg %]
+
+[% h.desc %] 
+
+Creates the Color Dialog element. It is a predefined dialog for
+selecting a color.
+
+There are 3 versions of the dialog. One for Windows only, one for GTK
+only and one for all systems, but it is based on the L<IUP::ColorBrowser|IUP::ColorBrowser>
+control that depends on the CD library.
+
+The Windows and GTK dialogs can be shown only with the L<IUP::Popup|IUP::Popup>
+function. The L<IUP::ColorBrowser|IUP::ColorBrowser> based dialog is a L<IUP::Dialog|IUP::Dialog> that
+can be shown as any regular B< IUP::Dialog>.
+
+B<IMPORTANT: >The B< IUP::ColorBrowser> based dialog is included in the
+L<Controls Library|../iupcontrols.html>. When the Controls Library is
+initialized the Windows and GTK dialogs are not available anymore, i.e.
+before the Controls Library initialization only the Windows and GTK
+dialogs are available, after only the L<IUP::ColorBrowser|IUP::ColorBrowser> based dialog
+is available.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::ColorDlg(void); [in C]
+ iup.colordlg{} -> (elem: ihandle) [in Lua]
+ colordlg() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * B<ALPHA> [ColorBrowser and GTK only]
+
+if defined it will enable an
+alpha selection additional controls with its initial value. If the user
+pressed the Ok button contains the returned value. Default: no defined,
+or 255 if SHOWALPHA=YES.
+
+=item * B<COLORTABLE>
+
+list of colors separated by ";". In GTK and in the
+ColorBrowser based accepts 20 values and if not present the palette
+will not be visible. In Windows accepts 16 values and will be always
+visible, even if the colors are not defined (in this case are
+initialized with black). If a color is not specified then the default
+color is used. You can skip colors using ";;".
+
+=item * L<PARENTDIALOG|[%m.at%]/PARENTDIALOG> (creation only)
+
+Name
+of a dialog to be used as parent. This dialog will be always in front
+of the parent dialog.
+
+=item * B<SHOWALPHA> [ColorBrowser and GTK only]
+
+if enabled will display the
+alpha selection controls, regardless if ALPHA is defined for the
+initial value or not.
+
+=item * B<SHOW>B<COLORTABLE>
+
+if enabled will display the color table,
+regardless if B<COLORTABLE> is defined or not. The default colors in
+the color table are different in GTK and in the ColorBrowser based
+dialog. In Windows the default colors are all black.
+
+=item * B<SHOWHEX> [ColorBrowser only]
+
+if enabled will display the Hexadecimal
+notation of the color.
+
+=item * B<SHOWHELP> [ColorBrowser only]
+
+if enabled will display the Help
+button. In GTK and Windows, the Help button is shown only if the
+HELP_CB callback is defined.
+
+=item * B<STATUS> (read-only)
+
+defined to "1" if the user pressed the Ok
+button, NULL if pressed the Cancel button.
+
+=item * L<TITLE|[%m.at%]/TITLE>
+
+Dialog title.
+
+=item * B<VALUE>
+
+The color value in RGB coordinates and optionally alpha. It
+is used as the initial value and contains the selected value if the
+user pressed the Ok button. Format: "R G B" or "R G B A". Each
+component range from 0 to 255.
+
+=item * B<VALUEHSI> [ColorBrowser only]
+
+The color value in HSI coordinates. It
+is used as the initial value and contains the selected value if the
+user pressed the Ok button. Format: "H S I". Each component range from
+0-359, 0-100 and 0-100 respectively.
+
+=item * B<VALUEHEX> [ColorBrowser only]
+
+The color value in RGB Hexadecimal
+notation. It is used as the initial value and contains the selected
+value if the user pressed the Ok button. Format: "#RRGGBB". Each
+component range from 0-255, but in hexadecimal notation.
+
+=back
+
+[% h.cb %]
+
+[%txt.cb_intro%]
+
+=over
+
+=item * L<HELP_CB|../call/iup_help_cb.html>
+
+Action generated when the Help
+button is pressed.
+
+=back
+
+[% h.notes %]
+
+The GTK and Windows dialogs are native pre-defined dialogs that are not
+altered by L<IUP::SetLanguage|IUP::SetLanguage>. To show the dialog, use function
+L<IUP::Popup|IUP::Popup>. In Lua, use the B<popup> function. The dialog is mapped
+only inside L<IUP::Popup|IUP::Popup>, L<IUP::Map|IUP::Map> does nothing.
+
+[% h.examples %]
+
+ Ihandle* dlg = IUP::ColorDlg();
+ 
+ IUP::SetAttribute(dlg, "VALUE", "128 0 255");
+ IUP::SetAttribute(dlg, "ALPHA", "142");
+ IUP::SetAttribute(dlg, "SHOWHEX", "YES");
+ IUP::SetAttribute(dlg, "SHOWCOLORTABLE", "YES");
+ IUP::SetAttribute(dlg, "TITLE", "IUP::ColorDlg Test");
+ IUP::SetCallback(dlg, "HELP_CB", (Icallback)help_cb);
+ 
+ IUP::Popup(dlg, IUP_CURRENT, IUP_CURRENT);
+ 
+ if (IUP::GetInt(dlg, "STATUS"))
+ {
+   printf("OK\n");
+   printf("  COLOR(%s)\n", IUP::GetAttribute(dlg, "COLOR"));
+   printf("  COLORTABLE(%s)\n", IUP::GetAttribute(dlg, "COLORTABLE"));
+ }
+ else
+   printf("CANCEL\n");
+ 
+ IUP::Destroy(dlg);  
+
+Windows XP
+
+[IMAGE]
+
+GTK/GNOME
+
+[IMAGE]
+
+ColorBrowser Based
+
+[IMAGE]
+
+[% h.see %]
+
+L<IUP::MessageDlg|IUP::MessageDlg>, L<IUP::FileDlg|IUP::FileDlg>,
+L<IUP::Popup|IUP::Popup>
+
+=cut

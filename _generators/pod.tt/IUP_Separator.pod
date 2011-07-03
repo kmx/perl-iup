@@ -1,0 +1,35 @@
+[% h.name %]
+
+[% n.iupseparator %]
+
+[% h.desc %]
+
+Creates the separator interface element. It shows a line between two
+menu items.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::Separator(void); [in C]
+ iup.separator{} -> (elem: ihandle) [in Lua]
+ separator() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.notes %]
+
+The separator is ignored when it is part of the definition of the items
+in a bar menu.
+
+[% h.examples %]
+
+L<Browse for Example Files|../../examples/>
+
+[% h.see %]
+
+L<IUP::Item|IUP::Item>, L<IUP::SubMenu|IUP::SubMenu>,
+L<IUP::Menu|IUP::Menu>.
+
+=cut

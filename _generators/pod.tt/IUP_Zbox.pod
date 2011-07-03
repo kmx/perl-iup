@@ -1,0 +1,138 @@
+[% h.name %]
+
+[% n.iupzbox %]
+
+[% h.desc %]
+
+Creates a void container for composing elements in hidden layers with
+only one layer visible. It is a box that piles up the children it
+contains, only the one child is visible.
+
+It does not have a native representation.
+
+Zbox works by changing the VISIBLE attribute of its children, so if any
+of the grand children has its VISIBLE attribute directly defined then
+Zbox will NOT change its state.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::Zbox (Ihandle *child, ...); [in C]
+ Ihandle* IUP::Zboxv (Ihandle **children); [in C]
+ iup.zbox{child, ... : ihandle} -> (elem: ihandle) [in Lua]
+ zbox(child, ...) [in LED]
+
+B<child, ... >: List of the elements that will be placed in the box.
+NULL must be used to define the end of the list in C. It can be empty.
+
+=over
+
+B<IMPORTANT>: in C, each element must have a name defined by
+L<IUP::SetHandle|IUP::SetHandle>. In Lua a name is always
+automatically created, but you can change it later.
+
+=back
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * B<ALIGNMENT> (non inheritable)
+
+Defines the alignment of the visible
+child. Possible values:
+
+"NORTH", "SOUTH", "WEST", "EAST",
+
+"NE", "SE", "NW", "SW",
+
+"ACENTER".
+
+Default: "NW".
+
+=item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+
+The default
+value is "YES".
+
+=item * L<FLOATING|[%m.at%]/FLOATING> (non inheritable) B<(at
+children only)>
+
+If a child has FLOATING=YES then its size and position
+will be ignored by the layout processing. Default: "NO". 
+
+=item * B<VALUE> (non inheritable)
+
+The visible child accessed by its name. The
+value passed must be the name of one of the children contained in the
+zbox. Use L<IUP::SetHandle|IUP::SetHandle> or
+=item * L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+associate a child to a name. In Lua you can also use the element
+reference directly. When the value is changed the selected child is
+made visible and all other children are made invisible, regardless
+their previous visible state.
+
+B<VALUE_HANDLE> (non inheritable)
+
+The visible child accessed by its
+handle. The value passed must be the handle of a child contained in the
+zbox. When the zbox is created, the first element inserted is set as
+the visible child. 
+
+=item * B<VALUEPOS> (non inheritable)
+
+The visible child accessed by its
+position. The value passed must be the index of a child contained in
+the zbox, starting at 0. When the zbox is created, the first element
+inserted is set as the visible child. 
+
+=item * L<SIZE|[%m.at%]/SIZE> /
+L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
+
+The
+default size is the smallest size that fits its largest child. All
+child elements are considered even invisible ones, except when
+FLOATING=YES in a child.
+
+=item * B<WID> (read-only)
+
+returns -1 if mapped.
+
+=back
+
+[%txt.at_common%]
+
+=over
+
+=item * L<FONT|[%m.at%]/FONT>,
+L<CLIENTSIZE|[%m.at%]/CLIENTSIZE>,
+L<CLIENTOFFSET|[%m.at%]/CLIENTOFFSET>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>
+
+also accepted.
+
+=back
+
+[% h.notes %]
+
+The box can be created with no elements and be dynamic filled using
+L<IUP::Append|IUP::Append> or
+L<IUP::Insert|IUP::Insert>.
+
+[% h.examples %]
+
+L<Browse for Example Files|../../examples/>
+
+[% h.see %]
+
+L<IUP::Hbox|IUP::Hbox>, L<IUP::VBox|IUP::VBox>
+
+=cut

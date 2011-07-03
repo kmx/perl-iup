@@ -1,0 +1,273 @@
+[% h.name %]
+
+[% n.iuptabs %]
+
+[% h.desc %] 
+
+Creates a Tabs element. Allows a single dialog to have several screens,
+grouping options. The grouping is done in a single line of tabs
+arranged according to the tab type. Also known as Notebook in native
+systems.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::Tabs(Ihandle* child, ...); [in C]
+ Ihandle* IUP::Tabsv(Ihandle** children); [in C]
+ iup.tabs{child, ...: ihandle} -> (elem: ihandle) [in Lua]
+ tabs(child, ...) [in LED]
+
+B<child, ... >: List of the elements that will be placed in the box.
+NULL must be used to define the end of the list in C. It can be empty.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * L<BGCOLOR|[%m.at%]/BGCOLOR>
+
+In Windows and in GTK when in
+Windows, the tab buttons background it will be always defined by the
+system. In Windows the default background is different from the dialog
+background. Default: the global attribute DLGBGCOLOR.
+
+=item * B<COUNT> (read-only) (non inheritable)
+
+returns the number of tabs.
+Same value returned by L<IUP::GetChildCount|IUP::GetChildCount>. (since 3.3)
+
+=item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+
+The default
+value is "YES".
+
+=item * L<FGCOLOR|[%m.at%]/FGCOLOR>
+
+Tabs title color. Default: the
+global attribute DLGFGCOLOR.
+
+=item * B<MULTILINE> [Windows Only] (non inheritable)
+
+Enable multiple lines
+of tab buttons. This will hide the tab scroll and fits to make all tab
+buttons visible. Can be "YES" or "NO". Default "NO". It is always
+enabled when TABTYPE=LEFT or TABTYPE=RIGHT. 
+
+=item * B<PADDING> (non inheritable)
+
+internal margin of the tab title. Works
+just like the MARGIN attribute of the IUP::Hbox and IUP::Vbox containers,
+but uses a different name to avoid inheritance problems. Default value:
+"0x0". 
+
+=item * L<SIZE|[%m.at%]/SIZE> (non inheritable)
+
+The default size is
+the smallest size that fits its largest child. All child elements are
+considered even invisible ones.
+
+=item * B<TABIMAGEn >(non inheritable)
+
+image name to be used in the respective
+tab. Use L< IUP::SetHandle|../func/iupsethandle.html> or
+=item * L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+associate an image to a name. n starts at 0. See also
+L<IUP::Image|IUP::Image>. In Motif, the image is shown only if
+B<TABTITLEn> is NULL. In Windows and Motif set the BGCOLOR attribute
+before setting the image. 
+
+B<TABORIENTATION >(non inheritable)
+
+Indicates the orientation of tab
+text, which can be "HORIZONTAL" or "VERTICAL". Default is "HORIZONTAL".
+VERTICAL is supported only in GTK and in Windows. In Windows, VERTICAL
+is only supported when TABTYPE=LEFT or TABTYPE=RIGHT. (GTK 2.6)
+
+=item * B<TABTITLEn >(non inheritable)
+
+Contains the text to be shown in the
+respective tab title. n starts at 0. If this value is NULL, it will
+remain empty. The "&" character can be used to define a mnemonic, the
+next character will be used as key. Use "&&" to show the "&" character
+instead on defining a mnemonic. The button can be activated from any
+control in the dialog using the "Alt+key" combination. (mnemonic
+support since 3.3) 
+
+=item * B<TABTITLE >(non inheritable) B<(at children)>
+
+Same as B<TABTITLEn>
+but set in each child. Works only before the child is added to the
+tabs. Deprecated, use B< TABTITLEn>.
+
+=item * B<TABTYPE >(non inheritable) (creation only in Windows)
+
+Indicates the
+type of tab, which can be "TOP", "BOTTOM", "LEFT" or "RIGHT". Default
+is "TOP". In Windows, if LEFT or RIGHT, then MULTILINE=YES and
+TABORIENTATIONB<=>VERTICAL always. In Windows, when not TOP, then
+visual style is removed from tabs.
+
+=item * B<VALUE >(non inheritable)
+
+Changes the active tab by its name. The
+value passed must be the name of one of the elements contained in the
+tabs. Use L< IUP::SetHandle|../func/iupsethandle.html> or L<
+IUP::SetAttributeHandle|../func/iupsetattributehandle.html> to associate
+a child to a name. In Lua you can also use the element reference
+directly.
+
+=item * B<VALUE_HANDLE> (non inheritable)
+
+Changes the active tab by its
+handle. The value passed must be the handle of a child contained in the
+tabs. When the tabs is created, the first element inserted is set as
+the visible child. 
+
+=item * B<VALUEPOS >(non inheritable)
+
+Changes the active tab by its position,
+starting at 0. When the tabs is created, the first element inserted is
+set as the visible child. In GTK, inside the callback the returned
+value is still the previous one. 
+
+=back
+
+[%txt.at_common%]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>, L<FONT|[%m.at%]/FONT>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<CLIENTSIZE|[%m.at%]/CLIENTSIZE>,
+L<CLIENTOFFSET|[%m.at%]/CLIENTOFFSET>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>, L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+also accepted.
+
+=back
+
+[% h.cb %]
+
+[%txt.cb_intro%]
+
+=over
+
+=item * B<TABCHANGE_CB>
+
+Callback called when the user shifts the active tab.
+
+ int function(Ihandle* ih, Ihandle* new_tab, Ihandle* old_tab); [in C]
+ elem:tabchange_cb(new_tab, old_tab: ihandle) -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+=item * B<new_tab> - the new tab selected by the user
+
+=item * B<old_tab> - the previously selected tab
+
+=back
+
+=item * B<TABCHANGEPOS_CB>
+
+Callback called when the user shifts the active
+tab. Called only when TABCHANGE_CB is not defined. (since 3.3)
+
+ int function(Ihandle* ih, int new_pos, int old_pos); [in C]
+ elem:tabchange_cb(new_pos, old_pos: number) -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+=item * B<new_pos> - the new tab position selected by the user
+
+=item * B<old_pos> - the previously selected tab position
+
+=back
+
+=back
+
+[%txt.cb_common%]
+
+=over
+
+=item * L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>,
+L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
+L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
+L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
+
+All common callbacks are supported.
+
+=back
+
+[% h.notes %]
+
+The Tabs can be created with no children and be dynamic filled using
+L<IUP::Append|IUP::Append>.
+
+The ENTERWINDOW_CB and LEAVEWINDOW_CB callbacks are called only when
+the mouse enter or leaves the tabs buttons area.
+
+The Tabs children, differently from a L<IUP::Zbox|IUP::Zbox>, automatically
+receives a name if does not already have one when it is appended to the
+tabs in the native system. Also L<IUP::Tabs|IUP::Tabs> does NOT depends on the
+VISIBLE attribute.
+
+In GTK, when the tabs buttons are scrolled, the active tab is also
+changed.
+
+When you change the active tab the focus is usually not changed. If you
+want to control the focus behavior call L<IUP::SetFocus|IUP::SetFocus> in the
+TABCHANGE_CB callback.
+
+=head2 Utility Functions
+
+These functions can be used to set and get attributes from the element:
+
+ void  IUP::SetAttributeId(Ihandle *ih, const char* name, int id, const char* value);
+ void  IUP::StoreAttributeId(Ihandle *ih, const char* name, int id, const char* value);
+ char* IUP::GetAttributeId(Ihandle *ih, const char* name, int id);
+ int   IUP::GetIntId(Ihandle *ih, const char* name, int id);
+ float IUP::GetFloatId(Ihandle *ih, const char* name, int id);
+ void  IUP::SetfAttributeId(Ihandle *ih, const char* name, int id, const char* format, ...);
+
+They work just like the respective traditional set and get functions.
+But the attribute string is complemented with the id value. For ex:
+
+ IUP::SetAttributeId(ih, "TABTITLE", 3, value) == IUP::SetAttribute(ih, "TABTITLE3", value)
+
+But these functions are faster than the traditional functions because
+they do not need to parse the attribute name string and the application
+does not need to concatenate the attribute name with the id.
+
+[% h.examples %]
+
+L<Browse for Example Files|../../examples/>
+
+In Windows, the Visual Styles work only when TABTYPE is TOP.
+
+[IMAGE]
+
+GTK is the only one that supports vertical text in the TOP
+configuration, but does not supports multiple lines of tab buttons.
+
+[IMAGE]
+
+=cut

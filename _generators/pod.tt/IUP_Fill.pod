@@ -1,0 +1,75 @@
+[% h.name %]
+
+[% n.iupfill %]
+
+[% h.desc %]
+
+Creates a Fill composition element, which dynamically occupies empty
+spaces always trying to expand itself. Its parent B<must> be an
+L<IUP::Hbox|IUP::Hbox> or an L<IUP::Vbox|IUP::Vbox>. If an EXPAND is set on at least one of the
+other children of the box, then the Fill is ignored.
+
+It does not have a native representation.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::Fill(void); [in C]
+ iup.fill{} -> elem: ihandle [in Lua]
+ fill() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+
+Ignored. If
+=item * B<User> size is not defined, then when inside a L<IUP::Hbox|IUP::Hbox> EXPAND is
+HORIZONTAL, when inside a IUP::Vbox EXPAND is VERTICAL. If B<User> size
+is defined then EXPAND is NO.
+
+L<SIZE|[%m.at%]/SIZE> /
+L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
+
+Defines
+the width, if inside a L<IUP::Hbox|IUP::Hbox>, or the height, if it is inside a
+=item * L<IUP::Vbox|IUP::Vbox>. When consulted behaves as the standard SIZE/RASTERSIZE
+attributes. The standard format "wxh" can also be used, but width will
+be ignored if inside a L<IUP::Vbox |IUP::Vbox >and height will be ignored if inside
+a L<IUP::Hbox|IUP::Hbox> (since 3.3).
+
+B<WID> (read-only)
+
+returns -1 if mapped.
+
+=back
+
+[%txt.at_common%]
+
+=over
+
+=item * L<FONT|[%m.at%]/FONT>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>
+
+also accepted.
+
+=back
+
+[% h.examples %]
+
+L<Browse for Example Files|../../examples/>
+
+[% h.see %]
+
+L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>.
+
+=cut

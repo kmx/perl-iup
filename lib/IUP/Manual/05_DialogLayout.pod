@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Manual::06_DialogLayout - Dialor Layout Composition
+IUP::Manual::05_DialogLayout - Dialor Layout Composition
 
 =head1 IUP MANUAL
 
@@ -16,9 +16,9 @@ IUP::Manual::06_DialogLayout - Dialor Layout Composition
 
 =item * L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>
 
-=item * L<IUP::Manual::05_HandlingKeyboard|IUP::Manual::05_HandlingKeyboard>
+=item * L<IUP::Manual::06_HandlingKeyboard|IUP::Manual::06_HandlingKeyboard>
 
-=item * IUP::Manual::06_DialogLayout E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
+=item * IUP::Manual::05_DialogLayout E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
 
 =back
 

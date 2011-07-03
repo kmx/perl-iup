@@ -1,0 +1,113 @@
+[% h.name %]
+
+[% n.iupsubmenu %]
+
+[% h.desc %]
+
+Creates a menu item that, when selected, opens another menu.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::Submenu(const char *title, Ihandle *menu); [in C]
+ iup.submenu{menu: ihandle[; title = title: string]} -> (elem: ihandle) [in Lua]
+ submenu(title, menu) [in LED]
+
+B<title>: String containing the text to be shown on the item. It can be
+NULL. It will set the TITLE attribute.
+
+B<menu>: optional child menu identifier. Can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * B<IMAGE> [Windows and GTK Only] (non inheritable)
+
+Image name of the
+submenu image. In Windows, an item in a menu bar cannot have a check
+mark. Ignored if submenu in a menu bar. A recommended size would be
+16x16 to fit the image in the menu item. In Windows, if larger than the
+check mark area it will be cropped. 
+
+=item * L<KEY|[%m.at%]/KEY> (non inheritable)
+
+Underlines a key
+character in the submenu title. It is updated only when TITLE is
+updated. B<Deprecated>, use the mnemonic support directly in the TITLE
+attribute.
+
+=item * L<TITLE|[%m.at%]/TITLE> (non inheritable)
+
+Submenu Text. The
+"&" character can be used to define a mnemonic, the next character will
+be used as key. Use "&&" to show the "&" character instead on defining
+a mnemonic.
+
+=item * L<WID|[%m.at%]/WID> (non inheritable)
+
+In Windows, returns
+the HMENU of the parent menu and it is actually created only when its
+child menu is mapped.
+
+=back
+
+[%txt.at_common%]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>
+
+also accepted.
+
+=back
+
+[% h.cb %]
+
+[%txt.cb_intro%]
+
+=over
+
+=item * L<HIGHLIGHT_CB|../call/iup_highlight_cb.html>
+
+Action generated when
+the submenu is highlighted.
+
+=back
+
+xxxTODO also common
+
+=over
+
+=item * L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>
+
+common callbacks are supported.
+
+=back
+
+[% h.notes %]
+
+In Motif and GTK, the text font will be affected by the dialog font
+when the menu is mapped.
+
+[% h.examples %]
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+See the L<IUP::Menu|IUP::Menu> element for more screenshots.
+
+[% h.see %]
+
+L<IUP::Item|IUP::Item>, L<IUP::Separator|IUP::Separator>,
+L<IUP::Menu|IUP::Menu>.
+
+=cut

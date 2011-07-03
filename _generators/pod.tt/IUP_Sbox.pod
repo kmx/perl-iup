@@ -1,0 +1,112 @@
+[% h.name %]
+
+[% n.iupsbox %]
+
+[% h.desc %]
+
+Creates a void container that allows its child to be resized. Allows
+expanding and contracting the child B<size> in one direction.
+
+It does not have a native representation but it contains also a
+L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::Sbox(Ihandle* child); [in C]
+ iup.sbox{child: ihandle} -> (elem: ihandle) [in Lua]
+ sbox(child) [in LED]
+
+B<child>: Identifier of an interface element which will receive the
+box. It can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * B<COLOR>
+
+Changes the color of the bar handler. The value should be
+given in "R G B" color style. Default: "192 192 192".
+
+=item * B<DIRECTION> (creation only)
+
+Indicates the direction of the resize and
+the position of the bar handler. Possible values are "NORTH", "SOUTH"
+(vertical direction), "EAST" or "WEST" (horizontal direction). Default:
+"EAST".
+
+=item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+
+It will expand
+automatically only in the direction opposite to the handler.
+
+=item * B<WID> (read-only)
+
+returns -1 if mapped.
+
+=back
+
+[%txt.at_common%]
+
+=over
+
+=item * L<FONT|[%m.at%]/FONT>, L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<CLIENTSIZE|[%m.at%]/CLIENTSIZE>,
+L<CLIENTOFFSET|[%m.at%]/CLIENTOFFSET>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>
+
+also accepted.
+
+=back
+
+[% h.notes %]
+
+The controls that you want to be resized must have the EXPAND=YES
+attribute set. The control inside the sbox will not be resized with a
+size lesser than its B<Natural> size. See the L<Layout
+Guide|../layout_guide.html> for mode details on sizes.
+
+The L<IUP::Canvas|IUP::Canvas> bar handler is always the first child of the sbox. It
+can be obtained using L<IUP::GetChild|IUP::GetChild> or B< IUP::GetNextChild>.
+
+L<IUP::Sbox|IUP::Sbox> can be resized above the maximum size so some controls go to
+outside the dialog area at right or bottom. In fact this is part of the
+dynamic layout default reposition of controls inside the dialog. See
+the L<IUP::Refresh|IUP::Refresh> function. The IUP layout does not have a maximum
+limit only a minimum, except if you use the MAXSIZE common attribute.
+
+The box can be created with no elements and be dynamic filled using
+L<IUP::Append|IUP::Append> or
+L<IUP::Insert|IUP::Insert>.
+
+[% h.examples %]
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+Natural Size
+
+[IMAGE]
+
+After Expanding the Sbox
+
+[IMAGE]
+
+Expanding the Dialog
+
+[IMAGE]
+
+After Expanding the Sbox
+
+=cut

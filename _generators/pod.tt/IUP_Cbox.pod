@@ -1,0 +1,115 @@
+=pod
+
+[% h.name %]
+
+[% n.iupcbox %]
+
+[% h.desc %]
+
+Creates a void container for position elements in absolute coordinates.
+It is a B<concrete> layout container.
+
+It does not have a native representation.
+
+The L<IUP::Cbox|IUP::Cbox> is equivalent of a L<IUP::Vbox|IUP::Vbox> or L<IUP::Hbox|IUP::Hbox> where all
+the children have the L<FLOATING|[%m.at%]/FLOATING> attribute
+set to YES, but children must use CX and CY attributes instead of the
+POSITION attribute.
+
+[% h.usage %]
+
+[% h.create %]
+
+ #standard way
+ my $cbox = IUP::Cbox->new( child=>[$elem1, $elem2], XXX=>XXX );
+ 
+ #or with just a single child
+ my $cbox = IUP::Cbox->new( child=>$elem, XXX=>XXX );
+ 
+ #or with just 1 parameter (arrayref)
+ my $cbox = IUP::Cbox->new( [$elem1, $elem2] );
+ 
+ #or with just 1 parameter (reference to child elements)
+ my $cbox = IUP::Cbox->new( $elem );
+
+=over 
+
+B<child:> (named parameter) List of the references to elements (or just a single element) that 
+will be placed in the box. It can be ommited (see note below).
+
+B<Returns:> The reference to the created element, or C<udnef> if an error
+occurs.
+
+[% txt.new_attr %]
+
+NOTE: IUP::Cbox can be created with no elements (no child params passed to C<new()> constructor)
+and be dynamic filled later using
+L<C<< $element->Append() >>|[%m.elem%]/"Append()"> and/or
+L<C<< $element->Insert() >>|[%m.elem%]/"Insert()"> methods.
+
+=back
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * B<CX, CY> (non inheritable) B<(at children only)>
+
+Position in pixels
+of the child relative to the top-left corner of the box. Must be set
+for each child inside the box.
+
+=item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+
+The default
+value is "YES".
+
+=item * L<SIZE|[%m.at%]/SIZE> /
+L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
+
+Must be
+defined for each child. If not defined for the box, then it will be the
+bounding box that includes all children in their position.
+
+=item * B<WID> (read-only)
+
+returns -1 if mapped.
+
+=back
+
+[%txt.at_common%]
+
+=over
+
+=item * L<FONT|[%m.at%]/FONT>,
+L<CLIENTSIZE|[%m.at%]/CLIENTSIZE>,
+L<CLIENTOFFSET|[%m.at%]/CLIENTOFFSET>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>
+
+=back
+
+[% h.examples %]
+
+[% IF examples.iupcbox %]
+The element B<IUP::Cbox> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupcbox %]
+=item * L<[%e.pl%]|[%e.url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
+
+[% h.see %]
+
+L<IUP::Vbox|IUP::Vbox>, L<IUP::Hbox|IUP::Hbox>
+
+=cut

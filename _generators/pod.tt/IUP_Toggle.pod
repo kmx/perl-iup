@@ -1,0 +1,284 @@
+[% h.name %]
+
+[% n.iuptoggle %]
+
+[% h.desc %]
+
+Creates the toggle interface element. It is a two-state (on/off) button
+that, when selected, generates an action that activates a function in
+the associated application. Its visual representation can contain a
+text or an image.
+
+[% h.usage %]
+
+[% h.create %]
+
+ Ihandle* IUP::Toggle(const char *title, const char *action); [in C]iup.toggle{[title = title: string]} -> (elem: ihandle) [in Lua]toggle(title, action) [in LED]
+
+B<title>: Text to be shown on the toggle. It can be NULL. It will set
+the TITLE attribute.
+
+B<action>: name of the action generated when the toggle is selected. It
+can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item * B<ALIGNMENT> (non inheritable)
+
+horizontal and vertical alignment when
+IMAGE is defined. Possible values: "ALEFT", "ACENTER" and "ARIGHT",
+combined to "ATOP", "ACENTER" and "ABOTTOM". Default:
+"ACENTER:ACENTER". Partial values are also accepted, like "ARIGHT" or
+":ATOP", the other value will be used from the current alignment. In
+Motif, vertical alignment is restricted to "ACENTER". In Windows works
+only when Visual Styles is active. Text is always left aligned. (since
+3.0)
+
+=item * L<BGCOLOR|[%m.at%]/BGCOLOR>
+
+Background color of toggle mark
+when displaying a text. The text background is transparent, it will use
+the background color of the native parent. When displaying an image in
+Windows the background is ignored and the system color is used.
+Default: the global attribute DLGBGCOLOR.
+
+=item * B<CANFOCUS> (creation only) (non inheritable)
+
+enables the focus
+traversal of the control. In Windows the control will still get the
+focus when clicked. Default: YES. 
+
+=item * L<FGCOLOR|[%m.at%]/FGCOLOR>
+
+Color of the text shown on the
+toggle. In Windows, when using Visual Styles FGCOLOR is ignored.
+Default: the global attribute DLGFGCOLOR.
+
+=item * B<FLAT> (creation only)
+
+Hides the toggle borders until the mouse enter
+the toggle area when the toggle is not checked. If the toggle is
+checked, then the borders will be shown even if flat is enabled. Used
+only when IMAGE is defined. Can be YES or NO. Default: NO. (since 3.3)
+
+=item * B<IMAGE> (non inheritable)
+
+Image name. When the IMAGE attribute is
+defined, the TITLE is not shown. This makes the toggle looks just like
+a button with an image, but its behavior remains the same. Use L<
+IUP::SetHandle|../func/iupsethandle.html> or L<
+IUP::SetAttributeHandle|../func/iupsetattributehandle.html> to associate
+an image to a name. See also L<IUP::Image|IUP::Image>. (GTK 2.6)
+
+=item * B<IMPRESS> (non inheritable)
+
+Image name of the pressed toggle. Unlike
+buttons, toggles always display the button border when IMAGE and
+IMPRESS are both defined. (GTK 2.6)
+
+=item * B<IMINACTIVE> (non inheritable)
+
+Image name of the inactive toggle. If
+it is not defined but IMAGE is defined then for inactive toggles the
+colors will be replaced by a modified version of the background color
+creating the disabled effect. (GTK 2.6)
+
+=item * B<MARKUP> [GTK only]
+
+allows the title string to contains pango markup
+commands. Works only if a mnemonic is NOT defined in the title. Can be
+"YES" or "NO". Default: "NO".
+
+=item * B<PADDING>
+
+internal margin when IMAGE is defined. Works just like the
+MARGIN attribute of the L<IUP::Hbox|IUP::Hbox> and L<IUP::Vbox|IUP::Vbox> containers, but uses
+a different name to avoid inheritance problems. Default value: "0x0".
+
+
+=item * B<RADIO> (read-only)
+
+returns if the toggle is inside a radio. Can be
+"YES" or "NO". Valid only after the element is mapped, before returns
+NULL. 
+
+=item * B<RIGHTBUTTON> (Windows Only) (creation only)
+
+place the check button
+at the right of the text. Can be "YES" or "NO". Default: "NO".
+
+=item * B<VALUE> (non inheritable)
+
+Toggle's state. Values can be "ON" or
+"OFF". If 3STATE=YES then can also be "NOTDEF". Default: "OFF". In GTK
+if you change the state of a radio, the unchecked toggle will receive
+an ACTION callback notification.
+
+=item * L<TITLE|[%m.at%]/TITLE> (non inheritable)
+
+Toggle's text. If
+IMAGE is not defined before map, then the default behavior is to
+contain a text. The button behavior can not be changed after map. The
+natural size will be larger enough to include all the text in the
+selected font, even using multiple lines, plus the button borders or
+check box if any. The '\n' character is accepted for line change. The
+"&" character can be used to define a mnemonic, the next character will
+be used as key. Use "&&" to show the "&" character instead on defining
+a mnemonic. The toggle can be activated from any control in the dialog
+using the "Alt+key" combination. (mnemonic support since 3.0)
+
+=item * B<3STATE >(creation only)
+
+Enable a three state toggle. Valid for
+toggles with text only and that do not belong to a radio. Can be "YES"
+or NO". Default: "NO".
+
+=back
+
+[%txt.at_common%]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>, L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>, L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>, L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+also accepted.
+
+=back
+
+[% h.cb %]
+
+[%txt.cb_intro%]
+
+=over
+
+=item * L<ACTION|[%m.cb%]/ACTION>
+
+Action generated when the toggle's
+state (on/off) was changed. The callback also receives the toggle's
+state.
+
+ int function(Ihandle* ih, int state); [in C]elem:action(state: number) -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+=item * B<state> - 1 if the toggle's state was shifted to on; 0 if it was
+shifted to off.
+
+Returns: IUP_CLOSE will be processed.
+
+=back
+
+=item * B<VALUECHANGED_CB>
+
+Called after the value was interactively changed by
+the user. Called after the ACTION callback, but under the same context.
+
+
+ int function(Ihandle *ih); [in C]elem:valuechanged_cb() -> (ret: number) [in Lua]
+
+=over
+
+=item * B<ih> - identifier of the element that activated the event.
+
+----
+
+=back
+
+=item * L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>,
+L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
+L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
+L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
+
+All common callbacks are supported.
+
+=back
+
+[% h.notes %]
+
+Toggle with image or text can not change its behavior after mapped.
+This is a creation attribute. But after creation the image can be
+changed for another image, and the text for another text.
+
+Toggles are activated using the Space key.
+
+To build a set of mutual exclusive toggles, insert them in a
+L<IUP::Radio|IUP::Radio> container. They must be inserted before creation, and their
+behavior can not be changed. If you need to dynamically remove toggles
+that belongs to a radio in Windows, then put the radio inside a
+L<IUP::Frame|IUP::Frame> that has a title.
+
+[% h.examples %]
+
+L<Browse for Example Files|../../examples/>
+
+Motif
+
+Windows
+
+Classic
+
+Windows
+
+w/ Styles
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[% h.see %]
+
+L<IUP::Image|IUP::Image>, L<IUP::Button|IUP::Button>,
+L<IUP::Label|IUP::Label>, L<IUP::Radio|IUP::Radio>.
+
+=cut

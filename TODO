@@ -1,7 +1,15 @@
 ################ the last time working on ################ 
-- POD draft
-- IUP::Tree - finished
+- POD hacking
 ##########################################################
+
+IDEA
+- nicer pod http://search.cpan.org/~jfearn/HTML-Tree-4.2/lib/HTML/Element.pm (related modules)
+
+!!Decide!!######## move to separate dist
+- IUP::OLE
+- IUP::CanvasGL
+- IUP::Canvas
+- we probably need IUP::ConfigData for listing available features (iupole, iupgl ...)
 
 !!Big Task!!######## doc
 - Cleanup first (in this order):
