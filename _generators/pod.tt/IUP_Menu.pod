@@ -59,16 +59,16 @@ the HMENU of the menu.
 Called just before the menu is
 opened.
 
+=back
+
 =item * L<MENUCLOSE_CB|../call/iup_menuclose_cb.html>
 
 Called just after the
 menu is closed.
 
+----
+
 =back
-
-xxxTODO also common
-
-=over
 
 =item * L<MAP_CB|../call/iup_map_cb.html>,
 L<UNMAP_CB|../call/iup_unmap_cb.html>
@@ -152,6 +152,46 @@ with already create elements.
 [% h.examples %]
 
 L<Browse for Example Files|../../examples/>
+
+Windows
+
+Classic
+
+Windows
+
+w/ Styles
+
+[IMAGE]
+
+[IMAGE]
+
+Motif
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+The L<IUP::Item|IUP::Item> check is affected by the RADIO attribute in L<IUP::Menu|IUP::Menu>:
+
+Windows
+
+Classic
+
+Windows
+
+XP Style
+
+[IMAGE]
+
+[IMAGE]
+
+Motif
+
+GTK
+
+[IMAGE]
 
 [IMAGE]
 

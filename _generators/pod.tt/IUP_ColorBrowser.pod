@@ -139,8 +139,6 @@ also be called, it is just called after them.
 
 =back
 
-=back
-
 [%txt.cb_common%]
 
 =over

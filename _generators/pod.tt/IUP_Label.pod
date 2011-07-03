@@ -67,7 +67,7 @@ size of the image in pixels. Use
 L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
 associate an image to a name. See also L<IUP::Image|IUP::Image>.
 
-=item * B<IMINACTIVE> (non inheritable) [GTK and Motif only]
+B<IMINACTIVE> (non inheritable) [GTK and Motif only]
 
 Image name of the
 element when inactive. If it is not defined then the IMAGE is used and
@@ -145,17 +145,22 @@ also accepted.
 Action generated when any
 mouse button is pressed or released. (since 3.3)
 
+=back
+
 =item * L<DROPFILES_CB|../call/iup_dropfiles_cb.html> [Windows and GTK Only]
 
 Action generated when one or more files are dropped in the element.
 (since 3.3)
+
+=back
 
 =item * L<MAP_CB|../call/iup_map_cb.html>,
 L<UNMAP_CB|../call/iup_unmap_cb.html>,
 L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
 L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>
 
-common callbacks are supported.
+common callbacks are
+supported.
 
 =back
 

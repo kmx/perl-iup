@@ -144,8 +144,6 @@ the user.
 
 =back
 
-=back
-
 [%txt.cb_common%]
 
 =over
@@ -181,26 +179,64 @@ when the control loses its focus.
 This is the default mapping when INVERTED has the default value, or
 ORIENTATION=HORIZONTAL+INVERTED=NO.
 
- Keys                       Action for HORIZONTAL
- -----------------------------------------------------------------
- Right Arrow                move right, increment by one step
- Left Arrow                 move left, decrement by one step
- Ctrl+Right Arrow or PgDn   move right, increment by one page step
- Ctrl+Left Arrow or PgUp    move left, decrement by one page step
- Home                       move all left, set to minimum
- End                        move all right, set to maximum
+Keys
+
+Action for HORIZONTAL
+
+Right Arrow
+
+move right, increment by one step
+
+Left Arrow
+
+move left, decrement by one step
+
+Ctrl+Right Arrow or PgDn
+
+move right, increment by one page step
+
+Ctrl+Left Arrow or PgUp
+
+move left, decrement by one page step
+
+Home
+
+move all left, set to minimum
+
+End
+
+move all right, set to maximum
 
 This is the default mapping when INVERTED has the default value, or
 ORIENTATION=VERTICAL+INVERTED=YES.
 
- Keys                       Action for VERTICAL
- -----------------------------------------------------------------
- Up Arrow                   move up, increment by one step
- Down Arrow                 move down, decrement by one step
- Ctrl+Up Arrow or PgUp      move up, increment by one page step
- Ctrl+Down Arrow or PgDn    move down, decrement by one page step
- Home                       move all up, set to maximum
- End                        move all down, set to minimum
+Keys
+
+Action for VERTICAL
+
+Up Arrow
+
+move up, increment by one step
+
+Down Arrow
+
+move down, decrement by one step
+
+Ctrl+Up Arrow or PgUp
+
+move up, increment by one page step
+
+Ctrl+Down Arrow or PgDn
+
+move down, decrement by one page step
+
+Home
+
+move all up, set to maximum
+
+End
+
+move all down, set to minimum
 
 Visually all the keys move to the same direction independent from the
 INVERTED attribute.
@@ -215,6 +251,40 @@ systems.
 [% h.examples %]
 
 L<Browse for Example Files|../../examples/>
+
+Motif
+
+Windows
+
+Classic
+
+Windows
+
+w/ Styles
+
+Windows
+
+Vista
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
 
 [IMAGE]
 

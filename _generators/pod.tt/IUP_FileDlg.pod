@@ -155,7 +155,9 @@ necessary if using "iup.dll"). Valid only if the FILE_CB callback is
 defined, use it to retrieve the file name and the necessary attributes
 to paint the preview area. (in Motif since 3.0)
 
-xxxTODO (check original)??? Read only attributes that are valid inside the FILE_CB callback when
+=over
+
+Read only attributes that are valid inside the FILE_CB callback when
 status="PAINT":
 
 =item * B<PREVIEWDC>
@@ -177,6 +179,9 @@ preview canvas. Notice that this is not a fully implemented IUP::GLCanvas
 that inherits from IUP::Canvas. This does the minimum necessary so you
 can use IUP::GLCanvas auxiliary functions for the preview canvas and call
 OpenGL functions. No IUP::Canvas attributes or callbacks are available.
+
+
+=back
 
 =item * B<STATUS> (read-only)
 
@@ -299,6 +304,16 @@ the active dialog.
    printf("CANCEL\n");
  
  IUP::Destroy(dlg); 
+
+Windows XP
+
+[IMAGE]
+
+Motif/Mwm
+
+[IMAGE]
+
+GTK/GNOME
 
 [IMAGE]
 

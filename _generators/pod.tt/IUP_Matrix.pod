@@ -36,23 +36,33 @@ occurs.
 
 [%txt.at_intro%]
 
+=over
+
 =head2 General
 
 =over
 
 =item * L<CURSOR|iupmatrix_attrib.html#CURSOR>
 
-=item * L<FITTOSIZE|iupmatrix_attrib.html#FITTOSIZE>
+L<EDIT_MODE|iupmatrix_attrib.html#EDIT_MODE>
 
-=item * L<FOCUS_CELL|iupmatrix_attrib.html#FOCUS_CELL>
+L<EDITNEXT|iupmatrix_attrib.html#EDITNEXT>
 
-=item * L<HIDEFOCUS|iupmatrix_attrib.html#HIDEFOCUS>
+L<FOCUS_CELL|iupmatrix_attrib.html#FOCUS_CELL>
 
-=item * L<READONLY|iupmatrix_attrib.html#READONLY>
+L<HIDEFOCUS|iupmatrix_attrib.html#HIDEFOCUS>
 
-=item * L<RESIZEMATRIX|iupmatrix_attrib.html#RESIZEMATRIX>
+L<HIDDENTEXTMARKS|iupmatrix_attrib.html#HIDDENTEXTMARKS>
 
-=item * L<USETITLESIZE|iupmatrix_attrib.html#USETITLESIZE>
+L<ORIGIN|iupmatrix_attrib.html#ORIGIN>
+
+L<ORIGINOFFSET|iupmatrix_attrib.html#ORIGINOFFSET>
+
+L<READONLY|iupmatrix_attrib.html#READONLY>
+
+L<RESIZEMATRIX|iupmatrix_attrib.html#RESIZEMATRIX>
+
+L<USETITLESIZE|iupmatrix_attrib.html#USETITLESIZE>
 
 =back
 
@@ -60,17 +70,23 @@ occurs.
 
 =over
 
-=item * L<LC|iupmatrix_attrib.html#L:C>
+L<L
+
+C|iupmatrix_attrib.html#L:C>
 
 =item * L<BGCOLOR|iupmatrix_attrib.html#BGCOLOR>
 
-=item * L<FGCOLOR|iupmatrix_attrib.html#FGCOLOR>
+L<FGCOLOR|iupmatrix_attrib.html#FGCOLOR>
 
-=item * L<FONT|iupmatrix_attrib.html#FONT>
+L<FONT|iupmatrix_attrib.html#FONT>
 
-=item * L<FRAMECOLOR|iupmatrix_attrib.html#FRAMECOLOR>
+L<FRAMECOLOR|iupmatrix_attrib.html#FRAMECOLOR>
 
-=item * L<VALUE|iupmatrix_attrib.html#VALUE>
+L<VALUE|iupmatrix_attrib.html#VALUE>
+
+L<CELLOFFSET|iupmatrix_attrib.html#CELLOFFSET>
+
+L<CELLSIZE|iupmatrix_attrib.html#CELLSIZE>
 
 =back
 
@@ -78,9 +94,9 @@ occurs.
 
 =over
 
-=item * L<ALIGNMENTn|iupmatrix_attrib.html#ALIGNMENTn>
+L<ALIGNMENTn|iupmatrix_attrib.html#ALIGNMENTn>
 
-=item * L<SORTSIGNn|iupmatrix_attrib.html#SORTSIGNn>
+L<SORTSIGNn|iupmatrix_attrib.html#SORTSIGNn>
 
 =back
 
@@ -88,11 +104,11 @@ occurs.
 
 =over
 
-=item * L<RASTERWIDTHn|iupmatrix_attrib.html#RASTERWIDTHn>
+L<RASTERWIDTHn|iupmatrix_attrib.html#RASTERWIDTHn>
 
-=item * L<WIDTHn|iupmatrix_attrib.html#WIDTHn>
+L<WIDTHn|iupmatrix_attrib.html#WIDTHn>
 
-=item * L<WIDTHDEF|iupmatrix_attrib.html#WIDTHDEF>
+L<WIDTHDEF|iupmatrix_attrib.html#WIDTHDEF>
 
 =back
 
@@ -100,11 +116,11 @@ occurs.
 
 =over
 
-=item * L<HEIGHTn|iupmatrix_attrib.html#HEIGHTn>
+L<HEIGHTn|iupmatrix_attrib.html#HEIGHTn>
 
-=item * L<HEIGHTDEF|iupmatrix_attrib.html#HEIGHTDEF>
+L<HEIGHTDEF|iupmatrix_attrib.html#HEIGHTDEF>
 
-=item * L<RASTERHEIGHTn|iupmatrix_attrib.html#RASTERHEIGHTn>
+L<RASTERHEIGHTn|iupmatrix_attrib.html#RASTERHEIGHTn>
 
 =back
 
@@ -112,21 +128,25 @@ occurs.
 
 =over
 
-=item * L<ADDCOL|iupmatrix_attrib.html#ADDCOL>
+L<ADDCOL|iupmatrix_attrib.html#ADDCOL>
 
-=item * L<ADDLIN|iupmatrix_attrib.html#ADDLIN>
+L<ADDLIN|iupmatrix_attrib.html#ADDLIN>
 
-=item * L<DELCOL|iupmatrix_attrib.html#DELCOL>
+L<DELCOL|iupmatrix_attrib.html#DELCOL>
 
-=item * L<DELLIN|iupmatrix_attrib.html#DELLIN>
+L<DELLIN|iupmatrix_attrib.html#DELLIN>
 
-=item * L<NUMCOL|iupmatrix_attrib.html#NUMCOL>
+L<NUMCOL|iupmatrix_attrib.html#NUMCOL>
 
-=item * L<NUMCOL_VISIBLE|iupmatrix_attrib.html#NUMCOL_VISIBLE>
+L<NUMCOL_VISIBLE|iupmatrix_attrib.html#NUMCOL_VISIBLE>
 
-=item * L<NUMLIN|iupmatrix_attrib.html#NUMLIN>
+L<NUMCOL_NOSCROLL|iupmatrix_attrib.html#NUMCOL_NOSCROLL>
 
-=item * L<NUMLIN_VISIBLE|iupmatrix_attrib.html#NUMLIN_VISIBLE>
+L<NUMLIN|iupmatrix_attrib.html#NUMLIN>
+
+L<NUMLIN_VISIBLE|iupmatrix_attrib.html#NUMLIN_VISIBLE>
+
+L<NUMLIN_NOSCROLL|iupmatrix_attrib.html#NUMLIN_NOSCROLL>
 
 =back
 
@@ -134,15 +154,15 @@ occurs.
 
 =over
 
-=item * L<MARKAREA|iupmatrix_attrib.html#MARKAREA>
+L<MARKAREA|iupmatrix_attrib.html#MARKAREA>
 
-=item * L<MARKMODE|iupmatrix_attrib.html#MARKMODE>
+L<MARKMODE|iupmatrix_attrib.html#MARKMODE>
 
-=item * L<MARK|iupmatrix_attrib.html#MARK>
+L<MARK|iupmatrix_attrib.html#MARK>
 
-=item * L<MARKED|iupmatrix_attrib.html#MARKED>
+L<MARKED|iupmatrix_attrib.html#MARKED>
 
-=item * L<MARKMULTIPLE|iupmatrix_attrib.html#MARKMULTIPLE>
+L<MARKMULTIPLE|iupmatrix_attrib.html#MARKMULTIPLE>
 
 =back
 
@@ -150,27 +170,29 @@ occurs.
 
 =over
 
-=item * L<EDIT_MODE|iupmatrix_attrib.html#EDIT_MODE>
+L<FITTOSIZE|iupmatrix_attrib.html#FITTOSIZE>
 
-=item * L<ORIGIN|iupmatrix_attrib.html#ORIGIN>
+L<FITTOTEXT|iupmatrix_attrib.html#FITTOTEXT>
 
-=item * L<SHOW|iupmatrix_attrib.html#SHOW>
+L<SHOW|iupmatrix_attrib.html#SHOW>
 
-=item * L<REDRAW|iupmatrix_attrib.html#REDRAW>
+L<REDRAW|iupmatrix_attrib.html#REDRAW>
 
 =back
 
-=head2 Text Edition Attributes
+=head2 Text Editing Attributes
 
 =over
 
-=item * L<CARET|iupmatrix_attrib.html#CARET>
+L<CARET|iupmatrix_attrib.html#CARET>
 
-=item * L<MASKLC|iupmatrix_attrib.html#MASKL:C>
+L<MASKL
 
-=item * L<MULTILINE|iupmatrix_attrib.html#MULTILINE>
+C|iupmatrix_attrib.html#MASKL:C>
 
-=item * L<SELECTION|iupmatrix_attrib.html#SELECTION>
+L<MULTILINE|iupmatrix_attrib.html#MULTILINE>
+
+L<SELECTION|iupmatrix_attrib.html#SELECTION>
 
 =back
 
@@ -178,9 +200,11 @@ occurs.
 
 =over
 
-=item * L<BORDER|iupmatrix_attrib.html#BORDER>
+L<BORDER|iupmatrix_attrib.html#BORDER>
 
-=item * L<SCROLLBAR|iupmatrix_attrib.html#SCROLLBAR>
+L<SCROLLBAR|iupmatrix_attrib.html#SCROLLBAR>
+
+=back
 
 =back
 
@@ -188,107 +212,98 @@ occurs.
 
 [%txt.cb_intro%]
 
+=over
+
+
 =head2 Interaction
 
-=over
+=back
 
 =item * L<ACTION_CB|iupmatrix_cb.html#ACTION_CB> - Action generated when a
 keyboard event occurs.
 
-=item * CLICK_CB - Action generated when any mouse button is pressed over a
+CLICK_CB - Action generated when any mouse button is pressed over a
 cell.
 
 =item * L<RELEASE_CB|iupmatrix_cb.html#RELEASE_CB> - Action generated when any
 mouse button is released over a cell.
 
-=item * L<MOUSEMOVE_CB|iupmatrix_cb.html#MOUSEMOVE_CB> - Action generated to
+L<MOUSEMOVE_CB|iupmatrix_cb.html#MOUSEMOVE_CB> - Action generated to
 notify the application that the mouse has moved over the matrix.
 
-=item * L<ENTERITEM_CB|iupmatrix_cb.html#ENTERITEM_CB> - Action generated when
+L<ENTERITEM_CB|iupmatrix_cb.html#ENTERITEM_CB> - Action generated when
 a matrix cell is selected, becoming the current cell.
 
-=item * LEAVEITEM_CB - Action generated when a cell is no longer the current
+LEAVEITEM_CB - Action generated when a cell is no longer the current
 cell.
 
-=item * L<SCROLLTOP_CB|iupmatrix_cb.html#SCROLL_CB> - Action generated when the
+L<SCROLLTOP_CB|iupmatrix_cb.html#SCROLL_CB> - Action generated when the
 matrix is scrolled with the scrollbars or with the keyboard.
-
-=back
 
 =head2 Drawing
 
-=over
-
-=item * L<BGCOLOR_CB|iupmatrix_cb.html#BGCOLOR_CB> - Action generated to
+L<BGCOLOR_CB|iupmatrix_cb.html#BGCOLOR_CB> - Action generated to
 retrieve the background color of a cell when it needs to be redrawn.
 
-=item * L<FGCOLOR_CB|iupmatrix_cb.html#FGCOLOR_CB> - Action generated to
+L<FGCOLOR_CB|iupmatrix_cb.html#FGCOLOR_CB> - Action generated to
 retrieve the foreground color of a cell when it needs to be redrawn.
 
-=item * L<FONT_CB|iupmatrix_cb.html#FONT_CB> - Action generated to retrieve the
+L<FONT_CB|iupmatrix_cb.html#FONT_CB> - Action generated to retrieve the
 font of a cell when it needs to be redrawn.
 
-=item * L<DRAW_CB|iupmatrix_cb.html#DRAW_CB> - Action generated before the cell
+L<DRAW_CB|iupmatrix_cb.html#DRAW_CB> - Action generated before the cell
 is drawn. Allow a custom cell draw.
 
-=item * L<DROPCHECK_CB|iupmatrix_cb.html#DROPCHECK_CB> - Action generated to
+L<DROPCHECK_CB|iupmatrix_cb.html#DROPCHECK_CB> - Action generated to
 determine if a dropdown feedback should be shown.
-
-=back
 
 =head2 Editing
 
-=over
-
-=item * L<DROP_CB|iupmatrix_cb.html#DROP_CB> - Action generated to determine if
+L<DROP_CB|iupmatrix_cb.html#DROP_CB> - Action generated to determine if
 a text field or a dropdown will be shown.
 
-=item * L<DROPSELECT_CB|iupmatrix_cb.html#DROPSELECT_CB> - Action generated
+L<DROPSELECT_CB|iupmatrix_cb.html#DROPSELECT_CB> - Action generated
 when an element in the dropdown list is selected.
 
-=item * EDITION_CB - Action generated when the current cell enters or leaves
+EDITION_CB - Action generated when the current cell enters or leaves
 the edition mode.
-
-=back
 
 =head2 Callback Mode
 
-=over
-
-=item * L<VALUE_CB|iupmatrix_cb.html#VALUE_CB> - Action generated to verify the
+L<VALUE_CB|iupmatrix_cb.html#VALUE_CB> - Action generated to verify the
 value of a cell.
 
-=item * L<VALUE_EDIT_CB|iupmatrix_cb.html#VALUE_EDIT_CB> - Action generated to
+L<VALUE_EDIT_CB|iupmatrix_cb.html#VALUE_EDIT_CB> - Action generated to
 notify the application that the value of a cell was edited.
 
-=item * L<MARK_CB|iupmatrix_cb.html#MARK_CB> - Action generated to verify the
+L<MARK_CB|iupmatrix_cb.html#MARK_CB> - Action generated to verify the
 selection state of a cell.
 
-=item * MARKEDIT_CB - Action generated to notify the application that the
+MARKEDIT_CB - Action generated to notify the application that the
 selection state of a cell was changed.
-
-=back
 
 =head2 Utility Functions
 
 These functions can be used to help set and get attributes from the
 matrix
 
- void  IUP::MatSetAttribute(Ihandle* ih, const char* name, int lin, int col, const char* value);
+void  IUP::MatSetAttribute(Ihandle* ih, const char* name, int lin, int col, const char* value);
  void  IUP::MatStoreAttribute(Ihandle* ih, const char* name, int lin, int col, const char* value);
  char* IUP::MatGetAttribute(Ihandle* ih, const char* name, int lin, int col);
  int   IUP::MatGetInt(Ihandle* ih, const char* name, int lin, int col);
  float IUP::MatGetFloat(Ihandle* ih, const char* name, int lin, int col);
  void  IUP::MatSetfAttribute(Ihandle* ih, const char* name, int lin, int col, const char* format, ...);
 
+=over
+
 They work just like the respective traditional set and get functions.
 But the attribute string is complemented with the L and C values. When
 only one value is needed then use the Iup*AttributeId functions. For
-ex:
-
- IUP::MatSetAttribute(ih, "", 30, 10, value) == IUP::SetAttribute(ih, "30:10", value)
+ex - IUP::MatSetAttribute(ih, "", 30, 10, value) == IUP::SetAttribute(ih, "30:10", value)
  IUP::MatSetAttribute(ih, "BGCOLOR", 30, 10, value) == IUP::SetAttribute(ih, "BGCOLOR30:10", value)
  IUP::SetAttributeId(ih, "ALIGNMENT", 10, value) == IUP::SetAttribute(ih, "ALIGNMENT10", value)
+
+=over
 
 But these functions are faster than the traditional functions because
 they do not need to parse the attribute name string and the application
@@ -300,16 +315,24 @@ Some of these functions are also available in Lua:
  iup.MatStoreAttribute(ih: ihandle, name: string, lin: number, col: number, value: string)
  iup.MatGetAttribute(ih: ihandle, name: string, lin: number, col: number) -> value: string
 
+=over
+
 They are used by the additional methods in Lua:
 
  elem:setcell(lin, col: number, value: string)
  elem:getcell(lin, col: number) -> (cell: string)
+
+=over
 
 But you can also use the traditional functions when typing:
 
  elem["bgcolor"..l..":"..c] = v
     or
  elem["bgcolor30:10"] = v
+
+=over
+
+=back
 
 [% h.notes %]
 
@@ -355,7 +378,7 @@ cell values, then you must set NUMLIN and NUMCOL before mapping.
 
 =head2 Titles
 
-A matrix might have titles for lines and columns. Titles are not
+A matrix might have titles for lines and columns. Titles are always non
 scrollable, non editable and presented with a different default
 background color. A matrix will have a line of titles if an attribute
 of the "I<L>:0" type is defined, where L is a line number, or if the

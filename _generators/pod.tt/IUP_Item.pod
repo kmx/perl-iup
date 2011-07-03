@@ -99,7 +99,7 @@ An item in a menu bar cannot have a check mark. When IMAGE is used, the
 checkmark is not shown. See the item AUTOTOGGLE attribute and the menu
 =item * L<RADIO|iupmenu.html#RADIO> attribute.
 
-=item * L<WID|[%m.at%]/WID> (non inheritable)
+L<WID|[%m.at%]/WID> (non inheritable)
 
 In Windows, returns
 the HMENU of the parent menu.
@@ -129,16 +129,16 @@ selected. IUP_CLOSE will be processed. Even if inside a popup menu when
 IUP_CLOSE is returned, the current popup dialog or the main loop will
 be closed.
 
+=back
+
 =item * L<HIGHLIGHT_CB|../call/iup_highlight_cb.html>
 
 Action generated when
 the item is highlighted.
 
+----
+
 =back
-
-xxxTODo also accepted
-
-=over
 
 =item * L<MAP_CB|../call/iup_map_cb.html>,
 L<UNMAP_CB|../call/iup_unmap_cb.html>,

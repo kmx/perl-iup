@@ -58,6 +58,8 @@ Called when the time is up.
 
 =over
 
+=over
+
 =item * B<ih> - identifier of the element that activated the event.
 
 Returns: IUP_CLOSE will be processed.

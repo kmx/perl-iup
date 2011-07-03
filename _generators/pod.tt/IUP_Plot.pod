@@ -39,8 +39,8 @@ Each plot can contain 2 B<axis> (X and Y), a B<title>, a B< legend>
 B<box>, a B<grid>, a B<dataset> B<area> and as many B<datasets> you
 want.
 
-Each data set is added using the L<IUP::PPlotAdd |IUP::PPlotAdd >function. All other
-plot parameters are configured by attributes.
+Each data set is added using the L<IUP::PlotAdd |IUP::PlotAdd >function. All other plot
+parameters are configured by attributes.
 
 If no attribute is set, the default values were selected to best
 display the plot.
@@ -129,93 +129,87 @@ error occurs.
 
 =head2 Auxiliary Functions
 
-=over
-
-=item * PPlotBegin()
-
- void IUP::PPlotBegin(Ihandle* ih, int strXdata); [in C]
- iup.PPlotBegin(ih: ihandle, strXdata: number) [in Lua]
+ void IUP::PlotBegin(Ihandle* ih, int strXdata); [in C]
+ iup.PlotBegin(ih: ihandle, strXdata: number) [in Lua]
 
 Prepares a dataset to receive samples. If strXdata is 1 then the X axis
 value is a string.
 
-=item * PPlotAdd()
+----
 
- void IUP::PPlotAdd(Ihandle* ih, float x, float y); [in C]
- iup.PPlotAdd(ih: ihandle, x, y: number) [in Lua]
+ void IUP::PlotAdd(Ihandle* ih, float x, float y); [in C]
+ iup.PlotAdd(ih: ihandle, x, y: number) [in Lua]
 
-Adds a sample to the dataset. Can only be called if L<IUP::PPlotBegin|IUP::PPlotBegin>
-was called with strXdata=0.
+Adds a sample to the dataset. Can only be called if L<IUP::PlotBegin|IUP::PlotBegin> was
+called with strXdata=0.
 
-=item * PPlotAddStr()
+----
 
- void IUP::PPlotAddStr(Ihandle* ih, const char* x, float y); [in C]
- iup.PPlotAddStr(ih: ihandle, x: string, y: number) [in Lua]
+ void IUP::PlotAddStr(Ihandle* ih, const char* x, float y); [in C]
+ iup.PlotAddStr(ih: ihandle, x: string, y: number) [in Lua]
 
-Same as L<IUP::PPlotAdd|IUP::PPlotAdd>, but allows to use a string as the X axis value.
-Can only be called if L<IUP::PPlotBegin|IUP::PPlotBegin> was called with strXdata=1.
+Same as L<IUP::PlotAdd|IUP::PlotAdd>, but allows to use a string as the X axis value.
+Can only be called if L<IUP::PlotBegin|IUP::PlotBegin> was called with strXdata=1.
 
-=item * PPlotEnd()
+----
 
- int IUP::PPlotEnd(Ihandle* ih); [in C]
- iup.PPlotEnd(ih: ihandle) -> (index: number) [in Lua]
+ int IUP::PlotEnd(Ihandle* ih); [in C]
+ iup.PlotEnd(ih: ihandle) -> (index: number) [in Lua]
 
 Adds a 2D dataset to the plot and returns the dataset B<index>. The
 data set can be empty. Redraw is NOT done until the REDRAW attribute is
 set. Also it will change the current dataset index to the return value.
 You can only set attributes of a dataset AFTER you added the dataset.
-Can only be called if L<IUP::PPlotBegin|IUP::PPlotBegin> was called. Whenever you create
-a dataset all its "DS_*" attributes will be set to the default values.
+Can only be called if L<IUP::PlotBegin|IUP::PlotBegin> was called. Whenever you create a
+dataset all its "DS_*" attributes will be set to the default values.
 Notice that DS_MODE must be set before other "DS_*" attributes.
 
-=item * PPlotInsert()
+----
 
- void IUP::PPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y); [in C]
- void IUP::PPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
- iup.IUP::PPlotInsert(ih: ihandle, index, sample_index, x, y: number) [in Lua]
- iup.IUP::PPlotInsertStr(ih: ihandle, index, sample_index, x, y: number)
+ void IUP::PlotInsert(Ihandle *ih, int index, int sample_index, float x, float y); [in C]
+ void IUP::PlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
+ iup.IUP::PlotInsert(ih: ihandle, index, sample_index, x, y: number) [in Lua]
+ iup.IUP::PlotInsertStr(ih: ihandle, index, sample_index, x, y: number)
 
 Inserts a sample in a dataset at the given B<sample_index>. Can be used
 only after the dataset is added to the plot.
 
-=item * PPlotInsertPoints()
+----
 
- void IUP::PPlotInsertPoints(Ihandle *ih, int index, int sample_index, float* x, float* y, int count); [in C]
- void IUP::PPlotInsertStrPoints(Ihandle *ih, int index, int sample_index, const char** x, float* y, int count);
- iup.IUP::PPlotInsertPoints(ih: ihandle, index, sample_index, x, y: table of number) [in Lua]
- iup.IUP::PPlotInsertStrPoints(ih: ihandle, index, sample_index, x, y: table of number)
+ void IUP::PlotInsertPoints(Ihandle *ih, int index, int sample_index, float* x, float* y, int count); [in C]
+ void IUP::PlotInsertStrPoints(Ihandle *ih, int index, int sample_index, const char** x, float* y, int count);
+ iup.IUP::PlotInsertPoints(ih: ihandle, index, sample_index, x, y: table of number) [in Lua]
+ iup.IUP::PlotInsertStrPoints(ih: ihandle, index, sample_index, x, y: table of number)
 
 Inserts an array of samples in a dataset at the given B<sample_index>.
 Can be used only after the dataset is added to the plot. (Since 3.4)
 
-=item * PPlotAddPoints()
+----
 
- void IUP::PPlotAddPoints(Ihandle *ih, int index, float* x, float* y, int count); [in C]
- void IUP::PPlotAddStrPoints(Ihandle *ih, int index, const char** x, float* y, int count);
- iup.IUP::PPlotAddPoints(ih: ihandle, index, x, y: table of number) [in Lua]
- iup.IUP::PPlotAddStrPoints(ih: ihandle, index, x, y: table of number)
+ void IUP::PlotAddPoints(Ihandle *ih, int index, float* x, float* y, int count); [in C]
+ void IUP::PlotAddStrPoints(Ihandle *ih, int index, const char** x, float* y, int count);
+ iup.IUP::PlotAddPoints(ih: ihandle, index, x, y: table of number) [in Lua]
+ iup.IUP::PlotAddStrPoints(ih: ihandle, index, x, y: table of number)
 
 Adds an array of samples in a dataset at the end. Can be used only
 after the dataset is added to the plot. (Since 3.4)
 
-=item * PPlotTransform()
+----
 
- void IUP::PPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy); [in C]
- iup.PPlotTransform(ih: ihandle, x, y: number) -> (ix, iy: number) [in Lua]
+ void IUP::PlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy); [in C]
+ iup.PlotTransform(ih: ihandle, x, y: number) -> (ix, iy: number) [in Lua]
 
 Converts coordinates in plot units to pixels. It should be used in
 PREDRAW_CB and POSTDRAW_CB callbacks only. Output variables can be NULL
 if not used. It can be used inside other callbacks, but make sure that
 the drawing after a resize is done.
 
-=item * PPlotPaintTo()
+----
 
- void IUP::PPlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C]
- iup.PPlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
+ void IUP::PlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C]
+ iup.PlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
 
 Plots to the given CD canvas instead of the display canvas.
-
-=back
 
 [% h.at %]
 
@@ -276,11 +270,7 @@ margin of the dataset area. PPlot implementation demands that margins
 must be set so the plot is not cropped. Default: "15", "15", "30",
 "15".
 
-=back
-
 =head2 Legend Configuration (non inheritable)
-
-=over
 
 =item * B<LEGENDSHOW>
 
@@ -297,11 +287,7 @@ legend box position. Can be: "TOPLEFT", "TOPRIGHT",
 the legend box text font size and
 style.
 
-=back
-
 =head2 Grid Configuration (non inheritable)
-
-=over
 
 =item * B<GRIDLINESTYLE>
 
@@ -318,11 +304,7 @@ grid color. Default: "200 200 200".
 shows or hides the grid in both or a specific axis. Can be:
 YES (both), HORIZONTAL, VERTICAL or NO. Default: NO.
 
-=back
-
 =head2 Dataset Management (non inheritable)
-
-=over
 
 =item * B<REMOVE> (write-only)
 
@@ -395,11 +377,7 @@ given its index.
 enable or disable the current dataset selection and
 editing. Can be YES or NO. Default: NO.
 
-=back
-
 =head2 Axis Configuration (non inheritable)
-
-=over
 
 =item * B<AXS_XCOLOR, AXS_YCOLOR>
 
@@ -466,9 +444,9 @@ AXS_YTICKFONTSTYLE>
 axis tick number font size and style. See
 TITLEFONTSIZE and TITLEFONTSTYLE.
 
-=item * B<AXS_XAUTOTICK>, B<AXS_YAUTOTICK>
+=item * B<AXS_XAUTOTICK>, B<AXS_YAUTOTICK
 
-configures the automatic tick
+>configures the automatic tick
 spacing. Can be YES or NO. Default: YES.
 
 =item * B<AXS_XTICKMAJORSPAN>, B<AXS_YTICKMAJORSPAN>
@@ -537,7 +515,7 @@ once for each selected point.
 
 =item * B<sample_index> - index of the sample in the dataset
 
-=item * x: X coordinate value of the sample
+x: X coordinate value of the sample
 
 =item * B<y> - Y coordinate value of the sample
 
@@ -578,7 +556,7 @@ changed.
 
 =item * B<sample_index> - index of the sample in the dataset
 
-=item * x: X coordinate value of the sample
+x: X coordinate value of the sample
 
 =item * B<y> - Y coordinate value of the sample
 
@@ -622,7 +600,7 @@ changed.
 
 =item * B<sample_index> - index of the sample in the dataset
 
-=item * x: X coordinate value of the sample
+x: X coordinate value of the sample
 
 =item * B<y> - Y coordinate value of the sample
 
@@ -671,8 +649,6 @@ function.
 
 =back
 
-=back
-
 [%txt.cb_common%]
 
 =over
@@ -692,6 +668,16 @@ All common callbacks are supported.
 [% h.examples %]
 
 L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
 
 [IMAGE]
 

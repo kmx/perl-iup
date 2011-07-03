@@ -226,8 +226,6 @@ switch is always accepted.
 
 =back
 
-=back
-
 [%txt.cb_common%]
 
 =over

@@ -313,9 +313,10 @@ proper state=0 value.
 Action generated when any
 mouse button is pressed or released inside the list. Called only when
 DROPDOWN=NO. If the list has an editbox the message is called when
-cursor is at the listbox only (ignored at the editbox). 
+cursor is at the listbox only (ignored at the editbox). Use
+=back
 
-Use xxxTODO??? L<IUP::ConvertXYToPos|IUP::ConvertXYToPos> to convert (x,y)
+=item * L<IUP::ConvertXYToPos|IUP::ConvertXYToPos> to convert (x,y)
 coordinates in item position. 
 
 =item * B<CARET_CB>
@@ -335,9 +336,10 @@ changed. Valid only when EDITBOX=YES.
 
 For lists B<lin> is always 1, and B<pos> is always "B<col>-1".
 
-This is the same CARET_CB callback definition as for the L<IUP::Text|IUP::Text>.
-
+This is the same CARET_CB callback definition as for the
 =back
+
+=item * L<IUP::Text|IUP::Text>.
 
 =item * B<DBLCLICK_CB>
 
@@ -375,6 +377,9 @@ or hidden. Called only when DROPDOWN=YES.
 
 Action generated when one or more files are dropped in the element.
 
+
+=back
+
 =item * B<EDIT_CB>
 
 Action generated when the text in the text box is manually
@@ -397,19 +402,23 @@ and returns a valid alpha numeric character, this new character will be
 used instead. The VALUE attribute can be changed only if IUP_IGNORE is
 returned.
 
-This is the same ACTION callback definition as for the L<IUP::Text|IUP::Text>.
-
+This is the same ACTION callback definition as for the
 =back
+
+=item * L<IUP::Text|IUP::Text>.
 
 =item * L<MOTION_CB|../call/iup_motion_cb.html>
 
 Action generated when the
 mouse is moved over the list. Called only when DROPDOWN=NO. If the list
 has an editbox the message is called when cursor is at the listbox only
-(ignored at the editbox). Use L<IUP::ConvertXYToPos|IUP::ConvertXYToPos> to convert (x,y)
+(ignored at the editbox). Use
+=back
+
+=item * L<IUP::ConvertXYToPos|IUP::ConvertXYToPos> to convert (x,y)
 coordinates in item position. 
 
-=item * B<MULTISELECT_CB>
+B<MULTISELECT_CB>
 
 Action generated when the state of an item in the
 multiple selection list is changed. But it is called only when the
@@ -447,13 +456,9 @@ edited.
 
 =item * B<ih> - identifier of the element that activated the event.
 
-=back
+----
 
 =back
-
-xxxTODO also common callbacks
-
-=over
 
 =item * L<MAP_CB|../call/iup_map_cb.html>,
 L<UNMAP_CB|../call/iup_unmap_cb.html>,
@@ -478,6 +483,8 @@ system:
 
 =over
 
+=over
+
 =item * If DROPDOWN=NO and EDITBOX=YES, then the list never gets the
 focus, the callbacks are called only when the edit box is clicked.
 
@@ -492,6 +499,8 @@ callbacks with mouse navigation set EDITBOX=YES and READONLY=YES). Also
 in GTK, if DROPDOWN=YES and EDITBOX=YES then when the dropdown button
 is clicked the list looses its focus and it gets it back only if the
 edit box is clicked.
+
+=back
 
 =back
 
@@ -533,6 +542,20 @@ does not need to concatenate the attribute name with the id.
 [% h.examples %]
 
 L<Browse for Example Files|../../examples/>
+
+Windows 2000
+
+[IMAGE]
+
+Windows XP
+
+[IMAGE]
+
+Motif
+
+[IMAGE]
+
+GTK
 
 [IMAGE]
 

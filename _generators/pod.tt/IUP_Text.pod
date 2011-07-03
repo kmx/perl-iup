@@ -437,11 +437,16 @@ For single line controls B<lin> is always 1, and B<pos> is always
 
 Action generated when one or more files are dropped in the element.
 
+
+=back
+
 =item * L<MOTION_CB|../call/iup_motion_cb.html>
 
 Action generated when the
 mouse is moved. Use L<IUP::ConvertXYToPos|IUP::ConvertXYToPos>
 to convert (x,y) coordinates in character positioning. 
+
+=back
 
 =item * B<SPIN_CB>
 
@@ -473,15 +478,12 @@ the user.
 
 =item * B<ih> - identifier of the element that activated the event.
 
-=back
+----
 
 =back
 
-xxxTODO also common
-
-=over
-
-=item * L<MAP_CB|../call/iup_map_cb.html>, L<UNMAP_CB|../call/iup_unmap_cb.html>,
+=item * L<MAP_CB|../call/iup_map_cb.html>,
+=item * L<UNMAP_CB|../call/iup_unmap_cb.html>,
 L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
 L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
 L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
@@ -490,22 +492,18 @@ L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
 
 All common callbacks are supported.
 
-=back
-
 =head2 Auxiliary Functions
 
-=over
-
-=item * TextConvertLinColToPos()
-
  void IUP::TextConvertLinColToPos(Ihandle* ih, int lin, int col, int *pos); [in C]iup.TextConvertLinColToPos(ih - ihandle, lin, col: number) -> pos: number [in Lua]
+
+=over
 
 Converts a (lin, col) character positioning into an absolute position.
 For single line controls B<pos> is always "B<col>-1". 
 
-=item * TextConvertPosToLinCol()
-
  void IUP::TextConvertPosToLinCol(Ihandle* ih, int pos, int *lin, int *col); [in C]iup.TextConvertPosToLinCol(ih: ihandle, pos: number) -> lin, col: number [in Lua]
+
+=over
 
 Converts an absolute position into a (lin, col) character positioning.
 For single line controls B<lin> is always 1, and B<col> is always
@@ -534,34 +532,91 @@ Asian codepage where some characters take two bytes).
 Here is a list of the common keys for all drivers. Other keys are
 available depending on the driver.
 
- Keys                             Navigation Action 
- --------------------------------------------------------------------
- Arrows                           move by individual characters/lines
- Ctrl+Arrows                      move by words/paragraphs
- Home/End                         move to begin/end line
- Ctrl+Home/End                    move to begin/end text
- PgUp/PgDn                        move vertically by pages
- Ctrl+PgUp/PgDn                   move horizontally by pages
+Keys
 
- Keys                             Selection Action
- --------------------------------------------------------------------
- Shift+Arrows                     select charaters
- Ctrl+A                           select all
+Action
 
- Keys                             Deleting Action
- --------------------------------------------------------------------
- Del                              delete the character at right
- Backspace                        delete the character at left
+I<Navigation>
 
- Keys                             Clipboard Action
- --------------------------------------------------------------------
- Ctrl+C                           copy
- Ctrl+X                           cut
- Ctrl+V                           paste
+Arrows
+
+move by individual characters/lines
+
+Ctrl+Arrows
+
+move by words/paragraphs
+
+Home/End
+
+move to begin/end line
+
+Ctrl+Home/End
+
+move to begin/end text
+
+PgUp/PgDn
+
+move vertically by pages
+
+Ctrl+PgUp/PgDn
+
+move horizontally by pages
+
+I<Selection>
+
+Shift+Arrows
+
+select charaters
+
+Ctrl+A
+
+select all
+
+I<Deleting>
+
+Del
+
+delete the character at right
+
+Backspace
+
+delete the character at left
+
+I<Clipboard>
+
+Ctrl+C
+
+copy
+
+Ctrl+X
+
+cut
+
+Ctrl+V
+
+paste
 
 [% h.examples %]
 
 L<Browse for Example Files|../../examples/>
+
+Motif
+
+Windows
+
+Classic
+
+Windows
+
+w/ Styles
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
 
 [IMAGE]
 
@@ -569,6 +624,28 @@ When FORMATTING=YES in Windows or GTK (formatting attributes are set to
 a formatag object that it is a L<IUP::User|IUP::User>):
 
  "ALIGNMENT" = "CENTER""SPACEAFTER" = "10""FONTSIZE" = "24""SELECTION" = "3,1:3,50""ADDFORMATTAG""BGCOLOR" = "255 128 64""UNDERLINE" = "SINGLE""WEIGHT" = "BOLD""SELECTION" = "3,7:3,11""ADDFORMATTAG"    "ITALIC" = "YES""STRIKEOUT" = "YES""SELECTION" = "2,1:2,12""ADDFORMATTAG"
+
+[IMAGE]
+
+When SPIN=YES:
+
+Motif
+
+Windows
+
+Classic
+
+Windows
+
+w/ Styles
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
 
 [IMAGE]
 

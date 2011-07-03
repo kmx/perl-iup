@@ -79,11 +79,9 @@ also accepted.
 Action generated when
 the submenu is highlighted.
 
+----
+
 =back
-
-xxxTODO also common
-
-=over
 
 =item * L<MAP_CB|../call/iup_map_cb.html>,
 L<UNMAP_CB|../call/iup_unmap_cb.html>

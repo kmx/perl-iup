@@ -154,6 +154,14 @@ Win32.
 
 =over
 
+
+The L<IUP::GLCanvas|IUP::GLCanvas> element understands all callbacks defined for a
+conventional canvas, see L<IUP::Canvas|IUP::Canvas>.
+
+Addicionally:
+
+=back
+
 =item * L<RESIZE_CB|../call/iup_resize_cb.html>
 
 By default the resize callback
@@ -161,63 +169,63 @@ sets:
 
  glViewport(0,0,width,height);
 
-=item * The L<IUP::GLCanvas|IUP::GLCanvas> element understands all callbacks defined for a
-conventional canvas, see L<IUP::Canvas|IUP::Canvas>.
+=over
 
-=back
- 
 =head2 Auxiliary Functions
 
 These are auxiliary functions based on the WGL and XGL extensions.
 Check the respective documentations for more information.
 
-=head3 GLMakeCurrent()
-
  void IUP::GLMakeCurrent(Ihandle* ih); [in C]
  iup.GLMakeCurrent(ih: ihandle) [in Lua]
+
+=over
 
 Activates the given canvas as the current OpenGL context. All
 subsequent OpenGL commands are directed to such canvas.
 
-=head3 GLIsCurrent()
-
  int IUP::GLIsCurrent(Ihandle* ih); [in C]
  iup.GLIsCurrent(ih: ihandle) -> status: boolean [in Lua]
+
+=over
 
 Returns a non zero value if the given canvas is the current OpenGL
 context.
 
-=head3 GLSwapBuffers()
-
  void IUP::GLSwapBuffers(Ihandle* ih); [in C]
  iup.GLSwapBuffers(ih: ihandle) [in Lua]
+
+=over
 
 Makes the BACK buffer visible. This function is necessary when a double
 buffer is used.
 
-=head3 GLPalette()
-
  void IUP::GLPalette(Ihandle* ih, int index, float r, float g, float b); [in C]
  iup.GLPalette(ih: ihandle, index, r, g, b: number) [in Lua]
+
+=over
 
 Defines a color in the color palette. This function is necessary when
 INDEX color is used.
 
-=head3 GLUseFont()
-
  void IUP::GLUseFont(Ihandle* ih, int first, int count, int list_base); [in C]
  iup.GLUseFont(ih:ihandle, first, count, list_base: number) [in Lua]
+
+=over
 
 Creates a bitmap display list from the current FONT attribute. See the
 documentation of the wglUseFontBitmaps and glXUseXFont functions.
 
-=head3 GLWait()
 
  void IUP::GLWait(int gl) [in C]
  iup.GLWait(gl: number) [in Lua]
 
+=over
+
 If gl is non zero it will call glFinish or glXWaitGL, else will call
 GdiFlush or glXWaitX. 
+
+=back
 
 [% h.notes %]
 

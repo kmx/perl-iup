@@ -199,8 +199,6 @@ tab. Called only when TABCHANGE_CB is not defined. (since 3.3)
 
 =back
 
-=back
-
 [%txt.cb_common%]
 
 =over
@@ -263,10 +261,44 @@ L<Browse for Example Files|../../examples/>
 
 In Windows, the Visual Styles work only when TABTYPE is TOP.
 
+Windows
+
+Classic
+
+Windows
+
+w/ Styles
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
 [IMAGE]
 
 GTK is the only one that supports vertical text in the TOP
 configuration, but does not supports multiple lines of tab buttons.
+
+GTK
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+Motif does not supports vertical text.
+
+Motif
+
+[IMAGE]
 
 [IMAGE]
 
