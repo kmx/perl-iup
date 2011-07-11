@@ -511,7 +511,7 @@ once for each selected point.
 
 =over
 
-=item * B<index> - index of the dataset
+B<$index:> index of the dataset
 
 =item * B<sample_index> - index of the sample in the dataset
 
@@ -519,7 +519,7 @@ x: X coordinate value of the sample
 
 =item * B<y> - Y coordinate value of the sample
 
-Returns: If IUP_IGNORE then the sample is not deleted.
+B<Returns:> If IUP_IGNORE then the sample is not deleted.
 
 =back
 

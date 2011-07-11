@@ -89,8 +89,6 @@ also accepted.
 =item * L<MAP_CB|[%m.cb%]/MAP_CB>,
 L<UNMAP_CB|[%m.cb%]/UNMAP_CB>
 
-common callbacks are supported.
-
 =back
 
 [% h.notes %]

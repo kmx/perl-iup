@@ -293,9 +293,9 @@ changed item:
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_List) that activated the event
 
-=item * B<text> - Text of the changed item.
+B<$text:> Text of the changed item.
 
 =item * B<item> - Number of the changed item starting at 1.
 
@@ -329,7 +329,7 @@ changed. Valid only when EDITBOX=YES.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_List) that activated the event
 
 =item * B<lin, col> - line and column number (start at 1).
 
@@ -351,7 +351,7 @@ Called only when DROPDOWN=NO.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_List) that activated the event
 
 =item * B<item> - Number of the selected item starting at 1.
 
@@ -368,7 +368,7 @@ or hidden. Called only when DROPDOWN=YES.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_List) that activated the event
 
 =item * B<state> - state of the list 1=shown, 0=hidden.
 
@@ -391,13 +391,13 @@ only when EDITBOX=YES.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_List) that activated the event
 
 =item * B<c> - valid alpha numeric character or 0.
 
 =item * B<new_value> - Represents the new text value.
 
-Returns: IUP_CLOSE will be processed, but the change will be ignored.
+B<Returns:> IUP_CLOSE will be processed, but the change will be ignored.
 If IUP_IGNORE, the system will ignore the new value. If B<c> is valid
 and returns a valid alpha numeric character, this new character will be
 used instead. The VALUE attribute can be changed only if IUP_IGNORE is
@@ -429,7 +429,7 @@ interaction is over.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_List) that activated the event
 
 =item * B<value> - Similar to the VALUE attribute for a multiple selection list.
 Items selected are marked with '+', items deselected are marked with
@@ -455,7 +455,7 @@ edited.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_List) that activated the event
 
 ----
 

@@ -145,8 +145,6 @@ the item is highlighted.
 L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
 L<HELP_CB|[%m.cb%]/HELP_CB>
 
-common callbacks are supported.
-
 =back
 
 [% h.notes %]

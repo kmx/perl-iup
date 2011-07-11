@@ -475,11 +475,11 @@ SINGLEINSTANCE to be called. (since iup-3.2)
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Dialog) that activated the event
 
 =item * B<cmdLine> - command line of the second instance.
 
-=item * B<size> - size of the command line string including the null character.
+B<$size:> size of the command line string including the null character.
 
 =back
 
@@ -501,7 +501,7 @@ when the child is shown for the first time.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Dialog) that activated the event
 
 =back
 
@@ -522,7 +522,7 @@ screen. The coordinates are the same as the
 
 trayclick_cb(x, y: number) -> (ret: number) [in Lua]
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Dialog) that activated the event
 
 =item * B<x>, B<y> - coordinates of the new position.
 
@@ -553,7 +553,7 @@ button is pressed or released over the tray icon. (GTK 2.10)
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Dialog) that activated the event
 
 =item * B<but> - identifies the activated mouse button. Can be: 1, 2 or 3. Note
 that this is different from the BUTTON_CB canvas callback definition.
@@ -563,7 +563,7 @@ GTK does not get button=2 messages.
 
 =item * B<dclick> - indicates a double click. In GTK double click is simulated.
 
-Returns: IUP_CLOSE will be processed.
+B<Returns:> IUP_CLOSE will be processed.
 
 =back
 

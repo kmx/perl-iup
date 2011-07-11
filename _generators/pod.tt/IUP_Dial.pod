@@ -104,9 +104,9 @@ dial.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Dial) that activated the event
 
-=item * B<angle> - the dial value converted according to UNIT.
+B<$angle:> the dial value converted according to UNIT.
 
 =back
 
@@ -120,7 +120,7 @@ button after pressing it over the dial.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Dial) that activated the event
 
 =item * B<angle> - the dial value converted according to UNIT.
 
@@ -137,7 +137,7 @@ initialized is passed as a parameter.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Dial) that activated the event
 
 =item * B<angle> - the dial value converted according to UNIT.
 
@@ -158,7 +158,7 @@ defined those callbacks will not be called.
 
 valuechanged_cb() -> (ret: number) [in Lua]
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Dial) that activated the event
 
 =back
 

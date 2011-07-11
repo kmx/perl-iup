@@ -141,7 +141,7 @@ change its value.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_ColorBar) that activated the event
 
 =item * B<cell:> index of the selected cell. If the user double click a preview
 cell, the respective index is returned.
@@ -161,11 +161,11 @@ Shift key pressed. It is independent of the SHOW_SECONDARY attribute.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_ColorBar) that activated the event
 
 =item * B<cell:> index of the selected cell.
 
-Returns: If IUP_IGNORE the cell is not redrawn. By default the cell is
+B<Returns:> If IUP_IGNORE the cell is not redrawn. By default the cell is
 always redrawn.
 
 =back
@@ -181,9 +181,9 @@ selected with the right mouse button.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_ColorBar) that activated the event
 
-=item * B<cell> - index of the selected cell.
+B<$cell:> index of the selected cell.
 
 =item * B<type> - indicates if the user selected a primary or secondary color.
 In can be: C<IUP_PRIMARY(-1)> or C<IUP_SECONDARY(-2).>
@@ -204,7 +204,7 @@ selections. It is only called if SHOW_SECONDARY=YESB<.>
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_ColorBar) that activated the event
 
 =item * B<prim_cell> - index of the actual primary cell.
 

@@ -847,7 +847,7 @@ filename. Uses pre-defined dialog L<IUP::FileDlg|IUP::FileDlg>.
 B<$filename_spec:> This parameter is used as an input value to define the
 default filter and directory. Example: "../docs/*.txt".
 
-Returns: a list with 2 values: B<filename> of chosen file; B<status> code, 
+B<Returns:> a list with 2 values: B<filename> of chosen file; B<status> code, 
 whose values can be:
 
 =over
@@ -1034,9 +1034,9 @@ the user pressed the OK button.
     #...
   }
 
-B<$dialog> - Reference to the dialog object (L<IUP::Dialog|IUP::Dialog>).
+B<$dialog:> Reference to the dialog object (L<IUP::Dialog|IUP::Dialog>).
 
-B<param_index> - Current parameter index (0 based) being changed. 
+B<param_index:> Current parameter index (0 based) being changed. 
 It is -1 if the user pressed the B<OK> button. It is -2 after the dialog
 is B<mapped> and just before it is shown. It is -3 if the user pressed
 the B<Cancel> button. It is -4 if the user pressed the B<Help> button, if any.

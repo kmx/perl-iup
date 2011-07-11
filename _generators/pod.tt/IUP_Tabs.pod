@@ -174,7 +174,7 @@ Callback called when the user shifts the active tab.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Tabs) that activated the event
 
 =item * B<new_tab> - the new tab selected by the user
 
@@ -192,7 +192,7 @@ tab. Called only when TABCHANGE_CB is not defined. (since iup-3.3)
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Tabs) that activated the event
 
 =item * B<new_pos> - the new tab position selected by the user
 

@@ -61,9 +61,9 @@ Called when the time is up.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Timer) that activated the event
 
-Returns: IUP_CLOSE will be processed.
+B<Returns:> IUP_CLOSE will be processed.
 
 =back
 

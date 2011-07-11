@@ -141,7 +141,7 @@ the user.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Val) that activated the event
 
 =back
 
