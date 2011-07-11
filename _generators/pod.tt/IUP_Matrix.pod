@@ -22,7 +22,7 @@ defines the mode the matrix will operate.
 
 [% h.create %]
 
- Ihandle* IUP::Matrix(char *action_cb); [in C]
+ $matrix = IUP::Matrix->new(char *action_cb);
  iup.matrix{} -> (elem: ihandle) [in Lua]
  matrix(action_cb) [in LED]
 

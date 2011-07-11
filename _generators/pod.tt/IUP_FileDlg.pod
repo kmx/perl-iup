@@ -12,7 +12,7 @@ IUP::Popup function only.
 
 [% h.create %]
 
- Ihandle* IUP::FileDlg(void); [in C]
+ $filedlg = IUP::FileDlg->new(void);
  iup.filedlg{} -> (elem: ihandle) [in Lua]
  filedlg() [in LED]
 

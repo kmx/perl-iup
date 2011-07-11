@@ -24,7 +24,7 @@ Originally implemented by Andr Clinio.
 
 [% h.create %]
 
- Ihandle* IUP::Colorbar(void); [in C]
+ $colorbar = IUP::Colorbar->new(void);
  iup.colorbar{} -> (elem: ihandle) [in Lua]
  colorbar() [in LED] 
 

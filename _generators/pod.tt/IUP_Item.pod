@@ -11,7 +11,7 @@ generates an action.
 
 [% h.create %]
 
- Ihandle* IUP::Item(const char *title, const char *action); [in C]
+ $item = IUP::Item->new(const char *title, const char *action);
  iup.item{[title = title: string]} -> elem: ihandle [in Lua]
  item(title, action) [in LED]
 

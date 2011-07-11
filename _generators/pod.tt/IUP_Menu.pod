@@ -12,8 +12,8 @@ a menu will be an error.
 
 [% h.create %]
 
- Ihandle* IUP::Menu(Ihandle *child, ...); [in C]
- Ihandle* IUP::Menuv(Ihandle **children); [in C]
+ $menu = IUP::Menu->new(Ihandle *child, ...);
+ $menuv = IUP::Menuv->new(Ihandle **children);
  iup.menu{child, ...: ihandle} -> (elem: ihandle) [in Lua]
  menu(child, ...) [in LED]
 

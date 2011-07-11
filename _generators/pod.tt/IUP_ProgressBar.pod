@@ -14,7 +14,7 @@ does not have support for text inside the bar.
 
 [% h.create %]
 
- Ihandle* IUP::ProgressBar(void); [in C]
+ $progressbar = IUP::ProgressBar->new(void);
  iup.progressbar{} -> (elem: ihandle) [in Lua]
  progressbar() [in LED] 
 

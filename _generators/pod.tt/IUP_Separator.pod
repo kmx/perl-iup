@@ -11,7 +11,7 @@ menu items.
 
 [% h.create %]
 
- Ihandle* IUP::Separator(void); [in C]
+ $separator = IUP::Separator->new(void);
  iup.separator{} -> (elem: ihandle) [in Lua]
  separator() [in LED]
 

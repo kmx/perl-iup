@@ -13,8 +13,8 @@ according to is value.
 
 [% h.create %]
 
- Ihandle* IUP::Normalizer(Ihandle *ih_first, ...); [in C]
- Ihandle* IUP::Normalizerv(Ihandle **ih_list); [in C]
+ $normalizer = IUP::Normalizer->new(Ihandle *ih_first, ...);
+ $normalizerv = IUP::Normalizerv->new(Ihandle **ih_list);
  iup.normalizer{ih_first, ...: ihandle} -> (elem: ihandle) [in Lua]
  normalizer(ih_first, ...) [in LED]
 

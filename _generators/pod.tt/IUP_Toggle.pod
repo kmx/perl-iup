@@ -13,7 +13,7 @@ text or an image.
 
 [% h.create %]
 
- Ihandle* IUP::Toggle(const char *title, const char *action); [in C]iup.toggle{[title = title: string]} -> (elem: ihandle) [in Lua]toggle(title, action) [in LED]
+ $toggle = IUP::Toggle->new(const char *title, const char *action);
 
 B<title>: Text to be shown on the toggle. It can be NULL. It will set
 the TITLE attribute.

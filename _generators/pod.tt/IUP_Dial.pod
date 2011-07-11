@@ -15,7 +15,7 @@ It inherits from L<IUP::Canvas|IUP::Canvas>.
 
 [% h.create %]
 
- Ihandle* IUP::Dial(const char *orientation); [in C]
+ $dial = IUP::Dial->new(const char *orientation);
  iup.dial{orientation: string} -> (elem: ihandle) [in Lua]
  dial(orientation) [in LED] 
 

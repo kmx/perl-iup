@@ -12,7 +12,7 @@ only.
 
 [% h.create %]
 
- Ihandle* IUP::FontDlg(void); [in C]
+ $fontdlg = IUP::FontDlg->new(void);
  iup.fontdlg{} -> (elem: ihandle) [in Lua]
  fontdlg() [in LED]
 

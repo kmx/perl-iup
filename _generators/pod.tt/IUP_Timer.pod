@@ -12,7 +12,7 @@ L<IUP::Destroy|IUP::Destroy>.
 
 [% h.create %]
 
- Ihandle* IUP::Timer(void); [in C]
+ $timer = IUP::Timer->new(void);
  iup.timer{} -> (elem: ihandle) [in Lua] 
  timer() [in LED]
 

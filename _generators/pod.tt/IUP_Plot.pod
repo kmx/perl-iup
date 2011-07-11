@@ -120,7 +120,7 @@ moving the Y coordinate.
 
 [% h.create %]
 
- Ihandle* IUP::PPlot(void); [in C]
+ $pplot = IUP::PPlot->new(void);
  iup.pplot{} -> (elem: ihandle) [in Lua]
  pplot() [in LED]
 

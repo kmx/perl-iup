@@ -13,8 +13,8 @@ systems.
 
 [% h.create %]
 
- Ihandle* IUP::Tabs(Ihandle* child, ...); [in C]
- Ihandle* IUP::Tabsv(Ihandle** children); [in C]
+ $tabs = IUP::Tabs->new(Ihandle* child, ...);
+ $tabsv = IUP::Tabsv->new(Ihandle** children);
  iup.tabs{child, ...: ihandle} -> (elem: ihandle) [in Lua]
  tabs(child, ...) [in LED]
 

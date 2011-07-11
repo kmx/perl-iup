@@ -32,7 +32,7 @@ L<IUP::ColorDlg|IUP::ColorDlg>.
 
 [% h.create %]
 
- Ihandle* IUP::ColorBrowser(void); [in C]
+ $colorbrowser = IUP::ColorBrowser->new(void);
  iup.colorbrowser{} (elem: ihandle) [in Lua]
  colorbrowser() [in LED]
 

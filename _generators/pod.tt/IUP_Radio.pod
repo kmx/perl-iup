@@ -14,7 +14,7 @@ It does not have a native representation.
 
 [% h.create %]
 
- Ihandle* IUP::Radio(Ihandle *child); [in C]
+ $radio = IUP::Radio->new(Ihandle *child);
  iup.radio{child: ihandle} -> (elem: ihandle) [in Lua]
  radio(child) [in LED]
 

@@ -13,8 +13,8 @@ It does not have a native representation.
 
 [% h.create %]
 
- Ihandle* IUP::Vbox(Ihandle *child, ...); [in C]
- Ihandle* IUP::Vboxv(Ihandle **children); [in C]
+ $vbox = IUP::Vbox->new(Ihandle *child, ...);
+ $vboxv = IUP::Vboxv->new(Ihandle **children);
  iup.vbox{child, ...: ihandle} -> (elem: ihandle) [in Lua]
  vbox(child, ...) [in LED]
 

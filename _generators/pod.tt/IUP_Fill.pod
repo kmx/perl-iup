@@ -15,7 +15,7 @@ It does not have a native representation.
 
 [% h.create %]
 
- Ihandle* IUP::Fill(void); [in C]
+ $fill = IUP::Fill->new(void);
  iup.fill{} -> elem: ihandle [in Lua]
  fill() [in LED]
 

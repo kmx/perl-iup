@@ -12,7 +12,7 @@ function only.
 
 [% h.create %]
 
- Ihandle* IUP::MessageDlg(void); [in C]
+ $messagedlg = IUP::MessageDlg->new(void);
  iup.messagedlg{} -> (elem: ihandle) [in Lua]
  messagedlg() [in LED]
 

@@ -16,7 +16,7 @@ L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
 
 [% h.create %]
 
- Ihandle* IUP::Split(Ihandle* child1, Ihandle* child2); [in C]
+ $split = IUP::Split->new(Ihandle* child1, Ihandle* child2);
  iup.split{child1, child2: ihandle} -> (elem: ihandle) [in Lua]
  split(child1, child2) [in LED]
 

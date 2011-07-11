@@ -13,9 +13,9 @@ cursor.
 
 [% h.create %]
 
- Ihandle* IUP::Image(int width, int height, const unsigned char *pixels); [in C]
- Ihandle* IUP::ImageRGB(int width, int height, const unsigned char *pixels); [in C]
- Ihandle* IUP::ImageRGBA(int width, int height, const unsigned char *pixels); [in C]
+ $image = IUP::Image->new(int width, int height, const unsigned char *pixels);
+ $imagergb = IUP::ImageRGB->new(int width, int height, const unsigned char *pixels);
+ $imagergba = IUP::ImageRGBA->new(int width, int height, const unsigned char *pixels);
  
  iup.image{line0: table, line1: table, ...; colors = colors: table} -> (elem: ihandle) [in Lua]
  iup.image{width = width: number, height = height: number, pixels = pixels: table, colors = colors: table} -> (elem: ihandle) [in Lua]

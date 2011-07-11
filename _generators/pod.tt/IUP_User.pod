@@ -13,7 +13,7 @@ Ihandle* to store private attributes.
 
 [% h.create %]
 
- Ihandle* IUP::User(void); [in C]
+ $user = IUP::User->new(void);
  iup.user{} -> (elem: ihandle) [in Lua]
  user() [in LED]
 

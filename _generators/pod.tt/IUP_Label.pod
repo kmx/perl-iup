@@ -11,7 +11,7 @@ or an image.
 
 [% h.create %]
 
- Ihandle* IUP::Label(const char *title); [in C]
+ $label = IUP::Label->new(const char *title);
  iup.label{[title = title: string]} -> (elem: ihandle) [in Lua]
  label(title) [in LED]
 

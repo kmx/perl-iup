@@ -10,7 +10,7 @@ Creates an editable text field.
 
 [% h.create %]
 
- Ihandle* IUP::Text(const char *action); [in C]iup.text{} -> (elem: ihandle) [in Lua]text(action) [in LED]
+ $text = IUP::Text->new(const char *action);
 
 B<action>: name of the action generated when the user types something.
 It can be NULL.

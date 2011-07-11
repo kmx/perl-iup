@@ -11,7 +11,7 @@ around an interface element.
 
 [% h.create %]
 
- Ihandle* IUP::Frame(Ihandle *child); [in C]
+ $frame = IUP::Frame->new(Ihandle *child);
  iup.frame{child: ihandle} -> (elem: ihandle) [in Lua]
  frame(child) [in LED]
 

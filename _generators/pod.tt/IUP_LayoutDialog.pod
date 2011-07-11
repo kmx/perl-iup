@@ -23,7 +23,7 @@ their dialogs in other ways.
 
 [% h.create %]
 
- Ihandle* IUP::LayoutDialog(Ihandle* dialog); [in C]
+ $layoutdialog = IUP::LayoutDialog->new(Ihandle* dialog);
  iup.LayoutDialog(dialog: ihandle) -> (elem: ihandle) [in Lua]
  [NOT available in LED]
 

@@ -10,7 +10,7 @@ Creates a menu item that, when selected, opens another menu.
 
 [% h.create %]
 
- Ihandle* IUP::Submenu(const char *title, Ihandle *menu); [in C]
+ $submenu = IUP::Submenu->new(const char *title, Ihandle *menu);
  iup.submenu{menu: ihandle[; title = title: string]} -> (elem: ihandle) [in Lua]
  submenu(title, menu) [in LED]
 

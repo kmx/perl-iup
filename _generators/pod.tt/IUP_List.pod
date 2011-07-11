@@ -13,7 +13,7 @@ down case is called Combo Box.
 
 [% h.create %]
 
- Ihandle* IUP::List(const char *action); [in C]iup.list{} -> (elem: ihandle) [in Lua]list(action) [in LED]
+ $list = IUP::List->new(const char *action);
 
 B<action>: String with the name of the action generated when the state
 of an item is changed. It can be NULL.

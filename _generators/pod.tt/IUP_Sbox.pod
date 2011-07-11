@@ -14,7 +14,7 @@ L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
 
 [% h.create %]
 
- Ihandle* IUP::Sbox(Ihandle* child); [in C]
+ $sbox = IUP::Sbox->new(Ihandle* child);
  iup.sbox{child: ihandle} -> (elem: ihandle) [in Lua]
  sbox(child) [in LED]
 

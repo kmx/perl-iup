@@ -21,7 +21,7 @@ their background inverted.
 
 [% h.create %]
 
- Ihandle* IUP::Tree(void); [in C] 
+ $tree = IUP::Tree->new(void);
  iup.tree{} -> (elem: ihandle) [in Lua]
  tree() [in LED]
 

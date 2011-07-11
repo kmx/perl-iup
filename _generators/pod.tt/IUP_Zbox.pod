@@ -18,8 +18,8 @@ Zbox will NOT change its state.
 
 [% h.create %]
 
- Ihandle* IUP::Zbox (Ihandle *child, ...); [in C]
- Ihandle* IUP::Zboxv (Ihandle **children); [in C]
+ $zbox = IUP::Zbox->new(Ihandle *child, ...);
+ $zboxv = IUP::Zboxv->new(Ihandle **children);
  iup.zbox{child, ... : ihandle} -> (elem: ihandle) [in Lua]
  zbox(child, ...) [in LED]
 

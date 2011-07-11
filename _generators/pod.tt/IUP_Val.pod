@@ -11,7 +11,7 @@ known as Scale or Trackbar in native systems.
 
 [% h.create %]
 
- Ihandle* IUP::Val(const char *orientation); [in C]iup.val{orientation: string} -> (elem: ihandle) [in Lua]val(orientation) [in LED] 
+ $val = IUP::Val->new(const char *orientation);
 
 B<orientation>: optional orientation of valuator. Can be NULL. See
 ORIENTATION attribute.

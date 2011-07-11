@@ -12,7 +12,7 @@ encapsulated in a dialog.
 
 [% h.create %]
 
- Ihandle* IUP::Dialog(Ihandle *child); [in C]
+ $dialog = IUP::Dialog->new(Ihandle *child);
  iup.dialog{child: ihandle} -> (elem: ihandle) [in Lua]
  dialog(child) [in LED]
 
