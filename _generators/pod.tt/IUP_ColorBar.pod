@@ -17,9 +17,7 @@ secondary colors.
 
 [% h.create %]
 
- $colorbar = IUP::Colorbar->new();
- iup.colorbar{} -> (elem: ihandle) [in Lua]
- colorbar() [in LED] 
+ $colorbar = IUP::Colorbar->new( SIZE=>"300x300" );
 
 [% txt.new_attr %]
 
@@ -37,7 +35,7 @@ Disables the automatic redrawing of
 the control, so many attributes can be changed without many redraws.
 Default: "NO". When set to "NO" the control is redrawn.
 
-=item * B<CELL>I<n>
+=item * B<< CELL<n> >>
 
 Contains the color of the "n" cell. "n" can be from 0
 to NUM_CELLS-1.
@@ -50,18 +48,15 @@ use the same set of L<IUP::Image|IUP::Image>.
 
 =item * B<COUNT> (read-only) (non inheritable)
 
-same as B<NUM_CELLS> but it
-is read-only. (since iup-3.3)
+Same as B<NUM_CELLS> but it is read-only. (since iup-3.3)
 
 =item * B<NUM_PARTS> (non inheritable)
 
-Contains the number of lines or
-columns. Default: "1".
+Contains the number of lines or columns. Default: "1".
 
-=item * B<ORIENTATION:> Controls the orientation. It can be "VERTICAL" or
-"HORIZONTAL". Default
+=item * B<ORIENTATION>
 
-"VERTICAL".
+Controls the orientation. It can be "VERTICAL" or "HORIZONTAL". Default "VERTICAL".
 
 =item * B<PREVIEW_SIZE> (non inheritable)
 
@@ -70,38 +65,34 @@ area in pixels. The default size is dynamically calculated from the
 size of the control. The size is reset to the default when
 SHOW_PREVIEW=NO.
 
-=item * B<SHOW_PREVIEW:> Controls the display of the preview area. Default
+=item * B<SHOW_PREVIEW>
 
-"YES".
+Controls the display of the preview area. Default "YES".
 
-=item * B<SHOW_SECONDARY:> Controls the existence of a secondary color
-selection. Default
+=item * B<SHOW_SECONDARY>
 
-"NO".
+Controls the existence of a secondary color selection. Default "NO".
 
 =item * L<SIZE|[%m.at%]/SIZE>
 
-there is no initial size. You must
-define SIZE or RASTERSIZE.
+there is no initial size. You must define SIZE or RASTERSIZE.
 
 =item * B<PRIMARY_CELL> (non inheritable)
 
-Contains the index of the primary
-color. Default "0" (black).
+Contains the index of the primary color. Default "0" (black).
 
 =item * B<SECONDARY_CELL> (non inheritable)
 
-Contains the index of the
-secondary color. Default "15" (white).
+Contains the index of the secondary color. Default "15" (white).
 
 =item * B<SQUARED>
 
 Controls the aspect ratio of the color cells. Non square
 cells expand equally to occupy all of the control area. Default: "YES".
 
-=item * B<SHADOWED:> Controls the 3D effect of the color cells. Default
+=item * B<SHADOWED>
 
-"YES".
+Controls the 3D effect of the color cells. Default "YES".
 
 =item * B<TRANSPARENCY>
 
@@ -128,8 +119,6 @@ L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
 L<ZORDER|[%m.at%]/ZORDER>,
 L<VISIBLE|[%m.at%]/VISIBLE>
 
-also accepted.
-
 =back
 
 [% h.cb %]
@@ -143,7 +132,11 @@ also accepted.
 called when the user double clicks a color cell to
 change its value.
 
- char* function(Ihandle* ih, int cell); [in C]
+ sub cell_cb_handler {
+   my ($self, $cell) = @_;
+   #...
+ }
+  char* function(Ihandle* ih, int cell); [in C]
  elem:cell_cb(cell: number) -> (ret: string) [in Lua]
 
 =over
@@ -172,7 +165,7 @@ Shift key pressed. It is independent of the SHOW_SECONDARY attribute.
 
 =item * B<cell:> index of the selected cell.
 
-Returns - If IUP_IGNORE the cell is not redrawn. By default the cell is
+Returns: If IUP_IGNORE the cell is not redrawn. By default the cell is
 always redrawn.
 
 =back
