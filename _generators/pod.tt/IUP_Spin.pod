@@ -1,3 +1,5 @@
+=for comment based on iup-3.5-XXX-UNFINISHED
+
 [% h.name %]
 
 [% n.iupspin %]
@@ -33,8 +35,7 @@ L<IUP::Spin|IUP::Spin>.
  iup.spinbox{child: ihandle} -> (elem: ihandle) [in Lua]
  spinbox(child)  [in LED]
 
-B<Returns:> the identifier of the created element, or NULL if an error
-occurs.
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 B<child>: Identifier of an interface element which will receive the
 spinbox around.

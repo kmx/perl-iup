@@ -1,3 +1,5 @@
+=for comment based on iup-3.5-XXX-UNFINISHED
+
 =head1 NAME
 
 IUP::Normalizer - [GUI element] normalizes all controls from a list to be the biggest natural size

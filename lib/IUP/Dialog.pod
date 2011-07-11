@@ -1,3 +1,5 @@
+=for comment based on iup-3.5-XXX-UNFINISHED
+
 =head1 NAME
 
 IUP::Dialog - [GUI element] the main GUI element; the main application window
@@ -12,12 +14,9 @@ encapsulated in a dialog.
 
 =head2 CREATION - new() method
 
- $dialog = IUP::Dialog->new(Ihandle *child);
- iup.dialog{child: ihandle} -> (elem: ihandle) [in Lua]
- dialog(child) [in LED]
+ $dialog = IUP::Dialog->new( TITLE=>"Windows title", $child=>$frame_element );
 
-B<child>: Identifier of an interface element. The dialog has only one
-child.
+B<$child>: Identifier of an interface element. The dialog has only one child.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
@@ -29,20 +28,27 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 For more info about concept of attributes (setting/getting values etc.)
 see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
 
-=over
-
 =head2 Common
 
-=item * B<BACKGROUND >(non inheritable)
+=over
+
+=item * B<BACKGROUND> (non inheritable)
 
 Dialog background color or image. Can
 be a non inheritable alternative to BGCOLOR or can be the name of an
-image to be tiled on the background. See also the screenshots of the
-=item * L<sample.c|../../examples/C/sample.c> results with L<normal
-background|../sample_results.html>, changing the dialog L<
-BACKGROUND|../sample_results_background.html>, the dialog
-L<BGCOLOR|../sample_results_bgcolor.html> and the L<children
-BGCOLOR|../sample_results_bgcolor_indiv.html>. 
+image to be tiled on the background. 
+
+See also the screenshots of the sample dialog: XXX-fix-the-following-links
+
+=item * L<results with normal background|../xxx.html>
+
+=item * L<changing the dialog BACKGROUND|../xxx.html>
+
+=item * L<changing the dialog BGCOLOR|../xxx.html>
+
+=item * L<changing the children BGCOLOR|../xxx.html>
+
+=back
 
 B<BORDER> (non inheritable) (creation only)
 
@@ -113,7 +119,7 @@ that limitation set SHRINK=YES.
 
 For more information see L<Layout Guide|../layout_guide.html>.
 
-L<TITLE|IUP::Manual::03_Attributes/TITLE> (non inheritable)
+=item * L<TITLE|IUP::Manual::03_Attributes/TITLE> (non inheritable)
 
 Dialogs title.
 Default: NULL. If you want to remove the title bar you must also set
@@ -140,10 +146,13 @@ L<CLIENTSIZE|IUP::Manual::03_Attributes/CLIENTSIZE>,
 L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
 L<ZORDER|IUP::Manual::03_Attributes/ZORDER>
 
-also accepted. Note that ACTIVE,
-BGCOLOR and FONT will also affect all the controls inside the dialog.
+Note that ACTIVE, BGCOLOR and FONT will also affect all the controls inside the dialog.
+
+=back
 
 =head2 Exclusive
+
+=over
 
 =item * B<DEFAULTENTER>
 
@@ -153,7 +162,7 @@ IUP::SetHandle|../func/iupsethandle.html> or
 =item * L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
 associate a button to a name.
 
-B<DEFAULTESC>
+=item * B<DEFAULTESC>
 
 Name of the button activated when the user press Esc
 when focus is in another control of the dialog. Use L<
@@ -161,7 +170,7 @@ IUP::SetHandle|../func/iupsethandle.html> or
 =item * L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
 associate a button to a name.
 
-B<DIALOGFRAME>
+=item * B<DIALOGFRAME>
 
 Set the common decorations for modal dialogs. This
 means RESIZE=NO, MINBOX=NO and MAXBOX=NO. In Windows, if the
@@ -174,9 +183,9 @@ Dialogs icon.
 
 =item * B<FULLSCREEN: >Makes the dialog occupy the whole screen over any system
 bars in the main monitor. All dialog details, such as title bar,
-borders, maximize button, etc, are removed. Possible values
+borders, maximize button, etc, are removed. 
 
-YES, NO.
+Possible values "YES", "NO".
 In Motif you may have to click in the dialog to set its focus.
 
 In Motif if set to YES when the dialog is hidden, then it can not be
@@ -210,7 +219,7 @@ IUP::SetHandle|../func/iupsethandle.html> or
 =item * L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
 associate a menu to a name. See also L<IUP::Menu|IUP::Menu>.
 
-B<MENUBOX> (creation only)
+=item * B<MENUBOX> (creation only)
 
 Requires a system menu box from the window
 manager. If hidden will also remove the Close button. Default: YES. In
@@ -247,10 +256,11 @@ as parent. Used only if PARENTDIALOG is not defined.
 
 =item * L<PARENTDIALOG|IUP::Manual::03_Attributes/PARENTDIALOG> (creation only)
 
-Name
-of a dialog to be used as parent.
+Name of a dialog to be used as parent.
 
-X<PLACEMENT>B<PLACEMENT>: Changes how the dialog will be shown. Values:
+=item * B<PLACEMENT>
+
+Changes how the dialog will be shown. Values:
 "FULL", "MAXIMIZED", "MINIMIZED" and "NORMAL". Default: NORMAL. After
 =item * L<IUP::Show|IUP::Show>/L<IUP::Popup|IUP::Popup> the attribute is set back to "NORMAL". FULL is
 similar to FULLSCREEN but only the dialog client area covers the screen
@@ -258,7 +268,7 @@ area, menu and decorations will be there but out of the screen. In UNIX
 there is a chance that the placement won't work correctly, that depends
 on the Window Manager.
 
-B<RESIZE> (creation only)
+=item * B<RESIZE> (creation only)
 
 Allows interactively changing the dialogs
 size. Default: YES. If RESIZE=NO then MAXBOX will be set to NO. In
@@ -296,7 +306,11 @@ Returns the
 X-Windows Window (Drawable). Available in the Motif driver or in the
 GTK driver in UNIX.
 
+=back
+
 =head2 Exclusive [Windows and GTK Only]
+
+=over
 
 =item * B<ACTIVEWINDOW> [Windows and GTK Only] (read-only)
 
@@ -341,14 +355,22 @@ the tray icon. (GTK 2.10)
 
 Tray icon's tooltip text. (GTK 2.10)
 
+=back
+
 =head2 Exclusive [GTK Only]
+
+=over
 
 =item * B<DIALOGHINT> (creation-only)
 
 if enabled sets the window type hint to
 a dialog hint.
 
+=back
+
 =head2 Exclusive [Windows Only]
+
+=over
 
 =item * B<BRINGFRONT> [Windows Only] (write-only)
 
@@ -382,14 +404,15 @@ makes the dialog look like a
 toolbar. It is only valid if the PARENTDIALOG or NATIVEPARENT attribute
 is also defined. Default: NO.
 
+=back
+
 =head2 Exclusive MDI [Windows Only]
 
-=item * B<I<--- For the MDI Frame --->>
+=over
 
-B<MDIFRAME> (creation only) [Windows Only] (non inheritable)
+=item * B<MDIFRAME> (creation only) [Windows Only] (non inheritable)
 
-Configure
-this dialog as a MDI frame. Can be YES or NO. Default: NO.
+Configure this dialog as a MDI frame. Can be YES or NO. Default: NO.
 
 =item * B<MDIACTIVE> [Windows Only] (read-only)
 
@@ -428,9 +451,7 @@ child handle. Must use MDIACTIVE to retrieve the first child. If the
 application is going to destroy the child retrieve the next child
 before destroying the current.
 
-=item * B<I<--- For the MDI Client >>(a IUP::Canvas)B<I< --->>
-
-B<MDICLIENT> (creation only) [Windows Only] (non inheritable)
+=item * B<MDICLIENT> [Windows Only] (non inheritable, creation only)
 
 Configure the canvas as a MDI client. Can be YES or NO. No callbacks
 will be called. This canvas will be used internally only by the MDI
@@ -443,9 +464,7 @@ Name of a IUP::Menu to be used
 as the Window list of a MDI frame. The system will automatically add
 the list of MDI child windows there.
 
-=item * B<I<--- For the MDI Children --->>
-
-B<MDICHILD> (creation only) [Windows Only]
+=item * B<MDICHILD> (creation only) [Windows Only]
 
 Configure this dialog to be
 a MDI child. Can be YES or NO. The PARENTDIALOG attribute must also be
@@ -463,10 +482,7 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =item * L<CLOSE_CB|IUP::Manual::04_Callbacks/CLOSE_CB>
 
-Called right before the dialog
-is closed.
-
-=back
+Called right before the dialog is closed.
 
 =item * B<COPYDATA_CB> [Windows Only]
 
@@ -474,15 +490,18 @@ Called at the first instance, when a
 second instance is running. Must set the global attribute
 SINGLEINSTANCE to be called. (since iup-3.2)
 
- int function(Ihandle *ih, char* cmdLine, int size); [in C]elem:copydata_cb(cmdLine: string, size: number) -> (ret: number) [in Lua]
+ sub copydata_cb_handler {
+   my ($self, $cmdLine, $size) = @_;
+   #...
+ }
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::Dialog) that activated the event
 
-=item * B<cmdLine> - command line of the second instance.
+B<$cmdLine:> command line of the second instance.
 
-=item * B<size> - size of the command line string including the null character.
+B<$size:> size of the command line string including the null character.
 
 =back
 
@@ -490,44 +509,38 @@ SINGLEINSTANCE to be called. (since iup-3.2)
 
 Action generated when one or more files are dropped in the dialog.
 
-=back
-
 =item * B<MDIACTIVATE_CB> [Windows Only]
 
 Called when a MDI child window is
 activated. Only the MDI child receive this message. It is not called
 when the child is shown for the first time.
 
- int function(Ihandle *ih); [in C]elem:mdiactivate_cb() -> (ret: number) [in Lua]
+ sub mdiactivate_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 =over
 
-=over
-
-=item * B<ih> - identifier of the element that activated the event.
-
-=back
+B<$self:> reference to the element (IUP::Dialog) that activated the event
 
 =back
 
 =item * B<MOVE_CB> [Windows and GTK Only]
 
 Called after the dialog was moved on
-screen. The coordinates are the same as the
-=back
+screen. The coordinates are the same as the L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION> attribute. (since iup-3.0)
 
-=item * L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION> attribute. (since
-3.0)
-
- int function(Ihandle *ih, int x, int y); [in C]elem
+ sub mdiactivate_cb_handler {
+   my ($self, $x, $y) = @_;
+   #...
+ }
 
 =over
 
-trayclick_cb(x, y: number) -> (ret: number) [in Lua]
+B<$self:> reference to the element (IUP::Dialog) that activated the event
 
-=item * B<ih> - identifier of the element that activated the event.
-
-=item * B<x>, B<y> - coordinates of the new position.
+B<$x, y:> coordinates of the new position.
 
 =back
 
@@ -537,36 +550,37 @@ Action generated when the
 dialog size is changed. If returns IUP_IGNORE the dialog layout is NOT
 recalculated. 
 
-=back
-
 =item * L<SHOW_CB|IUP::Manual::04_Callbacks/SHOW_CB>
 
 Called right after the dialog is
 showed, hidden, maximized, minimized or restored from
 minimized/maximized.
 
-=back
-
 =item * B<TRAYCLICK_CB> [Windows and GTK Only]
 
 Called right after the mouse
 button is pressed or released over the tray icon. (GTK 2.10)
 
- int function(Ihandle *ih, int but, int pressed, int dclick); [in C]elem:trayclick_cb(but, pressed, dclick: number) -> (ret: number) [in Lua]
+ sub trayclick_cb_handler {
+   my ($self, $but, $pressed, $dclick) = @_;
+   #...
+ }
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::Dialog) that activated the event
 
-=item * B<but> - identifies the activated mouse button. Can be: 1, 2 or 3. Note
+B<$but:> identifies the activated mouse button. Can be: 1, 2 or 3. Note
 that this is different from the BUTTON_CB canvas callback definition.
 GTK does not get button=2 messages.
 
-=item * B<pressed> - indicates the state of the button. Always 1 in GTK.
+B<$pressed:> indicates the state of the button. Always 1 in GTK.
 
-=item * B<dclick> - indicates a double click. In GTK double click is simulated.
+B<$dclick:> indicates a double click. In GTK double click is simulated.
 
-Returns: IUP_CLOSE will be processed.
+B<Returns:> IUP_CLOSE will be processed.
+
+=back
 
 =back
 
@@ -608,61 +622,164 @@ dialog that will be the MDI frame, other controls can also be available
 in the same dialog, like buttons and other canvases composing toolbars
 and status area. The following picture illustrates the e components:
 
-[IMAGE]
+=for html <p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/mdi.gif"></p> 
 
 =head1 EXAMPLES
 
-Very simple dialog with a label and a button. The application is closed
-when the button is pressed.
 
- #include <iup.h>
- 
- int quit_cb(void)
- {
-   return IUP_CLOSE;
- }
- 
- int main(int argc, char* argv[])
- {
-   Ihandle *dialog, *quit_bt, *vbox;
- 
-   IUP::Open(&argc, &argv);
- 
-   /* Creating the button */ 
-   quit_bt = IUP::Button("Quit", 0);
-   IUP::SetCallback(quit_bt, "ACTION", (Icallback)quit_cb);
- 
-   /* the container with a label and the button */
-   vbox = IUP::Vbox(
-            IUP::SetAttributes(IUP::Label("Very Long Text Label"), "EXPAND=YES, ALIGNMENT=ACENTER"), 
-            quit_bt, 
-            0);
-   IUP::SetAttribute(vbox, "MARGIN", "10x10");
-   IUP::SetAttribute(vbox, "GAP", "5");
- 
-   /* Creating the dialog */ 
-   dialog = IUP::Dialog(vbox);
-   IUP::SetAttribute(dialog, "TITLE", "Dialog Title");
-   IUP::SetAttributeHandle(dialog, "DEFAULTESC", quit_bt);
- 
-   IUP::Show(dialog);
- 
-   IUP::MainLoop();
-   
-   IUP::Destroy(dialog);
-   IUP::Close();
- 
-   return 0;
- }
+The element B<IUP::Dialog> is used in the following sample scripts:
 
-L<Browse for Example Files|../../examples/>
+=over
+
+=item * L<0-basic/button.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/button.pl> - IUP::Button example
+
+=item * L<0-basic/canvas1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/canvas1.pl> - IUP::Canvas example
+
+=item * L<0-basic/canvas2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/canvas2.pl> - IUP::Canvas example
+
+=item * L<0-basic/canvas3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/canvas3.pl> - IUP::Canvas example
+
+=item * L<0-basic/cbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/cbox.pl> - IUP::Cbox example
+
+=item * L<0-basic/cells_checkboard.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/cells_checkboard.pl> - IUP::Cells example
+
+=item * L<0-basic/cells_degrade.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/cells_degrade.pl> - IUP::Cells example
+
+=item * L<0-basic/cells_numbering.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/cells_numbering.pl> - IUP::Cells example
+
+=item * L<0-basic/colorbar.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/colorbar.pl> - IUP::ColorBar example
+
+=item * L<0-basic/colorbrowser.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/colorbrowser.pl> - IUP::ColorBrowser example
+
+=item * L<0-basic/dial.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/dial.pl> - IUP::Dial example
+
+=item * L<0-basic/dialog1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/dialog1.pl> - IUP::Dialog example
+
+=item * L<0-basic/dialog2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/dialog2.pl> - IUP::Dialog example
+
+=item * L<0-basic/fill.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/fill.pl> - IUP::Fill Example
+
+=item * L<0-basic/frame1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/frame1.pl> - IUP::Frame Example
+
+=item * L<0-basic/frame2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/frame2.pl> - IUP::Image example
+
+=item * L<0-basic/glcanvas1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/glcanvas1.pl> - IUP::CanvasGL example
+
+=item * L<0-basic/glcanvas2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/glcanvas2.pl> - IUP::CanvasGL example
+
+=item * L<0-basic/hbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/hbox.pl> - IUP::Hbox example
+
+=item * L<0-basic/idle.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/idle.pl> - IUP->SetIdle Example
+
+=item * L<0-basic/image.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/image.pl> - IUP::Image example
+
+=item * L<0-basic/item.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/item.pl> - IUP::Item Example
+
+=item * L<0-basic/label.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/label.pl> - IUP::Label example
+
+=item * L<0-basic/layoutdialog.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+
+=item * L<0-basic/list1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/list1.pl> - IUP::List example
+
+=item * L<0-basic/list2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/list2.pl> - IUP::List example
+
+=item * L<0-basic/mask_matrix.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/mask_matrix.pl> - IUP::Matrix + MASK example
+
+=item * L<0-basic/mask_simple.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/mask_simple.pl> - IUP::Text + MASK example
+
+=item * L<0-basic/matrix_basic.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/matrix_basic.pl> - IUP::Matrix example
+
+=item * L<0-basic/matrix_cbmode.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/matrix_cbmode.pl> - IUP::Matrix (callback mode) example
+
+=item * L<0-basic/menu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/menu.pl> - IUP::Menu example
+
+=item * L<0-basic/message_clone.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/message_clone.pl>
+
+=item * L<0-basic/plot1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/plot1.pl> - IUP::Plot example
+
+=item * L<0-basic/plot2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/plot2.pl> - IUP::Plot example
+
+=item * L<0-basic/plot3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/plot3.pl> - IUP::Plot example
+
+=item * L<0-basic/plot4.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/plot4.pl> - IUP::Plot example
+
+=item * L<0-basic/plot5.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/plot5.pl> - IUP::Plot example
+
+=item * L<0-basic/plot_advanced.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/plot_advanced.pl> - Plot controls
+
+=item * L<0-basic/progressbar1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/progressbar1.pl> - IUP::Progressbar example
+
+=item * L<0-basic/progressbar2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
+
+=item * L<0-basic/progressbar3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/progressbar3.pl> - IUP::ProgressBar example
+
+=item * L<0-basic/radio.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/radio.pl> - IUP::Radio example
+
+=item * L<0-basic/sbox1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/sbox1.pl> - IUP::Sbox example
+
+=item * L<0-basic/sbox2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/sbox2.pl> - IUP::Sbox example
+
+=item * L<0-basic/scrollbar.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/scrollbar.pl> - IUP::Canvas (with scrollbar) example
+
+=item * L<0-basic/separator.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/separator.pl> - IUP::Separator example
+
+=item * L<0-basic/submenu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/submenu.pl> - IUP::Submenu example
+
+=item * L<0-basic/tabs1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tabs1.pl> - IUP::Tabs example 
+
+=item * L<0-basic/tabs2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tabs2.pl> - IUP::Tabs example
+
+=item * L<0-basic/tabs3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tabs3.pl> - IUP::Tabs example 
+
+=item * L<0-basic/text1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/text1.pl> - IUP::Text (single line) example
+
+=item * L<0-basic/text2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/text2.pl> - IUP::Text example
+
+=item * L<0-basic/text_font.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/text_font.pl> - IUP::Text (font) example
+
+=item * L<0-basic/text_format.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/text_format.pl> - IUP::Text (formating) example
+
+=item * L<0-basic/text_multiline.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/text_multiline.pl> - IUP::Text (multiline) example
+
+=item * L<0-basic/timer.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/timer.pl> - IUP::Timer example
+
+=item * L<0-basic/toggle.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/toggle.pl> - IUP::Toggle example
+
+=item * L<0-basic/tray.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tray.pl> - IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
+
+=item * L<0-basic/tree1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tree1.pl> - IUP::Tree example (animals) - using helper methods e.g. TreeAddNodes()
+
+=item * L<0-basic/tree2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tree2.pl> - IUP::Tree example (figures) - using attribute only interface
+
+=item * L<0-basic/tree3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tree3.pl> - IUP::Tree example (figures) - using attribute only interface
+
+=item * L<0-basic/tree_set_attrs.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tree_set_attrs.pl> - IUP::Tree example (attributes)
+
+=item * L<0-basic/val.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/val.pl> - IUP::Val example
+
+=item * L<0-basic/vbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/vbox.pl> - IUP::Vbox example
+
+=item * L<0-basic/zbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/zbox.pl> - IUP::Zbox example
+
+=item * L<1-apps/app-mdi.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-mdi.pl> - IUP app example
+
+=item * L<1-apps/app-plot-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-plot-demo.pl> - dials for zooming
+
+=item * L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+
+=item * L<1-apps/app-sample2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-sample2.pl> - xxxTODO xxx some better callback
+
+=item * L<1-apps/app-simple-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
+
+=back 
+
+
 
 =head1 SEE ALSO
 
 L<IUP::FileDlg|IUP::FileDlg>,
 L<IUP::MessageDlg|IUP::MessageDlg>,
-L<IUP::Destroy|IUP::Destroy>,
-L<IUP::ShowXY|IUP::ShowXY>, L< IUP::Show|../func/iupshow.html>,
-L<IUP::Popup|IUP::Popup>
-
-=cut
+L<Destroy|IUP::Manual::02_Elements/"Destroy()">,
+L<ShowXY|IUP::Manual::02_Elements/"ShowXY>,
+L<Show|IUP::Manual::02_Elements/"Show()">,,
+L<Popup|IUP::Manual::02_Elements/"Popup()">

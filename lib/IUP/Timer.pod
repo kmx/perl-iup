@@ -1,3 +1,5 @@
+=for comment based on iup-3.5-XXX-UNFINISHED
+
 =head1 NAME
 
 IUP::Timer - [special] periodicaly invokes a callback when the time is up
@@ -64,9 +66,9 @@ Called when the time is up.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Timer) that activated the event
 
-Returns: IUP_CLOSE will be processed.
+B<Returns:> IUP_CLOSE will be processed.
 
 =back
 

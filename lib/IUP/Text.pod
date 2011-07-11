@@ -1,3 +1,5 @@
+=for comment based on iup-3.5-XXX-UNFINISHED
+
 =head1 NAME
 
 IUP::Text - [GUI element] editable text field (single/multi-line, plain/rich-text)
@@ -64,7 +66,7 @@ depends in MULTILINE=YES. The first position, B<lin> or B<col>, is "1".
 =item * B<For multiple lines>
 
 a string with the "B<lin>,B<col>" format, where
-=item * B<lin> and B<col> are integer numbers corresponding to the caret's
+B<$lin:> and B<col> are integer numbers corresponding to the caret's
 position.
 
 B<For single line>
@@ -394,13 +396,13 @@ using the keyboard, undo system or from the clipboard.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Text) that activated the event
 
 =item * B<c> - valid alpha numeric character or 0.
 
 =item * B<new_value> - Represents the new text value.
 
-Returns: IUP_CLOSE will be processed, but the change will be ignored.
+B<Returns:> IUP_CLOSE will be processed, but the change will be ignored.
 If IUP_IGNORE, the system will ignore the new value. If B<c> is valid
 and returns a valid alpha numeric character, this new character will be
 used instead. The VALUE attribute can be changed only if IUP_IGNORE is
@@ -426,7 +428,7 @@ changed.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Text) that activated the event
 
 =item * B<lin, col> - line and column number (start at 1).
 
@@ -463,7 +465,7 @@ SPINAUTO=NO.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Text) that activated the event
 
 =item * B<pos> - the value of the spin (after it was incremented).
 
@@ -480,7 +482,7 @@ the user.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Text) that activated the event
 
 ----
 

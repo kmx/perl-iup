@@ -1,3 +1,5 @@
+=for comment based on iup-3.5
+
 [% h.name %]
 
 [% n.iupdial %]
@@ -6,16 +8,17 @@
 
 Creates a dial for regulating a given angular variable.
 
+=begin HTML
+
+[% html.iupdial %]
+
+=end HTML 
+
 [% h.usage %]
 
 [% h.create %]
 
- $dial = IUP::Dial->new(const char *orientation);
- iup.dial{orientation: string} -> (elem: ihandle) [in Lua]
- dial(orientation) [in LED] 
-
-B<orientation>: optional dial orientation, can be NULL. See ORIENTATION
-attribute.
+ $dial = IUP::Dial->new( ORIENTATION=>"VERTICAL" );
 
 [% txt.new_attr %]
 
@@ -29,42 +32,40 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =item * B<DENSITY>
 
-number of lines per pixel in the handle of the dial.
+Number of lines per pixel in the handle of the dial.
 Default is "0.2".
 
 =item * L<EXPAND|[%m.at%]/EXPAND>
 
-the default is "NO".
+The default is "NO".
 
 =item * L<FGCOLOR|[%m.at%]/FGCOLOR>
 
-foreground color. The default
+Foreground color. The default
 value is "64 64 64". Not used for the circular dial.
 
 =item * L<SIZE|[%m.at%]/SIZE> (non inheritable)
 
-the initial size is
-"16x80", "80x16" or "40x35" according to the dial orientation. Set to
-NULL to allow the automatic layout use smaller values.
+The initial size is "16x80", "80x16" or "40x35" according to the dial orientation. Set to
+C<undef> to allow the automatic layout use smaller values.
 
 =item * B<ORIENTATION> (creation only) (non inheritable)
 
-dial layout
-configuration "VERTICAL", "HORIZONTAL" or "CIRCULAR". Default:
+Dial layout configuration "VERTICAL", "HORIZONTAL" or "CIRCULAR". Default:
 "HORIZONTAL".
 
 =item * B<UNIT>
 
-unit of the angle. Can be "DEGREES" or "RADIANS". Default is
+Unit of the angle. Can be "DEGREES" or "RADIANS". Default is
 "RADIANS". Used only in the callbacks.
 
 =item * B<VALUE >(non inheritable)
 
 The dial angular value in radians. The
 value is reset to zero when the interaction is started, except for
-ORIENTATION=CIRCULAR. When orientation is vertical or horizontal, the
+C<ORIENTATION="CIRCULAR">. When orientation is vertical or horizontal, the
 dial measures relative angles. When orientation is circular the dial
-measure absolute angles, where the origin is at 3 O'clock.
+measure absolute angles, where the origin is at 3 o'clock.
 
 =back
 
@@ -83,8 +84,6 @@ L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
 L<ZORDER|[%m.at%]/ZORDER>,
 L<VISIBLE|[%m.at%]/VISIBLE>
 
-also accepted.
-
 =back
 
 [% h.cb %]
@@ -99,12 +98,14 @@ Called when the user presses the left mouse button
 over the dial. The angle here is always zero, except for the circular
 dial.
 
- int function(Ihandle *ih, double angle)
- elem:button_press_cb(angle: number) -> (ret: number) [in Lua]
+ sub button_press_cb_handler {
+   my ($self, $angle) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_Dial) that activated the event
+B<$self:> reference to the element (IUP::Dial) that activated the event
 
 B<$angle:> the dial value converted according to UNIT.
 
@@ -115,14 +116,16 @@ B<$angle:> the dial value converted according to UNIT.
 Called when the user releases the left mouse
 button after pressing it over the dial.
 
- int function(Ihandle *ih, double angle)
- elem:button_release_cb(angle: number) -> (ret: number) [in Lua]
+ sub button_release_cb_handler {
+   my ($self, $angle) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_Dial) that activated the event
+B<$self:> reference to the element (IUP::Dial) that activated the event
 
-=item * B<angle> - the dial value converted according to UNIT.
+B<$angle:> the dial value converted according to UNIT.
 
 =back
 
@@ -132,14 +135,16 @@ Called each time the user moves the dial with the
 mouse button pressed. The angle the dial rotated since it was
 initialized is passed as a parameter.
 
- int function(Ihandle *ih, double angle); [in C]
- elem:mousemove_cb(angle: number) -> (ret: number) [in Lua]
+ sub mousemove_cb_handler {
+   my ($self, $angle) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_Dial) that activated the event
+B<$self:> reference to the element (IUP::Dial) that activated the event
 
-=item * B<angle> - the dial value converted according to UNIT.
+B<$angle:> the dial value converted according to UNIT.
 
 =back
 
@@ -147,18 +152,17 @@ B<$self:> reference to the element (IUP::XXXIUP_Dial) that activated the event
 
 Called after the value was interactively changed by
 the user. It is called whenever a B<BUTTON_PRESS_CB>, a
-=back
-
-=item * B<BUTTON_RELEASE_CB> or aB< MOUSEMOVE_CB> would also be called, but if
+B<BUTTON_RELEASE_CB> or a B<MOUSEMOVE_CB> would also be called, but if
 defined those callbacks will not be called. 
 
- int function(Ihandle *ih); [in C]elem
+ sub valuechanged_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 =over
 
-valuechanged_cb() -> (ret: number) [in Lua]
-
-B<$self:> reference to the element (IUP::XXXIUP_Dial) that activated the event
+B<$self:> reference to the element (IUP::Dial) that activated the event
 
 =back
 
@@ -194,12 +198,20 @@ reset to 0.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
+[% IF examples.iupdial %]
+The element B<IUP::Dial> is used in the following sample scripts:
 
-[IMAGE]
+=over
+[%FOREACH e IN examples.iupdial %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 
 L<IUP::Canvas|IUP::Canvas>
-
-=cut

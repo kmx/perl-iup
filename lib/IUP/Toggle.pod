@@ -1,3 +1,5 @@
+=for comment based on iup-3.5-XXX-UNFINISHED
+
 =head1 NAME
 
 IUP::Toggle - [GUI element] two-state (on/off) button with a text and/or an image
@@ -181,12 +183,12 @@ state.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Toggle) that activated the event
 
-=item * B<state> - 1 if the toggle's state was shifted to on; 0 if it was
+B<$state:> 1 if the toggle's state was shifted to on; 0 if it was
 shifted to off.
 
-Returns: IUP_CLOSE will be processed.
+B<Returns:> IUP_CLOSE will be processed.
 
 =back
 
@@ -200,7 +202,7 @@ the user. Called after the ACTION callback, but under the same context.
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_Toggle) that activated the event
 
 ----
 

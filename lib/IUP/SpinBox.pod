@@ -1,3 +1,5 @@
+=for comment based on iup-3.5-XXX-UNFINISHED
+
 =head1 NAME
 
 IUP::Spin - [GUI element] vertical box containing 2 buttons for incrementing/decrementing values
@@ -34,7 +36,7 @@ L<IUP::Spin|IUP::Spin>.
  iup.spinbox{child: ihandle} -> (elem: ihandle) [in Lua]
  spinbox(child)  [in LED]
 
-Returns: the identifier of the created element, or NULL if an error
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 occurs.
 
 B<child>: Identifier of an interface element which will receive the

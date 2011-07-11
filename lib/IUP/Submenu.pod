@@ -1,3 +1,5 @@
+=for comment based on iup-3.5-XXX-UNFINISHED
+
 =head1 NAME
 
 IUP::Submenu - [GUI element] menu item that, when selected, opens another menu
@@ -89,8 +91,6 @@ the submenu is highlighted.
 
 =item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
 L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>
-
-common callbacks are supported.
 
 =back
 

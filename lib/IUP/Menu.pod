@@ -1,3 +1,5 @@
+=for comment based on iup-3.5-XXX-UNFINISHED
+
 =head1 NAME
 
 IUP::Menu - [GUI element] menu which can group 3 types of elements: item, submenu, separator
@@ -76,8 +78,6 @@ menu is closed.
 
 =item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
 L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>
-
-common callbacks are supported.
 
 =back
 

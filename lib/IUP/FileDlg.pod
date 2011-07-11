@@ -1,3 +1,5 @@
+=for comment based on iup-3.5-XXX-UNFINISHED
+
 =head1 NAME
 
 IUP::FileDlg - [pre-defined dialog] selecting files or a directory
@@ -229,11 +231,11 @@ Can be used with SHOWPREVIEW=NO also. (Windows only in 2.x)
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::XXXIUP_FileDlg) that activated the event
 
 =item * B<file_name> - name of the file selected.
 
-=item * B<status> - describes the action. Can be:
+B<$status:> describes the action. Can be:
 
 =over
 

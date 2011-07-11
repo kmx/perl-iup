@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 XXX-NOT-FINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -12,6 +12,12 @@ with the left mouse button, and the secondary color is selected with
 the right mouse button. You can double click a cell to change its color
 and you can double click the preview area to switch between primary and
 secondary colors.
+
+=begin HTML
+
+[% html.iupcolorbar %]
+
+=end HTML 
 
 [% h.usage %]
 
@@ -136,17 +142,15 @@ change its value.
    my ($self, $cell) = @_;
    #...
  }
-  char* function(Ihandle* ih, int cell); [in C]
- elem:cell_cb(cell: number) -> (ret: string) [in Lua]
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_ColorBar) that activated the event
+B<$self:> reference to the element (IUP::ColorBar) that activated the event
 
-=item * B<cell:> index of the selected cell. If the user double click a preview
+B<$cell:> index of the selected cell. If the user double click a preview
 cell, the respective index is returned.
 
-Returns - a new color or NULL (nil in Lua) to ignore the change. By
+B<Returns:> a new color or C<undef> to ignore the change. By
 default nothing is changed.
 
 =back
@@ -156,14 +160,16 @@ default nothing is changed.
 called when the user right click a cell with the
 Shift key pressed. It is independent of the SHOW_SECONDARY attribute.
 
- int function(Ihandle* ih, int cell);  [in C]
- elem:extended_cb(cell: number) -> (ret: number) [in Lua]
+ sub extended_cb_handler {
+   my ($self, $cell) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_ColorBar) that activated the event
+B<$self:> reference to the element (IUP::ColorBar) that activated the event
 
-=item * B<cell:> index of the selected cell.
+B<$cell:> index of the selected cell.
 
 B<Returns:> If IUP_IGNORE the cell is not redrawn. By default the cell is
 always redrawn.
@@ -176,19 +182,21 @@ called when a color is selected. The primary color is
 selected with the left mouse button, and if existent the secondary is
 selected with the right mouse button.
 
- int function(Ihandle* ih, int cell, int type);  [in C]
- elem:select_cb(cell, type: number) -> (ret: number) [in Lua]
+ sub extended_cb_handler {
+   my ($self, $cell, $type) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_ColorBar) that activated the event
+B<$self:> reference to the element (IUP::ColorBar) that activated the event
 
 B<$cell:> index of the selected cell.
 
-=item * B<type> - indicates if the user selected a primary or secondary color.
-In can be: C<IUP_PRIMARY(-1)> or C<IUP_SECONDARY(-2).>
+B<$type:> indicates if the user selected a primary or secondary color.
+In can be: C<IUP_PRIMARY(-1)> or C<IUP_SECONDARY(-2)>.
 
-Returns: If IUP_IGNORE the selection is not accepted. By default the
+B<Returns:> If IUP_IGNORE the selection is not accepted. By default the
 selection is always accepted.
 
 =back
@@ -199,18 +207,20 @@ called when the user double clicks the preview area
 outside the preview cells to switch the primary and secondary
 selections. It is only called if SHOW_SECONDARY=YESB<.>
 
- int function(Ihandle* ih, int prim_cell, int sec_cell);  [in C]
- elem:switch_cb(prim_cell, sec_cell: number) -> (ret: number) [in Lua]
+ sub extended_cb_handler {
+   my ($self, $prim_cell, $sec_cell) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_ColorBar) that activated the event
+B<$self:> reference to the element (IUP::ColorBar) that activated the event
 
-=item * B<prim_cell> - index of the actual primary cell.
+B<$prim_cell:> index of the actual primary cell.
 
-=item * B<sec_cell> - index of the actual secondary cell.
+B<$sec_cell:> index of the actual secondary cell.
 
-Returns: If IUP_IGNORE the switch is not accepted. By default the
+B<Returns:> If IUP_IGNORE the switch is not accepted. By default the
 switch is always accepted.
 
 =back
@@ -241,14 +251,20 @@ callback. B<Shift>+B<Enter> will activate the B< CELL_CB> callback.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
+[% IF examples.iupcolorbar %]
+The element B<IUP::ColorBar> is used in the following sample scripts:
 
-Creates a Colorbar for selection of two colors.
+=over
+[%FOREACH e IN examples.iupcolorbar %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
 
-iupcolorbar.gif
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 
 L<IUP::Canvas|IUP::Canvas>, L<IUP::Image|IUP::Image>
-
-=cut

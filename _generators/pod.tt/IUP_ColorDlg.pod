@@ -1,3 +1,5 @@
+=for comment based on iup-3.5
+
 [% h.name %]
 
 [% n.iupcolordlg %]
@@ -7,28 +9,28 @@
 Creates the Color Dialog element. It is a predefined dialog for
 selecting a color.
 
+=begin HTML
+
+[% html.iupcolordlg %]
+
+=end HTML 
+
 There are 3 versions of the dialog. One for Windows only, one for GTK
-only and one for all systems, but it is based on the L<IUP::ColorBrowser|IUP::ColorBrowser>
-control that depends on the CD library.
+only and one for all systems, but it is based on the L<IUP::ColorBrowser|IUP::ColorBrowser>.
 
-The Windows and GTK dialogs can be shown only with the L<IUP::Popup|IUP::Popup>
-function. The L<IUP::ColorBrowser|IUP::ColorBrowser> based dialog is a L<IUP::Dialog|IUP::Dialog> that
-can be shown as any regular B< IUP::Dialog>.
+The Windows and GTK dialogs can be shown only with the L<Popup|[%m.elem%]/"Popup()">
+function. The L<IUP::ColorBrowser|IUP::ColorBrowser> based dialog is a L<IUP::Dialog> that
+can be shown as any regular L<IUP::Dialog>.
 
-B<IMPORTANT: >The B< IUP::ColorBrowser> based dialog is included in the
-L<Controls Library|../iupcontrols.html>. When the Controls Library is
-initialized the Windows and GTK dialogs are not available anymore, i.e.
-before the Controls Library initialization only the Windows and GTK
-dialogs are available, after only the L<IUP::ColorBrowser|IUP::ColorBrowser> based dialog
-is available.
+B<IMPORTANT:> In perl IUP bindings only B<IUP::ColorBrowser> based dialog is available
+(because perl bindings automatically initializes the Controls Library after that
+the Windows and GTK dialogs are not available anymore).
 
 [% h.usage %]
 
 [% h.create %]
 
- $colordlg = IUP::ColorDlg->new(void);
- iup.colordlg{} -> (elem: ihandle) [in Lua]
- colordlg() [in LED]
+ $colordlg = IUP::ColorDlg->new( VALUE=>"100 100 0" );
 
 [% txt.new_attr %]
 
@@ -134,49 +136,27 @@ button is pressed.
 [% h.notes %]
 
 The GTK and Windows dialogs are native pre-defined dialogs that are not
-altered by L<IUP::SetLanguage|IUP::SetLanguage>. To show the dialog, use function
-L<IUP::Popup|IUP::Popup>. In Lua, use the B<popup> function. The dialog is mapped
-only inside L<IUP::Popup|IUP::Popup>, L<IUP::Map|IUP::Map> does nothing.
+altered by L<SetLanguage|IUP/"SetLanguage()">. To show the dialog, use function
+L<Popup|[%m.elem%]/"Popup()">. The dialog is mapped only inside L<Popup|[%m.elem%]/"Popup()">,
+L<Map|[%m.elem%]/"Map()"> does nothing.
 
 [% h.examples %]
 
- Ihandle* dlg = IUP::ColorDlg();
- 
- IUP::SetAttribute(dlg, "VALUE", "128 0 255");
- IUP::SetAttribute(dlg, "ALPHA", "142");
- IUP::SetAttribute(dlg, "SHOWHEX", "YES");
- IUP::SetAttribute(dlg, "SHOWCOLORTABLE", "YES");
- IUP::SetAttribute(dlg, "TITLE", "IUP::ColorDlg Test");
- IUP::SetCallback(dlg, "HELP_CB", (Icallback)help_cb);
- 
- IUP::Popup(dlg, IUP_CURRENT, IUP_CURRENT);
- 
- if (IUP::GetInt(dlg, "STATUS"))
- {
-   printf("OK\n");
-   printf("  COLOR(%s)\n", IUP::GetAttribute(dlg, "COLOR"));
-   printf("  COLORTABLE(%s)\n", IUP::GetAttribute(dlg, "COLORTABLE"));
- }
- else
-   printf("CANCEL\n");
- 
- IUP::Destroy(dlg);  
+[% IF examples.iupcolordlg %]
+The element B<IUP::ColorDlg> is used in the following sample scripts:
 
-Windows XP
+=over
+[%FOREACH e IN examples.iupcolordlg %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
 
-[IMAGE]
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
 
-GTK/GNOME
-
-[IMAGE]
-
-ColorBrowser Based
-
-[IMAGE]
+[%END%]
 
 [% h.see %]
 
 L<IUP::MessageDlg|IUP::MessageDlg>, L<IUP::FileDlg|IUP::FileDlg>,
-L<IUP::Popup|IUP::Popup>
-
-=cut
+L<Popup|[%m.elem%]/"Popup()">

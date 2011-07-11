@@ -1,3 +1,5 @@
+=for comment based on iup-3.5
+
 [% h.name %]
 
 [% n.iupcolorbrowser %]
@@ -21,20 +23,20 @@ the diagonal to black (RGB=0 0 0). B<I> can also be seen as the
 projection of the color vector onto the diagonal. But B<I> is not
 linear, see L<Notes|#Notes> below.
 
-This is an additional control that depends on the CD library. It is
-included in the L<Controls Library|../iupcontrols.html>.
+=begin HTML
 
-For a dialog that simply returns the selected color, you can use
-function L<IUP::GetColor|IUP::GetColor> or
-L<IUP::ColorDlg|IUP::ColorDlg>.
+[% html.iupcolorbrowser %]
+
+=end HTML 
+
+NOTE: For a dialog that simply returns the selected color, you can use
+function L<GetColor|IUP/"GetColor()"> or L<IUP::ColorDlg|IUP::ColorDlg>.
 
 [% h.usage %]
 
 [% h.create %]
 
- $colorbrowser = IUP::ColorBrowser->new(void);
- iup.colorbrowser{} (elem: ihandle) [in Lua]
- colorbrowser() [in LED]
+ $colorbrowser = IUP::ColorBrowser->new( RGB=>"100 100 0" );
 
 [% txt.new_attr %]
 
@@ -52,20 +54,17 @@ The default is "NO".
 
 =item * L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
 
-the
-initial size is "181x181". Set to NULL to allow the automatic layout
+The initial size is "181x181". Set to NULL to allow the automatic layout
 use smaller values.
 
 =item * B<RGB> (non inheritable)
 
-the color selected in the control, in the "r
-g b"E<157> format; r, g and b are integers ranging from 0 to 255.
+The color selected in the control, in the "r g b" format; r, g and b are integers ranging from 0 to 255.
 Default: "255 0 0".
 
 =item * B<HSI> (non inheritable)
 
-the color selected in the control, in the "h
-s i"E<157> format; h, s and i are floating point numbers ranging from
+The color selected in the control, in the "h s i" format; h, s and i are floating point numbers ranging from
 0-360, 0-1 and 0-1 respectively.
 
 =back
@@ -84,8 +83,6 @@ L<TIP|[%m.at%]/TIP>, L<SIZE|[%m.at%]/SIZE>,
 L<ZORDER|[%m.at%]/ZORDER>,
 L<VISIBLE|[%m.at%]/VISIBLE>
 
-also accepted.
-
 =back
 
 [% h.cb %]
@@ -99,14 +96,16 @@ also accepted.
 Called when the user releases the left mouse button over
 the control, defining the selected color.
 
- int change(Ihandle *ih, unsigned char r, unsigned char g, unsigned char b); [in C]
- elem:change_cb(r: number, g: number, b: number) -> (ret: number) [in Lua]
+ sub change_cb_handler {
+   my ($self, $r, $g, $b) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_ColorBrowser) that activated the event
+B<$self:> reference to the element (IUP::ColorBrowser) that activated the event
 
-=item * B<r, g, b> - color value.
+B<$r, $g, $b:> color value.
 
 =back
 
@@ -115,28 +114,33 @@ B<$self:> reference to the element (IUP::XXXIUP_ColorBrowser) that activated the
 Called several times while the color is being changed by
 dragging the mouse over the control.
 
- int drag(Ihandle *ih, unsigned char r, unsigned char g, unsigned char b); [in C]
- elem:drag_cb(r: number, g: number, b: number) -> (ret: number) [in Lua]
+ sub drag_cb_handler {
+   my ($self, $r, $g, $b) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_ColorBrowser) that activated the event
+B<$self:> reference to the element (IUP::ColorBrowser) that activated the event
 
-=item * B<r, g, b> - color value.
+B<$r, $g, $b:> color value.
 
 =back
 
 =item * B<VALUECHANGED_CB>
 
 Called after the value was interactively changed by
-the user. It is called whenever a B<CHANGE_CB >or a B<DRAG_CB >would
+the user. It is called whenever a B<CHANGE_CB> or a B<DRAG_CB> would
 also be called, it is just called after them. 
 
- int function(Ihandle *ih); [in C]elem:valuechanged_cb() -> (ret: number) [in Lua]
+ sub drag_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_ColorBrowser) that activated the event
+B<$self:> reference to the element (IUP::ColorBrowser) that activated the event
 
 =back
 
@@ -168,23 +172,26 @@ ColorBrowser this point is fixed at the center of the B<I> axis. So the
 B<I> axis is not completely linear, it is linear in two parts, one from
 0 to 0.5, and another from 0.5 to 1.0. Although the selected values are
 linear specified you can notice that when Hue is changed the gray scale
-also changes, visually compacting values above or below the I=0.5 line
+also changes, visually compacting values above or below the B<I>=0.5 line
 according to the selected Hue.
-
-This is the same HSI specified in the
-L<IM|http://www.tecgraf.puc-rio.br/im> toolkit, except for the non
-linearity of B<I>. This non linearity were introduced so a simple
-triangle could be used to represent the SI plane.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
+[% IF examples.iupcolorbrowser %]
+The element B<IUP::ColorBrowser> is used in the following sample scripts:
 
-[IMAGE]
+=over
+[%FOREACH e IN examples.iupcolorbrowser %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 
 L<IUP::GetColor|IUP::GetColor>,
-L<IUP::ColorDlg|IUP::ColorDlg>.
-
-=cut
+L<IUP::ColorDlg|IUP::ColorDlg>

@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 XXX-NOT-FINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -13,13 +13,19 @@ the right mouse button. You can double click a cell to change its color
 and you can double click the preview area to switch between primary and
 secondary colors.
 
+=begin HTML
+
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupcolorbar.gif"></td>
+</p>
+
+=end HTML 
+
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- $colorbar = IUP::Colorbar->new();
- iup.colorbar{} -> (elem: ihandle) [in Lua]
- colorbar() [in LED] 
+ $colorbar = IUP::Colorbar->new( SIZE=>"300x300" );
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
@@ -39,7 +45,7 @@ Disables the automatic redrawing of
 the control, so many attributes can be changed without many redraws.
 Default: "NO". When set to "NO" the control is redrawn.
 
-=item * B<CELL>I<n>
+=item * B<< CELL<n> >>
 
 Contains the color of the "n" cell. "n" can be from 0
 to NUM_CELLS-1.
@@ -52,18 +58,15 @@ use the same set of L<IUP::Image|IUP::Image>.
 
 =item * B<COUNT> (read-only) (non inheritable)
 
-same as B<NUM_CELLS> but it
-is read-only. (since iup-3.3)
+Same as B<NUM_CELLS> but it is read-only. (since iup-3.3)
 
 =item * B<NUM_PARTS> (non inheritable)
 
-Contains the number of lines or
-columns. Default: "1".
+Contains the number of lines or columns. Default: "1".
 
-=item * B<ORIENTATION:> Controls the orientation. It can be "VERTICAL" or
-"HORIZONTAL". Default
+=item * B<ORIENTATION>
 
-"VERTICAL".
+Controls the orientation. It can be "VERTICAL" or "HORIZONTAL". Default "VERTICAL".
 
 =item * B<PREVIEW_SIZE> (non inheritable)
 
@@ -72,38 +75,34 @@ area in pixels. The default size is dynamically calculated from the
 size of the control. The size is reset to the default when
 SHOW_PREVIEW=NO.
 
-=item * B<SHOW_PREVIEW:> Controls the display of the preview area. Default
+=item * B<SHOW_PREVIEW>
 
-"YES".
+Controls the display of the preview area. Default "YES".
 
-=item * B<SHOW_SECONDARY:> Controls the existence of a secondary color
-selection. Default
+=item * B<SHOW_SECONDARY>
 
-"NO".
+Controls the existence of a secondary color selection. Default "NO".
 
 =item * L<SIZE|IUP::Manual::03_Attributes/SIZE>
 
-there is no initial size. You must
-define SIZE or RASTERSIZE.
+there is no initial size. You must define SIZE or RASTERSIZE.
 
 =item * B<PRIMARY_CELL> (non inheritable)
 
-Contains the index of the primary
-color. Default "0" (black).
+Contains the index of the primary color. Default "0" (black).
 
 =item * B<SECONDARY_CELL> (non inheritable)
 
-Contains the index of the
-secondary color. Default "15" (white).
+Contains the index of the secondary color. Default "15" (white).
 
 =item * B<SQUARED>
 
 Controls the aspect ratio of the color cells. Non square
 cells expand equally to occupy all of the control area. Default: "YES".
 
-=item * B<SHADOWED:> Controls the 3D effect of the color cells. Default
+=item * B<SHADOWED>
 
-"YES".
+Controls the 3D effect of the color cells. Default "YES".
 
 =item * B<TRANSPARENCY>
 
@@ -130,8 +129,6 @@ L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
 L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
 L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
 
-also accepted.
-
 =back
 
 =head2 CALLBACKS
@@ -146,17 +143,19 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 called when the user double clicks a color cell to
 change its value.
 
- char* function(Ihandle* ih, int cell); [in C]
- elem:cell_cb(cell: number) -> (ret: string) [in Lua]
+ sub cell_cb_handler {
+   my ($self, $cell) = @_;
+   #...
+ }
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::ColorBar) that activated the event
 
-=item * B<cell:> index of the selected cell. If the user double click a preview
+B<$cell:> index of the selected cell. If the user double click a preview
 cell, the respective index is returned.
 
-Returns - a new color or NULL (nil in Lua) to ignore the change. By
+B<Returns:> a new color or C<undef> to ignore the change. By
 default nothing is changed.
 
 =back
@@ -166,16 +165,18 @@ default nothing is changed.
 called when the user right click a cell with the
 Shift key pressed. It is independent of the SHOW_SECONDARY attribute.
 
- int function(Ihandle* ih, int cell);  [in C]
- elem:extended_cb(cell: number) -> (ret: number) [in Lua]
+ sub extended_cb_handler {
+   my ($self, $cell) = @_;
+   #...
+ }
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::ColorBar) that activated the event
 
-=item * B<cell:> index of the selected cell.
+B<$cell:> index of the selected cell.
 
-Returns - If IUP_IGNORE the cell is not redrawn. By default the cell is
+B<Returns:> If IUP_IGNORE the cell is not redrawn. By default the cell is
 always redrawn.
 
 =back
@@ -186,19 +187,21 @@ called when a color is selected. The primary color is
 selected with the left mouse button, and if existent the secondary is
 selected with the right mouse button.
 
- int function(Ihandle* ih, int cell, int type);  [in C]
- elem:select_cb(cell, type: number) -> (ret: number) [in Lua]
+ sub extended_cb_handler {
+   my ($self, $cell, $type) = @_;
+   #...
+ }
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::ColorBar) that activated the event
 
-=item * B<cell> - index of the selected cell.
+B<$cell:> index of the selected cell.
 
-=item * B<type> - indicates if the user selected a primary or secondary color.
-In can be: C<IUP_PRIMARY(-1)> or C<IUP_SECONDARY(-2).>
+B<$type:> indicates if the user selected a primary or secondary color.
+In can be: C<IUP_PRIMARY(-1)> or C<IUP_SECONDARY(-2)>.
 
-Returns: If IUP_IGNORE the selection is not accepted. By default the
+B<Returns:> If IUP_IGNORE the selection is not accepted. By default the
 selection is always accepted.
 
 =back
@@ -209,18 +212,20 @@ called when the user double clicks the preview area
 outside the preview cells to switch the primary and secondary
 selections. It is only called if SHOW_SECONDARY=YESB<.>
 
- int function(Ihandle* ih, int prim_cell, int sec_cell);  [in C]
- elem:switch_cb(prim_cell, sec_cell: number) -> (ret: number) [in Lua]
+ sub extended_cb_handler {
+   my ($self, $prim_cell, $sec_cell) = @_;
+   #...
+ }
 
 =over
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$self:> reference to the element (IUP::ColorBar) that activated the event
 
-=item * B<prim_cell> - index of the actual primary cell.
+B<$prim_cell:> index of the actual primary cell.
 
-=item * B<sec_cell> - index of the actual secondary cell.
+B<$sec_cell:> index of the actual secondary cell.
 
-Returns: If IUP_IGNORE the switch is not accepted. By default the
+B<Returns:> If IUP_IGNORE the switch is not accepted. By default the
 switch is always accepted.
 
 =back
@@ -251,14 +256,17 @@ callback. B<Shift>+B<Enter> will activate the B< CELL_CB> callback.
 
 =head1 EXAMPLES
 
-L<Browse for Example Files|../../examples/>
 
-Creates a Colorbar for selection of two colors.
+The element B<IUP::ColorBar> is used in the following sample scripts:
 
-iupcolorbar.gif
+=over
+
+=item * L<0-basic/colorbar.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/colorbar.pl> - IUP::ColorBar example
+
+=back 
+
+
 
 =head1 SEE ALSO
 
 L<IUP::Canvas|IUP::Canvas>, L<IUP::Image|IUP::Image>
-
-=cut

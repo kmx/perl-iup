@@ -1,3 +1,5 @@
+=for comment based on iup-3.5-XXX-UNFINISHED
+
 =head1 NAME
 
 IUP::Item - [GUI element] item of the menu interface element
@@ -147,8 +149,6 @@ the item is highlighted.
 =item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
 L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
 L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
-
-common callbacks are supported.
 
 =back
 
