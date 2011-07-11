@@ -11,7 +11,7 @@ generates an action.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Item(const char *title, const char *action); [in C]
+ $item = IUP::Item->new(const char *title, const char *action);
  iup.item{[title = title: string]} -> elem: ihandle [in Lua]
  item(title, action) [in LED]
 
@@ -21,8 +21,10 @@ TITLE attribute.
 B<action>: Name of the action generated when the item is selected. It
 can be NULL.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -133,7 +135,7 @@ be closed.
 
 =back
 
-=item * L<HIGHLIGHT_CB|../call/iup_highlight_cb.html>
+=item * L<HIGHLIGHT_CB|IUP::Manual::04_Callbacks/HIGHLIGHT_CB>
 
 Action generated when
 the item is highlighted.
@@ -142,9 +144,9 @@ the item is highlighted.
 
 =back
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>,
-L<HELP_CB|../call/iup_help_cb.html>
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
 common callbacks are supported.
 

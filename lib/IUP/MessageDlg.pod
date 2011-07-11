@@ -12,12 +12,14 @@ function only.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::MessageDlg(void); [in C]
+ $messagedlg = IUP::MessageDlg->new(void);
  iup.messagedlg{} -> (elem: ihandle) [in Lua]
  messagedlg() [in LED]
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -74,7 +76,7 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * L<HELP_CB|../call/iup_help_cb.html>
+=item * L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
 Action generated when the Help
 button is pressed.

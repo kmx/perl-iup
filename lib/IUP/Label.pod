@@ -11,15 +11,17 @@ or an image.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Label(const char *title); [in C]
+ $label = IUP::Label->new(const char *title);
  iup.label{[title = title: string]} -> (elem: ihandle) [in Lua]
  label(title) [in LED]
 
 B<title>: Text to be shown on the label. It can be NULL. It will set
 the TITLE attribute.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -41,7 +43,7 @@ Possible values: "ALEFT", "ACENTER" and "ARIGHT", combined to "ATOP",
 "ACENTER" and "ABOTTOM". Default: "ALEFT:ACENTER". Partial values are
 also accepted, like "ARIGHT" or ":ATOP", the other value will be used
 from the current alignment. In Motif, vertical alignment is restricted
-to "ACENTER". (vertical alignment since 3.0)
+to "ACENTER". (vertical alignment since iup-3.0)
 
 =item * L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
 
@@ -107,7 +109,7 @@ character is accepted for line change. The "&" character can be used to
 define a mnemonic, the next character will be used as key. Use "&&" to
 show the "&" character instead of defining a mnemonic. The next control
 from the label will be activated from any control in the dialog using
-the "Alt+key" combination. (mnemonic support since 3.0)
+the "Alt+key" combination. (mnemonic support since iup-3.0)
 
 =item * B<WORDWRAP> [Windows and GTK only]
 
@@ -142,24 +144,24 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * L<BUTTON_CB|../call/iup_button_cb.html>
+=item * L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB>
 
 Action generated when any
-mouse button is pressed or released. (since 3.3)
+mouse button is pressed or released. (since iup-3.3)
 
 =back
 
-=item * L<DROPFILES_CB|../call/iup_dropfiles_cb.html> [Windows and GTK Only]
+=item * L<DROPFILES_CB|IUP::Manual::04_Callbacks/DROPFILES_CB> [Windows and GTK Only]
 
 Action generated when one or more files are dropped in the element.
-(since 3.3)
+(since iup-3.3)
 
 =back
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>,
-L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
-L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>
 
 common callbacks are
 supported.

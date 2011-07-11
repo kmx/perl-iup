@@ -2,7 +2,7 @@
 
 IUP::Split - [GUI element] container that split its client area in two
 
-=head1 DESCRIPTION (since 3.1)
+=head1 DESCRIPTION (since iup-3.1)
 
 Creates a void container that split its client area in two. Allows the
 provided controls to be enclosed in a box that allows expanding and
@@ -16,7 +16,7 @@ L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Split(Ihandle* child1, Ihandle* child2); [in C]
+ $split = IUP::Split->new(Ihandle* child1, Ihandle* child2);
  iup.split{child1, child2: ihandle} -> (elem: ihandle) [in Lua]
  split(child1, child2) [in LED]
 
@@ -26,8 +26,10 @@ top. It can be NULL.
 B<child2>: Identifier of an interface element that will be at right or
 bottom. It can be NULL.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -75,7 +77,7 @@ sets minimum and maximum crop values for
 VALUE, in the format "%d:%d" [min:max]. The min value can not be less
 than 0, and the max value can not be larger than 1000. This will
 constrain the interactive change of the bar handler. Default: "0:1000".
-(Since 3.2)
+(Since iup-3.2)
 
 =item * B<SHOWGRIP> (non inheritable)
 

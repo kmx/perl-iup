@@ -12,15 +12,17 @@ encapsulated in a dialog.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Dialog(Ihandle *child); [in C]
+ $dialog = IUP::Dialog->new(Ihandle *child);
  iup.dialog{child: ihandle} -> (elem: ihandle) [in Lua]
  dialog(child) [in LED]
 
 B<child>: Identifier of an interface element. The dialog has only one
 child.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -300,7 +302,7 @@ GTK driver in UNIX.
 
 informs if the
 dialog is the active window (the window with focus). Can be Yes or No.
-(since 3.4)
+(since iup-3.4)
 
 =item * B<HIDETASKBAR> [Windows and GTK Only] (write-only)
 
@@ -370,7 +372,7 @@ Inserts a help button in
 the same place of the maximize button. It can only be used for dialogs
 without the minimize and maximize buttons, and with the menu box. For
 the next interaction of the user with a control in the dialog, the
-callback L<HELP_CB|../call/iup_help_cb.html> will be called instead of
+callback L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB> will be called instead of
 the control defined ACTION callback. Possible values: YES, NO. Default:
 NO.
 
@@ -459,7 +461,7 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * L<CLOSE_CB|../call/iup_close_cb.html>
+=item * L<CLOSE_CB|IUP::Manual::04_Callbacks/CLOSE_CB>
 
 Called right before the dialog
 is closed.
@@ -470,7 +472,7 @@ is closed.
 
 Called at the first instance, when a
 second instance is running. Must set the global attribute
-SINGLEINSTANCE to be called. (since 3.2)
+SINGLEINSTANCE to be called. (since iup-3.2)
 
  int function(Ihandle *ih, char* cmdLine, int size); [in C]elem:copydata_cb(cmdLine: string, size: number) -> (ret: number) [in Lua]
 
@@ -484,7 +486,7 @@ SINGLEINSTANCE to be called. (since 3.2)
 
 =back
 
-=item * L<DROPFILES_CB|../call/iup_dropfiles_cb.html> [Windows and GTK Only]
+=item * L<DROPFILES_CB|IUP::Manual::04_Callbacks/DROPFILES_CB> [Windows and GTK Only]
 
 Action generated when one or more files are dropped in the dialog.
 
@@ -529,7 +531,7 @@ trayclick_cb(x, y: number) -> (ret: number) [in Lua]
 
 =back
 
-=item * L<RESIZE_CB|../call/iup_resize_cb.html>
+=item * L<RESIZE_CB|IUP::Manual::04_Callbacks/RESIZE_CB>
 
 Action generated when the
 dialog size is changed. If returns IUP_IGNORE the dialog layout is NOT
@@ -537,7 +539,7 @@ recalculated.
 
 =back
 
-=item * L<SHOW_CB|../call/iup_show_cb.html>
+=item * L<SHOW_CB|IUP::Manual::04_Callbacks/SHOW_CB>
 
 Called right after the dialog is
 showed, hidden, maximized, minimized or restored from
@@ -572,15 +574,13 @@ The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are
 
 =over
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>,
-L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
-L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
-L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
-L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
-L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
-
-All common callbacks are supported.
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>, L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
 =back
 

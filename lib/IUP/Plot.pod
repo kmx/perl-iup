@@ -120,7 +120,7 @@ moving the Y coordinate.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::PPlot(void); [in C]
+ $pplot = IUP::PPlot->new(void);
  iup.pplot{} -> (elem: ihandle) [in Lua]
  pplot() [in LED]
 
@@ -182,7 +182,7 @@ only after the dataset is added to the plot.
  iup.IUP::PlotInsertStrPoints(ih: ihandle, index, sample_index, x, y: table of number)
 
 Inserts an array of samples in a dataset at the given B<sample_index>.
-Can be used only after the dataset is added to the plot. (Since 3.4)
+Can be used only after the dataset is added to the plot. (Since iup-3.4)
 
 ----
 
@@ -192,7 +192,7 @@ Can be used only after the dataset is added to the plot. (Since 3.4)
  iup.IUP::PlotAddStrPoints(ih: ihandle, index, x, y: table of number)
 
 Adds an array of samples in a dataset at the end. Can be used only
-after the dataset is added to the plot. (Since 3.4)
+after the dataset is added to the plot. (Since iup-3.4)
 
 ----
 
@@ -655,15 +655,13 @@ The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are
 
 =over
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>,
-L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
-L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
-L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
-L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
-L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
-
-All common callbacks are supported.
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>, L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
 =back
 

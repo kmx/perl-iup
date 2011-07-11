@@ -1,3 +1,5 @@
+=for comment based on iup-3.5
+
 =head1 NAME
 
 IUP::Clipboard - [special] allows access to the clipboard
@@ -39,7 +41,7 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 =item * B<EMFAVAILABLE> (read-only) [Windows Only]
 
 informs if there is a
-Windows Enhanced Metafile available at the clipboard. (Since 3.2)
+Windows Enhanced Metafile available at the clipboard. (Since iup-3.2)
 
 =item * B<IMAGE> (write-only)
 
@@ -71,12 +73,12 @@ image native handles. (GTK 2.6)
 =item * B<SAVEEMF> (write-only) [Windows Only]
 
 saves the EMF from the
-clipboard to the given filename. (Since 3.2)
+clipboard to the given filename. (Since iup-3.2)
 
 =item * B<SAVEWMF> (write-only) [Windows Only]
 
 saves the WMF from the
-clipboard to the given filename. (Since 3.2)
+clipboard to the given filename. (Since iup-3.2)
 
 =item * B<TEXT>
 
@@ -90,7 +92,7 @@ the clipboard.
 =item * B<WMFAVAILABLE> (read-only) [Windows Only]
 
 informs if there is a
-Windows Metafile available at the clipboard. (Since 3.2)
+Windows Metafile available at the clipboard. (Since iup-3.2)
 
 =back
 

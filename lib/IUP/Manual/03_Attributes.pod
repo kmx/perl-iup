@@ -201,7 +201,7 @@ B<Affects:> All elements that are containers, except menus.
 B<Notes:>
 
 **) For L<IUP::Dialog|IUP::Dialog> CLIENTSIZE is NOT read-only, and it will define
-RASTERSIZE by adding the decorations to the Client size. (Since 3.3)
+RASTERSIZE by adding the decorations to the Client size. (Since iup-3.3)
 
 B<See Also:> L<SIZE|/SIZE>, L<RASTERSIZE|/RASTERSIZE>,
 L<CLIENTOFFSET|/CLIENTOFFSET>
@@ -257,7 +257,7 @@ If the value IGNORE is used then it will behave as YES, but also it
 will not update the the size and position in the native system. (since
 3.3)
 
-B<Value:> "YES", "IGNORE" (since 3.3) or "NO".
+B<Value:> "YES", "IGNORE" (since iup-3.3) or "NO".
 
 B<Default:> "NO"
 

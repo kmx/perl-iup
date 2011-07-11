@@ -15,12 +15,14 @@ It does not have a native representation.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Fill(void); [in C]
+ $fill = IUP::Fill->new(void);
  iup.fill{} -> elem: ihandle [in Lua]
  fill() [in LED]
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -44,7 +46,7 @@ the width, if inside a L<IUP::Hbox|IUP::Hbox>, or the height, if it is inside a
 =item * L<IUP::Vbox|IUP::Vbox>. When consulted behaves as the standard SIZE/RASTERSIZE
 attributes. The standard format "wxh" can also be used, but width will
 be ignored if inside a L<IUP::Vbox |IUP::Vbox >and height will be ignored if inside
-a L<IUP::Hbox|IUP::Hbox> (since 3.3).
+a L<IUP::Hbox|IUP::Hbox> (since iup-3.3).
 
 B<WID> (read-only)
 

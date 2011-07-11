@@ -6,24 +6,21 @@ IUP::Dial - [GUI element] dial for regulating a given angular variable
 
 Creates a dial for regulating a given angular variable.
 
-This is an additional control that depends on the CD library. It is
-included in the L<Controls Library|../iupcontrols.html>.
-
-It inherits from L<IUP::Canvas|IUP::Canvas>.
-
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Dial(const char *orientation); [in C]
+ $dial = IUP::Dial->new(const char *orientation);
  iup.dial{orientation: string} -> (elem: ihandle) [in Lua]
  dial(orientation) [in LED] 
 
 B<orientation>: optional dial orientation, can be NULL. See ORIENTATION
 attribute.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -172,15 +169,13 @@ The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are
 
 =over
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>,
-L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
-L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
-L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
-L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
-L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
-
-All common callbacks are supported.
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>, L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
 =back
 

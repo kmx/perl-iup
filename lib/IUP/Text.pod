@@ -10,13 +10,15 @@ Creates an editable text field.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Text(const char *action); [in C]iup.text{} -> (elem: ihandle) [in Lua]text(action) [in LED]
+ $text = IUP::Text->new(const char *action);
 
 B<action>: name of the action generated when the user types something.
 It can be NULL.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -103,7 +105,7 @@ FORMATTING=YES.
 =item * B<COUNT> (read-only)
 
 returns the number of characters in the text.
-(since 3.5)
+(since iup-3.5)
 
 =item * B<CUEBANNER> [Windows Only] (non inheritable)
 
@@ -145,13 +147,13 @@ replaces the current selection if any. Ignored if set before map.
 =item * B<LINECOUNT> (read-only)
 
 returns the number of characters in the line
-where the caret is. When MULTILINE=NO returns always "1". (since 3.5)
+where the caret is. When MULTILINE=NO returns always "1". (since iup-3.5)
 
 =item * B<LINEVALUE> (read-only)
 
 returns the text of the line where the caret
 is. It does not include the "\n" character. When MULTILINE=NO returns
-the same as VALUE. (since 3.5)
+the same as VALUE. (since iup-3.5)
 
 =item * L<MASK|IUP::Manual::03_Attributes/MASK> (non inheritable)
 
@@ -328,7 +330,7 @@ string "".
 =item * B<VALUEMASKED >(non inheritable) (write-only)
 
 sets VALUE but first
-checks if it is validated by MASK. If not does nothing. (since 3.4)
+checks if it is validated by MASK. If not does nothing. (since iup-3.4)
 
 =item * B<VISIBLECOLUMNS>
 
@@ -406,7 +408,7 @@ returned.
 
 =back
 
-=item * L<BUTTON_CB|../call/iup_button_cb.html>
+=item * L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB>
 
 Action generated when any
 mouse button is pressed or released. Use
@@ -435,14 +437,14 @@ For single line controls B<lin> is always 1, and B<pos> is always
 
 =back
 
-=item * L<DROPFILES_CB|../call/iup_dropfiles_cb.html> [Windows and GTK Only]
+=item * L<DROPFILES_CB|IUP::Manual::04_Callbacks/DROPFILES_CB> [Windows and GTK Only]
 
 Action generated when one or more files are dropped in the element.
 
 
 =back
 
-=item * L<MOTION_CB|../call/iup_motion_cb.html>
+=item * L<MOTION_CB|IUP::Manual::04_Callbacks/MOTION_CB>
 
 Action generated when the
 mouse is moved. Use L<IUP::ConvertXYToPos|IUP::ConvertXYToPos>
@@ -484,13 +486,13 @@ the user.
 
 =back
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-=item * L<UNMAP_CB|../call/iup_unmap_cb.html>,
-L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
-L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
-L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
-L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
-L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+=item * L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>, L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
 All common callbacks are supported.
 

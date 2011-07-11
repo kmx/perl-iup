@@ -13,7 +13,7 @@ text or an image.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Toggle(const char *title, const char *action); [in C]iup.toggle{[title = title: string]} -> (elem: ihandle) [in Lua]toggle(title, action) [in LED]
+ $toggle = IUP::Toggle->new(const char *title, const char *action);
 
 B<title>: Text to be shown on the toggle. It can be NULL. It will set
 the TITLE attribute.
@@ -21,8 +21,10 @@ the TITLE attribute.
 B<action>: name of the action generated when the toggle is selected. It
 can be NULL.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -67,7 +69,7 @@ Default: the global attribute DLGFGCOLOR.
 Hides the toggle borders until the mouse enter
 the toggle area when the toggle is not checked. If the toggle is
 checked, then the borders will be shown even if flat is enabled. Used
-only when IMAGE is defined. Can be YES or NO. Default: NO. (since 3.3)
+only when IMAGE is defined. Can be YES or NO. Default: NO. (since iup-3.3)
 
 =item * B<IMAGE> (non inheritable)
 
@@ -133,7 +135,7 @@ check box if any. The '\n' character is accepted for line change. The
 "&" character can be used to define a mnemonic, the next character will
 be used as key. Use "&&" to show the "&" character instead on defining
 a mnemonic. The toggle can be activated from any control in the dialog
-using the "Alt+key" combination. (mnemonic support since 3.0)
+using the "Alt+key" combination. (mnemonic support since iup-3.0)
 
 =item * B<3STATE >(creation only)
 
@@ -204,15 +206,13 @@ the user. Called after the ACTION callback, but under the same context.
 
 =back
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>,
-L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
-L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
-L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
-L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
-L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
-
-All common callbacks are supported.
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>, L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
 =back
 

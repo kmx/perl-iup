@@ -824,7 +824,7 @@ L<Destroy|/"Destroy()">,
 L<ShowXY|/"ShowXY()">,
 L<Show|/"Show()">,
 L<Popup|/"Popup()">,
-L<MAP_CB|../call/iup_map_cb.html>.
+L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>.
 
 =back
 

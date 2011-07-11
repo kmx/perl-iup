@@ -12,16 +12,18 @@ a menu will be an error.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Menu(Ihandle *child, ...); [in C]
- Ihandle* IUP::Menuv(Ihandle **children); [in C]
+ $menu = IUP::Menu->new(Ihandle *child, ...);
+ $menuv = IUP::Menuv->new(Ihandle **children);
  iup.menu{child, ...: ihandle} -> (elem: ihandle) [in Lua]
  menu(child, ...) [in LED]
 
 B<child>, ... : List of identifiers that will be grouped by the menu.
 NULL must be used to mark the end of the list in C. It can be empty.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -56,14 +58,14 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * L<OPEN_CB|../call/iup_open_cb.html>
+=item * L<OPEN_CB|IUP::Manual::04_Callbacks/OPEN_CB>
 
 Called just before the menu is
 opened.
 
 =back
 
-=item * L<MENUCLOSE_CB|../call/iup_menuclose_cb.html>
+=item * L<MENUCLOSE_CB|IUP::Manual::04_Callbacks/MENUCLOSE_CB>
 
 Called just after the
 menu is closed.
@@ -72,8 +74,8 @@ menu is closed.
 
 =back
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>
 
 common callbacks are supported.
 

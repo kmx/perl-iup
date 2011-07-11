@@ -13,16 +13,18 @@ It does not have a native representation.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Vbox(Ihandle *child, ...); [in C]
- Ihandle* IUP::Vboxv(Ihandle **children); [in C]
+ $vbox = IUP::Vbox->new(Ihandle *child, ...);
+ $vboxv = IUP::Vboxv->new(Ihandle **children);
  iup.vbox{child, ...: ihandle} -> (elem: ihandle) [in Lua]
  vbox(child, ...) [in LED]
 
 B<child>, ... : List of the identifiers that will be placed in the box.
 NULL must be used to define the end of the list in C. It can be empty.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -53,7 +55,7 @@ preserved.
 
 If a child
 defines the expand weight, then it is used to multiply the free space
-used for expansion. (since 3.1)
+used for expansion. (since iup-3.1)
 
 =item * L<FLOATING|IUP::Manual::03_Attributes/FLOATING> (non inheritable) B<(at
 children only)>
@@ -67,7 +69,7 @@ Defines a vertical space in pixels between the children,
 =item * B<CGAP> is in the same units of the B<SIZE> attribute for the height.
 Default
 
-"0". (CGAP since 3.0)
+"0". (CGAP since iup-3.0)
 
 =item * B<NGAP, NCGAP> (non inheritable)
 
@@ -88,7 +90,7 @@ Defines a margin in pixels, B<CMARGIN >is in the
 same units of the B< SIZE> attribute. Its value has the format
 "I<width>xI<height>", where I< width> and I<height> are integer values
 corresponding to the horizontal and vertical margins, respectively.
-Default: "0x0" (no margin). (CMARGIN since 3.0)
+Default: "0x0" (no margin). (CMARGIN since iup-3.0)
 
 =item * B<NMARGIN, NCMARGIN> (non inheritable)
 
@@ -109,7 +111,7 @@ L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE> (non inheritable)
 Defines
 the height of the box. When consulted behaves as the standard
 SIZE/RASTERSIZE attributes. The standard format "wxh" can also be used,
-but width will be ignored (since 3.3).
+but width will be ignored (since iup-3.3).
 
 =item * B<WID> (read-only)
 

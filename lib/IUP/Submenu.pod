@@ -10,7 +10,7 @@ Creates a menu item that, when selected, opens another menu.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Submenu(const char *title, Ihandle *menu); [in C]
+ $submenu = IUP::Submenu->new(const char *title, Ihandle *menu);
  iup.submenu{menu: ihandle[; title = title: string]} -> (elem: ihandle) [in Lua]
  submenu(title, menu) [in LED]
 
@@ -19,8 +19,10 @@ NULL. It will set the TITLE attribute.
 
 B<menu>: optional child menu identifier. Can be NULL.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -76,7 +78,7 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * L<HIGHLIGHT_CB|../call/iup_highlight_cb.html>
+=item * L<HIGHLIGHT_CB|IUP::Manual::04_Callbacks/HIGHLIGHT_CB>
 
 Action generated when
 the submenu is highlighted.
@@ -85,8 +87,8 @@ the submenu is highlighted.
 
 =back
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>
 
 common callbacks are supported.
 

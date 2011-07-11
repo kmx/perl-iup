@@ -11,15 +11,17 @@ around an interface element.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Frame(Ihandle *child); [in C]
+ $frame = IUP::Frame->new(Ihandle *child);
  iup.frame{child: ihandle} -> (elem: ihandle) [in Lua]
  frame(child) [in LED]
 
 B<child>: Identifier of an interface element which will receive the
 frame around. It can be NULL.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -87,8 +89,8 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>
 
 common callbacks are supported.
 

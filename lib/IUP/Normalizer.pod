@@ -13,16 +13,18 @@ according to is value.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Normalizer(Ihandle *ih_first, ...); [in C]
- Ihandle* IUP::Normalizerv(Ihandle **ih_list); [in C]
+ $normalizer = IUP::Normalizer->new(Ihandle *ih_first, ...);
+ $normalizerv = IUP::Normalizerv->new(Ihandle **ih_list);
  iup.normalizer{ih_first, ...: ihandle} -> (elem: ihandle) [in Lua]
  normalizer(ih_first, ...) [in LED]
 
 B<ih_first>, ... : List of the identifiers that will be normalized.
 NULL must be used to define the end of the list in C. It can be empty.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 

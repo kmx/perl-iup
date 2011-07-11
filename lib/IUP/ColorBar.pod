@@ -1,3 +1,5 @@
+=for comment based on iup-3.5 XXX-NOT-FINISHED
+
 =head1 NAME
 
 IUP::ColorBar - [GUI element] color palette for color selection of 1 or 2 colors
@@ -11,23 +13,18 @@ the right mouse button. You can double click a cell to change its color
 and you can double click the preview area to switch between primary and
 secondary colors.
 
-This is an additional control that depends on the CD library. It is
-included in the L<Controls Library|../iupcontrols.html>.
-
-It inherits from L<IUP::Canvas|IUP::Canvas>.
-
-Originally implemented by Andr Clinio.
-
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Colorbar(void); [in C]
+ $colorbar = IUP::Colorbar->new();
  iup.colorbar{} -> (elem: ihandle) [in Lua]
  colorbar() [in LED] 
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -56,7 +53,7 @@ use the same set of L<IUP::Image|IUP::Image>.
 =item * B<COUNT> (read-only) (non inheritable)
 
 same as B<NUM_CELLS> but it
-is read-only. (since 3.3)
+is read-only. (since iup-3.3)
 
 =item * B<NUM_PARTS> (non inheritable)
 
@@ -232,15 +229,13 @@ The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are
 
 =over
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>,
-L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
-L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
-L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
-L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
-L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
-
-All common callbacks are supported.
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>, L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
 =back
 

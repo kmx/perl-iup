@@ -12,12 +12,14 @@ IUP::Popup function only.
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::FileDlg(void); [in C]
+ $filedlg = IUP::FileDlg->new(void);
  iup.filedlg{} -> (elem: ihandle) [in Lua]
  filedlg() [in LED]
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -154,7 +156,7 @@ have values "YES" or "NO". Default: "NO". In Windows, you must link
 with the "iup.rc" resource file so the preview area can be enabled (not
 necessary if using "iup.dll"). Valid only if the FILE_CB callback is
 defined, use it to retrieve the file name and the necessary attributes
-to paint the preview area. (in Motif since 3.0)
+to paint the preview area. (in Motif since iup-3.0)
 
 =over
 
@@ -244,7 +246,7 @@ Can be used with SHOWPREVIEW=NO also. (Windows only in 2.x)
 =item * "SELECT" - a file has been selected.
 
 =item * "OTHER" - an invalid file or a directory is selected. file_name
-is the one selected. (Since 3.0)
+is the one selected. (Since iup-3.0)
 
 =item * "OK" - the user pressed the OK button. If returns IUP_IGNORE
 the action is refused and the dialog is not closed.
@@ -259,7 +261,7 @@ file_name is NULL.
 
 =back
 
-=item * L<HELP_CB|../call/iup_help_cb.html>
+=item * L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
 Action generated when the Help
 button is pressed.
