@@ -4,7 +4,7 @@
 
 IUP::Canvas::EMF
 
-xxxTODO
+XXX-TODO
 
 =head1 DESCRIPTION 
 

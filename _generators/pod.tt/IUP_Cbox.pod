@@ -1,4 +1,4 @@
-=pod
+=for comment based on iup-3.2
 
 [% h.name %]
 

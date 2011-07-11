@@ -1,4 +1,4 @@
-=pod
+=for comment based on iup-3.2
 
 [% h.name %]
 
@@ -251,7 +251,8 @@ Unfortunately there are no sample scripts using this element.
 [% h.see %]
 
 L<IUP::Image|IUP::Image>, L<IUP::Toggle|IUP::Toggle>, L<IUP::Button|IUP::Button>
-[%IF flags.gennerate_origdoc %] 
+
+[%IF flags.gennerate_origdoc -%]
 The original doc: L<iupbutton.html|[%url.iuporigdoc%]elem/iupbutton.html>
 [%END%]
 

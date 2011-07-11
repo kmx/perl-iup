@@ -1,11 +1,20 @@
+=for comment based on iup-3.5
+
 =head1 NAME
 
 
 
 =head1 DESCRIPTION
 
-Creates an OpenGL canvas (drawing area for OpenGL). It inherits from
-L<IUP::Canvas|IUP::Canvas>.
+Creates an OpenGL canvas (drawing area for OpenGL).
+
+=begin HTML
+
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupglcanvas.png"></td>
+</p>
+
+=end HTML
 
 =head2 Initialization and Usage
 

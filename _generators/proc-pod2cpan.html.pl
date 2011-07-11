@@ -42,6 +42,7 @@ sub procfile {
   $p->set_source($pod);  
   $p->run;
   $html_new = encode('utf-8', $html_new);
+  $html_new =~ s|<style type="text/css">|</title><style type="text/css">|;
   if (sha1_hex($html_orig) ne sha1_hex($html_new)) {
     warn " -> orig=", sha1_hex($html_orig), "\n" unless $html_orig =~ /^EMPTY/;
     warn " -> new =", sha1_hex($html_new), "\n";

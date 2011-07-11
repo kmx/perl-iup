@@ -1,4 +1,4 @@
-=pod
+=for comment based on iup-3.2
 
 =head1 NAME
 
@@ -311,7 +311,7 @@ The element B<IUP::Button> is used in the following sample scripts:
 
 =item * L<0-basic/message_clone.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/message_clone.pl>
 
-=item * L<0-basic/pplot_advanced.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/pplot_advanced.pl> - PPlot controls
+=item * L<0-basic/plot_advanced.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/plot_advanced.pl> - Plot controls
 
 =item * L<0-basic/progressbar2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
 
@@ -333,7 +333,7 @@ The element B<IUP::Button> is used in the following sample scripts:
 
 =item * L<1-apps/app-mdi.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-pplot-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-pplot-demo.pl> - dials for zooming
+=item * L<1-apps/app-plot-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
 =item * L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
@@ -348,6 +348,7 @@ The element B<IUP::Button> is used in the following sample scripts:
 =head1 SEE ALSO
 
 L<IUP::Image|IUP::Image>, L<IUP::Toggle|IUP::Toggle>, L<IUP::Button|IUP::Button>
+
 
 
 =cut

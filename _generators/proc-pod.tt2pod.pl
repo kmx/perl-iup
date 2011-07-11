@@ -149,6 +149,7 @@ my $ttdata = {
   url => {
     gitroot  => 'https://github.com/kmx/perl-iup/tree/master',
     distroot => $g_disturlroot,
+    ghwebroot => 'http://kmx.github.com/perl-iup',
     examples => $g_disturlroot."examples/",
     iuporigdoc => 'http://www.tecgraf.puc-rio.br/iup/en/',
   },

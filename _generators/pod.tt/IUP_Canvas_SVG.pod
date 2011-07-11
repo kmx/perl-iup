@@ -4,7 +4,7 @@
 
 IUP::Canvas::SVG
 
-xxxTODO
+XXX-TODO
 
 [% h.desc %] 
 

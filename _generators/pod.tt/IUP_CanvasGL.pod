@@ -1,11 +1,18 @@
+=for comment based on iup-3.5
+
 [% h.name %]
 
 [% n.iupglcanvas %]
 
 [% h.desc %]
 
-Creates an OpenGL canvas (drawing area for OpenGL). It inherits from
-L<IUP::Canvas|IUP::Canvas>.
+Creates an OpenGL canvas (drawing area for OpenGL).
+
+=begin HTML
+
+[% html.iupcanvasgl %]
+
+=end HTML
 
 =head2 Initialization and Usage
 
