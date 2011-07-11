@@ -1,4 +1,4 @@
-=for comment based on iup-3.5
+=for comment based on iup-3.2
 
 [% h.name %]
 
@@ -14,63 +14,68 @@ Creates an OpenGL canvas (drawing area for OpenGL).
 
 =end HTML
 
-=head2 Initialization and Usage
+B<IMPORTANT:> For using L<IUP::CanvasGL> you also need to have module L<OpenGL|OpenGL> installed.
 
-The L<IUP::GLCanvasOpen|IUP::GLCanvasOpen> function must be called after a L<IUP::Open|IUP::Open>, so
-that the control can be used. The "iupgl.h" file must also be included
-in the source code. The program must be linked to the controls library
-(iupgl), and with the OpenGL library.
+Example:
 
-To make the control available in Lua use require"iupluagl" or manually
-call the initialization function in C, B<iupgllua_open>, after calling
-B<iuplua_open>. When manually calling the function the iupluagl.h file
-must also be included in the source code and the program must be linked
-to the lua control library (iupluagl).
+ use IUP ':all';
+ use OpenGL ':all';
+ 
+ sub action_callback {
+   my ($self, $x, $y) = @_;
+   $self->GLMakeCurrent();
+   glViewport(0, 0, 300, 300);
+   glClearColor(1.0, 1.0, 1.0, 1.0);
+   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+   glColor3f(1.0,0.0,0.0);
+   glBegin(GL_QUADS); 
+     glVertex2f( 0.9,  0.9); 
+     glVertex2f( 0.9, -0.9); 
+     glVertex2f(-0.9, -0.9); 
+     glVertex2f(-0.9,  0.9); 
+   glEnd();
+   $self->GLSwapBuffers();
+   return IUP_DEFAULT;
+ }
 
-To link with the OpenGL libraries in Windows add: opengl32.lib. In UNIX
-add before the X-Windows libraries: -LGL.
+ my $dlg = IUP::Dialog->new( 
+             TITLE=>"Example",
+             MINSIZE=>"300x300",
+             child=>IUP::CanvasGL->new( BUFFER=>"DOUBLE", RASTERSIZE=>"300x300", ACTION=>\&action_callback ),
+           );
 
-The Lua binding does not include OpenGL functions. But you can use any
-OpenGL binding available, for example the
-L<LuaGL|http://luagl.sourceforge.net/> binding.
+ $dlg->Show();
+ IUP->MainLoop();
+
 
 [% h.usage %]
 
 [% h.create %]
 
- Ihandle* IUP::GLCanvas(const char* action); [in C]
- iup.glcanvas{} -> (elem: ihandle) [in Lua]
- glcanvas(action) [in LED]
+ my $canvas_gl = IUP::CanvaGL->new( BUFFER=>"DOUBLE", RASTERSIZE=>"300x300" );
 
-B<action>: Name of the action generated when the canvas needs to be
-redrawn. It can be NULL.
+[% txt.new_attr %]
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 
 [%txt.at_intro%]
 
-=over
-
-The L<IUP::GLCanvas|IUP::GLCanvas> element handle all attributes defined for a
+The L<IUP::CanvasGL|IUP::CanvasGL> element handles all attributes defined for a
 conventional canvas, see L<IUP::Canvas|IUP::Canvas>.
 
-Apart from these attributes, L<IUP::GLCanvas|IUP::GLCanvas> handle specific attributes
+Apart from these attributes, L<IUP::CanvasGL|IUP::CanvasGL> handles specific attributes
 used to define the kind of buffer to be instanced. Such attributes are
-all B<creation only >attributes and must be set before the element is
+all B<creation only> attributes and must be set before the element is
 mapped on the native system. After the mapping, specifying these
 special attributes has no effect.
-
-=back
 
 [%txt.at_common%]
 
 =over
 
-=item * B<ACCUM_RED_SIZE>,B< ACCUM_GREEN_SIZE>,B< ACCUM_BLUE_SIZE> andB<
-ACCUM_ALPHA_SIZE>
+=item * B<ACCUM_RED_SIZE>, B<ACCUM_GREEN_SIZE>, B<ACCUM_BLUE_SIZE> and B<ACCUM_ALPHA_SIZE>
 
 Indicate the number of bits for representing the
 color components in the accumulation buffer. Value 0 means the
@@ -119,7 +124,7 @@ necessary.
 If an error is found, returns a string containing
 a description of the error in English.
 
-=item * B<RED_SIZE>,B< GREEN_SIZE> andB< BLUE_SIZE>
+=item * B<RED_SIZE>, B<GREEN_SIZE> and B<BLUE_SIZE>
 
 Indicate the number of
 bits for representing each color component (valid only for RGBA). The
@@ -159,97 +164,96 @@ Win32.
 
 [%txt.cb_intro%]
 
+
+The L<IUP::CanvasGL|IUP::CanvasGL> element understands all callbacks defined for a
+conventional canvas, see L<IUP::Canvas|IUP::Canvas> section L<callbacks|IUP::Canvas/CALLBACKS>.
+
+Additionally:
+
 =over
 
+=item * L<RESIZE_CB|[%m.at%]/RESIZE_CB>
 
-The L<IUP::GLCanvas|IUP::GLCanvas> element understands all callbacks defined for a
-conventional canvas, see L<IUP::Canvas|IUP::Canvas>.
+ sub resize_cb_handler {
+   my ($self, $width, $heght) = @_;
+   #...
+ }
 
-Addicionally:
+By default the resize callback sets:
+
+ glViewport(0,0,$width,height);
 
 =back
-
-=item * L<RESIZE_CB|../call/iup_resize_cb.html>
-
-By default the resize callback
-sets:
-
- glViewport(0,0,width,height);
-
-=over
 
 =head2 Auxiliary Functions
 
 These are auxiliary functions based on the WGL and XGL extensions.
 Check the respective documentations for more information.
 
- void IUP::GLMakeCurrent(Ihandle* ih); [in C]
- iup.GLMakeCurrent(ih: ihandle) [in Lua]
+=head3 GLMakeCurrent()
 
-=over
+ $canvas_gl->GLMakeCurrent();
 
 Activates the given canvas as the current OpenGL context. All
 subsequent OpenGL commands are directed to such canvas.
 
- int IUP::GLIsCurrent(Ihandle* ih); [in C]
- iup.GLIsCurrent(ih: ihandle) -> status: boolean [in Lua]
+=head3 GLIsCurrent()
 
-=over
+ $canvas_gl->GLIsCurrent();
 
 Returns a non zero value if the given canvas is the current OpenGL
 context.
 
- void IUP::GLSwapBuffers(Ihandle* ih); [in C]
- iup.GLSwapBuffers(ih: ihandle) [in Lua]
+=head3 GLSwapBuffers()
 
-=over
+ $canvas_gl->GLSwapBuffers();
 
 Makes the BACK buffer visible. This function is necessary when a double
 buffer is used.
 
- void IUP::GLPalette(Ihandle* ih, int index, float r, float g, float b); [in C]
- iup.GLPalette(ih: ihandle, index, r, g, b: number) [in Lua]
+=head3 GLPalette()
 
-=over
+ $canvas_gl->GLPalette($index, $r, $g, $b);
 
 Defines a color in the color palette. This function is necessary when
 INDEX color is used.
 
- void IUP::GLUseFont(Ihandle* ih, int first, int count, int list_base); [in C]
- iup.GLUseFont(ih:ihandle, first, count, list_base: number) [in Lua]
+=head3 GLUseFont()
 
-=over
+ $canvas_gl->GLUseFont($first, $count, $list_base);
 
 Creates a bitmap display list from the current FONT attribute. See the
 documentation of the wglUseFontBitmaps and glXUseXFont functions.
 
+=head3 GLWait()
 
- void IUP::GLWait(int gl) [in C]
- iup.GLWait(gl: number) [in Lua]
+ $canvas_gl->GLWait($gl);
 
-=over
-
-If gl is non zero it will call glFinish or glXWaitGL, else will call
-GdiFlush or glXWaitX. 
-
-=back
+If B<gl> is non zero it will call B<glFinish> or B<glXWaitGL>, else will call
+B<GdiFlush> or B<glXWaitX>. 
 
 [% h.notes %]
 
-In Windows XP, if the COMPOSITE attribute is enabled then the hardware
+In Windows XP, if the COMPOSITED attribute on the the main dialog (L<IUP::Dialog>) is enabled then the hardware
 acceleration will be disabled.
 
-The L<IUP::GLCanvas|IUP::GLCanvas> works with the GTK base driver in Windows and in
-UNIX (X-Windows).
-
-Not available in SunOS510x86 just because we were not able to compile
-OpenGL code in our installation.
+The L<IUP::CanvasGL|IUP::CanvasGL> works with the GTK base driver in UNIX (X-Windows).
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
+[% IF examples.iupcanvasgl %]
+The element B<IUP::CanvasGL> is used in the following sample scripts:
 
-[IMAGE]
+=over
+[%FOREACH e IN examples.iupcanvasgl %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 

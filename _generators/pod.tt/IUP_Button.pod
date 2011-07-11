@@ -166,13 +166,20 @@ button can be activated from any control in the dialog using the
 
 =over
 
-=item * L<ACTIVE|IUP::Manual::Attributes::ACTIVE>, L<FONT|IUP::Manual::Attributes::FONT>,
-L<EXPAND|IUP::Manual::Attributes::EXPAND>, L<X|IUP::Manual::Attributes::X>,
-L<Y|IUP::Manual::Attributes::Y>, L<POSITION|../attrib/iup_position.html>, L<MINSIZE|../attrib/iup_minsize.html>,
-L<MAXSIZE|../attrib/iup_maxsize.html>, L<WID|IUP::Manual::Attributes::WID>,
-L<TIP|IUP:Manual::Attributes::TIP>, L<SIZE|IUP::Manual::Attributes::SIZE>,
-L<RASTERSIZE|IUP:Manual::Attributes::RASTERSIZE>, L<ZORDER|IUP:Manual::Attributes::ZORDER>,
-L<VISIBLE|IUP:Manual::Attributes::VISIBLE>
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<X|[%m.at%]/X>,
+L<Y|[%m.at%]/Y>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
 
 =back
 

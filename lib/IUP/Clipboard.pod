@@ -5,21 +5,29 @@ IUP::Clipboard - [special] allows access to the clipboard
 =head1 DESCRIPTION 
 
 Creates an element that allows access to the clipboard. Each clipboard
-should be destroyed using L<IUP::Destroy|IUP::Destroy>, but
+should be destroyed using L<Destroy|IUP::Element::XXX/"Destroy()"> method, but
 you can use only one for entire application because it does not store
 any data inside. Or you can simply create and destroy everytime you
 need to copy or paste.
+
+Example: XXX-TODO
+
+ $text = IUP::Text->new();
+ #...
+ $clipboard = IUP::Clipboard->new();
+ $clipboard->TEXT( $text->VALUE );
+ $clipboard->Destroy();
 
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- Ihandle* IUP::Clipboard(void); [in C]
- iup.clipboard{} -> (elem: ihandle) [in Lua] 
- clipboard() [in LED]
+ $clipboard = IUP::Clipboard->new();
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -46,14 +54,21 @@ at the clipboard. (GTK 2.6)
 =item * B<NATIVEIMAGE>
 
 native handle of an image to copy or paste, to or from
-the clipboard. In Win32 is a B<HANDLE> of a DIB. In GTK is a
-=item * B<GdkPixbuf*>. In Motif is a B<Pixmap>. The returned handle in a paste
-must be released after used (GlobalFree(handle), g_object_unref(pixbuf)
+the clipboard.
+
+In Win32 is a B<HANDLE> of a DIB. 
+
+In GTK is a B<GdkPixbuf*>. 
+
+In Motif is a B<Pixmap>. 
+
+XXX-TODO-FIXME
+The returned handle in a paste must be released after used (GlobalFree(handle), g_object_unref(pixbuf)
 or XFreePixmap(display, pixmap)). After copy, do NOT release the given
 handle. See L< IUP-IM Functions|../iupim.html> for utility functions on
 image native handles. (GTK 2.6)
 
-B<SAVEEMF> (write-only) [Windows Only]
+=item * B<SAVEEMF> (write-only) [Windows Only]
 
 saves the EMF from the
 clipboard to the given filename. (Since 3.2)
@@ -81,11 +96,8 @@ Windows Metafile available at the clipboard. (Since 3.2)
 
 =head1 EXAMPLES
 
- Ihandle* clipboard = IUP::Clipboard();
- IUP::StoreAttribute(clipboard, "TEXT", IUP::GetAttribute(text, "VALUE"));
- IUP::Destroy(clipboard);
- Ihandle* clipboard = IUP::Clipboard();
- IUP::StoreAttribute(text, "VALUE", IUP::GetAttribute(clipboard, "TEXT"));
- IUP::Destroy(clipboard);
 
-=cut
+Unfortunately there are no sample scripts using this element.
+
+
+

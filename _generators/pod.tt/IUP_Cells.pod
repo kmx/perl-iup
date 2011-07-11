@@ -1,4 +1,4 @@
-=pod
+=for comment based on iup-3.2
 
 [% h.name %]
 
@@ -26,20 +26,6 @@ also must be given using SIZE or RASTERSIZE attributes.
 [% html.iupcells %]
 
 =end HTML
-
-[% h.examples %]
-
-B<IUP::Cells> class is used in the following sample scripts:
-
-=over
-
-=item * L<sample1.pl|http://www.x.cz/samples/x.pl> - 'Checkerboard Pattern' example
-
-=item * L<sample2.pl|http://www.x.cz/samples/x.pl> - 'Numbering Cells' example
-
-=item * L<sample3.pl|http://www.x.cz/samples/x.pl> - sample application using zzz
-
-=back
 
 [% h.usage %]
 
@@ -390,6 +376,22 @@ L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>, L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW
 L<K_ANY|[%m.cb%]/K_ANY>, L<HELP_CB|[%m.cb%]/HELP_CB>
 
 =back
+
+[% h.examples %]
+
+[% IF examples.iupcells %]
+The element B<IUP::Cells> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupcells %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 
