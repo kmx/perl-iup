@@ -7,7 +7,7 @@
 Creates an image to be shown on a label, button, toggle, or as a
 cursor.
 
-(L<IUP::ImageRGB|IUP::ImageRGB> and L<IUP::ImageRGBA,|IUP::ImageRGBA,> since 3.0)
+(L<IUP::ImageRGB|IUP::ImageRGB> and L<IUP::ImageRGBA,|IUP::ImageRGBA,> since iup-3.0)
 
 [% h.usage %]
 

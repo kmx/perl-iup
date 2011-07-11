@@ -41,7 +41,7 @@ background. Default: the global attribute DLGBGCOLOR.
 =item * B<COUNT> (read-only) (non inheritable)
 
 returns the number of tabs.
-Same value returned by L<IUP::GetChildCount|IUP::GetChildCount>. (since 3.3)
+Same value returned by L<IUP::GetChildCount|IUP::GetChildCount>. (since iup-3.3)
 
 =item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
 
@@ -98,7 +98,7 @@ remain empty. The "&" character can be used to define a mnemonic, the
 next character will be used as key. Use "&&" to show the "&" character
 instead on defining a mnemonic. The button can be activated from any
 control in the dialog using the "Alt+key" combination. (mnemonic
-support since 3.3) 
+support since iup-3.3) 
 
 =item * B<TABTITLE >(non inheritable) B<(at children)>
 
@@ -185,7 +185,7 @@ Callback called when the user shifts the active tab.
 =item * B<TABCHANGEPOS_CB>
 
 Callback called when the user shifts the active
-tab. Called only when TABCHANGE_CB is not defined. (since 3.3)
+tab. Called only when TABCHANGE_CB is not defined. (since iup-3.3)
 
  int function(Ihandle* ih, int new_pos, int old_pos); [in C]
  elem:tabchange_cb(new_pos, old_pos: number) -> (ret: number) [in Lua]

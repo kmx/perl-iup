@@ -6,11 +6,6 @@
 
 Creates a dial for regulating a given angular variable.
 
-This is an additional control that depends on the CD library. It is
-included in the L<Controls Library|../iupcontrols.html>.
-
-It inherits from L<IUP::Canvas|IUP::Canvas>.
-
 [% h.usage %]
 
 [% h.create %]

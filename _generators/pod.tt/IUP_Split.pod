@@ -2,7 +2,7 @@
 
 [% n.iupsplit %]
 
-[% h.desc %] (since 3.1)
+[% h.desc %] (since iup-3.1)
 
 Creates a void container that split its client area in two. Allows the
 provided controls to be enclosed in a box that allows expanding and
@@ -75,7 +75,7 @@ sets minimum and maximum crop values for
 VALUE, in the format "%d:%d" [min:max]. The min value can not be less
 than 0, and the max value can not be larger than 1000. This will
 constrain the interactive change of the bar handler. Default: "0:1000".
-(Since 3.2)
+(Since iup-3.2)
 
 =item * B<SHOWGRIP> (non inheritable)
 

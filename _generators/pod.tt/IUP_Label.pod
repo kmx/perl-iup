@@ -41,7 +41,7 @@ Possible values: "ALEFT", "ACENTER" and "ARIGHT", combined to "ATOP",
 "ACENTER" and "ABOTTOM". Default: "ALEFT:ACENTER". Partial values are
 also accepted, like "ARIGHT" or ":ATOP", the other value will be used
 from the current alignment. In Motif, vertical alignment is restricted
-to "ACENTER". (vertical alignment since 3.0)
+to "ACENTER". (vertical alignment since iup-3.0)
 
 =item * L<BGCOLOR|[%m.at%]/BGCOLOR>
 
@@ -107,7 +107,7 @@ character is accepted for line change. The "&" character can be used to
 define a mnemonic, the next character will be used as key. Use "&&" to
 show the "&" character instead of defining a mnemonic. The next control
 from the label will be activated from any control in the dialog using
-the "Alt+key" combination. (mnemonic support since 3.0)
+the "Alt+key" combination. (mnemonic support since iup-3.0)
 
 =item * B<WORDWRAP> [Windows and GTK only]
 
@@ -144,14 +144,14 @@ also accepted.
 =item * L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
 
 Action generated when any
-mouse button is pressed or released. (since 3.3)
+mouse button is pressed or released. (since iup-3.3)
 
 =back
 
 =item * L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
 
 Action generated when one or more files are dropped in the element.
-(since 3.3)
+(since iup-3.3)
 
 =back
 

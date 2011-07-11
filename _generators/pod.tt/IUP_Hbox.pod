@@ -53,7 +53,7 @@ preserved.
 
 If a child
 defines the expand weight, then it is used to multiply the free space
-used for expansion. (since 3.1)
+used for expansion. (since iup-3.1)
 
 =item * L<FLOATING|[%m.at%]/FLOATING> (non inheritable) B<(at
 children only)>
@@ -65,7 +65,7 @@ will be ignored by the layout processing. Default: "NO".
 
 Defines an horizontal space in pixels between the
 children, B<CGAP> is in the same units of the B<SIZE> attribute for the
-width. Default: "0". (CGAP since 3.0)
+width. Default: "0". (CGAP since iup-3.0)
 
 =item * B<NGAP, NCGAP> (non inheritable)
 
@@ -86,7 +86,7 @@ Defines a margin in pixels, B<CMARGIN >is in the
 same units of the B< SIZE> attribute. Its value has the format
 "I<width>xI<height>", where I< width> and I<height> are integer values
 corresponding to the horizontal and vertical margins, respectively.
-Default: "0x0" (no margin). (CMARGIN since 3.0)
+Default: "0x0" (no margin). (CMARGIN since iup-3.0)
 
 =item * B<NMARGIN, NCMARGIN> (non inheritable)
 
@@ -107,7 +107,7 @@ L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
 Defines
 the width of the box. When consulted behaves as the standard
 SIZE/RASTERSIZE attributes. The standard format "wxh" can also be used,
-but height will be ignored (since 3.3).
+but height will be ignored (since iup-3.3).
 
 =item * B<WID> (read-only)
 

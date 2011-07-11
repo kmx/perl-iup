@@ -182,7 +182,7 @@ only after the dataset is added to the plot.
  iup.IUP::PlotInsertStrPoints(ih: ihandle, index, sample_index, x, y: table of number)
 
 Inserts an array of samples in a dataset at the given B<sample_index>.
-Can be used only after the dataset is added to the plot. (Since 3.4)
+Can be used only after the dataset is added to the plot. (Since iup-3.4)
 
 ----
 
@@ -192,7 +192,7 @@ Can be used only after the dataset is added to the plot. (Since 3.4)
  iup.IUP::PlotAddStrPoints(ih: ihandle, index, x, y: table of number)
 
 Adds an array of samples in a dataset at the end. Can be used only
-after the dataset is added to the plot. (Since 3.4)
+after the dataset is added to the plot. (Since iup-3.4)
 
 ----
 

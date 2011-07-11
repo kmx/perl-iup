@@ -158,7 +158,7 @@ selected font, even using multiple lines, plus the button borders. The
 used to define a mnemonic, the next character will be used as key. Use
 "&&" to show the "&" character instead on defining a mnemonic. The
 button can be activated from any control in the dialog using the
-"Alt+key" combination. (mnemonic support since 3.0)
+"Alt+key" combination. (mnemonic support since iup-3.0)
 
 =back
 

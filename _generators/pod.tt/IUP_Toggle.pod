@@ -67,7 +67,7 @@ Default: the global attribute DLGFGCOLOR.
 Hides the toggle borders until the mouse enter
 the toggle area when the toggle is not checked. If the toggle is
 checked, then the borders will be shown even if flat is enabled. Used
-only when IMAGE is defined. Can be YES or NO. Default: NO. (since 3.3)
+only when IMAGE is defined. Can be YES or NO. Default: NO. (since iup-3.3)
 
 =item * B<IMAGE> (non inheritable)
 
@@ -133,7 +133,7 @@ check box if any. The '\n' character is accepted for line change. The
 "&" character can be used to define a mnemonic, the next character will
 be used as key. Use "&&" to show the "&" character instead on defining
 a mnemonic. The toggle can be activated from any control in the dialog
-using the "Alt+key" combination. (mnemonic support since 3.0)
+using the "Alt+key" combination. (mnemonic support since iup-3.0)
 
 =item * B<3STATE >(creation only)
 

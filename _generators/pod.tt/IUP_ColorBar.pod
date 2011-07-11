@@ -13,18 +13,11 @@ the right mouse button. You can double click a cell to change its color
 and you can double click the preview area to switch between primary and
 secondary colors.
 
-This is an additional control that depends on the CD library. It is
-included in the L<Controls Library|../iupcontrols.html>.
-
-It inherits from L<IUP::Canvas|IUP::Canvas>.
-
-Originally implemented by Andr Clinio.
-
 [% h.usage %]
 
 [% h.create %]
 
- $colorbar = IUP::Colorbar->new(void);
+ $colorbar = IUP::Colorbar->new();
  iup.colorbar{} -> (elem: ihandle) [in Lua]
  colorbar() [in LED] 
 
@@ -58,7 +51,7 @@ use the same set of L<IUP::Image|IUP::Image>.
 =item * B<COUNT> (read-only) (non inheritable)
 
 same as B<NUM_CELLS> but it
-is read-only. (since 3.3)
+is read-only. (since iup-3.3)
 
 =item * B<NUM_PARTS> (non inheritable)
 

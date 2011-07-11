@@ -81,7 +81,7 @@ scrollbars are shown only if they are necessary. Default:
 
 automatically redraws the
 list when something has change. Set to NO to add many items to the list
-without updating the display. Default: "YES". (since 3.3)
+without updating the display. Default: "YES". (since iup-3.3)
 
 =item * L<BGCOLOR|[%m.at%]/BGCOLOR>
 

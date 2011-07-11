@@ -44,7 +44,7 @@ the width, if inside a L<IUP::Hbox|IUP::Hbox>, or the height, if it is inside a
 =item * L<IUP::Vbox|IUP::Vbox>. When consulted behaves as the standard SIZE/RASTERSIZE
 attributes. The standard format "wxh" can also be used, but width will
 be ignored if inside a L<IUP::Vbox |IUP::Vbox >and height will be ignored if inside
-a L<IUP::Hbox|IUP::Hbox> (since 3.3).
+a L<IUP::Hbox|IUP::Hbox> (since iup-3.3).
 
 B<WID> (read-only)
 

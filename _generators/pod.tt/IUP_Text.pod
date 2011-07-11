@@ -103,7 +103,7 @@ FORMATTING=YES.
 =item * B<COUNT> (read-only)
 
 returns the number of characters in the text.
-(since 3.5)
+(since iup-3.5)
 
 =item * B<CUEBANNER> [Windows Only] (non inheritable)
 
@@ -145,13 +145,13 @@ replaces the current selection if any. Ignored if set before map.
 =item * B<LINECOUNT> (read-only)
 
 returns the number of characters in the line
-where the caret is. When MULTILINE=NO returns always "1". (since 3.5)
+where the caret is. When MULTILINE=NO returns always "1". (since iup-3.5)
 
 =item * B<LINEVALUE> (read-only)
 
 returns the text of the line where the caret
 is. It does not include the "\n" character. When MULTILINE=NO returns
-the same as VALUE. (since 3.5)
+the same as VALUE. (since iup-3.5)
 
 =item * L<MASK|[%m.at%]/MASK> (non inheritable)
 
@@ -328,7 +328,7 @@ string "".
 =item * B<VALUEMASKED >(non inheritable) (write-only)
 
 sets VALUE but first
-checks if it is validated by MASK. If not does nothing. (since 3.4)
+checks if it is validated by MASK. If not does nothing. (since iup-3.4)
 
 =item * B<VISIBLECOLUMNS>
 

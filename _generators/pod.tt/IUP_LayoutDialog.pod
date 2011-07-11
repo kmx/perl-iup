@@ -2,7 +2,7 @@
 
 [% n.iuplayoutdialog %]
 
-[% h.desc %] (since 3.3)
+[% h.desc %] (since iup-3.3)
 
 Creates a Layout Dialog. It is a predefined dialog to visually edit the
 layout of another dialog in run time. It is a standard L<IUP::Dialog|IUP::Dialog>

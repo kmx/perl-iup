@@ -300,7 +300,7 @@ GTK driver in UNIX.
 
 informs if the
 dialog is the active window (the window with focus). Can be Yes or No.
-(since 3.4)
+(since iup-3.4)
 
 =item * B<HIDETASKBAR> [Windows and GTK Only] (write-only)
 
@@ -469,7 +469,7 @@ is closed.
 
 Called at the first instance, when a
 second instance is running. Must set the global attribute
-SINGLEINSTANCE to be called. (since 3.2)
+SINGLEINSTANCE to be called. (since iup-3.2)
 
  int function(Ihandle *ih, char* cmdLine, int size); [in C]elem:copydata_cb(cmdLine: string, size: number) -> (ret: number) [in Lua]
 
