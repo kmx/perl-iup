@@ -21,8 +21,9 @@ L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
 B<child>: Identifier of an interface element which will receive the
 box. It can be NULL.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 

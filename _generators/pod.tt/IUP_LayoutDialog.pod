@@ -29,8 +29,9 @@ their dialogs in other ways.
 
 B<dialog>: identifier of the dialog to display the layout. Can be NULL.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 

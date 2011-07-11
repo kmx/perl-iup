@@ -21,8 +21,9 @@ TITLE attribute.
 B<action>: Name of the action generated when the item is selected. It
 can be NULL.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 
@@ -131,7 +132,7 @@ be closed.
 
 =back
 
-=item * L<HIGHLIGHT_CB|../call/iup_highlight_cb.html>
+=item * L<HIGHLIGHT_CB|[%m.cb%]/HIGHLIGHT_CB>
 
 Action generated when
 the item is highlighted.
@@ -140,9 +141,9 @@ the item is highlighted.
 
 =back
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>,
-L<HELP_CB|../call/iup_help_cb.html>
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
 
 common callbacks are supported.
 

@@ -16,8 +16,9 @@ IUP::Popup function only.
  iup.filedlg{} -> (elem: ihandle) [in Lua]
  filedlg() [in LED]
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 
@@ -257,7 +258,7 @@ file_name is NULL.
 
 =back
 
-=item * L<HELP_CB|../call/iup_help_cb.html>
+=item * L<HELP_CB|[%m.cb%]/HELP_CB>
 
 Action generated when the Help
 button is pressed.

@@ -19,8 +19,9 @@ encapsulated in a dialog.
 B<child>: Identifier of an interface element. The dialog has only one
 child.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 
@@ -369,7 +370,7 @@ Inserts a help button in
 the same place of the maximize button. It can only be used for dialogs
 without the minimize and maximize buttons, and with the menu box. For
 the next interaction of the user with a control in the dialog, the
-callback L<HELP_CB|../call/iup_help_cb.html> will be called instead of
+callback L<HELP_CB|[%m.cb%]/HELP_CB> will be called instead of
 the control defined ACTION callback. Possible values: YES, NO. Default:
 NO.
 
@@ -457,7 +458,7 @@ Default: NO.
 
 =over
 
-=item * L<CLOSE_CB|../call/iup_close_cb.html>
+=item * L<CLOSE_CB|[%m.cb%]/CLOSE_CB>
 
 Called right before the dialog
 is closed.
@@ -482,7 +483,7 @@ SINGLEINSTANCE to be called. (since 3.2)
 
 =back
 
-=item * L<DROPFILES_CB|../call/iup_dropfiles_cb.html> [Windows and GTK Only]
+=item * L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
 
 Action generated when one or more files are dropped in the dialog.
 
@@ -527,7 +528,7 @@ trayclick_cb(x, y: number) -> (ret: number) [in Lua]
 
 =back
 
-=item * L<RESIZE_CB|../call/iup_resize_cb.html>
+=item * L<RESIZE_CB|[%m.cb%]/RESIZE_CB>
 
 Action generated when the
 dialog size is changed. If returns IUP_IGNORE the dialog layout is NOT
@@ -535,7 +536,7 @@ recalculated.
 
 =back
 
-=item * L<SHOW_CB|../call/iup_show_cb.html>
+=item * L<SHOW_CB|[%m.cb%]/SHOW_CB>
 
 Called right after the dialog is
 showed, hidden, maximized, minimized or restored from
@@ -570,15 +571,13 @@ Returns: IUP_CLOSE will be processed.
 
 =over
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>,
-L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
-L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
-L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
-L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
-L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
-
-All common callbacks are supported.
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>, L<HELP_CB|[%m.cb%]/HELP_CB>
 
 =back
 

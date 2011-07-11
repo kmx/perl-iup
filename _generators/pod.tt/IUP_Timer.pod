@@ -16,8 +16,9 @@ L<IUP::Destroy|IUP::Destroy>.
  iup.timer{} -> (elem: ihandle) [in Lua] 
  timer() [in LED]
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 

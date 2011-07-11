@@ -19,8 +19,9 @@ NULL. It will set the TITLE attribute.
 
 B<menu>: optional child menu identifier. Can be NULL.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 
@@ -74,7 +75,7 @@ also accepted.
 
 =over
 
-=item * L<HIGHLIGHT_CB|../call/iup_highlight_cb.html>
+=item * L<HIGHLIGHT_CB|[%m.cb%]/HIGHLIGHT_CB>
 
 Action generated when
 the submenu is highlighted.
@@ -83,8 +84,8 @@ the submenu is highlighted.
 
 =back
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>
 
 common callbacks are supported.
 

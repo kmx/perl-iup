@@ -21,8 +21,9 @@ It does not have a native representation.
 B<child>, ... : List of the identifiers that will be placed in the box.
 NULL must be used to define the end of the list in C. It can be empty.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 

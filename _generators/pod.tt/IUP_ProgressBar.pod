@@ -18,8 +18,9 @@ does not have support for text inside the bar.
  iup.progressbar{} -> (elem: ihandle) [in Lua]
  progressbar() [in LED] 
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 
@@ -100,8 +101,8 @@ also accepted.
 
 =over
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>
 
 common callbacks are supported.
 

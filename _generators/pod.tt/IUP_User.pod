@@ -17,8 +17,9 @@ Ihandle* to store private attributes.
  iup.user{} -> (elem: ihandle) [in Lua]
  user() [in LED]
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 

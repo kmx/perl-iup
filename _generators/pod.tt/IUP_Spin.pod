@@ -22,8 +22,9 @@ L<IUP::Spin|IUP::Spin> inherits from a L<IUP::Vbox|IUP::Vbox>, and contains two 
  iup.spin{} -> (elem: ihandle) [in Lua]
  spin() [in LED]
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 L<IUP::Spinbox|IUP::Spinbox> is an horizontal container that already contains a
 L<IUP::Spin|IUP::Spin>.

@@ -20,8 +20,9 @@ a menu will be an error.
 B<child>, ... : List of identifiers that will be grouped by the menu.
 NULL must be used to mark the end of the list in C. It can be empty.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 
@@ -54,14 +55,14 @@ the HMENU of the menu.
 
 =over
 
-=item * L<OPEN_CB|../call/iup_open_cb.html>
+=item * L<OPEN_CB|[%m.cb%]/OPEN_CB>
 
 Called just before the menu is
 opened.
 
 =back
 
-=item * L<MENUCLOSE_CB|../call/iup_menuclose_cb.html>
+=item * L<MENUCLOSE_CB|[%m.cb%]/MENUCLOSE_CB>
 
 Called just after the
 menu is closed.
@@ -70,8 +71,8 @@ menu is closed.
 
 =back
 
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>
 
 common callbacks are supported.
 

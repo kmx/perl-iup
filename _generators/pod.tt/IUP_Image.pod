@@ -48,8 +48,9 @@ values. See Notes below.
 B<colors>: table named colors containing the colors indices. See Notes
 below.
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 

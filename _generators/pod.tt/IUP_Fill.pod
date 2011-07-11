@@ -19,8 +19,9 @@ It does not have a native representation.
  iup.fill{} -> elem: ihandle [in Lua]
  fill() [in LED]
 
-Returns: the identifier of the created element, or NULL if an error
-occurs.
+[% txt.new_attr %]
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 
