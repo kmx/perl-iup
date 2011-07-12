@@ -68,9 +68,7 @@ L<IUP::Insert|IUP::Insert>.
 
 [% h.examples %]
 
- Ihandle* spinbox = IUP::Spinbox(IUP::Text(NULL));
-
-[IMAGE]
+XXX-EX-XXX
 
 [% h.see %]
 

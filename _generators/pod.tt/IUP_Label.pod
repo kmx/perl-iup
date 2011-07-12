@@ -175,39 +175,7 @@ and the text for another text.
 
 [% h.examples %]
 
-Normal Text Label -
-
-[IMAGE]
-
-- Normal Image Label
-
-Horizontal Separator -
-
-- Horizontal Separator
-
-FGCOLOR = "0 0 255"
-
-ALIGNMENT="ALEFT:ATOP"
-
-- (8bpp Image)
-
-FONT = "Helvetica, 14"
-
-ALIGNMENT = "ACENTER:ACENTER"
-
-- ALIGNMENT = "ACENTER"
-
-(24 bpp Image)
-
-MARKUP = "YES" (GTK Only)
-
-ALIGNMENT = "ARIGHT:ABOTTOM"
-
-- ALIGNMENT = "ARIGHT"
-
-(32 bpp Image)
-
-L<Browse for Example Files|../../examples/>
+XXX-EX-XXX
 
 [% h.see %]
 

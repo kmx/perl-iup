@@ -162,9 +162,7 @@ control.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-See the L<IUP::Menu|IUP::Menu> element for screenshots.
+XXX-EX-XXX
 
 [% h.see %]
 

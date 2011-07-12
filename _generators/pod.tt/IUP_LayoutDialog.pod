@@ -156,15 +156,7 @@ L<IUP::ElementPropertiesDialog|IUP::ElementPropertiesDialog>.
 
 [% h.examples %]
 
-This will create an empty layout with a new dialog.
-
- IUP::Show(IUP::LayoutDialog(NULL));   [in C]
- 
- iup.Show(iup.LayoutDialog(nil))    [in Lua]
-
-The following dialog layout is displayed next.
-
-[IMAGE]
+XXX-EX-XXX
 
 [% h.see %]
 

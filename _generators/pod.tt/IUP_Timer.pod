@@ -73,6 +73,6 @@ B<Returns:> IUP_CLOSE will be processed.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
+XXX-EX-XXX
 
 =cut

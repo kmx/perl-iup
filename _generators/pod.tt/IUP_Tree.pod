@@ -554,18 +554,6 @@ for the IUP::Tree with some limitations.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-Windows
-
-[IMAGE]
-
-Motif
-
-[IMAGE]
-
-GTK
-
-[IMAGE]
+XXX-EX-XXX
 
 =cut

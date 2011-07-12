@@ -28,4 +28,8 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 B<CLEARATTRIBUTES> (write-only, non inheritable): it will clear all
 attributes stored internally and remove all references. 
 
+[% h.examples %]
+
+XXX-EX-XXX
+
 =cut

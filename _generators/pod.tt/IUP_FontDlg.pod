@@ -91,37 +91,7 @@ the active dialog.
 
 [% h.examples %]
 
- Ihandle* dlg = IUP::FontDlg();
- 
- IUP::SetAttribute(dlg, "COLOR", "128 0 255");
- IUP::SetAttribute(dlg, "VALUE", "Times New Roman, Bold 20");
- IUP::SetAttribute(dlg, "TITLE", "IUP::FontDlg Test");
- IUP::SetCallback(dlg, "HELP_CB", (Icallback)help_cb);
- 
- IUP::Popup(dlg, IUP_CURRENT, IUP_CURRENT);
- 
- if (IUP::GetInt(dlg, "STATUS"))
- {
-   printf("OK\n");
-   printf("  VALUE(%s)\n", IUP::GetAttribute(dlg, "VALUE"));
-   printf("  COLOR(%s)\n", IUP::GetAttribute(dlg, "COLOR"));
- }
- else
-   printf("CANCEL\n");
- 
- IUP::Destroy(dlg); 
-
-Windows XP
-
-[IMAGE]
-
-GTK/GNOME
-
-[IMAGE]
-
-Motif/MWM
-
-[IMAGE]
+XXX-EX-XXX
 
 [% h.see %]
 

@@ -529,11 +529,7 @@ LINCOL.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-[IMAGE]
-
-[IMAGE]
+XXX-EX-XXX
 
 [% h.see %]
 

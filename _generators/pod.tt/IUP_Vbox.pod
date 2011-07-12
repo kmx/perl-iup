@@ -147,27 +147,7 @@ and there must be room in the box parent.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-[IMAGE]
-
-[IMAGE]
-
-HOMOGENEOUS=YES
-
-[IMAGE]
-
-EXPANDCHILDREN=YES
-
-[IMAGE]
-
-VISIBLE=NO
-
-[IMAGE]
-
-+FLOATING=NO
-
-[IMAGE]
+XXX-EX-XXX
 
 [% h.see %]
 

@@ -108,47 +108,6 @@ L<IUP::Insert|IUP::Insert>.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-  frame1 = IUP::Frame
-          (
-            IUP::Vbox
-            (
-              IUP::Label("Label1"),
-              IUP::Label("Label2"), 
-              IUP::Label("Label3"),
-              NULL
-            )
-          );
- 
-  frame2 = IUP::Frame
-          (
-            IUP::Vbox
-            (
-              IUP::Label("Label4"), 
-              IUP::Label("Label5"),
-              IUP::Label("Label6"),
-              NULL
-            )
-          );
- 
-  IUP::SetAttribute(frame1, "TITLE", "Title Text");
-  IUP::SetAttribute(frame2, "SUNKEN", "YES");
-
-Windows 2000
-
-[IMAGE]
-
-Windows XP
-
-[IMAGE]
-
-Motif
-
-[IMAGE]
-
-GTK
-
-[IMAGE]
+XXX-EX-XXX
 
 =cut

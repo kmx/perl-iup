@@ -98,11 +98,7 @@ when the menu is mapped.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-[IMAGE]
-
-See the L<IUP::Menu|IUP::Menu> element for more screenshots.
+XXX-EX-XXX
 
 [% h.see %]
 

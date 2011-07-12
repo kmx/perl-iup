@@ -251,42 +251,6 @@ systems.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-Motif
-
-Windows
-
-Classic
-
-Windows
-
-w/ Styles
-
-Windows
-
-Vista
-
-GTK
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
+XXX-EX-XXX
 
 =cut

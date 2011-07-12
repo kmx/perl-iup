@@ -258,49 +258,6 @@ does not need to concatenate the attribute name with the id.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-In Windows, the Visual Styles work only when TABTYPE is TOP.
-
-Windows
-
-Classic
-
-Windows
-
-w/ Styles
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-GTK is the only one that supports vertical text in the TOP
-configuration, but does not supports multiple lines of tab buttons.
-
-GTK
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-Motif does not supports vertical text.
-
-Motif
-
-[IMAGE]
-
-[IMAGE]
+XXX-EX-XXX
 
 =cut

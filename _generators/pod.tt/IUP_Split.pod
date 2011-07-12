@@ -138,14 +138,6 @@ L<IUP::Insert|IUP::Insert>.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-[IMAGE]
-
-Natural Size
-
-[IMAGE]
-
-After Moving the Split Bar
+XXX-EX-XXX
 
 =cut

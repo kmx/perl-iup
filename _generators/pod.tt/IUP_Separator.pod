@@ -28,7 +28,7 @@ in a bar menu.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
+XXX-EX-XXX
 
 [% h.see %]
 

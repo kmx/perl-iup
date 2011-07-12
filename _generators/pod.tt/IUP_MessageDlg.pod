@@ -105,31 +105,7 @@ only to its parent.
 
 [% h.examples %]
 
- Ihandle* dlg = IUP::MessageDlg();
- 
- IUP::SetAttribute(dlg, "DIALOGTYPE", "WARNING");
- IUP::SetAttribute(dlg, "TITLE", "IUP::MessageDlg Test");
- IUP::SetAttribute(dlg, "BUTTONS", "OKCANCEL");
- IUP::SetAttribute(dlg, "VALUE", "Message Text\nSecond Line");
- IUP::SetCallback(dlg, "HELP_CB", (Icallback)help_cb);
- 
- IUP::Popup(dlg, IUP_CURRENT, IUP_CURRENT);
- 
- printf("BUTTONRESPONSE(%s)\n", IUP::GetAttribute(dlg, "BUTTONRESPONSE"));
- 
- IUP::Destroy(dlg);  
-
-Windows XP
-
-[IMAGE]
-
-Motif/Mwm
-
-[IMAGE]
-
-GTK/GNOME
-
-[IMAGE]
+XXX-EX-XXX
 
 [% h.see %]
 

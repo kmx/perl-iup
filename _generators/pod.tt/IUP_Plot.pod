@@ -667,19 +667,7 @@ L<K_ANY|[%m.cb%]/K_ANY>, L<HELP_CB|[%m.cb%]/HELP_CB>
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
+XXX-EX-XXX
 
 [% h.see %]
 

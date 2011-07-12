@@ -94,22 +94,6 @@ L<IUP::Insert|IUP::Insert>.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-[IMAGE]
-
-Natural Size
-
-[IMAGE]
-
-After Expanding the Sbox
-
-[IMAGE]
-
-Expanding the Dialog
-
-[IMAGE]
-
-After Expanding the Sbox
+XXX-EX-XXX
 
 =cut

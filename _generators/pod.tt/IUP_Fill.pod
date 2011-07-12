@@ -17,10 +17,8 @@ It does not have a native representation.
 
 [% h.create %]
 
- $fill = IUP::Fill->new(void);
- iup.fill{} -> elem: ihandle [in Lua]
- fill() [in LED]
-
+ $fill = IUP::Fill->new();
+ 
 [% txt.new_attr %]
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
@@ -33,17 +31,15 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
 
-Ignored. If
-=item * B<User> size is not defined, then when inside a L<IUP::Hbox|IUP::Hbox> EXPAND is
-HORIZONTAL, when inside a IUP::Vbox EXPAND is VERTICAL. If B<User> size
+Ignored. If B<User> size is not defined, then when inside a L<IUP::Hbox|IUP::Hbox> EXPAND is
+HORIZONTAL, when inside a L<IUP::Vbox> EXPAND is VERTICAL. If B<User> size
 is defined then EXPAND is NO.
 
 L<SIZE|[%m.at%]/SIZE> /
 L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
 
-Defines
-the width, if inside a L<IUP::Hbox|IUP::Hbox>, or the height, if it is inside a
-=item * L<IUP::Vbox|IUP::Vbox>. When consulted behaves as the standard SIZE/RASTERSIZE
+Defines the width, if inside a L<IUP::Hbox|IUP::Hbox>, or the height, if it is inside a
+L<IUP::Vbox|IUP::Vbox>. When consulted behaves as the standard SIZE/RASTERSIZE
 attributes. The standard format "wxh" can also be used, but width will
 be ignored if inside a L<IUP::Vbox |IUP::Vbox >and height will be ignored if inside
 a L<IUP::Hbox|IUP::Hbox> (since iup-3.3).
@@ -63,16 +59,24 @@ L<POSITION|[%m.at%]/POSITION>,
 L<MINSIZE|[%m.at%]/MINSIZE>,
 L<MAXSIZE|[%m.at%]/MAXSIZE>
 
-also accepted.
-
 =back
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
+[% IF examples.iupfill %]
+The element B<IUP::Fill> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupfill %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 
-L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>.
-
-=cut
+L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>

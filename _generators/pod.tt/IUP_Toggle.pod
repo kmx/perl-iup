@@ -231,51 +231,7 @@ L<IUP::Frame|IUP::Frame> that has a title.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-Motif
-
-Windows
-
-Classic
-
-Windows
-
-w/ Styles
-
-GTK
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
+XXX-EX-XXX
 
 [% h.see %]
 

@@ -152,49 +152,7 @@ with already create elements.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-Windows
-
-Classic
-
-Windows
-
-w/ Styles
-
-[IMAGE]
-
-[IMAGE]
-
-Motif
-
-GTK
-
-[IMAGE]
-
-[IMAGE]
-
-The L<IUP::Item|IUP::Item> check is affected by the RADIO attribute in L<IUP::Menu|IUP::Menu>:
-
-Windows
-
-Classic
-
-Windows
-
-XP Style
-
-[IMAGE]
-
-[IMAGE]
-
-Motif
-
-GTK
-
-[IMAGE]
-
-[IMAGE]
+XXX-EX-XXX
 
 [% h.see %]
 

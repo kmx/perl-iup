@@ -348,7 +348,7 @@ values in Lua, except as an userdata using the WID attribute.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
+XXX-EX-XXX
 
 [% h.see %]
 

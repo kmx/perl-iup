@@ -601,56 +601,7 @@ paste
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-Motif
-
-Windows
-
-Classic
-
-Windows
-
-w/ Styles
-
-GTK
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-When FORMATTING=YES in Windows or GTK (formatting attributes are set to
-a formatag object that it is a L<IUP::User|IUP::User>):
-
- "ALIGNMENT" = "CENTER""SPACEAFTER" = "10""FONTSIZE" = "24""SELECTION" = "3,1:3,50""ADDFORMATTAG""BGCOLOR" = "255 128 64""UNDERLINE" = "SINGLE""WEIGHT" = "BOLD""SELECTION" = "3,7:3,11""ADDFORMATTAG"    "ITALIC" = "YES""STRIKEOUT" = "YES""SELECTION" = "2,1:2,12""ADDFORMATTAG"
-
-[IMAGE]
-
-When SPIN=YES:
-
-Motif
-
-Windows
-
-Classic
-
-Windows
-
-w/ Styles
-
-GTK
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
+XXX-EX-XXX
 
 [% h.see %]
 

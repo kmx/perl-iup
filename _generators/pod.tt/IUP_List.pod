@@ -542,23 +542,7 @@ does not need to concatenate the attribute name with the id.
 
 [% h.examples %]
 
-L<Browse for Example Files|../../examples/>
-
-Windows 2000
-
-[IMAGE]
-
-Windows XP
-
-[IMAGE]
-
-Motif
-
-[IMAGE]
-
-GTK
-
-[IMAGE]
+XXX-EX-XXX
 
 [% h.see %]
 
