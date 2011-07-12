@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -40,17 +40,19 @@ image to be tiled on the background.
 
 See also the screenshots of the sample dialog: XXX-fix-the-following-links
 
-=item * L<results with normal background|../xxx.html>
+=over
 
-=item * L<changing the dialog BACKGROUND|../xxx.html>
+=item * L<results with normal background|xxx.html>
 
-=item * L<changing the dialog BGCOLOR|../xxx.html>
+=item * L<changing the dialog BACKGROUND|xxx.html>
 
-=item * L<changing the children BGCOLOR|../xxx.html>
+=item * L<changing the dialog BGCOLOR|xxx.html>
+
+=item * L<changing the children BGCOLOR|xxx.html>
 
 =back
 
-B<BORDER> (non inheritable) (creation only)
+=item * B<BORDER> (non inheritable) (creation only)
 
 Shows a resize border
 around the dialog. Default: "YES". BORDER=NO is useful only when
@@ -117,7 +119,7 @@ so the dialog can be resized to smaller values. But notice that its
 contents will still be limited by the B<Natural> size, to also remove
 that limitation set SHRINK=YES.
 
-For more information see L<Layout Guide|../layout_guide.html>.
+For more information see L<Layout Guide|XXX>.
 
 =item * L<TITLE|IUP::Manual::03_Attributes/TITLE> (non inheritable)
 
@@ -128,8 +130,7 @@ it will hide it only if RESIZE=NO also.
 
 =item * L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
 
-Simply call L<IUP::Show|IUP::Show> or
-=item * L<IUP::Hide|IUP::Hide> for the dialog.
+Simply call L<Show|IUP::Manual::02_Elements/"Show()"> or L<Hide|IUP::Manual::02_Elements/"Hide()"> for the dialog.
 
 =back
 
@@ -137,11 +138,11 @@ The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> 
 
 =over
 
-L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
+=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
 L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>, L<FONT|IUP::Manual::03_Attributes/FONT>,
 L<EXPAND|IUP::Manual::03_Attributes/EXPAND>,
 L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
-L<WID|IUP::Manual::03_Attributes/WID>, L< TIP|../attrib/iup_tip.html>,
+L<WID|IUP::Manual::03_Attributes/WID>, L<TIP|IUP::Manual::03_Attributes/TIP>,
 L<CLIENTSIZE|IUP::Manual::03_Attributes/CLIENTSIZE>,
 L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
 L<ZORDER|IUP::Manual::03_Attributes/ZORDER>
@@ -157,17 +158,15 @@ Note that ACTIVE, BGCOLOR and FONT will also affect all the controls inside the 
 =item * B<DEFAULTENTER>
 
 Name of the button activated when the user press Enter
-when focus is in another control of the dialog. Use L<
-IUP::SetHandle|../func/iupsethandle.html> or
-=item * L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+when focus is in another control of the dialog. Use L<SetName|IUP::Manual::02_Elements/"SetName()"> or
+XXX-FIX_ME to
 associate a button to a name.
 
 =item * B<DEFAULTESC>
 
 Name of the button activated when the user press Esc
-when focus is in another control of the dialog. Use L<
-IUP::SetHandle|../func/iupsethandle.html> or
-=item * L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+when focus is in another control of the dialog. Use L<SetName|IUP::Manual::02_Elements/"SetName()"> or
+XXX-FIX_ME to
 associate a button to a name.
 
 =item * B<DIALOGFRAME>
@@ -181,7 +180,9 @@ button remains.
 
 Dialogs icon.
 
-=item * B<FULLSCREEN: >Makes the dialog occupy the whole screen over any system
+=item * B<FULLSCREEN>
+
+Makes the dialog occupy the whole screen over any system
 bars in the main monitor. All dialog details, such as title bar,
 borders, maximize button, etc, are removed. 
 
@@ -214,9 +215,8 @@ Default: 65535x65535.
 =item * B<MENU>
 
 Name of a menu. Associates a menu to the dialog as a menu bar.
-The previous menu, if any, is unmapped. Use L<
-IUP::SetHandle|../func/iupsethandle.html> or
-=item * L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+The previous menu, if any, is unmapped. Use L<SetName|IUP::Manual::02_Elements/"SetName()"> or
+XXX-FIX_ME to
 associate a menu to a name. See also L<IUP::Menu|IUP::Menu>.
 
 =item * B<MENUBOX> (creation only)
@@ -246,7 +246,7 @@ the window decoration buttons.
 =item * B<MODAL> (read-only)
 
 Returns the popup state. It is "YES" if the
-dialog was shown using L<IUP::Popup|IUP::Popup>. It is "NO" if L<IUP::Show|IUP::Show> was used
+dialog was shown using L<Popup|IUP::Manual::02_Elements/"Popup()">. It is "NO" if L<Show|IUP::Manual::02_Elements/"Show()"> was used
 or it is not visible. 
 
 =item * B<NATIVEPARENT> (creation only)
@@ -262,7 +262,7 @@ Name of a dialog to be used as parent.
 
 Changes how the dialog will be shown. Values:
 "FULL", "MAXIMIZED", "MINIMIZED" and "NORMAL". Default: NORMAL. After
-=item * L<IUP::Show|IUP::Show>/L<IUP::Popup|IUP::Popup> the attribute is set back to "NORMAL". FULL is
+L<Show|IUP::Manual::02_Elements/"Show()">/L<Popup|IUP::Manual::02_Elements/"Popup()"> the attribute is set back to "NORMAL". FULL is
 similar to FULLSCREEN but only the dialog client area covers the screen
 area, menu and decorations will be there but out of the screen. In UNIX
 there is a chance that the placement won't work correctly, that depends
@@ -294,7 +294,7 @@ NO.
 =item * B<STARTFOCUS>
 
 Name of the element that must receive the focus right
-after the dialog is shown using L<IUP::Show|IUP::Show> or B< IUP::Popup>. If not
+after the dialog is shown using L<Show|IUP::Manual::02_Elements/"Show()"> or L<Popup|IUP::Manual::02_Elements/"Popup()">. If not
 defined then the first control than can receive the focus is selected
 (same effect of calling L<IUP::NextField|IUP::NextField> for
 the dialog). Updated after SHOW_CB is called and only if the focus was
@@ -784,7 +784,7 @@ L<ShowXY|IUP::Manual::02_Elements/"ShowXY>,
 L<Show|IUP::Manual::02_Elements/"Show()">,,
 L<Popup|IUP::Manual::02_Elements/"Popup()">
 
-The original doc: L<iupdialog.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupdialog.html>
+The original doc: L<iupdialog.html|http://www.tecgraf.puc-rio.br/iup/en/dlg/iupdialog.html>
  
 
 =cut

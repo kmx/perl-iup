@@ -166,6 +166,8 @@ B<$self:> reference to the element (IUP::Dial) that activated the event
 
 =back
 
+=back
+
 [%txt.cb_common%]
 
 =over
@@ -217,7 +219,7 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::Canvas|IUP::Canvas>
 
 [%IF flags.gennerate_origdoc -%]
-The original doc: L<iupdial.html|[%url.iuporigdoc%]elem/iupdial.html>
+The original doc: L<iupdial.html|[%url.iuporigdoc%]ctrl/iupdial.html>
 [%END%] 
 
 =cut

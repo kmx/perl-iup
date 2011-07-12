@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -15,19 +15,22 @@ Ihandle* to store private attributes.
 
 =head2 CREATION - new() method
 
- $user = IUP::User->new(void);
- iup.user{} -> (elem: ihandle) [in Lua]
- user() [in LED]
+ $user = IUP::User->new();
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
 
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
-
 =head2 ATTRIBUTES
 
-B<CLEARATTRIBUTES> (write-only, non inheritable): it will clear all
-attributes stored internally and remove all references. 
+=over
+
+=item * B<CLEARATTRIBUTES> (write-only, non inheritable)
+
+It will clear all attributes stored internally and remove all references. 
+
+=back
 
 =head1 EXAMPLES
 

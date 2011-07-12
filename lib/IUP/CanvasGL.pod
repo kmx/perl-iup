@@ -75,8 +75,6 @@ all B<creation only> attributes and must be set before the element is
 mapped on the native system. After the mapping, specifying these
 special attributes has no effect.
 
-The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
-
 =over
 
 =item * B<ACCUM_RED_SIZE>, B<ACCUM_GREEN_SIZE>, B<ACCUM_BLUE_SIZE> and B<ACCUM_ALPHA_SIZE>
@@ -263,7 +261,7 @@ The element B<IUP::CanvasGL> is used in the following sample scripts:
 
 L<IUP::Canvas|IUP::Canvas>
 
-The original doc: L<iupcanvasgl.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupcanvasgl.html>
+The original doc: L<iupcanvasgl.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupglcanvas.html>
  
 
 =cut

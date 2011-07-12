@@ -144,7 +144,7 @@ Text color. Default: the global attribute DLGFGCOLOR.
 Image name. If set before map defines the
 behavior of the button to contain an image. The natural size will be
 size of the image in pixels, plus the button borders. 
-Use L<IUP->SetHandle|IUP::SetHandle> or L<IUP::SetAttributeHandle|IUP::SetAttributeHandle>
+Use L<IUP->SetHandle|IUP::SetHandle> or XXX-FIX_ME
 to associate an image to a name. See also L<IUP::Image|IUP::Image>. If
 TITLE is also defined and not empty both will be shown (except in
 Motif). (GTK 2.6)
@@ -264,7 +264,7 @@ For more details see L<generic description of BUTTON_CB|Manual::Attributes/BUTTO
 
 =back
 
-The following L<common callbacks|Manual::Callbacks/Common Callbacks> are also accepted:
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
 
 =over
 

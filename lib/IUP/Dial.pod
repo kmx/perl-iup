@@ -63,7 +63,7 @@ Dial layout configuration "VERTICAL", "HORIZONTAL" or "CIRCULAR". Default:
 Unit of the angle. Can be "DEGREES" or "RADIANS". Default is
 "RADIANS". Used only in the callbacks.
 
-=item * B<VALUE >(non inheritable)
+=item * B<VALUE> (non inheritable)
 
 The dial angular value in radians. The
 value is reset to zero when the interaction is started, except for
@@ -171,6 +171,8 @@ B<$self:> reference to the element (IUP::Dial) that activated the event
 
 =back
 
+=back
+
 The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
 
 =over
@@ -222,7 +224,7 @@ The element B<IUP::Dial> is used in the following sample scripts:
 
 L<IUP::Canvas|IUP::Canvas>
 
-The original doc: L<iupdial.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupdial.html>
+The original doc: L<iupdial.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupdial.html>
  
 
 =cut

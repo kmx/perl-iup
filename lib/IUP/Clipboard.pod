@@ -67,7 +67,7 @@ In Motif is a B<Pixmap>.
 XXX-TODO-FIXME
 The returned handle in a paste must be released after used (GlobalFree(handle), g_object_unref(pixbuf)
 or XFreePixmap(display, pixmap)). After copy, do NOT release the given
-handle. See L< IUP-IM Functions|../iupim.html> for utility functions on
+handle. See L<IUP-IM Functions|XXX> for utility functions on
 image native handles. (GTK 2.6)
 
 =item * B<SAVEEMF> (write-only) [Windows Only]

@@ -58,7 +58,7 @@ L<IUP::Text|IUP::Text>, L<IUP::Vbox|IUP::Vbox>,
 L<IUP::Hbox|IUP::Hbox>, L<IUP::Button|IUP::Button>
 
 [%IF flags.gennerate_origdoc -%]
-The original doc: L<iupspinbox.html|[%url.iuporigdoc%]elem/iupspinbox.html>
+The original doc: L<iupspin.html|[%url.iuporigdoc%]elem/iupspin.html>
 [%END%] 
 
 =cut

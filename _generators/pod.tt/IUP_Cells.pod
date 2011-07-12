@@ -397,7 +397,7 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::Canvas|IUP::Canvas>
 
 [%IF flags.gennerate_origdoc -%]
-The original doc: L<iupcells.html|[%url.iuporigdoc%]elem/iupcells.html>
+The original doc: L<iupcells.html|[%url.iuporigdoc%]ctrl/iupcells.html>
 [%END%] 
 
 =cut

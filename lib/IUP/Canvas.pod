@@ -395,10 +395,10 @@ NOTES:
 =over
 
 =item * Some keys might remove the focus from the canvas. To avoid
-this, return IGNORE in the L< K_ANY|IUP::Manual::04_Callbacks/K_ANY> callback.
+this, return IGNORE in the L<K_ANY|IUP::Manual::04_Callbacks/K_ANY> callback.
 
 =item * The mouse cursor position can be programmatically controlled using the
-global attribute L<CURSORPOS|../attrib/iup_globals.html#cursorpos>.
+global attribute L<CURSORPOS|IUP::Manual::03_Attributes/CURSORPOS>.
 
 =back
 
@@ -478,7 +478,7 @@ driver does not have this attribute, it returns C<undef>.
 
 Configures a new current foreground color and returns the previous one.
 This color is used in all primitives (lines, areas, marks and text).
-Default value: B< C<CD_BLACK>>. Value C<B<CD_QUERY> >simply returns the
+Default value: B<CD_BLACK>. Value B<CD_QUERY> simply returns the
 current value.
 
 Notice that B<CD_QUERY> conflicts with color RGBA=(255,255,255,0) (full
@@ -495,7 +495,7 @@ one. However, it does not automatically change the background of a
 canvas. For such, it is necessary to call the L<cdClear|/"cdClear()"> function. The
 background color only makes sense for L<cdClear|/"cdClear()"> and for primitives
 affected by the background opacity attribute. Default value:
-B<C<CD_WHITE>>. Value C<B<CD_QUERY> >simply returns the current value.
+B<CD_WHITE>. Value B<CD_QUERY> simply returns the current value.
 
 Notice that CD_QUERY conflicts with color RGBA=(255,255,255,0) (full
 transparent white). Use L<cdSetBackground|/"cdSetBackground()"> to avoid the conflict. See
@@ -520,11 +520,11 @@ selection feedback.
 The library's color system is RGB. In order to simplify some functions,
 a compact representation was created for the 3 values. To make a
 conversion from this representation to the 3 separate values and
-vice-versa, use functions B< cdDecodeColor> and B< cdEncodeColor>.
+vice-versa, use functions B<cdDecodeColor> and B<cdEncodeColor>.
 
 When the canvas used does not support more than 8 bpp of color
-resolution, you can use function B< Palette> to give the driver an idea
-of which colors to prioritize. B< Palette's> behavior is driver
+resolution, you can use function B<Palette> to give the driver an idea
+of which colors to prioritize. B<Palette's> behavior is driver
 dependent.
 
 There are some predefined colors - see L<IUP::Constants>:
@@ -553,8 +553,8 @@ There are some predefined colors - see L<IUP::Constants>:
  $old_color = IUP::Canvas->cdEncodeColor($r, $g, $b);
 
 Returns a codified triple (I<r,g,b>) in a long integer such as
-B<C<0x00RRGGBB>>, where C<B<RR> >are the red components, B<C<GG>> are
-the green ones and B<C<BB>> are the blue ones. The code is used in the
+B<0x00RRGGBB>, where B<RR> are the red components, B<GG> are
+the green ones and B<BB> are the blue ones. The code is used in the
 CD library to define colors. It can be used without an active canvas.
 
 =head3 cdDecodeColor()
@@ -573,9 +573,8 @@ library. Can be used without an active canvas.
  $color = IUP::Canvas->cdEncodeAlpha($color, $alpha);
 
 Returns the given color coded with the alpha information. ATENTION: At
-the moment only the L<Cairo|../drv/cairo.html>,
-L<GDI+|../drv/gdiplus.html>, L<XRender|../drv/xrender.html> and
-L<IMAGERGB|../drv/irgb.html> drivers support alpha components in color
+the moment only the L<Cairo|XXX>, L<GDI+|XXX>, L<XRender|XXX> and L<IMAGERGB|XXX>
+drivers support alpha components in color
 coding. The internal representation of the component is inverted,
 because the default value must be 0 and opaque for backward
 compatibility, so you should use the L<cdDecodeAlpha|/"cdDecodeAlpha()"> function or the
@@ -643,7 +642,7 @@ In systems limited to 256 palette colors, this function aims at adding
 B<C<n>> colors to the system's palette. In such systems, the colors
 demanded forward or backward which are not in the palette are
 approximated to the closest available color. The type can be
-C<B<CD_FORCE> >or B<C<CD_POLITE>>. B<C<CD_FORCE>> ignores the system
+B<CD_FORCE> or B<CD_POLITE>. B<CD_FORCE> ignores the system
 colors and interface elements, since the menus and dialogues may be in
 illegible colors, but there will be more colors available.
 C<B<CD_POLITE>> is the recommended type. It must always be used before
@@ -967,7 +966,7 @@ Sometimes it is implemented as a rectangle with size 1x1.
  $canvas->cdMark($x, $y);
  $canvas->wdMark($x, $y);
 
-Draws a mark in B<B<(x,y)> >using the current foreground color. It is
+Draws a mark in B<(x,y)> using the current foreground color. It is
 not possible to use this function between a call to functions
 L<cdBegin|/"cdBegin()"> and L<cdEnd|/"cdEnd()"> if the type of mark is set to
 B<CD_DIAMOND>. If the active driver does not include this primitive, it
@@ -992,7 +991,7 @@ this also increases this function's performance.
  $canvas->cdMarkType($type);
 
 Configures the current mark type for: B<CD_PLUS>, B<CD_STAR>,
-B<CD_CIRCLE>, B<CD_X>, B< CD_BOX>, B<CD_DIAMOND>, B<CD_HOLLOW_CIRCLE>,
+B<CD_CIRCLE>, B<CD_X>, B<CD_BOX>, B<CD_DIAMOND>, B<CD_HOLLOW_CIRCLE>,
 B<CD_HOLLOW_BOX> or B<CD_HOLLOW_DIAMOND>. Returns the previous value.
 Default value: B<CD_STAR>. Value B<CD_QUERY>simply returns the
 current value.
@@ -1007,7 +1006,7 @@ Mark Types:
  $old_size = $canvas->wMarkSize($number);
 
 Configures the mark size in pixels. Returns the previous value. Default
-value: 10. Value B<B<CD_QUERY> >simply returns the current value. Valid
+value: 10. Value B<CD_QUERY> simply returns the current value. Valid
 width interval: E<gt>= 1.
 
 In WC, it configures the current line width in millimeters.
@@ -1117,8 +1116,8 @@ Arc Parameters:
 
 Configures the current line style for: B<CD_CONTINUOUS>, B<CD_DASHED>,
 B<CD_DOTTED>, B<CD_DASH_DOT,> B<CD_DASH_DOT_DOT,> or C<B<CD_CUSTOM>>.
-Returns the previous value. Default value: B<CD_CONTINUOUS>. Value B<B<
-CD_QUERY> >simply returns the current value. When B<CD_CUSTOM> is used
+Returns the previous value. Default value: B<CD_CONTINUOUS>. Value
+B<CD_QUERY> simply returns the current value. When B<CD_CUSTOM> is used
 the L<cdLineStyleDahes|/"cdLineStyleDahes()"> function must be called before to initialize
 the custom dashes. The spaces are drawn with the background color,
 except when back opacity is transparent then the background is left
@@ -1193,17 +1192,17 @@ to L<cdEnd|/"cdEnd()"> in between.
 
 =over
 
-=item * B<CD_OPEN_LINES>: connects all the points at cdEnd. Depends
+=item * B<CD_OPEN_LINES:> connects all the points at cdEnd. Depends
 on line width and line style attributes.
 
-=item * B<B<CD_CLOSED_LINES:> >connects all the points at cdEnd and
+=item * <CD_CLOSED_LINES:> connects all the points at cdEnd and
 connects the last point to the first. Depends on line width and line
 style attributes.
 
 =item * B<CD_FILL:> connects the last point to the first and fills the
 resulting polygon according to the current interior style. When the
-interior style B<B<CD_HOLLOW>> is defined the it behaves as if the mode
-were B<CD_CLOSED_LINES>B<.>
+interior style B<CD_HOLLOW> is defined the it behaves as if the mode
+were B<CD_CLOSED_LINES>.
 
 =item * B<CD_CLIP: i>nstead of creating a polygon to be drawn, creates
 a polygon to define a polygonal clipping region.
@@ -1220,8 +1219,8 @@ B<Filled Polygons> and L<cdText|/"cdText()"> will be composed in a region for cl
 See L<Regions|region.html> documentation.
 
 =item * B<CD_PATH>: creates a path composed of several primitives that
-can be line draw, filled or used as clipping. Must call B<
-cdCanvasPathSet> to configure the action between sequences of
+can be line draw, filled or used as clipping. Must call 
+L<cdCanvasPathSet|/"cdCanvasPathSet()"> to configure the action between sequences of
 L<cdCanvasVertex|/"cdCanvasVertex()">.
 
 =back
@@ -1261,8 +1260,8 @@ one path is configured. L<cdCanvasBegin|/"cdCanvasBegin()">(CD_PATH) already cre
 path.
 
 =item * B<CD_PATH_MOVETO> - moves the current position to the given
-coordinates. Must be followed by 1 call to L<cdCanvasVertex|/"cdCanvasVertex()">, B<
-cdfCanvasVertex>, or B<wdCanvasVertex>.
+coordinates. Must be followed by 1 call to L<cdCanvasVertex|/"cdCanvasVertex()">, 
+B<cdfCanvasVertex>, or B<wdCanvasVertex>.
 
 =item * B<CD_PATH_LINETO> - adds a line to the path from the current
 position to the given coordinates. The current position is updated to
@@ -1636,7 +1635,7 @@ style and size. When these parameters are specified the current font
 parameter is used. For example: C<CanvasFont(undef, -1, 10)> will only
 change the font size.
 
-To convert between pixels and points use the function B< cdPixel2MM >to
+To convert between pixels and points use the function B<cdPixel2MM> to
 convert from pixels to millimeters and use the formula "B<(value in
 I<points>) = CD_MM2PT * (value in millimeters)>".
 
@@ -1764,8 +1763,8 @@ and C<undef> for the others.
  $rect = $canvas->wdGetTextBounds($x, $y, $text);
 
 Returns the oriented bounding rectangle occupied by a text at a given
-position. The rectangle has the same dimentions returned by B<
-GetTextSize>. The rectangle corners are returned in counter-clock wise
+position. The rectangle has the same dimentions returned by 
+L<cdGetTextSize|/"cdGetTextSize()">. The rectangle corners are returned in counter-clock wise
 order starting with the bottom left corner, arranged
 [x0,y0,x1,y1,x2,y2,x3,y3].
 
@@ -1816,8 +1815,8 @@ be "B<cdf>".
  $canvas->cdVectorTextDirection($x1, $y1, $x2, $y2);
  $canvas->wdVectorTextDirection($x1, $y1, $x2, $y2);
 
-Defines the text direction by means of two points, B<C<(x1,y1)>> and B<
-C<(x2,y2)>>. The default direction is horizontal from left to right. It
+Defines the text direction by means of two points, B<C<(x1,y1)>> and B<C<(x2,y2)>>.
+The default direction is horizontal from left to right. It
 is independent from the transformation matrix.
 
 =head3 cdVectorTextTransform()
@@ -1903,8 +1902,8 @@ and C<undef> for the others.
  $rect = $canvas->wdGetVectorTextBounds($text, $x, $y);
 
 Returns the oriented bounding rectangle occupied by a text at a given
-position. The rectangle has the same dimentions returned by B<
-GetVectorTextSize>. The rectangle corners are returned in counter-clock
+position. The rectangle has the same dimentions returned by 
+L<cdGetVectorTextSize|/"cdGetVectorTextSize()">. The rectangle corners are returned in counter-clock
 wise order starting with the bottom left corner, arranged
 (x0,y0,x1,y1,x2,y2,x3,y3).
 

@@ -546,7 +546,7 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::Canvas|IUP::Canvas>
 
 [%IF flags.gennerate_origdoc -%]
-The original doc: L<iupmatrix.html|[%url.iuporigdoc%]elem/iupmatrix.html>
+The original doc: L<iupmatrix.html|[%url.iuporigdoc%]ctrl/iupmatrix.html>
 [%END%] 
 
 =cut

@@ -144,6 +144,8 @@ B<$self:> reference to the element (IUP::ColorBrowser) that activated the event
 
 =back
 
+=back
+
 [%txt.cb_common%]
 
 =over
@@ -197,7 +199,7 @@ L<IUP::GetColor|IUP::GetColor>,
 L<IUP::ColorDlg|IUP::ColorDlg>
 
 [%IF flags.gennerate_origdoc -%]
-The original doc: L<iupcolorbrowser.html|[%url.iuporigdoc%]elem/iupcolorbrowser.html>
+The original doc: L<iupcolorbrowser.html|[%url.iuporigdoc%]ctrl/iupcolorbrowser.html>
 [%END%] 
 
 =cut

@@ -19,8 +19,28 @@ IUP::PPlot library includes the PPlot source code so no external
 references are needed. Also the standard PPlot distribution source code
 was changed to improve features and visual appearance.
 
-IUP::PPlot first implementation was written by Marian Trifon
-(mtrif@katamail.com), then completed and documented by the IUP team.
+=begin HTML
+
+<p>
+  <table border="1">
+    <tbody>
+    <tr>
+      <td style="text-align: center;"><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot0.gif" border="0"></td>
+      <td style="text-align: center;"><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot1.gif" border="0"></td>
+
+    </tr>
+    <tr>
+      <td style="text-align: center;"><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot2.gif" border="0"></td>
+      <td style="text-align: center;"><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot3.gif" border="0"></td>
+    </tr>
+    <tr>
+      <td style="text-align: center;"><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot4.gif" border="0"></td>
+      <td style="text-align: center;"><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot5.gif" border="0"></td>
+    </tr>
+  </table>
+</p>
+
+=end HTML
 
 =head2 Initialization and Usage
 
@@ -37,11 +57,11 @@ program must be linked to the Lua control library (iuplua_pplot).
 
 =head2 Guide
 
-Each plot can contain 2 B<axis> (X and Y), a B<title>, a B< legend>
+Each plot can contain 2 B<axis> (X and Y), a B<title>, a B<legend>
 B<box>, a B<grid>, a B<dataset> B<area> and as many B<datasets> you
 want.
 
-Each data set is added using the L<IUP::PlotAdd |IUP::PlotAdd >function. All other plot
+Each data set is added using the L<IUP::PlotAdd |IUP::PlotAdd> function. All other plot
 parameters are configured by attributes.
 
 If no attribute is set, the default values were selected to best
@@ -89,8 +109,8 @@ pressed the zoom selection is restored to a free rectangle.
 Each zoom in operation is stacked, so each zoom out operation goes back
 the the previous zoom selection.
 
-Zoom operates on B<AXS_XMAX, AXS_XMIN, AXS_YMAX, AXS_YMIN> even if B<
-AUTOMIN/MAX> is enabled. The axis may be hidden depending on the
+Zoom operates on B<AXS_XMAX, AXS_XMIN, AXS_YMAX, AXS_YMIN> even 
+if B<AUTOMIN/MAX> is enabled. The axis may be hidden depending on the
 selected rectangle.
 
 =head2 CrossHair Cursor
@@ -226,7 +246,7 @@ redraw the plot and update
 the display. Value is ignored. All other attributes will B<NOT> update
 the display, so you can set many attributes without visual output.
 
-=item * B<USE_IMAGERGB >(non inheritable)
+=item * B<USE_IMAGERGB> (non inheritable)
 
 defines if the double buffer will
 use standard driver image (NO - faster) or an RGB image (YES - slower).
@@ -255,19 +275,19 @@ default value is white "255 255 255".
 the title color. The default
 value is black "0 0 0".
 
-=item * B<TITLE >(non inheritable)
+=item * B<TITLE> (non inheritable)
 
 the title. Located always at the top center
 area.
 
-=item * B<TITLEFONTSIZE, TITLEFONTSTYLE >(non inheritable)
+=item * B<TITLEFONTSIZE, TITLEFONTSTYLE> (non inheritable)
 
 the title font size
 and style. The default values depends on the FONT attribute and the
 returned value is NULL. Set to NULL, to use the FONT attribute values.
 Style can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC".
 
-=item * B<MARGINLEFT, MARGINRIGHT, MARGINTOP, MARGINBOTTOM >(non inheritable)
+=item * B<MARGINLEFT, MARGINRIGHT, MARGINTOP, MARGINBOTTOM> (non inheritable)
 
 margin of the dataset area. PPlot implementation demands that margins
 must be set so the plot is not cropped. Default: "15", "15", "30",
@@ -678,7 +698,7 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::Canvas|IUP::Canvas>
 
-The original doc: L<iupplot.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupplot.html>
+The original doc: L<iup_pplot.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_pplot.html>
  
 
 =cut

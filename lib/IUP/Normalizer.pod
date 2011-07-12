@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -11,22 +11,23 @@ biggest natural size among them. All natural width will be set to the
 biggest width, and all natural height will be set to the biggest height
 according to is value.
 
+ my $normalizer = IUP::Normalizer( child=>[$elem1, $elem2, $elem3],
+                                   NORMALIZE=>"HORIZONTAL" );
+ #at his point $elem1 ... $elem3 are normalized, IUP::Normalizer instance can be destroyed
+ undef $normalizer;
+
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- $normalizer = IUP::Normalizer->new(Ihandle *ih_first, ...);
- $normalizerv = IUP::Normalizerv->new(Ihandle **ih_list);
- iup.normalizer{ih_first, ...: ihandle} -> (elem: ihandle) [in Lua]
- normalizer(ih_first, ...) [in LED]
+ $normalizer = IUP::Normalizer->new( );
 
-B<ih_first>, ... : List of the identifiers that will be normalized.
-NULL must be used to define the end of the list in C. It can be empty.
+XXX-child-named-param-not implemented-yet
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -37,28 +38,27 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =item * B<NORMALIZE> (non inheritable)
 
-normalization direction. Can be
+Normalization direction. Can be
 HORIZONTAL, VERTICAL or BOTH. These are the same values of the
 NORMALIZESIZE attribute. Default: HORIZONTAL.
 
-=item * B<NORMALIZERGROUP> (non inheritable) B<(for contained controls use)>
+=item * B<NORMALIZERGROUP> (non inheritable, for contained controls use)
 
-name of a normalizer to automatically add the control. If a normalizer
+Name of a normalizer to automatically add the control. If a normalizer
 with that name does not exists then one is created.
 
 =item * B<ADDCONTROL> (non inheritable)
 
 Adds a control to the normalizer. The
 value passed must be the name of an element. Use
-=item * L<IUP::SetHandle|IUP::SetHandle> or
-L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+L<SetName|IUP::Manual::02_Elements/"SetName()"> or
+XXX-FIX_ME to
 associate an element to a name. In Lua you can also use the element
 reference directly.
 
-B<ADDCONTROL_HANDLE> (non inheritable)
+=item * B<ADDCONTROL_HANDLE> (non inheritable)
 
-Adds a control to the
-normalizer. The value passed must be a handle of an element.
+Adds a control to the normalizer. The value passed must be a handle of an element.
 
 =back
 
@@ -91,7 +91,7 @@ Unfortunately there are no sample scripts using this element.
 
 =head1 SEE ALSO
 
-L<IUP::Hbox|IUP::Hbox>, L< IUP::Vbox|../elem/iupvbox.html>
+L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>
 
 The original doc: L<iupnormalizer.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupnormalizer.html>
  

@@ -230,6 +230,8 @@ switch is always accepted.
 
 =back
 
+=back
+
 The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
 
 =over
@@ -252,7 +254,7 @@ to cell, B<Home> goes to the first cell, B<End> goes to the last cell.
 B<Space> will activate the B<SELECT_CB> callback for the primary color,
 B<Ctrl>+B<Space> will activate the B<SELECT_CB> callback for the
 secondary color. B<Shift>+B<Space> will activate the B<EXTENTED_CB>
-callback. B<Shift>+B<Enter> will activate the B< CELL_CB> callback.
+callback. B<Shift>+B<Enter> will activate the B<CELL_CB> callback.
 
 =head1 EXAMPLES
 
@@ -271,7 +273,7 @@ The element B<IUP::ColorBar> is used in the following sample scripts:
 
 L<IUP::Canvas|IUP::Canvas>, L<IUP::Image|IUP::Image>
 
-The original doc: L<iupcolorbar.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupcolorbar.html>
+The original doc: L<iupcolorbar.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupcolorbar.html>
  
 
 =cut

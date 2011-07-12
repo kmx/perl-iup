@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -13,19 +13,17 @@ menu items.
 
 =head2 CREATION - new() method
 
- $separator = IUP::Separator->new(void);
- iup.separator{} -> (elem: ihandle) [in Lua]
- separator() [in LED]
+ $separator = IUP::Separator->new();
+
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
 
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
-
 =head1 NOTES
 
-The separator is ignored when it is part of the definition of the items
-in a bar menu.
+The separator is ignored when it is part of the definition of the items in a bar menu.
 
 =head1 EXAMPLES
 
@@ -52,8 +50,7 @@ The element B<IUP::Separator> is used in the following sample scripts:
 
 =head1 SEE ALSO
 
-L<IUP::Item|IUP::Item>, L<IUP::SubMenu|IUP::SubMenu>,
-L<IUP::Menu|IUP::Menu>.
+L<IUP::Item|IUP::Item>, L<IUP::SubMenu|IUP::SubMenu>, L<IUP::Menu|IUP::Menu>
 
 The original doc: L<iupseparator.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupseparator.html>
  

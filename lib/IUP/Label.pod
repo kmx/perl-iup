@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -9,21 +9,24 @@ IUP::Label - [GUI element] displays a separator, a text or an image
 Creates a label interface element, which displays a separator, a text
 or an image.
 
+=begin HTML
+
+<p>
+<img src="http://kmx.github.com/perl-iup/spec/iuplabel1.png"></td>
+</p>
+
+=end HTML
+
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- $label = IUP::Label->new(const char *title);
- iup.label{[title = title: string]} -> (elem: ihandle) [in Lua]
- label(title) [in LED]
+ $label = IUP::Label->new( TITLE=>"Text" );
 
-B<title>: Text to be shown on the label. It can be NULL. It will set
-the TITLE attribute.
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -40,7 +43,7 @@ one is its visual feedback. Possible values: "YES, "NO". Default:
 
 =item * B<ALIGNMENT> (non inheritable)
 
-horizontal and vertical alignment.
+Horizontal and vertical alignment.
 Possible values: "ALEFT", "ACENTER" and "ARIGHT", combined to "ATOP",
 "ACENTER" and "ABOTTOM". Default: "ALEFT:ACENTER". Partial values are
 also accepted, like "ARIGHT" or ":ATOP", the other value will be used
@@ -49,12 +52,12 @@ to "ACENTER". (vertical alignment since iup-3.0)
 
 =item * L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
 
-ignored, transparent in all
+Ignored, transparent in all
 systems. Will use the background color of the native parent.
 
 =item * B<ELLIPSIS> [Windows and GTK only]
 
-add an ellipsis: "..." to the text
+Add an ellipsis: "..." to the text
 if there is not enough space to render the entire string. Can be "YES"
 or "NO". Default: "NO".  (GTK 2.6)
 
@@ -67,33 +70,31 @@ attribute DLGFGCOLOR.
 
 Image name. If set before map defines the
 behavior of the label to contain an image. The natural size will be
-size of the image in pixels. Use
-=item * L<IUP::SetHandle|IUP::SetHandle> or
-L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+size of the image in pixels. XXX-check-this Use L<SetName|IUP::Manual::02_Elements/"SetName()"> or
+XXX-FIX_ME to
 associate an image to a name. See also L<IUP::Image|IUP::Image>.
 
 B<IMINACTIVE> (non inheritable) [GTK and Motif only]
 
-Image name of the
-element when inactive. If it is not defined then the IMAGE is used and
+Image name of the element when inactive. If it is not defined then the IMAGE is used and
 the colors will be replaced by a modified version of the background
 color creating the disabled effect. GTK will also change the inactive
 image to look like other inactive objects.
 
 =item * B<MARKUP> [GTK only]
 
-allows the title string to contains pango markup
+Allows the title string to contains pango markup
 commands. Works only if a mnemonic is NOT defined in the title. Can be
 "YES" or "NO". Default: "NO".
 
 =item * B<PADDING>
 
-internal margin. Works just like the MARGIN attribute of
+Internal margin. Works just like the MARGIN attribute of
 the IUP::Hbox and IUP::Vbox containers, but uses a different name to avoid
 inheritance problems. Not used when SEPARATOR is used. Default value:
 "0x0". 
 
-=item * B<SEPARATOR >(creation only) (non inheritable)
+=item * B<SEPARATOR> (creation only, non inheritable)
 
 Turns the label into a
 line separator. Possible values: "HORIZONTAL" or "VERTICAL". When
@@ -115,7 +116,7 @@ the "Alt+key" combination. (mnemonic support since iup-3.0)
 
 =item * B<WORDWRAP> [Windows and GTK only]
 
-enables or disable the wrapping of
+Enables or disable the wrapping of
 lines that does not fits in the label. Can be "YES" or "NO". Default:
 "NO". Can only set WORDWRAP=YES if ALIGNMENT=ALEFT. 
 
@@ -135,8 +136,6 @@ L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
 L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
 L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
 
-also accepted.
-
 =back
 
 =head2 CALLBACKS
@@ -148,25 +147,22 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =item * L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB>
 
-Action generated when any
-mouse button is pressed or released. (since iup-3.3)
-
-=back
+Action generated when any mouse button is pressed or released. (since iup-3.3)
 
 =item * L<DROPFILES_CB|IUP::Manual::04_Callbacks/DROPFILES_CB> [Windows and GTK Only]
 
-Action generated when one or more files are dropped in the element.
-(since iup-3.3)
+Action generated when one or more files are dropped in the element. (since iup-3.3)
 
 =back
+
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
 
 =item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
 L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
 L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
 L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>
-
-common callbacks are
-supported.
 
 =back
 

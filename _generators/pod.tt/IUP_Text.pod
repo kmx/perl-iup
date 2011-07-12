@@ -203,7 +203,7 @@ include its size even if the native system hides the scrollbar. If
 default AUTOHIDE=NO. In Windows when FORMATTING=NO, AUTOHIDE is not
 supported. In Motif AUTOHIDE is not supported.
 
-B<SCROLLTO> (non inheritable, write only)
+=item * B<SCROLLTO> (non inheritable, write only)
 
 Scroll the text to make the
 given position visible. It uses the same format and reference of the
@@ -428,8 +428,6 @@ For single line controls B<lin> is always 1, and B<pos> is always B<col-1>.
 =item * L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
 
 Action generated when one or more files are dropped in the element.
-
-=back
 
 =item * L<MOTION_CB|[%m.cb%]/MOTION_CB>
 

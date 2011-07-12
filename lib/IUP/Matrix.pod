@@ -8,11 +8,7 @@ IUP::Matrix - [GUI element] matrix of alphanumeric fields
 
 Creates a matrix of alphanumeric fields. Therefore, all values of the
 matrixs fields are strings. The matrix is not a grid container like
-many systems have. It inherits from
-L<IUP::Canvas|IUP::Canvas>.
-
-This is an additional control that depends on the CD library. It is
-included in the L<Controls Library|../iupcontrols.html>.
+many systems have. It inherits from L<IUP::Canvas|IUP::Canvas> XXX-check-this.
 
 It has two modes of operation: normal and callback mode. In normal
 mode, string values are stored in attributes for each cell. In callback
@@ -20,19 +16,27 @@ mode these attributes are ignored and the cells are filled with strings
 returned by the "VALUE_CB" callback. So the existence of this callback
 defines the mode the matrix will operate.
 
+=begin HTML
+
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupmatrix1.png">
+</p>
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupmatrix2.png">
+</p>
+
+=end HTML
+
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- $matrix = IUP::Matrix->new(char *action_cb);
- iup.matrix{} -> (elem: ihandle) [in Lua]
- matrix(action_cb) [in LED]
+ $matrix = IUP::Matrix->new();
 
-B<action_cb>: Name of the action generated when the user types
-something.
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
-Returns the identifier of the created matrix, or NULL if an error
-occurs.
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
 
 =head2 ATTRIBUTES
 
@@ -552,7 +556,7 @@ The element B<IUP::Matrix> is used in the following sample scripts:
 
 L<IUP::Canvas|IUP::Canvas>
 
-The original doc: L<iupmatrix.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupmatrix.html>
+The original doc: L<iupmatrix.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrix.html>
  
 
 =cut

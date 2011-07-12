@@ -112,7 +112,7 @@ L<IUP::MessageDlg|IUP::MessageDlg>, L<IUP::FileDlg|IUP::FileDlg>,
 L<Popup|[%m.elem%]/"Popup()">
 
 [%IF flags.gennerate_origdoc -%]
-The original doc: L<iupfontdlg.html|[%url.iuporigdoc%]elem/iupfontdlg.html>
+The original doc: L<iupfontdlg.html|[%url.iuporigdoc%]dlg/iupfontdlg.html>
 [%END%] 
 
 =cut

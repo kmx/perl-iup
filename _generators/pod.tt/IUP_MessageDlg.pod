@@ -126,7 +126,7 @@ L<ListDialog|IUP/"ListDialog>()">, L<Alarm|IUP/"Alarm()">,
 L<GetFile|IUP/"GetFile()">, L<Popup|[%m.elem%]/"Popup()">
 
 [%IF flags.gennerate_origdoc -%]
-The original doc: L<iupmessagedlg.html|[%url.iuporigdoc%]elem/iupmessagedlg.html>
+The original doc: L<iupmessagedlg.html|[%url.iuporigdoc%]dlg/iupmessagedlg.html>
 [%END%] 
 
 =cut

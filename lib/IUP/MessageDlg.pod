@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -10,18 +10,37 @@ Creates the Message Dialog element. It is a predefined dialog for
 displaying a message. The dialog can be shown with the IUP::Popup
 function only.
 
+=begin HTML
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th style="text-align: center;">GTK</th>
+        <th style="text-align: center;">Motif</th>
+        <th style="text-align: center;">Windows</th>
+      </tr>
+      <tr>
+        <td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_gtk.png"></td>
+	<td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_mot.png"></td>
+	<td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_win.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end HTML
+
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- $messagedlg = IUP::MessageDlg->new(void);
- iup.messagedlg{} -> (elem: ihandle) [in Lua]
- messagedlg() [in LED]
+ $messagedlg = IUP::MessageDlg->new( BUTTONS=>"OKCANCEL" );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -56,8 +75,7 @@ or "INFORMATION" (Letter "i"). Default: "MESSAGE".
 
 =item * L<PARENTDIALOG|IUP::Manual::03_Attributes/PARENTDIALOG> (creation only)
 
-Name
-of a dialog to be used as parent. This dialog will be always in front
+Name of a dialog to be used as parent. This dialog will be always in front
 of the parent dialog. If not defined in Motif the dialog could not be
 modal.
 
@@ -80,8 +98,7 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =item * L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
-Action generated when the Help
-button is pressed.
+Action generated when the Help button is pressed.
 
 =back
 
@@ -90,21 +107,19 @@ button is pressed.
 The L<IUP::MessageDlg|IUP::MessageDlg> is a native pre-defined dialog not altered by
 L<IUP::SetLanguage|IUP::SetLanguage>.
 
-To show the dialog, use function L<IUP::Popup|IUP::Popup>. In Lua, use the B<popup>
+To show the dialog, use function L<Popup|IUP::Manual::02_Elements/"Popup()">.
 function.
 
-The dialog is mapped only inside L<IUP::Popup|IUP::Popup>, L<IUP::Map|IUP::Map> does nothing.
+The dialog is mapped only inside L<Popup|IUP::Manual::02_Elements/"Popup()">, L<Map|IUP::Manual::02_Elements/"Map()"> does nothing.
 
-In Windows the position (x,y) used in L<IUP::Popup|IUP::Popup> is ignored and the
+In Windows the position (x,y) used in L<Popup|IUP::Manual::02_Elements/"Popup()"> is ignored and the
 dialog is always centered on screen.
 
-The L<IUP::Message|IUP::Message> function simply creates and popup a L<IUP::MessageDlg|IUP::MessageDlg>.
+The L<Message|IUP/"Message()"> function simply creates and popup a L<IUP::MessageDlg|IUP::MessageDlg>.
 
-In Windows each different dialog type is always associated with a
-different beep sound.
+In Windows each different dialog type is always associated with a different beep sound.
 
-In Windows, if PARENTDIALOG is specified then it will be modal relative
-only to its parent.
+In Windows, if PARENTDIALOG is specified then it will be modal relative only to its parent.
 
 =head1 EXAMPLES
 
@@ -121,11 +136,11 @@ The element B<IUP::MessageDlg> is used in the following sample scripts:
 
 =head1 SEE ALSO
 
-L<IUP::Message|IUP::Message>, L<IUP::Scanf|IUP::Scanf>,
-L<IUP::ListDialog|IUP::ListDialog>, L<IUP::Alarm|IUP::Alarm>,
-L<IUP::GetFile|IUP::GetFile>, L<IUP::Popup|IUP::Popup>
+L<Message|IUP/"Message()">, L<GetParam|IUP/"GetParam()">,
+L<ListDialog|IUP/"ListDialog>()">, L<Alarm|IUP/"Alarm()">,
+L<GetFile|IUP/"GetFile()">, L<Popup|IUP::Manual::02_Elements/"Popup()">
 
-The original doc: L<iupmessagedlg.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupmessagedlg.html>
+The original doc: L<iupmessagedlg.html|http://www.tecgraf.puc-rio.br/iup/en/dlg/iupmessagedlg.html>
  
 
 =cut

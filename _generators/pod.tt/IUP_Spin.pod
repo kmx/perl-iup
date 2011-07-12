@@ -49,6 +49,8 @@ a factor of 2, holding Ctrl a factor of 10, and both a factor of 100.
    #...
  }
 
+=back
+
 [% h.examples %]
 
 [% IF examples.iupspin %]

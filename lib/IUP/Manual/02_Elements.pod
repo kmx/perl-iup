@@ -223,8 +223,7 @@ B<Notes:>
 It will automatically call L<Unmap|/"Unmap()"> to B<unmap> the element if
 necessary, and then B<detach> the element.
 
-If left B<detached> it is still necessary to call L<Destroy|/"Destroy()"> to B<
-destroy> the IUP element.
+If left B<detached> it is still necessary to call L<Destroy|/"Destroy()"> to B<destroy> the IUP element.
 
 The elements are NOT immediately repositioned. Call L<Refresh|/"Refresh()"> for
 the container (or any other element in the dialog) to update the dialog
@@ -277,7 +276,7 @@ L<SetAttribute|/"SetAttribute()">.
 =over
 
 Returns the name of an interface element attribute. See also the
-L<Attributes Guide|../attrib_guide.html> section.
+L<Attributes Guide|xxx.html> section.
 
  my $val = $element->GetAttribute($name);
  #or
@@ -294,12 +293,15 @@ B<Returns:> the attribute value or C<undef> if the attribute is
 not defined or does not exist.
 
 B<Notes:>
-See the L<Attributes Guide|../attrib_guide.html> for more details.
+
+See the L<Attributes Guide|xxx.html> for more details.
 
 B<Examples:>
+
 L<Browse for Example Files|../../examples/>
 
 B<See Also:>
+
 L<SetAttribute|/"SetAttribute()">.
 
 =back
@@ -999,8 +1001,7 @@ B<$element> before B<$ref_child> inside the B<$new_parent>.
 
 B<Notes:>
 
-This function is faster and easier than doing the sequence B<unmap>, B<
-detach>, B<append/insert> and B<map>.
+This function is faster and easier than doing the sequence B<unmap>, B<detach>, B<append/insert> and B<map>.
 
 The elements are NOT immediately repositioned. Call L<Refresh|/"Refresh()"> for
 the container (or any other element in the dialog) to update the dialog

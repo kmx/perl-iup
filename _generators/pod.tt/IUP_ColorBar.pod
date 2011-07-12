@@ -225,6 +225,8 @@ switch is always accepted.
 
 =back
 
+=back
+
 [%txt.cb_common%]
 
 =over
@@ -270,7 +272,7 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::Canvas|IUP::Canvas>, L<IUP::Image|IUP::Image>
 
 [%IF flags.gennerate_origdoc -%]
-The original doc: L<iupcolorbar.html|[%url.iuporigdoc%]elem/iupcolorbar.html>
+The original doc: L<iupcolorbar.html|[%url.iuporigdoc%]ctrl/iupcolorbar.html>
 [%END%] 
 
 =cut

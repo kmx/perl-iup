@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -10,22 +10,68 @@ Creates a menu element, which groups 3 types of interface elements:
 item, submenu and separator. Any other interface element defined inside
 a menu will be an error.
 
+=begin HTML
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th style="text-align: center;">GTK</th>
+        <th style="text-align: center;">Motif</th>
+        <th style="text-align: center;">Windows<br>Classic</th>
+        <th style="text-align: center;">Windows<br>w/ Style</th>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_gtk.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_mot.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_win2k.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_winxp.png"></td>
+      </tr>
+      <tr>
+        <th style="text-align: center;">RADIO=YES</th>
+        <th style="text-align: center;">RADIO=YES</th>
+        <th style="text-align: center;">RADIO=YES</th>
+        <th style="text-align: center;">RADIO=YES</th>
+      </tr>      
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_gtk_radio.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_mot_radio.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_win2k_radio.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_winxp_radio.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_fromsyntax.png"></td>
+</p>
+
+=end HTML
+
 =head1 USAGE
 
 =head2 CREATION - new() method
 
  $menu = IUP::Menu->new(Ihandle *child, ...);
- $menuv = IUP::Menuv->new(Ihandle **children);
- iup.menu{child, ...: ihandle} -> (elem: ihandle) [in Lua]
- menu(child, ...) [in LED]
+ #standard way
+ my $menu = IUP::Menu->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'XXX' );
+ 
+ #or with just a single child
+ my $menu = IUP::Menu->new( child=>$elem, ANYATTRIBUTE=>'XXX' );
+ 
+ #or with just 1 parameter (arrayref)
+ my $menu = IUP::Menu->new( [$elem1, $elem2] );
+ 
+ #or with just 1 parameter (reference to child elements)
+ my $menu = IUP::Menu->new( $elem ); 
 
-B<child>, ... : List of identifiers that will be grouped by the menu.
-NULL must be used to mark the end of the list in C. It can be empty.
+B<child:> (named parameter) List of the references to elements (or just a single element) that 
+will be grouped by the menu.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -36,20 +82,18 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =item * L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
 
-the background color of the
-menu, affects all items in the menu. 
+The background color of the menu, affects all items in the menu. 
 
 =item * B<X<RADIO>RADIO> (non inheritable)
 
-enables the automatic toggle of one
+Enables the automatic toggle of one
 child item. When a child item is selected the other item is
 automatically deselected. The menu acts like a L<IUP::Radio|IUP::Radio> for its
 children. Submenus and their children are not affected.
 
 =item * L<WID|IUP::Manual::03_Attributes/WID> (non inheritable)
 
-In Windows, returns
-the HMENU of the menu.
+In Windows, returns the HMENU of the menu.
 
 =back
 
@@ -62,19 +106,17 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =item * L<OPEN_CB|IUP::Manual::04_Callbacks/OPEN_CB>
 
-Called just before the menu is
-opened.
-
-=back
+Called just before the menu is opened.
 
 =item * L<MENUCLOSE_CB|IUP::Manual::04_Callbacks/MENUCLOSE_CB>
 
-Called just after the
-menu is closed.
-
-----
+Called just after the menu is closed.
 
 =back
+
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
 
 =item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
 L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>
@@ -86,72 +128,21 @@ L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>
 A menu can be a menu bar of a dialog, defined by the dialog's MENU
 attribute, or a popup menu.
 
-A popup menu is displayed for the user using the L<IUP::Popup|IUP::Popup> function
+A popup menu is displayed for the user using the L<Popup|IUP::Manual::02_Elements/"Popup()"> function
 (usually on the mouse position) and disappears when an item is
 selected.
 
-L<IUP::Destroy|IUP::Destroy> should be called only for popup menus. Menu bars
+L<Destroy|IUP::Manual::02_Elements/"Destroy()"> should be called only for popup menus. Menu bars
 associated with dialogs are automatically destroyed when the dialog is
 destroyed. But if you change the menu of a dialog for another menu, the
-previous one should be destroyed using L<IUP::Destroy|IUP::Destroy>. If you replace a
+previous one should be destroyed using L<Destroy|IUP::Manual::02_Elements/"Destroy()">. If you replace a
 menu bar of a dialog, the previous menu is unmapped.
 
 Any item inside a menu bar can retrieve attributes from the dialog
-using L<IUP::GetAttribute|IUP::GetAttribute>. It is not necessary to call B< IUP::GetDialog>.
+using L<GetAttribute|IUP::Manual::02_Elements/"GetAttribute()">. It is not necessary to call L<GetDialog|IUP::Manual::02_Elements/"GetDialog()">.
 
 The menu can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or
-L<IUP::Insert|IUP::Insert>.
-
-=head2 Lua Binding
-
-Offers a "cleaner" syntax than LED for defining menu, submenu and
-separator items. The list of elements in the menu is described as a
-string, with one element after the other, separated by commas.
-
-Each element can be:
-
- {"<item_name>"} - menu item
- {"<submenu_name>", <menu>} - submenu
- {} - separator
-
-For example:
-
- mnu = iup.menu
- {
-   iup.submenu
-   {
-     iup.menu
-     {
-       iup.item{title="IUP::Item 1 Checked",value="ON"},
-       iup.separator{},
-       iup.item{title="IUP::Item 2 Disabled",active="NO"}
-     } 
-     ;title="IUP::SubMenu 1"
-   },
-   iup.item{title="IUP::Item 3"},
-   iup.item{title="IUP::Item 4"}
- }:popup(iup.CENTER, iup.CENTER)
-
-The same example using the cleaner syntax:
-
- mnu = iup.menu
- {
-   {
-     "IUP::SubMenu 1",
-     iup.menu
-     {
-       {"IUP::Item 1 Checked";value="ON"},
-       {},
-       {"IUP::Item 2 Disabled";active="NO"}
-     } 
-   },
-   {"IUP::Item 3"},
-   {"IUP::Item 4"}
- }:popup(iup.CENTER, iup.CENTER)
-
-It is also possible to mix the cleaner syntax with the normal syntax or
-with already create elements.
+L<Append|IUP::Manual::02_Elements/"Append()"> or L<Insert|IUP::Manual::02_Elements/"Insert()">.
 
 =head1 EXAMPLES
 
@@ -190,8 +181,8 @@ The element B<IUP::Menu> is used in the following sample scripts:
 
 L<IUP::Dialog|IUP::Dialog>, L<IUP::Item|IUP::Item>,
 L<IUP::Separator|IUP::Separator>, L<IUP::Submenu|IUP::Submenu>,
-L<IUP::Popup|IUP::Popup>,
-L<IUP::Destroy|IUP::Destroy>
+L<Popup|IUP::Manual::02_Elements/"Popup()">,
+L<Destroy|IUP::Manual::02_Elements/"Destroy()">
 
 The original doc: L<iupmenu.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupmenu.html>
  

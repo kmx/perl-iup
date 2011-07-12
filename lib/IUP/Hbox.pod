@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -11,22 +11,53 @@ box that arranges the elements it contains from left to right.
 
 It does not have a native representation.
 
+=begin HTML
+
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuphbox_align.png"></td>
+</p>
+<p>
+  <table border="1">
+    <tbody align="center">    
+        <tr>
+		<th>default layout</th>
+		<th>HOMOGENEOUS=YES</th>
+		<th>EXPANDCHILDREN=YES</th>
+	</tr>
+	<tr>
+		<td style="background-color: rgb(240, 240, 240);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuphbox.png"></td>
+		<td style="background-color: rgb(240, 240, 240);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuphbox_homogeneous.png"></td>
+		<td style="background-color: rgb(240, 240, 240);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuphbox_expandchildren.png"></td>
+	</tr>
+    </tbody>
+  </table>
+</p>
+
+=end HTML
+
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- $hbox = IUP::Hbox->new(Ihandle *child, ...);
- $hboxv = IUP::Hboxv->new(Ihandle **children);
- iup.hbox{child, ...: ihandle} -> (elem: ihandle) [in Lua]
- hbox(child, ...) [in LED]
+ #standard way
+ my $hbox = IUP::Hbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'XXX' );
+ 
+ #or with just a single child
+ my $hbox = IUP::Hbox->new( child=>$elem, ANYATTRIBUTE=>'XXX' );
+ 
+ #or with just 1 parameter (arrayref)
+ my $hbox = IUP::Hbox->new( [$elem1, $elem2] );
+ 
+ #or with just 1 parameter (reference to child elements)
+ my $hbox = IUP::Hbox->new( $elem );
 
-B<child>,... : List of identifiers that will be placed in the box. NULL
-must be used to define the end of the list in C. It can be empty.
+B<child:> (named parameter) List of the references to elements (or just a single element) that 
+will be placed in the box. 
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -48,19 +79,17 @@ inheritance.
 
 =item * B<EXPANDCHILDREN> (non inheritable)
 
-forces all children to expand
+Forces all children to expand
 vertically. Default: "NO". This has the same effect as setting
 EXPAND=VERTICAL on each child, but their horizontal expansion will be
 preserved. 
 
-=item * B<EXPANDWEIGHT> (non inheritable) B<(at children only)>
+=item * B<EXPANDWEIGHT> (non inheritable, at children only)
 
-If a child
-defines the expand weight, then it is used to multiply the free space
+If a child defines the expand weight, then it is used to multiply the free space
 used for expansion. (since iup-3.1)
 
-=item * L<FLOATING|IUP::Manual::03_Attributes/FLOATING> (non inheritable) B<(at
-children only)>
+=item * L<FLOATING|IUP::Manual::03_Attributes/FLOATING> (non inheritable, at children only)
 
 If a child has FLOATING=YES then its size and position
 will be ignored by the layout processing. Default: "NO". 
@@ -73,12 +102,11 @@ width. Default: "0". (CGAP since iup-3.0)
 
 =item * B<NGAP, NCGAP> (non inheritable)
 
-Same as B< GAP> but are non
-inheritable. 
+Same as B<GAP> but are non inheritable. 
 
 =item * B<HOMOGENEOUS> (non inheritable)
 
-forces all children to get equal
+Forces all children to get equal
 horizontal space. The natural size width will be based on the largest
 child. Default: "NO". Notice that this does not changes the children
 size, only the available space for each one of them to expand. (since
@@ -86,36 +114,33 @@ size, only the available space for each one of them to expand. (since
 
 =item * B<MARGIN, CMARGIN>
 
-Defines a margin in pixels, B<CMARGIN >is in the
-same units of the B< SIZE> attribute. Its value has the format
+Defines a margin in pixels, B<CMARGIN> is in the
+same units of the B<SIZE> attribute. Its value has the format
 "I<width>xI<height>", where I< width> and I<height> are integer values
 corresponding to the horizontal and vertical margins, respectively.
 Default: "0x0" (no margin). (CMARGIN since iup-3.0)
 
 =item * B<NMARGIN, NCMARGIN> (non inheritable)
 
-Same as B<MARGIN> but are non
-inheritable. 
+Same as B<MARGIN> but are non inheritable. 
 
 =item * B<NORMALIZESIZE> (non inheritable)
 
-normalizes all children natural
+Normalizes all children natural
 size to be the biggest natural size among them. All natural width will
 be set to the biggest width, and all natural height will be set to the
 biggest height according to is value. Can be NO, HORIZONTAL, VERTICAL
 or BOTH. Default: "NO". 
 
-=item * L<SIZE|IUP::Manual::03_Attributes/SIZE> /
-L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE> (non inheritable)
+=item * L<SIZE|IUP::Manual::03_Attributes/SIZE> / L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE> (non inheritable)
 
-Defines
-the width of the box. When consulted behaves as the standard
+Defines the width of the box. When consulted behaves as the standard
 SIZE/RASTERSIZE attributes. The standard format "wxh" can also be used,
 but height will be ignored (since iup-3.3).
 
 =item * B<WID> (read-only)
 
-returns -1 if mapped.
+Returns -1 if mapped.
 
 =back
 
@@ -130,15 +155,13 @@ L<POSITION|IUP::Manual::03_Attributes/POSITION>,
 L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
 L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>
 
-also accepted.
-
 =back
 
 =head1 NOTES
 
 The box can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or
-L<IUP::Insert|IUP::Insert>.
+L<Append|IUP::Manual::02_Elements/"Append()"> or
+L<Insert|IUP::Manual::02_Elements/"Insert()">.
 
 The box will NOT expand its children, it will allow its children to
 expand according to the space left in the box parent. So for the

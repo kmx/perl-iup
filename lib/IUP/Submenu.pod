@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -8,23 +8,26 @@ IUP::Submenu - [GUI element] menu item that, when selected, opens another menu
 
 Creates a menu item that, when selected, opens another menu.
 
+=begin HTML
+
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsubmenu.png"></td>
+</p>
+
+=end HTML
+
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- $submenu = IUP::Submenu->new(const char *title, Ihandle *menu);
- iup.submenu{menu: ihandle[; title = title: string]} -> (elem: ihandle) [in Lua]
- submenu(title, menu) [in LED]
+ $submenu = IUP::Submenu->new( TITLE=>"Name", child=>$menu_element );
 
-B<title>: String containing the text to be shown on the item. It can be
-NULL. It will set the TITLE attribute.
+B<child:> (named parameter) optional child menu reference. Can be C<undef> or ommited.
 
-B<menu>: optional child menu identifier. Can be NULL.
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -40,13 +43,6 @@ submenu image. In Windows, an item in a menu bar cannot have a check
 mark. Ignored if submenu in a menu bar. A recommended size would be
 16x16 to fit the image in the menu item. In Windows, if larger than the
 check mark area it will be cropped. 
-
-=item * L<KEY|IUP::Manual::03_Attributes/KEY> (non inheritable)
-
-Underlines a key
-character in the submenu title. It is updated only when TITLE is
-updated. B<Deprecated>, use the mnemonic support directly in the TITLE
-attribute.
 
 =item * L<TITLE|IUP::Manual::03_Attributes/TITLE> (non inheritable)
 
@@ -69,8 +65,6 @@ The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> 
 
 =item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>
 
-also accepted.
-
 =back
 
 =head2 CALLBACKS
@@ -82,15 +76,15 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =item * L<HIGHLIGHT_CB|IUP::Manual::04_Callbacks/HIGHLIGHT_CB>
 
-Action generated when
-the submenu is highlighted.
-
-----
+Action generated when the submenu is highlighted.
 
 =back
 
-=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
-L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
+
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>, L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>
 
 =back
 
@@ -130,8 +124,7 @@ The element B<IUP::Submenu> is used in the following sample scripts:
 
 =head1 SEE ALSO
 
-L<IUP::Item|IUP::Item>, L<IUP::Separator|IUP::Separator>,
-L<IUP::Menu|IUP::Menu>.
+L<IUP::Item|IUP::Item>, L<IUP::Separator|IUP::Separator>, L<IUP::Menu|IUP::Menu>
 
 The original doc: L<iupsubmenu.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupsubmenu.html>
  

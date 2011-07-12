@@ -152,7 +152,7 @@ are quite different. See some examples bellow.
 
 =end html
 
-The IUP sizes (B<User>, B<Natural> and B< Current>) described bellow
+The IUP sizes (B<User>, B<Natural> and B<Current>) described bellow
 are all related to the B<Window> size.
 
 The native B<Client> size is used only internally to reposition the
@@ -167,7 +167,7 @@ IUP does not require that the application specifies the size of any
 element. The sizes are automatically calculated so the contents of each
 element is fully displayed. This size is called B<Natural> size. The
 B<Natural> size is calculated just before the element is mapped to the
-native system and every time L<IUP::Map|IUP::Map> is called, even if the element
+native system and every time L<Map|IUP::Manual::02_Elements/"Map()"> is called, even if the element
 is already mapped.
 
 The B<Natural> size of a container is the size that allows all the
@@ -352,20 +352,20 @@ The layout of the elements of a dialog in IUP has a natural hierarchy
 because of the way they are composed together.
 
 To create a node simply call one of the pre-defined constructors like
-B< IUP::Label>, L<IUP::Button|IUP::Button>, L<IUP::Canvas|IUP::Canvas>, and so on. To create a branch
+B<IUP::Label>, L<IUP::Button|IUP::Button>, L<IUP::Canvas|IUP::Canvas>, and so on. To create a branch
 just call the constructors of containers like L<IUP::Dialog|IUP::Dialog>,
 L<IUP::Frame|IUP::Frame>, L<IUP::VBox|IUP::VBox>, and so on. Internally they all call
 L<IUP::Create|IUP::Create> to create branches or nodes. To
-destroy a node or branch call L<IUP::Destroy|IUP::Destroy>.
+destroy a node or branch call L<Destroy|IUP::Manual::02_Elements/"Destroy()">.
 
 Some of the constructors already append children to its branch, but you
-can add other children using L<IUP::Append|IUP::Append> or
-L<IUP::Insert|IUP::Insert>. To remove from the tree call
+can add other children using L<Append|IUP::Manual::02_Elements/"Append()"> or
+L<Insert|IUP::Manual::02_Elements/"Insert()">. To remove from the tree call
 L<IUP::Detach|IUP::Detach>.
 
-For the element to be visible L<IUP::Map|IUP::Map> must be called
-so it can be associated with a native control. L<IUP::Show|IUP::Show>, B<
-IUP::ShowXY> or L<IUP::Popup|IUP::Popup> will automatically call L<IUP::Map|IUP::Map> before
+For the element to be visible L<Map|IUP::Manual::02_Elements/"Map()"> must be called
+so it can be associated with a native control. L<Show|IUP::Manual::02_Elements/"Show()">, B<
+IUP::ShowXY> or L<Popup|IUP::Manual::02_Elements/"Popup()"> will automatically call L<Map|IUP::Manual::02_Elements/"Map()"> before
 showing a dialog. To remove this association call L<
 IUP::Unmap|func/iupumap.html>.
 
@@ -373,10 +373,10 @@ But there is a call order to be able to call theses functions that
 depends on the state of the element. As you can see from these
 functions there are 3 states: B<created>, B<appended> and B<mapped>.
 From B<created> to B<mapped> it is performed one step at a time. Even
-when the constructor receives the children as a parameter L<IUP::Append|IUP::Append>
+when the constructor receives the children as a parameter L<Append|IUP::Manual::02_Elements/"Append()">
 is called internally. When you B<detach> an element it will be
 automatically B<unmapped> if necessary. When you B<destroy> an element
-it will be automatically B< detached> if necessary. So explicity or
+it will be automatically B<detached> if necessary. So explicity or
 implicity there will be a call to:
 
  IUP::Create  -> IUP::Append -> IUP::Map
@@ -386,15 +386,14 @@ A more simple and fast way to move an element from one position in the
 hierarchy to another is using L<IUP::Reparent|IUP::Reparent>.
 
 The dialog is the root of the hierarchy tree. To retrieve the dialog of
-any element you can simply call L<IUP::GetDialog|IUP::GetDialog>,
+any element you can simply call L<GetDialog|IUP::Manual::02_Elements/"GetDialog()">,
 but there are other ways to navigate in the hierarchy tree.
 
-To get all the children of a container call L<
-IUP::GetChild|func/iupgetchild.html> or
-L<IUP::GetNextChild|IUP::GetNextChild>. To get just the next
+To get all the children of a container call L<GetChild|IUP::Manual::02_Elements/"GetChild()"> or
+L<GetNextChild|IUP::Manual::02_Elements/"GetNextChild()">. To get just the next
 control with the same parent use
-L<IUP::GetBrother|IUP::GetBrother>. To get the parent of a
-control call L<IUP::GetParent|IUP::GetParent>.
+L<GetBrother|IUP::Manual::02_Elements/"GetBrother()">. To get the parent of a
+control call L<GetParent|IUP::Manual::02_Elements/"GetParent()">.
 
 In Lua, if the element was created in Lua, you can access any child of
 the element using the notation "elem[n][n]....", where n is the index
@@ -412,10 +411,10 @@ of the child. For example:
 
 =head2 Layout Display
 
-The layout size and positioning is automatically updated by L<IUP::Map|IUP::Map>.
-L<IUP::Map|IUP::Map> also updates the dialog layout even if it is already mapped,
-so using it or using L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup> (they all
-call L<IUP::Map|IUP::Map>) will also update the dialog layout. The layout size and
+The layout size and positioning is automatically updated by L<Map|IUP::Manual::02_Elements/"Map()">.
+L<Map|IUP::Manual::02_Elements/"Map()"> also updates the dialog layout even if it is already mapped,
+so using it or using L<Show|IUP::Manual::02_Elements/"Show()">, L<ShowXY|IUP::Manual::02_Elements/"ShowXY()"> or L<Popup|IUP::Manual::02_Elements/"Popup()"> (they all
+call L<Map|IUP::Manual::02_Elements/"Map()">) will also update the dialog layout. The layout size and
 positioning can be manually updated using
 L<IUP::Refresh|IUP::Refresh>, even if the dialog is not mapped.
 

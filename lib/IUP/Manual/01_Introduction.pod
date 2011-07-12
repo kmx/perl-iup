@@ -115,7 +115,7 @@ There are two functions to change them:
 
 =over
 
-=item * L<IUP::SetAttribute|IUP::SetAttribute> stores only a pointer to the string and does
+=item * L<SetAttribute|IUP::Manual::02_Elements/"SetAttribute()"> stores only a pointer to the string and does
 not duplicate it.
 
 =item * L<IUP::StoreAtribute|IUP::StoreAtribute> duplicates the string, allowing you to use
@@ -123,11 +123,11 @@ it for other purposes.
 
 =back
 
-With L<IUP::SetAttribute|IUP::SetAttribute> you can also store application pointers that
+With L<SetAttribute|IUP::Manual::02_Elements/"SetAttribute()"> you can also store application pointers that
 can be strings or not. This can be very useful, for instance, used
 inside B<callbacks>. For example, by storing a C pointer of an
 application defined structure, the application can retrieve this
-pointer inside the callback through function L<IUP::GetAttribute|IUP::GetAttribute>.
+pointer inside the callback through function L<GetAttribute|IUP::Manual::02_Elements/"GetAttribute()">.
 Therefore, even if the callbacks are global functions, the same
 callback can be used for several objects, even of different types.
 
@@ -388,7 +388,7 @@ Even though callbacks have different purposes from attributes, they are
 also associated to an element by means of an name.
 
 xxxThe OLD method to associate a function to a callback, the application
-must employ the L<IUP::SetAttribute|IUP::SetAttribute> function, linking the action to a
+must employ the L<SetAttribute|IUP::Manual::02_Elements/"SetAttribute()"> function, linking the action to a
 name (passed as a string). From this point on, this name will refer to
 a callback. By means of function L<IUP::SetFunction|IUP::SetFunction>, the user connects
 this name to the callback. For example:
@@ -452,7 +452,7 @@ IUP_DEFAULT is supported.
 
 An important detail when using callbacks is that they are only called
 when the user actually executes an action over an element. A callback
-is not called when the programmer sets a value via L<IUP::SetAttribute|IUP::SetAttribute>.
+is not called when the programmer sets a value via L<SetAttribute|IUP::Manual::02_Elements/"SetAttribute()">.
 For instance: when the programmer changes a selected item on a list, no
 callback is called.
 

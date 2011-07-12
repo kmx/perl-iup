@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -7,16 +7,13 @@ IUP::Timer - [special] periodicaly invokes a callback when the time is up
 =head1 DESCRIPTION
 
 Creates a timer which periodicaly invokes a callback when the time is
-up. Each timer should be destroyed using
-L<IUP::Destroy|IUP::Destroy>.
+up. Each timer should be destroyed using L<Destroy|IUP::Manual::02_Elements/"Destroy()"> (XXX-more-perlish C<undef $timer>).
 
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- $timer = IUP::Timer->new(void);
- iup.timer{} -> (elem: ihandle) [in Lua] 
- timer() [in LED]
+ $timer = IUP::Timer->new();
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
@@ -59,14 +56,14 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 Called when the time is up.
 
- int function(Ihandle *ih); [in C]
- elem:action_cb() -> (ret: number) [in Lua]
+ sub action_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 =over
 
-=over
-
-B<$self:> reference to the element (IUP::XXXIUP_Timer) that activated the event
+B<$self:> reference to the element (IUP::Timer) that activated the event
 
 B<Returns:> IUP_CLOSE will be processed.
 

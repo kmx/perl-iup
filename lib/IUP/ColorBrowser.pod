@@ -149,6 +149,8 @@ B<$self:> reference to the element (IUP::ColorBrowser) that activated the event
 
 =back
 
+=back
+
 The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
 
 =over
@@ -198,7 +200,7 @@ The element B<IUP::ColorBrowser> is used in the following sample scripts:
 L<IUP::GetColor|IUP::GetColor>,
 L<IUP::ColorDlg|IUP::ColorDlg>
 
-The original doc: L<iupcolorbrowser.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupcolorbrowser.html>
+The original doc: L<iupcolorbrowser.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupcolorbrowser.html>
  
 
 =cut

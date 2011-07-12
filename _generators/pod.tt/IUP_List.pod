@@ -349,6 +349,8 @@ For lists B<lin> is always 1, and B<pos> is always "B<col-1>".
 
 This is the same CARET_CB callback definition as for the L<IUP::Text|IUP::Text>.
 
+=back
+
 =item * B<DBLCLICK_CB>
 
 Action generated when the user double click an item.
@@ -418,6 +420,8 @@ returned.
 
 This is the same ACTION callback definition as for the L<IUP::Text|IUP::Text>.
 
+=back
+
 =item * L<MOTION_CB|[%m.cb%]/MOTION_CB>
 
 Action generated when the
@@ -426,7 +430,7 @@ has an editbox the message is called when cursor is at the listbox only
 (ignored at the editbox). Use L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
 coordinates in item position. 
 
-B<MULTISELECT_CB>
+=item * B<MULTISELECT_CB>
 
 Action generated when the state of an item in the
 multiple selection list is changed. But it is called only when the

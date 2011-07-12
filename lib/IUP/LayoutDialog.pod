@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -9,11 +9,10 @@
 Creates a Layout Dialog. It is a predefined dialog to visually edit the
 layout of another dialog in run time. It is a standard L<IUP::Dialog|IUP::Dialog>
 constructed with other IUP elements. The dialog can be shown with any
-of the show functions L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup>.
+of the show functions L<Show|IUP::Manual::02_Elements/"Show()">, L<ShowXY|IUP::Manual::02_Elements/"ShowXY()"> or L<Popup|IUP::Manual::02_Elements/"Popup()">.
 
 Any existent dialog can be selected. It does not need to be mapped on
-the native system nor visible. It could have been created in C, LED or
-Lua.
+the native system nor visible.
 
 The layout dialog is composed by two areas: one showing the given
 dialog children hierarchy tree, and one displaying its layout.
@@ -21,20 +20,31 @@ dialog children hierarchy tree, and one displaying its layout.
 This is a dialog intended for developers, so they can see and inspect
 their dialogs in other ways.
 
+=begin HTML
+
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.5/dlg/layoutdlg1.png"></td>
+</p>
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.5/dlg/layoutdlg2.png"></td>
+</p>
+
+=end HTML
+
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- $layoutdialog = IUP::LayoutDialog->new(Ihandle* dialog);
- iup.LayoutDialog(dialog: ihandle) -> (elem: ihandle) [in Lua]
- [NOT available in LED]
+ $layoutdialog = IUP::LayoutDialog->new($dialog);
+ #or
+ $layoutdialog = IUP::LayoutDialog->new( dialog=>$dialog );
 
-B<dialog>: identifier of the dialog to display the layout. Can be NULL.
+B<$dialog>: reference to dialog (L<IUP::Dialog>) to display the layout. Can be C<undef>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -48,21 +58,16 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 The dialog will be automatically destroyed when
 closed. Default: Yes.
 
-Check the L<IUP::Dialog|IUP::Dialog> attributes.
-
 =back
+
+Check the L<IUP::Dialog|IUP::Dialog/"ATTRIBUTES"> attributes.
 
 =head2 CALLBACKS
 
 For more info about concept of callbacks (setting callback handlers etc.)
 see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
 
-=over
-
-
-Check the L<IUP::Dialog|IUP::Dialog> callbacks.
-
-=back
+Check the L<IUP::Dialog|IUP::Dialog/"CALLBACKS"> callbacks.
 
 =head1 NOTES
 
@@ -166,10 +171,10 @@ Unfortunately there are no sample scripts using this element.
 
 =head1 SEE ALSO
 
-L<IUP::Dialog|IUP::Dialog>, L< IUP::Show|../func/iupshow.html>,
-L<IUP::ShowXY|IUP::ShowXY>, L<IUP::Popup|IUP::Popup>
+L<IUP::Dialog|IUP::Dialog>, L<Show|IUP::Manual::02_Elements/"Show()">,
+L<ShowXY|IUP::Manual::02_Elements/"ShowXY()">, L<Popup|IUP::Manual::02_Elements/"Popup()">
 
-The original doc: L<iuplayoutdialog.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iuplayoutdialog.html>
+The original doc: L<iuplayoutdialog.html|http://www.tecgraf.puc-rio.br/iup/en/dlg/iuplayoutdialog.html>
  
 
 =cut

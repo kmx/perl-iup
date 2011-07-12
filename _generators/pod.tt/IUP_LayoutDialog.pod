@@ -176,7 +176,7 @@ L<IUP::Dialog|IUP::Dialog>, L<Show|[%m.elem%]/"Show()">,
 L<ShowXY|[%m.elem%]/"ShowXY()">, L<Popup|[%m.elem%]/"Popup()">
 
 [%IF flags.gennerate_origdoc -%]
-The original doc: L<iuplayoutdialog.html|[%url.iuporigdoc%]elem/iuplayoutdialog.html>
+The original doc: L<iuplayoutdialog.html|[%url.iuporigdoc%]dlg/iuplayoutdialog.html>
 [%END%] 
 
 =cut

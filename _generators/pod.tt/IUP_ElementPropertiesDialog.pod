@@ -73,7 +73,7 @@ L<ShowXY|[%m.elem%]/"ShowXY()">, L<Popup|[%m.elem%]/"Popup()">,
 L<IUP::LayoutDialog|IUP::LayoutDialog>
 
 [%IF flags.gennerate_origdoc -%]
-The original doc: L<iupelementpropertiesdialog.html|[%url.iuporigdoc%]dlg/iupelementpropertiesdialog.html>
+The original doc: L<iupelementpropdialog.html|[%url.iuporigdoc%]dlg/iupelementpropdialog.html>
 [%END%] 
 
 =cut

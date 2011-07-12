@@ -38,6 +38,8 @@ image to be tiled on the background.
 
 See also the screenshots of the sample dialog: XXX-fix-the-following-links
 
+=over
+
 =item * L<results with normal background|xxx.html>
 
 =item * L<changing the dialog BACKGROUND|xxx.html>
@@ -48,7 +50,7 @@ See also the screenshots of the sample dialog: XXX-fix-the-following-links
 
 =back
 
-B<BORDER> (non inheritable) (creation only)
+=item * B<BORDER> (non inheritable) (creation only)
 
 Shows a resize border
 around the dialog. Default: "YES". BORDER=NO is useful only when
@@ -645,7 +647,7 @@ L<Show|[%m.elem%]/"Show()">,,
 L<Popup|[%m.elem%]/"Popup()">
 
 [%IF flags.gennerate_origdoc -%]
-The original doc: L<iupdialog.html|[%url.iuporigdoc%]elem/iupdialog.html>
+The original doc: L<iupdialog.html|[%url.iuporigdoc%]dlg/iupdialog.html>
 [%END%] 
 
 =cut

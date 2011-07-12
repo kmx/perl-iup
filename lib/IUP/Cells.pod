@@ -413,7 +413,7 @@ The element B<IUP::Cells> is used in the following sample scripts:
 
 L<IUP::Canvas|IUP::Canvas>
 
-The original doc: L<iupcells.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupcells.html>
+The original doc: L<iupcells.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupcells.html>
  
 
 =cut

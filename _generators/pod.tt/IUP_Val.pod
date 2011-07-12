@@ -149,6 +149,8 @@ B<$self:> reference to the element (IUP::Val) that activated the event
 
 =back
 
+=back
+
 [%txt.cb_common%]
 
 =over

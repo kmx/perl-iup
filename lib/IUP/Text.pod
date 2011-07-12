@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -8,19 +8,87 @@ IUP::Text - [GUI element] editable text field (single/multi-line, plain/rich-tex
 
 Creates an editable text field.
 
+=begin HTML
+
+<p>
+  <table border="1">
+    <col style="background-color: rgb(239, 235, 231);">
+    <col style="background-color: rgb(173, 177, 194);">
+    <col style="background-color: rgb(212, 208, 200);">
+    <col style="background-color: rgb(236, 233, 216);">
+    <tbody align="center">
+      <tr>
+        <th style="text-align: center;">GTK</th>
+        <th style="text-align: center;">Motif</th>
+        <th style="text-align: center;">Windows<br>Classic</th>
+        <th style="text-align: center;">Windows<br>w/ Style</th>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_gtk.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_mot.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_win2k.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_winxp.png"></td>
+      </tr>
+      <tr>
+        <th colspan="4" style="text-align: center;">When SPIN=YES</th>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_gtk_spin.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_mot_spin.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_win2k_spin.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_winxp_spin.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th style="text-align: center;">Attributes</th>
+        <th style="text-align: center;">Screenshot</th>
+      </tr>
+      <tr>
+        <td style="text-align: left;">
+<pre>
+$txt = IUP::Text->new( MULTILINE=>"YES", FORMATTING=>"YES");
+
+$txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
+    ALIGNMENT=>"CENTER", 
+    SPACEAFTER=>"10",
+    FONTSIZE=>"24", 
+    SELECTION=>"3,1:3,50",
+));
+$txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
+    BGCOLOR=>"255 128 64",
+    UNDERLINE=>"SINGLE",
+    WEIGHT=>"BOLD",
+    SELECTION=>"3,7:3,11",
+));
+$txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
+    ITALIC=>"YES",
+    STRIKEOUT=>"YES",
+    SELECTION=>"2,1:2,12",
+));
+</pre>
+        <td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_formatting.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end HTML
+
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- $text = IUP::Text->new(const char *action);
+ $text = IUP::Text->new( VALUE=>"text text text" );
 
-B<action>: name of the action generated when the user types something.
-It can be NULL.
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -31,9 +99,9 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =item * B<ALIGNMENT> [Windows and GTK Only] (non inheritable)
 
-text alignment.
-Possible values: "ALEFT", "ARIGHT", "ACENTER". Default: "ALEFT". In
-Motif, text is always left aligned.
+Text alignment. Possible values: "ALEFT", "ARIGHT", "ACENTER".
+  
+Default: "ALEFT". In Motif, text is always left aligned.
 
 =item * B<APPEND> (write-only)
 
@@ -47,7 +115,7 @@ not empty(APPENDNEWLINE default is YES). Ignored if set before map.
 Background color of the text.
 Default: the global attribute TXTBGCOLOR.
 
-=item * B<BORDER >(creation only)
+=item * B<BORDER> (creation only)
 
 Shows a border around the text. Default:
 "YES".
@@ -63,16 +131,12 @@ focus when clicked. Default: YES.
 Position of the insertion point. Its format
 depends in MULTILINE=YES. The first position, B<lin> or B<col>, is "1".
 
-=item * B<For multiple lines>
-
-a string with the "B<lin>,B<col>" format, where
-B<$lin:> and B<col> are integer numbers corresponding to the caret's
+For multiple lines a string with the B<< "<lin>,<col>" >> format, where
+B<lin> and B<col> are integer numbers corresponding to the caret's
 position.
 
-B<For single line>
-
-a string in the "B<col>" format, where B<col> is an
-integer number corresponding to the caret's position.
+For single line a string in the B<< "<col>" >> format, where B<col>
+is an integer number corresponding to the caret's position.
 
 When B<lin> is greater than the number of lines, the caret is placed at
 the last line. When B<col> is greater than the number of characters in
@@ -88,14 +152,15 @@ position can be changed even if not visible. When changed it will also
 change the selection but the text will be scrolled only when it
 receives the focus.
 
-See the Notes below if using UTF-8 strings in GTK.
+See the Notes below if using UTF-8 strings in GTK. XXX-check-this
 
 =item * B<CARETPOS> (non inheritable)
 
 Also the position of the insertion
 point, but using a zero based character unique index "pos". Useful for
-indexing the VALUE string. See the Notes below if using UTF-8 strings
-in GTK. 
+indexing the VALUE string.
+
+See the Notes below if using UTF-8 strings in GTK. XXX-check-this
 
 =item * B<CLIPBOARD> (write-only)
 
@@ -106,12 +171,11 @@ FORMATTING=YES.
 
 =item * B<COUNT> (read-only)
 
-returns the number of characters in the text.
-(since iup-3.5)
+Returns the number of characters in the text. (since iup-3.5)
 
 =item * B<CUEBANNER> [Windows Only] (non inheritable)
 
-a text that is displayed
+Text that is displayed
 when there is no text at the control. It works as a textual cue, or tip
 to prompt the user for input. Valid only for MULTILINE=NO, and it is
 not available for Windows 2000. 
@@ -122,7 +186,6 @@ Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
 
-
 =item * L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
 
 Text color. Default: the global
@@ -130,16 +193,13 @@ attribute TXTFGCOLOR.
 
 =item * B<FILTER> [Windows Only] (non inheritable)
 
-allows a custom filter to
-process the characters: Can be LOWERCASE, UPPERCASE or NUMBER (only
-numbers allowed). 
+Allows a custom filter to
+process the characters: Can be LOWERCASE, UPPERCASE or NUMBER (only numbers allowed). 
 
-=item * L<FORMATTING|IUP::Manual::03_Attributes/FORMATTING> [Windows and GTK Only] (non
-inheritable)
+=item * L<FORMATTING|IUP::Manual::03_Attributes/FORMATTING> [Windows and GTK Only] (non inheritable)
 
 When enabled allow the use of text formatting attributes.
 In GTK is always enabled, but only when MULTILINE=YES. Default: NO.
-
 
 =item * B<INSERT> (write-only)
 
@@ -148,12 +208,12 @@ replaces the current selection if any. Ignored if set before map.
 
 =item * B<LINECOUNT> (read-only)
 
-returns the number of characters in the line
+Returns the number of characters in the line
 where the caret is. When MULTILINE=NO returns always "1". (since iup-3.5)
 
 =item * B<LINEVALUE> (read-only)
 
-returns the text of the line where the caret
+Returns the text of the line where the caret
 is. It does not include the "\n" character. When MULTILINE=NO returns
 the same as VALUE. (since iup-3.5)
 
@@ -164,7 +224,7 @@ will filter interactive text input.
 
 =item * B<MULTILINE> (creation only) (non inheritable)
 
-allows the edition of
+Allows the edition of
 multiple lines. In single line mode some characters are invalid, like
 "\t", "\r" and "\n". Default: NO.
 
@@ -177,17 +237,17 @@ maximum.
 
 =item * B<OVERWRITE> [Windows and GTK Only] (non inheritable)
 
-turns the
+Turns the
 overwrite mode ON or OFF. Works only when FORMATTING=YES. 
 
 =item * B<PADDING>
 
-internal margin. Works just like the MARGIN attribute of
+Internal margin. Works just like the MARGIN attribute of
 the L<IUP::Hbox|IUP::Hbox> and L<IUP::Vbox|IUP::Vbox> containers, but uses a different name to
 avoid inheritance problems. Default value: "0x0". In Windows, only the
-horizontal value is used.  (GTK 2.10 for single line)
+horizontal value is used. (GTK 2.10 for single line)
 
-=item * B<PASSWORD >(creation only) [Windows and GTK Only] (non inheritable)
+=item * B<PASSWORD> [Windows and GTK Only] (creation only, non inheritable)
 
 Hide the typed character using an "*". Default: "NO".
 
@@ -209,7 +269,7 @@ include its size even if the native system hides the scrollbar. If
 default AUTOHIDE=NO. In Windows when FORMATTING=NO, AUTOHIDE is not
 supported. In Motif AUTOHIDE is not supported.
 
-B<SCROLLTO> (non inheritable, write only)
+=item * B<SCROLLTO> (non inheritable, write only)
 
 Scroll the text to make the
 given position visible. It uses the same format and reference of the
@@ -223,45 +283,41 @@ the CARETPOS attribute ("pos" starting at 0).
 
 =item * B<SELECTEDTEXT> (non inheritable)
 
-Selection text. Returns NULL if
+Selection text. Returns C<undef> if
 there is no selection. When changed replaces the current selection.
 Similar to INSERT, but does nothing if there is no selection.
 
-=item * B<X<SELECTION>SELECTION> (non inheritable)
+=item * B<SELECTION> (non inheritable)
 
 Selection interval. Returns
-NULL if there is no selection. Its format depends in MULTILINE=YES. The
+C<undef> if there is no selection. Its format depends in MULTILINE=YES. The
 first position, B<lin> or B<col>, is "1".
 
-=item * B<For multiple lines>
-
-a string in the
-"B<lin1>,B<col1>:B<lin2>,B<col2>" format, where B<lin1>, B<col1>,
-=item * B<lin2> and B<col2> are integer numbers corresponding to the
+For multiple lines a string in the
+B<< "<lin1>,<col1>:<lin2>,<col2>" >>format, where B<lin1>, B<col1>,
+B<lin2> and B<col2> are integer numbers corresponding to the
 selection's interval. B<col2> correspond to the character after the
 last selected character.
 
-B<For single line>
-
-a string in the "B<col1>:B<col2>" format, where
-=item * B<col1> and B<col2> are integer numbers corresponding to the
+For single line a string in the B<< "<col1>:<col2>" >> format, where
+B<col1> and B<col2> are integer numbers corresponding to the
 selection's interval. B<col2> correspond to the character after the
 last selected character.
 
 In Windows, when changing the selection the caret position is also
 changed.
 
-The values ALL and NONE are also accepted independently of MULTILINE
-.
+The values ALL and NONE are also accepted independently of MULTILINE.
 
-See the Notes below if using UTF-8 strings in GTK.
+See the Notes below if using UTF-8 strings in GTK. XXX-chek-this
 
-B<SELECTIONPOS> (non inheritable)
+=item * B<SELECTIONPOS> (non inheritable)
 
 Same as SELECTION but using a zero
-based character index "B<pos1>:B<pos2>". Useful for indexing the VALUE
-string. The values ALL and NONE are also accepted. See the Notes below
-if using UTF-8 strings in GTK. 
+based character index B<< "<pos1>:<pos2>" >>. Useful for indexing the VALUE
+string. The values ALL and NONE are also accepted.
+
+See the Notes below if using UTF-8 strings in GTK. XXX-check-this
 
 =item * L<SIZE|IUP::Manual::03_Attributes/SIZE> (non inheritable)
 
@@ -270,45 +326,45 @@ can be changed by the user, the B<Natural> B<Size> is not affected by
 the text contents . In IUP 2.x the B<Natural> B<Size> was
 defined by the number of lines in the text and the with of the largest
 line. For IUP 3, use VISIBLECOLUMNS and VISIBLELINES to control the
-=item * B<Natural Size>.
+B<Natural Size>.
 
-B<SPIN> (non inheritable, creation only)
+=item * B<SPIN> (non inheritable, creation only)
 
-enables a spin control
+Enables a spin control
 attached to the element. Default: NO. The spin increments and
 decrements an integer number. The editing in the element is still
 available. 
 
-=item * B<SPINVALUE >(non inheritable)
+=item * B<SPINVALUE> (non inheritable)
 
-the current value of the spin. The
+The current value of the spin. The
 value is limited to the minimum and maximum values.
 
-=item * B<SPINMAX >(non inheritable)
+=item * B<SPINMAX> (non inheritable)
 
-the maximum value. Default: 100.
+The maximum value. Default: 100.
 
-=item * B<SPINMIN >(non inheritable)
+=item * B<SPINMIN> (non inheritable)
 
-the minimum value. Default: 0.
+The minimum value. Default: 0.
 
-=item * B<SPININC >(non inheritable)
+=item * B<SPININC> (non inheritable)
 
-the increment value. Default: 1.
+The increment value. Default: 1.
 
 =item * B<SPINALIGN> (creation only)
 
-the position of the spin. Can be LEFT or
+The position of the spin. Can be LEFT or
 RIGHT. Default: RIGHT. In GTK is always RIGHT.
 
 =item * B<SPINWRAP> (creation only)
 
-if the position reach a limit it continues
+If the position reach a limit it continues
 from the opposite limit. Default: NO.
 
 =item * B<SPINAUTO> (creation only)
 
-enables the automatic update of the text
+Enables the automatic update of the text
 contents. Default: YES. Use SPINAUTO=NO and the VALUE attribute during
 SPIN_CB to control the text contents when the spin is incremented.
 
@@ -322,14 +378,14 @@ pressed.
 Valid only when MULTILINE=YES.
 Controls the number of characters for a tab stop. Default: 8.
 
-=item * B<VALUE >(non inheritable)
+=item * B<VALUE> (non inheritable)
 
 Text entered by the user. The '\n'
 character indicates a new line, valid only when MULTILINE=YES. After
 the element is mapped and if there is no text will return the empty
 string "".
 
-=item * B<VALUEMASKED >(non inheritable) (write-only)
+=item * B<VALUEMASKED> (non inheritable) (write-only)
 
 sets VALUE but first
 checks if it is validated by MASK. If not does nothing. (since iup-3.4)
@@ -337,19 +393,17 @@ checks if it is validated by MASK. If not does nothing. (since iup-3.4)
 =item * B<VISIBLECOLUMNS>
 
 Defines the number of visible columns for the
-=item * B<Natural> B<Size>, this means that will act also as minimum number of
+B<Natural Size>, this means that will act also as minimum number of
 visible columns. It uses a wider character size then the one used for
 the SIZE attribute so strings will fit better without the need of extra
-columns. As for SIZE you can set to NULL after map to use it as an
-initial value. Default
-
-5 
+columns. As for SIZE you can set to C<undef> after map to use it as an
+initial value. Default 5 
 
 =item * B<VISIBLELINES>
 
 When MULTILINE=YES defines the number of visible lines
-for the B<Natural> B<Size>, this means that will act also as minimum
-number of visible lines. As for SIZE you can set to NULL after map to
+for the B<Natural Size>, this means that will act also as minimum
+number of visible lines. As for SIZE you can set to C<undef> after map to
 use it as an initial value. Default: 1 
 
 =item * B<WORDWRAP> (creation only)
@@ -375,8 +429,6 @@ L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
 L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
 L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
 
-also accepted.
-
 =back
 
 =head2 CALLBACKS
@@ -392,15 +444,18 @@ Action generated when the text is
 edited, but before its value is actually changed. Can be generated when
 using the keyboard, undo system or from the clipboard.
 
- int function(Ihandle *ih, int c, char *new_value); [in C]elem:action(c: number, new_value: string) -> (ret: number) [in Lua]
+ sub action_handler {
+   my ($self, $c, $new_value) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_Text) that activated the event
+B<$self:> reference to the element (IUP::Text) that activated the event
 
-=item * B<c> - valid alpha numeric character or 0.
+B<$c:> valid alpha numeric character or 0.
 
-=item * B<new_value> - Represents the new text value.
+B<$new_value:> Represents the new text value.
 
 B<Returns:> IUP_CLOSE will be processed, but the change will be ignored.
 If IUP_IGNORE, the system will ignore the new value. If B<c> is valid
@@ -413,29 +468,27 @@ returned.
 =item * L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB>
 
 Action generated when any
-mouse button is pressed or released. Use
-=back
-
-=item * L<IUP::ConvertXYToPos|IUP::ConvertXYToPos> to convert (x,y)
+mouse button is pressed or released. Use L<ConvertXYToPos|IUP::Manual::02_Elements/"ConvertXYToPos()"> to convert (x,y)
 coordinates in character positioning. 
 
 =item * B<CARET_CB>
 
-Action generated when the caret/cursor position is
-changed.
+Action generated when the caret/cursor position is changed.
 
- int function(Ihandle *ih, int lin, int col, int pos); [in C]elem - caret_cb(lin, col, pos: number) -> (ret: number) [in Lua]
+ sub caret_cb_handler {
+   my ($self, $lin, $col, $pos) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_Text) that activated the event
+B<$self:> reference to the element (IUP::Text) that activated the event
 
-=item * B<lin, col> - line and column number (start at 1).
+B<$lin, $col:> line and column number (start at 1).
 
-=item * B<pos> - 0 based character position.
+B<$pos:> 0 based character position.
 
-For single line controls B<lin> is always 1, and B<pos> is always
-"B<col>-1".
+For single line controls B<lin> is always 1, and B<pos> is always B<col-1>.
 
 =back
 
@@ -443,16 +496,11 @@ For single line controls B<lin> is always 1, and B<pos> is always
 
 Action generated when one or more files are dropped in the element.
 
-
-=back
-
 =item * L<MOTION_CB|IUP::Manual::04_Callbacks/MOTION_CB>
 
 Action generated when the
-mouse is moved. Use L<IUP::ConvertXYToPos|IUP::ConvertXYToPos>
+mouse is moved. Use L<ConvertXYToPos|IUP::Manual::02_Elements/"ConvertXYToPos()">
 to convert (x,y) coordinates in character positioning. 
-
-=back
 
 =item * B<SPIN_CB>
 
@@ -461,61 +509,68 @@ when SPIN=YES. When this callback is called the ACTION callback is not
 called. The VALUE attribute can be changed during this callback only if
 SPINAUTO=NO. 
 
- int function(Ihandle *ih, int pos); [in C]elem:spin_cb(pos: number) -> (ret: number) [in Lua]
+ sub spin_cb_handler {
+   my ($self, $pos) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_Text) that activated the event
+B<$self:> reference to the element (IUP::Text) that activated the event
 
-=item * B<pos> - the value of the spin (after it was incremented).
+B<$pos:> the value of the spin (after it was incremented).
 
-Returns: IUP_IGNORE is processed in Windows and Motif.
+B<Returns:> IUP_IGNORE is processed in Windows and Motif.
 
 =back
 
 =item * B<VALUECHANGED_CB>
 
-Called after the value was interactively changed by
-the user. 
+Called after the value was interactively changed by the user. 
 
- int function(Ihandle *ih); [in C]elem:valuechanged_cb() -> (ret: number) [in Lua]
+ sub valuechanged_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_Text) that activated the event
-
-----
+B<$self:> reference to the element (IUP::Text) that activated the event
 
 =back
 
+=back
+
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
+
 =item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
-=item * L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
 L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
 L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
 L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
 L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
 L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>, L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
-All common callbacks are supported.
+=back
 
 =head2 Auxiliary Functions
 
- void IUP::TextConvertLinColToPos(Ihandle* ih, int lin, int col, int *pos); [in C]iup.TextConvertLinColToPos(ih - ihandle, lin, col: number) -> pos: number [in Lua]
+=head3 TextConvertLinColToPos()
 
-=over
+ $pos = $text->TextConvertLinColToPos($lin, $col);
 
 Converts a (lin, col) character positioning into an absolute position.
-For single line controls B<pos> is always "B<col>-1". 
+For single line controls B<pos> is always B<col-1>. 
 
- void IUP::TextConvertPosToLinCol(Ihandle* ih, int pos, int *lin, int *col); [in C]iup.TextConvertPosToLinCol(ih: ihandle, pos: number) -> lin, col: number [in Lua]
+=head3 TextConvertPosToLinCol()
 
-=over
+ ($lin, $col) = $text->TextConvertPosToLinCol($pos);
 
 Converts an absolute position into a (lin, col) character positioning.
 For single line controls B<lin> is always 1, and B<col> is always
-"B<pos>+1". 
-
-=back
+B<pos+1>.
 
 =head1 NOTES
 
@@ -527,6 +582,7 @@ next element press E<lt>CtrlE<gt>+E<lt>TabE<gt>.
 In Windows, if you press a Ctrl+key combination that is not supported
 by the control, then a beep is sound.
 
+XXX-UTF8-to-be-fixed
 When using UTF-8 strings in GTK be aware that all attributes are
 indexed by characters, NOT by byte index, because some characters in
 UTF-8 can use more than one byte. This also applies to Windows if
@@ -538,69 +594,38 @@ Asian codepage where some characters take two bytes).
 Here is a list of the common keys for all drivers. Other keys are
 available depending on the driver.
 
-Keys
+B<Navigation:>
 
-Action
+ Keys             Action             
+ --------------------------------------------------
+ Arrows	          move by individual characters/lines
+ Ctrl+Arrows      move by words/paragraphs
+ Home/End         move to begin/end line
+ Ctrl+Home/End    move to begin/end text
+ PgUp/PgDn        move vertically by pages
+ Ctrl+PgUp/PgDn   move horizontally by pages
 
-I<Navigation>
+B<Selection:>
 
-Arrows
+ Keys             Action             
+ --------------------------------------------------
+ Shift+Arrows     select charaters
+ Ctrl+A           select all
 
-move by individual characters/lines
+B<Deleting:>
 
-Ctrl+Arrows
+ Keys             Action             
+ --------------------------------------------------
+ Del              delete the character at right
+ Backspace        delete the character at left
 
-move by words/paragraphs
+B<Clipboard:>
 
-Home/End
-
-move to begin/end line
-
-Ctrl+Home/End
-
-move to begin/end text
-
-PgUp/PgDn
-
-move vertically by pages
-
-Ctrl+PgUp/PgDn
-
-move horizontally by pages
-
-I<Selection>
-
-Shift+Arrows
-
-select charaters
-
-Ctrl+A
-
-select all
-
-I<Deleting>
-
-Del
-
-delete the character at right
-
-Backspace
-
-delete the character at left
-
-I<Clipboard>
-
-Ctrl+C
-
-copy
-
-Ctrl+X
-
-cut
-
-Ctrl+V
-
-paste
+ Keys             Action             
+ --------------------------------------------------
+ Ctrl+C           copy
+ Ctrl+X           cut
+ Ctrl+V           paste
 
 =head1 EXAMPLES
 
@@ -663,7 +688,7 @@ The element B<IUP::Text> is used in the following sample scripts:
 
 =head1 SEE ALSO
 
-L<IUP::List|IUP::List>, L<IUP::MultiLine|IUP::MultiLine>
+L<IUP::List|IUP::List>
 
 The original doc: L<iuptext.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iuptext.html>
  

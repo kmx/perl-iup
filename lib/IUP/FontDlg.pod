@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -7,16 +7,37 @@ IUP::FontDlg - [pre-defined dialog] selecting a font
 =head1 DESCRIPTION 
 
 Creates the Font Dialog element. It is a predefined dialog for
-selecting a font. The dialog can be shown with the L<IUP::Popup|IUP::Popup> function
+selecting a font. The dialog can be shown with the L<Popup|IUP::Manual::02_Elements/"Popup()"> function
 only.
+
+=begin HTML
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th style="text-align: center;">GTK</th>
+        <td style="text-align: left;"><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_gtk.png"></td>
+      </tr>
+      <tr>
+        <th style="text-align: center;">Motif</th>
+	<td style="text-align: left;"><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_mot.png"></td>
+      </tr>
+      <tr>
+        <th style="text-align: center;">Windows</th>
+	<td style="text-align: left;"><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_win.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end HTML
 
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- $fontdlg = IUP::FontDlg->new(void);
- iup.fontdlg{} -> (elem: ihandle) [in Lua]
- fontdlg() [in LED]
+ $fontdlg = IUP::FontDlg->new( TITLE=>"Hello" );
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
@@ -44,14 +65,13 @@ of colors.
 
 =item * L<PARENTDIALOG|IUP::Manual::03_Attributes/PARENTDIALOG> (creation only)
 
-Name
-of a dialog to be used as parent. This dialog will be always in front
+Name of a dialog to be used as parent. This dialog will be always in front
 of the parent dialog.
 
 =item * B<STATUS> (read-only)
 
-defined to "1" if the user pressed the Ok
-button, NULL if pressed the Cancel button.
+Defined to "1" if the user pressed the Ok
+button, C<undef> if pressed the Cancel button.
 
 =item * L<TITLE|IUP::Manual::03_Attributes/TITLE>
 
@@ -74,20 +94,18 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =item * L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
-Action generated when the Help
-button is pressed.
+Action generated when the Help button is pressed.
 
 =back
 
 =head1 NOTES
 
 The L<IUP::FontDlg|IUP::FontDlg> is a native pre-defined dialog not altered by
-L<IUP::SetLanguage|IUP::SetLanguage>.
+L<SetLanguage|IUP/"SetLanguage()">.
 
-To show the dialog, use function L<IUP::Popup|IUP::Popup>. In Lua, use the B<popup>
-function.
+To show the dialog, use function L<Popup|IUP/"Popup()">.
 
-The dialog is mapped only inside L<IUP::Popup|IUP::Popup>, L<IUP::Map|IUP::Map> does nothing.
+The dialog is mapped only inside L<Popup|IUP::Manual::02_Elements/"Popup()">, L<Map|IUP::Manual::02_Elements/"Map()"> does nothing.
 
 In Windows, the dialog will be modal relative only to its parent or to
 the active dialog.
@@ -102,9 +120,9 @@ Unfortunately there are no sample scripts using this element.
 =head1 SEE ALSO
 
 L<IUP::MessageDlg|IUP::MessageDlg>, L<IUP::FileDlg|IUP::FileDlg>,
-L<IUP::Popup|IUP::Popup>
+L<Popup|IUP::Manual::02_Elements/"Popup()">
 
-The original doc: L<iupfontdlg.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupfontdlg.html>
+The original doc: L<iupfontdlg.html|http://www.tecgraf.puc-rio.br/iup/en/dlg/iupfontdlg.html>
  
 
 =cut

@@ -75,7 +75,7 @@ The default size is
 the smallest size that fits its largest child. All child elements are
 considered even invisible ones.
 
-=item * B<< TABIMAGE<n> >>(non inheritable)
+=item * B<< TABIMAGE(n) >>(non inheritable)
 
 E<lt>nE<gt> starts at 0. 
 
@@ -84,7 +84,7 @@ Use L<SetName|[%m.elem%]/"SetName()"> or XXX-FIX_ME to
 associate an image to a name. XXX-check-this
 
 See also L<IUP::Image|IUP::Image>. In Motif, the image is shown only if
-B<< TABTITLE<n> >> is C<undef>. In Windows and Motif set the BGCOLOR attribute
+B<< TABTITLE(n) >> is C<undef>. In Windows and Motif set the BGCOLOR attribute
 before setting the image. 
 
 =item * B<TABORIENTATION> (non inheritable)
@@ -94,7 +94,7 @@ text, which can be "HORIZONTAL" or "VERTICAL". Default is "HORIZONTAL".
 VERTICAL is supported only in GTK and in Windows. In Windows, VERTICAL
 is only supported when TABTYPE=LEFT or TABTYPE=RIGHT. (GTK 2.6)
 
-=item * B<< TABTITLE<n> >> (non inheritable)
+=item * B<< TABTITLE(n) >> (non inheritable)
 
 Contains the text to be shown in the
 respective tab title. n starts at 0. If this value is NULL, it will
@@ -103,11 +103,6 @@ next character will be used as key. Use "&&" to show the "&" character
 instead on defining a mnemonic. The button can be activated from any
 control in the dialog using the "Alt+key" combination. (mnemonic
 support since iup-3.3) 
-
-=item * B<TABTITLE> (non inheritable, at children)
-
-Same as B<< TABTITLE<n> >> but set in each child. 
-Works only before the child is added to the tabs. Deprecated, use B<< TABTITLE<n> >>.
 
 =item * B<TABTYPE> (non inheritable, creation only in Windows)
 
@@ -201,6 +196,8 @@ B<$self:> reference to the element (IUP::Tabs) that activated the event
 B<$new_pos:> the new tab position selected by the user
 
 B<$old_pos:> the previously selected tab position
+
+=back
 
 =back
 
