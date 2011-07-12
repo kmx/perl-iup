@@ -110,6 +110,8 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::MessageDlg|IUP::MessageDlg>, L<IUP::FileDlg|IUP::FileDlg>,
 L<IUP::Popup|IUP::Popup>
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupfontdlg.html|[%url.iuporigdoc%]elem/iupfontdlg.html>
+[%END%] 
 
 =cut

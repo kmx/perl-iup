@@ -161,6 +161,8 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::MessageDlg|IUP::MessageDlg>, L<IUP::FileDlg|IUP::FileDlg>,
 L<Popup|[%m.elem%]/"Popup()">
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupcolordlg.html|[%url.iuporigdoc%]elem/iupcolordlg.html>
+[%END%] 
 
 =cut

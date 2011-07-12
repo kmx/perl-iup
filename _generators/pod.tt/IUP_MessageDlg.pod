@@ -125,6 +125,8 @@ L<IUP::Message|IUP::Message>, L<IUP::Scanf|IUP::Scanf>,
 L<IUP::ListDialog|IUP::ListDialog>, L<IUP::Alarm|IUP::Alarm>,
 L<IUP::GetFile|IUP::GetFile>, L<IUP::Popup|IUP::Popup>
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupmessagedlg.html|[%url.iuporigdoc%]elem/iupmessagedlg.html>
+[%END%] 
 
 =cut

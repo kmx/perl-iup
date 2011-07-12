@@ -81,6 +81,8 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupfill.html|[%url.iuporigdoc%]elem/iupfill.html>
+[%END%] 
 
 =cut

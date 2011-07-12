@@ -46,6 +46,8 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupuser.html|[%url.iuporigdoc%]elem/iupuser.html>
+[%END%] 
 
 =cut

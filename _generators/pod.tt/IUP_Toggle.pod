@@ -250,6 +250,8 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::Image|IUP::Image>, L<IUP::Button|IUP::Button>,
 L<IUP::Label|IUP::Label>, L<IUP::Radio|IUP::Radio>.
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iuptoggle.html|[%url.iuporigdoc%]elem/iuptoggle.html>
+[%END%] 
 
 =cut

@@ -196,6 +196,8 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::GetColor|IUP::GetColor>,
 L<IUP::ColorDlg|IUP::ColorDlg>
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupcolorbrowser.html|[%url.iuporigdoc%]elem/iupcolorbrowser.html>
+[%END%] 
 
 =cut

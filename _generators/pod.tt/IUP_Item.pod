@@ -181,6 +181,8 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::Separator|IUP::Separator>, L<IUP::Submenu|IUP::Submenu>,
 L<IUP::Menu|IUP::Menu>.
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupitem.html|[%url.iuporigdoc%]elem/iupitem.html>
+[%END%] 
 
 =cut

@@ -274,6 +274,8 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iuptabs.html|[%url.iuporigdoc%]elem/iuptabs.html>
+[%END%] 
 
 =cut

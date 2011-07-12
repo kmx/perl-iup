@@ -108,6 +108,8 @@ Unfortunately there are no sample scripts using this element.
 
 [%END%]
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupsbox.html|[%url.iuporigdoc%]elem/iupsbox.html>
+[%END%] 
 
 =cut

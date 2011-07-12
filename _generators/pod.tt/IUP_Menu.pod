@@ -173,6 +173,8 @@ L<IUP::Separator|IUP::Separator>, L<IUP::Submenu|IUP::Submenu>,
 L<IUP::Popup|IUP::Popup>,
 L<IUP::Destroy|IUP::Destroy>
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupmenu.html|[%url.iuporigdoc%]elem/iupmenu.html>
+[%END%] 
 
 =cut

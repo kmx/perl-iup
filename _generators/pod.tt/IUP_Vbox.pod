@@ -165,6 +165,8 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::Zbox|IUP::Zbox>, L<IUP::Hbox|IUP::Hbox>
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupvbox.html|[%url.iuporigdoc%]elem/iupvbox.html>
+[%END%] 
 
 =cut

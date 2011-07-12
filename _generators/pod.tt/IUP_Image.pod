@@ -367,6 +367,8 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::Label|IUP::Label>, L<IUP::Button|IUP::Button>,
 L<IUP::Toggle|IUP::Toggle>, L<IUP::Destroy|IUP::Destroy>.
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupimage.html|[%url.iuporigdoc%]elem/iupimage.html>
+[%END%] 
 
 =cut

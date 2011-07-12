@@ -619,6 +619,8 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::List|IUP::List>, L<IUP::MultiLine|IUP::MultiLine>
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iuptext.html|[%url.iuporigdoc%]elem/iuptext.html>
+[%END%] 
 
 =cut

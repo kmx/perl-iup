@@ -100,6 +100,8 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::Hbox|IUP::Hbox>, L< IUP::Vbox|../elem/iupvbox.html>
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupnormalizer.html|[%url.iuporigdoc%]elem/iupnormalizer.html>
+[%END%] 
 
 =cut

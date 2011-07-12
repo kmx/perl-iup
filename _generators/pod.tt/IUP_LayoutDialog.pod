@@ -175,6 +175,8 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::Dialog|IUP::Dialog>, L< IUP::Show|../func/iupshow.html>,
 L<IUP::ShowXY|IUP::ShowXY>, L<IUP::Popup|IUP::Popup>
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iuplayoutdialog.html|[%url.iuporigdoc%]elem/iuplayoutdialog.html>
+[%END%] 
 
 =cut

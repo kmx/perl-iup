@@ -646,6 +646,8 @@ L<ShowXY|[%m.elem%]/"ShowXY>,
 L<Show|[%m.elem%]/"Show()">,,
 L<Popup|[%m.elem%]/"Popup()">
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupdialog.html|[%url.iuporigdoc%]elem/iupdialog.html>
+[%END%] 
 
 =cut

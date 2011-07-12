@@ -86,6 +86,8 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::Text|IUP::Text>, L<IUP::Vbox|IUP::Vbox>,
 L<IUP::Hbox|IUP::Hbox>, L<IUP::Button|IUP::Button>
 
-XXX-ODOC-XXX
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupspin.html|[%url.iuporigdoc%]elem/iupspin.html>
+[%END%] 
 
 =cut
