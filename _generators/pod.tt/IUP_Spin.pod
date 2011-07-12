@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -24,27 +24,13 @@ inserted inside the L<IUP::Text|IUP::Text> area.
 
 [% h.create %]
 
-L<IUP::Spin|IUP::Spin> inherits from a L<IUP::Vbox|IUP::Vbox>, and contains two L<IUP::Button|IUP::Button>.
+L<IUP::Spin|IUP::Spin> inherits (xxx-better-explanation) from a L<IUP::Vbox|IUP::Vbox>, and contains two L<IUP::Button|IUP::Button>.
 
- $spin = IUP::Spin->new(void);
- iup.spin{} -> (elem: ihandle) [in Lua]
- spin() [in LED]
+ $spin = IUP::Spin->new();
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% txt.new_attr %]
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
-
-L<IUP::Spinbox|IUP::Spinbox> is an horizontal container that already contains a
-L<IUP::Spin|IUP::Spin>.
-
- $spinbox = IUP::Spinbox->new(Ihandle* child);
- iup.spinbox{child: ihandle} -> (elem: ihandle) [in Lua]
- spinbox(child)  [in LED]
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
-
-B<child>: Identifier of an interface element which will receive the
-spinbox around.
 
 [% h.cb %]
 
@@ -58,18 +44,10 @@ Called each time the user clicks in the buttons. It will
 increment 1 and decrement -1 by default. Holding the Shift key will set
 a factor of 2, holding Ctrl a factor of 10, and both a factor of 100.
 
- int function(Ihandle *ih, int inc); [in C]
- elem:spin_cb(inc: number) -> (ret: number) [in Lua]
-
-=over
-
-=back
-
-[% h.notes %]
-
-The spinbox can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or
-L<IUP::Insert|IUP::Insert>.
+ sub spin_cb_handler {
+   my ($self, $inc) = @_;
+   #...
+ }
 
 [% h.examples %]
 

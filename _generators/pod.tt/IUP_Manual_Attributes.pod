@@ -181,7 +181,7 @@ values corresponding to the horizontal and vertical offsets, respectively, in pi
 [% h.at_affects %] All elements that are containers, except menus.
 
 [% h.at_see %] L<SIZE|/SIZE>, L<RASTERSIZE|/RASTERSIZE>,
-L<CLIENTSIZE|/CLIENTSIZE>, L< POSITION|iup_position.html>
+L<CLIENTSIZE|/CLIENTSIZE>, L<POSITION|iup_position.html>
 
 =item B<CLIENTSIZE> (read-only**, non inheritable)
 
@@ -268,8 +268,8 @@ L<IUP::HBox|IUP::HBox>
 
 =item B<FONT>
 
-Character font of the text shown in the element. See L<
-FONT|iup_font2.html> definition up to IUP 2.x. Although it is an
+Character font of the text shown in the element. See L<FONT|XXX.html>
+definition up to IUP 2.x. Although it is an
 inheritable attribute, it is defined only on elements that have a
 native representation.
 
@@ -286,8 +286,8 @@ stylesE<gt> E<lt>font sizeE<gt>".
 Font family can be a list of fonts face names, but this is only
 accepted in GTK. So the font family can be reduced to font face.
 
-The supported font style is a combination of: B<Bold>, B<Italic>, B<
-Underline> and B<Strikeout>. The Pango format include many other
+The supported font style is a combination of: B<Bold>, B<Italic>,
+B<Underline> and B<Strikeout>. The Pango format include many other
 definitions not supported by the common format, they are supported only
 by the GTK driver. Unsupported values are simply ignored.
 
@@ -480,7 +480,7 @@ occupied by other controls although its size will be limited.
 
 See the L<[%m.dlg%]|[%m.dlg%]> for mode details on sizes.
 
-[% h.at_see %] L<RASTERSIZE|/RASTERSIZE>, L< MINSIZE|iup_minsize.html>
+[% h.at_see %] L<RASTERSIZE|/RASTERSIZE>, L<MINSIZE|iup_minsize.html>
 
 =item B<MINSIZE> (non inheritable)
 
@@ -512,7 +512,7 @@ occupied by other controls although its size will be limited.
 
 See the L<[%m.dlg%]|[%m.dlg%]> for mode details on sizes.
 
-[% h.at_see %] L<RASTERSIZE|/RASTERSIZE>, L< MAXSIZE|iup_maxsize.html>
+[% h.at_see %] L<RASTERSIZE|/RASTERSIZE>, L<MAXSIZE|iup_maxsize.html>
 
 =item B<NAME> (non inheritable)
 
@@ -1267,7 +1267,7 @@ automatically hidden. See the attribute XAUTOHIDE.
 The same is valid for YMIN, YMAX, DY and POSY. But remember that the Y
 axis is oriented from top to bottom in IUP. So if you want to consider
 YMIN and YMAX as bottom-up oriented, then the actual YPOS must be
-obtained using B< YMAX-DY-POSY>.
+obtained using B<YMAX-DY-POSY>.
 
 Important: the LINE*, *MAX and *MIN are only updated in the scrollbar
 when the respective D* is updated.
@@ -1494,7 +1494,7 @@ Simulates a mouse button press or release at the given coordinates. The
 position is in absolute coordinates relative to the upper left corner
 of the screen. Accept values in the format "XB<x>Y button state" (in C
 "%dx%d %c %d"), example "200x200 1 1". B<button> can be one of the
-IUP_BUTTON1,... definitions. B< state> can be 1=pressed, or 0=released.
+IUP_BUTTON1,... definitions. B<state> can be 1=pressed, or 0=released.
 The cursor position is always updated. (since GTK 2.8)
 
 =item B<SHIFTKEY> (read-only)

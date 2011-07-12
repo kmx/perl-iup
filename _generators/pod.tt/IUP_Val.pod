@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -19,14 +19,11 @@ known as Scale or Trackbar in native systems.
 
 [% h.create %]
 
- $val = IUP::Val->new(const char *orientation);
-
-B<orientation>: optional orientation of valuator. Can be NULL. See
-ORIENTATION attribute.
-
-[% txt.new_attr %]
+ $val = IUP::Val->new( ORIENTATION=>"VERTICAL" );
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 [% h.at %]
 
@@ -36,12 +33,12 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =item * L<BGCOLOR|[%m.at%]/BGCOLOR>
 
-transparent in all systems
+Transparent in all systems
 except in Motif. It will use the background color of the native parent.
 
 =item * B<CANFOCUS> (creation only) (non inheritable)
 
-enables the focus
+Enables the focus
 traversal of the control. In Windows the control will still get the
 focus when clicked. Default: YES. 
 
@@ -73,11 +70,10 @@ not the size of the increment. The increment size is
 
 =item * L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
 
-The
-initial size is 100 pixels along the major axis, and the handler normal
+The initial size is 100 pixels along the major axis, and the handler normal
 size on the minor axis. If there are ticks then they are added to the
 natural size on the minor axis. The handler can be smaller than the
-normal size. Set to NULL to allow the automatic layout use smaller
+normal size. Set to C<undef> to allow the automatic layout use smaller
 values.
 
 =item * B<SHOWTICKS> [Windows and Motif Only]
@@ -102,14 +98,14 @@ NORMAL. The normal position for horizontal orientation is at the top of
 the control, and for vertical orientation is at the left of the
 control. In Motif, the ticks position is always normal. 
 
-=item * B<ORIENTATION >(non inheritable)
+=item * B<ORIENTATION> (non inheritable)
 
 Informs whether the valuator is
 "VERTICAL" or "HORIZONTAL". Vertical valuators are bottom to up, and
 horizontal valuators are left to right variations of min to max (but
 can be inverted using INVERTED). Default: "HORIZONTAL".
 
-=item * B<VALUE >(non inheritable)
+=item * B<VALUE> (non inheritable)
 
 Contains a number between MIN and MAX,
 indicating the valuator position. Default: "0.0".
@@ -130,8 +126,6 @@ L<TIP|[%m.at%]/TIP>, L<SIZE|[%m.at%]/SIZE>,
 L<ZORDER|[%m.at%]/ZORDER>,
 L<VISIBLE|[%m.at%]/VISIBLE>
 
-also accepted.
-
 =back
 
 [% h.cb %]
@@ -142,14 +136,16 @@ also accepted.
 
 =item * B<VALUECHANGED_CB>
 
-Called after the value was interactively changed by
-the user.
+Called after the value was interactively changed by the user.
 
- int function(Ihandle *ih); [in C]elem:valuechanged_cb() -> (ret: number) [in Lua]
+ sub valuechanged_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_Val) that activated the event
+B<$self:> reference to the element (IUP::Val) that activated the event
 
 =back
 
@@ -186,64 +182,26 @@ when the control loses its focus.
 This is the default mapping when INVERTED has the default value, or
 ORIENTATION=HORIZONTAL+INVERTED=NO.
 
-Keys
-
-Action for HORIZONTAL
-
-Right Arrow
-
-move right, increment by one step
-
-Left Arrow
-
-move left, decrement by one step
-
-Ctrl+Right Arrow or PgDn
-
-move right, increment by one page step
-
-Ctrl+Left Arrow or PgUp
-
-move left, decrement by one page step
-
-Home
-
-move all left, set to minimum
-
-End
-
-move all right, set to maximum
+ Keys                       Action for HORIZONTAL
+ ------------------------------------------------------------
+ Right Arrow                move right, increment by one step
+ Left Arrow                 move left, decrement by one step
+ Ctrl+Right Arrow or PgDn   move right, increment by one page step
+ Ctrl+Left Arrow or PgUp    move left, decrement by one page step
+ Home                       move all left, set to minimum
+ End                        move all right, set to maximum
 
 This is the default mapping when INVERTED has the default value, or
 ORIENTATION=VERTICAL+INVERTED=YES.
 
-Keys
-
-Action for VERTICAL
-
-Up Arrow
-
-move up, increment by one step
-
-Down Arrow
-
-move down, decrement by one step
-
-Ctrl+Up Arrow or PgUp
-
-move up, increment by one page step
-
-Ctrl+Down Arrow or PgDn
-
-move down, decrement by one page step
-
-Home
-
-move all up, set to maximum
-
-End
-
-move all down, set to minimum
+ Keys                       Action for VERTICAL
+ ------------------------------------------------------------
+ Up Arrow                   move up, increment by one step
+ Down Arrow                 move down, decrement by one step
+ Ctrl+Up Arrow or PgUp      move up, increment by one page step
+ Ctrl+Down Arrow or PgDn    move down, decrement by one page step
+ Home                       move all up, set to maximum
+ End                        move all down, set to minimum
 
 Visually all the keys move to the same direction independent from the
 INVERTED attribute.
@@ -277,5 +235,4 @@ Unfortunately there are no sample scripts using this element.
 The original doc: L<iupval.html|[%url.iuporigdoc%]elem/iupval.html>
 [%END%] 
 
-=cut
 =cut

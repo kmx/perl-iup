@@ -59,7 +59,7 @@ Dial layout configuration "VERTICAL", "HORIZONTAL" or "CIRCULAR". Default:
 Unit of the angle. Can be "DEGREES" or "RADIANS". Default is
 "RADIANS". Used only in the callbacks.
 
-=item * B<VALUE >(non inheritable)
+=item * B<VALUE> (non inheritable)
 
 The dial angular value in radians. The
 value is reset to zero when the interaction is started, except for

@@ -32,8 +32,8 @@ B<width>: Image width in pixels.
 
 B<height>: Image height in pixels.
 
-B<pixels>: Vector containing the value of each pixel. B< IUP::Image> uses
-1 value per pixel, L<IUP::ImageRGB|IUP::ImageRGB> uses 3 values and B< IUP::ImageRGBA>
+B<pixels>: Vector containing the value of each pixel. B<IUP::Image> uses
+1 value per pixel, L<IUP::ImageRGB|IUP::ImageRGB> uses 3 values and B<IUP::ImageRGBA>
 uses 4 values per pixel. Each value is always 8 bit. Origin is at the
 top-left corner and data is oriented top to bottom, and left to right.
 The pixels array is duplicated internally so you can discard it after
@@ -95,19 +95,19 @@ Used only for images created with L<IUP::Image|IUP::Image>.
 The color used for transparency. If not defined uses the
 BGCOLOR of the control that contains the image.
 
-=item * B<BPP >(read-only)
+=item * B<BPP> (read-only)
 
 returns the number of bits per pixel in the image.
 Images created with L<IUP::Image|IUP::Image> returns 8, with L<IUP::ImageRGB|IUP::ImageRGB> returns
 24 and with L<IUP::ImageRGBA|IUP::ImageRGBA> returns 32. 
 
-=item * B<CHANNELS >(read-only)
+=item * B<CHANNELS> (read-only)
 
 returns the number of channels in the image.
 Images created with L<IUP::Image|IUP::Image> returns 1, with L<IUP::ImageRGB|IUP::ImageRGB> returns
 3 and with L<IUP::ImageRGBA|IUP::ImageRGBA> returns 4. 
 
-=item * B<HEIGHT >(read-only)
+=item * B<HEIGHT> (read-only)
 
 Image height in pixels.
 
@@ -118,17 +118,17 @@ the mouse-click spot. Its value is given by the x and y coordinates
 inside a cursor image. Its value has the format "x:y", where x and y
 are integers defining the coordinates in pixels. Default: "0:0".
 
-=item * B<RASTERSIZE >(read-only)
+=item * B<RASTERSIZE> (read-only)
 
 returns the image size in pixels. (since
 3.0)
 
-=item * B<WID >(read-only)
+=item * B<WID> (read-only)
 
 returns the internal pixels data pointer. (since
 3.0)
 
-=item * B<WIDTH >(read-only)
+=item * B<WIDTH> (read-only)
 
 Image width in pixels.
 
@@ -148,14 +148,12 @@ in use, i.e the controls where it is used should be destroyed first.
 Images that were associated with controls by names are automatically
 destroyed in IUP::Close.
 
-Please observe the rules for creating cursor images: L<
-CURSOR|../attrib/iup_cursor.html>.
+Please observe the rules for creating cursor images: L<CURSOR|[%m.at%]/CURSOR>.
 
 =head2 Usage
 
 Images are used in elements such as buttons and labels by attributes
-that points to names registered with L<
-IUP::SetHandle|../func/iupsethandle.html>. You can also use
+that points to names registered with L<IUP::SetHandle>. You can also use
 L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to shortcut the set of an image as an
 attribute. For example:
 
@@ -185,7 +183,7 @@ the X-Windows bitmap. For example:
  IUP::SetAttribute(label, "IMAGE", "../etc/tecgraf.bmp");
 
 A more format independent approach can be reached using the L<IUP-IM
-Functions|../iupim.html>.
+Functions|xxx.html>.
 
 =head2 Colors
 
@@ -193,7 +191,7 @@ In Motif, the alpha channel in RGBA images is composed with the control
 BGCOLOR by IUP prior to setting the image at the control. In Windows
 and in GTK, the alpha channel is composed internally by the system. But
 in Windows for some controls the alpha must be composed prior also, it
-includes: B< IUP::Item> and L<IUP::Submenu|IUP::Submenu> always; and B< IUP::Toggle> when
+includes: B<IUP::Item> and L<IUP::Submenu|IUP::Submenu> always; and B<IUP::Toggle> when
 NOT using Visual Styles. This implies that if the control background is
 not uniform then probably there will be a visible difference where it
 should be transparent.
@@ -226,11 +224,10 @@ i=16 up to i=100 must be defined even if some indices are not used.
 
 =head2 Samples
 
-You can obtain several images from the L<
-IUP::ImageLib|../iupimglib.html>, a library of pre-defined images. To
+You can obtain several images from the L<IUP::ImageLib::XXX|xxx.html>, a library of pre-defined images. To
 view the images you can use the L<IUP::View|IUP::View> in the applications included
-in the distribution, available at the L<Download|../download.html>. B<
-IUP::View> is also capable of converting several image formats into an
+in the distribution, available at the L<Download|xxx.html>.
+B<IUP::View> is also capable of converting several image formats into an
 IUP::Image, and save IUP images as LED, Lua or ICO.
 
 The L<EdPatt|http://www.tecgraf.puc-rio.br/edpatt> and the

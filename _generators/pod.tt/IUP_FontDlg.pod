@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -52,7 +52,7 @@ of the parent dialog.
 =item * B<STATUS> (read-only)
 
 Defined to "1" if the user pressed the Ok
-button, NULL if pressed the Cancel button.
+button, C<undef> if pressed the Cancel button.
 
 =item * L<TITLE|[%m.at%]/TITLE>
 

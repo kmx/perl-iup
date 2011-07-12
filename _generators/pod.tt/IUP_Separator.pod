@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -13,18 +13,16 @@ menu items.
 
 [% h.create %]
 
- $separator = IUP::Separator->new(void);
- iup.separator{} -> (elem: ihandle) [in Lua]
- separator() [in LED]
+ $separator = IUP::Separator->new();
 
-[% txt.new_attr %]
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
+[% txt.new_attr %]
+
 [% h.notes %]
 
-The separator is ignored when it is part of the definition of the items
-in a bar menu.
+The separator is ignored when it is part of the definition of the items in a bar menu.
 
 [% h.examples %]
 
@@ -44,8 +42,7 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-L<IUP::Item|IUP::Item>, L<IUP::SubMenu|IUP::SubMenu>,
-L<IUP::Menu|IUP::Menu>.
+L<IUP::Item|IUP::Item>, L<IUP::SubMenu|IUP::SubMenu>, L<IUP::Menu|IUP::Menu>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupseparator.html|[%url.iuporigdoc%]elem/iupseparator.html>

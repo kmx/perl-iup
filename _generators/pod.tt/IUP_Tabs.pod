@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -21,17 +21,13 @@ systems.
 
 [% h.create %]
 
- $tabs = IUP::Tabs->new(Ihandle* child, ...);
- $tabsv = IUP::Tabsv->new(Ihandle** children);
- iup.tabs{child, ...: ihandle} -> (elem: ihandle) [in Lua]
- tabs(child, ...) [in LED]
+ $tabs = IUP::Tabs->new( child=>[$elem1,$elem2], EXPAND=>'YES' );
 
-B<child, ... >: List of the elements that will be placed in the box.
-NULL must be used to define the end of the list in C. It can be empty.
-
-[% txt.new_attr %]
+B<child:> (named parameter) List of the elements that will be placed in the box.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 [% h.at %]
 
@@ -48,18 +44,16 @@ background. Default: the global attribute DLGBGCOLOR.
 
 =item * B<COUNT> (read-only) (non inheritable)
 
-returns the number of tabs.
+Returns the number of tabs.
 Same value returned by L<IUP::GetChildCount|IUP::GetChildCount>. (since iup-3.3)
 
 =item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
 
-The default
-value is "YES".
+The default value is "YES".
 
 =item * L<FGCOLOR|[%m.at%]/FGCOLOR>
 
-Tabs title color. Default: the
-global attribute DLGFGCOLOR.
+Tabs title color. Default: the global attribute DLGFGCOLOR.
 
 =item * B<MULTILINE> [Windows Only] (non inheritable)
 
@@ -70,10 +64,10 @@ enabled when TABTYPE=LEFT or TABTYPE=RIGHT.
 
 =item * B<PADDING> (non inheritable)
 
-internal margin of the tab title. Works
+Internal margin of the tab title. Works
 just like the MARGIN attribute of the IUP::Hbox and IUP::Vbox containers,
-but uses a different name to avoid inheritance problems. Default value:
-"0x0". 
+but uses a different name to avoid inheritance problems.
+Default value: "0x0". 
 
 =item * L<SIZE|[%m.at%]/SIZE> (non inheritable)
 
@@ -81,24 +75,26 @@ The default size is
 the smallest size that fits its largest child. All child elements are
 considered even invisible ones.
 
-=item * B<TABIMAGEn >(non inheritable)
+=item * B<< TABIMAGE<n> >>(non inheritable)
 
-image name to be used in the respective
-tab. Use L< IUP::SetHandle|../func/iupsethandle.html> or
-=item * L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
-associate an image to a name. n starts at 0. See also
-L<IUP::Image|IUP::Image>. In Motif, the image is shown only if
-B<TABTITLEn> is NULL. In Windows and Motif set the BGCOLOR attribute
+E<lt>nE<gt> starts at 0. 
+
+Image name to be used in the respective tab.
+Use L<IUP::SetHandle> or L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+associate an image to a name. XXX-check-this
+
+See also L<IUP::Image|IUP::Image>. In Motif, the image is shown only if
+B<< TABTITLE<n> >> is C<undef>. In Windows and Motif set the BGCOLOR attribute
 before setting the image. 
 
-B<TABORIENTATION >(non inheritable)
+=item * B<TABORIENTATION> (non inheritable)
 
 Indicates the orientation of tab
 text, which can be "HORIZONTAL" or "VERTICAL". Default is "HORIZONTAL".
 VERTICAL is supported only in GTK and in Windows. In Windows, VERTICAL
 is only supported when TABTYPE=LEFT or TABTYPE=RIGHT. (GTK 2.6)
 
-=item * B<TABTITLEn >(non inheritable)
+=item * B<< TABTITLE<n> >> (non inheritable)
 
 Contains the text to be shown in the
 respective tab title. n starts at 0. If this value is NULL, it will
@@ -108,13 +104,12 @@ instead on defining a mnemonic. The button can be activated from any
 control in the dialog using the "Alt+key" combination. (mnemonic
 support since iup-3.3) 
 
-=item * B<TABTITLE >(non inheritable) B<(at children)>
+=item * B<TABTITLE> (non inheritable, at children)
 
-Same as B<TABTITLEn>
-but set in each child. Works only before the child is added to the
-tabs. Deprecated, use B< TABTITLEn>.
+Same as B<< TABTITLE<n> >> but set in each child. 
+Works only before the child is added to the tabs. Deprecated, use B<< TABTITLE<n> >>.
 
-=item * B<TABTYPE >(non inheritable) (creation only in Windows)
+=item * B<TABTYPE> (non inheritable, creation only in Windows)
 
 Indicates the
 type of tab, which can be "TOP", "BOTTOM", "LEFT" or "RIGHT". Default
@@ -122,13 +117,12 @@ is "TOP". In Windows, if LEFT or RIGHT, then MULTILINE=YES and
 TABORIENTATIONB<=>VERTICAL always. In Windows, when not TOP, then
 visual style is removed from tabs.
 
-=item * B<VALUE >(non inheritable)
+=item * B<VALUE> (non inheritable)
 
 Changes the active tab by its name. The
 value passed must be the name of one of the elements contained in the
-tabs. Use L< IUP::SetHandle|../func/iupsethandle.html> or L<
-IUP::SetAttributeHandle|../func/iupsetattributehandle.html> to associate
-a child to a name. In Lua you can also use the element reference
+tabs. Use L<IUP::SetHandle> or L<IUP::SetAttributeHandle> to associate
+a child to a name. In Lua (XXX-check-this-for-perl) you can also use the element reference
 directly.
 
 =item * B<VALUE_HANDLE> (non inheritable)
@@ -138,7 +132,7 @@ handle. The value passed must be the handle of a child contained in the
 tabs. When the tabs is created, the first element inserted is set as
 the visible child. 
 
-=item * B<VALUEPOS >(non inheritable)
+=item * B<VALUEPOS> (non inheritable)
 
 Changes the active tab by its position,
 starting at 0. When the tabs is created, the first element inserted is
@@ -163,8 +157,6 @@ L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
 L<ZORDER|[%m.at%]/ZORDER>,
 L<VISIBLE|[%m.at%]/VISIBLE>
 
-also accepted.
-
 =back
 
 [% h.cb %]
@@ -177,16 +169,18 @@ also accepted.
 
 Callback called when the user shifts the active tab.
 
- int function(Ihandle* ih, Ihandle* new_tab, Ihandle* old_tab); [in C]
- elem:tabchange_cb(new_tab, old_tab: ihandle) -> (ret: number) [in Lua]
+ sub tabchange_cb_handler {
+   my ($self, $new_tab, $old_tab) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_Tabs) that activated the event
+B<$self:> reference to the element (IUP::Tabs) that activated the event
 
-=item * B<new_tab> - the new tab selected by the user
+B<$new_tab:> the new tab selected by the user
 
-=item * B<old_tab> - the previously selected tab
+B<$old_tab:> the previously selected tab
 
 =back
 
@@ -195,16 +189,18 @@ B<$self:> reference to the element (IUP::XXXIUP_Tabs) that activated the event
 Callback called when the user shifts the active
 tab. Called only when TABCHANGE_CB is not defined. (since iup-3.3)
 
- int function(Ihandle* ih, int new_pos, int old_pos); [in C]
- elem:tabchange_cb(new_pos, old_pos: number) -> (ret: number) [in Lua]
+ sub tabchangepos_cb_handler {
+   my ($self, $new_tab, $old_tab) = @_;
+   #...
+ }
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_Tabs) that activated the event
+B<$self:> reference to the element (IUP::Tabs) that activated the event
 
-=item * B<new_pos> - the new tab position selected by the user
+B<$new_pos:> the new tab position selected by the user
 
-=item * B<old_pos> - the previously selected tab position
+B<$old_pos:> the previously selected tab position
 
 =back
 
@@ -246,17 +242,13 @@ TABCHANGE_CB callback.
 
 These functions can be used to set and get attributes from the element:
 
- void  IUP::SetAttributeId(Ihandle *ih, const char* name, int id, const char* value);
- void  IUP::StoreAttributeId(Ihandle *ih, const char* name, int id, const char* value);
- char* IUP::GetAttributeId(Ihandle *ih, const char* name, int id);
- int   IUP::GetIntId(Ihandle *ih, const char* name, int id);
- float IUP::GetFloatId(Ihandle *ih, const char* name, int id);
- void  IUP::SetfAttributeId(Ihandle *ih, const char* name, int id, const char* format, ...);
+ $elem->SetAttributeId($name, $id, $value);
+ $elem->GetAttributeId($name, $id);
 
 They work just like the respective traditional set and get functions.
 But the attribute string is complemented with the id value. For ex:
 
- IUP::SetAttributeId(ih, "TABTITLE", 3, value) == IUP::SetAttribute(ih, "TABTITLE3", value)
+ $elem->SetAttributeId("TABTITLE", 3, $value) ~~ $elem->SetAttribute("TABTITLE3", $value)
 
 But these functions are faster than the traditional functions because
 they do not need to parse the attribute name string and the application

@@ -404,7 +404,7 @@ callback B<K_ANY> is processed.
 [%txt.cb_ih%]
 
 B<$c:> identifier of typed key. Please refer to the L<Keyboard
-Codes|../attrib/key.html> table for a list of possible values.
+Codes|xxx.html> table for a list of possible values.
 
 B<$press:> 1 is the user pressed the key or 0 otherwise. xxxotherwise means what?
 
@@ -447,7 +447,7 @@ Action generated when a keyboard event occurs.
 [%txt.cb_ih%]
 
 B<$c:> identifier of typed key. Please refer to the L<Keyboard
-Codes|../attrib/key.html> table for a list of possible values.
+Codes|xxx.html> table for a list of possible values.
 
 B<Returns:> If IUP_IGNORE is returned the key is ignored and not processed
 by the control and not propagated. If returns IUP_CONTINUE, the key

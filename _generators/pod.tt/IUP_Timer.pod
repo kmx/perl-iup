@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -7,16 +7,13 @@
 [% h.desc %]
 
 Creates a timer which periodicaly invokes a callback when the time is
-up. Each timer should be destroyed using
-L<IUP::Destroy|IUP::Destroy>.
+up. Each timer should be destroyed using L<IUP::Destroy|IUP::Destroy> (XXX-more-perlish C<undef $timer>).
 
 [% h.usage %]
 
 [% h.create %]
 
- $timer = IUP::Timer->new(void);
- iup.timer{} -> (elem: ihandle) [in Lua] 
- timer() [in LED]
+ $timer = IUP::Timer->new();
 
 [% txt.new_attr %]
 
@@ -56,14 +53,14 @@ Returns -1 if not running. A timer is mapped only when it is running.
 
 Called when the time is up.
 
- int function(Ihandle *ih); [in C]
- elem:action_cb() -> (ret: number) [in Lua]
+ sub action_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 =over
 
-=over
-
-B<$self:> reference to the element (IUP::XXXIUP_Timer) that activated the event
+B<$self:> reference to the element (IUP::Timer) that activated the event
 
 B<Returns:> IUP_CLOSE will be processed.
 

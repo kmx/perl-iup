@@ -495,8 +495,7 @@ is not a table then it is a leaf and only defines the leaf title. When
 B<leafname> or B<branchname> are used you can also define other node
 attributes: B<color>, B<state>, B<titlefont>, B<marked>, B<image> and
 B<imageexpanded>; without specifying the node id. You can also use
-B<userid> to associate an userdata or table just like in B<
-iup.TreeSetUserId>. 
+B<userid> to associate an userdata or table just like in B<iup.TreeSetUserId>. 
 
  iup.TreeSetNodeAttributes(ih: ihandle, id: number, attrs: table) [in Lua]
 

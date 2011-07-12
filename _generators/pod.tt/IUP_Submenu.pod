@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -18,18 +18,13 @@ Creates a menu item that, when selected, opens another menu.
 
 [% h.create %]
 
- $submenu = IUP::Submenu->new(const char *title, Ihandle *menu);
- iup.submenu{menu: ihandle[; title = title: string]} -> (elem: ihandle) [in Lua]
- submenu(title, menu) [in LED]
+ $submenu = IUP::Submenu->new( TITLE=>"Name", child=>$menu_element );
 
-B<title>: String containing the text to be shown on the item. It can be
-NULL. It will set the TITLE attribute.
-
-B<menu>: optional child menu identifier. Can be NULL.
-
-[% txt.new_attr %]
+B<child:> (named parameter) optional child menu reference. Can be C<undef> or ommited.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 [% h.at %]
 
@@ -44,13 +39,6 @@ submenu image. In Windows, an item in a menu bar cannot have a check
 mark. Ignored if submenu in a menu bar. A recommended size would be
 16x16 to fit the image in the menu item. In Windows, if larger than the
 check mark area it will be cropped. 
-
-=item * L<KEY|[%m.at%]/KEY> (non inheritable)
-
-Underlines a key
-character in the submenu title. It is updated only when TITLE is
-updated. B<Deprecated>, use the mnemonic support directly in the TITLE
-attribute.
 
 =item * L<TITLE|[%m.at%]/TITLE> (non inheritable)
 
@@ -73,8 +61,6 @@ child menu is mapped.
 
 =item * L<ACTIVE|[%m.at%]/ACTIVE>
 
-also accepted.
-
 =back
 
 [% h.cb %]
@@ -85,15 +71,15 @@ also accepted.
 
 =item * L<HIGHLIGHT_CB|[%m.cb%]/HIGHLIGHT_CB>
 
-Action generated when
-the submenu is highlighted.
-
-----
+Action generated when the submenu is highlighted.
 
 =back
 
-=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
-L<UNMAP_CB|[%m.cb%]/UNMAP_CB>
+[%txt.cb_common%]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>, L<UNMAP_CB|[%m.cb%]/UNMAP_CB>
 
 =back
 
@@ -120,8 +106,7 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-L<IUP::Item|IUP::Item>, L<IUP::Separator|IUP::Separator>,
-L<IUP::Menu|IUP::Menu>.
+L<IUP::Item|IUP::Item>, L<IUP::Separator|IUP::Separator>, L<IUP::Menu|IUP::Menu>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupsubmenu.html|[%url.iuporigdoc%]elem/iupsubmenu.html>

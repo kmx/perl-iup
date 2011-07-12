@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -13,19 +13,11 @@ generates an action.
 
 [% h.create %]
 
- $item = IUP::Item->new(const char *title, const char *action);
- iup.item{[title = title: string]} -> elem: ihandle [in Lua]
- item(title, action) [in LED]
-
-B<title>: Text to be shown on the item. It can be NULL. It will set the
-TITLE attribute.
-
-B<action>: Name of the action generated when the item is selected. It
-can be NULL.
-
-[% txt.new_attr %]
+ $item = IUP::Item->new( TITLE=>"Item text" );
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 [% h.at %]
 
@@ -35,15 +27,8 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =item * B<AUTOTOGGLE> (non inheritable)
 
-enables the automatic toggle of VALUE
+Enables the automatic toggle of VALUE
 state when the item is activated. Default: NO. 
-
-=item * L<KEY|[%m.at%]/KEY> (non inheritable)
-
-Underlines a key
-character in the submenu title. It is updated only when TITLE is
-updated. B<Deprecated >, use the mnemonic support directly
-in the TITLE attribute.
 
 =item * B<HIDEMARK> [Motif and GTK Only]
 
@@ -104,8 +89,7 @@ checkmark is not shown. See the item AUTOTOGGLE attribute and the menu
 
 L<WID|[%m.at%]/WID> (non inheritable)
 
-In Windows, returns
-the HMENU of the parent menu.
+In Windows, returns the HMENU of the parent menu.
 
 =back
 
@@ -114,8 +98,6 @@ the HMENU of the parent menu.
 =over
 
 =item * L<ACTIVE|[%m.at%]/ACTIVE>
-
-also accepted.
 
 =back
 
@@ -132,16 +114,15 @@ selected. IUP_CLOSE will be processed. Even if inside a popup menu when
 IUP_CLOSE is returned, the current popup dialog or the main loop will
 be closed.
 
-=back
-
 =item * L<HIGHLIGHT_CB|[%m.cb%]/HIGHLIGHT_CB>
 
-Action generated when
-the item is highlighted.
-
-----
+Action generated when the item is highlighted.
 
 =back
+
+[%txt.cb_common%]
+
+=over
 
 =item * L<MAP_CB|[%m.cb%]/MAP_CB>,
 L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,

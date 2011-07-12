@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -15,18 +15,21 @@ Ihandle* to store private attributes.
 
 [% h.create %]
 
- $user = IUP::User->new(void);
- iup.user{} -> (elem: ihandle) [in Lua]
- user() [in LED]
-
-[% txt.new_attr %]
+ $user = IUP::User->new();
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
+[% txt.new_attr %]
+
 [% h.at %]
 
-B<CLEARATTRIBUTES> (write-only, non inheritable): it will clear all
-attributes stored internally and remove all references. 
+=over
+
+=item * B<CLEARATTRIBUTES> (write-only, non inheritable)
+
+It will clear all attributes stored internally and remove all references. 
+
+=back
 
 [% h.examples %]
 

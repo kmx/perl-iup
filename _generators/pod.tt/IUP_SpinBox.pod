@@ -1,45 +1,23 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
 [% n.iupspin %]
 
-[% h.desc %] and IUP::SpinBox
+[% h.desc %]
 
-This functions will create a control set with a vertical box containing
-two buttons, one with an up arrow and the other with a down arrow, to
-be used to increment and decrement values.
-
-Unlike the SPIN attribute of the L<IUP::Text|IUP::Text> element, the L<IUP::Spin|IUP::Spin>
-element can NOT automatically increment the value and it is NOT
-inserted inside the L<IUP::Text|IUP::Text> area.
+L<IUP::Spinbox|IUP::Spinbox> is an horizontal container that already contains a L<IUP::Spin|IUP::Spin>.
 
 [% h.usage %]
 
 [% h.create %]
 
-L<IUP::Spin|IUP::Spin> inherits from a L<IUP::Vbox|IUP::Vbox>, and contains two L<IUP::Button|IUP::Button>.
+ $spinbox = IUP::Spinbox->new( child=>$element );
 
- $spin = IUP::Spin->new(void);
- iup.spin{} -> (elem: ihandle) [in Lua]
- spin() [in LED]
-
-[% txt.new_attr %]
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
-
-L<IUP::Spinbox|IUP::Spinbox> is an horizontal container that already contains a
-L<IUP::Spin|IUP::Spin>.
-
- $spinbox = IUP::Spinbox->new(Ihandle* child);
- iup.spinbox{child: ihandle} -> (elem: ihandle) [in Lua]
- spinbox(child)  [in LED]
+B<child:> Identifier of an interface element which will receive the spinbox around.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 occurs.
-
-B<child>: Identifier of an interface element which will receive the
-spinbox around.
 
 [% h.cb %]
 
@@ -47,24 +25,16 @@ spinbox around.
 
 =over
 
-=item * B<SPIN_CB>
+=item * L<SPIN_CB|IUP::Spin/SPIN_CB>
 
-Called each time the user clicks in the buttons. It will
-increment 1 and decrement -1 by default. Holding the Shift key will set
-a factor of 2, holding Ctrl a factor of 10, and both a factor of 100.
-
- int function(Ihandle *ih, int inc); [in C]
- elem:spin_cb(inc: number) -> (ret: number) [in Lua]
-
-=over
+See L<IUP::Spin|IUP::Spin/SPIN_CB>.
 
 =back
 
 [% h.notes %]
 
-The spinbox can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or
-L<IUP::Insert|IUP::Insert>.
+The L<IUP::SpinBox> can be created with no elements and be dynamic filled using
+L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
 
 [% h.examples %]
 

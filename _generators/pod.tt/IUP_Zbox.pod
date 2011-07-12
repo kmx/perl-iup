@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -20,25 +20,28 @@ Zbox will NOT change its state.
 
 [% h.create %]
 
- $zbox = IUP::Zbox->new(Ihandle *child, ...);
- $zboxv = IUP::Zboxv->new(Ihandle **children);
- iup.zbox{child, ... : ihandle} -> (elem: ihandle) [in Lua]
- zbox(child, ...) [in LED]
+ #standard way
+ my $zbox = IUP::Zbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'XXX' );
+ 
+ #or with just a single child
+ my $zbox = IUP::Zbox->new( child=>$elem, ANYATTRIBUTE=>'XXX' );
+ 
+ #or with just 1 parameter (arrayref)
+ my $zbox = IUP::Zbox->new( [$elem1, $elem2] );
+ 
+ #or with just 1 parameter (reference to child elements)
+ my $zbox = IUP::Zbox->new( $elem );
 
-B<child, ... >: List of the elements that will be placed in the box.
-NULL must be used to define the end of the list in C. It can be empty.
+B<child:> (named parameter) List of the references to elements (or just a single element) that
+will be placed in the box. Can be C<undef>.
 
-=over
-
-B<IMPORTANT>: in C, each element must have a name defined by
-L<IUP::SetHandle|IUP::SetHandle>. In Lua a name is always
+B<IMPORTANT>: Each element must have a name defined by
+L<IUP::SetHandle|IUP::SetHandle>. In perl a name is always
 automatically created, but you can change it later.
 
-=back
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% txt.new_attr %]
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% h.at %]
 
@@ -51,21 +54,17 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 Defines the alignment of the visible
 child. Possible values:
 
-"NORTH", "SOUTH", "WEST", "EAST",
-
-"NE", "SE", "NW", "SW",
-
-"ACENTER".
+ "NORTH", "SOUTH", "WEST", "EAST",
+ "NE", "SE", "NW", "SW",
+ "ACENTER".
 
 Default: "NW".
 
 =item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
 
-The default
-value is "YES".
+The default value is "YES".
 
-=item * L<FLOATING|[%m.at%]/FLOATING> (non inheritable) B<(at
-children only)>
+=item * L<FLOATING|[%m.at%]/FLOATING> (non inheritable, at children only)
 
 If a child has FLOATING=YES then its size and position
 will be ignored by the layout processing. Default: "NO". 
@@ -75,7 +74,7 @@ will be ignored by the layout processing. Default: "NO".
 The visible child accessed by its name. The
 value passed must be the name of one of the children contained in the
 zbox. Use L<IUP::SetHandle|IUP::SetHandle> or
-=item * L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
 associate a child to a name. In Lua you can also use the element
 reference directly. When the value is changed the selected child is
 made visible and all other children are made invisible, regardless
@@ -95,17 +94,15 @@ position. The value passed must be the index of a child contained in
 the zbox, starting at 0. When the zbox is created, the first element
 inserted is set as the visible child. 
 
-=item * L<SIZE|[%m.at%]/SIZE> /
-L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
+=item * L<SIZE|[%m.at%]/SIZE> / L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
 
-The
-default size is the smallest size that fits its largest child. All
+The default size is the smallest size that fits its largest child. All
 child elements are considered even invisible ones, except when
 FLOATING=YES in a child.
 
 =item * B<WID> (read-only)
 
-returns -1 if mapped.
+Returns -1 if mapped.
 
 =back
 
@@ -120,15 +117,12 @@ L<POSITION|[%m.at%]/POSITION>,
 L<MINSIZE|[%m.at%]/MINSIZE>,
 L<MAXSIZE|[%m.at%]/MAXSIZE>
 
-also accepted.
-
 =back
 
 [% h.notes %]
 
 The box can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or
-L<IUP::Insert|IUP::Insert>.
+L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
 
 [% h.examples %]
 

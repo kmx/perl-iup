@@ -135,7 +135,7 @@ are quite different. See some examples bellow.
 
 =end html
 
-The IUP sizes (B<User>, B<Natural> and B< Current>) described bellow
+The IUP sizes (B<User>, B<Natural> and B<Current>) described bellow
 are all related to the B<Window> size.
 
 The native B<Client> size is used only internally to reposition the
@@ -325,7 +325,7 @@ The layout of the elements of a dialog in IUP has a natural hierarchy
 because of the way they are composed together.
 
 To create a node simply call one of the pre-defined constructors like
-B< IUP::Label>, L<IUP::Button|IUP::Button>, L<IUP::Canvas|IUP::Canvas>, and so on. To create a branch
+B<IUP::Label>, L<IUP::Button|IUP::Button>, L<IUP::Canvas|IUP::Canvas>, and so on. To create a branch
 just call the constructors of containers like L<IUP::Dialog|IUP::Dialog>,
 L<IUP::Frame|IUP::Frame>, L<IUP::VBox|IUP::VBox>, and so on. Internally they all call
 L<IUP::Create|IUP::Create> to create branches or nodes. To
@@ -349,7 +349,7 @@ From B<created> to B<mapped> it is performed one step at a time. Even
 when the constructor receives the children as a parameter L<IUP::Append|IUP::Append>
 is called internally. When you B<detach> an element it will be
 automatically B<unmapped> if necessary. When you B<destroy> an element
-it will be automatically B< detached> if necessary. So explicity or
+it will be automatically B<detached> if necessary. So explicity or
 implicity there will be a call to:
 
  IUP::Create  -> IUP::Append -> IUP::Map
@@ -362,8 +362,7 @@ The dialog is the root of the hierarchy tree. To retrieve the dialog of
 any element you can simply call L<IUP::GetDialog|IUP::GetDialog>,
 but there are other ways to navigate in the hierarchy tree.
 
-To get all the children of a container call L<
-IUP::GetChild|func/iupgetchild.html> or
+To get all the children of a container call L<IUP::GetChild> or
 L<IUP::GetNextChild|IUP::GetNextChild>. To get just the next
 control with the same parent use
 L<IUP::GetBrother|IUP::GetBrother>. To get the parent of a

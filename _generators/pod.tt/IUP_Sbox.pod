@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -10,7 +10,7 @@ Creates a void container that allows its child to be resized. Allows
 expanding and contracting the child B<size> in one direction.
 
 It does not have a native representation but it contains also a
-L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
+L<IUP::Canvas|IUP::Canvas> to implement the bar handler. XXX-check-this
 
 =begin HTML
 
@@ -22,16 +22,25 @@ L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
 
 [% h.create %]
 
- $sbox = IUP::Sbox->new(Ihandle* child);
- iup.sbox{child: ihandle} -> (elem: ihandle) [in Lua]
- sbox(child) [in LED]
+ #standard way
+ my $sbox = IUP::Sbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'XXX' );
+ 
+ #or with just a single child
+ my $sbox = IUP::Sbox->new( child=>$elem, ANYATTRIBUTE=>'XXX' );
+ 
+ #or with just 1 parameter (arrayref)
+ my $sbox = IUP::Sbox->new( [$elem1, $elem2] );
+ 
+ #or with just 1 parameter (reference to child elements)
+ my $sbox = IUP::Sbox->new( $elem ); 
+ 
 
-B<child>: Identifier of an interface element which will receive the
-box. It can be NULL.
-
-[% txt.new_attr %]
+B<child:> (named parameter) List of the references to elements (or just a single element) that 
+will receive the box. It can be C<undef> or ommited. 
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 [% h.at %]
 
@@ -53,12 +62,11 @@ the position of the bar handler. Possible values are "NORTH", "SOUTH"
 
 =item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
 
-It will expand
-automatically only in the direction opposite to the handler.
+It will expand automatically only in the direction opposite to the handler.
 
 =item * B<WID> (read-only)
 
-returns -1 if mapped.
+Returns -1 if mapped.
 
 =back
 
@@ -74,8 +82,6 @@ L<POSITION|[%m.at%]/POSITION>,
 L<MINSIZE|[%m.at%]/MINSIZE>,
 L<MAXSIZE|[%m.at%]/MAXSIZE>
 
-also accepted.
-
 =back
 
 [% h.notes %]
@@ -83,10 +89,10 @@ also accepted.
 The controls that you want to be resized must have the EXPAND=YES
 attribute set. The control inside the sbox will not be resized with a
 size lesser than its B<Natural> size. See the L<Layout
-Guide|../layout_guide.html> for mode details on sizes.
+Guide|xxx.html> for mode details on sizes.
 
 The L<IUP::Canvas|IUP::Canvas> bar handler is always the first child of the sbox. It
-can be obtained using L<IUP::GetChild|IUP::GetChild> or B< IUP::GetNextChild>.
+can be obtained using L<IUP::GetChild|IUP::GetChild> or B<IUP::GetNextChild>.
 
 L<IUP::Sbox|IUP::Sbox> can be resized above the maximum size so some controls go to
 outside the dialog area at right or bottom. In fact this is part of the
@@ -95,8 +101,7 @@ the L<IUP::Refresh|IUP::Refresh> function. The IUP layout does not have a maximu
 limit only a minimum, except if you use the MAXSIZE common attribute.
 
 The box can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or
-L<IUP::Insert|IUP::Insert>.
+L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
 
 [% h.examples %]
 
@@ -113,6 +118,8 @@ The element B<IUP::Sbox> is used in the following sample scripts:
 Unfortunately there are no sample scripts using this element.
 
 [%END%]
+
+[% h.see %]
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupsbox.html|[%url.iuporigdoc%]elem/iupsbox.html>

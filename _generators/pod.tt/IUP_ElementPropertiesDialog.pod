@@ -1,0 +1,79 @@
+=for comment based on iup-3.5
+
+[% h.name %]
+
+[% n.iupelementpropertiesdialog %]
+
+[% h.desc %]
+
+Creates an Element Properties Dialog. It is a predefined dialog to edit
+the properties of an element in run time. It is a standard L<IUP::Dialog|IUP::Dialog>
+constructed with other IUP elements. The dialog can be shown with any
+of the show functions L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup>.
+
+Any existent element can be edited. It does not need to be mapped on
+the native system nor visible.
+
+This is a dialog intended for developers, so they can see and inspect
+their elements in other ways.
+
+It contains 3 Tab sections: one for the registered attributes of the
+element, one for custom attributes set at the hash table, and one for
+the callbacks. The callbacks are just for inspection, and custom
+attribute should be handled carefully because they may be not strings.
+Registered attributes values are shown in red when they were changed by
+the application.
+
+[% h.usage %]
+
+[% h.create %]
+
+ $propdialog = IUP::ElementPropertiesDialog( $element );
+ #or
+ $propdialog = IUP::ElementPropertiesDialog( element=>$element );
+
+B<$element>: identifier of the element to display the properties. Not optional.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+Check the L<IUP::Dialog|IUP::Dialog/"ATTRIBUTES"> attributes.
+
+[% h.cb %]
+
+[%txt.cb_intro%]
+
+Check the L<IUP::Dialog|IUP::Dialog/"CALLBACKS"> callbacks.
+
+[% h.examples %]
+
+[% IF examples.iupelementpropertiesdialog %]
+The element B<IUP::ElementPropertiesDialog> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupelementpropertiesdialog %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
+
+[% h.see %]
+
+L<IUP::Dialog|IUP::Dialog>, L<IUP::Show>,
+L<IUP::ShowXY|IUP::ShowXY>, L<IUP::Popup|IUP::Popup>,
+L<IUP::LayoutDialog|IUP::LayoutDialog>
+
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupelementpropertiesdialog.html|[%url.iuporigdoc%]dlg/iupelementpropertiesdialog.html>
+[%END%] 
+
+=cut

@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -20,11 +20,9 @@ around an interface element.
 [% h.create %]
 
  $frame = IUP::Frame->new(Ihandle *child);
- iup.frame{child: ihandle} -> (elem: ihandle) [in Lua]
- frame(child) [in LED]
 
 B<child>: Identifier of an interface element which will receive the
-frame around. It can be NULL.
+frame around. It can be C<undef>.
 
 [% txt.new_attr %]
 
@@ -84,8 +82,6 @@ L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
 L<ZORDER|[%m.at%]/ZORDER>,
 L<VISIBLE|[%m.at%]/VISIBLE>
 
-also accepted.
-
 =back
 
 [% h.cb %]
@@ -94,23 +90,23 @@ also accepted.
 
 =over
 
-=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
-L<UNMAP_CB|[%m.cb%]/UNMAP_CB>
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>
+
+=item * L<UNMAP_CB|[%m.cb%]/UNMAP_CB>
 
 =back
 
 [% h.notes %]
 
-In Windows, a Frame with TITLE==NULL is not the same control as then
-TITLE!=NULL. When TITLE==NULL it does not have Visual Styles and uses a
-sharp rectangle border. When TITLE!=NULL it has Visual Styles and the
+In Windows, a Frame with C<TITLE==undef> is not the same control as then
+C<TITLE!=undef>. When C<TITLE==undef> it does not have Visual Styles and uses a
+sharp rectangle border. When C<TITLE!=undef> it has Visual Styles and the
 border is a rounded rectangle. To always use Visual Styles set the
 title to "" before mapping, but be aware that a vertical space for the
 title will be always reserved at the top border.
 
 The frame can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or
-L<IUP::Insert|IUP::Insert>.
+L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
 
 [% h.examples %]
 

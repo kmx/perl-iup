@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -24,19 +24,17 @@ L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
 
 [% h.create %]
 
- $split = IUP::Split->new(Ihandle* child1, Ihandle* child2);
- iup.split{child1, child2: ihandle} -> (elem: ihandle) [in Lua]
- split(child1, child2) [in LED]
+ $split = IUP::Split->new($child1, $child2);
 
-B<child1>: Identifier of an interface element that will be at left or
-top. It can be NULL.
+B<$child1:> Identifier of an interface element that will be at left or
+top. It can be C<undef>.
 
-B<child2>: Identifier of an interface element that will be at right or
-bottom. It can be NULL.
-
-[% txt.new_attr %]
+B<$child2:> Identifier of an interface element that will be at right or
+bottom. It can be C<undef>.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 [% h.at %]
 
@@ -46,13 +44,12 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =item * B<AUTOHIDE> (non inheritable)
 
-if the child client area is smaller than
+If the child client area is smaller than
 the bar size, then automatically hide the child. Default: NO.
 
 =item * B<BARSIZE> (non inheritable)
 
-controls the size of the bar handler.
-Default: 5.
+Controls the size of the bar handler. Default: 5.
 
 =item * B<COLOR>
 
@@ -68,8 +65,7 @@ orientation. Possible values are "VERTICAL" or "HORIZONTAL". Default:
 
 =item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
 
-The default
-value is "YES".
+The default value is "YES".
 
 =item * B<LAYOUTDRAG> (non inheritable)
 
@@ -79,7 +75,7 @@ will be updated only when the mouse drag is released.
 
 =item * B<MINMAX> (non inheritable)
 
-sets minimum and maximum crop values for
+Sets minimum and maximum crop values for
 VALUE, in the format "%d:%d" [min:max]. The min value can not be less
 than 0, and the max value can not be larger than 1000. This will
 constrain the interactive change of the bar handler. Default: "0:1000".
@@ -94,12 +90,12 @@ YES. When set to NO, the BARSIZE is changed from 5 to 3.
 
 The proportion of the left or top (child1)
 client area relative to the full available area. It is an integer
-between 0 and 1000. If not defined or set to NULL, the Native size of
+between 0 and 1000. If not defined or set to C<undef>, the Native size of
 the two children will define its initial size.
 
 =item * B<WID> (read-only)
 
-returns -1 if mapped.
+Returns -1 if mapped.
 
 =back
 
@@ -115,8 +111,6 @@ L<POSITION|[%m.at%]/POSITION>,
 L<MINSIZE|[%m.at%]/MINSIZE>,
 L<MAXSIZE|[%m.at%]/MAXSIZE>
 
-also accepted.
-
 =back
 
 [% h.notes %]
@@ -124,14 +118,14 @@ also accepted.
 The controls that you want to be resized must have the EXPAND=YES
 attribute set. The control inside the split will not be resized with a
 size lesser than its B<Natural> size. See the L<Layout
-Guide|../layout_guide.html> for mode details on sizes.
+Guide|xxx> for mode details on sizes.
 
 L<IUP::Split|IUP::Split> is not capable of detecting a child minimum size, so if a
 child has a minimum size, then manually set the B<MINMAX> attribute to
 avoid invalid positioning of the L<IUP::Split|IUP::Split> bar.
 
 The L<IUP::Canvas|IUP::Canvas> bar handler is always the first child of the split. It
-can be obtained using L<IUP::GetChild|IUP::GetChild> or B< IUP::GetNextChild>.
+can be obtained using L<IUP::GetChild|IUP::GetChild> or B<IUP::GetNextChild>.
 
 The L<IUP::Split|IUP::Split> control looks just like the L<IUP::Sbox|IUP::Sbox>, but internally
 is very different. While sbox controls only one element and can push
@@ -139,8 +133,7 @@ other elements outside the dialog, split balance its internal size and
 never push other elements outside its boundaries.
 
 The container can be created with no elements and be dynamic filled
-using L<IUP::Append|IUP::Append> or
-L<IUP::Insert|IUP::Insert>.
+using L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
 
 [% h.examples %]
 

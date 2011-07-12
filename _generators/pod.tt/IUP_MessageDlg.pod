@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -20,13 +20,11 @@ function only.
 
 [% h.create %]
 
- $messagedlg = IUP::MessageDlg->new(void);
- iup.messagedlg{} -> (elem: ihandle) [in Lua]
- messagedlg() [in LED]
-
-[% txt.new_attr %]
+ $messagedlg = IUP::MessageDlg->new( BUTTONS=>"OKCANCEL" );
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 [% h.at %]
 
@@ -60,8 +58,7 @@ or "INFORMATION" (Letter "i"). Default: "MESSAGE".
 
 =item * L<PARENTDIALOG|[%m.at%]/PARENTDIALOG> (creation only)
 
-Name
-of a dialog to be used as parent. This dialog will be always in front
+Name of a dialog to be used as parent. This dialog will be always in front
 of the parent dialog. If not defined in Motif the dialog could not be
 modal.
 
@@ -83,8 +80,7 @@ Message text.
 
 =item * L<HELP_CB|[%m.cb%]/HELP_CB>
 
-Action generated when the Help
-button is pressed.
+Action generated when the Help button is pressed.
 
 =back
 
@@ -93,7 +89,7 @@ button is pressed.
 The L<IUP::MessageDlg|IUP::MessageDlg> is a native pre-defined dialog not altered by
 L<IUP::SetLanguage|IUP::SetLanguage>.
 
-To show the dialog, use function L<IUP::Popup|IUP::Popup>. In Lua, use the B<popup>
+To show the dialog, use function L<IUP::Popup|IUP::Popup>.
 function.
 
 The dialog is mapped only inside L<IUP::Popup|IUP::Popup>, L<IUP::Map|IUP::Map> does nothing.
@@ -103,11 +99,9 @@ dialog is always centered on screen.
 
 The L<IUP::Message|IUP::Message> function simply creates and popup a L<IUP::MessageDlg|IUP::MessageDlg>.
 
-In Windows each different dialog type is always associated with a
-different beep sound.
+In Windows each different dialog type is always associated with a different beep sound.
 
-In Windows, if PARENTDIALOG is specified then it will be modal relative
-only to its parent.
+In Windows, if PARENTDIALOG is specified then it will be modal relative only to its parent.
 
 [% h.examples %]
 

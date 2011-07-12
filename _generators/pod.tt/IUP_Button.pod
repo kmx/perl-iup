@@ -216,7 +216,7 @@ For more details see L<generic description of BUTTON_CB|Manual::Attributes/BUTTO
 
 =back
 
-The following L<common callbacks|Manual::Callbacks/Common Callbacks> are also accepted:
+[%txt.cb_common%]
 
 =over
 

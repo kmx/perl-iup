@@ -8,11 +8,7 @@
 
 Creates a matrix of alphanumeric fields. Therefore, all values of the
 matrixs fields are strings. The matrix is not a grid container like
-many systems have. It inherits from
-L<IUP::Canvas|IUP::Canvas>.
-
-This is an additional control that depends on the CD library. It is
-included in the L<Controls Library|../iupcontrols.html>.
+many systems have. It inherits from L<IUP::Canvas|IUP::Canvas> XXX-check-this.
 
 It has two modes of operation: normal and callback mode. In normal
 mode, string values are stored in attributes for each cell. In callback
@@ -30,15 +26,11 @@ defines the mode the matrix will operate.
 
 [% h.create %]
 
- $matrix = IUP::Matrix->new(char *action_cb);
- iup.matrix{} -> (elem: ihandle) [in Lua]
- matrix(action_cb) [in LED]
+ $matrix = IUP::Matrix->new();
 
-B<action_cb>: Name of the action generated when the user types
-something.
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
-Returns the identifier of the created matrix, or NULL if an error
-occurs.
+[% txt.new_attr %]
 
 [% h.at %]
 

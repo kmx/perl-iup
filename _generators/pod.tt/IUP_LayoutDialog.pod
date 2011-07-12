@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -12,8 +12,7 @@ constructed with other IUP elements. The dialog can be shown with any
 of the show functions L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup>.
 
 Any existent dialog can be selected. It does not need to be mapped on
-the native system nor visible. It could have been created in C, LED or
-Lua.
+the native system nor visible.
 
 The layout dialog is composed by two areas: one showing the given
 dialog children hierarchy tree, and one displaying its layout.
@@ -31,15 +30,15 @@ their dialogs in other ways.
 
 [% h.create %]
 
- $layoutdialog = IUP::LayoutDialog->new(Ihandle* dialog);
- iup.LayoutDialog(dialog: ihandle) -> (elem: ihandle) [in Lua]
- [NOT available in LED]
+ $layoutdialog = IUP::LayoutDialog->new($dialog);
+ #or
+ $layoutdialog = IUP::LayoutDialog->new( dialog=>$dialog );
 
-B<dialog>: identifier of the dialog to display the layout. Can be NULL.
-
-[% txt.new_attr %]
+B<$dialog>: reference to dialog (L<IUP::Dialog>) to display the layout. Can be C<undef>.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 [% h.at %]
 
@@ -52,20 +51,15 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 The dialog will be automatically destroyed when
 closed. Default: Yes.
 
-Check the L<IUP::Dialog|IUP::Dialog> attributes.
-
 =back
+
+Check the L<IUP::Dialog|IUP::Dialog/"ATTRIBUTES"> attributes.
 
 [% h.cb %]
 
 [%txt.cb_intro%]
 
-=over
-
-
-Check the L<IUP::Dialog|IUP::Dialog> callbacks.
-
-=back
+Check the L<IUP::Dialog|IUP::Dialog/"CALLBACKS"> callbacks.
 
 [% h.notes %]
 
@@ -178,7 +172,7 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-L<IUP::Dialog|IUP::Dialog>, L< IUP::Show|../func/iupshow.html>,
+L<IUP::Dialog|IUP::Dialog>, L<Show|[%m.elem%]/"Show()">,
 L<IUP::ShowXY|IUP::ShowXY>, L<IUP::Popup|IUP::Popup>
 
 [%IF flags.gennerate_origdoc -%]
