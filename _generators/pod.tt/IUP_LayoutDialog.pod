@@ -156,7 +156,19 @@ L<IUP::ElementPropertiesDialog|IUP::ElementPropertiesDialog>.
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iuplayoutdialog %]
+The element B<IUP::LayoutDialog> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iuplayoutdialog %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 

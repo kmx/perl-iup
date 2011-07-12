@@ -601,7 +601,19 @@ paste
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iuptext %]
+The element B<IUP::Text> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iuptext %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 

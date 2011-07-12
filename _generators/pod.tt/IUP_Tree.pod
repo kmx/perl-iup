@@ -554,6 +554,18 @@ for the IUP::Tree with some limitations.
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iuptree %]
+The element B<IUP::Tree> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iuptree %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 =cut

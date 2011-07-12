@@ -251,6 +251,18 @@ systems.
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iupval %]
+The element B<IUP::Val> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupval %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 =cut

@@ -82,7 +82,19 @@ parents, it changes the B<User> size of the elements.
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iupnormalizer %]
+The element B<IUP::Normalizer> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupnormalizer %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 

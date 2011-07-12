@@ -231,7 +231,19 @@ L<IUP::Frame|IUP::Frame> that has a title.
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iuptoggle %]
+The element B<IUP::Toggle> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iuptoggle %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 

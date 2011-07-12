@@ -98,7 +98,19 @@ when the menu is mapped.
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iupsubmenu %]
+The element B<IUP::Submenu> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupsubmenu %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 

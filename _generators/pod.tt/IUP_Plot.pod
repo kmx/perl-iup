@@ -667,7 +667,19 @@ L<K_ANY|[%m.cb%]/K_ANY>, L<HELP_CB|[%m.cb%]/HELP_CB>
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iupplot %]
+The element B<IUP::Plot> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupplot %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 

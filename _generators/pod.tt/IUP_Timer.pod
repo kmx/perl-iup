@@ -73,6 +73,18 @@ B<Returns:> IUP_CLOSE will be processed.
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iuptimer %]
+The element B<IUP::Timer> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iuptimer %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 =cut

@@ -68,7 +68,19 @@ L<IUP::Insert|IUP::Insert>.
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iupspinbox %]
+The element B<IUP::SpinBox> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupspinbox %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 

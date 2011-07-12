@@ -145,7 +145,19 @@ and there must be room in the box parent.
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iuphbox %]
+The element B<IUP::Hbox> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iuphbox %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 

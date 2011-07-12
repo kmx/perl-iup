@@ -28,7 +28,19 @@ in a bar menu.
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iupseparator %]
+The element B<IUP::Separator> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupseparator %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 

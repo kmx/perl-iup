@@ -348,7 +348,19 @@ values in Lua, except as an userdata using the WID attribute.
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iupimage %]
+The element B<IUP::Image> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupimage %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
 

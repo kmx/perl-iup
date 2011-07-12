@@ -30,6 +30,18 @@ attributes stored internally and remove all references.
 
 [% h.examples %]
 
-XXX-EX-XXX
+[% IF examples.iupuser %]
+The element B<IUP::User> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupuser %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 =cut
