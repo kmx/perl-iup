@@ -272,4 +272,8 @@ Unfortunately there are no sample scripts using this element.
 
 [%END%]
 
+[% h.see %]
+
+XXX-ODOC-XXX
+
 =cut

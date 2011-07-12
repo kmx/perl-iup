@@ -195,3 +195,7 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::GetColor|IUP::GetColor>,
 L<IUP::ColorDlg|IUP::ColorDlg>
+
+XXX-ODOC-XXX
+
+=cut

@@ -685,4 +685,6 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::Canvas|IUP::Canvas>
 
+XXX-ODOC-XXX
+
 =cut

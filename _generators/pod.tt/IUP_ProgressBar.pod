@@ -124,4 +124,6 @@ Unfortunately there are no sample scripts using this element.
 
 [%END%]
 
+XXX-ODOC-XXX
+
 =cut

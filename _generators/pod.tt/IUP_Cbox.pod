@@ -112,4 +112,6 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::Vbox|IUP::Vbox>, L<IUP::Hbox|IUP::Hbox>
 
+XXX-ODOC-XXX
+
 =cut

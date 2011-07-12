@@ -193,4 +193,6 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::Image|IUP::Image>, L<IUP::Button|IUP::Button>.
 
+XXX-ODOC-XXX
+
 =cut

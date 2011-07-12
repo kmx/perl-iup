@@ -163,4 +163,6 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::Zbox|IUP::Zbox>, L<IUP::VBox|IUP::VBox>
 
+XXX-ODOC-XXX
+
 =cut

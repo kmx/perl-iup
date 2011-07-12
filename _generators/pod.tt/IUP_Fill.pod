@@ -80,3 +80,7 @@ Unfortunately there are no sample scripts using this element.
 [% h.see %]
 
 L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>
+
+XXX-ODOC-XXX
+
+=cut

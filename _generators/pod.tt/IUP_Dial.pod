@@ -215,3 +215,7 @@ Unfortunately there are no sample scripts using this element.
 [% h.see %]
 
 L<IUP::Canvas|IUP::Canvas>
+
+XXX-ODOC-XXX
+
+=cut

@@ -560,4 +560,6 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::ListDialog|IUP::ListDialog>, L< IUP::text|iuptext.html>
 
+XXX-ODOC-XXX
+
 =cut

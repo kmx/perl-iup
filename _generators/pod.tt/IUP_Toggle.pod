@@ -250,4 +250,6 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::Image|IUP::Image>, L<IUP::Button|IUP::Button>,
 L<IUP::Label|IUP::Label>, L<IUP::Radio|IUP::Radio>.
 
+XXX-ODOC-XXX
+
 =cut

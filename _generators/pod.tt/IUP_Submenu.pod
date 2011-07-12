@@ -117,4 +117,6 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::Item|IUP::Item>, L<IUP::Separator|IUP::Separator>,
 L<IUP::Menu|IUP::Menu>.
 
+XXX-ODOC-XXX
+
 =cut

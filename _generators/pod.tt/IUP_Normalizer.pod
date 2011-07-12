@@ -100,4 +100,6 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::Hbox|IUP::Hbox>, L< IUP::Vbox|../elem/iupvbox.html>
 
+XXX-ODOC-XXX
+
 =cut

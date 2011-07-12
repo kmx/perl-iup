@@ -619,4 +619,6 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::List|IUP::List>, L<IUP::MultiLine|IUP::MultiLine>
 
+XXX-ODOC-XXX
+
 =cut
