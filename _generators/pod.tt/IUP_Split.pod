@@ -4,7 +4,7 @@
 
 [% n.iupsplit %]
 
-[% h.desc %] (since iup-3.1)
+[% h.desc %]
 
 Creates a void container that split its client area in two. Allows the
 provided controls to be enclosed in a box that allows expanding and
@@ -13,6 +13,12 @@ expanded the other is contracted.
 
 It does not have a native representation, but it contains also a
 L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
+
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
 
 [% h.usage %]
 

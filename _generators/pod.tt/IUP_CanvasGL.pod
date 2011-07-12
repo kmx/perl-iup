@@ -71,8 +71,6 @@ all B<creation only> attributes and must be set before the element is
 mapped on the native system. After the mapping, specifying these
 special attributes has no effect.
 
-[%txt.at_common%]
-
 =over
 
 =item * B<ACCUM_RED_SIZE>, B<ACCUM_GREEN_SIZE>, B<ACCUM_BLUE_SIZE> and B<ACCUM_ALPHA_SIZE>

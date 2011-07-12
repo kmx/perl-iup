@@ -9,6 +9,12 @@
 Creates a Frame interface element, which draws a frame with a title
 around an interface element.
 
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

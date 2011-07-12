@@ -8,6 +8,13 @@
 
 Creates an editable text field.
 
+=begin HTML
+
+[% html.iupX_X_X_SMALL1 %]
+[% html.iupX_X_X_SMALL2 %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

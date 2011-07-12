@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -8,13 +8,20 @@
 
 Creates the File Dialog element. It is a predefined dialog for
 selecting files or a directory. The dialog can be shown with the
-IUP::Popup function only.
+L<Popup|[%m.elem%]/"Popup()"> function only.
+
+=begin HTML
+
+[% html.iupfiledlg %]
+
+=end HTML
+
 
 [% h.usage %]
 
 [% h.create %]
 
- $filedlg = IUP::FileDlg->new();
+ $filedlg = IUP::FileDlg->new( DIALOGTYPE=>"OPEN" );
 
 [% txt.new_attr %]
 
@@ -176,15 +183,9 @@ OpenGL functions. No IUP::Canvas attributes or callbacks are available.
 
 Indicates the status of the selection made:
 
-=over
-
-=item "1": New file.
-
-=item "0": Normal, existing file or directory.
-
-=item "-1": Operation cancelled.
-
-=back
+ "1"   New file.
+ "0"   Normal, existing file or directory.
+ "-1"  Operation cancelled.
 
 =item * B<L<TITLE|[%m.at%]/TITLE>>
 
@@ -192,7 +193,7 @@ Dialog's title.
 
 =item * B<VALUE> (read-only)
 
-Name of the selected file(s), or NULL if no file
+Name of the selected file(s), or C<undef> if no file
 was selected. If FILE is not defined this is used as the initial value.
 In Windows there is a limit of 32Kb for this string.
 
@@ -217,7 +218,7 @@ Can be used with SHOWPREVIEW=NO also. (Windows only in 2.x)
 
 =over
 
-B<$self:> reference to the element (IUP::XXXIUP_FileDlg) that activated the event
+B<$self:> reference to the element (IUP::FileDlg) that activated the event
 
 B<$file_name:> name of the file selected.
 
@@ -225,13 +226,13 @@ B<$status:> describes the action. Can be:
 
 =over
 
-=item * "INIT" - when the dialog has started. file_name is NULL.
+=item * "INIT" - when the dialog has started. $file_name is C<undef>.
 
-=item * "FINISH" - when the dialog is closed. file_name is NULL.
+=item * "FINISH" - when the dialog is closed. $file_name is C<undef>.
 
 =item * "SELECT" - a file has been selected.
 
-=item * "OTHER" - an invalid file or a directory is selected. file_name
+=item * "OTHER" - an invalid file or a directory is selected. $file_name
 is the one selected. (Since iup-3.0)
 
 =item * "OK" - the user pressed the OK button. If returns IUP_IGNORE
@@ -239,7 +240,7 @@ the action is refused and the dialog is not closed.
 
 =item * "PAINT" - the preview area must be redrawn. Used only when
 SHOWPREVIEW=YES. If an invalid file or a directory is selected,
-file_name is NULL.
+file_name is C<undef>.
 
 =back
 
@@ -287,12 +288,12 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-L<IUP::Message|IUP::Message>, L<IUP::Scanf|IUP::Scanf>,
-L<IUP::ListDialog|IUP::ListDialog>, L<IUP::Alarm|IUP::Alarm>,
-L<IUP::GetFile|IUP::GetFile>, L<IUP::Popup|IUP::Popup>
+L<Message|IUP/"Message()">, L<IUP|/"GetParam()">,
+L<ListDialog|IUP/"ListDialog()">, L<Alarm|IUP/"Alarm()">,
+L<GetFile|IUP/"GetFile()">, L<Popup|[%m.elem%]/"Popup()">
 
 [%IF flags.gennerate_origdoc -%]
-The original doc: L<iupfiledlg.html|[%url.iuporigdoc%]elem/iupfiledlg.html>
+The original doc: L<iupfiledlg.html|[%url.iuporigdoc%]dlg/iupfiledlg.html>
 [%END%] 
 
 =cut

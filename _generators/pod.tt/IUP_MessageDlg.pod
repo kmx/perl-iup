@@ -10,6 +10,12 @@ Creates the Message Dialog element. It is a predefined dialog for
 displaying a message. The dialog can be shown with the IUP::Popup
 function only.
 
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

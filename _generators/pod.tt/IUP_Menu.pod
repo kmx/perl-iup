@@ -10,6 +10,13 @@ Creates a menu element, which groups 3 types of interface elements:
 item, submenu and separator. Any other interface element defined inside
 a menu will be an error.
 
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+[% html.iupX_X_X_SMALL_fromsyntax %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

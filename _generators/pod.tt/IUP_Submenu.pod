@@ -8,6 +8,12 @@
 
 Creates a menu item that, when selected, opens another menu.
 
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

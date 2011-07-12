@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -135,7 +135,7 @@ Simply call L<IUP::Show|IUP::Show> or
 
 =over
 
-L<ACTIVE|[%m.at%]/ACTIVE>,
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
 L<BGCOLOR|[%m.at%]/BGCOLOR>, L<FONT|[%m.at%]/FONT>,
 L<EXPAND|[%m.at%]/EXPAND>,
 L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,

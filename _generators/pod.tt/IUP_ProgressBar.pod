@@ -9,8 +9,11 @@
 Creates a progress bar control. Shows a percent value that can be
 updated to simulate a progression.
 
-It is similar of L<IUP::Gauge|IUP::Gauge>, but uses native controls internally. Also
-does not have support for text inside the bar.
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
 
 [% h.usage %]
 

@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 [% h.name %]
 
@@ -17,7 +17,7 @@ It does not have a native representation.
 
 [% h.create %]
 
- $fill = IUP::Fill->new();
+ $fill = IUP::Fill->new( SIZE=>30 );
  
 [% txt.new_attr %]
 
@@ -35,8 +35,7 @@ Ignored. If B<User> size is not defined, then when inside a L<IUP::Hbox|IUP::Hbo
 HORIZONTAL, when inside a L<IUP::Vbox> EXPAND is VERTICAL. If B<User> size
 is defined then EXPAND is NO.
 
-L<SIZE|[%m.at%]/SIZE> /
-L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
+=item *  L<SIZE|[%m.at%]/SIZE> / L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
 
 Defines the width, if inside a L<IUP::Hbox|IUP::Hbox>, or the height, if it is inside a
 L<IUP::Vbox|IUP::Vbox>. When consulted behaves as the standard SIZE/RASTERSIZE
@@ -44,9 +43,9 @@ attributes. The standard format "wxh" can also be used, but width will
 be ignored if inside a L<IUP::Vbox |IUP::Vbox >and height will be ignored if inside
 a L<IUP::Hbox|IUP::Hbox> (since iup-3.3).
 
-B<WID> (read-only)
+=item * B<WID> (read-only)
 
-returns -1 if mapped.
+Returns -1 if mapped.
 
 =back
 

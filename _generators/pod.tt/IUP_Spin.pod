@@ -4,7 +4,7 @@
 
 [% n.iupspin %]
 
-[% h.desc %] and IUP::SpinBox
+[% h.desc %]
 
 This functions will create a control set with a vertical box containing
 two buttons, one with an up arrow and the other with a down arrow, to
@@ -13,6 +13,12 @@ be used to increment and decrement values.
 Unlike the SPIN attribute of the L<IUP::Text|IUP::Text> element, the L<IUP::Spin|IUP::Spin>
 element can NOT automatically increment the value and it is NOT
 inserted inside the L<IUP::Text|IUP::Text> area.
+
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
 
 [% h.usage %]
 

@@ -19,8 +19,11 @@ IUP::PPlot library includes the PPlot source code so no external
 references are needed. Also the standard PPlot distribution source code
 was changed to improve features and visual appearance.
 
-IUP::PPlot first implementation was written by Marian Trifon
-(mtrif@katamail.com), then completed and documented by the IUP team.
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
 
 =head2 Initialization and Usage
 

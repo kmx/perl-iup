@@ -9,6 +9,12 @@
 Creates a Valuator control. Selects a value in a limited interval. Also
 known as Scale or Trackbar in native systems.
 
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

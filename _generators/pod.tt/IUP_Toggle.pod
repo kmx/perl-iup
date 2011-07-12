@@ -11,6 +11,12 @@ that, when selected, generates an action that activates a function in
 the associated application. Its visual representation can contain a
 text or an image.
 
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

@@ -9,6 +9,12 @@
 Creates a label interface element, which displays a separator, a text
 or an image.
 
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

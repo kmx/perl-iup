@@ -20,6 +20,12 @@ mode these attributes are ignored and the cells are filled with strings
 returned by the "VALUE_CB" callback. So the existence of this callback
 defines the mode the matrix will operate.
 
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

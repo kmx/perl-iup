@@ -12,6 +12,12 @@ expanding and contracting the child B<size> in one direction.
 It does not have a native representation but it contains also a
 L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
 
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

@@ -11,6 +11,12 @@ can be visible or can be dropped down. It also can have an edit box for
 text input. So it is a 4 in 1 element. In native systems the dropped
 down case is called Combo Box.
 
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

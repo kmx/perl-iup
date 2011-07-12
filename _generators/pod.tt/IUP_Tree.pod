@@ -19,6 +19,12 @@ can only generate a "renamed" action.
 The focus node is the node with the focus rectangle, marked nodes have
 their background inverted.
 
+=begin HTML
+
+[% html.iupX_X_X_SMALL1 %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

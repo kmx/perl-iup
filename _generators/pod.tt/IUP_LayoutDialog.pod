@@ -21,6 +21,12 @@ dialog children hierarchy tree, and one displaying its layout.
 This is a dialog intended for developers, so they can see and inspect
 their dialogs in other ways.
 
+=begin HTML
+
+[% html.iupX_X_X_SMALL %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]
