@@ -7,7 +7,7 @@
 [% h.desc %] 
 
 Creates the Font Dialog element. It is a predefined dialog for
-selecting a font. The dialog can be shown with the L<IUP::Popup|IUP::Popup> function
+selecting a font. The dialog can be shown with the L<Popup|[%m.elem%]/"Popup()"> function
 only.
 
 =begin HTML
@@ -85,7 +85,7 @@ L<SetLanguage|IUP/"SetLanguage()">.
 
 To show the dialog, use function L<Popup|IUP/"Popup()">.
 
-The dialog is mapped only inside L<IUP::Popup|IUP::Popup>, L<IUP::Map|IUP::Map> does nothing.
+The dialog is mapped only inside L<Popup|[%m.elem%]/"Popup()">, L<Map|[%m.elem%]/"Map()"> does nothing.
 
 In Windows, the dialog will be modal relative only to its parent or to
 the active dialog.
@@ -109,7 +109,7 @@ Unfortunately there are no sample scripts using this element.
 [% h.see %]
 
 L<IUP::MessageDlg|IUP::MessageDlg>, L<IUP::FileDlg|IUP::FileDlg>,
-L<IUP::Popup|IUP::Popup>
+L<Popup|[%m.elem%]/"Popup()">
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupfontdlg.html|[%url.iuporigdoc%]elem/iupfontdlg.html>

@@ -45,7 +45,7 @@ background. Default: the global attribute DLGBGCOLOR.
 =item * B<COUNT> (read-only) (non inheritable)
 
 Returns the number of tabs.
-Same value returned by L<IUP::GetChildCount|IUP::GetChildCount>. (since iup-3.3)
+Same value returned by L<GetChildCount|[%m.elem%]/"GetChildCount()">. (since iup-3.3)
 
 =item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
 
@@ -80,7 +80,7 @@ considered even invisible ones.
 E<lt>nE<gt> starts at 0. 
 
 Image name to be used in the respective tab.
-Use L<IUP::SetHandle> or L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+Use L<SetName|[%m.elem%]/"SetName()"> or XXX-FIX_ME to
 associate an image to a name. XXX-check-this
 
 See also L<IUP::Image|IUP::Image>. In Motif, the image is shown only if
@@ -121,7 +121,7 @@ visual style is removed from tabs.
 
 Changes the active tab by its name. The
 value passed must be the name of one of the elements contained in the
-tabs. Use L<IUP::SetHandle> or L<IUP::SetAttributeHandle> to associate
+tabs. Use L<SetName|[%m.elem%]/"SetName()"> or XXX-FIX_ME to associate
 a child to a name. In Lua (XXX-check-this-for-perl) you can also use the element reference
 directly.
 
@@ -221,7 +221,7 @@ L<K_ANY|[%m.cb%]/K_ANY>, L<HELP_CB|[%m.cb%]/HELP_CB>
 [% h.notes %]
 
 The Tabs can be created with no children and be dynamic filled using
-L<IUP::Append|IUP::Append>.
+L<Append|[%m.elem%]/"Append()">.
 
 The ENTERWINDOW_CB and LEAVEWINDOW_CB callbacks are called only when
 the mouse enter or leaves the tabs buttons area.

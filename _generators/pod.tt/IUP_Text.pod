@@ -401,7 +401,7 @@ returned.
 =item * L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
 
 Action generated when any
-mouse button is pressed or released. Use L<IUP::ConvertXYToPos|IUP::ConvertXYToPos> to convert (x,y)
+mouse button is pressed or released. Use L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
 coordinates in character positioning. 
 
 =item * B<CARET_CB>
@@ -434,7 +434,7 @@ Action generated when one or more files are dropped in the element.
 =item * L<MOTION_CB|[%m.cb%]/MOTION_CB>
 
 Action generated when the
-mouse is moved. Use L<IUP::ConvertXYToPos|IUP::ConvertXYToPos>
+mouse is moved. Use L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()">
 to convert (x,y) coordinates in character positioning. 
 
 =item * B<SPIN_CB>

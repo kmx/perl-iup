@@ -143,7 +143,7 @@ Images created with the L<IUP::Image|IUP::Image>* constructors can be reused in
 different elements.
 
 The images should be destroyed when they are no longer necessary, by
-means of the L<IUP::Destroy|IUP::Destroy> function. To destroy an image, it cannot be
+means of the L<Destroy|[%m.elem%]/"Destroy()"> function. To destroy an image, it cannot be
 in use, i.e the controls where it is used should be destroyed first.
 Images that were associated with controls by names are automatically
 destroyed in IUP::Close.
@@ -153,8 +153,8 @@ Please observe the rules for creating cursor images: L<CURSOR|[%m.at%]/CURSOR>.
 =head2 Usage
 
 Images are used in elements such as buttons and labels by attributes
-that points to names registered with L<IUP::SetHandle>. You can also use
-L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to shortcut the set of an image as an
+that points to names registered with L<SetName|[%m.elem%]/"SetName()">. You can also use
+XXX-FIX_ME to shortcut the set of an image as an
 attribute. For example:
 
  Ihandle* image = IUP::Image(width, height, pixels);
@@ -362,7 +362,7 @@ Unfortunately there are no sample scripts using this element.
 [% h.see %]
 
 L<IUP::Label|IUP::Label>, L<IUP::Button|IUP::Button>,
-L<IUP::Toggle|IUP::Toggle>, L<IUP::Destroy|IUP::Destroy>.
+L<IUP::Toggle|IUP::Toggle>, L<Destroy|[%m.elem%]/"Destroy()">.
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupimage.html|[%url.iuporigdoc%]elem/iupimage.html>

@@ -34,7 +34,7 @@ See L<IUP::Spin|IUP::Spin/SPIN_CB>.
 [% h.notes %]
 
 The L<IUP::SpinBox> can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
+L<Append|[%m.elem%]/"Append()"> or L<Insert|[%m.elem%]/"Insert()">.
 
 [% h.examples %]
 

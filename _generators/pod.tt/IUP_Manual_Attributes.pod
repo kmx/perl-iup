@@ -517,7 +517,7 @@ See the L<[%m.dlg%]|[%m.dlg%]> for mode details on sizes.
 =item B<NAME> (non inheritable)
 
 Name of the control inside the dialog. Not releated to
-L<IUP::SetHandle|IUP::SetHandle>.
+L<SetName|[%m.elem%]/"SetName()">.
 
 [% h.at_value %] Text.
 
@@ -580,14 +580,14 @@ A B<User> size of "0x0" can be set, it can also be set using C<undef>.
 
 If you wish to use the B<User> size only as an initial size, change
 this attribute to C<undef> after the control is mapped, the returned size
-in L<IUP::GetAttribute|IUP::GetAttribute> will still be the B<Current> size.
+in L<GetAttribute|[%m.elem%]/"GetAttribute()"> will still be the B<Current> size.
 
 The element is NOT immediately repositioned. Call L<IUP::Refresh|IUP::Refresh> to
 update the dialog layout.
 
-L<IUP::Map|IUP::Map> also updates the dialog layout even if it is already mapped,
-so calling it or calling L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup>
-(they all call L<IUP::Map|IUP::Map>) will also update the dialog layout.
+L<Map|[%m.elem%]/"Map()"> also updates the dialog layout even if it is already mapped,
+so calling it or calling L<Show|[%m.elem%]/"Show()">, L<ShowXY|[%m.elem%]/"ShowXY()"> or L<Popup|[%m.elem%]/"Popup()">
+(they all call L<Map|[%m.elem%]/"Map()">) will also update the dialog layout.
 
 See the L<[%m.dlg%]|[%m.dlg%]> for mode details on sizes.
 
@@ -649,14 +649,14 @@ A B<User> size of "0x0" can be set, it can also be set using C<undef>.
 
 If you wish to use the B<User> size only as an initial size, change
 this attribute to C<undef> after the control is mapped, the returned size
-in L<IUP::GetAttribute|IUP::GetAttribute> will still be the B<Current> size.
+in L<GetAttribute|[%m.elem%]/"GetAttribute()"> will still be the B<Current> size.
 
 The element is NOT immediately repositioned. Call L<IUP::Refresh|IUP::Refresh> to
 update the dialog layout.
 
-L<IUP::Map|IUP::Map> also updates the dialog layout even if it is already mapped,
-so calling it or calling L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup>
-(they all call L<IUP::Map|IUP::Map>) will also update the dialog layout.
+L<Map|[%m.elem%]/"Map()"> also updates the dialog layout even if it is already mapped,
+so calling it or calling L<Show|[%m.elem%]/"Show()">, L<ShowXY|[%m.elem%]/"ShowXY()"> or L<Popup|[%m.elem%]/"Popup()">
+(they all call L<Map|[%m.elem%]/"Map()">) will also update the dialog layout.
 
 See the L<[%m.dlg%]|[%m.dlg%]> for mode details on sizes.
 
@@ -795,7 +795,7 @@ among the others in the designed composition. To change this attribute
 in such cases, different mechanisms are necessary according to the
 programming environment used. When the elements taking part in a
 composition were created in C, this attribute's contents is a name that
-must be defined by the L<IUP::SetHandle|IUP::SetHandle>
+must be defined by the L<SetName|[%m.elem%]/"SetName()">
 function. When the elements were created in Lua, this attribute's
 contents is the name of a variable - more precisely, the one receiving
 the return from the function that created the element you wish to
@@ -930,7 +930,7 @@ the value will be used as a cursor name, see the GDK documentation on
 Cursors.
 
 If no system cursors were found then the value will be used to try to
-find an IUP image with the same name. Use L<IUP::SetHandle|IUP::SetHandle> to define a
+find an IUP image with the same name. Use L<SetName|[%m.elem%]/"SetName()"> to define a
 name for an L<IUP::Image|IUP::Image>. But the image will need an extra attribute and
 some specific characteristics, see notes bellow.
 
@@ -953,7 +953,7 @@ The Windows SDK recommends that cursors and icons should be implemented
 as resources rather than created at run time.
 
 When the cursor image is no longer necessary, it must be destroyed
-through function L<IUP::Destroy|IUP::Destroy>. Attention: the
+through function L<Destroy|[%m.elem%]/"Destroy()">. Attention: the
 cursor cannot be in use when it is destroyed.
 
 [% h.at_affects %] L<IUP::Dialog|IUP::Dialog>, L<IUP::Canvas|IUP::Canvas>
@@ -1029,8 +1029,8 @@ On Motif, it only works with some window managers, like I<mwm> and
 I<gnome>. Icon colors can have the BGCOLOR values, but it works better
 if it is at index 0.
 
-Use L<IUP::SetHandle|IUP::SetHandle> or
-L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+Use L<SetName|[%m.elem%]/"SetName()"> or
+XXX-FIX_ME to
 associate an image to a name.
 
 [% h.at_affects %] L<IUP::Dialog|IUP::Dialog>
@@ -1190,8 +1190,8 @@ must be mapped before mapping the child dialog. If PARENTDIALOG is not
 defined then the NATIVEPARENT attribute is consulted. This one must be
 a native handle of an existing dialog.
 
-Use L<IUP::SetHandle|IUP::SetHandle> or
-L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+Use L<SetName|[%m.elem%]/"SetName()"> or
+XXX-FIX_ME to
 associate a dialog to a name.
 
 B<IMPORTANT>: When the parent is destroyed the child dialog is also

@@ -125,7 +125,7 @@ child has a minimum size, then manually set the B<MINMAX> attribute to
 avoid invalid positioning of the L<IUP::Split|IUP::Split> bar.
 
 The L<IUP::Canvas|IUP::Canvas> bar handler is always the first child of the split. It
-can be obtained using L<IUP::GetChild|IUP::GetChild> or B<IUP::GetNextChild>.
+can be obtained using L<GetChild|[%m.elem%]/"GetChild()"> or L<GetNextChild|[%m.elem%]/"GetNextChild()">.
 
 The L<IUP::Split|IUP::Split> control looks just like the L<IUP::Sbox|IUP::Sbox>, but internally
 is very different. While sbox controls only one element and can push
@@ -133,7 +133,7 @@ other elements outside the dialog, split balance its internal size and
 never push other elements outside its boundaries.
 
 The container can be created with no elements and be dynamic filled
-using L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
+using L<Append|[%m.elem%]/"Append()"> or L<Insert|[%m.elem%]/"Insert()">.
 
 [% h.examples %]
 

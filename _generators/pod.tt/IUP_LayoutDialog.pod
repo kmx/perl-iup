@@ -9,7 +9,7 @@
 Creates a Layout Dialog. It is a predefined dialog to visually edit the
 layout of another dialog in run time. It is a standard L<IUP::Dialog|IUP::Dialog>
 constructed with other IUP elements. The dialog can be shown with any
-of the show functions L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup>.
+of the show functions L<Show|[%m.elem%]/"Show()">, L<ShowXY|[%m.elem%]/"ShowXY()"> or L<Popup|[%m.elem%]/"Popup()">.
 
 Any existent dialog can be selected. It does not need to be mapped on
 the native system nor visible.
@@ -173,7 +173,7 @@ Unfortunately there are no sample scripts using this element.
 [% h.see %]
 
 L<IUP::Dialog|IUP::Dialog>, L<Show|[%m.elem%]/"Show()">,
-L<IUP::ShowXY|IUP::ShowXY>, L<IUP::Popup|IUP::Popup>
+L<ShowXY|[%m.elem%]/"ShowXY()">, L<Popup|[%m.elem%]/"Popup()">
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iuplayoutdialog.html|[%url.iuporigdoc%]elem/iuplayoutdialog.html>

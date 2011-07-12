@@ -76,7 +76,7 @@ only when IMAGE is defined. Can be YES or NO. Default: NO. (since iup-3.3)
 Image name. When the IMAGE attribute is
 defined, the TITLE is not shown. This makes the toggle looks just like
 a button with an image, but its behavior remains the same. 
-Use L<IUP::SetHandle> or L<IUP::SetAttributeHandle> to associate
+Use L<SetName|[%m.elem%]/"SetName()"> or XXX-FIX_ME to associate
 an image to a name. See also L<IUP::Image|IUP::Image>. (GTK 2.6)
 
 =item * B<IMPRESS> (non inheritable)

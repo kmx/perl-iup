@@ -92,7 +92,7 @@ size lesser than its B<Natural> size. See the L<Layout
 Guide|xxx.html> for mode details on sizes.
 
 The L<IUP::Canvas|IUP::Canvas> bar handler is always the first child of the sbox. It
-can be obtained using L<IUP::GetChild|IUP::GetChild> or B<IUP::GetNextChild>.
+can be obtained using L<GetChild|[%m.elem%]/"GetChild()"> or L<GetNextChild|[%m.elem%]/"GetNextChild()">.
 
 L<IUP::Sbox|IUP::Sbox> can be resized above the maximum size so some controls go to
 outside the dialog area at right or bottom. In fact this is part of the
@@ -101,7 +101,7 @@ the L<IUP::Refresh|IUP::Refresh> function. The IUP layout does not have a maximu
 limit only a minimum, except if you use the MAXSIZE common attribute.
 
 The box can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
+L<Append|[%m.elem%]/"Append()"> or L<Insert|[%m.elem%]/"Insert()">.
 
 [% h.examples %]
 

@@ -106,7 +106,7 @@ title to "" before mapping, but be aware that a vertical space for the
 title will be always reserved at the top border.
 
 The frame can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
+L<Append|[%m.elem%]/"Append()"> or L<Insert|[%m.elem%]/"Insert()">.
 
 [% h.examples %]
 

@@ -9,7 +9,7 @@
 Creates an Element Properties Dialog. It is a predefined dialog to edit
 the properties of an element in run time. It is a standard L<IUP::Dialog|IUP::Dialog>
 constructed with other IUP elements. The dialog can be shown with any
-of the show functions L<IUP::Show|IUP::Show>, L<IUP::ShowXY|IUP::ShowXY> or L<IUP::Popup|IUP::Popup>.
+of the show functions L<Show|[%m.elem%]/"Show()">, L<ShowXY|[%m.elem%]/"ShowXY()"> or L<Popup|[%m.elem%]/"Popup()">.
 
 Any existent element can be edited. It does not need to be mapped on
 the native system nor visible.
@@ -68,8 +68,8 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-L<IUP::Dialog|IUP::Dialog>, L<IUP::Show>,
-L<IUP::ShowXY|IUP::ShowXY>, L<IUP::Popup|IUP::Popup>,
+L<IUP::Dialog|IUP::Dialog>, L<Show|[%m.elem%]/"Show()">,
+L<ShowXY|[%m.elem%]/"ShowXY()">, L<Popup|[%m.elem%]/"Popup()">,
 L<IUP::LayoutDialog|IUP::LayoutDialog>
 
 [%IF flags.gennerate_origdoc -%]

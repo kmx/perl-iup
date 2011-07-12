@@ -49,8 +49,8 @@ with that name does not exists then one is created.
 
 Adds a control to the normalizer. The
 value passed must be the name of an element. Use
-L<IUP::SetHandle|IUP::SetHandle> or
-L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+L<SetName|[%m.elem%]/"SetName()"> or
+XXX-FIX_ME to
 associate an element to a name. In Lua you can also use the element
 reference directly.
 

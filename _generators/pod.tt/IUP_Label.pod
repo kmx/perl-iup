@@ -66,8 +66,8 @@ attribute DLGFGCOLOR.
 
 Image name. If set before map defines the
 behavior of the label to contain an image. The natural size will be
-size of the image in pixels. XXX-check-this Use L<IUP::SetHandle|IUP::SetHandle> or
-L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+size of the image in pixels. XXX-check-this Use L<SetName|[%m.elem%]/"SetName()"> or
+XXX-FIX_ME to
 associate an image to a name. See also L<IUP::Image|IUP::Image>.
 
 B<IMINACTIVE> (non inheritable) [GTK and Motif only]

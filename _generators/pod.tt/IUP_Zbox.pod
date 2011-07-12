@@ -36,7 +36,7 @@ B<child:> (named parameter) List of the references to elements (or just a single
 will be placed in the box. Can be C<undef>.
 
 B<IMPORTANT>: Each element must have a name defined by
-L<IUP::SetHandle|IUP::SetHandle>. In perl a name is always
+L<SetName|[%m.elem%]/"SetName()">. In perl a name is always
 automatically created, but you can change it later.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
@@ -73,8 +73,8 @@ will be ignored by the layout processing. Default: "NO".
 
 The visible child accessed by its name. The
 value passed must be the name of one of the children contained in the
-zbox. Use L<IUP::SetHandle|IUP::SetHandle> or
-L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+zbox. Use L<SetName|[%m.elem%]/"SetName()"> or
+XXX-FIX_ME to
 associate a child to a name. In Lua you can also use the element
 reference directly. When the value is changed the selected child is
 made visible and all other children are made invisible, regardless
@@ -122,7 +122,7 @@ L<MAXSIZE|[%m.at%]/MAXSIZE>
 [% h.notes %]
 
 The box can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
+L<Append|[%m.elem%]/"Append()"> or L<Insert|[%m.elem%]/"Insert()">.
 
 [% h.examples %]
 

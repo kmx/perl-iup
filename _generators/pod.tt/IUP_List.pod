@@ -324,7 +324,7 @@ Action generated when any
 mouse button is pressed or released inside the list. Called only when
 DROPDOWN=NO. If the list has an editbox the message is called when
 cursor is at the listbox only (ignored at the editbox). 
-Use L<IUP::ConvertXYToPos|IUP::ConvertXYToPos> to convert (x,y)
+Use L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
 coordinates in item position. 
 
 =item * B<CARET_CB>
@@ -423,7 +423,7 @@ This is the same ACTION callback definition as for the L<IUP::Text|IUP::Text>.
 Action generated when the
 mouse is moved over the list. Called only when DROPDOWN=NO. If the list
 has an editbox the message is called when cursor is at the listbox only
-(ignored at the editbox). Use L<IUP::ConvertXYToPos|IUP::ConvertXYToPos> to convert (x,y)
+(ignored at the editbox). Use L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
 coordinates in item position. 
 
 B<MULTISELECT_CB>
@@ -566,7 +566,7 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-L<IUP::ListDialog|IUP::ListDialog>, L<IUP::Text>
+L<ListDialog|IUP/"ListDialog>()">, L<IUP::Text>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iuplist.html|[%url.iuporigdoc%]elem/iuplist.html>

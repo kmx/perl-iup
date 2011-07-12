@@ -89,15 +89,15 @@ Action generated when the Help button is pressed.
 The L<IUP::MessageDlg|IUP::MessageDlg> is a native pre-defined dialog not altered by
 L<IUP::SetLanguage|IUP::SetLanguage>.
 
-To show the dialog, use function L<IUP::Popup|IUP::Popup>.
+To show the dialog, use function L<Popup|[%m.elem%]/"Popup()">.
 function.
 
-The dialog is mapped only inside L<IUP::Popup|IUP::Popup>, L<IUP::Map|IUP::Map> does nothing.
+The dialog is mapped only inside L<Popup|[%m.elem%]/"Popup()">, L<Map|[%m.elem%]/"Map()"> does nothing.
 
-In Windows the position (x,y) used in L<IUP::Popup|IUP::Popup> is ignored and the
+In Windows the position (x,y) used in L<Popup|[%m.elem%]/"Popup()"> is ignored and the
 dialog is always centered on screen.
 
-The L<IUP::Message|IUP::Message> function simply creates and popup a L<IUP::MessageDlg|IUP::MessageDlg>.
+The L<Message|IUP/"Message()"> function simply creates and popup a L<IUP::MessageDlg|IUP::MessageDlg>.
 
 In Windows each different dialog type is always associated with a different beep sound.
 
@@ -121,9 +121,9 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-L<IUP::Message|IUP::Message>, L<IUP::Scanf|IUP::Scanf>,
-L<IUP::ListDialog|IUP::ListDialog>, L<IUP::Alarm|IUP::Alarm>,
-L<IUP::GetFile|IUP::GetFile>, L<IUP::Popup|IUP::Popup>
+L<Message|IUP/"Message()">, L<GetParam|IUP/"GetParam()">,
+L<ListDialog|IUP/"ListDialog>()">, L<Alarm|IUP/"Alarm()">,
+L<GetFile|IUP/"GetFile()">, L<Popup|[%m.elem%]/"Popup()">
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupmessagedlg.html|[%url.iuporigdoc%]elem/iupmessagedlg.html>

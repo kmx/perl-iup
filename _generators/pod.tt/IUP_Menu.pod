@@ -94,21 +94,21 @@ L<UNMAP_CB|[%m.cb%]/UNMAP_CB>
 A menu can be a menu bar of a dialog, defined by the dialog's MENU
 attribute, or a popup menu.
 
-A popup menu is displayed for the user using the L<IUP::Popup|IUP::Popup> function
+A popup menu is displayed for the user using the L<Popup|[%m.elem%]/"Popup()"> function
 (usually on the mouse position) and disappears when an item is
 selected.
 
-L<IUP::Destroy|IUP::Destroy> should be called only for popup menus. Menu bars
+L<Destroy|[%m.elem%]/"Destroy()"> should be called only for popup menus. Menu bars
 associated with dialogs are automatically destroyed when the dialog is
 destroyed. But if you change the menu of a dialog for another menu, the
-previous one should be destroyed using L<IUP::Destroy|IUP::Destroy>. If you replace a
+previous one should be destroyed using L<Destroy|[%m.elem%]/"Destroy()">. If you replace a
 menu bar of a dialog, the previous menu is unmapped.
 
 Any item inside a menu bar can retrieve attributes from the dialog
-using L<IUP::GetAttribute|IUP::GetAttribute>. It is not necessary to call B<IUP::GetDialog>.
+using L<GetAttribute|[%m.elem%]/"GetAttribute()">. It is not necessary to call L<GetDialog|[%m.elem%]/"GetDialog()">.
 
 The menu can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
+L<Append|[%m.elem%]/"Append()"> or L<Insert|[%m.elem%]/"Insert()">.
 
 [% h.examples %]
 
@@ -130,8 +130,8 @@ Unfortunately there are no sample scripts using this element.
 
 L<IUP::Dialog|IUP::Dialog>, L<IUP::Item|IUP::Item>,
 L<IUP::Separator|IUP::Separator>, L<IUP::Submenu|IUP::Submenu>,
-L<IUP::Popup|IUP::Popup>,
-L<IUP::Destroy|IUP::Destroy>
+L<Popup|[%m.elem%]/"Popup()">,
+L<Destroy|[%m.elem%]/"Destroy()">
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupmenu.html|[%url.iuporigdoc%]elem/iupmenu.html>

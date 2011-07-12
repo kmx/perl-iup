@@ -7,7 +7,7 @@
 [% h.desc %]
 
 Creates a timer which periodicaly invokes a callback when the time is
-up. Each timer should be destroyed using L<IUP::Destroy|IUP::Destroy> (XXX-more-perlish C<undef $timer>).
+up. Each timer should be destroyed using L<Destroy|[%m.elem%]/"Destroy()"> (XXX-more-perlish C<undef $timer>).
 
 [% h.usage %]
 

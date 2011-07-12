@@ -143,7 +143,7 @@ L<MAXSIZE|[%m.at%]/MAXSIZE>
 [% h.notes %]
 
 The box can be created with no elements and be dynamic filled using
-L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
+L<Append|[%m.elem%]/"Append()"> or L<Insert|[%m.elem%]/"Insert()">.
 
 The box will NOT expand its children, it will allow its children to
 expand according to the space left in the box parent. So for the
