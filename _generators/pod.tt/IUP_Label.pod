@@ -11,7 +11,7 @@ or an image.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iuplabel %]
 
 =end HTML
 

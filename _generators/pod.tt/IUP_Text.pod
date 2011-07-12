@@ -10,8 +10,8 @@ Creates an editable text field.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL1 %]
-[% html.iupX_X_X_SMALL2 %]
+[% html.iuptext1 %]
+[% html.iuptext2 %]
 
 =end HTML
 

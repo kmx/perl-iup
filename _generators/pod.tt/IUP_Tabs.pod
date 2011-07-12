@@ -13,7 +13,7 @@ systems.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iuptabs %]
 
 =end HTML
 

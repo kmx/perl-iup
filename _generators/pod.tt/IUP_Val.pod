@@ -11,7 +11,7 @@ known as Scale or Trackbar in native systems.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iupval %]
 
 =end HTML
 

@@ -12,7 +12,7 @@ only.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iupfontdlg %]
 
 =end HTML
 

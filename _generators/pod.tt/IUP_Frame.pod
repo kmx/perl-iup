@@ -11,7 +11,7 @@ around an interface element.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iupframe %]
 
 =end HTML
 

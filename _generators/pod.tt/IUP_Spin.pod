@@ -16,7 +16,7 @@ inserted inside the L<IUP::Text|IUP::Text> area.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iupspin %]
 
 =end HTML
 

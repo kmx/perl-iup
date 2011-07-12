@@ -21,7 +21,7 @@ their background inverted.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL1 %]
+[% html.iuptree1 %]
 
 =end HTML
 

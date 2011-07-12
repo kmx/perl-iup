@@ -23,7 +23,7 @@ their dialogs in other ways.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iuplayoutdialog %]
 
 =end HTML
 

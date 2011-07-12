@@ -13,8 +13,8 @@ It does not have a native representation.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL1 %]
-[% html.iupX_X_X_SMALL2 %]
+[% html.iupvbox1 %]
+[% html.iupvbox2 %]
 
 =end HTML
 

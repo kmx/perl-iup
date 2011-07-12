@@ -21,7 +21,7 @@ was changed to improve features and visual appearance.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iupplot %]
 
 =end HTML
 

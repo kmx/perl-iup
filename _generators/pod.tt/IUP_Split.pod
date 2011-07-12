@@ -16,7 +16,7 @@ L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iupsplit %]
 
 =end HTML
 

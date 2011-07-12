@@ -12,7 +12,7 @@ function only.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iupmessagedlg %]
 
 =end HTML
 

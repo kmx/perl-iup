@@ -13,7 +13,7 @@ text or an image.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iuptoggle %]
 
 =end HTML
 

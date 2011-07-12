@@ -22,7 +22,7 @@ defines the mode the matrix will operate.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iupmatrix %]
 
 =end HTML
 

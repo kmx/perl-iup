@@ -13,7 +13,7 @@ down case is called Combo Box.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iuplist %]
 
 =end HTML
 

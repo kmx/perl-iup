@@ -10,7 +10,7 @@ Creates a menu item that, when selected, opens another menu.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
+[% html.iupsubmenu %]
 
 =end HTML
 

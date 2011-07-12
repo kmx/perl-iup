@@ -12,8 +12,8 @@ a menu will be an error.
 
 =begin HTML
 
-[% html.iupX_X_X_SMALL %]
-[% html.iupX_X_X_SMALL_fromsyntax %]
+[% html.iupmenu %]
+[% html.iupmenu_fromsyntax %]
 
 =end HTML
 
