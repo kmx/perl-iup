@@ -134,10 +134,22 @@ L<IUP::Insert|IUP::Insert>.
 
 =head1 EXAMPLES
 
-L<Browse for Example Files|../../examples/>
+
+The element B<IUP::Zbox> is used in the following sample scripts:
+
+=over
+
+=item * L<0-basic/zbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/zbox.pl> - IUP::Zbox example
+
+=back 
+
+
 
 =head1 SEE ALSO
 
 L<IUP::Hbox|IUP::Hbox>, L<IUP::VBox|IUP::VBox>
+
+The original doc: L<iupzbox.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupzbox.html>
+ 
 
 =cut

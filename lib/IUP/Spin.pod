@@ -69,13 +69,17 @@ L<IUP::Insert|IUP::Insert>.
 
 =head1 EXAMPLES
 
- Ihandle* spinbox = IUP::Spinbox(IUP::Text(NULL));
 
-[IMAGE]
+Unfortunately there are no sample scripts using this element.
+
+
 
 =head1 SEE ALSO
 
 L<IUP::Text|IUP::Text>, L<IUP::Vbox|IUP::Vbox>,
 L<IUP::Hbox|IUP::Hbox>, L<IUP::Button|IUP::Button>
+
+The original doc: L<iupspin.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupspin.html>
+ 
 
 =cut

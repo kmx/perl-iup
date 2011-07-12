@@ -177,3 +177,8 @@ The element B<IUP::ColorDlg> is used in the following sample scripts:
 
 L<IUP::MessageDlg|IUP::MessageDlg>, L<IUP::FileDlg|IUP::FileDlg>,
 L<Popup|IUP::Manual::02_Elements/"Popup()">
+
+The original doc: L<iupcolordlg.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupcolordlg.html>
+ 
+
+=cut

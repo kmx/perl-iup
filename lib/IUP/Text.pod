@@ -604,59 +604,68 @@ paste
 
 =head1 EXAMPLES
 
-L<Browse for Example Files|../../examples/>
 
-Motif
+The element B<IUP::Text> is used in the following sample scripts:
 
-Windows
+=over
 
-Classic
+=item * L<0-basic/button.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/button.pl> - IUP::Button example
 
-Windows
+=item * L<0-basic/cbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-w/ Styles
+=item * L<0-basic/colorbrowser.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/colorbrowser.pl> - IUP::ColorBrowser example
 
-GTK
+=item * L<0-basic/frame2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/frame2.pl> - IUP::Image example
 
-[IMAGE]
+=item * L<0-basic/item.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/item.pl> - IUP::Item Example
 
-[IMAGE]
+=item * L<0-basic/layoutdialog.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-[IMAGE]
+=item * L<0-basic/mask_simple.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/mask_simple.pl> - IUP::Text + MASK example
 
-[IMAGE]
+=item * L<0-basic/menu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/menu.pl> - IUP::Menu example
 
-When FORMATTING=YES in Windows or GTK (formatting attributes are set to
-a formatag object that it is a L<IUP::User|IUP::User>):
+=item * L<0-basic/sbox1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/sbox1.pl> - IUP::Sbox example
 
- "ALIGNMENT" = "CENTER""SPACEAFTER" = "10""FONTSIZE" = "24""SELECTION" = "3,1:3,50""ADDFORMATTAG""BGCOLOR" = "255 128 64""UNDERLINE" = "SINGLE""WEIGHT" = "BOLD""SELECTION" = "3,7:3,11""ADDFORMATTAG"    "ITALIC" = "YES""STRIKEOUT" = "YES""SELECTION" = "2,1:2,12""ADDFORMATTAG"
+=item * L<0-basic/sbox2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/sbox2.pl> - IUP::Sbox example
 
-[IMAGE]
+=item * L<0-basic/separator.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/separator.pl> - IUP::Separator example
 
-When SPIN=YES:
+=item * L<0-basic/submenu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/submenu.pl> - IUP::Submenu example
 
-Motif
+=item * L<0-basic/tabs2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tabs2.pl> - IUP::Tabs example
 
-Windows
+=item * L<0-basic/text1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/text1.pl> - IUP::Text (single line) example
 
-Classic
+=item * L<0-basic/text2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/text2.pl> - IUP::Text example
 
-Windows
+=item * L<0-basic/text_font.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/text_font.pl> - IUP::Text (font) example
 
-w/ Styles
+=item * L<0-basic/text_format.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/text_format.pl> - IUP::Text (formating) example
 
-GTK
+=item * L<0-basic/text_multiline.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/text_multiline.pl> - IUP::Text (multiline) example
 
-[IMAGE]
+=item * L<0-basic/tree_set_attrs.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tree_set_attrs.pl> - IUP::Tree example (attributes)
 
-[IMAGE]
+=item * L<0-basic/zbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/zbox.pl> - IUP::Zbox example
 
-[IMAGE]
+=item * L<1-apps/app-mdi.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-mdi.pl> - IUP app example
 
-[IMAGE]
+=item * L<1-apps/app-plot-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-plot-demo.pl> - dials for zooming
+
+=item * L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+
+=item * L<1-apps/app-sample2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-sample2.pl> - xxxTODO xxx some better callback
+
+=back 
+
+
 
 =head1 SEE ALSO
 
 L<IUP::List|IUP::List>, L<IUP::MultiLine|IUP::MultiLine>
+
+The original doc: L<iuptext.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iuptext.html>
+ 
 
 =cut

@@ -29,4 +29,22 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 B<CLEARATTRIBUTES> (write-only, non inheritable): it will clear all
 attributes stored internally and remove all references. 
 
+=head1 EXAMPLES
+
+
+The element B<IUP::User> is used in the following sample scripts:
+
+=over
+
+=item * L<0-basic/text_format.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/text_format.pl> - IUP::Text (formating) example
+
+=back 
+
+
+
+=head1 SEE ALSO
+
+The original doc: L<iupuser.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupuser.html>
+ 
+
 =cut

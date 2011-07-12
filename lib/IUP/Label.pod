@@ -178,42 +178,74 @@ and the text for another text.
 
 =head1 EXAMPLES
 
-Normal Text Label -
 
-[IMAGE]
+The element B<IUP::Label> is used in the following sample scripts:
 
-- Normal Image Label
+=over
 
-Horizontal Separator -
+=item * L<0-basic/canvas2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/canvas2.pl> - IUP::Canvas example
 
-- Horizontal Separator
+=item * L<0-basic/cbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-FGCOLOR = "0 0 255"
+=item * L<0-basic/dial.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/dial.pl> - IUP::Dial example
 
-ALIGNMENT="ALEFT:ATOP"
+=item * L<0-basic/dialog1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/dialog1.pl> - IUP::Dialog example
 
-- (8bpp Image)
+=item * L<0-basic/frame1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/frame1.pl> - IUP::Frame Example
 
-FONT = "Helvetica, 14"
+=item * L<0-basic/idle.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/idle.pl> - IUP->SetIdle Example
 
-ALIGNMENT = "ACENTER:ACENTER"
+=item * L<0-basic/image.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/image.pl> - IUP::Image example
 
-- ALIGNMENT = "ACENTER"
+=item * L<0-basic/label.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/label.pl> - IUP::Label example
 
-(24 bpp Image)
+=item * L<0-basic/layoutdialog.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-MARKUP = "YES" (GTK Only)
+=item * L<0-basic/list2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/list2.pl> - IUP::List example
 
-ALIGNMENT = "ARIGHT:ABOTTOM"
+=item * L<0-basic/message_clone.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/message_clone.pl>
 
-- ALIGNMENT = "ARIGHT"
+=item * L<0-basic/plot_advanced.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/plot_advanced.pl> - Plot controls
 
-(32 bpp Image)
+=item * L<0-basic/sbox1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/sbox1.pl> - IUP::Sbox example
 
-L<Browse for Example Files|../../examples/>
+=item * L<0-basic/sbox2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/sbox2.pl> - IUP::Sbox example
+
+=item * L<0-basic/tabs1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tabs1.pl> - IUP::Tabs example 
+
+=item * L<0-basic/tabs3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tabs3.pl> - IUP::Tabs example 
+
+=item * L<0-basic/text_format.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/text_format.pl> - IUP::Text (formating) example
+
+=item * L<0-basic/timer.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/timer.pl> - IUP::Timer example
+
+=item * L<0-basic/tray.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tray.pl> - IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
+
+=item * L<0-basic/tree_set_attrs.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tree_set_attrs.pl> - IUP::Tree example (attributes)
+
+=item * L<0-basic/val.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/val.pl> - IUP::Val example
+
+=item * L<0-basic/zbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/zbox.pl> - IUP::Zbox example
+
+=item * L<1-apps/app-mdi.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-mdi.pl> - IUP app example
+
+=item * L<1-apps/app-plot-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-plot-demo.pl> - dials for zooming
+
+=item * L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+
+=item * L<1-apps/app-sample2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-sample2.pl> - xxxTODO xxx some better callback
+
+=item * L<1-apps/app-simple-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
+
+=back 
+
+
 
 =head1 SEE ALSO
 
 L<IUP::Image|IUP::Image>, L<IUP::Button|IUP::Button>.
+
+The original doc: L<iuplabel.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iuplabel.html>
+ 
 
 =cut

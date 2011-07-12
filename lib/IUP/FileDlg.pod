@@ -14,9 +14,7 @@ IUP::Popup function only.
 
 =head2 CREATION - new() method
 
- $filedlg = IUP::FileDlg->new(void);
- iup.filedlg{} -> (elem: ihandle) [in Lua]
- filedlg() [in LED]
+ $filedlg = IUP::FileDlg->new();
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
@@ -43,8 +41,6 @@ DIALOGTYPE=DIR.
 Type of dialog (Open, Save or Directory). Can have
 values "OPEN", "SAVE" or "DIR". Default: "OPEN".
 
-=over
-
 In Windows, when DIALOGTYPE=DIR the dialog shown is not the same dialog
 for OPEN and SAVE, this new dialog does not have the Help button
 neither filters. Also this new dialog needs CoInitializeEx with
@@ -53,15 +49,11 @@ initialized with COINIT_MULTITHREADED prior to L<IUP::Open|IUP::Open> then the n
 dialog will have limited functionality. In Motif or GTK the dialog is
 the same, but it only allows the user to select a directory.
 
-=back
-
 =item * B<DIRECTORY>
 
 Initial directory. When consulted after the dialog is
 closed and the user pressed the OK button, it will contain the
 directory of the selected file.
-
-=over
 
 In Motif or GTK, if not defined the dialog opens in the current
 directory.
@@ -74,8 +66,6 @@ directory contains any files of the specified filter types, the initial
 directory is the current directory. Otherwise, the initial directory is
 the "My Documents" directory of the current user. Otherwise, the
 initial directory is the Desktop folder.
-
-=back
 
 =item * B<EXTFILTER> [Windows and GTK Only]
 
@@ -126,7 +116,8 @@ directory and the files is '|'. The file list ends with character '|'.
 When the user selects just one file, the directory and the file are not
 separated by '|'. For example:
 
- "/tecgraf/iup/test|a.txt|b.txt|c.txt|" or
+ "/tecgraf/iup/test|a.txt|b.txt|c.txt|"
+ or
  "/tecgraf/iup/test/a.txt" (only one file is selected)
 
 In Windows the maximum size allowed for file name returned is 65Kb.
@@ -160,8 +151,6 @@ necessary if using "iup.dll"). Valid only if the FILE_CB callback is
 defined, use it to retrieve the file name and the necessary attributes
 to paint the preview area. (in Motif since iup-3.0)
 
-=over
-
 Read only attributes that are valid inside the FILE_CB callback when
 status="PAINT":
 
@@ -170,12 +159,12 @@ status="PAINT":
 Returns the Device Context (HDC in Windows and GC in
 UNIX)
 
-=item * B<PREVIEWWIDTH >and B<PREVIEWHEIGHT>
+=item * B<PREVIEWWIDTH> and B<PREVIEWHEIGHT>
 
 Returns the width and the height
 of the client rectangle for the preview area.
 
- Also the attributes WID, HWND, XWINDOW and XDISPLAY are valid and
+Also the attributes WID, HWND, XWINDOW and XDISPLAY are valid and
 are relative to the preview area.
 
 If the attribute PREVIEWGLCANVAS is defined then it is used as the name
@@ -185,20 +174,17 @@ that inherits from IUP::Canvas. This does the minimum necessary so you
 can use IUP::GLCanvas auxiliary functions for the preview canvas and call
 OpenGL functions. No IUP::Canvas attributes or callbacks are available.
 
-
-=back
-
 =item * B<STATUS> (read-only)
 
 Indicates the status of the selection made:
 
 =over
 
-"1": New file.
+=item "1": New file.
 
-"0": Normal, existing file or directory.
+=item "0": Normal, existing file or directory.
 
-"-1": Operation cancelled.
+=item "-1": Operation cancelled.
 
 =back
 
@@ -227,17 +213,18 @@ Action generated when a file is selected. Not called when
 DIALOGTYPE=DIR. When MULTIPLEFILES=YES it is called only for one file.
 Can be used with SHOWPREVIEW=NO also. (Windows only in 2.x)
 
- int function(Ihandle *ih, const char* file_name, const char* status); [in C]elem:file_cb(file_name, status: string) -> (ret: number) [in Lua]
+ sub file_cb_handler {
+   my ($self, $file_name, $status) = @_;
+   #...
+ }
 
 =over
 
 B<$self:> reference to the element (IUP::XXXIUP_FileDlg) that activated the event
 
-=item * B<file_name> - name of the file selected.
+B<$file_name:> name of the file selected.
 
 B<$status:> describes the action. Can be:
-
-=over
 
 =over
 
@@ -261,27 +248,22 @@ file_name is NULL.
 
 =back
 
-=back
-
 =item * L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
-Action generated when the Help
-button is pressed.
+Action generated when the Help button is pressed.
 
 =back
 
 =head1 NOTES
 
 The L<IUP::FileDlg|IUP::FileDlg> is a native pre-defined dialog that is not altered by
-L<IUP::SetLanguage|IUP::SetLanguage>.
+L<SetLanguage|IUP/"SetLanguage()">.
 
-To show the dialog, use function L<IUP::Popup|IUP::Popup>. In
-Lua, use the popup function.
+To show the dialog, use function L<Popup|IUP::Manual::02_Elements/"Popup()">.
 
-The dialog is mapped only inside L<IUP::Popup|IUP::Popup>, L<IUP::Map|IUP::Map> does nothing.
+The dialog is mapped only inside L<Popup|IUP::Manual::02_Elements/"Popup()">, L<Map|IUP::Manual::02_Elements/"Map()"> does nothing.
 
-The L< IUP::GetFile|iupgetfile.html> function simply creates and popup a
-IUP::FileDlg.
+The L<GetFile|IUP/"GetFile()"> function simply creates and popup a L<IUP::FileDlg>.
 
 In Windows, the FILE and the DIRECTORY attributes also accept strings
 containing "/" as path separators, but the VALUE attribute will always
@@ -292,43 +274,24 @@ the active dialog.
 
 =head1 EXAMPLES
 
- Ihandle *dlg = IUP::FileDlg(); 
- 
- IUP::SetAttribute(dlg, "DIALOGTYPE", "OPEN");
- IUP::SetAttribute(dlg, "TITLE", "IUP::FileDlg Test");
- IUP::SetAttributes(dlg, "FILTER = \"*.bmp\", FILTERINFO = \"Bitmap Files\"");
- IUP::SetCallback(dlg, "HELP_CB", (Icallback)help_cb);
- 
- IUP::Popup(dlg, IUP_CURRENT, IUP_CURRENT); 
- 
- if (IUP::GetInt(dlg, "STATUS"))
- {
-   printf("OK\n");
-   printf("  VALUE(%s)\n", IUP::GetAttribute(dlg, "VALUE")); 
- }
- else
-   printf("CANCEL\n");
- 
- IUP::Destroy(dlg); 
 
-Windows XP
+The element B<IUP::FileDlg> is used in the following sample scripts:
 
-[IMAGE]
+=over
 
-Motif/Mwm
+=item * L<0-basic/filedlg.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/filedlg.pl> - IUP::FileDlg example
 
-[IMAGE]
+=back 
 
-GTK/GNOME
 
-[IMAGE]
-
-L<Browse for Example Files|../../examples/>
 
 =head1 SEE ALSO
 
 L<IUP::Message|IUP::Message>, L<IUP::Scanf|IUP::Scanf>,
 L<IUP::ListDialog|IUP::ListDialog>, L<IUP::Alarm|IUP::Alarm>,
 L<IUP::GetFile|IUP::GetFile>, L<IUP::Popup|IUP::Popup>
+
+The original doc: L<iupfiledlg.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupfiledlg.html>
+ 
 
 =cut

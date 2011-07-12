@@ -108,36 +108,24 @@ only to its parent.
 
 =head1 EXAMPLES
 
- Ihandle* dlg = IUP::MessageDlg();
- 
- IUP::SetAttribute(dlg, "DIALOGTYPE", "WARNING");
- IUP::SetAttribute(dlg, "TITLE", "IUP::MessageDlg Test");
- IUP::SetAttribute(dlg, "BUTTONS", "OKCANCEL");
- IUP::SetAttribute(dlg, "VALUE", "Message Text\nSecond Line");
- IUP::SetCallback(dlg, "HELP_CB", (Icallback)help_cb);
- 
- IUP::Popup(dlg, IUP_CURRENT, IUP_CURRENT);
- 
- printf("BUTTONRESPONSE(%s)\n", IUP::GetAttribute(dlg, "BUTTONRESPONSE"));
- 
- IUP::Destroy(dlg);  
 
-Windows XP
+The element B<IUP::MessageDlg> is used in the following sample scripts:
 
-[IMAGE]
+=over
 
-Motif/Mwm
+=item * L<0-basic/messagedlg.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/messagedlg.pl> - IUP::MessageDlg example
 
-[IMAGE]
+=back 
 
-GTK/GNOME
 
-[IMAGE]
 
 =head1 SEE ALSO
 
 L<IUP::Message|IUP::Message>, L<IUP::Scanf|IUP::Scanf>,
 L<IUP::ListDialog|IUP::ListDialog>, L<IUP::Alarm|IUP::Alarm>,
 L<IUP::GetFile|IUP::GetFile>, L<IUP::Popup|IUP::Popup>
+
+The original doc: L<iupmessagedlg.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupmessagedlg.html>
+ 
 
 =cut

@@ -159,19 +159,17 @@ L<IUP::ElementPropertiesDialog|IUP::ElementPropertiesDialog>.
 
 =head1 EXAMPLES
 
-This will create an empty layout with a new dialog.
 
- IUP::Show(IUP::LayoutDialog(NULL));   [in C]
- 
- iup.Show(iup.LayoutDialog(nil))    [in Lua]
+Unfortunately there are no sample scripts using this element.
 
-The following dialog layout is displayed next.
 
-[IMAGE]
 
 =head1 SEE ALSO
 
 L<IUP::Dialog|IUP::Dialog>, L< IUP::Show|../func/iupshow.html>,
 L<IUP::ShowXY|IUP::ShowXY>, L<IUP::Popup|IUP::Popup>
+
+The original doc: L<iuplayoutdialog.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iuplayoutdialog.html>
+ 
 
 =cut

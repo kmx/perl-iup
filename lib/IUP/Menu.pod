@@ -155,49 +155,36 @@ with already create elements.
 
 =head1 EXAMPLES
 
-L<Browse for Example Files|../../examples/>
 
-Windows
+The element B<IUP::Menu> is used in the following sample scripts:
 
-Classic
+=over
 
-Windows
+=item * L<0-basic/dialog2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/dialog2.pl> - IUP::Dialog example
 
-w/ Styles
+=item * L<0-basic/item.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/item.pl> - IUP::Item Example
 
-[IMAGE]
+=item * L<0-basic/layoutdialog.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-[IMAGE]
+=item * L<0-basic/menu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/menu.pl> - IUP::Menu example
 
-Motif
+=item * L<0-basic/separator.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/separator.pl> - IUP::Separator example
 
-GTK
+=item * L<0-basic/submenu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/submenu.pl> - IUP::Submenu example
 
-[IMAGE]
+=item * L<0-basic/tray.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tray.pl> - IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
 
-[IMAGE]
+=item * L<1-apps/app-mdi.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-mdi.pl> - IUP app example
 
-The L<IUP::Item|IUP::Item> check is affected by the RADIO attribute in L<IUP::Menu|IUP::Menu>:
+=item * L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-Windows
+=item * L<1-apps/app-sample2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-sample2.pl> - xxxTODO xxx some better callback
 
-Classic
+=item * L<1-apps/app-simple-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
-Windows
+=back 
 
-XP Style
 
-[IMAGE]
-
-[IMAGE]
-
-Motif
-
-GTK
-
-[IMAGE]
-
-[IMAGE]
 
 =head1 SEE ALSO
 
@@ -205,5 +192,8 @@ L<IUP::Dialog|IUP::Dialog>, L<IUP::Item|IUP::Item>,
 L<IUP::Separator|IUP::Separator>, L<IUP::Submenu|IUP::Submenu>,
 L<IUP::Popup|IUP::Popup>,
 L<IUP::Destroy|IUP::Destroy>
+
+The original doc: L<iupmenu.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupmenu.html>
+ 
 
 =cut

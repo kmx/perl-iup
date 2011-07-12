@@ -140,14 +140,14 @@ L<IUP::Insert|IUP::Insert>.
 
 =head1 EXAMPLES
 
-L<Browse for Example Files|../../examples/>
 
-[IMAGE]
+Unfortunately there are no sample scripts using this element.
 
-Natural Size
 
-[IMAGE]
 
-After Moving the Split Bar
+=head1 SEE ALSO
+
+The original doc: L<iupsplit.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupsplit.html>
+ 
 
 =cut

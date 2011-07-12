@@ -96,22 +96,20 @@ L<IUP::Insert|IUP::Insert>.
 
 =head1 EXAMPLES
 
-L<Browse for Example Files|../../examples/>
 
-[IMAGE]
+The element B<IUP::Sbox> is used in the following sample scripts:
 
-Natural Size
+=over
 
-[IMAGE]
+=item * L<0-basic/sbox1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/sbox1.pl> - IUP::Sbox example
 
-After Expanding the Sbox
+=item * L<0-basic/sbox2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/sbox2.pl> - IUP::Sbox example
 
-[IMAGE]
+=back 
 
-Expanding the Dialog
 
-[IMAGE]
 
-After Expanding the Sbox
+The original doc: L<iupsbox.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupsbox.html>
+ 
 
 =cut

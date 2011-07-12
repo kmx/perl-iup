@@ -2135,5 +2135,6 @@ L<IUP::Canvas::EMF|IUP::Canvas::EMF>,
 L<IUP::Canvas::SVG|IUP::Canvas::SVG>,
 L<IUP::CanvasGL|IUP::CanvasGL>
 
+The original doc: L<iupcanvas.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupcanvas.html>
 
 =cut

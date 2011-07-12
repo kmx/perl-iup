@@ -94,41 +94,17 @@ the active dialog.
 
 =head1 EXAMPLES
 
- Ihandle* dlg = IUP::FontDlg();
- 
- IUP::SetAttribute(dlg, "COLOR", "128 0 255");
- IUP::SetAttribute(dlg, "VALUE", "Times New Roman, Bold 20");
- IUP::SetAttribute(dlg, "TITLE", "IUP::FontDlg Test");
- IUP::SetCallback(dlg, "HELP_CB", (Icallback)help_cb);
- 
- IUP::Popup(dlg, IUP_CURRENT, IUP_CURRENT);
- 
- if (IUP::GetInt(dlg, "STATUS"))
- {
-   printf("OK\n");
-   printf("  VALUE(%s)\n", IUP::GetAttribute(dlg, "VALUE"));
-   printf("  COLOR(%s)\n", IUP::GetAttribute(dlg, "COLOR"));
- }
- else
-   printf("CANCEL\n");
- 
- IUP::Destroy(dlg); 
 
-Windows XP
+Unfortunately there are no sample scripts using this element.
 
-[IMAGE]
 
-GTK/GNOME
-
-[IMAGE]
-
-Motif/MWM
-
-[IMAGE]
 
 =head1 SEE ALSO
 
 L<IUP::MessageDlg|IUP::MessageDlg>, L<IUP::FileDlg|IUP::FileDlg>,
 L<IUP::Popup|IUP::Popup>
+
+The original doc: L<iupfontdlg.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupfontdlg.html>
+ 
 
 =cut

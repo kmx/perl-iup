@@ -261,49 +261,32 @@ does not need to concatenate the attribute name with the id.
 
 =head1 EXAMPLES
 
-L<Browse for Example Files|../../examples/>
 
-In Windows, the Visual Styles work only when TABTYPE is TOP.
+The element B<IUP::Tabs> is used in the following sample scripts:
 
-Windows
+=over
 
-Classic
+=item * L<0-basic/layoutdialog.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-Windows
+=item * L<0-basic/plot_advanced.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/plot_advanced.pl> - Plot controls
 
-w/ Styles
+=item * L<0-basic/tabs1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tabs1.pl> - IUP::Tabs example 
 
-[IMAGE]
+=item * L<0-basic/tabs2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tabs2.pl> - IUP::Tabs example
 
-[IMAGE]
+=item * L<0-basic/tabs3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/tabs3.pl> - IUP::Tabs example 
 
-[IMAGE]
+=item * L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-[IMAGE]
+=item * L<1-apps/app-sample2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/1-apps/app-sample2.pl> - xxxTODO xxx some better callback
 
-[IMAGE]
+=back 
 
-[IMAGE]
 
-GTK is the only one that supports vertical text in the TOP
-configuration, but does not supports multiple lines of tab buttons.
 
-GTK
+=head1 SEE ALSO
 
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-Motif does not supports vertical text.
-
-Motif
-
-[IMAGE]
-
-[IMAGE]
+The original doc: L<iuptabs.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iuptabs.html>
+ 
 
 =cut

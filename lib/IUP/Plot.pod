@@ -669,22 +669,16 @@ L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>, L<HELP_CB|IUP::Manual::04_Callbacks/HE
 
 =head1 EXAMPLES
 
-L<Browse for Example Files|../../examples/>
 
-[IMAGE]
+Unfortunately there are no sample scripts using this element.
 
-[IMAGE]
 
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
-
-[IMAGE]
 
 =head1 SEE ALSO
 
 L<IUP::Canvas|IUP::Canvas>
+
+The original doc: L<iupplot.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupplot.html>
+ 
 
 =cut

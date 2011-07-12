@@ -154,7 +154,7 @@ my $ttdata = {
     iuporigdoc => 'http://www.tecgraf.puc-rio.br/iup/en/',
   },
   flags => {
-    gennerate_origdoc => 0, #xxx
+    gennerate_origdoc => 1, #xxx
   },
   html => { }, #this is loaded via load_htmlinc()
 };

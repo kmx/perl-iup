@@ -356,6 +356,7 @@ The element B<IUP::Button> is used in the following sample scripts:
 
 L<IUP::Image|IUP::Image>, L<IUP::Toggle|IUP::Toggle>, L<IUP::Button|IUP::Button>
 
+The original doc: L<iupbutton.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupbutton.html>
 
 
 =cut

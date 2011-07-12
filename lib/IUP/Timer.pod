@@ -76,6 +76,24 @@ B<Returns:> IUP_CLOSE will be processed.
 
 =head1 EXAMPLES
 
-L<Browse for Example Files|../../examples/>
+
+The element B<IUP::Timer> is used in the following sample scripts:
+
+=over
+
+=item * L<0-basic/glcanvas2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/glcanvas2.pl> - IUP::CanvasGL example
+
+=item * L<0-basic/progressbar2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
+
+=item * L<0-basic/timer.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/timer.pl> - IUP::Timer example
+
+=back 
+
+
+
+=head1 SEE ALSO
+
+The original doc: L<iuptimer.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iuptimer.html>
+ 
 
 =cut

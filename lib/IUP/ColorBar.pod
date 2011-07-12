@@ -270,3 +270,8 @@ The element B<IUP::ColorBar> is used in the following sample scripts:
 =head1 SEE ALSO
 
 L<IUP::Canvas|IUP::Canvas>, L<IUP::Image|IUP::Image>
+
+The original doc: L<iupcolorbar.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupcolorbar.html>
+ 
+
+=cut

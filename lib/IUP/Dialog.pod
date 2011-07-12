@@ -783,3 +783,8 @@ L<Destroy|IUP::Manual::02_Elements/"Destroy()">,
 L<ShowXY|IUP::Manual::02_Elements/"ShowXY>,
 L<Show|IUP::Manual::02_Elements/"Show()">,,
 L<Popup|IUP::Manual::02_Elements/"Popup()">
+
+The original doc: L<iupdialog.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupdialog.html>
+ 
+
+=cut
