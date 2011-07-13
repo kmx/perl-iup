@@ -1,4 +1,4 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
 =head1 NAME
 
@@ -133,32 +133,25 @@ moving the Y coordinate.
 
 =head3 PlotBegin()
 
- void IUP::PlotBegin(Ihandle* ih, int strXdata); [in C] XXX-TODO
- iup.PlotBegin(ih: ihandle, strXdata: number) [in Lua]
+  $plot->PlotBegin($strXdata);
+  #or
+  $plot->PlotBegin();
 
 Prepares a dataset to receive samples. If strXdata is 1 then the X axis
 value is a string.
 
 =head3 PlotAdd()
 
- void IUP::PlotAdd(Ihandle* ih, float x, float y); [in C] XXX-TODO
- iup.PlotAdd(ih: ihandle, x, y: number) [in Lua]
+ $plot->PlotAdd($x, $y);
 
-Adds a sample to the dataset. Can only be called if L<IUP::PlotBegin|IUP::PlotBegin> was
-called with strXdata=0.
+Adds a sample to the dataset. 
 
----- XXX-???
-
- void IUP::PlotAddStr(Ihandle* ih, const char* x, float y); [in C] XXX-TODO
- iup.PlotAddStr(ih: ihandle, x: string, y: number) [in Lua]
-
-Same as L<IUP::PlotAdd|IUP::PlotAdd>, but allows to use a string as the X axis value.
-Can only be called if L<IUP::PlotBegin|IUP::PlotBegin> was called with strXdata=1.
+NOTE: there is an autodetection whether it calls iupPlotAddStr
+or iupPlotAdd behind the scene.
 
 =head3 PlotEnd()
 
- int IUP::PlotEnd(Ihandle* ih); [in C] XXX-TODO
- iup.PlotEnd(ih: ihandle) -> (index: number) [in Lua]
+ $index = $plot->PlotEnd();
 
 Adds a 2D dataset to the plot and returns the dataset B<index>. The
 data set can be empty. Redraw is NOT done until the REDRAW attribute is
@@ -170,38 +163,49 @@ Notice that DS_MODE must be set before other "DS_*" attributes.
 
 =head3 PlotInsert()
 
- void IUP::PlotInsert(Ihandle *ih, int index, int sample_index, float x, float y); [in C] XXX-TODO
- void IUP::PlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
- iup.IUP::PlotInsert(ih: ihandle, index, sample_index, x, y: number) [in Lua]
- iup.IUP::PlotInsertStr(ih: ihandle, index, sample_index, x, y: number)
+ $plot->PlotInsert($index, $sample_index, $x, $y);
 
 Inserts a sample in a dataset at the given B<sample_index>. Can be used
-only after the dataset is added to the plot.
+only after the dataset is added to the plot (after L<PlotBegin|/"PlotBegin()">).
+
+NOTE: there is an autodetection whether it calls iupPlotInsertStr
+or iupPlotInsert behind the scene.
 
 =head3 PlotInsertPoints()
 
- void IUP::PlotInsertPoints(Ihandle *ih, int index, int sample_index, float* x, float* y, int count); [in C] XXX-TODO
- void IUP::PlotInsertStrPoints(Ihandle *ih, int index, int sample_index, const char** x, float* y, int count);
- iup.IUP::PlotInsertPoints(ih: ihandle, index, sample_index, x, y: table of number) [in Lua]
- iup.IUP::PlotInsertStrPoints(ih: ihandle, index, sample_index, x, y: table of number)
+ @values = ( $x1, $y1, $x2, $y2, $x3, $y3, $x4, $y4 );
+ $plot->InsertPoints($index, $sample_index, \@values);
 
-Inserts an array of samples in a dataset at the given B<sample_index>.
-Can be used only after the dataset is added to the plot. (Since iup-3.4)
+Inserts an array of samples in a dataset at the given B<sample_index>. (Since iup-3.4)
+
+Can be used only after the dataset is added to the plot e.g.
+
+  $plot->PlotBegin(0);
+  $index = $mainplot->PlotEnd();
+  $plot->PlotInsertPoints($index, 2, \@values); ###XXX-FIXME-check-this 
+
+NOTE: there is an autodetection whether it calls iupPlotInsertStrPoints
+or iupPlotInsertPoints behind the scene.
 
 =head3 PlotAddPoints()
 
- void IUP::PlotAddPoints(Ihandle *ih, int index, float* x, float* y, int count); [in C] XXX-TODO
- void IUP::PlotAddStrPoints(Ihandle *ih, int index, const char** x, float* y, int count);
- iup.IUP::PlotAddPoints(ih: ihandle, index, x, y: table of number) [in Lua]
- iup.IUP::PlotAddStrPoints(ih: ihandle, index, x, y: table of number)
+ @values = ( $x1, $y1, $x2, $y2, $x3, $y3, $x4, $y4 );
+ $plot->PlotAddPoints($index, \@values);
 
-Adds an array of samples in a dataset at the end. Can be used only
-after the dataset is added to the plot. (Since iup-3.4)
+Adds an array of samples in a dataset at the end. (Since iup-3.4)
+
+Can be used only after the dataset is added to the plot e.g.
+
+  $plot->PlotBegin(0);
+  $index = $mainplot->PlotEnd();
+  $plot->PlotAddPoints($index, \@values);  
+
+NOTE: there is an autodetection whether it calls iupPlotAddStrPoints
+or iupPlotAddPoints behind the scene.
 
 =head3 PlotTransform()
 
- void IUP::PlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy); [in C] XXX-TODO
- iup.PlotTransform(ih: ihandle, x, y: number) -> (ix, iy: number) [in Lua]
+ ($ix, $iy) = $plot->PlotTransform($x, $y);
 
 Converts coordinates in plot units to pixels. It should be used in
 PREDRAW_CB and POSTDRAW_CB callbacks only. Output variables can be NULL
@@ -210,10 +214,15 @@ the drawing after a resize is done.
 
 =head3 PlotPaintTo()
 
- void IUP::PlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C] XXX-TODO
- iup.PlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
+ $plot->PlotPaintTo($canvas);
+ 
+Plots to the given canvas instead of the display canvas.
 
-Plots to the given CD canvas instead of the display canvas.
+Handy if you want to save the plot into L<IUP::Canvas::SVG> or L<IUP::Canvas::EMF> like this:
+
+  my $cnv = IUP::Canvas::SVG->new(filename=>"output.svg", width=>300, height=>210, resolution=>4);
+  $mainplot->PlotPaintTo($cnv);
+  $cnv->cdKillCanvas();
 
 =head2 ATTRIBUTES
 
@@ -523,8 +532,10 @@ Action generated when the Del key is pressed to removed a
 sample from a dataset. If multiple points are selected it is called
 once for each selected point.
 
- int function(Ihandle *ih, int index, int sample_index, float x, float y); [in C] XXX-TODO
- elem:delete_cb(index, sample_index, x, y: number) -> (ret: number) [in Lua]
+ sub delete_cb_handler {
+   my ($self, $index, $sample_index, $x, $y) = @_;
+   #...
+ }
 
 =over
 
@@ -546,9 +557,15 @@ Actions generated when a delete
 operation will begin or end. But they are called only if DELETE_CB is
 also defined.
 
- int function(Ihandle *ih); [in C] XXX-TODO
- elem:deletebegin_cb() -> (ret: number) [in Lua]
- elem:deleteend_cb() -> (ret: number) [in Lua]
+ sub deletebegin_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+ sub deleteend_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 =over
 
@@ -564,8 +581,10 @@ points are selected it is called once for each new selected point. It
 is called only if the selection state of the sample is about to be
 changed.
 
- int function(Ihandle *ih, int index, int sample_index, float x, float y, int select); [in C] XXX-TODO
- elem:select_cb(index, sample_index, x, y, select: number) -> (ret: number) [in Lua]
+ sub select_cb_handler {
+   my ($self, $index, $sample_index, $x, $y, $select) = @_;
+   #...
+ }
 
 =over
 
@@ -590,9 +609,15 @@ Actions generated when a selection
 operation will begin or end. But they are called only if SELECT_CB is
 also defined.
 
- int function(Ihandle *ih); [in C] XXX-TODO
- elem:selectbegin_cb() -> (ret: number) [in Lua]
- elem:selectend_cb() -> (ret: number) [in Lua]
+ sub seletebegin_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+ sub selectend_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 =over
 
@@ -608,8 +633,13 @@ points are selected it is called once for each new selected point. It
 is called only if the selection state of the sample is about to be
 changed.
 
- int function(Ihandle *ih, int index, int sample_index, float x, float y, float *new_x, float *new_y); [in C] XXX-TODO
- elem:edit_cb(index, sample_index, x, y, new_x, new_y: number) -> (new_x, new_y, ret: number) [in Lua]
+ #XXX-FIXME-check-implementation
+ sub selectend_cb_handler {
+   my ($self, $index, $sample_index, $x, $y) = @_;
+   my $new_x, $new_y, $retval;
+   #...
+   return ($new_x, $new_y, $retval);
+ }
 
 =over
 
@@ -621,11 +651,11 @@ B<$x:> X coordinate value of the sample
 
 B<$y:> Y coordinate value of the sample
 
-B<$new_x:> the new X coordinate value of the sample
+B<$new_x:> (return value) the new X coordinate value of the sample
 
-B<$new_y:> the new Y coordinate value of the sample
+B<$new_y:> (return value) the new Y coordinate value of the sample
 
-B<Returns:> If IUP_IGNORE then the sample is not edited. The application
+B<$retval:> (return value) If IUP_IGNORE then the sample is not edited. The application
 can changed the new value before it is edited.
 
 =back
@@ -636,9 +666,15 @@ Actions generated when an editing
 operation will begin or end. But they are called only if EDIT_CB is
 also defined.
 
- int function(Ihandle *ih); [in C] XXX-TODO
- elem:editbegin_cb() -> (ret: number) [in Lua]
- elem:editend_cb() -> (ret: number) [in Lua]
+ sub editbegin_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+ sub editend_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 =over
 
@@ -656,9 +692,15 @@ Predraw has no restrictions, but Postdraw is clipped to the dataset
 area. To position elements in plot units, use the L<IUP::PPlotTransform|IUP::PPlotTransform>
 function.
 
- int function(Ihandle *ih, cdCanvas* cnv); [in C] XXX-TODO
- elem:predraw_cb(cnv: cdCanvas) -> (ret: number) [in Lua]
- elem:postdraw_cb(cnv: cdCanvas) -> (ret: number) [in Lua]
+ sub predraw_cb_handler {
+   my ($self, $canvas) = @_;
+   #...
+ }
+
+ sub postdraw_cb_handler {
+   my ($self, $canvas) = @_;
+   #...
+ }
 
 =over
 

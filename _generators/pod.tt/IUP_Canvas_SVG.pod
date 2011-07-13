@@ -1,15 +1,67 @@
-=for comment based on iup-3.5-XXX-UNFINISHED
+=for comment based on iup-3.5
 
-[% h.name %]
+=head1 NAME
 
-IUP::Canvas::SVG
+IUP::Canvas::SVG [special] 2D drawing canvas storing the result into SVG file
 
-XXX-TODO
+=head1 SYNOPSIS
 
-[% h.desc %] 
+ use IUP::Constants ':cd';
+ use IUP::Canvas::SVG;
 
-[% h.usage %]
+ my $cnv = IUP::Canvas::SVG->new(filename=>"tmp_test.svg", width=>400, height=>400);
+
+ $cnv->cdForeground(CD_RED);
+ $cnv->cdBox(0, 200, 0, 400);
+
+ $cnv->cdForeground(CD_BLACK);
+ $cnv->cdLineStyle(CD_DOTTED);
+ $cnv->cdArc(200,200,180,380,0,360);
+
+ $cnv->cdKillCanvas;
+
+[% h.desc %]
+
+IUP::Canvas::SVG is derived from L<IUP::Canvas> and offers all 2D drawing related methods:
+
+=over
+
+=item * L<Canvas Related Constants|IUP::Canvas/"Canvas Related Constants">
+
+=item * L<Methods - Basic Canvas Control|IUP::Canvas/"Methods - Basic Canvas Control">
+
+=item * L<Methods - Color Coding|IUP::Canvas/"Methods - Color Coding">
+
+=item * L<Methods - Coordinate System|IUP::Canvas/"Methods - Coordinate System">
+
+=item * L<Methods - World Coordinates|IUP::Canvas/"Methods - World Coordinates">
+
+=item * L<Methods - Primitives / Marks|IUP::Canvas/"Methods - Primitives / Marks">
+
+=item * L<Methods - Primitives / Lines|IUP::Canvas/"Methods - Primitives / Lines">
+
+=item * L<Methods - Primitives / Polygons|IUP::Canvas/"Methods - Primitives / Polygons">
+
+=item * L<Methods - Primitives / Filled Areas|IUP::Canvas/"Methods - Primitives / Filled Areas">
+
+=item * L<Methods - Primitives / Text|IUP::Canvas/"Methods - Primitives / Text">
+
+=item * L<Methods - Primitives / Vector Text|IUP::Canvas/"Methods - Primitives / Vector Text">
+
+=item * L<Methods - Primitives / Client Images|IUP::Canvas/"Methods - Primitives / Client Images">
+
+=item * L<Methods - Primitives / Server Images|IUP::Canvas/"Methods - Primitives / Server Images">
+
+=item * L<Methods - Canvas Clipping|IUP::Canvas/"Methods - Canvas Clipping|IUP::Canvas">
+
+=item * L<Methods - Complex Clipping Regions|IUP::Canvas/"Methods - Complex Clipping Regions">
+
+=item * L<Methods - Others|IUP::Canvas/"Methods - Others">
+
+=back
 
 [% h.see %]
+
+L<IUP::Canvas>, L<IUP::Canvas::EMF>
 
 =cut

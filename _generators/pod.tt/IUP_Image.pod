@@ -62,15 +62,11 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =item * B<"0"> Color in index 0.
 
-B<"1"> Color in index 1.
+=item * B<"1"> Color in index 1.
 
-B<"2"> Color in index 2.
+=item * B<"2"> Color in index 2.
 
-B<...>
-
-B<"i"> Color in index i.
-
-=over
+=item * B<"(i)"> Color in index i.
 
 The indices can range from 0 to 255. The total number of colors is
 limited to 256 colors. Notice that in Lua the first index in the array
@@ -79,16 +75,12 @@ colors, since they are attributes they follow the same storage rules
 for standard attributes.
 
 The values are integer numbers from 0 to 255, one for each color in the
-RGB triple (For ex
-
-"64 190 255"). If the value of a given index is
+RGB triple (For ex "64 190 255"). If the value of a given index is
 "BGCOLOR", the color used will be the background color of the element
 on which the image will be inserted. The "BGCOLOR" value must be
 defined within an index less than 16.
 
-Used only for images created with L<IUP::Image|IUP::Image>.
-
-=back
+Used only for images created with L<IUP::Image|IUP::Image>. XXX-color-depth
 
 =item * B<BGCOLOR>
 
@@ -120,13 +112,11 @@ are integers defining the coordinates in pixels. Default: "0:0".
 
 =item * B<RASTERSIZE> (read-only)
 
-returns the image size in pixels. (since
-3.0)
+returns the image size in pixels. (since iup-3.0)
 
 =item * B<WID> (read-only)
 
-returns the internal pixels data pointer. (since
-3.0)
+returns the internal pixels data pointer. (since iup-3.0)
 
 =item * B<WIDTH> (read-only)
 
@@ -153,9 +143,10 @@ Please observe the rules for creating cursor images: L<CURSOR|[%m.at%]/CURSOR>.
 =head2 Usage
 
 Images are used in elements such as buttons and labels by attributes
-that points to names registered with L<SetName|[%m.elem%]/"SetName()">. You can also use
-XXX-FIX_ME to shortcut the set of an image as an
-attribute. For example:
+that points to names registered with L<SetName|[%m.elem%]/"SetName()"> XXX-FIX_ME
+attribute. 
+
+For example:
 
  Ihandle* image = IUP::Image(width, height, pixels);
  
@@ -237,7 +228,7 @@ such as importing GIF images and exporting them as IUP images.
 B<EdPatt> allows you to manually edit the images, and also have support
 for images in IUP::Lua.
 
-=head2 IUP::Lua Old Constructor
+=head2 XXX-Old Constructor
 
 In Lua, the 8bpp image can also be created using an unnamed table,
 using a series of tables for each line. Width and height will be
@@ -282,7 +273,7 @@ must use "raawget" function, for example:
  pixel3 = lin0[3]       -- column index 3
  ...
 
-=head2 IUP::Lua New Constructors
+=head2 XXX-New Constructors
 
 The new constructors since IUP 3 are different and must contains
 explicit values for B<width>, B<height> and B<pixels>. Also the
