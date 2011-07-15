@@ -104,7 +104,7 @@ directory of IUP distribution or look at L<IUP::Manual::09_Examples|IUP::Manual:
 
 =head3 Simple GUI Dialogs
 
- use IUP;
+ use IUP ':all';
 
  my ($ret, $b, $i, $a, $s, $l, $f, $c) = IUP->GetParam(
    "Simple Dialog Title", undef,
@@ -160,7 +160,7 @@ L<Message|Message> - see L<simple GUI dialogs|/"Simple GUI dialogs"> section.
 
 =head3 Pre-defined Dialogs
 
- use IUP;
+ use IUP ':all';
  
  my $dlg = IUP::ColorDlg->new( VALUE=>"128 0 255", ALPHA=>"142",
                                SHOWHEX=>"YES", SHOWCOLORTABLE=>"YES",
@@ -199,7 +199,7 @@ L<IUP::MessageDlg|IUP::MessageDlg>.
 
 =head3 Custom Dialogs
 
- use IUP;
+ use IUP ':all';
  
  # demo callback handler
  sub my_cb {

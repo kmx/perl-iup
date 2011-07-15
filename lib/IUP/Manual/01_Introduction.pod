@@ -74,7 +74,7 @@ Non-GUI elements: IUP::Timer
 Every IUP based application has the main IUP::Dialog object and a set
 of other child GUI objects. Example:
 
- use IUP;
+ use IUP ':all';
  my $dlg = IUP::Dialog->new(...);
  IUP->MainLoop;
 
