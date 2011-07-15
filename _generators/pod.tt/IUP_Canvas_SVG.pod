@@ -1,10 +1,10 @@
 =for comment based on iup-3.5
 
-=head1 NAME
+[% h.name %]
 
-IUP::Canvas::SVG [special] 2D drawing canvas storing the result into SVG file
+[% n.iupcanvassvg %]
 
-=head1 SYNOPSIS
+[% h.synopsis %]
 
  use IUP::Constants ':cd';
  use IUP::Canvas::SVG;
@@ -22,7 +22,7 @@ IUP::Canvas::SVG [special] 2D drawing canvas storing the result into SVG file
 
 [% h.desc %]
 
-IUP::Canvas::SVG is derived from L<IUP::Canvas> and offers all 2D drawing related methods:
+L<IUP::Canvas::SVG> is derived from L<IUP::Canvas> and offers all 2D drawing related methods:
 
 =over
 

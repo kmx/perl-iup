@@ -1,10 +1,10 @@
 =for comment based on iup-3.5
 
-=head1 NAME
+[% h.name %]
 
-IUP::Canvas::EMF [special] 2D drawing canvas storing the result into EMF file
+[% n.iupcanvasemf %]
 
-=head1 SYNOPSIS
+[% h.synopsis %]
 
  use IUP::Constants ':cd';
  use IUP::Canvas::EMF;
@@ -22,7 +22,7 @@ IUP::Canvas::EMF [special] 2D drawing canvas storing the result into EMF file
 
 [% h.desc %]
 
-IUP::Canvas::EMF is derived from L<IUP::Canvas> and offers all 2D drawing related methods:
+L<IUP::Canvas::EMF> is derived from L<IUP::Canvas> and offers all 2D drawing related methods:
 
 =over
 

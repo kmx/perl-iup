@@ -48,14 +48,12 @@ their background inverted.
 
 =head2 CREATION - new() method
 
- $tree = IUP::Tree->new(void);
- iup.tree{} -> (elem: ihandle) [in Lua]
- tree() [in LED]
+ $tree = IUP::Tree->new( TITLE=>'Root node name' );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 Tree - Hierarchy
 
@@ -147,7 +145,7 @@ and to find a node given its user data.
 
 =head2 Tree - Images
 
-IUP::Tree has three types of images: one associated to the leaf, one to
+L<IUP::Tree> has three types of images: one associated to the leaf, one to
 the collapsed branch and the other to the expanded branch. Each image
 can be changed, both globally and individually.
 
@@ -168,7 +166,7 @@ only one node can be selected.
 
 =head2 Tree - Multiple Marking
 
-IUP::Tree allows marking several nodes simultaneously using the Shift and
+L<IUP::Tree> allows marking several nodes simultaneously using the Shift and
 Control keys. To use multiple marking set MARKMODE=MULTIPLE. In GTK and
 Motif multiple nodes can also be selected using a rubber band if
 SHOW_DRAGDROP=NO.

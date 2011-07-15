@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Manual::Elements - Manuals element guide
+[% m.keys %] - Manuals element guide
 
 =head1 IUP MANUAL
 

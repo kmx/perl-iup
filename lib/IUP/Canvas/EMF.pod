@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Canvas::EMF [special] 2D drawing canvas storing the result into EMF file
+IUP::Canvas::EMF - [special] 2D drawing canvas storing the result into EMF file
 
 =head1 SYNOPSIS
 
@@ -22,7 +22,7 @@ IUP::Canvas::EMF [special] 2D drawing canvas storing the result into EMF file
 
 =head1 DESCRIPTION
 
-IUP::Canvas::EMF is derived from L<IUP::Canvas> and offers all 2D drawing related methods:
+L<IUP::Canvas::EMF> is derived from L<IUP::Canvas> and offers all 2D drawing related methods:
 
 =over
 

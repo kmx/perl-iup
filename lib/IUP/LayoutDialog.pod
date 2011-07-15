@@ -2,11 +2,11 @@
 
 =head1 NAME
 
+IUP::LayoutDialog - [pre-defined-dialog] special dialog for GUI editing of other IUP dialogs
 
+=head1 DESCRIPTION
 
-=head1 DESCRIPTION (since iup-3.3)
-
-Creates a Layout Dialog. It is a predefined dialog to visually edit the
+Creates a Layout Dialog (since iup-3.3). It is a predefined dialog to visually edit the
 layout of another dialog in run time. It is a standard L<IUP::Dialog|IUP::Dialog>
 constructed with other IUP elements. The dialog can be shown with any
 of the show functions L<Show|IUP::Manual::02_Elements/"Show()">, L<ShowXY|IUP::Manual::02_Elements/"ShowXY()"> or L<Popup|IUP::Manual::02_Elements/"Popup()">.
@@ -165,7 +165,13 @@ L<IUP::ElementPropertiesDialog|IUP::ElementPropertiesDialog>.
 =head1 EXAMPLES
 
 
-Unfortunately there are no sample scripts using this element.
+The element B<IUP::LayoutDialog> is used in the following sample scripts:
+
+=over
+
+=item * L<0-basic/layoutdialog.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+
+=back 
 
 
 

@@ -4,9 +4,9 @@
 
 [% n.iuplayoutdialog %]
 
-[% h.desc %] (since iup-3.3)
+[% h.desc %]
 
-Creates a Layout Dialog. It is a predefined dialog to visually edit the
+Creates a Layout Dialog (since iup-3.3). It is a predefined dialog to visually edit the
 layout of another dialog in run time. It is a standard L<IUP::Dialog|IUP::Dialog>
 constructed with other IUP elements. The dialog can be shown with any
 of the show functions L<Show|[%m.elem%]/"Show()">, L<ShowXY|[%m.elem%]/"ShowXY()"> or L<Popup|[%m.elem%]/"Popup()">.

@@ -21,9 +21,9 @@ application.
 
  my $canvas = IUP::Canvas->new( BORDER=>"YES", BGCOLOR=>"220 0 0" );
 
-[% txt.new_attr %]
-
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 [% h.at %]
 

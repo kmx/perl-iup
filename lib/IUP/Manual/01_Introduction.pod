@@ -240,7 +240,7 @@ Y
 =back
 
 Inheritable attributes are stored in the hash table so the
-IUP::Get/SetAttribute logic can work, even if the control class store it
+L<SetAttribute|IUP::Manual::02_Elements/"SetAttribute()> / L<GetAttribute|IUP::Manual::02_Elements/"GetAttribute()> logic can work, even if the control class store it
 internally. But when you change an attribute to NULL, then its value is
 removed from the hash table and the default value if any is passed to
 the native system.

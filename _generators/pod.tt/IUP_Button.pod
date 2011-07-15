@@ -47,9 +47,9 @@ Color button with background color set:
  my $button1 = IUP::Button->new( BGCOLOR=>"0 200 0" ); #defined by RGB values
  my $button2 = IUP::Button->new( BGCOLOR=>IUP_RED );   #build-in constant
  
-[% txt.new_attr %]
-
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 [% h.at %]
 

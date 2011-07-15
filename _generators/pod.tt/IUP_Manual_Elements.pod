@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Manual::Elements - Manuals element guide
+[% m.elem %] - Manuals element guide
 
 =head1 IUP MANUAL
 
@@ -1255,9 +1255,9 @@ L<Destroy|/"Destroy()">.
 
 =head3 Update()
 
-=over
+=head3 UpdateChildren()
 
-IUP::UpdateChildren
+=over
 
 Mark the element to be redraw when the control returns to the system.
 

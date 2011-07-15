@@ -24,9 +24,9 @@ around an interface element.
 B<child>: Identifier of an interface element which will receive the
 frame around. It can be C<undef>.
 
-[% txt.new_attr %]
-
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 [% h.at %]
 

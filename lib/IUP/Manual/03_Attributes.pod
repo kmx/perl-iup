@@ -865,7 +865,7 @@ B<Affects:> All controls that have visual representation.
 
 Change the ZORDER of a dialog or control. It is commonly used for
 dialogs, but it can be used to control the z-order of controls in a
-IUP::Cbox.
+L<IUP::Cbox>.
 
 B<Value:> Can be "TOP" or "BOTTOM".
 

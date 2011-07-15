@@ -20,9 +20,9 @@ Creates a dial for regulating a given angular variable.
 
  $dial = IUP::Dial->new( ORIENTATION=>"VERTICAL" );
 
-[% txt.new_attr %]
-
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 [% h.at %]
 

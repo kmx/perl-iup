@@ -255,7 +255,7 @@ are defined in L<IUP::Constants|IUP::Constants>. Please note that:
 =item * constants are usable as barewords therefore they do not
 interpolate in interpolation contexts such as double-quoted strings
 
-  use IUP;
+  use IUP::Constants;
   
   # beware!!!
   print "color is - IUP_GREEN";    # prints: color is - IUP_GREEN

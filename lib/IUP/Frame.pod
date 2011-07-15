@@ -45,10 +45,10 @@ around an interface element.
 B<child>: Identifier of an interface element which will receive the
 frame around. It can be C<undef>.
 
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 

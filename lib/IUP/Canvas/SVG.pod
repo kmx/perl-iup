@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Canvas::SVG [special] 2D drawing canvas storing the result into SVG file
+IUP::Canvas::SVG - [special] 2D drawing canvas storing the result into SVG file
 
 =head1 SYNOPSIS
 
@@ -22,7 +22,7 @@ IUP::Canvas::SVG [special] 2D drawing canvas storing the result into SVG file
 
 =head1 DESCRIPTION
 
-IUP::Canvas::SVG is derived from L<IUP::Canvas> and offers all 2D drawing related methods:
+L<IUP::Canvas::SVG> is derived from L<IUP::Canvas> and offers all 2D drawing related methods:
 
 =over
 

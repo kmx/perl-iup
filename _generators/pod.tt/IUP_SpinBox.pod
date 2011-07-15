@@ -19,6 +19,8 @@ B<child:> Identifier of an interface element which will receive the spinbox arou
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 occurs.
 
+[% txt.new_attr %]
+
 [% h.cb %]
 
 [%txt.cb_intro%]

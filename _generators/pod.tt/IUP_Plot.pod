@@ -2,7 +2,7 @@
 
 [% h.name %]
 
-[% n.iuppplot %]
+[% n.iupplot %]
 
 [% h.desc %]
 
@@ -22,12 +22,11 @@ However the standard PPlot distribution source code was changed for iup_pplot li
 
 [% h.create %]
 
- $pplot = IUP::PPlot->new(void);
- iup.pplot{} -> (elem: ihandle) [in Lua]
- pplot() [in LED]
+ $pplot = IUP::PPlot->new( TITLE=>"Simple Data", GRID=>"YES" );
 
-This function returns the identifier of the created plot, or NULL if an
-error occurs.
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 =head2 Guide
 

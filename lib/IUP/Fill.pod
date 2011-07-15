@@ -19,10 +19,10 @@ It does not have a native representation.
 
  $fill = IUP::Fill->new( SIZE=>30 );
  
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 

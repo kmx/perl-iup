@@ -50,10 +50,10 @@ values. See Notes below.
 B<colors>: table named colors containing the colors indices. See Notes
 below.
 
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
 to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
-
-B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 =head2 ATTRIBUTES
 
@@ -220,8 +220,8 @@ i=16 up to i=100 must be defined even if some indices are not used.
 You can obtain several images from the L<IUP::ImageLib::XXX|xxx.html>, a library of pre-defined images. To
 view the images you can use the L<IUP::View|IUP::View> in the applications included
 in the distribution, available at the L<Download|xxx.html>.
-B<IUP::View> is also capable of converting several image formats into an
-IUP::Image, and save IUP images as LED, Lua or ICO.
+B<IUP::View> is also capable of converting several image formats into an 
+L<IUP::Image>, and save IUP images as LED, Lua or ICO.
 
 The L<EdPatt|http://www.tecgraf.puc-rio.br/edpatt> and the
 L<IMLAB|http://www.tecgraf.puc-rio.br/~scuri/imlab> applications can

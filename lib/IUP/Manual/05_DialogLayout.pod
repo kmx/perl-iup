@@ -364,10 +364,8 @@ L<Insert|IUP::Manual::02_Elements/"Insert()">. To remove from the tree call
 L<IUP::Detach|IUP::Detach>.
 
 For the element to be visible L<Map|IUP::Manual::02_Elements/"Map()"> must be called
-so it can be associated with a native control. L<Show|IUP::Manual::02_Elements/"Show()">, B<
-IUP::ShowXY> or L<Popup|IUP::Manual::02_Elements/"Popup()"> will automatically call L<Map|IUP::Manual::02_Elements/"Map()"> before
-showing a dialog. To remove this association call L<
-IUP::Unmap|func/iupumap.html>.
+so it can be associated with a native control. L<Show|IUP::Manual::02_Elements/"Show()">, B<IUP::ShowXY> or L<Popup|IUP::Manual::02_Elements/"Popup()"> will automatically call L<Map|IUP::Manual::02_Elements/"Map()"> 
+before showing a dialog. To remove this association call L<IUP::Unmap|IUP::Unmap>.
 
 But there is a call order to be able to call theses functions that
 depends on the state of the element. As you can see from these

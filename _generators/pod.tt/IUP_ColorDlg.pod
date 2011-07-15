@@ -32,9 +32,9 @@ the Windows and GTK dialogs are not available anymore).
 
  $colordlg = IUP::ColorDlg->new( VALUE=>"100 100 0" );
 
-[% txt.new_attr %]
-
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
 
 [% h.at %]
 
