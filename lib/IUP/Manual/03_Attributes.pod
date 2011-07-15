@@ -523,12 +523,12 @@ B<Value:> Text.
 B<Notes:>
 
 The NAME value will be used by
-L<IUP::GetDialogChild|IUP::GetDialogChild> to find a child
+L<GetDialogChild|IUP::Manual::02_Elements/"GetDialogChild()"> to find a child
 inside a dialog.
 
 B<Affects:> All controls.
 
-B<See Also:> L<IUP::GetDialogChild|IUP::GetDialogChild>
+B<See Also:> L<GetDialogChild|IUP::Manual::02_Elements/"GetDialogChild()">
 
 =item B<POSITION> (read-only) (non inheritable)
 
@@ -581,7 +581,7 @@ If you wish to use the B<User> size only as an initial size, change
 this attribute to C<undef> after the control is mapped, the returned size
 in L<GetAttribute|IUP::Manual::02_Elements/"GetAttribute()"> will still be the B<Current> size.
 
-The element is NOT immediately repositioned. Call L<IUP::Refresh|IUP::Refresh> to
+The element is NOT immediately repositioned. Call L<Refresh|IUP::Manual::02_Elements/"Refresh()"> to
 update the dialog layout.
 
 L<Map|IUP::Manual::02_Elements/"Map()"> also updates the dialog layout even if it is already mapped,
@@ -650,7 +650,7 @@ If you wish to use the B<User> size only as an initial size, change
 this attribute to C<undef> after the control is mapped, the returned size
 in L<GetAttribute|IUP::Manual::02_Elements/"GetAttribute()"> will still be the B<Current> size.
 
-The element is NOT immediately repositioned. Call L<IUP::Refresh|IUP::Refresh> to
+The element is NOT immediately repositioned. Call L<Refresh|IUP::Manual::02_Elements/"Refresh()"> to
 update the dialog layout.
 
 L<Map|IUP::Manual::02_Elements/"Map()"> also updates the dialog layout even if it is already mapped,
@@ -662,7 +662,7 @@ See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for mode de
 B<Affects:> All, except menus.
 
 B<See Also:> L<FONT|/FONT>, L<RASTERSIZE|/RASTERSIZE>,
-L<IUP::Refresh|IUP::Refresh>
+L<Refresh|IUP::Manual::02_Elements/"Refresh()">
 
 =item B<TIP> (non inheritable)
 
@@ -1215,7 +1215,7 @@ When the canvas is visible, a change in POSX can generate a redraw in
 the horizontal scrollbar on the screen.
 
 This attribute does not generate a redraw of the canvas. If you need a
-redraw call L<IUP::Update|IUP::Update> in L<SCROLL_CB|IUP::Manual::04_CallbacksSCROLL_CB>.
+redraw call L<Update|IUP::Manual::02_Elements/"Update()"> in L<SCROLL_CB|IUP::Manual::04_CallbacksSCROLL_CB>.
 
 B<Affects:> L<IUP::Canvas|IUP::Canvas>
 
@@ -1235,7 +1235,7 @@ When the canvas is visible, a change in POSY can generate a redraw in
 the vertical scrollbar on the screen.
 
 This attribute does not generate a redraw of the canvas. If you need a
-redraw call L<IUP::Update|IUP::Update> in L<SCROLL_CB|IUP::Manual::04_CallbacksSCROLL_CB>.
+redraw call L<Update|IUP::Manual::02_Elements/"Update()"> in L<SCROLL_CB|IUP::Manual::04_CallbacksSCROLL_CB>.
 
 B<Affects:> L<IUP::Canvas|IUP::Canvas>
 
@@ -1421,7 +1421,7 @@ Can have the values "ENGLISH" and "PORTUGUESE".
 
 B<Default:> "ENGLISH"
 
-Can also be set by L<IUP::SetLanguage|IUP::SetLanguage>.
+Can also be set by L<SetLanguage|IUP/"SetLanguage()">.
 
 =item B<VERSION> (read-only)
 
@@ -1474,7 +1474,7 @@ possible values.
 
 =item B<LOCKLOOP>
 
-When the last visible dialog is closed the L<IUP::ExitLoop|IUP::ExitLoop> function is
+When the last visible dialog is closed the L<ExitLoop|IUP/"ExitLoop()"> function is
 called. To avoid that set LOCKLOOP=YES before hiding the last dialog.
 
 Possible values: "YES" or "NO".

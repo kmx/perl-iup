@@ -116,7 +116,7 @@ can be obtained using L<GetChild|IUP::Manual::02_Elements/"GetChild()"> or L<Get
 L<IUP::Sbox|IUP::Sbox> can be resized above the maximum size so some controls go to
 outside the dialog area at right or bottom. In fact this is part of the
 dynamic layout default reposition of controls inside the dialog. See
-the L<IUP::Refresh|IUP::Refresh> function. The IUP layout does not have a maximum
+the L<Refresh|IUP::Manual::02_Elements/"Refresh()"> function. The IUP layout does not have a maximum
 limit only a minimum, except if you use the MAXSIZE common attribute.
 
 The box can be created with no elements and be dynamic filled using

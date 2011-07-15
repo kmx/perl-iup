@@ -294,7 +294,7 @@ NO.
 Name of the element that must receive the focus right
 after the dialog is shown using L<Show|[%m.elem%]/"Show()"> or L<Popup|[%m.elem%]/"Popup()">. If not
 defined then the first control than can receive the focus is selected
-(same effect of calling L<NextField|[%m.elem]/"NextField()"> for
+(same effect of calling L<NextField|[%m.elem%]/"NextField()"> for
 the dialog). Updated after SHOW_CB is called and only if the focus was
 not changed during the callback.
 

@@ -282,8 +282,8 @@ B<$self:> reference to the the element that received keyboard focus.
 B<Affects:> All elements with user interaction, except menus.
 
 B<See Also:> L<KILLFOCUS_CB|iup_killfocus_cb.html>,
-L<IUP::GetFocus|IUP::GetFocus>,
-L<IUP::SetFocus|IUP::SetFocus>
+L<GetFocus|IUP/"GetFocus()">,
+L<SetFocus|IUP::Manual::02_Elements/"SetFocus()">
 
 =item B<HELP_CB>
 
@@ -385,7 +385,7 @@ the timer in all the mouse and keyboard callbacks of the L<IUP::Canvas|IUP::Canv
 If the timer is trigged then you are in idle state. If the L<IUP::Canvas|IUP::Canvas>
 loses its focus then stop the timer.
 
-B<See Also:> L<IUP::SetFunction|IUP::SetFunction>,
+B<See Also:> L<SetFunction|IUP::Manual::02_Elements/"SetFunction()">,
 L<IUP::Timer|IUP::Timer>.
 
 =item B<KEYPRESS_CB>

@@ -523,12 +523,12 @@ L<SetName|[%m.elem%]/"SetName()">.
 [% h.at_notes %]
 
 The NAME value will be used by
-L<GetDialogChild|[%m.elem]/"GetDialogChild()"> to find a child
+L<GetDialogChild|[%m.elem%]/"GetDialogChild()"> to find a child
 inside a dialog.
 
 [% h.at_affects %] All controls.
 
-[% h.at_see %] L<GetDialogChild|[%m.elem]/"GetDialogChild()">
+[% h.at_see %] L<GetDialogChild|[%m.elem%]/"GetDialogChild()">
 
 =item B<POSITION> (read-only) (non inheritable)
 
@@ -581,7 +581,7 @@ If you wish to use the B<User> size only as an initial size, change
 this attribute to C<undef> after the control is mapped, the returned size
 in L<GetAttribute|[%m.elem%]/"GetAttribute()"> will still be the B<Current> size.
 
-The element is NOT immediately repositioned. Call L<Refresh|[%m.elem]/"Refresh()"> to
+The element is NOT immediately repositioned. Call L<Refresh|[%m.elem%]/"Refresh()"> to
 update the dialog layout.
 
 L<Map|[%m.elem%]/"Map()"> also updates the dialog layout even if it is already mapped,
@@ -650,7 +650,7 @@ If you wish to use the B<User> size only as an initial size, change
 this attribute to C<undef> after the control is mapped, the returned size
 in L<GetAttribute|[%m.elem%]/"GetAttribute()"> will still be the B<Current> size.
 
-The element is NOT immediately repositioned. Call L<Refresh|[%m.elem]/"Refresh()"> to
+The element is NOT immediately repositioned. Call L<Refresh|[%m.elem%]/"Refresh()"> to
 update the dialog layout.
 
 L<Map|[%m.elem%]/"Map()"> also updates the dialog layout even if it is already mapped,
@@ -662,7 +662,7 @@ See the L<[%m.dlg%]|[%m.dlg%]> for mode details on sizes.
 [% h.at_affects %] All, except menus.
 
 [% h.at_see %] L<FONT|/FONT>, L<RASTERSIZE|/RASTERSIZE>,
-L<Refresh|[%m.elem]/"Refresh()">
+L<Refresh|[%m.elem%]/"Refresh()">
 
 =item B<TIP> (non inheritable)
 
@@ -1215,7 +1215,7 @@ When the canvas is visible, a change in POSX can generate a redraw in
 the horizontal scrollbar on the screen.
 
 This attribute does not generate a redraw of the canvas. If you need a
-redraw call L<Update|[%m.elem]/"Update()"> in L<SCROLL_CB|[%m.cb%]SCROLL_CB>.
+redraw call L<Update|[%m.elem%]/"Update()"> in L<SCROLL_CB|[%m.cb%]SCROLL_CB>.
 
 [% h.at_affects %] L<IUP::Canvas|IUP::Canvas>
 
@@ -1235,7 +1235,7 @@ When the canvas is visible, a change in POSY can generate a redraw in
 the vertical scrollbar on the screen.
 
 This attribute does not generate a redraw of the canvas. If you need a
-redraw call L<Update|[%m.elem]/"Update()"> in L<SCROLL_CB|[%m.cb%]SCROLL_CB>.
+redraw call L<Update|[%m.elem%]/"Update()"> in L<SCROLL_CB|[%m.cb%]SCROLL_CB>.
 
 [% h.at_affects %] L<IUP::Canvas|IUP::Canvas>
 

@@ -232,7 +232,7 @@ B<User> size is defined then the B<Natural> size is ignored.
 
 If you want to adjust sizes in the dialog do it after the layout size
 and positioning are done, i.e. after the dialog is mapped or after
-L<Refresh|[%m.elem]/"Refresh()"> is called.
+L<Refresh|[%m.elem%]/"Refresh()"> is called.
 
 =head3 EXPAND
 
@@ -328,17 +328,17 @@ To create a node simply call one of the pre-defined constructors like
 B<IUP::Label>, L<IUP::Button|IUP::Button>, L<IUP::Canvas|IUP::Canvas>, and so on. To create a branch
 just call the constructors of containers like L<IUP::Dialog|IUP::Dialog>,
 L<IUP::Frame|IUP::Frame>, L<IUP::Vbox|IUP::Vbox>, and so on. Internally they all call
-L<Create|[%m.elem]/"Create()"> to create branches or nodes. To
+L<Create|[%m.elem%]/"Create()"> to create branches or nodes. To
 destroy a node or branch call L<Destroy|[%m.elem%]/"Destroy()">.
 
 Some of the constructors already append children to its branch, but you
 can add other children using L<Append|[%m.elem%]/"Append()"> or
 L<Insert|[%m.elem%]/"Insert()">. To remove from the tree call
-L<Detach|[%m.elem]/"Detach()">.
+L<Detach|[%m.elem%]/"Detach()">.
 
 For the element to be visible L<Map|[%m.elem%]/"Map()"> must be called
 so it can be associated with a native control. L<Show|[%m.elem%]/"Show()">, L<ShowXY|[%m.elem%]/"ShowXY()"> or L<Popup|[%m.elem%]/"Popup()"> will automatically call L<Map|[%m.elem%]/"Map()"> 
-before showing a dialog. To remove this association call L<Unmap|[%m.elem]/"Unmap()">.
+before showing a dialog. To remove this association call L<Unmap|[%m.elem%]/"Unmap()">.
 
 But there is a call order to be able to call theses functions that
 depends on the state of the element. As you can see from these
@@ -354,7 +354,7 @@ implicity there will be a call to:
  IUP::Destroy <- IUP::Detach <- IUP::Unmap
 
 A more simple and fast way to move an element from one position in the
-hierarchy to another is using L<Reparent|[%m.elem]/"Reparent()">.
+hierarchy to another is using L<Reparent|[%m.elem%]/"Reparent()">.
 
 The dialog is the root of the hierarchy tree. To retrieve the dialog of
 any element you can simply call L<GetDialog|[%m.elem%]/"GetDialog()">,
@@ -387,13 +387,13 @@ L<Map|[%m.elem%]/"Map()"> also updates the dialog layout even if it is already m
 so using it or using L<Show|[%m.elem%]/"Show()">, L<ShowXY|[%m.elem%]/"ShowXY()"> or L<Popup|[%m.elem%]/"Popup()"> (they all
 call L<Map|[%m.elem%]/"Map()">) will also update the dialog layout. The layout size and
 positioning can be manually updated using
-L<Refresh|[%m.elem]/"Refresh()">, even if the dialog is not mapped.
+L<Refresh|[%m.elem%]/"Refresh()">, even if the dialog is not mapped.
 
 After changing containers attributes or element sizes that affect the
 layout the elements are NOT immediately repositioned. Call
-L<Refresh|[%m.elem]/"Refresh()"> for an element inside the dialog to update the dialog
+L<Refresh|[%m.elem%]/"Refresh()"> for an element inside the dialog to update the dialog
 layout. To force a redraw of an element without layout update call
-L<Update|[%m.elem]/"Update()">.
+L<Update|[%m.elem%]/"Update()">.
 
 The Layout update is done in two phases. First the layout is computed,
 this can be done without the dialog being mapped. Second is the native

@@ -197,7 +197,7 @@ The element B<IUP::ColorBrowser> is used in the following sample scripts:
 
 =head1 SEE ALSO
 
-L<IUP::GetColor|IUP::GetColor>,
+L<GetColor|IUP/"GetColor()">,
 L<IUP::ColorDlg|IUP::ColorDlg>
 
 The original doc: L<iupcolorbrowser.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupcolorbrowser.html>
