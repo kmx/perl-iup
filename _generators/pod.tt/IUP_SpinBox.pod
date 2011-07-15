@@ -6,13 +6,13 @@
 
 [% h.desc %]
 
-L<IUP::Spinbox|IUP::Spinbox> is an horizontal container that already contains a L<IUP::Spin|IUP::Spin>.
+L<IUP::SpinBox|IUP::SpinBox> is an horizontal container that already contains a L<IUP::Spin|IUP::Spin>.
 
 [% h.usage %]
 
 [% h.create %]
 
- $spinbox = IUP::Spinbox->new( child=>$element );
+ $spinbox = IUP::SpinBox->new( child=>$element );
 
 B<child:> Identifier of an interface element which will receive the spinbox around.
 

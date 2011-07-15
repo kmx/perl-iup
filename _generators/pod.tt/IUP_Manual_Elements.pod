@@ -1186,7 +1186,7 @@ the keyboard focus.
 The value returned by L<GetFocus|IUP/"GetFocus()"> will be updated only after the
 main loop regain the control and the control actually receive the
 focus. So if you call L<GetFocus|IUP/"GetFocus()"> right after L<SetFocus|/"SetFocus()"> the
-return value will be different. You could call L<Flush|/"Flush()"> between the
+return value will be different. You could call L<Flush|/"Flush()Flush()"> between the
 two functions to obtain the same value.
 
 [% h.at_see %]

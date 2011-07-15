@@ -167,7 +167,7 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-L<IUP::Zbox|IUP::Zbox>, L<IUP::VBox|IUP::VBox>
+L<IUP::Zbox|IUP::Zbox>, L<IUP::Vbox|IUP::Vbox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iuphbox.html|[%url.iuporigdoc%]elem/iuphbox.html>

@@ -6,13 +6,13 @@ IUP::Spin - [GUI element] vertical box containing 2 buttons for incrementing/dec
 
 =head1 DESCRIPTION
 
-L<IUP::Spinbox|IUP::Spinbox> is an horizontal container that already contains a L<IUP::Spin|IUP::Spin>.
+L<IUP::SpinBox|IUP::SpinBox> is an horizontal container that already contains a L<IUP::Spin|IUP::Spin>.
 
 =head1 USAGE
 
 =head2 CREATION - new() method
 
- $spinbox = IUP::Spinbox->new( child=>$element );
+ $spinbox = IUP::SpinBox->new( child=>$element );
 
 B<child:> Identifier of an interface element which will receive the spinbox around.
 

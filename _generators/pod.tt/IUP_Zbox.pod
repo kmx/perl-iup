@@ -142,7 +142,7 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-L<IUP::Hbox|IUP::Hbox>, L<IUP::VBox|IUP::VBox>
+L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupzbox.html|[%url.iuporigdoc%]elem/iupzbox.html>

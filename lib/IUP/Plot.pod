@@ -39,7 +39,7 @@ However the standard PPlot distribution source code was changed for iup_pplot li
 
 =head2 CREATION - new() method
 
- $pplot = IUP::PPlot->new( TITLE=>"Simple Data", GRID=>"YES" );
+ $pplot = IUP::Plot->new( TITLE=>"Simple Data", GRID=>"YES" );
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
@@ -689,7 +689,7 @@ Actions generated before and after the
 redraw operation. Predraw can be used to draw a different background
 and Postdraw can be used to draw additional information in the plot.
 Predraw has no restrictions, but Postdraw is clipped to the dataset
-area. To position elements in plot units, use the L<IUP::PPlotTransform|IUP::PPlotTransform>
+area. To position elements in plot units, use the L<IUP::PlotTransform|IUP::PlotTransform>
 function.
 
  sub predraw_cb_handler {
@@ -704,7 +704,7 @@ function.
 
 =over
 
-B<$cnv:> reference to L<IUP::Cavnas> where the draw operation occurs.
+B<$cnv:> reference to L<IUP::Canvas> where the draw operation occurs.
 
 =back
 

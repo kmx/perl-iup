@@ -94,7 +94,7 @@ Layout Hierarchy
 
  IUP::Dialog
  |
- +-> IUP::HBox
+ +-> IUP::Hbox
      |
      +->IUP::Fill
      |
@@ -327,7 +327,7 @@ because of the way they are composed together.
 To create a node simply call one of the pre-defined constructors like
 B<IUP::Label>, L<IUP::Button|IUP::Button>, L<IUP::Canvas|IUP::Canvas>, and so on. To create a branch
 just call the constructors of containers like L<IUP::Dialog|IUP::Dialog>,
-L<IUP::Frame|IUP::Frame>, L<IUP::VBox|IUP::VBox>, and so on. Internally they all call
+L<IUP::Frame|IUP::Frame>, L<IUP::Vbox|IUP::Vbox>, and so on. Internally they all call
 L<IUP::Create|IUP::Create> to create branches or nodes. To
 destroy a node or branch call L<Destroy|[%m.elem%]/"Destroy()">.
 

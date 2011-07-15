@@ -67,7 +67,7 @@ enabled when TABTYPE=LEFT or TABTYPE=RIGHT.
 =item * B<PADDING> (non inheritable)
 
 Internal margin of the tab title. Works
-just like the MARGIN attribute of the IUP::Hbox and IUP::Vbox containers,
+just like the MARGIN attribute of the L<IUP::Hbox> and L<IUP::Vbox> containers,
 but uses a different name to avoid inheritance problems.
 Default value: "0x0". 
 

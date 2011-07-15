@@ -263,8 +263,7 @@ will not update the the size and position in the native system. (since
 
 [% h.at_affects %] All elements, except menus.
 
-[% h.at_see %] L<IUP::Zbox|IUP::Zbox>, L<IUP::VBox|IUP::VBox>,
-L<IUP::HBox|IUP::HBox>
+[% h.at_see %] L<IUP::Zbox|IUP::Zbox>, L<IUP::Vbox|IUP::Vbox>, L<IUP::Hbox|IUP::Hbox>
 
 =item B<FONT>
 

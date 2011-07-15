@@ -86,7 +86,7 @@ commands. Works only if a mnemonic is NOT defined in the title. Can be
 =item * B<PADDING>
 
 Internal margin. Works just like the MARGIN attribute of
-the IUP::Hbox and IUP::Vbox containers, but uses a different name to avoid
+the L<IUP::Hbox> and <IUP::Vbox> containers, but uses a different name to avoid
 inheritance problems. Not used when SEPARATOR is used. Default value:
 "0x0". 
 

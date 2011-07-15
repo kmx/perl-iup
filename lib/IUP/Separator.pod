@@ -49,7 +49,7 @@ The element B<IUP::Separator> is used in the following sample scripts:
 
 =head1 SEE ALSO
 
-L<IUP::Item|IUP::Item>, L<IUP::SubMenu|IUP::SubMenu>, L<IUP::Menu|IUP::Menu>
+L<IUP::Item|IUP::Item>, L<IUP::Submenu|IUP::Submenu>, L<IUP::Menu|IUP::Menu>
 
 The original doc: L<iupseparator.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupseparator.html>
  
