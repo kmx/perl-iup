@@ -236,8 +236,8 @@ K_Print and the K_Pause keys (up to GTK version 2.8.18).
  Pause		K_PAUSE
  Print Screen	K_Print
  Context Menu	K_Menu
- Â´		K_acute    xxxencoding broken
- Ã§		K_ccedilla xxxencoding broken
+ XXX		K_acute    xxxencoding broken
+ XXX		K_ccedilla xxxencoding broken
  F1		K_F1
  F2		K_F2
  F3		K_F3
