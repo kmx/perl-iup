@@ -1,5 +1,7 @@
 ################ the last time working on ################ 
-- POD hacking - IUP_Plot.pod
+
+- POD hacking - 2 elements to be done: IUP::Image + IUP::Matrix
+
 ##########################################################
 
 IDEA
@@ -7,8 +9,6 @@ IDEA
 
 !!Decide!!######## move to separate dist
 - IUP::OLE
-- IUP::CanvasGL
-- IUP::Canvas
 - we probably need IUP::ConfigData for listing available features (iupole, iupgl ...)
 
 !!Big Task!!######## doc
