@@ -390,7 +390,7 @@ also associated to an element by means of an name.
 xxxThe OLD method to associate a function to a callback, the application
 must employ the L<SetAttribute|[%m.elem%]/"SetAttribute()"> function, linking the action to a
 name (passed as a string). From this point on, this name will refer to
-a callback. By means of function L<IUP::SetFunction|IUP::SetFunction>, the user connects
+a callback. By means of function L<SetFunction|[%m.elem]/"SetFunction()">, the user connects
 this name to the callback. For example:
 
  sub button_action {
@@ -401,14 +401,14 @@ this name to the callback. For example:
 
 In LED, callback are only assigned by their names. It will be still
 necessary to associate the name with the corresponding function in C
-using L<IUP::SetFunction|IUP::SetFunction>. For example:
+using L<SetFunction|[%m.elem]/"SetFunction()">. For example:
 
  # In LED, is equivalent to the IUP::SetAttribute command in the previous example.
  bt = button("Title", my_button_action)  
 
 In the NEW method, the application does not needs a global name, it
 directly sets the callback using the attribute name using
-L<IUP::SetCallback|IUP::SetCallback>. For example:
+L<SetCallback|[%m.elem]/"SetCallback()">. For example:
 
  int myButton_action(Ihandle* self);
  ...
@@ -416,7 +416,7 @@ L<IUP::SetCallback|IUP::SetCallback>. For example:
 
 The new method is more efficient and more secure, because there is no
 risk of a name conflict. If the application uses LED, just ignore the
-name in the LED, and replace L<IUP::SetFunction|IUP::SetFunction> by L<IUP::SetCallback|IUP::SetCallback>.
+name in the LED, and replace L<SetFunction|[%m.elem]/"SetFunction()"> by L<SetCallback|[%m.elem]/"SetCallback()">.
 
 Although enabled in old versions, callbacks do NOT have B<inheritance>
 like attributes.
@@ -433,7 +433,7 @@ the following values:
 other return values do not apply, the callback should return this
 value.
 
-=item * IUP_CLOSE: Call L<IUP::ExitLoop|IUP::ExitLoop> after return. Depending on the
+=item * IUP_CLOSE: Call L<ExitLoop|IUP/"ExitLoop()"> after return. Depending on the
 state of the application it will close all windows and exit the
 application. Applies only to some actions.
 
@@ -464,14 +464,14 @@ X-Windows when the dialog is shown for the first time.
 
 IUP is an event-oriented interface system, so it will keep a loop
 E<ldquo>waitingE<rdquo> for the user to interact with the application.
-For this loop to occur, the application must call the L<IUP::MainLoop|IUP::MainLoop>
+For this loop to occur, the application must call the L<MainLoop|IUP/"MainLoop()">
 function, which is generally used right before L<IUP::Close|IUP::Close>.
 
 When the application is closed by returning IUP_CLOSE in a callback,
-calling L<IUP::ExitLoop|IUP::ExitLoop> or by hiding the last visible dialog, the
-function L<IUP::MainLoop|IUP::MainLoop> will return.
+calling L<ExitLoop|IUP/"ExitLoop()"> or by hiding the last visible dialog, the
+function L<MainLoop|IUP/"MainLoop()"> will return.
 
-The L<IUP::LoopStep|IUP::LoopStep> and the L<IUP::Flush|IUP::Flush> functions force the processing
+The L<LoopStep|IUP/"LoopStep()"> and the L<Flush|[%m.elem]/"Flush()"> functions force the processing
 of incoming events while inside an application callback.
 
 =head2 IUP::Lua

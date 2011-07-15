@@ -29,7 +29,7 @@ xxxTODO text text
 =head1 Keyboard
 
 The application can control the focus using the functions
-L<IUP::GetFocus|IUP::GetFocus> and L<IUP::SetFocus|IUP::SetFocus>. When the focus is changed the
+L<GetFocus|IUP/"GetFocus()"> and L<SetFocus|[%m.elem]/"SetFocus()">. When the focus is changed the
 application is notified trough the callbacks GETFOCUS_CB and
 KILLFOCUS_CB.
 
@@ -40,7 +40,7 @@ combination "Ctrl+Tab" must be used, because "Tab" is a valid input for
 the text. All IUP interactive controls have Tab stops, but the
 navigation order is related to the order the controls are placed in the
 dialog and can not be changed. The order is the same implemented by the
-functions L<IUP::NextField|IUP::NextField> and L<IUP::PreviousField|IUP::PreviousField>. To remove the Tab
+functions L<NextField|[%m.elem]/"NextField()"> and L<PreviousField|[%m.elem]/"PreviousField()">. To remove the Tab
 stop from a control use the CANFOCUS attribute.
 
 Arrows can also be used for navigation between buttons and toggles.

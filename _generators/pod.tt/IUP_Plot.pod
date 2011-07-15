@@ -139,7 +139,7 @@ Adds a 2D dataset to the plot and returns the dataset B<index>. The
 data set can be empty. Redraw is NOT done until the REDRAW attribute is
 set. Also it will change the current dataset index to the return value.
 You can only set attributes of a dataset AFTER you added the dataset.
-Can only be called if L<IUP::PlotBegin|IUP::PlotBegin> was called. Whenever you create a
+Can only be called if L<PlotBegin|IUP::Plot/"PlotBegin()"> was called. Whenever you create a
 dataset all its "DS_*" attributes will be set to the default values.
 Notice that DS_MODE must be set before other "DS_*" attributes.
 
@@ -669,7 +669,7 @@ Actions generated before and after the
 redraw operation. Predraw can be used to draw a different background
 and Postdraw can be used to draw additional information in the plot.
 Predraw has no restrictions, but Postdraw is clipped to the dataset
-area. To position elements in plot units, use the L<IUP::PlotTransform|IUP::PlotTransform>
+area. To position elements in plot units, use the L<PlotTransform|IUP::Plot/"PlotTransform()">
 function.
 
  sub predraw_cb_handler {

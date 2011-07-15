@@ -449,8 +449,8 @@ The user data associated with the specified node. (since iup-3.0)
 Image name to be used in the specified node, where id is
 the specified node identifier. If id is empty, then the focus node is
 used as the specified node. 
-XXX-check-this Use L<IUP::SetHandle|IUP::SetHandle> 
-XXX-check-this or L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+XXX-check-this Use L<SetName|[%m.elem%]/"SetName()"> 
+XXX-check-this or XXX-FIX_ME to
 XXX-check-this associate an image to a name. 
 See also L<IUP::Image|IUP::Image>. 
 In Windows and Motif set the BGCOLOR attribute before setting the image.
@@ -959,14 +959,14 @@ B<$id:> node identifier.
 
 Action generated when any
 mouse button is pressed or released inside the element. Use
-L<IUP::ConvertXYToPos|IUP::ConvertXYToPos> to convert (x,y)
+L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
 coordinates in the node identifier. 
 
 =item * L<MOTION_CB|[%m.cb%]/MOTION_CB>
 
 Action generated when the
 mouse is moved over the element. Use
-L<IUP::ConvertXYToPos|IUP::ConvertXYToPos> to convert (x,y)
+L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
 coordinates in item the node identifier. 
 
 =item * L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]

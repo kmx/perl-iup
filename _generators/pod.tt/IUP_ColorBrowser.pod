@@ -195,7 +195,7 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-L<IUP::GetColor|IUP::GetColor>,
+L<GetColor|IUP/"GetColor()">,
 L<IUP::ColorDlg|IUP::ColorDlg>
 
 [%IF flags.gennerate_origdoc -%]

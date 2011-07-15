@@ -87,7 +87,7 @@ Action generated when the Help button is pressed.
 [% h.notes %]
 
 The L<IUP::MessageDlg|IUP::MessageDlg> is a native pre-defined dialog not altered by
-L<IUP::SetLanguage|IUP::SetLanguage>.
+L<SetLanguage|IUP/"SetLanguage()">.
 
 To show the dialog, use function L<Popup|[%m.elem%]/"Popup()">.
 function.

@@ -232,7 +232,7 @@ In GTK, when the tabs buttons are scrolled, the active tab is also
 changed.
 
 When you change the active tab the focus is usually not changed. If you
-want to control the focus behavior call L<IUP::SetFocus|IUP::SetFocus> in the
+want to control the focus behavior call L<SetFocus|[%m.elem]/"SetFocus()"> in the
 TABCHANGE_CB callback.
 
 =head2 Utility Functions
