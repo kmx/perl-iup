@@ -167,7 +167,7 @@ also accepted.
 
 =over
 
-=item * L<ACTION|[%m.cb%]/ACTION>
+=item L<ACTION|[%m.cb%]/ACTION>
 
 Action generated when the toggle's
 state (on/off) was changed. The callback also receives the toggle's
@@ -191,7 +191,7 @@ B<Returns:> IUP_CLOSE will be processed.
 
 =back
 
-=item * B<VALUECHANGED_CB>
+=item B<VALUECHANGED_CB>
 
 Called after the value was interactively changed by
 the user. Called after the ACTION callback, but under the same context.

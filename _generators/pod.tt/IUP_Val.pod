@@ -134,7 +134,7 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 =over
 
-=item * B<VALUECHANGED_CB>
+=item B<VALUECHANGED_CB>
 
 Called after the value was interactively changed by the user.
 

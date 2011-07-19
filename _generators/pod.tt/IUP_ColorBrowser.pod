@@ -91,7 +91,7 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 =over
 
-=item * B<CHANGE_CB>
+=item B<CHANGE_CB>
 
 Called when the user releases the left mouse button over
 the control, defining the selected color.
@@ -111,7 +111,7 @@ B<$r, $g, $b:> color value.
 
 =back
 
-=item * B<DRAG_CB>
+=item B<DRAG_CB>
 
 Called several times while the color is being changed by
 dragging the mouse over the control.
@@ -131,7 +131,7 @@ B<$r, $g, $b:> color value.
 
 =back
 
-=item * B<VALUECHANGED_CB>
+=item B<VALUECHANGED_CB>
 
 Called after the value was interactively changed by
 the user. It is called whenever a B<CHANGE_CB> or a B<DRAG_CB> would

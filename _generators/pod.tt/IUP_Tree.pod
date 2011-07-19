@@ -700,7 +700,7 @@ be set to YES before map, but can be changed later (since iup-3.3).
 
 =over
 
-=item * B<SELECTION_CB>
+=item B<SELECTION_CB>
 
 Action generated when a node is selected or
 deselected. This action occurs when the user clicks with the mouse or
@@ -723,7 +723,7 @@ B<$status:> 1=node selected, 0=node unselected.
 
 =back
 
-=item * B<MULTISELECTION_CB>
+=item B<MULTISELECTION_CB>
 
 Action generated after a continuous range of
 nodes is selected in one single operation. If not defined the
@@ -753,7 +753,7 @@ B<$n:> Number of nodes in the array.
 
 =back
 
-=item * B<MULTIUNSELECTION_CB>
+=item B<MULTIUNSELECTION_CB>
 
 Action generated before multiple nodes are
 unselected in one single operation. If not defined the SELECTION_CB
@@ -778,7 +778,7 @@ B<$n:> Number of nodes in the array.
 
 =back
 
-=item * B<BRANCHOPEN_CB>
+=item B<BRANCHOPEN_CB>
 
 Action generated when a branch is expanded. This
 action occurs when the user clicks the "+" sign on the left of the
@@ -803,7 +803,7 @@ the branch to be opened.
 
 =back
 
-=item * B<BRANCHCLOSE_CB>
+=item B<BRANCHCLOSE_CB>
 
 Action generated when a branch is collapsed. This
 action occurs when the user clicks the "-" sign on the left of the
@@ -828,7 +828,7 @@ the branch to be closed.
 
 =back
 
-=item * B<EXECUTELEAF_CB>
+=item B<EXECUTELEAF_CB>
 
 Action generated when a leaf is to be executed. This
 action occurs when the user double clicks a leaf, or hits Enter on a
@@ -849,7 +849,7 @@ B<$id:> node identifier.
 
 =back
 
-=item * B<SHOWRENAME_CB>
+=item B<SHOWRENAME_CB>
 
 Action generated when a node is about to be renamed.
 It occurs when the user clicks twice the node or press B<F2>. Called
@@ -873,7 +873,7 @@ rename continuous but the edit box is read-only).
 
 =back
 
-=item * B<RENAME_CB>
+=item B<RENAME_CB>
 
 Action generated after a node was renamed in place. It
 occurs when the user press B<Enter> after editing the name, or when the
@@ -902,7 +902,7 @@ editing stops always.
 
 =back
 
-=item * B<DRAGDROP_CB>
+=item B<DRAGDROP_CB>
 
 Action generated when a drag & drop is executed. Only
 active if B<SHOWDRAGDROP=YES.>
@@ -936,7 +936,7 @@ drop node.
 
 =back
 
-=item * B<NODEREMOVED_CB>
+=item B<NODEREMOVED_CB>
 
 Action generated when a node is going to be removed.
 It is only a notification, the action can not be aborted. No node
@@ -958,7 +958,7 @@ B<$userdata_ref:> #XXX-check-implementation.
 
 =back
 
-=item * B<RIGHTCLICK_CB>
+=item B<RIGHTCLICK_CB>
 
 Action generated when the right mouse button is pressed over a node.
 
@@ -977,21 +977,21 @@ B<$id:> node identifier.
 
 =back
 
-=item * L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
+=item L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
 
 Action generated when any
 mouse button is pressed or released inside the element. Use
 L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
 coordinates in the node identifier. 
 
-=item * L<MOTION_CB|[%m.cb%]/MOTION_CB>
+=item L<MOTION_CB|[%m.cb%]/MOTION_CB>
 
 Action generated when the
 mouse is moved over the element. Use
 L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
 coordinates in item the node identifier. 
 
-=item * L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
+=item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
 
 Action generated when one or more files are dropped in the element.
 

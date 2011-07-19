@@ -107,14 +107,14 @@ In Windows, returns the HMENU of the parent menu.
 
 =over
 
-=item * L<ACTION|[%m.cb%]/ACTION>
+=item L<ACTION|[%m.cb%]/ACTION>
 
 Action generated when the item is
 selected. IUP_CLOSE will be processed. Even if inside a popup menu when
 IUP_CLOSE is returned, the current popup dialog or the main loop will
 be closed.
 
-=item * L<HIGHLIGHT_CB|[%m.cb%]/HIGHLIGHT_CB>
+=item L<HIGHLIGHT_CB|[%m.cb%]/HIGHLIGHT_CB>
 
 Action generated when the item is highlighted.
 

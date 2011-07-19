@@ -69,7 +69,7 @@ child menu is mapped.
 
 =over
 
-=item * L<HIGHLIGHT_CB|[%m.cb%]/HIGHLIGHT_CB>
+=item L<HIGHLIGHT_CB|[%m.cb%]/HIGHLIGHT_CB>
 
 Action generated when the submenu is highlighted.
 

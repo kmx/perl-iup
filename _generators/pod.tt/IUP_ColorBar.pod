@@ -133,7 +133,7 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 =over
 
-=item * B<CELL_CB>
+=item B<CELL_CB>
 
 called when the user double clicks a color cell to
 change its value.
@@ -157,7 +157,7 @@ default nothing is changed.
 
 =back
 
-=item * B<EXTENDED_CB>
+=item B<EXTENDED_CB>
 
 called when the user right click a cell with the
 Shift key pressed. It is independent of the SHOW_SECONDARY attribute.
@@ -180,7 +180,7 @@ always redrawn.
 
 =back
 
-=item * B<SELECT_CB>
+=item B<SELECT_CB>
 
 called when a color is selected. The primary color is
 selected with the left mouse button, and if existent the secondary is
@@ -207,7 +207,7 @@ selection is always accepted.
 
 =back
 
-=item * B<SWITCH_CB>
+=item B<SWITCH_CB>
 
 called when the user double clicks the preview area
 outside the preview cells to switch the primary and secondary

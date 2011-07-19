@@ -506,7 +506,7 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 =over
 
-=item * B<DELETE_CB>
+=item B<DELETE_CB>
 
 Action generated when the Del key is pressed to removed a
 sample from a dataset. If multiple points are selected it is called
@@ -533,7 +533,7 @@ B<Returns:> If IUP_IGNORE then the sample is not deleted.
 
 =back
 
-=item * B<DELETEBEGIN_CB, DELETEEND_CB>
+=item B<DELETEBEGIN_CB, DELETEEND_CB>
 
 Actions generated when a delete
 operation will begin or end. But they are called only if DELETE_CB is
@@ -560,7 +560,7 @@ all the selected samples are aborted.
 
 =back
 
-=item * B<SELECT_CB>
+=item B<SELECT_CB>
 
 Action generated when a sample is selected. If multiple
 points are selected it is called once for each new selected point. It
@@ -591,7 +591,7 @@ B<Returns:> If IUP_IGNORE then the sample is not selected.
 
 =back
 
-=item * B<SELECTBEGIN_CB, SELECTEND_CB>
+=item B<SELECTBEGIN_CB, SELECTEND_CB>
 
 Actions generated when a selection
 operation will begin or end. But they are called only if SELECT_CB is
@@ -618,7 +618,7 @@ is aborted.
 
 =back
 
-=item * B<EDIT_CB>
+=item B<EDIT_CB>
 
 Action generated when a sample is selected. If multiple
 points are selected it is called once for each new selected point. It
@@ -654,7 +654,7 @@ can changed the new value before it is edited.
 
 =back
 
-=item * B<EDITBEGIN_CB, EDITEND_CB>
+=item B<EDITBEGIN_CB, EDITEND_CB>
 
 Actions generated when an editing
 operation will begin or end. But they are called only if EDIT_CB is
@@ -681,7 +681,7 @@ aborted.
 
 =back
 
-=item * B<PREDRAW_CB, POSTDRAW_CB>
+=item B<PREDRAW_CB, POSTDRAW_CB>
 
 Actions generated before and after the
 redraw operation. Predraw can be used to draw a different background

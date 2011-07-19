@@ -160,7 +160,7 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 =over
 
-=item * B<TABCHANGE_CB>
+=item B<TABCHANGE_CB>
 
 Callback called when the user shifts the active tab.
 
@@ -181,7 +181,7 @@ B<$old_tab:> the previously selected tab
 
 =back
 
-=item * B<TABCHANGEPOS_CB>
+=item B<TABCHANGEPOS_CB>
 
 Callback called when the user shifts the active
 tab. Called only when TABCHANGE_CB is not defined. (since iup-3.3)

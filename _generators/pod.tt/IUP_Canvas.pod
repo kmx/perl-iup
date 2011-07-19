@@ -208,7 +208,7 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 =over
 
-=item * L<ACTION|[%m.cb%]/ACTION>
+=item L<ACTION|[%m.cb%]/ACTION>
 
 Action generated when the canvas
 needs to be redrawn.
@@ -230,15 +230,15 @@ B<$posy:> thumb position in the vertical scrollbar. The POSY attribute value.
 
 =back
 
-=item * L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
+=item L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
 
 Action generated when any mouse button is pressed or released.
 
-=item * L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
+=item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
 
 Action generated when one or more files are dropped in the element.
 
-=item * B<FOCUS_CB>
+=item B<FOCUS_CB>
 
 Called when the canvas gets or looses the focus. It is
 called after the common callbacks GETFOCUS_CB and KILL_FOCUS_CB.
@@ -257,11 +257,11 @@ is loosing the focus.
 
 =back
 
-=item * L<MOTION_CB|[%m.cb%]/MOTION_CB>
+=item L<MOTION_CB|[%m.cb%]/MOTION_CB>
 
 Action generated when the mouse is moved.
 
-=item * L<KEYPRESS_CB|[%m.cb%]/KEYPRESS_CB>
+=item L<KEYPRESS_CB|[%m.cb%]/KEYPRESS_CB>
 
 Action generated when a
 key is pressed or released. It is called after the common callback
@@ -272,17 +272,17 @@ focus to another control in some systems. If your callback process the
 arrow keys, we recommend you to return IUP_IGNORE so it will not lose
 its focus.
 
-=item * L<RESIZE_CB|[%m.cb%]/RESIZE_CB>
+=item L<RESIZE_CB|[%m.cb%]/RESIZE_CB>
 
 Action generated when the canvas size is changed.
 
-=item * L<SCROLL_CB|[%m.cb%]/SCROLL_CB>
+=item L<SCROLL_CB|[%m.cb%]/SCROLL_CB>
 
 Called when the scrollbar is
 manipulated. (GTK 2.8) Also the POSX and POSY values will not be
 correctly updated for older GTK versions.
 
-=item * B<TOUCH_CB> [Windows 7 Only]
+=item B<TOUCH_CB> [Windows 7 Only]
 
 Action generated when a touch event
 occurred. Multiple touch events will trigger several calls. Must set
@@ -310,7 +310,7 @@ B<Returns:> IUP_CLOSE will be processed.
 
 =back
 
-=item * B<MULTITOUCH_CB> [Windows 7 Only]
+=item B<MULTITOUCH_CB> [Windows 7 Only]
 
 Action generated when multiple touch
 events occurred. Must set TOUCH=Yes to receive this event. (Since iup-3.3)
@@ -343,11 +343,11 @@ B<Returns:> IUP_CLOSE will be processed.
 
 =back
 
-=item * L<WHEEL_CB|[%m.cb%]/WHEEL_CB>
+=item L<WHEEL_CB|[%m.cb%]/WHEEL_CB>
 
 Action generated when the mouse wheel is rotated.
 
-=item * L<WOM_CB|[%m.cb%]/WOM_CB> [Windows Only]
+=item L<WOM_CB|[%m.cb%]/WOM_CB> [Windows Only]
 
 Action generated when an audio device receives an event.
 

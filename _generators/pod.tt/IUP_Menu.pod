@@ -70,11 +70,11 @@ In Windows, returns the HMENU of the menu.
 
 =over
 
-=item * L<OPEN_CB|[%m.cb%]/OPEN_CB>
+=item L<OPEN_CB|[%m.cb%]/OPEN_CB>
 
 Called just before the menu is opened.
 
-=item * L<MENUCLOSE_CB|[%m.cb%]/MENUCLOSE_CB>
+=item L<MENUCLOSE_CB|[%m.cb%]/MENUCLOSE_CB>
 
 Called just after the menu is closed.
 

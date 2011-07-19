@@ -289,7 +289,7 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 =over
 
-=item * L<ACTION|[%m.cb%]/ACTION>
+=item L<ACTION|[%m.cb%]/ACTION>
 
 Action generated when the state of
 an item in the list is changed. Also provides information on the
@@ -320,7 +320,7 @@ proper state=0 value.
 
 =back
 
-=item * L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
+=item L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
 
 Action generated when any
 mouse button is pressed or released inside the list. Called only when
@@ -329,7 +329,7 @@ cursor is at the listbox only (ignored at the editbox).
 Use L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
 coordinates in item position. 
 
-=item * B<CARET_CB>
+=item B<CARET_CB>
 
 Action generated when the caret/cursor position is
 changed. Valid only when EDITBOX=YES.
@@ -355,7 +355,7 @@ This is the same CARET_CB callback definition as for the L<IUP::Text|IUP::Text>.
 
 =back
 
-=item * B<DBLCLICK_CB>
+=item B<DBLCLICK_CB>
 
 Action generated when the user double click an item.
 Called only when DROPDOWN=NO. 
@@ -377,7 +377,7 @@ B<$text:> Text of the selected item.
 
 =back
 
-=item * B<DROPDOWN_CB>
+=item B<DROPDOWN_CB>
 
 Action generated when the list of a dropdown is shown
 or hidden. Called only when DROPDOWN=YES. 
@@ -397,11 +397,11 @@ B<$state:> state of the list 1=shown, 0=hidden.
 
 =back
 
-=item * L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
+=item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
 
 Action generated when one or more files are dropped in the element.
 
-=item * B<EDIT_CB>
+=item B<EDIT_CB>
 
 Action generated when the text in the text box is manually
 changed by the user, but before its value is actually updated. Valid
@@ -432,7 +432,7 @@ This is the same ACTION callback definition as for the L<IUP::Text|IUP::Text>.
 
 =back
 
-=item * L<MOTION_CB|[%m.cb%]/MOTION_CB>
+=item L<MOTION_CB|[%m.cb%]/MOTION_CB>
 
 Action generated when the
 mouse is moved over the list. Called only when DROPDOWN=NO. If the list
@@ -440,7 +440,7 @@ has an editbox the message is called when cursor is at the listbox only
 (ignored at the editbox). Use L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
 coordinates in item position. 
 
-=item * B<MULTISELECT_CB>
+=item B<MULTISELECT_CB>
 
 Action generated when the state of an item in the
 multiple selection list is changed. But it is called only when the
@@ -471,7 +471,7 @@ attribute to ensure proper 'x' values.
 
 =back
 
-=item * B<VALUECHANGED_CB>
+=item B<VALUECHANGED_CB>
 
 Called after the value was interactively changed by
 the user. Called when the selection is changed or when the text is

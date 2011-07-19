@@ -371,7 +371,7 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 =over
 
-=item * L<ACTION|[%m.cb%]/ACTION>
+=item L<ACTION|[%m.cb%]/ACTION>
 
 Action generated when the text is
 edited, but before its value is actually changed. Can be generated when
@@ -400,13 +400,13 @@ returned.
 
 =back
 
-=item * L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
+=item L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
 
 Action generated when any
 mouse button is pressed or released. Use L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
 coordinates in character positioning. 
 
-=item * B<CARET_CB>
+=item B<CARET_CB>
 
 Action generated when the caret/cursor position is changed.
 
@@ -429,17 +429,17 @@ For single line controls B<lin> is always 1, and B<pos> is always B<col-1>.
 
 =back
 
-=item * L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
+=item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
 
 Action generated when one or more files are dropped in the element.
 
-=item * L<MOTION_CB|[%m.cb%]/MOTION_CB>
+=item L<MOTION_CB|[%m.cb%]/MOTION_CB>
 
 Action generated when the
 mouse is moved. Use L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()">
 to convert (x,y) coordinates in character positioning. 
 
-=item * B<SPIN_CB>
+=item B<SPIN_CB>
 
 Action generated when a spin button is pressed. Valid only
 when SPIN=YES. When this callback is called the ACTION callback is not
@@ -463,7 +463,7 @@ B<Returns:> IUP_IGNORE is processed in Windows and Motif.
 
 =back
 
-=item * B<VALUECHANGED_CB>
+=item B<VALUECHANGED_CB>
 
 Called after the value was interactively changed by the user. 
 
