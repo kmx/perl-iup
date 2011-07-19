@@ -118,7 +118,7 @@ There are two functions to change them:
 =item * L<SetAttribute|[%m.elem%]/"SetAttribute()"> stores only a pointer to the string and does
 not duplicate it.
 
-=item * L<IUP::StoreAtribute|IUP::StoreAtribute> duplicates the string, allowing you to use
+=item * L<StoreAtribute|xxx> duplicates the string, allowing you to use
 it for other purposes.
 
 =back
