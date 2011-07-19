@@ -1031,9 +1031,9 @@ control vertices. A sequence of bezier lines can be defined using more
 previous bezier will be used as the start point.
 
 See the documentation of XXX-polygon section-XXX
-L<cdBegin|IUP::Canvas/"cdBegin">
-L<cdVertex|IUP::Canvas/"cdVertex>
-L<cdEnd|IUP::Canvas/"cdEnd">
+L<cdBegin|/"cdBegin()">
+L<cdVertex|/"cdVertex()">
+L<cdEnd|/"cdEnd()">
 
 =head3 cdRect()
 
@@ -1329,7 +1329,7 @@ B<Filled polygons can be created using:>
  $canvas->cdEnd();
 
 See the documentation of
-L<cdBegin|/"cdBegin"> L<cdVertex|/"cdVertex">, L<cdEnd|/"cdEnd">.
+L<cdBegin|/"cdBegin()"> L<cdVertex|/"cdVertex()">, L<cdEnd|/"cdEnd()">.
 
 =head3 cdBox()
  
@@ -1953,7 +1953,7 @@ but works only in some drivers (please refer to the notes of each
 driver). The clipping polygon must be defined before activating the
 polygon clipping; if it is not defined, the current clipping state
 remains unchanged. See the documentation of
-L<cdBegin|/"cdBegin">, L<cdVertex|/"cdVertex">, L<cdEnd|/"cdEnd"> to create a polygon.
+L<cdBegin|/"cdBegin()">, L<cdVertex|/"cdVertex()">, L<cdEnd|/"cdEnd()"> to create a polygon.
 
 The value B<CD_CLIPREGION> activates a complex clipping region. See the
 documentation of L<Regions|region.html>.
@@ -1991,7 +1991,7 @@ A polygon for clipping can be created using:
  #...
  $canvas->cdEnd();
 
-See the documentation of L<cdBegin|/"cdBegin">, L<cdVertex|/"cdVertex">, L<cdEnd|/"cdEnd">.
+See the documentation of L<cdBegin|/"cdBegin()">, L<cdVertex|/"cdVertex()">, L<cdEnd|/"cdEnd()">.
 
 =head2 Methods - Complex Clipping Regions
 
