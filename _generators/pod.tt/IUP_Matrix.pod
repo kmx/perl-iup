@@ -228,20 +228,20 @@ LINCOL.
 
 =over
 
-=item * B<CURSOR>
+=item B<CURSOR>
 
 Default cursor used by the matrix. The default
 cursor is a symbol that looks like a cross. If you need to refer to
 this default cursor, use the name "IUP::MatrixCrossCursor".
 
-=item * B<EDIT_MODE>
+=item B<EDIT_MODE>
 
 When set to YES, programmatically puts the
 current cell in edition mode, allowing the user to modify its value.
 When consulted informs if the the current cell is being edited.
 Possible values: "YES" or "NO".
 
-=item * B<EDITNEXT>
+=item B<EDITNEXT>
 
 controls how the next cell after editing is
 chosen. Can be LIN, COL, LINCR, COLCR. Default: LIN. (since 3.4)
@@ -251,50 +251,50 @@ chosen. Can be LIN, COL, LINCR, COLCR. Default: LIN. (since 3.4)
  COL - go to the next column, if at last column then go to the next line at the same column;
  COLCR - go to the next column, if at last column then go to the next line at the first column;
 
-=item * B<FOCUS_CELL>
+=item B<FOCUS_CELL>
 
 Defines the current cell. Two numbers in
 the "B<(L)>:B<(C)>" format, (B<(L)> E<gt> 0 and B<(C)> E<gt> 0, a title
 cell can NOT be the current cell). Default: "1:1".
 
-=item * B<HIDEFOCUS>
+=item B<HIDEFOCUS>
 
 do not show the focus mark when drawing the
 matrix. Default is NO.
 
-=item * B<HIDDENTEXTMARKS>
+=item B<HIDDENTEXTMARKS>
 
 when text is greater than cell
 space, it is normally cropped, but when set to YES a "..." mark will be
 added at the crop point to indicate that there is more text not
 visible. Default: NO. (since 3.1)
 
-=item * B<LIMITEXPAND>
+=item B<LIMITEXPAND>
 
 limit expansion to the maximum size that shows all
 cells. (since 3.5)
 
-=item * B<ORIGIN>
+=item B<ORIGIN>
 
 Scroll the visible area to the given cell. Returns
 the cell at the upper left corner. To scroll to a line or a column, use
 a value such as "B<(L)>:*" or "*:B<(C)>" (where I<B<L>> E<gt> 0 and
 B<(C)> E<gt> 0). L and C can not be a non scrollable cell either.
 
-=item * B<ORIGINOFFSET>
+=item B<ORIGINOFFSET>
 
 complements the ORIGIN attribute by
 specifying the drag offset of the top left cell. Returns the current
 value. Has the format "XxY" or "%dx%d" in C. Used only the ORIGIN is
 set. (since 3.5)
 
-=item * B<READONLY>
+=item B<READONLY>
 
 disables the editing of all cells. EDITION_CB
 and VALUE_EDIT_CB will not be called anymore. The L:C attribute will
 still be able to change the cell value. 
 
-=item * B<RESIZEMATRIX>
+=item B<RESIZEMATRIX>
 
 Defines if the width of a column can be
 interactively changed. When this is possible, the user can change the
@@ -302,7 +302,9 @@ size of a column by dragging the column title right border. Possible
 values: "YES" or "NO". Default: "NO" (does not allow interactive width
 change).
 
-=item * B<USETITLESIZE:> Use the title size to define the cell
+=item B<USETITLESIZE>
+
+Use the title size to define the cell
 size if necessary. See WIDTHn and HEIGHTn. Default: NO. 
 
 =back

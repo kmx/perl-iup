@@ -31,13 +31,13 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<ACTIVE>
+=item B<ACTIVE>
 
 The only difference between an active label and an inactive
 one is its visual feedback. Possible values: "YES, "NO". Default:
 "YES".
 
-=item * B<ALIGNMENT> (non inheritable)
+=item B<ALIGNMENT> (non inheritable)
 
 Horizontal and vertical alignment.
 Possible values: "ALEFT", "ACENTER" and "ARIGHT", combined to "ATOP",
@@ -46,23 +46,23 @@ also accepted, like "ARIGHT" or ":ATOP", the other value will be used
 from the current alignment. In Motif, vertical alignment is restricted
 to "ACENTER". (vertical alignment since iup-3.0)
 
-=item * L<BGCOLOR|[%m.at%]/BGCOLOR>
+=item L<BGCOLOR|[%m.at%]/BGCOLOR>
 
 Ignored, transparent in all
 systems. Will use the background color of the native parent.
 
-=item * B<ELLIPSIS> [Windows and GTK only]
+=item B<ELLIPSIS> [Windows and GTK only]
 
 Add an ellipsis: "..." to the text
 if there is not enough space to render the entire string. Can be "YES"
 or "NO". Default: "NO".  (GTK 2.6)
 
-=item * L<FGCOLOR|[%m.at%]/FGCOLOR>
+=item L<FGCOLOR|[%m.at%]/FGCOLOR>
 
 Text color. Default: the global
 attribute DLGFGCOLOR.
 
-=item * B<IMAGE> (non inheritable)
+=item B<IMAGE> (non inheritable)
 
 Image name. If set before map defines the
 behavior of the label to contain an image. The natural size will be
@@ -77,27 +77,27 @@ the colors will be replaced by a modified version of the background
 color creating the disabled effect. GTK will also change the inactive
 image to look like other inactive objects.
 
-=item * B<MARKUP> [GTK only]
+=item B<MARKUP> [GTK only]
 
 Allows the title string to contains pango markup
 commands. Works only if a mnemonic is NOT defined in the title. Can be
 "YES" or "NO". Default: "NO".
 
-=item * B<PADDING>
+=item B<PADDING>
 
 Internal margin. Works just like the MARGIN attribute of
 the L<IUP::Hbox> and <IUP::Vbox> containers, but uses a different name to avoid
 inheritance problems. Not used when SEPARATOR is used. Default value:
 "0x0". 
 
-=item * B<SEPARATOR> (creation only, non inheritable)
+=item B<SEPARATOR> (creation only, non inheritable)
 
 Turns the label into a
 line separator. Possible values: "HORIZONTAL" or "VERTICAL". When
 changed before mapping the EXPAND attribute is set to "HORIZONTAL" or
 "VERTICAL" accordingly.
 
-=item * L<TITLE|[%m.at%]/TITLE> (non inheritable)
+=item L<TITLE|[%m.at%]/TITLE> (non inheritable)
 
 Label's text. If
 SEPARATOR or IMAGE are not defined before map, then the default
@@ -110,7 +110,7 @@ show the "&" character instead of defining a mnemonic. The next control
 from the label will be activated from any control in the dialog using
 the "Alt+key" combination. (mnemonic support since iup-3.0)
 
-=item * B<WORDWRAP> [Windows and GTK only]
+=item B<WORDWRAP> [Windows and GTK only]
 
 Enables or disable the wrapping of
 lines that does not fits in the label. Can be "YES" or "NO". Default:

@@ -30,7 +30,7 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<BACKGROUND> (non inheritable)
+=item B<BACKGROUND> (non inheritable)
 
 Dialog background color or image. Can
 be a non inheritable alternative to BGCOLOR or can be the name of an
@@ -40,40 +40,40 @@ See also the screenshots of the sample dialog: XXX-fix-the-following-links
 
 =over
 
-=item * L<results with normal background|xxx.html>
+=item L<results with normal background|xxx.html>
 
-=item * L<changing the dialog BACKGROUND|xxx.html>
+=item L<changing the dialog BACKGROUND|xxx.html>
 
-=item * L<changing the dialog BGCOLOR|xxx.html>
+=item L<changing the dialog BGCOLOR|xxx.html>
 
-=item * L<changing the children BGCOLOR|xxx.html>
+=item L<changing the children BGCOLOR|xxx.html>
 
 =back
 
-=item * B<BORDER> (non inheritable) (creation only)
+=item B<BORDER> (non inheritable) (creation only)
 
 Shows a resize border
 around the dialog. Default: "YES". BORDER=NO is useful only when
 RESIZE=NO, MAXBOX=NO, MINBOX=NO, MENUBOX=NO and TITLE=NULL, if any of
 these are defined there will be always some border.
 
-=item * L<CURSOR|[%m.at%]/CURSOR> (non inheritable)
+=item L<CURSOR|[%m.at%]/CURSOR> (non inheritable)
 
 Defines a cursor
 for the dialog.
 
-=item * B<DRAGDROP> [Windows and GTK Only] (non inheritable)
+=item B<DRAGDROP> [Windows and GTK Only] (non inheritable)
 
 Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
 
-=item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+=item L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
 
 The default
 value is "YES".
 
-=item * L<SIZE|[%m.at%]/SIZE> (non inheritable)
+=item L<SIZE|[%m.at%]/SIZE> (non inheritable)
 
 Dialogs size.
 Additionally the following values can also be defined for width and/or
@@ -81,19 +81,19 @@ height:
 
 =over
 
-=item * "FULL": Defines the dialogs width (or height) equal to the
+=item "FULL": Defines the dialogs width (or height) equal to the
 screen's width (or height)
 
-=item * "HALF": Defines the dialogs width (or height) equal to half the
+=item "HALF": Defines the dialogs width (or height) equal to half the
 screen's width (or height)
 
-=item * "THIRD": Defines the dialogs width (or height) equal to 1/3 the
+=item "THIRD": Defines the dialogs width (or height) equal to 1/3 the
 screen's width (or height)
 
-=item * "QUARTER": Defines the dialogs width (or height) equal to 1/4
+=item "QUARTER": Defines the dialogs width (or height) equal to 1/4
 of the screen's width (or height)
 
-=item * "EIGHTH": Defines the dialogs width (or height) equal to 1/8 of
+=item "EIGHTH": Defines the dialogs width (or height) equal to 1/8 of
 the screen's width (or height)
 
 =back
@@ -103,7 +103,7 @@ not defined or when it is bigger than the B<Current> size. This
 behavior is different from a control that goes inside the dialog.
 Because of that, when SIZE or RASTERSIZE are set (changing the B<User>
 size), the B<Current> size is internally reset to 0x0, so the the
-=item * B<Natural> size can be considered when re-computing the B<Current> size
+=item B<Natural> size can be considered when re-computing the B<Current> size
 of the dialog.
 
 Values set at SIZE or RASTERSIZE attributes of a dialog are always
@@ -119,14 +119,14 @@ that limitation set SHRINK=YES.
 
 For more information see L<Layout Guide|XXX>.
 
-=item * L<TITLE|[%m.at%]/TITLE> (non inheritable)
+=item L<TITLE|[%m.at%]/TITLE> (non inheritable)
 
 Dialogs title.
 Default: NULL. If you want to remove the title bar you must also set
 MENUBOX=NO, MAXBOX=NO and MINBOX=NO, before map. But in Motif and GTK
 it will hide it only if RESIZE=NO also.
 
-=item * L<VISIBLE|[%m.at%]/VISIBLE>
+=item L<VISIBLE|[%m.at%]/VISIBLE>
 
 Simply call L<Show|[%m.elem%]/"Show()"> or L<Hide|[%m.elem%]/"Hide()"> for the dialog.
 

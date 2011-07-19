@@ -34,31 +34,31 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * L<BGCOLOR|[%m.at%]/BGCOLOR>
+=item L<BGCOLOR|[%m.at%]/BGCOLOR>
 
 ignored, transparent in all
 systems. Will use the background color of the native parent. Except if
 TITLE is not defined and BGCOLOR is defined before map (can be changed
 later), then the frame will have a color background.
 
-=item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+=item L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
 
 The default
 value is "YES".
 
-=item * L<FGCOLOR|[%m.at%]/FGCOLOR>
+=item L<FGCOLOR|[%m.at%]/FGCOLOR>
 
 Text title color. Not available
 in Windows when using Windows Visual Styles. Default: the global
 attribute DLGFGCOLOR.
 
-=item * B<SUNKEN> (creation only)
+=item B<SUNKEN> (creation only)
 
 When not using a title, the frame line
 defines a sunken area (lowered area). Valid values: YES or NOI<.>
 Default: NO.
 
-=item * L<TITLE|[%m.at%]/TITLE> (non inheritable)
+=item L<TITLE|[%m.at%]/TITLE> (non inheritable)
 
 Text the user will
 see at the top of the frame. If not defined during creation it can not

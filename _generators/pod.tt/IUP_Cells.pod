@@ -47,40 +47,40 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<BOXED>
+=item B<BOXED>
 
 Determines if the bounding cells' regions should be drawn
 with black lines. It can be "YES" or "NO". Default: "YES". If the span
 atributtes are used, set this attribute to "NO" to avoid grid drawing
 over spanned cells.
 
-=item * B<BUFFERIZE>
+=item B<BUFFERIZE>
 
 Disables the automatic redrawing of the control, so many
 attributes can be changed without many redraws. When set to "NO" the
 control is redrawn. When REPAINT attribute is set, BUFFERIZE is
 automatically set to "NO". Default: "NO".
 
-=item * B<CANVAS> (read-only, non inheritable)
+=item B<CANVAS> (read-only, non inheritable)
 
 Returns the internal CD canvas xxx???. This attribute should be used only in specific cases and by
 experienced IUP::Canvas programmers.
 
-=item * B<CLIPPED>
+=item B<CLIPPED>
 
 Determines if, before cells drawing, each bounding region
 should be clipped. This attribute should the changed in few specific
 cases. It can be "YES" or "NO". Default: "YES".
 
-=item * B<FIRST_COL> (read-only, non inheritable)
+=item B<FIRST_COL> (read-only, non inheritable)
 
 Returns the number of the first visible column.
 
-=item * B<FIRST_LINE> (read-only, non inheritable)
+=item B<FIRST_LINE> (read-only, non inheritable)
 
 Returns the number of the first visible line.
 
-=item * B<FULL_VISIBLE> (write-only, non inheritable)
+=item B<FULL_VISIBLE> (write-only, non inheritable)
 
 Tries to show
 completely a specific cell (considering any vertical or horizontal
@@ -88,45 +88,45 @@ header or scrollbar position). This attribute is set by a formatted
 string "%d:%d" (C syntax), where each "%d" represent the line and
 column integer indexes respectively.
 
-=item * B<IMAGE_CANVAS> (read-only, non inheritable)
+=item B<IMAGE_CANVAS> (read-only, non inheritable)
 
 Returns the internal
 image CD canvas xxx???. This attribute should be used only in specific cases
 and by experienced CD programmers.
 
-=item * B<LIMITS(L):(C)> (read-only, non inheritable)
+=item B<LIMITS(L):(C)> (read-only, non inheritable)
 
 Where (L) is the line number and (C) the column number - e.g. "LIMITS11:25". 
 Returns the limits of a given cell. Output format is a string "xmin:xmax:ymin:ymax".
 
-=item * B<NON_SCROLLABLE_LINES>
+=item B<NON_SCROLLABLE_LINES>
 
 Determines the number of non-scrollable lines
 (vertical headers) that should always be visible despite the vertical
 scrollbar position. It can be any non-negative integer value. Default: "0"
 
-=item * B<NON_SCROLLABLE_COLS>
+=item B<NON_SCROLLABLE_COLS>
 
 Determines the number of non-scrollable columns
 (horizontal headers) that should always be visible despite the
 horizontal scrollbar position. It can be any non-negative integer
 value. Default: "0"
 
-=item * B<ORIGIN>
+=item B<ORIGIN>
 
 Sets the first visible line and column positions. This
 attribute is set by a formatted string "%d:%d" (C syntax), where each
 "%d" represent the line and column integer indexes respectively.
 
-=item * B<REPAINT> (write-only, non inheritable)
+=item B<REPAINT> (write-only, non inheritable)
 
 When set with any value, provokes the control to be redrawn.
 
-=item * L<SIZE|[%m.at%]/SIZE> (non inheritable)
+=item L<SIZE|[%m.at%]/SIZE> (non inheritable)
 
 There is no initial size. You must define SIZE or RASTERSIZE.
 
-=item * L<SCROLLBAR|[%m.at%]/SCROLLBAR> (creation only)
+=item L<SCROLLBAR|[%m.at%]/SCROLLBAR> (creation only)
 
 Default: "YES".
 

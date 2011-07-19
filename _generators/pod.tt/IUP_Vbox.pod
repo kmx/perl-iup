@@ -47,54 +47,54 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<ALIGNMENT> (non inheritable)
+=item B<ALIGNMENT> (non inheritable)
 
 Horizontally aligns the elements.
 Possible values: "ALEFT", "ACENTER", "ARIGHT". Default: "ALEFT".
 
-=item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable*)
+=item L<EXPAND|[%m.at%]/EXPAND> (non inheritable*)
 
 The default
 value is "YES". See the documentation of the attribute for EXPAND
 inheritance.
 
-=item * B<EXPANDCHILDREN> (non inheritable)
+=item B<EXPANDCHILDREN> (non inheritable)
 
 Forces all children to expand
 horizontally. Default: "NO". This has the same effect as setting
 EXPAND=HORIZONTAL on each child, but their vertical expansion will be
 preserved. 
 
-=item * B<EXPANDWEIGHT> (non inheritable) B<(at children only)>
+=item B<EXPANDWEIGHT> (non inheritable) B<(at children only)>
 
 If a child
 defines the expand weight, then it is used to multiply the free space
 used for expansion. (since iup-3.1)
 
-=item * L<FLOATING|[%m.at%]/FLOATING> (non inheritable) B<(at
+=item L<FLOATING|[%m.at%]/FLOATING> (non inheritable) B<(at
 children only)>
 
 If a child has FLOATING=YES then its size and position
 will be ignored by the layout processing. Default: "NO". 
 
-=item * B<GAP, CGAP>
+=item B<GAP, CGAP>
 
 Defines a vertical space in pixels between the children,
-=item * B<CGAP> is in the same units of the B<SIZE> attribute for the height.
+=item B<CGAP> is in the same units of the B<SIZE> attribute for the height.
 Default "0". (CGAP since iup-3.0)
 
-=item * B<NGAP, NCGAP> (non inheritable)
+=item B<NGAP, NCGAP> (non inheritable)
 
 Same as B<GAP> but are non inheritable. 
 
-=item * B<HOMOGENEOUS> (non inheritable)
+=item B<HOMOGENEOUS> (non inheritable)
 
 Forces all children to get equal
 vertical space. The natural size height will be based on the highest
 child. Default: "NO". Notice that this does not changes the children
 size, only the available space for each one of them to expand. (since iup-3.0)
 
-=item * B<MARGIN, CMARGIN>
+=item B<MARGIN, CMARGIN>
 
 Defines a margin in pixels, B<CMARGIN> is in the
 same units of the B<SIZE> attribute. Its value has the format
@@ -102,12 +102,12 @@ same units of the B<SIZE> attribute. Its value has the format
 corresponding to the horizontal and vertical margins, respectively.
 Default: "0x0" (no margin). (CMARGIN since iup-3.0)
 
-=item * B<NMARGIN, NCMARGIN> (non inheritable)
+=item B<NMARGIN, NCMARGIN> (non inheritable)
 
 Same as B<MARGIN> but are non
 inheritable. 
 
-=item * B<NORMALIZESIZE> (non inheritable)
+=item B<NORMALIZESIZE> (non inheritable)
 
 normalizes all children natural
 size to be the biggest natural size among them. All natural width will
@@ -115,13 +115,13 @@ be set to the biggest width, and all natural height will be set to the
 biggest height according to is value. Can be NO, HORIZONTAL, VERTICAL
 or BOTH. Default: "NO". 
 
-=item * L<SIZE|[%m.at%]/SIZE> / L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
+=item L<SIZE|[%m.at%]/SIZE> / L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
 
 Defines the height of the box. When consulted behaves as the standard
 SIZE/RASTERSIZE attributes. The standard format "wxh" can also be used,
 but width will be ignored (since iup-3.3).
 
-=item * B<WID> (read-only)
+=item B<WID> (read-only)
 
 Returns -1 if mapped.
 

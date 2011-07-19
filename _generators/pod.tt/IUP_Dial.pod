@@ -30,36 +30,36 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<DENSITY>
+=item B<DENSITY>
 
 Number of lines per pixel in the handle of the dial.
 Default is "0.2".
 
-=item * L<EXPAND|[%m.at%]/EXPAND>
+=item L<EXPAND|[%m.at%]/EXPAND>
 
 The default is "NO".
 
-=item * L<FGCOLOR|[%m.at%]/FGCOLOR>
+=item L<FGCOLOR|[%m.at%]/FGCOLOR>
 
 Foreground color. The default
 value is "64 64 64". Not used for the circular dial.
 
-=item * L<SIZE|[%m.at%]/SIZE> (non inheritable)
+=item L<SIZE|[%m.at%]/SIZE> (non inheritable)
 
 The initial size is "16x80", "80x16" or "40x35" according to the dial orientation. Set to
 C<undef> to allow the automatic layout use smaller values.
 
-=item * B<ORIENTATION> (creation only) (non inheritable)
+=item B<ORIENTATION> (creation only) (non inheritable)
 
 Dial layout configuration "VERTICAL", "HORIZONTAL" or "CIRCULAR". Default:
 "HORIZONTAL".
 
-=item * B<UNIT>
+=item B<UNIT>
 
 Unit of the angle. Can be "DEGREES" or "RADIANS". Default is
 "RADIANS". Used only in the callbacks.
 
-=item * B<VALUE> (non inheritable)
+=item B<VALUE> (non inheritable)
 
 The dial angular value in radians. The
 value is reset to zero when the interaction is started, except for

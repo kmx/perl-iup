@@ -29,13 +29,13 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+=item L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
 
 Ignored. If B<User> size is not defined, then when inside a L<IUP::Hbox|IUP::Hbox> EXPAND is
 HORIZONTAL, when inside a L<IUP::Vbox> EXPAND is VERTICAL. If B<User> size
 is defined then EXPAND is NO.
 
-=item *  L<SIZE|[%m.at%]/SIZE> / L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
+=item  L<SIZE|[%m.at%]/SIZE> / L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
 
 Defines the width, if inside a L<IUP::Hbox|IUP::Hbox>, or the height, if it is inside a
 L<IUP::Vbox|IUP::Vbox>. When consulted behaves as the standard SIZE/RASTERSIZE
@@ -43,7 +43,7 @@ attributes. The standard format "wxh" can also be used, but width will
 be ignored if inside a L<IUP::Vbox|IUP::Vbox> and height will be ignored if inside
 a L<IUP::Hbox|IUP::Hbox> (since iup-3.3).
 
-=item * B<WID> (read-only)
+=item B<WID> (read-only)
 
 Returns -1 if mapped.
 

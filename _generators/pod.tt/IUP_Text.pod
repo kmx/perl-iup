@@ -31,36 +31,36 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<ALIGNMENT> [Windows and GTK Only] (non inheritable)
+=item B<ALIGNMENT> [Windows and GTK Only] (non inheritable)
 
 Text alignment. Possible values: "ALEFT", "ARIGHT", "ACENTER".
   
 Default: "ALEFT". In Motif, text is always left aligned.
 
-=item * B<APPEND> (write-only)
+=item B<APPEND> (write-only)
 
 Inserts a text at the end of the current text.
 In the Multiline, if APPENDNEWLINE=YES, a "\n" character will be
 automatically inserted before the appended text if the current text is
 not empty(APPENDNEWLINE default is YES). Ignored if set before map.
 
-=item * L<BGCOLOR|[%m.at%]/BGCOLOR>
+=item L<BGCOLOR|[%m.at%]/BGCOLOR>
 
 Background color of the text.
 Default: the global attribute TXTBGCOLOR.
 
-=item * B<BORDER> (creation only)
+=item B<BORDER> (creation only)
 
 Shows a border around the text. Default:
 "YES".
 
-=item * B<CANFOCUS> (creation only) (non inheritable)
+=item B<CANFOCUS> (creation only) (non inheritable)
 
 enables the focus
 traversal of the control. In Windows the control will still get the
 focus when clicked. Default: YES. 
 
-=item * B<CARET> (non inheritable)
+=item B<CARET> (non inheritable)
 
 Position of the insertion point. Its format
 depends in MULTILINE=YES. The first position, B<lin> or B<col>, is "1".
@@ -88,7 +88,7 @@ receives the focus.
 
 See the Notes below if using UTF-8 strings in GTK. XXX-check-this
 
-=item * B<CARETPOS> (non inheritable)
+=item B<CARETPOS> (non inheritable)
 
 Also the position of the insertion
 point, but using a zero based character unique index "pos". Useful for
@@ -96,132 +96,132 @@ indexing the VALUE string.
 
 See the Notes below if using UTF-8 strings in GTK. XXX-check-this
 
-=item * B<CLIPBOARD> (write-only)
+=item B<CLIPBOARD> (write-only)
 
 clear, cut, copy or paste the selection to
 or from the clipboard. Values: "CLEAR", "CUT", "COPY" or "PASTE". In
 Windows UNDO is also available, and REDO is available when
 FORMATTING=YES. 
 
-=item * B<COUNT> (read-only)
+=item B<COUNT> (read-only)
 
 Returns the number of characters in the text. (since iup-3.5)
 
-=item * B<CUEBANNER> [Windows Only] (non inheritable)
+=item B<CUEBANNER> [Windows Only] (non inheritable)
 
 Text that is displayed
 when there is no text at the control. It works as a textual cue, or tip
 to prompt the user for input. Valid only for MULTILINE=NO, and it is
 not available for Windows 2000. 
 
-=item * B<DRAGDROP> [Windows and GTK Only] (non inheritable)
+=item B<DRAGDROP> [Windows and GTK Only] (non inheritable)
 
 Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
 
-=item * L<FGCOLOR|[%m.at%]/FGCOLOR>
+=item L<FGCOLOR|[%m.at%]/FGCOLOR>
 
 Text color. Default: the global
 attribute TXTFGCOLOR.
 
-=item * B<FILTER> [Windows Only] (non inheritable)
+=item B<FILTER> [Windows Only] (non inheritable)
 
 Allows a custom filter to
 process the characters: Can be LOWERCASE, UPPERCASE or NUMBER (only numbers allowed). 
 
-=item * L<FORMATTING|[%m.at%]/FORMATTING> [Windows and GTK Only] (non inheritable)
+=item L<FORMATTING|[%m.at%]/FORMATTING> [Windows and GTK Only] (non inheritable)
 
 When enabled allow the use of text formatting attributes.
 In GTK is always enabled, but only when MULTILINE=YES. Default: NO.
 
-=item * B<INSERT> (write-only)
+=item B<INSERT> (write-only)
 
 Inserts a text in the caret's position, also
 replaces the current selection if any. Ignored if set before map.
 
-=item * B<LINECOUNT> (read-only)
+=item B<LINECOUNT> (read-only)
 
 Returns the number of characters in the line
 where the caret is. When MULTILINE=NO returns always "1". (since iup-3.5)
 
-=item * B<LINEVALUE> (read-only)
+=item B<LINEVALUE> (read-only)
 
 Returns the text of the line where the caret
 is. It does not include the "\n" character. When MULTILINE=NO returns
 the same as VALUE. (since iup-3.5)
 
-=item * L<MASK|[%m.at%]/MASK> (non inheritable)
+=item L<MASK|[%m.at%]/MASK> (non inheritable)
 
 Defines a mask that
 will filter interactive text input.
 
-=item * B<MULTILINE> (creation only) (non inheritable)
+=item B<MULTILINE> (creation only) (non inheritable)
 
 Allows the edition of
 multiple lines. In single line mode some characters are invalid, like
 "\t", "\r" and "\n". Default: NO.
 
-=item * B<NC>
+=item B<NC>
 
 Maximum number of characters allowed for keyboard input, larger
 text can still be set using attributes. The maximum value is the limit
 of the VALUE attribute. The "0" value is the same as maximum. Default:
 maximum.
 
-=item * B<OVERWRITE> [Windows and GTK Only] (non inheritable)
+=item B<OVERWRITE> [Windows and GTK Only] (non inheritable)
 
 Turns the
 overwrite mode ON or OFF. Works only when FORMATTING=YES. 
 
-=item * B<PADDING>
+=item B<PADDING>
 
 Internal margin. Works just like the MARGIN attribute of
 the L<IUP::Hbox|IUP::Hbox> and L<IUP::Vbox|IUP::Vbox> containers, but uses a different name to
 avoid inheritance problems. Default value: "0x0". In Windows, only the
 horizontal value is used. (GTK 2.10 for single line)
 
-=item * B<PASSWORD> [Windows and GTK Only] (creation only, non inheritable)
+=item B<PASSWORD> [Windows and GTK Only] (creation only, non inheritable)
 
 Hide the typed character using an "*". Default: "NO".
 
-=item * B<READONLY>
+=item B<READONLY>
 
 Allows the user only to read the contents, without
 changing it. Restricts keyboard input only, text value can still be
 changed using attributes. Navigation keys are still available. Possible
 values: "YES", "NO". Default: NO.
 
-=item * B<SCROLLBAR> (creation only)
+=item B<SCROLLBAR> (creation only)
 
 Valid only when MULTILINE=YES. Associates
 an automatic horizontal and/or vertical scrollbar to the multiline. Can
 be: "VERTICAL", "HORIZONTAL", "YES" (both) or "NO" (none). Default:
 "YES". For all systems, when SCROLLBAR!=NO the natural size will always
 include its size even if the native system hides the scrollbar. If
-=item * B<AUTOHIDE>=YES scrollbars are visible only if they are necessary, by
+=item B<AUTOHIDE>=YES scrollbars are visible only if they are necessary, by
 default AUTOHIDE=NO. In Windows when FORMATTING=NO, AUTOHIDE is not
 supported. In Motif AUTOHIDE is not supported.
 
-=item * B<SCROLLTO> (non inheritable, write only)
+=item B<SCROLLTO> (non inheritable, write only)
 
 Scroll the text to make the
 given position visible. It uses the same format and reference of the
 CARET attribute ("lin:col" or "col" starting at 1). 
 
-=item * B<SCROLLTOPOS> (non inheritable, write only)
+=item B<SCROLLTOPOS> (non inheritable, write only)
 
 Scroll the text to make
 the given position visible. It uses the same format and reference of
 the CARETPOS attribute ("pos" starting at 0).
 
-=item * B<SELECTEDTEXT> (non inheritable)
+=item B<SELECTEDTEXT> (non inheritable)
 
 Selection text. Returns C<undef> if
 there is no selection. When changed replaces the current selection.
 Similar to INSERT, but does nothing if there is no selection.
 
-=item * B<SELECTION> (non inheritable)
+=item B<SELECTION> (non inheritable)
 
 Selection interval. Returns
 C<undef> if there is no selection. Its format depends in MULTILINE=YES. The
@@ -245,7 +245,7 @@ The values ALL and NONE are also accepted independently of MULTILINE.
 
 See the Notes below if using UTF-8 strings in GTK. XXX-chek-this
 
-=item * B<SELECTIONPOS> (non inheritable)
+=item B<SELECTIONPOS> (non inheritable)
 
 Same as SELECTION but using a zero
 based character index B<< "<pos1>:<pos2>" >>. Useful for indexing the VALUE
@@ -253,7 +253,7 @@ string. The values ALL and NONE are also accepted.
 
 See the Notes below if using UTF-8 strings in GTK. XXX-check-this
 
-=item * L<SIZE|[%m.at%]/SIZE> (non inheritable)
+=item L<SIZE|[%m.at%]/SIZE> (non inheritable)
 
 Since the contents
 can be changed by the user, the B<Natural> B<Size> is not affected by
@@ -262,41 +262,41 @@ defined by the number of lines in the text and the with of the largest
 line. For IUP 3, use VISIBLECOLUMNS and VISIBLELINES to control the
 B<Natural Size>.
 
-=item * B<SPIN> (non inheritable, creation only)
+=item B<SPIN> (non inheritable, creation only)
 
 Enables a spin control
 attached to the element. Default: NO. The spin increments and
 decrements an integer number. The editing in the element is still
 available. 
 
-=item * B<SPINVALUE> (non inheritable)
+=item B<SPINVALUE> (non inheritable)
 
 The current value of the spin. The
 value is limited to the minimum and maximum values.
 
-=item * B<SPINMAX> (non inheritable)
+=item B<SPINMAX> (non inheritable)
 
 The maximum value. Default: 100.
 
-=item * B<SPINMIN> (non inheritable)
+=item B<SPINMIN> (non inheritable)
 
 The minimum value. Default: 0.
 
-=item * B<SPININC> (non inheritable)
+=item B<SPININC> (non inheritable)
 
 The increment value. Default: 1.
 
-=item * B<SPINALIGN> (creation only)
+=item B<SPINALIGN> (creation only)
 
 The position of the spin. Can be LEFT or
 RIGHT. Default: RIGHT. In GTK is always RIGHT.
 
-=item * B<SPINWRAP> (creation only)
+=item B<SPINWRAP> (creation only)
 
 If the position reach a limit it continues
 from the opposite limit. Default: NO.
 
-=item * B<SPINAUTO> (creation only)
+=item B<SPINAUTO> (creation only)
 
 Enables the automatic update of the text
 contents. Default: YES. Use SPINAUTO=NO and the VALUE attribute during
@@ -307,24 +307,24 @@ multiplied by 20 after 5 seconds of a spin button pressed. In GTK, the
 increment change is progressively accelerated when a spin button is
 pressed.
 
-=item * B<TABSIZE> [Windows and GTK Only]
+=item B<TABSIZE> [Windows and GTK Only]
 
 Valid only when MULTILINE=YES.
 Controls the number of characters for a tab stop. Default: 8.
 
-=item * B<VALUE> (non inheritable)
+=item B<VALUE> (non inheritable)
 
 Text entered by the user. The '\n'
 character indicates a new line, valid only when MULTILINE=YES. After
 the element is mapped and if there is no text will return the empty
 string "".
 
-=item * B<VALUEMASKED> (non inheritable) (write-only)
+=item B<VALUEMASKED> (non inheritable) (write-only)
 
 sets VALUE but first
 checks if it is validated by MASK. If not does nothing. (since iup-3.4)
 
-=item * B<VISIBLECOLUMNS>
+=item B<VISIBLECOLUMNS>
 
 Defines the number of visible columns for the
 B<Natural Size>, this means that will act also as minimum number of
@@ -333,14 +333,14 @@ the SIZE attribute so strings will fit better without the need of extra
 columns. As for SIZE you can set to C<undef> after map to use it as an
 initial value. Default 5 
 
-=item * B<VISIBLELINES>
+=item B<VISIBLELINES>
 
 When MULTILINE=YES defines the number of visible lines
 for the B<Natural Size>, this means that will act also as minimum
 number of visible lines. As for SIZE you can set to C<undef> after map to
 use it as an initial value. Default: 1 
 
-=item * B<WORDWRAP> (creation only)
+=item B<WORDWRAP> (creation only)
 
 Valid only when MULTILINE=YES. If enabled
 will force a word wrap of lines that are greater than the with of the

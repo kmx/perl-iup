@@ -32,7 +32,7 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<IMAGE> [Windows and GTK Only] (non inheritable)
+=item B<IMAGE> [Windows and GTK Only] (non inheritable)
 
 Image name of the
 submenu image. In Windows, an item in a menu bar cannot have a check
@@ -40,14 +40,14 @@ mark. Ignored if submenu in a menu bar. A recommended size would be
 16x16 to fit the image in the menu item. In Windows, if larger than the
 check mark area it will be cropped. 
 
-=item * L<TITLE|[%m.at%]/TITLE> (non inheritable)
+=item L<TITLE|[%m.at%]/TITLE> (non inheritable)
 
 Submenu Text. The
 "&" character can be used to define a mnemonic, the next character will
 be used as key. Use "&&" to show the "&" character instead on defining
 a mnemonic.
 
-=item * L<WID|[%m.at%]/WID> (non inheritable)
+=item L<WID|[%m.at%]/WID> (non inheritable)
 
 In Windows, returns
 the HMENU of the parent menu and it is actually created only when its

@@ -33,7 +33,7 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<ALIGNMENT> (non inheritable)
+=item B<ALIGNMENT> (non inheritable)
 
 horizontal and vertical alignment when
 IMAGE is defined. Possible values: "ALEFT", "ACENTER" and "ARIGHT",
@@ -44,7 +44,7 @@ Motif, vertical alignment is restricted to "ACENTER". In Windows works
 only when Visual Styles is active. Text is always left aligned. (since
 3.0)
 
-=item * L<BGCOLOR|[%m.at%]/BGCOLOR>
+=item L<BGCOLOR|[%m.at%]/BGCOLOR>
 
 Background color of toggle mark
 when displaying a text. The text background is transparent, it will use
@@ -52,26 +52,26 @@ the background color of the native parent. When displaying an image in
 Windows the background is ignored and the system color is used.
 Default: the global attribute DLGBGCOLOR.
 
-=item * B<CANFOCUS> (creation only) (non inheritable)
+=item B<CANFOCUS> (creation only) (non inheritable)
 
 enables the focus
 traversal of the control. In Windows the control will still get the
 focus when clicked. Default: YES. 
 
-=item * L<FGCOLOR|[%m.at%]/FGCOLOR>
+=item L<FGCOLOR|[%m.at%]/FGCOLOR>
 
 Color of the text shown on the
 toggle. In Windows, when using Visual Styles FGCOLOR is ignored.
 Default: the global attribute DLGFGCOLOR.
 
-=item * B<FLAT> (creation only)
+=item B<FLAT> (creation only)
 
 Hides the toggle borders until the mouse enter
 the toggle area when the toggle is not checked. If the toggle is
 checked, then the borders will be shown even if flat is enabled. Used
 only when IMAGE is defined. Can be YES or NO. Default: NO. (since iup-3.3)
 
-=item * B<IMAGE> (non inheritable)
+=item B<IMAGE> (non inheritable)
 
 Image name. When the IMAGE attribute is
 defined, the TITLE is not shown. This makes the toggle looks just like
@@ -79,49 +79,49 @@ a button with an image, but its behavior remains the same.
 Use L<SetName|[%m.elem%]/"SetName()"> or XXX-FIX_ME to associate
 an image to a name. See also L<IUP::Image|IUP::Image>. (GTK 2.6)
 
-=item * B<IMPRESS> (non inheritable)
+=item B<IMPRESS> (non inheritable)
 
 Image name of the pressed toggle. Unlike
 buttons, toggles always display the button border when IMAGE and
 IMPRESS are both defined. (GTK 2.6)
 
-=item * B<IMINACTIVE> (non inheritable)
+=item B<IMINACTIVE> (non inheritable)
 
 Image name of the inactive toggle. If
 it is not defined but IMAGE is defined then for inactive toggles the
 colors will be replaced by a modified version of the background color
 creating the disabled effect. (GTK 2.6)
 
-=item * B<MARKUP> [GTK only]
+=item B<MARKUP> [GTK only]
 
 Allows the title string to contains pango markup
 commands. Works only if a mnemonic is NOT defined in the title. Can be
 "YES" or "NO". Default: "NO".
 
-=item * B<PADDING>
+=item B<PADDING>
 
 Internal margin when IMAGE is defined. Works just like the
 MARGIN attribute of the L<IUP::Hbox|IUP::Hbox> and L<IUP::Vbox|IUP::Vbox> containers, but uses
 a different name to avoid inheritance problems. Default value: "0x0".
 
-=item * B<RADIO> (read-only)
+=item B<RADIO> (read-only)
 
 Returns if the toggle is inside a radio. Can be
 "YES" or "NO". Valid only after the element is mapped, before returns C<undef>. 
 
-=item * B<RIGHTBUTTON> (Windows Only) (creation only)
+=item B<RIGHTBUTTON> (Windows Only) (creation only)
 
 Place the check button
 at the right of the text. Can be "YES" or "NO". Default: "NO".
 
-=item * B<VALUE> (non inheritable)
+=item B<VALUE> (non inheritable)
 
 Toggle's state. Values can be "ON" or
 "OFF". If 3STATE=YES then can also be "NOTDEF". Default: "OFF". In GTK
 if you change the state of a radio, the unchecked toggle will receive
 an ACTION callback notification.
 
-=item * L<TITLE|[%m.at%]/TITLE> (non inheritable)
+=item L<TITLE|[%m.at%]/TITLE> (non inheritable)
 
 Toggle's text. If
 IMAGE is not defined before map, then the default behavior is to
@@ -134,7 +134,7 @@ be used as key. Use "&&" to show the "&" character instead on defining
 a mnemonic. The toggle can be activated from any control in the dialog
 using the "Alt+key" combination. (mnemonic support since iup-3.0)
 
-=item * B<3STATE> (creation only)
+=item B<3STATE> (creation only)
 
 Enable a three state toggle. Valid for
 toggles with text only and that do not belong to a radio. Can be "YES"
