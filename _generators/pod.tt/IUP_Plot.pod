@@ -512,6 +512,8 @@ Action generated when the Del key is pressed to removed a
 sample from a dataset. If multiple points are selected it is called
 once for each selected point.
 
+[%h.at_handler%]
+
  sub delete_cb_handler {
    my ($self, $index, $sample_index, $x, $y) = @_;
    #...
@@ -537,10 +539,14 @@ Actions generated when a delete
 operation will begin or end. But they are called only if DELETE_CB is
 also defined.
 
+[%h.at_handler%]
+
  sub deletebegin_cb_handler {
    my ($self) = @_;
    #...
  }
+
+[%h.at_handler%]
 
  sub deleteend_cb_handler {
    my ($self) = @_;
@@ -560,6 +566,8 @@ Action generated when a sample is selected. If multiple
 points are selected it is called once for each new selected point. It
 is called only if the selection state of the sample is about to be
 changed.
+
+[%h.at_handler%]
 
  sub select_cb_handler {
    my ($self, $index, $sample_index, $x, $y, $select) = @_;
@@ -589,10 +597,14 @@ Actions generated when a selection
 operation will begin or end. But they are called only if SELECT_CB is
 also defined.
 
+[%h.at_handler%]
+
  sub seletebegin_cb_handler {
    my ($self) = @_;
    #...
  }
+
+[%h.at_handler%]
 
  sub selectend_cb_handler {
    my ($self) = @_;
@@ -614,6 +626,8 @@ is called only if the selection state of the sample is about to be
 changed.
 
  #XXX-FIXME-check-implementation
+[%h.at_handler%]
+
  sub selectend_cb_handler {
    my ($self, $index, $sample_index, $x, $y) = @_;
    my $new_x, $new_y, $retval;
@@ -646,10 +660,14 @@ Actions generated when an editing
 operation will begin or end. But they are called only if EDIT_CB is
 also defined.
 
+[%h.at_handler%]
+
  sub editbegin_cb_handler {
    my ($self) = @_;
    #...
  }
+
+[%h.at_handler%]
 
  sub editend_cb_handler {
    my ($self) = @_;
@@ -672,10 +690,14 @@ Predraw has no restrictions, but Postdraw is clipped to the dataset
 area. To position elements in plot units, use the L<PlotTransform|IUP::Plot/"PlotTransform()">
 function.
 
+[%h.at_handler%]
+
  sub predraw_cb_handler {
    my ($self, $canvas) = @_;
    #...
  }
+
+[%h.at_handler%]
 
  sub postdraw_cb_handler {
    my ($self, $canvas) = @_;

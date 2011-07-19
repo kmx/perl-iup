@@ -21,6 +21,8 @@ Example:
  use IUP ':all';
  use OpenGL ':all';
  
+[%h.at_handler%]
+
  sub action_callback {
    my ($self, $x, $y) = @_;
    $self->GLMakeCurrent();

@@ -224,6 +224,8 @@ mouse button.
 By default the Del key is not processed, but you can implement it using
 a simple K_ANY callback:
 
+[%h.at_handler%]
+
  sub k_any_handler {
    my ($self, $c) = @_
    if ($c == K_DEL) {
@@ -704,6 +706,8 @@ Action generated when a node is selected or
 deselected. This action occurs when the user clicks with the mouse or
 uses the keyboard with the appropriate combination of keys.
 
+[%h.at_handler%]
+
  sub selection_cb_handler {
    my ($self, $id, $status) = @_;
    #...
@@ -729,8 +733,8 @@ already marked. That single operation also guaranties that all other
 nodes outside the range are already not selected. Called only if
 MARKMODE=MULTIPLE.
 
- int function(Ihandle *ih, int* ids, int n) [in C]
- elem:multiselection_cb(ids: table, n: number) -> (ret: number) [in Lua]
+[%h.at_handler%]
+
  sub multiselection_cb_handler {
    my ($self, $ids, $n) = @_;
    #...
@@ -757,6 +761,8 @@ with status=0 will be called for all nodes in the range. The range is
 not necessarily continuous. Called only if MARKMODE=MULTIPLE. (Since
 3.1)
 
+[%h.at_handler%]
+
  sub multiunselection_cb_handler {
    my ($self, $ids, $n) = @_;
    #...
@@ -778,6 +784,8 @@ Action generated when a branch is expanded. This
 action occurs when the user clicks the "+" sign on the left of the
 branch, or when double clicks the branch, or hits Enter on a collapsed
 branch.
+
+[%h.at_handler%]
 
  sub branchopen_cb_handler {
    my ($self, $id) = @_;
@@ -802,6 +810,8 @@ action occurs when the user clicks the "-" sign on the left of the
 branch, or when double clicks the branch, or hits Enter on an expanded
 branch.
 
+[%h.at_handler%]
+
  sub branchclose_cb_handler {
    my ($self, $id) = @_;
    #...
@@ -824,6 +834,8 @@ Action generated when a leaf is to be executed. This
 action occurs when the user double clicks a leaf, or hits Enter on a
 leaf.
 
+[%h.at_handler%]
+
  sub executeleaf_cb_handler {
    my ($self, $id) = @_;
    #...
@@ -842,6 +854,8 @@ B<$id:> node identifier.
 Action generated when a node is about to be renamed.
 It occurs when the user clicks twice the node or press B<F2>. Called
 only if SHOWRENAME=YES.
+
+[%h.at_handler%]
 
  sub showrename_cb_handler {
    my ($self, $id) = @_;
@@ -864,6 +878,8 @@ rename continuous but the edit box is read-only).
 Action generated after a node was renamed in place. It
 occurs when the user press B<Enter> after editing the name, or when the
 text box looses it focus. Called only if SHOWRENAME=YES.
+
+[%h.at_handler%]
 
  sub rename_cb_handler {
    my ($self, $id, $title) = @_;
@@ -890,6 +906,8 @@ editing stops always.
 
 Action generated when a drag & drop is executed. Only
 active if B<SHOWDRAGDROP=YES.>
+
+[%h.at_handler%]
 
  sub dragdrop_cb_handler {
    my ($self, $drag_id, $drop_id, $isshift, $iscontrol) = @_;
@@ -925,6 +943,8 @@ It is only a notification, the action can not be aborted. No node
 dependent attribute can be consulted during the callback. Not called
 when the tree is unmapped. 
 
+[%h.at_handler%]
+
  sub noderemoved_cb_handler {
    my ($self, $userdata_ref) = @_;
    #...
@@ -941,6 +961,8 @@ B<$userdata_ref:> #XXX-check-implementation.
 =item * B<RIGHTCLICK_CB>
 
 Action generated when the right mouse button is pressed over a node.
+
+[%h.at_handler%]
 
  sub rightclick_cb_handler {
    my ($self, $id) = @_;

@@ -98,6 +98,8 @@ Called when the user presses the left mouse button
 over the dial. The angle here is always zero, except for the circular
 dial.
 
+[%h.at_handler%]
+
  sub button_press_cb_handler {
    my ($self, $angle) = @_;
    #...
@@ -115,6 +117,8 @@ B<$angle:> the dial value converted according to UNIT.
 
 Called when the user releases the left mouse
 button after pressing it over the dial.
+
+[%h.at_handler%]
 
  sub button_release_cb_handler {
    my ($self, $angle) = @_;
@@ -135,6 +139,8 @@ Called each time the user moves the dial with the
 mouse button pressed. The angle the dial rotated since it was
 initialized is passed as a parameter.
 
+[%h.at_handler%]
+
  sub mousemove_cb_handler {
    my ($self, $angle) = @_;
    #...
@@ -154,6 +160,8 @@ Called after the value was interactively changed by
 the user. It is called whenever a B<BUTTON_PRESS_CB>, a
 B<BUTTON_RELEASE_CB> or a B<MOUSEMOVE_CB> would also be called, but if
 defined those callbacks will not be called. 
+
+[%h.at_handler%]
 
  sub valuechanged_cb_handler {
    my ($self) = @_;

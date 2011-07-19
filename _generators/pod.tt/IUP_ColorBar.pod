@@ -138,6 +138,8 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 called when the user double clicks a color cell to
 change its value.
 
+[%h.at_handler%]
+
  sub cell_cb_handler {
    my ($self, $cell) = @_;
    #...
@@ -160,6 +162,8 @@ default nothing is changed.
 called when the user right click a cell with the
 Shift key pressed. It is independent of the SHOW_SECONDARY attribute.
 
+[%h.at_handler%]
+
  sub extended_cb_handler {
    my ($self, $cell) = @_;
    #...
@@ -181,6 +185,8 @@ always redrawn.
 called when a color is selected. The primary color is
 selected with the left mouse button, and if existent the secondary is
 selected with the right mouse button.
+
+[%h.at_handler%]
 
  sub extended_cb_handler {
    my ($self, $cell, $type) = @_;
@@ -206,6 +212,8 @@ selection is always accepted.
 called when the user double clicks the preview area
 outside the preview cells to switch the primary and secondary
 selections. It is only called if SHOW_SECONDARY=YESB<.>
+
+[%h.at_handler%]
 
  sub extended_cb_handler {
    my ($self, $prim_cell, $sec_cell) = @_;

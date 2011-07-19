@@ -173,6 +173,8 @@ Action generated when the toggle's
 state (on/off) was changed. The callback also receives the toggle's
 state.
 
+[%h.at_handler%]
+
  sub action_handler {
    my ($self, $state) = @_;
    #...
@@ -193,6 +195,8 @@ B<Returns:> IUP_CLOSE will be processed.
 
 Called after the value was interactively changed by
 the user. Called after the ACTION callback, but under the same context.
+
+[%h.at_handler%]
 
  sub valuechanged_cb_handler {
    my ($self) = @_;

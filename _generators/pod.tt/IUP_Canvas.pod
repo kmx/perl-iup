@@ -213,6 +213,8 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 Action generated when the canvas
 needs to be redrawn.
 
+[%h.at_handler%]
+
  sub action_handler {
    my ($self, $posx, $posy) = @_;
    #...
@@ -286,6 +288,8 @@ Action generated when a touch event
 occurred. Multiple touch events will trigger several calls. Must set
 TOUCH=Yes to receive this event. (Since iup-3.3)
 
+[%h.at_handler%]
+
  sub touch_cb_handler {
    my ($self, $id, $x, $y, $state) = @_;
    #...
@@ -310,6 +314,8 @@ B<Returns:> IUP_CLOSE will be processed.
 
 Action generated when multiple touch
 events occurred. Must set TOUCH=Yes to receive this event. (Since iup-3.3)
+
+[%h.at_handler%]
 
  sub multitouch_cb_handler {
    my ($self, $count, $pid, $px, $py, $pstate) = @_;

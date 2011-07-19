@@ -96,6 +96,8 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 Called when the user releases the left mouse button over
 the control, defining the selected color.
 
+[%h.at_handler%]
+
  sub change_cb_handler {
    my ($self, $r, $g, $b) = @_;
    #...
@@ -113,6 +115,8 @@ B<$r, $g, $b:> color value.
 
 Called several times while the color is being changed by
 dragging the mouse over the control.
+
+[%h.at_handler%]
 
  sub drag_cb_handler {
    my ($self, $r, $g, $b) = @_;
@@ -132,6 +136,8 @@ B<$r, $g, $b:> color value.
 Called after the value was interactively changed by
 the user. It is called whenever a B<CHANGE_CB> or a B<DRAG_CB> would
 also be called, it is just called after them. 
+
+[%h.at_handler%]
 
  sub drag_cb_handler {
    my ($self) = @_;

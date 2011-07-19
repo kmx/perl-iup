@@ -164,6 +164,8 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 Callback called when the user shifts the active tab.
 
+[%h.at_handler%]
+
  sub tabchange_cb_handler {
    my ($self, $new_tab, $old_tab) = @_;
    #...
@@ -183,6 +185,8 @@ B<$old_tab:> the previously selected tab
 
 Callback called when the user shifts the active
 tab. Called only when TABCHANGE_CB is not defined. (since iup-3.3)
+
+[%h.at_handler%]
 
  sub tabchangepos_cb_handler {
    my ($self, $new_tab, $old_tab) = @_;

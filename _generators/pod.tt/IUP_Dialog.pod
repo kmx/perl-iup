@@ -487,6 +487,8 @@ Called at the first instance, when a
 second instance is running. Must set the global attribute
 SINGLEINSTANCE to be called. (since iup-3.2)
 
+[%h.at_handler%]
+
  sub copydata_cb_handler {
    my ($self, $cmdLine, $size) = @_;
    #...
@@ -512,6 +514,8 @@ Called when a MDI child window is
 activated. Only the MDI child receive this message. It is not called
 when the child is shown for the first time.
 
+[%h.at_handler%]
+
  sub mdiactivate_cb_handler {
    my ($self) = @_;
    #...
@@ -527,6 +531,8 @@ B<$self:> reference to the element (IUP::Dialog) that activated the event
 
 Called after the dialog was moved on
 screen. The coordinates are the same as the L<SCREENPOSITION|[%m.at%]/SCREENPOSITION> attribute. (since iup-3.0)
+
+[%h.at_handler%]
 
  sub mdiactivate_cb_handler {
    my ($self, $x, $y) = @_;
@@ -557,6 +563,8 @@ minimized/maximized.
 
 Called right after the mouse
 button is pressed or released over the tray icon. (GTK 2.10)
+
+[%h.at_handler%]
 
  sub trayclick_cb_handler {
    my ($self, $but, $pressed, $dclick) = @_;

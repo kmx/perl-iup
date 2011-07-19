@@ -138,6 +138,8 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 Called after the value was interactively changed by the user.
 
+[%h.at_handler%]
+
  sub valuechanged_cb_handler {
    my ($self) = @_;
    #...

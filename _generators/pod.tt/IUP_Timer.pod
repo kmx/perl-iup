@@ -53,6 +53,8 @@ Returns -1 if not running. A timer is mapped only when it is running.
 
 Called when the time is up.
 
+[%h.at_handler%]
+
  sub action_cb_handler {
    my ($self) = @_;
    #...

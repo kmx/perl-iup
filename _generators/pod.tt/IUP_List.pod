@@ -295,6 +295,8 @@ Action generated when the state of
 an item in the list is changed. Also provides information on the
 changed item:
 
+[%h.at_handler%]
+
  sub action_handler {
    my ($self, $text, $item, $state) = @_;
    #...
@@ -332,6 +334,8 @@ coordinates in item position.
 Action generated when the caret/cursor position is
 changed. Valid only when EDITBOX=YES.
 
+[%h.at_handler%]
+
  sub caret_cb_handler {
    my ($self, $lin, $col, $pos) = @_;
    #...
@@ -356,6 +360,8 @@ This is the same CARET_CB callback definition as for the L<IUP::Text|IUP::Text>.
 Action generated when the user double click an item.
 Called only when DROPDOWN=NO. 
 
+[%h.at_handler%]
+
  sub dblclick_cb_handler {
    my ($self, $item, $text) = @_;
    #...
@@ -375,6 +381,8 @@ B<$text:> Text of the selected item.
 
 Action generated when the list of a dropdown is shown
 or hidden. Called only when DROPDOWN=YES. 
+
+[%h.at_handler%]
 
  sub dropdown_cb_handler {
    my ($self, $state) = @_;
@@ -398,6 +406,8 @@ Action generated when one or more files are dropped in the element.
 Action generated when the text in the text box is manually
 changed by the user, but before its value is actually updated. Valid
 only when EDITBOX=YES.
+
+[%h.at_handler%]
 
  sub edit_cb_handler {
    my ($self, $c, $new_value) = @_;
@@ -436,6 +446,8 @@ Action generated when the state of an item in the
 multiple selection list is changed. But it is called only when the
 interaction is over.
 
+[%h.at_handler%]
+
  sub multiselect_cb_handler {
    my ($self, $value) = @_;
    #...
@@ -464,6 +476,8 @@ attribute to ensure proper 'x' values.
 Called after the value was interactively changed by
 the user. Called when the selection is changed or when the text is
 edited. 
+
+[%h.at_handler%]
 
  sub valuechanged_cb_handler {
    my ($self) = @_;

@@ -377,6 +377,8 @@ Action generated when the text is
 edited, but before its value is actually changed. Can be generated when
 using the keyboard, undo system or from the clipboard.
 
+[%h.at_handler%]
+
  sub action_handler {
    my ($self, $c, $new_value) = @_;
    #...
@@ -407,6 +409,8 @@ coordinates in character positioning.
 =item * B<CARET_CB>
 
 Action generated when the caret/cursor position is changed.
+
+[%h.at_handler%]
 
  sub caret_cb_handler {
    my ($self, $lin, $col, $pos) = @_;
@@ -442,6 +446,8 @@ when SPIN=YES. When this callback is called the ACTION callback is not
 called. The VALUE attribute can be changed during this callback only if
 SPINAUTO=NO. 
 
+[%h.at_handler%]
+
  sub spin_cb_handler {
    my ($self, $pos) = @_;
    #...
@@ -460,6 +466,8 @@ B<Returns:> IUP_IGNORE is processed in Windows and Motif.
 =item * B<VALUECHANGED_CB>
 
 Called after the value was interactively changed by the user. 
+
+[%h.at_handler%]
 
  sub valuechanged_cb_handler {
    my ($self) = @_;

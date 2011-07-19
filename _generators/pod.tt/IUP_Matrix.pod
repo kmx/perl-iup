@@ -839,6 +839,8 @@ Changed to YES.
 Action generated when a keyboard event
 occurs.
 
+[%h.at_handler%]
+
  sub action_cb_handler {
    my ($self, $key, $lin, $col, $edition, $value) = @_;
    #...
@@ -875,6 +877,8 @@ Action generated when any mouse button is
 pressed over a cell. This callback is always called after other
 callbacks.
 
+[%h.at_handler%]
+
  sub click_cb_handler {
    my ($self, $lin, $col, $status) = @_;
    #...
@@ -902,6 +906,8 @@ Action generated when any mouse button is
 released over a cell. This callback is always called after other
 callbacks.
 
+[%h.at_handler%]
+
  sub click_cb_handler {
    my ($self, $lin, $col, $status) = @_;
    #...
@@ -928,6 +934,8 @@ B<Returns:> To avoid the display update return IUP_IGNORE.
 Action generated to notify the
 application that the mouse has moved over the matrix.
 
+[%h.at_handler%]
+
  sub mousemove_cb_handler {
    my ($self, $lin, $col) = @_;
    #...
@@ -948,6 +956,8 @@ Action generated when a matrix cell is
 selected, becoming the current cell. Also called when matrix is getting
 focus.
 
+[%h.at_handler%]
+
  sub enteritem_cb_handler {
    my ($self, $lin, $col) = @_;
    #...
@@ -965,6 +975,8 @@ B<$lin, $col:> Coordinates of the selected cell.
 
 Action generated when a cell is no
 longer the current cell. Also called when the matrix is losing focus.
+
+[%h.at_handler%]
 
  sub leaveitem_cb_handler {
    my ($self, $lin, $col) = @_;
@@ -991,6 +1003,8 @@ scrolled with the scrollbars or with the keyboard. Can be used together
 with the ORIGIN and ORIGINOFFSET attributes to synchronize the movement
 of two or more matrices.
 
+[%h.at_handler%]
+
  sub scrolltop_cb_handler {
    my ($self, $lin, $col) = @_;
    #...
@@ -1016,6 +1030,8 @@ corner of the matrix.
 
 Action generated to retrieve the background color of a cell when it needs to be redrawn.
 
+[%h.at_handler%]
+
  sub bgcolor_cb_handler {
    my ($self, $lin, $col) = @_;
    my ($red, $green, $blue, $ret);
@@ -1040,6 +1056,8 @@ returned values will be used as the background color.
 =item * B<FGCOLOR_CB>
 
 Action generated to retrieve the foreground color of a cell when it needs to be redrawn.
+
+[%h.at_handler%]
 
  sub fgcolor_cb_handler {
    my ($self, $lin, $col) = @_;
@@ -1067,6 +1085,8 @@ returned values will be used as the foreground color.
 Action generated to verify the font of a cell.
 Called both for common cells and for line and column titles. (since iup-3.0)
 
+[%h.at_handler%]
+
  sub value_cb_handler {
    my ($self, $lin, $col) = @_;
    #...
@@ -1089,6 +1109,8 @@ Action generated before a cell is drawn. Allows to draw a custom cell contents. 
 L<IUP::Canvas> methods. The clipping is set for the bounding rectangle. The callback is called
 after the cell background has been filled with the background color.
 The focus feedback area is not included in the decoration size.
+
+[%h.at_handler%]
 
  sub draw_cb_handler {
    my ($self, $lin, $col, $x1, $x2, $y1, $y2, $cnv) = @_;
@@ -1114,6 +1136,8 @@ B<Returns:> If IUP_IGNORE the normal text drawing will take place.
 Action generated before the current
 cell is redrawn to determine if a dropdown feedback should be shown. If
 this action is not registered, no feedback will be shown.
+
+[%h.at_handler%]
 
  sub dropcheck_cb_handler {
    my ($self, $lin, $col) = @_;
@@ -1151,6 +1175,8 @@ current value ("VALUE"), the default is always "1". The previously cell
 value can be verified from the given drop Ihandle via the
 "PREVIOUSVALUE" attribute.
 
+[%h.at_handler%]
+
  sub drop_cb_handler {
    my ($self, $drop, $lin, $col) = @_;
    #...
@@ -1174,6 +1200,8 @@ Action generated when an element in
 the dropdown list is selected. If returns IUP_CONTINUE the value is
 accepted as a new value and the matrix leaves edition mode, else the
 item is selected and editing remains.
+
+[%h.at_handler%]
 
  sub dropselect_cb_handler {
    my ($self, $lin, $col, $drop, $t, $i, $v) = @_;
@@ -1200,6 +1228,8 @@ B<$v:> Indicates if item was selected or unselected (1 or 0).
 
 Action generated when the current cell
 enters or leaves the edition mode. Not called if READONLY=YES.
+
+[%h.at_handler%]
 
  sub edition_cb_handler {
    my ($self, $lin, $col, $mode, $update) = @_;
@@ -1254,6 +1284,8 @@ called only with mode=1).
 Action generated to verify the value of a cell.
 Called both for common cells and for line and column titles.
 
+[%h.at_handler%]
+
  sub value_cb_handler {
    my ($self, $lin, $col) = @_;
    #...
@@ -1281,6 +1313,8 @@ done by the "EDITION_CB" callback). Not called if READONLY=YES. This
 callback is usually set in callback mode, but also works in normal
 mode.
 
+[%h.at_handler%]
+
  sub value_edit_cb_handler {
    my ($self, $lin, $col, $newval) = @_;
    #...
@@ -1305,6 +1339,8 @@ Action generated to verify the selection state of
 a cell. Called only for common cells, only when MARKMODE=CELL and only
 in callback mode.
 
+[%h.at_handler%]
+
  sub mark_cb_handler {
    my ($self, $lin, $col) = @_;
    #...
@@ -1327,6 +1363,8 @@ Action generated to notify the
 application that the selection state of a cell was changed. Since it is
 a notification, it cannot refuse the mark modification. Called only for
 common cells, only when MARKMODE=CELL and only in callback mode.
+
+[%h.at_handler%]
 
  sub markedit_cb_handler {
    my ($self, $lin, $col, $marked) = @_;
