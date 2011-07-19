@@ -2,7 +2,7 @@
 
 [% h.name %]
 
-[% m.at %] - Attribute concept, using attributes, common + global attributes
+[% m.intro %] - Basic introduction to IUP concept
 
 =head1 IUP MANUAL
 
