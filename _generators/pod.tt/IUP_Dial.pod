@@ -44,12 +44,16 @@ The default is "NO".
 Foreground color. The default
 value is "64 64 64". Not used for the circular dial.
 
-=item L<SIZE|[%m.at%]/SIZE> (non inheritable)
+=item L<SIZE|[%m.at%]/SIZE>
+
+I<(non inheritable)>
 
 The initial size is "16x80", "80x16" or "40x35" according to the dial orientation. Set to
 C<undef> to allow the automatic layout use smaller values.
 
-=item B<ORIENTATION> (creation only) (non inheritable)
+=item B<ORIENTATION>
+
+I<(creation only) (non inheritable)>
 
 Dial layout configuration "VERTICAL", "HORIZONTAL" or "CIRCULAR". Default:
 "HORIZONTAL".
@@ -59,7 +63,9 @@ Dial layout configuration "VERTICAL", "HORIZONTAL" or "CIRCULAR". Default:
 Unit of the angle. Can be "DEGREES" or "RADIANS". Default is
 "RADIANS". Used only in the callbacks.
 
-=item B<VALUE> (non inheritable)
+=item B<VALUE>
+
+I<(non inheritable)>
 
 The dial angular value in radians. The
 value is reset to zero when the interaction is started, except for

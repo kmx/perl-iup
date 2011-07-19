@@ -42,12 +42,16 @@ Windows, the tab buttons background it will be always defined by the
 system. In Windows the default background is different from the dialog
 background. Default: the global attribute DLGBGCOLOR.
 
-=item B<COUNT> (read-only) (non inheritable)
+=item B<COUNT>
+
+I<(read-only) (non inheritable)>
 
 Returns the number of tabs.
 Same value returned by L<GetChildCount|[%m.elem%]/"GetChildCount()">. (since iup-3.3)
 
-=item L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+=item L<EXPAND|[%m.at%]/EXPAND>
+
+I<(non inheritable)>
 
 The default value is "YES".
 
@@ -55,21 +59,27 @@ The default value is "YES".
 
 Tabs title color. Default: the global attribute DLGFGCOLOR.
 
-=item B<MULTILINE> [Windows Only] (non inheritable)
+=item B<MULTILINE>
+
+I<[Windows Only] (non inheritable)>
 
 Enable multiple lines
 of tab buttons. This will hide the tab scroll and fits to make all tab
 buttons visible. Can be "YES" or "NO". Default "NO". It is always
 enabled when TABTYPE=LEFT or TABTYPE=RIGHT. 
 
-=item B<PADDING> (non inheritable)
+=item B<PADDING>
+
+I<(non inheritable)>
 
 Internal margin of the tab title. Works
 just like the MARGIN attribute of the L<IUP::Hbox> and L<IUP::Vbox> containers,
 but uses a different name to avoid inheritance problems.
 Default value: "0x0". 
 
-=item L<SIZE|[%m.at%]/SIZE> (non inheritable)
+=item L<SIZE|[%m.at%]/SIZE>
+
+I<(non inheritable)>
 
 The default size is
 the smallest size that fits its largest child. All child elements are
@@ -87,7 +97,9 @@ See also L<IUP::Image|IUP::Image>. In Motif, the image is shown only if
 B<< TABTITLE(n) >> is C<undef>. In Windows and Motif set the BGCOLOR attribute
 before setting the image. 
 
-=item B<TABORIENTATION> (non inheritable)
+=item B<TABORIENTATION>
+
+I<(non inheritable)>
 
 Indicates the orientation of tab
 text, which can be "HORIZONTAL" or "VERTICAL". Default is "HORIZONTAL".
@@ -104,7 +116,9 @@ instead on defining a mnemonic. The button can be activated from any
 control in the dialog using the "Alt+key" combination. (mnemonic
 support since iup-3.3) 
 
-=item B<TABTYPE> (non inheritable, creation only in Windows)
+=item B<TABTYPE>
+
+I<(non inheritable, creation only in Windows)>
 
 Indicates the
 type of tab, which can be "TOP", "BOTTOM", "LEFT" or "RIGHT". Default
@@ -112,7 +126,9 @@ is "TOP". In Windows, if LEFT or RIGHT, then MULTILINE=YES and
 TABORIENTATIONB<=>VERTICAL always. In Windows, when not TOP, then
 visual style is removed from tabs.
 
-=item B<VALUE> (non inheritable)
+=item B<VALUE>
+
+I<(non inheritable)>
 
 Changes the active tab by its name. The
 value passed must be the name of one of the elements contained in the
@@ -120,14 +136,18 @@ tabs. Use L<SetName|[%m.elem%]/"SetName()"> or XXX-FIX_ME to associate
 a child to a name. In Lua (XXX-check-this-for-perl) you can also use the element reference
 directly.
 
-=item B<VALUE_HANDLE> (non inheritable)
+=item B<VALUE_HANDLE>
+
+I<(non inheritable)>
 
 Changes the active tab by its
 handle. The value passed must be the handle of a child contained in the
 tabs. When the tabs is created, the first element inserted is set as
 the visible child. 
 
-=item B<VALUEPOS> (non inheritable)
+=item B<VALUEPOS>
+
+I<(non inheritable)>
 
 Changes the active tab by its position,
 starting at 0. When the tabs is created, the first element inserted is

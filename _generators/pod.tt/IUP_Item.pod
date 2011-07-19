@@ -25,12 +25,16 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item B<AUTOTOGGLE> (non inheritable)
+=item B<AUTOTOGGLE>
+
+I<(non inheritable)>
 
 Enables the automatic toggle of VALUE
 state when the item is activated. Default: NO. 
 
-=item B<HIDEMARK> [Motif and GTK Only]
+=item B<HIDEMARK>
+
+I<[Motif and GTK Only]>
 
 If enabled the item cannot be
 checked, since the check box will not be shown. If all items in a menu
@@ -41,7 +45,9 @@ you must set HIDEMARK=YES, since this is the most common case we
 changed the default value to YES for this version of GTK, but if VALUE
 is defined the default goes back to NO. Default: NO. 
 
-=item B<IMAGE> [Windows and GTK Only] (non inheritable)
+=item B<IMAGE>
+
+I<[Windows and GTK Only] (non inheritable)>
 
 Image name of the
 check mark image when VALUE=OFF. In Windows, an item in a menu bar
@@ -49,12 +55,16 @@ cannot have a check mark. Ignored if item in a menu bar. A recommended
 size would be 16x16 to fit the image in the menu item. In Windows, if
 larger than the check mark area it will be cropped.
 
-=item B<IMPRESS> [Windows and GTK Only] (non inheritable)
+=item B<IMPRESS>
+
+I<[Windows and GTK Only] (non inheritable)>
 
 Image name of the
 check mark image when VALUE=ON.
 
-=item L<TITLE|[%m.at%]/TITLE> (non inheritable)
+=item L<TITLE|[%m.at%]/TITLE>
+
+I<(non inheritable)>
 
 Item text. The "&"
 character can be used to define a mnemonic, the next character will be
@@ -70,7 +80,9 @@ but notice that the shortcut key (also known as Accelerator or Hot Key)
 still has to be implemented. To implement a shortcut use the K_*
 callbacks in the dialog.
 
-=item B<TITLEIMAGE> (non inheritable)
+=item B<TITLEIMAGE>
+
+I<(non inheritable)>
 
 Image name of the title image. In
 Windows, it appears before of the title text and after the check mark
@@ -79,7 +91,9 @@ be at least defined during map, it replaces the text, and only images
 will be possible to set (TITLE will be hidden). In GTK, it will appear
 on the check mark area. 
 
-=item B<VALUE> (non inheritable)
+=item B<VALUE>
+
+I<(non inheritable)>
 
 Indicates the item's state. When the value
 is ON, a mark will be displayed to the left of the item. Default: OFF.

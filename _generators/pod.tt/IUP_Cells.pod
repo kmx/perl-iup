@@ -61,7 +61,9 @@ attributes can be changed without many redraws. When set to "NO" the
 control is redrawn. When REPAINT attribute is set, BUFFERIZE is
 automatically set to "NO". Default: "NO".
 
-=item B<CANVAS> (read-only, non inheritable)
+=item B<CANVAS>
+
+I<(read-only, non inheritable)>
 
 Returns the internal CD canvas xxx???. This attribute should be used only in specific cases and by
 experienced IUP::Canvas programmers.
@@ -72,15 +74,21 @@ Determines if, before cells drawing, each bounding region
 should be clipped. This attribute should the changed in few specific
 cases. It can be "YES" or "NO". Default: "YES".
 
-=item B<FIRST_COL> (read-only, non inheritable)
+=item B<FIRST_COL>
+
+I<(read-only, non inheritable)>
 
 Returns the number of the first visible column.
 
-=item B<FIRST_LINE> (read-only, non inheritable)
+=item B<FIRST_LINE>
+
+I<(read-only, non inheritable)>
 
 Returns the number of the first visible line.
 
-=item B<FULL_VISIBLE> (write-only, non inheritable)
+=item B<FULL_VISIBLE>
+
+I<(write-only, non inheritable)>
 
 Tries to show
 completely a specific cell (considering any vertical or horizontal
@@ -88,13 +96,17 @@ header or scrollbar position). This attribute is set by a formatted
 string "%d:%d" (C syntax), where each "%d" represent the line and
 column integer indexes respectively.
 
-=item B<IMAGE_CANVAS> (read-only, non inheritable)
+=item B<IMAGE_CANVAS>
+
+I<(read-only, non inheritable)>
 
 Returns the internal
 image CD canvas xxx???. This attribute should be used only in specific cases
 and by experienced CD programmers.
 
-=item B<LIMITS(L):(C)> (read-only, non inheritable)
+=item B<LIMITS(L):(C)>
+
+I<(read-only, non inheritable)>
 
 Where (L) is the line number and (C) the column number - e.g. "LIMITS11:25". 
 Returns the limits of a given cell. Output format is a string "xmin:xmax:ymin:ymax".
@@ -118,15 +130,21 @@ Sets the first visible line and column positions. This
 attribute is set by a formatted string "%d:%d" (C syntax), where each
 "%d" represent the line and column integer indexes respectively.
 
-=item B<REPAINT> (write-only, non inheritable)
+=item B<REPAINT>
+
+I<(write-only, non inheritable)>
 
 When set with any value, provokes the control to be redrawn.
 
-=item L<SIZE|[%m.at%]/SIZE> (non inheritable)
+=item L<SIZE|[%m.at%]/SIZE>
+
+I<(non inheritable)>
 
 There is no initial size. You must define SIZE or RASTERSIZE.
 
-=item L<SCROLLBAR|[%m.at%]/SCROLLBAR> (creation only)
+=item L<SCROLLBAR|[%m.at%]/SCROLLBAR>
+
+I<(creation only)>
 
 Default: "YES".
 

@@ -55,13 +55,17 @@ L<C<< $element->Insert() >>|[%m.elem%]/"Insert()"> methods.
 
 =over
 
-=item B<CX, CY> (non inheritable) B<(at children only)>
+=item B<CX, CY>
+
+I<(non inheritable) B<(at children only)>>
 
 Position in pixels
 of the child relative to the top-left corner of the box. Must be set
 for each child inside the box.
 
-=item L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+=item L<EXPAND|[%m.at%]/EXPAND>
+
+I<(non inheritable)>
 
 The default
 value is "YES".
@@ -73,7 +77,9 @@ Must be
 defined for each child. If not defined for the box, then it will be the
 bounding box that includes all children in their position.
 
-=item B<WID> (read-only)
+=item B<WID>
+
+I<(read-only)>
 
 returns -1 if mapped.
 

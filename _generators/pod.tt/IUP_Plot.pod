@@ -214,20 +214,26 @@ Handy if you want to save the plot into L<IUP::Canvas::SVG> or L<IUP::Canvas::EM
 
 =over
 
-=item B<REDRAW> (write-only) (non inheritable)
+=item B<REDRAW>
+
+I<(write-only) (non inheritable)>
 
 Redraw the plot and update
 the display. Value is ignored. All other attributes will B<NOT> update
 the display, so you can set many attributes without visual output.
 
-=item B<USE_IMAGERGB> (non inheritable)
+=item B<USE_IMAGERGB>
+
+I<(non inheritable)>
 
 Defines if the double buffer will
 use standard driver image (NO - faster) or an RGB image (YES - slower).
 Default: NO. The IMAGERGB driver has anti-aliasing which can improve
 the line drawing.
 
-=item B<USE_GDI+> [Windows Only] (non inheritable)
+=item B<USE_GDI+>
+
+I<[Windows Only] (non inheritable)>
 
 Defines if the double
 buffer will use GDI+ (YES) for drawing or standard GDI (NO). Default:
@@ -249,19 +255,25 @@ default value is white "255 255 255".
 The title color. The default
 value is black "0 0 0".
 
-=item B<TITLE> (non inheritable)
+=item B<TITLE>
+
+I<(non inheritable)>
 
 The title. Located always at the top center
 area.
 
-=item B<TITLEFONTSIZE, TITLEFONTSTYLE> (non inheritable)
+=item B<TITLEFONTSIZE, TITLEFONTSTYLE>
+
+I<(non inheritable)>
 
 The title font size
 and style. The default values depends on the FONT attribute and the
 returned value is NULL. Set to NULL, to use the FONT attribute values.
 Style can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC".
 
-=item B<MARGINLEFT, MARGINRIGHT, MARGINTOP, MARGINBOTTOM> (non inheritable)
+=item B<MARGINLEFT, MARGINRIGHT, MARGINTOP, MARGINBOTTOM>
+
+I<(non inheritable)>
 
 Margin of the dataset area. PPlot implementation demands that margins
 must be set so the plot is not cropped. Default: "15", "15", "30",
@@ -314,15 +326,21 @@ YES (both), HORIZONTAL, VERTICAL or NO. Default: NO.
 
 =over
 
-=item B<REMOVE> (write-only)
+=item B<REMOVE>
+
+I<(write-only)>
 
 Removes a dataset given its index.
 
-=item B<CLEAR> (write-only)
+=item B<CLEAR>
+
+I<(write-only)>
 
 Removes all datasets. Value is ignored.
 
-=item B<COUNT> [read-only]
+=item B<COUNT>
+
+I<[read-only]>
 
 Total number of datasets.
 
@@ -375,7 +393,9 @@ Mark size of the current dataset. Default: 7.
 Enable or disable the display of the values near each
 sample. Can be YES or NO. Default: NO.
 
-=item B<DS_REMOVE> (write-only)
+=item B<DS_REMOVE>
+
+I<(write-only)>
 
 Removes a sample from the current dataset
 given its index.

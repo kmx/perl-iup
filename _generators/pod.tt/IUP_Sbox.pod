@@ -53,18 +53,24 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 Changes the color of the bar handler. The value should be
 given in "R G B" color style. Default: "192 192 192".
 
-=item B<DIRECTION> (creation only)
+=item B<DIRECTION>
+
+I<(creation only)>
 
 Indicates the direction of the resize and
 the position of the bar handler. Possible values are "NORTH", "SOUTH"
 (vertical direction), "EAST" or "WEST" (horizontal direction). Default:
 "EAST".
 
-=item L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+=item L<EXPAND|[%m.at%]/EXPAND>
+
+I<(non inheritable)>
 
 It will expand automatically only in the direction opposite to the handler.
 
-=item B<WID> (read-only)
+=item B<WID>
+
+I<(read-only)>
 
 Returns -1 if mapped.
 

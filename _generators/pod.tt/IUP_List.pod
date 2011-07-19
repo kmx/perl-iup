@@ -70,7 +70,9 @@ inserting a new one at the old position.
 
 =back
 
-=item B<APPENDITEM> (write-only)
+=item B<APPENDITEM>
+
+I<(write-only)>
 
 Inserts an item after the last item.
 Ignored if set before map. 
@@ -79,7 +81,9 @@ Ignored if set before map.
 
 Scrollbars are shown only if they are necessary. Default: "YES".
 
-=item B<AUTOREDRAW> [Windows] (non inheritable)
+=item B<AUTOREDRAW>
+
+I<[Windows] (non inheritable)>
 
 Automatically redraws the
 list when something has change. Set to NO to add many items to the list
@@ -91,25 +95,33 @@ Background color of the text.
 
 Default: the global attribute TXTBGCOLOR. In GTK does nothing when DROPDOWN=Yes.
 
-=item B<CANFOCUS> (creation only) (non inheritable)
+=item B<CANFOCUS>
+
+I<(creation only) (non inheritable)>
 
 Enables the focus
 traversal of the control. In Windows the control will still get the
 focus when clicked. Default: YES. 
 
-=item B<COUNT> (read-only) (non inheritable)
+=item B<COUNT>
+
+I<(read-only) (non inheritable)>
 
 Returns the number of items.
 Before mapping it counts the number of non C<undef> items before the first
 C<undef> item. 
 
-=item B<DRAGDROP> [Windows and GTK Only] (non inheritable)
+=item B<DRAGDROP>
+
+I<[Windows and GTK Only] (non inheritable)>
 
 Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
 
-=item B<DROPDOWN> (creation only)
+=item B<DROPDOWN>
+
+I<(creation only)>
 
 Changes the appearance of the list for the
 user: only the selected item is shown beside a button with the image of
@@ -117,13 +129,17 @@ an arrow pointing down. To select another option, the user must press
 this button, which displays all items in the list. Can be "YES" or
 "NO". Default "NO".
 
-=item B<DROPEXPAND> [Windows Only]
+=item B<DROPEXPAND>
+
+I<[Windows Only]>
 
 When DROPDOWN=Yes the size of the dropped
 list will expand to include the largest text. Can be "YES" or "NO".
 Default: "YES".
 
-=item B<EDITBOX> (creation only)
+=item B<EDITBOX>
+
+I<(creation only)>
 
 Adds an edit box to the list. Can be "YES"
 or "NO". Default "NO".
@@ -133,25 +149,33 @@ or "NO". Default "NO".
 Text color. Default: the global
 attribute TXTFGCOLOR.
 
-=item B<INSERTITEMn> (write-only)
+=item B<INSERTITEMn>
+
+I<(write-only)>
 
 Inserts an item before the given n
 position. n starts at 1. If n=COUNT+1 then it will append after the
 last item. Ignored if out of bounds. Ignored if set before map. (since
 3.0)
 
-=item B<MULTIPLE> (creation only)
+=item B<MULTIPLE>
+
+I<(creation only)>
 
 Allows selecting several items
 simultaneously (multiple list). Default: "NO". Only valid when
 EDITBOX=NO and DROPDOWN=NO.
 
-=item B<REMOVEITEM> (write-only)
+=item B<REMOVEITEM>
+
+I<(write-only)>
 
 Removes the given value. value starts at 1.
 If value is C<undef> removes all the items. Ignored if set before map.
 
-=item B<SCROLLBAR> (creation only)
+=item B<SCROLLBAR>
+
+I<(creation only)>
 
 Associates automatic scrollbars to the
 list when DROPDOWN=NO. Can be: "YES" or "NO" (none). Default: "YES".
@@ -168,7 +192,9 @@ items are always visible. In Motif, the horizontal scrollbar is never
 shown. In Windows, if DROPEXPAND=YES then the horizontal scrollbar is
 never shown.
 
-=item B<SHOWDROPDOWN> (write-only)
+=item B<SHOWDROPDOWN>
+
+I<(write-only)>
 
 Opens or closes the dropdown list. Can be
 "YES" or "NO". Valid only when DROPDOWN=YES. Ignored if set before map.
@@ -182,12 +208,16 @@ In IUP 3, the B<Natural> B<Size> ignores the list contents if
 VISIBLECOLUMNS or VISIBLELINES attributes are defined. The text in the
 edit box is ignored when considering the list contents.
 
-=item B<SORT> (creation only)
+=item B<SORT>
+
+I<(creation only)>
 
 Force the list to be alphabetically sorted.
 When using INSERTITEMn or APPENDITEM the position will be ignored.
 
-=item B<TOPITEM> (write-only)
+=item B<TOPITEM>
+
+I<(write-only)>
 
 Position the given item at the top of the list
 or near to make it visible. Valid only when DROPDOWN=NO. 
@@ -200,7 +230,9 @@ affects the horizontal margin of the item. In Windows, the text is
 aligned at the top left of the item always. Valid only when
 DROPDOWN=NO. 
 
-=item B<VALUE> (non inheritable)
+=item B<VALUE>
+
+I<(non inheritable)>
 
 Depends on the DROPDOWN+EDITBOX combination:
 
@@ -221,7 +253,9 @@ otherwise the specified items will be deselected.
 
 =back
 
-=item B<VISIBLE_ITEMS> [Windows and Motif Only]
+=item B<VISIBLE_ITEMS>
+
+I<[Windows and Motif Only]>
 
 Number of items that are
 visible when DROPDOWN=YES is used for the dropdown list. Default: 5.
@@ -397,7 +431,9 @@ B<$state:> state of the list 1=shown, 0=hidden.
 
 =back
 
-=item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
+=item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB>
+
+I<[Windows and GTK Only]>
 
 Action generated when one or more files are dropped in the element.
 

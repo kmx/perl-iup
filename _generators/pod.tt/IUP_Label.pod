@@ -37,7 +37,9 @@ The only difference between an active label and an inactive
 one is its visual feedback. Possible values: "YES, "NO". Default:
 "YES".
 
-=item B<ALIGNMENT> (non inheritable)
+=item B<ALIGNMENT>
+
+I<(non inheritable)>
 
 Horizontal and vertical alignment.
 Possible values: "ALEFT", "ACENTER" and "ARIGHT", combined to "ATOP",
@@ -51,7 +53,9 @@ to "ACENTER". (vertical alignment since iup-3.0)
 Ignored, transparent in all
 systems. Will use the background color of the native parent.
 
-=item B<ELLIPSIS> [Windows and GTK only]
+=item B<ELLIPSIS>
+
+I<[Windows and GTK only]>
 
 Add an ellipsis: "..." to the text
 if there is not enough space to render the entire string. Can be "YES"
@@ -62,7 +66,9 @@ or "NO". Default: "NO".  (GTK 2.6)
 Text color. Default: the global
 attribute DLGFGCOLOR.
 
-=item B<IMAGE> (non inheritable)
+=item B<IMAGE>
+
+I<(non inheritable)>
 
 Image name. If set before map defines the
 behavior of the label to contain an image. The natural size will be
@@ -77,7 +83,9 @@ the colors will be replaced by a modified version of the background
 color creating the disabled effect. GTK will also change the inactive
 image to look like other inactive objects.
 
-=item B<MARKUP> [GTK only]
+=item B<MARKUP>
+
+I<[GTK only]>
 
 Allows the title string to contains pango markup
 commands. Works only if a mnemonic is NOT defined in the title. Can be
@@ -90,14 +98,18 @@ the L<IUP::Hbox> and <IUP::Vbox> containers, but uses a different name to avoid
 inheritance problems. Not used when SEPARATOR is used. Default value:
 "0x0". 
 
-=item B<SEPARATOR> (creation only, non inheritable)
+=item B<SEPARATOR>
+
+I<(creation only, non inheritable)>
 
 Turns the label into a
 line separator. Possible values: "HORIZONTAL" or "VERTICAL". When
 changed before mapping the EXPAND attribute is set to "HORIZONTAL" or
 "VERTICAL" accordingly.
 
-=item L<TITLE|[%m.at%]/TITLE> (non inheritable)
+=item L<TITLE|[%m.at%]/TITLE>
+
+I<(non inheritable)>
 
 Label's text. If
 SEPARATOR or IMAGE are not defined before map, then the default
@@ -110,7 +122,9 @@ show the "&" character instead of defining a mnemonic. The next control
 from the label will be activated from any control in the dialog using
 the "Alt+key" combination. (mnemonic support since iup-3.0)
 
-=item B<WORDWRAP> [Windows and GTK only]
+=item B<WORDWRAP>
+
+I<[Windows and GTK only]>
 
 Enables or disable the wrapping of
 lines that does not fits in the label. Can be "YES" or "NO". Default:
@@ -144,7 +158,9 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 Action generated when any mouse button is pressed or released. (since iup-3.3)
 
-=item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
+=item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB>
+
+I<[Windows and GTK Only]>
 
 Action generated when one or more files are dropped in the element. (since iup-3.3)
 

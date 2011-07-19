@@ -49,7 +49,9 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item B<ALIGNMENT> (non inheritable)
+=item B<ALIGNMENT>
+
+I<(non inheritable)>
 
 Defines the alignment of the visible
 child. Possible values:
@@ -60,16 +62,22 @@ child. Possible values:
 
 Default: "NW".
 
-=item L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+=item L<EXPAND|[%m.at%]/EXPAND>
+
+I<(non inheritable)>
 
 The default value is "YES".
 
-=item L<FLOATING|[%m.at%]/FLOATING> (non inheritable, at children only)
+=item L<FLOATING|[%m.at%]/FLOATING>
+
+I<(non inheritable, at children only)>
 
 If a child has FLOATING=YES then its size and position
 will be ignored by the layout processing. Default: "NO". 
 
-=item B<VALUE> (non inheritable)
+=item B<VALUE>
+
+I<(non inheritable)>
 
 The visible child accessed by its name. The
 value passed must be the name of one of the children contained in the
@@ -87,7 +95,9 @@ handle. The value passed must be the handle of a child contained in the
 zbox. When the zbox is created, the first element inserted is set as
 the visible child. 
 
-=item B<VALUEPOS> (non inheritable)
+=item B<VALUEPOS>
+
+I<(non inheritable)>
 
 The visible child accessed by its
 position. The value passed must be the index of a child contained in
@@ -100,7 +110,9 @@ The default size is the smallest size that fits its largest child. All
 child elements are considered even invisible ones, except when
 FLOATING=YES in a child.
 
-=item B<WID> (read-only)
+=item B<WID>
+
+I<(read-only)>
 
 Returns -1 if mapped.
 

@@ -30,7 +30,9 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item B<BACKGROUND> (non inheritable)
+=item B<BACKGROUND>
+
+I<(non inheritable)>
 
 Dialog background color or image. Can
 be a non inheritable alternative to BGCOLOR or can be the name of an
@@ -50,30 +52,40 @@ See also the screenshots of the sample dialog: XXX-fix-the-following-links
 
 =back
 
-=item B<BORDER> (non inheritable) (creation only)
+=item B<BORDER>
+
+I<(non inheritable) (creation only)>
 
 Shows a resize border
 around the dialog. Default: "YES". BORDER=NO is useful only when
 RESIZE=NO, MAXBOX=NO, MINBOX=NO, MENUBOX=NO and TITLE=NULL, if any of
 these are defined there will be always some border.
 
-=item L<CURSOR|[%m.at%]/CURSOR> (non inheritable)
+=item L<CURSOR|[%m.at%]/CURSOR>
+
+I<(non inheritable)>
 
 Defines a cursor
 for the dialog.
 
-=item B<DRAGDROP> [Windows and GTK Only] (non inheritable)
+=item B<DRAGDROP>
+
+I<[Windows and GTK Only] (non inheritable)>
 
 Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
 
-=item L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+=item L<EXPAND|[%m.at%]/EXPAND>
+
+I<(non inheritable)>
 
 The default
 value is "YES".
 
-=item L<SIZE|[%m.at%]/SIZE> (non inheritable)
+=item L<SIZE|[%m.at%]/SIZE>
+
+I<(non inheritable)>
 
 Dialogs size.
 Additionally the following values can also be defined for width and/or
@@ -119,7 +131,9 @@ that limitation set SHRINK=YES.
 
 For more information see L<Layout Guide|XXX>.
 
-=item L<TITLE|[%m.at%]/TITLE> (non inheritable)
+=item L<TITLE|[%m.at%]/TITLE>
+
+I<(non inheritable)>
 
 Dialogs title.
 Default: NULL. If you want to remove the title bar you must also set
@@ -481,7 +495,9 @@ Default: NO.
 
 Called right before the dialog is closed.
 
-=item B<COPYDATA_CB> [Windows Only]
+=item B<COPYDATA_CB>
+
+I<[Windows Only]>
 
 Called at the first instance, when a
 second instance is running. Must set the global attribute
@@ -504,11 +520,15 @@ B<$size:> size of the command line string including the null character.
 
 =back
 
-=item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
+=item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB>
+
+I<[Windows and GTK Only]>
 
 Action generated when one or more files are dropped in the dialog.
 
-=item B<MDIACTIVATE_CB> [Windows Only]
+=item B<MDIACTIVATE_CB>
+
+I<[Windows Only]>
 
 Called when a MDI child window is
 activated. Only the MDI child receive this message. It is not called
@@ -527,7 +547,9 @@ B<$self:> reference to the element (IUP::Dialog) that activated the event
 
 =back
 
-=item B<MOVE_CB> [Windows and GTK Only]
+=item B<MOVE_CB>
+
+I<[Windows and GTK Only]>
 
 Called after the dialog was moved on
 screen. The coordinates are the same as the L<SCREENPOSITION|[%m.at%]/SCREENPOSITION> attribute. (since iup-3.0)
@@ -559,7 +581,9 @@ Called right after the dialog is
 showed, hidden, maximized, minimized or restored from
 minimized/maximized.
 
-=item B<TRAYCLICK_CB> [Windows and GTK Only]
+=item B<TRAYCLICK_CB>
+
+I<[Windows and GTK Only]>
 
 Called right after the mouse
 button is pressed or released over the tray icon. (GTK 2.10)

@@ -242,7 +242,9 @@ a simple K_ANY callback:
 
 =over
 
-=item B<ADDEXPANDED> (non inheritable)
+=item B<ADDEXPANDED>
+
+I<(non inheritable)>
 
 Defines if branches will be expanded
 when created. The branch will be actually expanded when it receives the
@@ -250,12 +252,16 @@ first child. Possible values: "YES" = The branches will be created
 expanded; "NO" = The branches will be created collapsed. Default:
 "YES".
 
-=item B<ADDROOT> (non inheritable)
+=item B<ADDROOT>
+
+I<(non inheritable)>
 
 Automatically adds an empty branch as the
 first node when the tree is mapped. Default: "YES". (Since 3.1)
 
-=item B<AUTOREDRAW> [Windows] (non inheritable)
+=item B<AUTOREDRAW>
+
+I<[Windows] (non inheritable)>
 
 Automatically redraws the
 tree when something has change. Set to NO to add many items to the tree
@@ -266,32 +272,42 @@ without updating the display. Default: "YES". (since 3.3)
 Background color of the tree.
 Default: the global attribute TXTBGCOLOR.
 
-=item B<CANFOCUS> (creation only) (non inheritable)
+=item B<CANFOCUS>
+
+I<(creation only) (non inheritable)>
 
 Enables the focus
 traversal of the control. In Windows the control will still get the
 focus when clicked. Default: YES. 
 
-=item B<COUNT> (read only) (non inheritable)
+=item B<COUNT>
+
+I<(read only) (non inheritable)>
 
 Returns the total number of
 nodes in the tree. 
 
-=item B<DRAGDROP> [Windows and GTK Only] (non inheritable)
+=item B<DRAGDROP>
+
+I<[Windows and GTK Only] (non inheritable)>
 
 Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled. This
 is NOT related to the drag&drop of nodes inside the tree. 
 
-=item B<DROPEQUALDRAG> (non inheritable)
+=item B<DROPEQUALDRAG>
+
+I<(non inheritable)>
 
 If enabled will allow a drop node
 to be equal to the drag node. Used only if SHOWDRAGDROP =Yes. In the
 case the nodes are equal the callback return value is ignored and
 nothing is done after. (since 3.3)
 
-=item L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+=item L<EXPAND|[%m.at%]/EXPAND>
+
+I<(non inheritable)>
 
 The default value is "YES".
 
@@ -301,13 +317,17 @@ Default text foreground color. Once each node is created it
 will not change its color when FGCOLOR is changed. Default: the global
 attribute TXTFGCOLOR. 
 
-=item B<HIDEBUTTONS> (creation only)
+=item B<HIDEBUTTONS>
+
+I<(creation only)>
 
 Hide the expand and collapse buttons.
 In GTK, branches will be only expanded programmatically. In Motif it
 did not work and crash the test.  (GTK 2.12)
 
-=item B<HIDELINES> (creation only)
+=item B<HIDELINES>
+
+I<(creation only)>
 
 Hide the lines that connect the nodes in
 the hierarchy.  (GTK 2.10)
@@ -320,12 +340,16 @@ as an additional indent value, and the lines do not follow the extra
 indent. In Windows is limited to a minimum of 5 pixels. 
 (GTK 2.12)
 
-=item L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
+=item L<RASTERSIZE|[%m.at%]/RASTERSIZE>
+
+I<(non inheritable)>
 
 The initial size is "400x200". Set to NULL to allow the automatic layout
 use smaller values.
 
-=item B<SHOWDRAGDROP> (creation only, non inheritable)
+=item B<SHOWDRAGDROP>
+
+I<(creation only, non inheritable)>
 
 Enables the drag and
 drop of nodes, and enables the B<DRAGDROP_CB> callback. Default: "NO".
@@ -336,7 +360,9 @@ Works only if MARKMODE=SINGLE.
 Vertical internal padding for each node. Notice that the
 distance between each node will be actually 2x the spacing. 
 
-=item B<TOPITEM> (write-only)
+=item B<TOPITEM>
+
+I<(write-only)>
 
 Position the given node identifier at the top
 of the tree or near to make it visible. If any parent node is collapsed
@@ -991,7 +1017,9 @@ mouse is moved over the element. Use
 L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
 coordinates in item the node identifier. 
 
-=item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB> [Windows and GTK Only]
+=item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB>
+
+I<[Windows and GTK Only]>
 
 Action generated when one or more files are dropped in the element.
 

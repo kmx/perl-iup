@@ -29,7 +29,9 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item L<EXPAND|[%m.at%]/EXPAND> (non inheritable)
+=item L<EXPAND|[%m.at%]/EXPAND>
+
+I<(non inheritable)>
 
 Ignored. If B<User> size is not defined, then when inside a L<IUP::Hbox|IUP::Hbox> EXPAND is
 HORIZONTAL, when inside a L<IUP::Vbox> EXPAND is VERTICAL. If B<User> size
@@ -43,7 +45,9 @@ attributes. The standard format "wxh" can also be used, but width will
 be ignored if inside a L<IUP::Vbox|IUP::Vbox> and height will be ignored if inside
 a L<IUP::Hbox|IUP::Hbox> (since iup-3.3).
 
-=item B<WID> (read-only)
+=item B<WID>
+
+I<(read-only)>
 
 Returns -1 if mapped.
 
