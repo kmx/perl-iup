@@ -43,7 +43,7 @@ a menu will be an error.
   </table>
 </p>
 <p>
-<img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_fromsyntax.png"></td>
+<img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_fromsyntax.png">
 </p>
 
 =end HTML

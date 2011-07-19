@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-
+IUP::CanvasGL - [GUI element] 2D canvas based on OpenGL (co-operates with OpenGL module)
 
 =head1 DESCRIPTION
 
@@ -11,7 +11,7 @@ Creates an OpenGL canvas (drawing area for OpenGL).
 =begin HTML
 
 <p>
-<img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupglcanvas.png"></td>
+<img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupglcanvas.png">
 </p>
 
 =end HTML

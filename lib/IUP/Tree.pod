@@ -29,9 +29,9 @@ their background inverted.
     <col style="background-color: rgb(236, 233, 216);">
     <tbody align="center">
       <tr>
-        <th style="text-align: center;">GTK</th>
-        <th style="text-align: center;">Motif</th>
-        <th style="text-align: center;">Windows</th>
+        <th>GTK</th>
+        <th>Motif</th>
+        <th>Windows</th>
       </tr>
       <tr>
         <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptree_gtk.png"></td>
@@ -69,7 +69,7 @@ B<Tree nodes and Ids:>
 =begin HTML
 
 <p>
-<img src="http://kmx.github.com/perl-iup/spec/iuptree1.png"></td>
+<img src="http://kmx.github.com/perl-iup/spec/iuptree1.png">
 </p>
 
 =end HTML
@@ -622,8 +622,8 @@ collapsed depending on B<ADDEXPANDED>. Ignored if set before map.
   <table border="1">
     <tbody align="center">
       <tr>
-        <th style="text-align: center;">Initial layout</th>
-        <th style="text-align: center;">After calling: <pre>$tree->SetAttribute(ADDBRANCH9, "new branch");</pre></th>
+        <th>Initial layout</th>
+        <th>After calling: <pre>$tree->SetAttribute(ADDBRANCH9, "new branch");</pre></th>
       </tr>
       <tr>
         <td><img src="http://kmx.github.com/perl-iup/spec/iuptree1.png"></td>
@@ -684,8 +684,8 @@ node + 1 + the total number of child nodes of the reference node.
   <table border="1">
     <tbody align="center">
       <tr>
-        <th style="text-align: center;">Initial layout</th>
-        <th style="text-align: center;">After calling: <pre>$tree->SetAttribute(INSERTBRANCH9, "new branch");</pre></th>
+        <th>Initial layout</th>
+        <th>After calling: <pre>$tree->SetAttribute(INSERTBRANCH9, "new branch");</pre></th>
       </tr>
       <tr>
         <td><img src="http://kmx.github.com/perl-iup/spec/iuptree1.png"></td>
@@ -1149,8 +1149,8 @@ Example:
   <table border="1">
     <tbody align="center">
       <tr>
-        <th style="text-align: center;">Initial layout</th>
-        <th style="text-align: center;">After calling: <pre>$tree->TreeAddNodes( {TITLE=>"subtree", child=>["item1","item2"]}, 9);</pre></th>
+        <th>Initial layout</th>
+        <th>After calling: <pre>$tree->TreeAddNodes( {TITLE=>"subtree", child=>["item1","item2"]}, 9);</pre></th>
       </tr>
       <tr>
         <td><img src="http://kmx.github.com/perl-iup/spec/iuptree1.png"></td>
@@ -1180,8 +1180,8 @@ node + 1 + the total number of child nodes of the reference node.
   <table border="1">
     <tbody align="center">
       <tr>
-        <th style="text-align: center;">Initial layout</th>
-        <th style="text-align: center;">After calling: <pre>$tree->TreeInsertNodes( {TITLE=>"subtree", child=>["item1","item2"]}, 9);</pre></th>
+        <th>Initial layout</th>
+        <th>After calling: <pre>$tree->TreeInsertNodes( {TITLE=>"subtree", child=>["item1","item2"]}, 9);</pre></th>
       </tr>
       <tr>
         <td><img src="http://kmx.github.com/perl-iup/spec/iuptree1.png"></td>

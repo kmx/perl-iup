@@ -18,16 +18,16 @@ L<IUP::Canvas|IUP::Canvas> to implement the bar handler. XXX-check-this
   <table border="1">
     <tbody align="center">    
         <tr>
-		<th>Natural Size</th>
-		<th>After Expanding the Sbox</th>
-		<th>Expanding the Dialog</th>
-		<th>After Expanding the Sbox</th>
+	  <th>Natural Size</th>
+	  <th>After Expanding the Sbox</th>
+	  <th>Expanding the Dialog</th>
+	  <th>After Expanding the Sbox</th>
 	</tr>
 	<tr>
-		<td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox1.png"></td>
-		<td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox2.png"></td>
-		<td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox3.png"></td>
-		<td style="vertical-align:top;"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox4.png"></td>
+	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox1.png"></td>
+	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox2.png"></td>
+	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox3.png"></td>
+	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox4.png"></td>
 	</tr>
     </tbody>
   </table>
