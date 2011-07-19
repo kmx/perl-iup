@@ -16,7 +16,7 @@ On all platform it uses native GUI widgets.
 
 =end html
 
-B<Source code:> see L<sample.pl|[%url.examples%]/sample.pl>
+B<Source code:> see L<1-apps/app-sample1.pl|[%url.examples%]/1-apps/app-sample1.pl>
 
 =head2 IUP's Strengths
 
@@ -111,12 +111,12 @@ directory of IUP distribution or look at L<[%m.examples%]|[%m.examples%]>.
 =end html
 
 All functions from this category:
-L<Alarm|/"Alarm">,
-L<GetFile|/"GetFile">,
-L<GetColor|/"GetColor">,
-L<GetParam|/"GetParam">,
-L<GetText|/"GetText">,
-L<ListDialog|/"ListDialog">,
+L<Alarm|/"Alarm()">,
+L<GetFile|/"GetFile()">,
+L<GetColor|/"GetColor()">,
+L<GetParam|/"GetParam()">,
+L<GetText|/"GetText()">,
+L<ListDialog|/"ListDialog()">,
 L<Message|Message> - see L<simple GUI dialogs|/"Simple GUI dialogs"> section.
 
 =head3 Pre-defined Dialogs

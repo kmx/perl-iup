@@ -233,54 +233,66 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<REDRAW> (write-only) (non inheritable)
+=item B<REDRAW>
+
+I<(write-only) (non inheritable)>
 
 Redraw the plot and update
 the display. Value is ignored. All other attributes will B<NOT> update
 the display, so you can set many attributes without visual output.
 
-=item * B<USE_IMAGERGB> (non inheritable)
+=item B<USE_IMAGERGB>
+
+I<(non inheritable)>
 
 Defines if the double buffer will
 use standard driver image (NO - faster) or an RGB image (YES - slower).
 Default: NO. The IMAGERGB driver has anti-aliasing which can improve
 the line drawing.
 
-=item * B<USE_GDI+> [Windows Only] (non inheritable)
+=item B<USE_GDI+>
+
+I<[Windows Only] (non inheritable)>
 
 Defines if the double
 buffer will use GDI+ (YES) for drawing or standard GDI (NO). Default:
 NO. The GDI+ driver has anti-aliasing which can improve the line
 drawing.
 
-=item * B<L<FONT|IUP::Manual::03_Attributes/FONT>>
+=item B<L<FONT|IUP::Manual::03_Attributes/FONT>>
 
 The font used in all text elements
 of the plot: title, legend and labels.
 
-=item * B<L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>>
+=item B<L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>>
 
 The background color. The
 default value is white "255 255 255".
 
-=item * B<L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>>
+=item B<L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>>
 
 The title color. The default
 value is black "0 0 0".
 
-=item * B<TITLE> (non inheritable)
+=item B<TITLE>
+
+I<(non inheritable)>
 
 The title. Located always at the top center
 area.
 
-=item * B<TITLEFONTSIZE, TITLEFONTSTYLE> (non inheritable)
+=item B<TITLEFONTSIZE, TITLEFONTSTYLE>
+
+I<(non inheritable)>
 
 The title font size
 and style. The default values depends on the FONT attribute and the
 returned value is NULL. Set to NULL, to use the FONT attribute values.
 Style can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC".
 
-=item * B<MARGINLEFT, MARGINRIGHT, MARGINTOP, MARGINBOTTOM> (non inheritable)
+=item B<MARGINLEFT, MARGINRIGHT, MARGINTOP, MARGINBOTTOM>
+
+I<(non inheritable)>
 
 Margin of the dataset area. PPlot implementation demands that margins
 must be set so the plot is not cropped. Default: "15", "15", "30",
@@ -292,17 +304,17 @@ must be set so the plot is not cropped. Default: "15", "15", "30",
 
 =over
 
-=item * B<LEGENDSHOW>
+=item B<LEGENDSHOW>
 
 Shows or hides the legend box. Can be YES or NO.
 Default: NO.
 
-=item * B<LEGENDPOS>
+=item B<LEGENDPOS>
 
 Legend box position. Can be: "TOPLEFT", "TOPRIGHT",
 "BOTTOMLEFT", or "BOTTOMRIGHT. Default: "TOPRIGHT".
 
-=item * B<LEGENDFONTSIZE, LEGENDFONTSTYLE>
+=item B<LEGENDFONTSIZE, LEGENDFONTSTYLE>
 
 The legend box text font size and style.
 
@@ -312,17 +324,17 @@ The legend box text font size and style.
 
 =over
 
-=item * B<GRIDLINESTYLE>
+=item B<GRIDLINESTYLE>
 
 Line style of the grid. Can be: "CONTINUOUS",
 "DASHED", "DOTTED", "DASH_DOT", "DASH_DOT_DOT". Default is
 "CONTINUOUS".
 
-=item * B<GRIDCOLOR>
+=item B<GRIDCOLOR>
 
 Grid color. Default: "200 200 200".
 
-=item * B<GRID>
+=item B<GRID>
 
 Shows or hides the grid in both or a specific axis. Can be:
 YES (both), HORIZONTAL, VERTICAL or NO. Default: NO.
@@ -333,73 +345,81 @@ YES (both), HORIZONTAL, VERTICAL or NO. Default: NO.
 
 =over
 
-=item * B<REMOVE> (write-only)
+=item B<REMOVE>
+
+I<(write-only)>
 
 Removes a dataset given its index.
 
-=item * B<CLEAR> (write-only)
+=item B<CLEAR>
+
+I<(write-only)>
 
 Removes all datasets. Value is ignored.
 
-=item * B<COUNT> [read-only]
+=item B<COUNT>
+
+I<[read-only]>
 
 Total number of datasets.
 
-=item * B<CURRENT>
+=item B<CURRENT>
 
 Current dataset index. Default is -1. When a dataset is
 added it becomes the current dataset. The index starts at 0. All "DS_*"
 attributes are dependent on this value.
 
-=item * B<DS_LEGEND>
+=item B<DS_LEGEND>
 
 Legend text of the current dataset. Default is
 dynamically generated: "plot 0", "plot 1", "plot 2", ...
 
-=item * B<DS_COLOR>
+=item B<DS_COLOR>
 
 Color of the current dataset and it legend text. Default
 is dynamically generated for the 6 first datasets, others are default
 to black "0 0 0". The first 6 are: 0="255 0 0", 1="0 0 255", 2="0 255
 0", 3="0 255 255", 4="255 0 255", 5="255 255 0".
 
-=item * B<DS_MODE>
+=item B<DS_MODE>
 
 Drawing mode of the current dataset. Can be: "LINE", "BAR",
 "MARK" or "MARKLINE". Default: "LINE". This must be set before other
 "DS_*" attributes.
 
-=item * B<DS_LINESTYLE>
+=item B<DS_LINESTYLE>
 
 Line style of the current dataset. Can be:
 "CONTINUOUS", "DASHED", "DOTTED", "DASH_DOT", "DASH_DOT_DOT". Default
 is "CONTINUOUS".
 
-=item * B<DS_LINEWIDTH>
+=item B<DS_LINEWIDTH>
 
 Line width of the current dataset. Default: 1.
 
-=item * B<DS_MARKSTYLE>
+=item B<DS_MARKSTYLE>
 
 Mark style of the current dataset. Can be: "PLUS",
 "STAR", "CIRCLE", "X", "BOX", "DIAMOND", "HOLLOW_CIRCLE", "HOLLOW_BOX",
 "HOLLOW_DIAMOND". Default is "X".
 
-=item * B<DS_MARKSIZE>
+=item B<DS_MARKSIZE>
 
 Mark size of the current dataset. Default: 7.
 
-=item * B<DS_SHOWVALUES>
+=item B<DS_SHOWVALUES>
 
 Enable or disable the display of the values near each
 sample. Can be YES or NO. Default: NO.
 
-=item * B<DS_REMOVE> (write-only)
+=item B<DS_REMOVE>
+
+I<(write-only)>
 
 Removes a sample from the current dataset
 given its index.
 
-=item * B<DS_EDIT>
+=item B<DS_EDIT>
 
 Enable or disable the current dataset selection and
 editing. Can be YES or NO. Default: NO.
@@ -410,93 +430,93 @@ editing. Can be YES or NO. Default: NO.
 
 =over
 
-=item * B<AXS_XCOLOR, AXS_YCOLOR>
+=item B<AXS_XCOLOR, AXS_YCOLOR>
 
 Axis, ticks and label color. Default: "0 0 0".
 
-=item * B<AXS_XMAX, AXS_XMIN, AXS_YMAX, AXS_YMIN>
+=item B<AXS_XMAX, AXS_XMIN, AXS_YMAX, AXS_YMIN>
 
 Minimum and maximum
 displayed values of the respective axis. Automatically calculated
 values when AUTOMIN or AUTOMAX are enabled.
 
-=item * B<AXS_XAUTOMIN, AXS_XAUTOMAX, AXS_YAUTOMIN, AXS_YAUTOMAX>
+=item B<AXS_XAUTOMIN, AXS_XAUTOMAX, AXS_YAUTOMIN, AXS_YAUTOMAX>
 
 Configures the automatic scaling of the minimum and maximum display values. Can be
 YES or NO. Default: YES.
 
-=item * B<AXS_XLABEL, AXS_YLABEL>
+=item B<AXS_XLABEL, AXS_YLABEL>
 
 Text label of the respective axis.
 
-=item * B<AXS_XLABELCENTERED>, B<AXS_YLABELCENTERED>
+=item B<AXS_XLABELCENTERED>, B<AXS_YLABELCENTERED>
 
 Text label position at
 center (YES) or at top/right (NO). Default: YES.
 
-=item * B<AXS_XREVERSE, AXS_YREVERSE>
+=item B<AXS_XREVERSE, AXS_YREVERSE>
 
 Reverse the axis direction. Can be YES
 or NO. Default: NO. Default is Y oriented bottom to top, and X oriented
 from left to right.
 
-=item * B<AXS_XCROSSORIGIN, AXS_YCROSSORIGIN>
+=item B<AXS_XCROSSORIGIN, AXS_YCROSSORIGIN>
 
 Allow the axis to cross the
 origin and to be placed inside the dataset area. Can be YES or NO.
 Default: YES.
 
-=item * B<AXS_XSCALE, AXS_YSCALE>
+=item B<AXS_XSCALE, AXS_YSCALE>
 
 Configures the scale of the respective axis.
 Can be: LIN (liner), LOG10 (base 10), LOG2 (base 2) and LOGN (base e).
 Default: LIN.
 
-=item * B<AXS_XFONTSIZE, AXS_YFONTSIZE, AXS_XFONTSTYLE, AXS_YFONTSTYLE>
+=item B<AXS_XFONTSIZE, AXS_YFONTSIZE, AXS_XFONTSTYLE, AXS_YFONTSTYLE>
 
 Axis label text font size and style. See TITLEFONTSIZE and TITLEFONTSTYLE.
 
-=item * B<AXS_XTICK, AXS_YTICK>
+=item B<AXS_XTICK, AXS_YTICK>
 
 Enable or disable the axis tick display. Can
 be YES or NO. Default: YES.
 
-=item * B<AXS_XTICKFORMAT, AXS_YTICKFORMAT>
+=item B<AXS_XTICKFORMAT, AXS_YTICKFORMAT>
 
 Axis tick number C format string.
 Default: "%.0f".
 
-=item * B<AXS_XTICKFONTSIZE, AXS_YTICKFONTSIZE, AXS_XTICKFONTSTYLE, AXS_YTICKFONTSTYLE>
+=item B<AXS_XTICKFONTSIZE, AXS_YTICKFONTSIZE, AXS_XTICKFONTSTYLE, AXS_YTICKFONTSTYLE>
 
 Axis tick number font size and style. See
 TITLEFONTSIZE and TITLEFONTSTYLE.
 
-=item * B<AXS_XAUTOTICK>, B<AXS_YAUTOTICK>
+=item B<AXS_XAUTOTICK>, B<AXS_YAUTOTICK>
 
 Configures the automatic tick
 spacing. Can be YES or NO. Default: YES.
 
-=item * B<AXS_XTICKMAJORSPAN>, B<AXS_YTICKMAJORSPAN>
+=item B<AXS_XTICKMAJORSPAN>, B<AXS_YTICKMAJORSPAN>
 
 The spacing between major
 ticks. Default is 1 when AUTOTICK is disabled.
 
-=item * B<AXS_XTICKDIVISION>, B<AXS_YTICKDIVISION>
+=item B<AXS_XTICKDIVISION>, B<AXS_YTICKDIVISION>
 
 Number of ticks between
 each major tick. Default is 5 when AUTOTICK is disabled.
 
-=item * B<AXS_XAUTOTICKSIZE, AXS_YAUTOTICKSIZE>
+=item B<AXS_XAUTOTICKSIZE, AXS_YAUTOTICKSIZE>
 
 Configures the automatic tick
 size. Can be YES or NO. Default: YES.
 
-=item * B<AXS_XTICKSIZE, AXS_YTICKSIZE>
+=item B<AXS_XTICKSIZE, AXS_YTICKSIZE>
 
 Size of ticks in pixels. Default is 5
 when AUTOTICKSIZE is disabled.
 
-=item * B<AXS_XTICKMAJORSIZE, AXS_YTICKMAJORSIZE>
+=item B<AXS_XTICKMAJORSIZE, AXS_YTICKMAJORSIZE>
 
 Size of major ticks in
 pixels. Default is 8 when AUTOTICKSIZE is disabled.
@@ -526,11 +546,13 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * B<DELETE_CB>
+=item B<DELETE_CB>
 
 Action generated when the Del key is pressed to removed a
 sample from a dataset. If multiple points are selected it is called
 once for each selected point.
+
+B<Callback handler prototype:>
 
  sub delete_cb_handler {
    my ($self, $index, $sample_index, $x, $y) = @_;
@@ -551,16 +573,20 @@ B<Returns:> If IUP_IGNORE then the sample is not deleted.
 
 =back
 
-=item * B<DELETEBEGIN_CB, DELETEEND_CB>
+=item B<DELETEBEGIN_CB, DELETEEND_CB>
 
 Actions generated when a delete
 operation will begin or end. But they are called only if DELETE_CB is
 also defined.
 
+B<Callback handler prototype:>
+
  sub deletebegin_cb_handler {
    my ($self) = @_;
    #...
  }
+
+B<Callback handler prototype:>
 
  sub deleteend_cb_handler {
    my ($self) = @_;
@@ -574,12 +600,14 @@ all the selected samples are aborted.
 
 =back
 
-=item * B<SELECT_CB>
+=item B<SELECT_CB>
 
 Action generated when a sample is selected. If multiple
 points are selected it is called once for each new selected point. It
 is called only if the selection state of the sample is about to be
 changed.
+
+B<Callback handler prototype:>
 
  sub select_cb_handler {
    my ($self, $index, $sample_index, $x, $y, $select) = @_;
@@ -603,16 +631,20 @@ B<Returns:> If IUP_IGNORE then the sample is not selected.
 
 =back
 
-=item * B<SELECTBEGIN_CB, SELECTEND_CB>
+=item B<SELECTBEGIN_CB, SELECTEND_CB>
 
 Actions generated when a selection
 operation will begin or end. But they are called only if SELECT_CB is
 also defined.
 
+B<Callback handler prototype:>
+
  sub seletebegin_cb_handler {
    my ($self) = @_;
    #...
  }
+
+B<Callback handler prototype:>
 
  sub selectend_cb_handler {
    my ($self) = @_;
@@ -626,7 +658,7 @@ is aborted.
 
 =back
 
-=item * B<EDIT_CB>
+=item B<EDIT_CB>
 
 Action generated when a sample is selected. If multiple
 points are selected it is called once for each new selected point. It
@@ -634,6 +666,8 @@ is called only if the selection state of the sample is about to be
 changed.
 
  #XXX-FIXME-check-implementation
+B<Callback handler prototype:>
+
  sub selectend_cb_handler {
    my ($self, $index, $sample_index, $x, $y) = @_;
    my $new_x, $new_y, $retval;
@@ -660,16 +694,20 @@ can changed the new value before it is edited.
 
 =back
 
-=item * B<EDITBEGIN_CB, EDITEND_CB>
+=item B<EDITBEGIN_CB, EDITEND_CB>
 
 Actions generated when an editing
 operation will begin or end. But they are called only if EDIT_CB is
 also defined.
 
+B<Callback handler prototype:>
+
  sub editbegin_cb_handler {
    my ($self) = @_;
    #...
  }
+
+B<Callback handler prototype:>
 
  sub editend_cb_handler {
    my ($self) = @_;
@@ -683,7 +721,7 @@ aborted.
 
 =back
 
-=item * B<PREDRAW_CB, POSTDRAW_CB>
+=item B<PREDRAW_CB, POSTDRAW_CB>
 
 Actions generated before and after the
 redraw operation. Predraw can be used to draw a different background
@@ -692,10 +730,14 @@ Predraw has no restrictions, but Postdraw is clipped to the dataset
 area. To position elements in plot units, use the L<PlotTransform|IUP::Plot/"PlotTransform()">
 function.
 
+B<Callback handler prototype:>
+
  sub predraw_cb_handler {
    my ($self, $canvas) = @_;
    #...
  }
+
+B<Callback handler prototype:>
 
  sub postdraw_cb_handler {
    my ($self, $canvas) = @_;

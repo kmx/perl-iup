@@ -58,12 +58,14 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<BACKINGSTORE> [Motif Only]
+=item B<BACKINGSTORE>
+
+I<[Motif Only]>
 
 Controls the canvas backing store flag.
 The default value is "YES".
 
-=item * L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
+=item L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
 
 Background color. The background
 is painted only if the ACTION callback is not defined. If the callback
@@ -72,40 +74,54 @@ Motif if you set the ACTION callback after map then you should also set
 BGCOLOR to any value just after setting the callback or the first
 redraw will be lost. Default: "255 255 255".
 
-=item * B<BORDER> (creation only)
+=item B<BORDER>
+
+I<(creation only)>
 
 Shows a border around the canvas. Default:
 "YES".
 
-=item * B<CANFOCUS> (creation only, non inheritable)
+=item B<CANFOCUS>
+
+I<(creation only, non inheritable)>
 
 enables the focus
 traversal of the control. In Windows the canvas will respect CANFOCUS
 in opposite to the other controls. Default: YES. 
 
-=item * B<CLIPRECT> [Windows and GTK Only] (only during ACTION)
+=item B<CLIPRECT>
+
+I<[Windows and GTK Only] (only during ACTION)>
 
 Specifies a
 rectangle that has its region invalidated for painting, it could be
 used for clipping. Format: "%d %d %d %d"="x1 y1 x2 y2".
 
-=item * L<CURSOR|IUP::Manual::03_Attributes/CURSOR> (non inheritable)
+=item L<CURSOR|IUP::Manual::03_Attributes/CURSOR>
+
+I<(non inheritable)>
 
 Defines a cursor
 for the canvas.
 
-=item * L<EXPAND|IUP::Manual::03_Attributes/EXPAND> (non inheritable)
+=item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
+
+I<(non inheritable)>
 
 The default
 value is "YES". The natural size is the size of 1 character.
 
-=item * B<DRAGDROP> [Windows and GTK Only] (non inheritable)
+=item B<DRAGDROP>
+
+I<[Windows and GTK Only] (non inheritable)>
 
 Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
 
-=item * B<DRAWSIZE> (non inheritable)
+=item B<DRAWSIZE>
+
+I<(non inheritable)>
 
 The size of the drawing area in pixels.
 This size is also used in the RESIZE_CB callback.
@@ -113,96 +129,108 @@ This size is also used in the RESIZE_CB callback.
 Notice that the drawing area size is not the same as RASTERSIZE. The
 SCROLLBAR and BORDER attributes affect the size of the drawing area.
 
-=item * B<HDC_WMPAINT> [Windows Only] (non inheritable)
+=item B<HDC_WMPAINT>
+
+I<[Windows Only] (non inheritable)>
 
 Contains the HDC
 created with the BeginPaint inside the WM_PAINT message. Valid only
 during the ACTION callback.
 
-=item * B<HWND> [Windows Only] (non inheritable, read-only)
+=item B<HWND>
+
+I<[Windows Only] (non inheritable, read-only)>
 
 Returns the
 Windows Window handle. Available in the Windows driver or in the GTK
 driver in Windows.
 
-=item * L<SCROLLBAR|IUP::Manual::03_Attributes/SCROLLBAR> (creation only)
+=item L<SCROLLBAR|IUP::Manual::03_Attributes/SCROLLBAR>
+
+I<(creation only)>
 
 Associates a
 horizontal and/or vertical scrollbar to the canvas. Default: "NO". The
 secondary attributes are all non inheritable.
 
-=item * L<DX|IUP::Manual::03_Attributes/DX>
+=item L<DX|IUP::Manual::03_Attributes/DX>
 
 Size of the thumb in the horizontal
 scrollbar. Also the horizontal page size. Default: "0.1".
 
-=item * L<DY|IUP::Manual::03_Attributes/DY>
+=item L<DY|IUP::Manual::03_Attributes/DY>
 
 Size of the thumb in the vertical
 scrollbar. Also the vertical page size. Default: "0.1".
 
-=item * L<POSX|IUP::Manual::03_Attributes/POSX>
+=item L<POSX|IUP::Manual::03_Attributes/POSX>
 
 Position of the thumb in the
 horizontal scrollbar. Default: "0.0".
 
-=item * L<POSY|IUP::Manual::03_Attributes/POSY>
+=item L<POSY|IUP::Manual::03_Attributes/POSY>
 
 Position of the thumb in the vertical
 scrollbar. Default: "0.0".
 
-=item * L<XMIN|IUP::Manual::03_Attributes/XMIN>
+=item L<XMIN|IUP::Manual::03_Attributes/XMIN>
 
 Minimum value of the horizontal
 scrollbar. Default: "0.0".
 
-=item * L<XMAX|IUP::Manual::03_Attributes/XMAX>
+=item L<XMAX|IUP::Manual::03_Attributes/XMAX>
 
 Maximum value of the horizontal
 scrollbar. Default: "1.0".
 
-=item * L<YMIN|IUP::Manual::03_Attributes/YMIN>
+=item L<YMIN|IUP::Manual::03_Attributes/YMIN>
 
 Minimum value of the vertical
 scrollbar. Default: "0.0".
 
-=item * L<YMAX|IUP::Manual::03_Attributes/YMAX>
+=item L<YMAX|IUP::Manual::03_Attributes/YMAX>
 
 Maximum value of the vertical
 scrollbar. Default: "1.0".
 
-=item * B<LINEX>
+=item B<LINEX>
 
 The amount the thumb moves when an horizontal step is
 performed. Default: 1/10th of DX. 
 
-=item * B<LINEY>
+=item B<LINEY>
 
 The amount the thumb moves when a vertical step is performed.
 Default: 1/10th of DY. 
 
-=item * X<XAUTOHIDE>B<XAUTOHIDE>
+=item X<XAUTOHIDE>B<XAUTOHIDE>
 
 When enabled, if DX E<gt>= XMAX-XMIN then the
 horizontal scrollbar is hidden. Default: "YES". 
 
-=item * X<YAUTOHIDE>B<YAUTOHIDE>
+=item X<YAUTOHIDE>B<YAUTOHIDE>
 
 When enabled, if DY E<gt>= YMAX-YMIN then the
 vertical scrollbar is hidden. Default: "YES". 
 
-=item * B<TOUCH> [Windows 7 Only]
+=item B<TOUCH>
+
+I<[Windows 7 Only]>
 
 enable the multi-touch events processing.
 (Since iup-3.3)
 
-=item * B<XDISPLAY> [UNIX Only](non inheritable, read-only)
+=item B<XDISPLAY>
+
+I<[UNIX Only](non inheritable, read-only)>
 
 Returns the
 X-Windows Display. Available in the Motif driver or in the GTK driver
 in UNIX.
 
-=item * B<XWINDOW> [UNIX Only](non inheritable, read-only)
+=item B<XWINDOW>
+
+I<[UNIX Only](non inheritable, read-only)>
 
 Returns the
 X-Windows Window (Drawable). Available in the Motif driver or in the
@@ -236,17 +264,17 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * L<ACTION|IUP::Manual::04_Callbacks/ACTION>
+=item L<ACTION|IUP::Manual::04_Callbacks/ACTION>
 
 Action generated when the canvas
 needs to be redrawn.
+
+B<Callback handler prototype:>
 
  sub action_handler {
    my ($self, $posx, $posy) = @_;
    #...
  }
-
-=over
 
 B<$self:> identifier of the element that activated the event.
 
@@ -254,17 +282,17 @@ B<$posx:> thumb position in the horizontal scrollbar. The POSX attribute value.
 
 B<$posy:> thumb position in the vertical scrollbar. The POSY attribute value.
 
-=back
-
-=item * L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB>
+=item L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB>
 
 Action generated when any mouse button is pressed or released.
 
-=item * L<DROPFILES_CB|IUP::Manual::04_Callbacks/DROPFILES_CB> [Windows and GTK Only]
+=item L<DROPFILES_CB|IUP::Manual::04_Callbacks/DROPFILES_CB>
+
+I<[Windows and GTK Only]>
 
 Action generated when one or more files are dropped in the element.
 
-=item * B<FOCUS_CB>
+=item B<FOCUS_CB>
 
 Called when the canvas gets or looses the focus. It is
 called after the common callbacks GETFOCUS_CB and KILL_FOCUS_CB.
@@ -274,20 +302,16 @@ called after the common callbacks GETFOCUS_CB and KILL_FOCUS_CB.
    #...
  }
 
-=over
-
 B<$self:> identifier of the element that activated the event.
 
 B<$focus:> is non zero if the canvas is getting the focus, is zero if it
 is loosing the focus.
 
-=back
-
-=item * L<MOTION_CB|IUP::Manual::04_Callbacks/MOTION_CB>
+=item L<MOTION_CB|IUP::Manual::04_Callbacks/MOTION_CB>
 
 Action generated when the mouse is moved.
 
-=item * L<KEYPRESS_CB|IUP::Manual::04_Callbacks/KEYPRESS_CB>
+=item L<KEYPRESS_CB|IUP::Manual::04_Callbacks/KEYPRESS_CB>
 
 Action generated when a
 key is pressed or released. It is called after the common callback
@@ -298,28 +322,30 @@ focus to another control in some systems. If your callback process the
 arrow keys, we recommend you to return IUP_IGNORE so it will not lose
 its focus.
 
-=item * L<RESIZE_CB|IUP::Manual::04_Callbacks/RESIZE_CB>
+=item L<RESIZE_CB|IUP::Manual::04_Callbacks/RESIZE_CB>
 
 Action generated when the canvas size is changed.
 
-=item * L<SCROLL_CB|IUP::Manual::04_Callbacks/SCROLL_CB>
+=item L<SCROLL_CB|IUP::Manual::04_Callbacks/SCROLL_CB>
 
 Called when the scrollbar is
 manipulated. (GTK 2.8) Also the POSX and POSY values will not be
 correctly updated for older GTK versions.
 
-=item * B<TOUCH_CB> [Windows 7 Only]
+=item B<TOUCH_CB>
+
+I<[Windows 7 Only]>
 
 Action generated when a touch event
 occurred. Multiple touch events will trigger several calls. Must set
 TOUCH=Yes to receive this event. (Since iup-3.3)
 
+B<Callback handler prototype:>
+
  sub touch_cb_handler {
    my ($self, $id, $x, $y, $state) = @_;
    #...
  }
-
-=over
 
 B<$self:> identifies the element that activated the event.
 
@@ -332,19 +358,19 @@ is a "primary" point then "-PRIMARY" is appended to the string.
 
 B<Returns:> IUP_CLOSE will be processed.
 
-=back
+=item B<MULTITOUCH_CB>
 
-=item * B<MULTITOUCH_CB> [Windows 7 Only]
+I<[Windows 7 Only]>
 
 Action generated when multiple touch
 events occurred. Must set TOUCH=Yes to receive this event. (Since iup-3.3)
+
+B<Callback handler prototype:>
 
  sub multitouch_cb_handler {
    my ($self, $count, $pid, $px, $py, $pstate) = @_;
    #...
  }
-
-=over
 
 B<$self:> identifier of the element that activated the event.
 
@@ -363,13 +389,13 @@ B<$pstate:> Array of touch point states. Can be 'D' (DOWN), 'U' (UP) or
 
 B<Returns:> IUP_CLOSE will be processed.
 
-=back
-
-=item * L<WHEEL_CB|IUP::Manual::04_Callbacks/WHEEL_CB>
+=item L<WHEEL_CB|IUP::Manual::04_Callbacks/WHEEL_CB>
 
 Action generated when the mouse wheel is rotated.
 
-=item * L<WOM_CB|IUP::Manual::04_Callbacks/WOM_CB> [Windows Only]
+=item L<WOM_CB|IUP::Manual::04_Callbacks/WOM_CB>
+
+I<[Windows Only]>
 
 Action generated when an audio device receives an event.
 

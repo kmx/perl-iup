@@ -57,25 +57,30 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<CX, CY> (non inheritable) B<(at children only)>
+=item B<CX, CY>
+
+I<(non inheritable) B<(at children only)>>
 
 Position in pixels
 of the child relative to the top-left corner of the box. Must be set
 for each child inside the box.
 
-=item * L<EXPAND|IUP::Manual::03_Attributes/EXPAND> (non inheritable)
+=item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
 
-The default
-value is "YES".
+I<(non inheritable)>
 
-=item * L<SIZE|IUP::Manual::03_Attributes/SIZE> /
+The default value is "YES".
+
+=item L<SIZE|IUP::Manual::03_Attributes/SIZE> /
 L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE> (non inheritable)
 
 Must be
 defined for each child. If not defined for the box, then it will be the
 bounding box that includes all children in their position.
 
-=item * B<WID> (read-only)
+=item B<WID>
+
+I<(read-only)>
 
 returns -1 if mapped.
 

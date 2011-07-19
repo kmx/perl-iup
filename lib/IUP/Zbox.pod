@@ -51,7 +51,9 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<ALIGNMENT> (non inheritable)
+=item B<ALIGNMENT>
+
+I<(non inheritable)>
 
 Defines the alignment of the visible
 child. Possible values:
@@ -62,16 +64,22 @@ child. Possible values:
 
 Default: "NW".
 
-=item * L<EXPAND|IUP::Manual::03_Attributes/EXPAND> (non inheritable)
+=item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
+
+I<(non inheritable)>
 
 The default value is "YES".
 
-=item * L<FLOATING|IUP::Manual::03_Attributes/FLOATING> (non inheritable, at children only)
+=item L<FLOATING|IUP::Manual::03_Attributes/FLOATING>
+
+I<(non inheritable, at children only)>
 
 If a child has FLOATING=YES then its size and position
 will be ignored by the layout processing. Default: "NO". 
 
-=item * B<VALUE> (non inheritable)
+=item B<VALUE>
+
+I<(non inheritable)>
 
 The visible child accessed by its name. The
 value passed must be the name of one of the children contained in the
@@ -89,20 +97,24 @@ handle. The value passed must be the handle of a child contained in the
 zbox. When the zbox is created, the first element inserted is set as
 the visible child. 
 
-=item * B<VALUEPOS> (non inheritable)
+=item B<VALUEPOS>
+
+I<(non inheritable)>
 
 The visible child accessed by its
 position. The value passed must be the index of a child contained in
 the zbox, starting at 0. When the zbox is created, the first element
 inserted is set as the visible child. 
 
-=item * L<SIZE|IUP::Manual::03_Attributes/SIZE> / L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE> (non inheritable)
+=item L<SIZE|IUP::Manual::03_Attributes/SIZE> / L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE> (non inheritable)
 
 The default size is the smallest size that fits its largest child. All
 child elements are considered even invisible ones, except when
 FLOATING=YES in a child.
 
-=item * B<WID> (read-only)
+=item B<WID>
+
+I<(read-only)>
 
 Returns -1 if mapped.
 

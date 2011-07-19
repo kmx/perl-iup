@@ -104,7 +104,9 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * X<ALIGNMENT>B<ALIGNMENT> (non inheritable)
+=item B<ALIGNMENT>
+
+I<(non inheritable)>
 
 Horizontal and vertical alignment.
 Possible values: "ALEFT", "ACENTER" and "ARIGHT", combined to "ATOP",
@@ -113,7 +115,7 @@ also accepted, like "ARIGHT" or ":ATOP", the other value will be used
 from the current alignment. In Motif, vertical alignment is restricted
 to "ACENTER". 
 
-=item * L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
+=item L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
 
 Background color. 
 BGCOLOR is ignored always when FLAT=YES because it will inherit from the
@@ -124,22 +126,27 @@ Windows, when using the Windows driver or the GTK driver, the BGCOLOR
 attribute is ignored if text or image is defined. Default: the global
 attribute DLGBGCOLOR.
 
-=item * X<CANFOCUS>B<CANFOCUS> (creation only, non inheritable)
+=item B<CANFOCUS>
 
-enables the focus
+I<(creation only, non inheritable)>
+
+Enables the focus
 traversal of the control. In Windows the button will respect CANFOCUS
 in opposite to the other controls. Default: YES. 
 
-=item * B<FLAT> (creation only)
+=item B<FLAT>
 
-Hides the button borders until the mouse enter
-the button area. Can be YES or NO.
+I<(creation only)>
 
-=item * L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
+Hides the button borders until the mouse enter the button area. Can be YES or NO.
+
+=item L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
 
 Text color. Default: the global attribute DLGFGCOLOR.
 
-=item * B<IMAGE> (non inheritable)
+=item B<IMAGE>
+
+I<(non inheritable)>
 
 Image name. If set before map defines the
 behavior of the button to contain an image. The natural size will be
@@ -149,7 +156,9 @@ to associate an image to a name. See also L<IUP::Image|IUP::Image>. If
 TITLE is also defined and not empty both will be shown (except in
 Motif). (GTK 2.6)
 
-=item * B<IMINACTIVE> (non inheritable)
+=item B<IMINACTIVE>
+
+I<(non inheritable)>
 
 Image name of the element when
 inactive. If it is not defined then the IMAGE is used and the colors
@@ -157,7 +166,9 @@ will be replaced by a modified version of the background color creating
 the disabled effect. GTK will also change the inactive image to look
 like other inactive objects. (GTK 2.6)
 
-=item * B<IMPRESS> (non inheritable)
+=item B<IMPRESS>
+
+I<(non inheritable)>
 
 Image name of the pressed button. If
 IMPRESS and IMAGE are defined, the button borders are not shown and not
@@ -165,36 +176,46 @@ computed in size computation. When the button is clicked the pressed
 image does not offset. In Motif the button will lose its focus feedback
 also. (GTK 2.6)
 
-=item * B<IMPRESSBORDER> (non inheritable)
+=item B<IMPRESSBORDER>
 
-if enabled the button borders will
+I<(non inheritable)>
+
+If enabled the button borders will
 be shown and computed even if IMPRESS is defined. Can be "YES" or "NO".
 Default: "NO".
 
-=item * B<IMAGEPOSITION> (non inheritable)
+=item B<IMAGEPOSITION>
+
+I<(non inheritable)>
 
 Position of the image relative to
 the text when both are displayed. Can be: LEFT, RIGHT, TOP, BOTTOM.
 Default: LEFT.  (GTK 2.10)
 
-=item * B<MARKUP> (GTK only)
+=item B<MARKUP>
+
+I<(GTK only)>
 
 allows the title string to contains pango markup
 commands. Works only if a mnemonic is NOT defined in the title. Can be
 "YES" or "NO". Default: "NO".
 
-=item * B<PADDING>
+=item B<PADDING>
 
 internal margin. Works just like the MARGIN attribute of
 the L<IUP::Hbox|IUP::Hbox> and L<IUP::Vbox|IUP::Vbox> containers, but uses a different name to
 avoid inheritance problems. Default value: "0x0". 
 
-=item * B<SPACING> (creation only)
+=item B<SPACING>
+
+I<(creation only)>
 
 defines the spacing between the image
 associated and the button's text. Default: "2".
 
-=item * L<TITLE|IUP::Manual::03_Attributes/TITLE> (non inheritable)
+=item L<TITLE|IUP::Manual::03_Attributes/TITLE>
+
+I<(non inheritable)>
 
 Button's text. If
 IMAGE is not defined before map, then the default behavior is to
@@ -237,30 +258,28 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * L<ACTION|IUP::Manual::03_Attributes/ACTION>
+=item L<ACTION|IUP::Manual::03_Attributes/ACTION>
 
 Action generated when the button 1
 (usually left) is selected. This callback is called only after the
 mouse is released and when it is released inside the button area.
+
+B<Callback handler prototype:>
 
  sub action_handler {
    my ($self) = @_;
    #...
  }
 
-=over
-
 B<$self:> reference to the element (IUP::Button) that activated the event
 
 B<Returns:> IUP_CLOSE will be processed.
 
-=back
-
-=item * B<L<BUTTON_CB|Manual::Attributes/BUTTON_CB>>
+=item L<BUTTON_CB|/BUTTON_CB>
 
 Action generated when any mouse button is pressed and released.
 
-For more details see L<generic description of BUTTON_CB|Manual::Attributes/BUTTON_CB> callback.
+For more details see L<generic description of BUTTON_CB|/BUTTON_CB> callback.
 
 =back
 

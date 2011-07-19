@@ -248,15 +248,11 @@ needs to be redrawn.
    #...
  }
 
-=over
-
 B<$self:> identifier of the element that activated the event.
 
 B<$posx:> thumb position in the horizontal scrollbar. The POSX attribute value.
 
 B<$posy:> thumb position in the vertical scrollbar. The POSY attribute value.
-
-=back
 
 =item L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
 
@@ -278,14 +274,10 @@ called after the common callbacks GETFOCUS_CB and KILL_FOCUS_CB.
    #...
  }
 
-=over
-
 B<$self:> identifier of the element that activated the event.
 
 B<$focus:> is non zero if the canvas is getting the focus, is zero if it
 is loosing the focus.
-
-=back
 
 =item L<MOTION_CB|[%m.cb%]/MOTION_CB>
 
@@ -327,8 +319,6 @@ TOUCH=Yes to receive this event. (Since iup-3.3)
    #...
  }
 
-=over
-
 B<$self:> identifies the element that activated the event.
 
 B<$id:> identifies the touch point.
@@ -339,8 +329,6 @@ B<$state:> the touch point state. Can be: DOWN, MOVE or UP. If the point
 is a "primary" point then "-PRIMARY" is appended to the string.
 
 B<Returns:> IUP_CLOSE will be processed.
-
-=back
 
 =item B<MULTITOUCH_CB>
 
@@ -355,8 +343,6 @@ events occurred. Must set TOUCH=Yes to receive this event. (Since iup-3.3)
    my ($self, $count, $pid, $px, $py, $pstate) = @_;
    #...
  }
-
-=over
 
 B<$self:> identifier of the element that activated the event.
 
@@ -374,8 +360,6 @@ B<$pstate:> Array of touch point states. Can be 'D' (DOWN), 'U' (UP) or
 'M' (MOVE).
 
 B<Returns:> IUP_CLOSE will be processed.
-
-=back
 
 =item L<WHEEL_CB|[%m.cb%]/WHEEL_CB>
 

@@ -62,40 +62,48 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<BOXED>
+=item B<BOXED>
 
 Determines if the bounding cells' regions should be drawn
 with black lines. It can be "YES" or "NO". Default: "YES". If the span
 atributtes are used, set this attribute to "NO" to avoid grid drawing
 over spanned cells.
 
-=item * B<BUFFERIZE>
+=item B<BUFFERIZE>
 
 Disables the automatic redrawing of the control, so many
 attributes can be changed without many redraws. When set to "NO" the
 control is redrawn. When REPAINT attribute is set, BUFFERIZE is
 automatically set to "NO". Default: "NO".
 
-=item * B<CANVAS> (read-only, non inheritable)
+=item B<CANVAS>
+
+I<(read-only, non inheritable)>
 
 Returns the internal CD canvas xxx???. This attribute should be used only in specific cases and by
 experienced IUP::Canvas programmers.
 
-=item * B<CLIPPED>
+=item B<CLIPPED>
 
 Determines if, before cells drawing, each bounding region
 should be clipped. This attribute should the changed in few specific
 cases. It can be "YES" or "NO". Default: "YES".
 
-=item * B<FIRST_COL> (read-only, non inheritable)
+=item B<FIRST_COL>
+
+I<(read-only, non inheritable)>
 
 Returns the number of the first visible column.
 
-=item * B<FIRST_LINE> (read-only, non inheritable)
+=item B<FIRST_LINE>
+
+I<(read-only, non inheritable)>
 
 Returns the number of the first visible line.
 
-=item * B<FULL_VISIBLE> (write-only, non inheritable)
+=item B<FULL_VISIBLE>
+
+I<(write-only, non inheritable)>
 
 Tries to show
 completely a specific cell (considering any vertical or horizontal
@@ -103,45 +111,55 @@ header or scrollbar position). This attribute is set by a formatted
 string "%d:%d" (C syntax), where each "%d" represent the line and
 column integer indexes respectively.
 
-=item * B<IMAGE_CANVAS> (read-only, non inheritable)
+=item B<IMAGE_CANVAS>
+
+I<(read-only, non inheritable)>
 
 Returns the internal
 image CD canvas xxx???. This attribute should be used only in specific cases
 and by experienced CD programmers.
 
-=item * B<LIMITS(L):(C)> (read-only, non inheritable)
+=item B<LIMITS(L):(C)>
+
+I<(read-only, non inheritable)>
 
 Where (L) is the line number and (C) the column number - e.g. "LIMITS11:25". 
 Returns the limits of a given cell. Output format is a string "xmin:xmax:ymin:ymax".
 
-=item * B<NON_SCROLLABLE_LINES>
+=item B<NON_SCROLLABLE_LINES>
 
 Determines the number of non-scrollable lines
 (vertical headers) that should always be visible despite the vertical
 scrollbar position. It can be any non-negative integer value. Default: "0"
 
-=item * B<NON_SCROLLABLE_COLS>
+=item B<NON_SCROLLABLE_COLS>
 
 Determines the number of non-scrollable columns
 (horizontal headers) that should always be visible despite the
 horizontal scrollbar position. It can be any non-negative integer
 value. Default: "0"
 
-=item * B<ORIGIN>
+=item B<ORIGIN>
 
 Sets the first visible line and column positions. This
 attribute is set by a formatted string "%d:%d" (C syntax), where each
 "%d" represent the line and column integer indexes respectively.
 
-=item * B<REPAINT> (write-only, non inheritable)
+=item B<REPAINT>
+
+I<(write-only, non inheritable)>
 
 When set with any value, provokes the control to be redrawn.
 
-=item * L<SIZE|IUP::Manual::03_Attributes/SIZE> (non inheritable)
+=item L<SIZE|IUP::Manual::03_Attributes/SIZE>
+
+I<(non inheritable)>
 
 There is no initial size. You must define SIZE or RASTERSIZE.
 
-=item * L<SCROLLBAR|IUP::Manual::03_Attributes/SCROLLBAR> (creation only)
+=item L<SCROLLBAR|IUP::Manual::03_Attributes/SCROLLBAR>
+
+I<(creation only)>
 
 Default: "YES".
 
@@ -171,9 +189,11 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * B<DRAW_CB>
+=item B<DRAW_CB>
 
 Called when a specific cell needs to be redrawn.
+
+B<Callback handler prototype:>
 
  sub draw_cb_handler {
    my ($self, $line, $column, $xmin, $xmax, $ymin, $ymax, $canvas) = @_;
@@ -196,9 +216,11 @@ B<$canvas> - internal canvas CD used to draw the cells.
 
 =back
 
-=item * B<HEIGHT_CB>
+=item B<HEIGHT_CB>
 
 Called when the controls needs to know a (eventually new) line height.
+
+B<Callback handler prototype:>
 
  sub height_cb_handler {
    my ($self, $line) = @_;
@@ -216,9 +238,11 @@ Default is 30 pixels.
 
 =back
 
-=item * B<HSPAN_CB>
+=item B<HSPAN_CB>
 
 Called when the control needs to know if a cell should be horizontally spanned.
+
+B<Callback handler prototype:>
 
  sub hspan_cb_handler {
    my ($self, $line, $column) = @_;
@@ -236,11 +260,13 @@ Default is 1 (no span).
 
 =back
 
-=item * B<MOUSECLICK_CB>
+=item B<MOUSECLICK_CB>
 
 Called when a color is selected. The primary color is selected with
 the left mouse button, and if existent the secondary is selected with
 the right mouse button.
+
+B<Callback handler prototype:>
 
  sub mouseclick_cb_handler {
    my ($self, $button, $pressed, $line, $column, $x, $y, $status) = @_;
@@ -259,9 +285,11 @@ has occurred, in grid coordinates.
 
 =back
 
-=item * B<MOUSEMOTION_CB>
+=item B<MOUSEMOTION_CB>
 
 Called when the mouse moves over the control.
+
+B<Callback handler prototype:>
 
  sub mousemotion_cb_handler {
    my ($self, $line, $column, $x, $y, $status) = @_;
@@ -280,10 +308,12 @@ has occurred, in grid coordinates.
 
 =back
 
-=item * B<NCOLS_CB>
+=item B<NCOLS_CB>
 
 Called when then controls needs to know its number of
 columns.
+
+B<Callback handler prototype:>
 
  sub ncols_cb_handler {
    my $self = shift;
@@ -299,9 +329,11 @@ Default is 10 columns.
 
 =back
 
-=item * B<NLINES_CB>
+=item B<NLINES_CB>
 
 Called when then controls needs to know its number of lines.
+
+B<Callback handler prototype:>
 
  sub nlines_cb_handler {
    my $self = shift;
@@ -317,9 +349,11 @@ Default is 10 lines.
 
 =back
 
-=item * B<SCROLLING_CB>
+=item B<SCROLLING_CB>
 
 Called when the scrollbars are activated.
+
+B<Callback handler prototype:>
 
  sub scrolling_cb_handler {
    my ($self, $line, $column) = @_
@@ -338,10 +372,12 @@ always redrawn.
 
 =back
 
-=item * B<VSPAN_CB>
+=item B<VSPAN_CB>
 
 Called when the control needs to know if a cell should
 be vertically spanned.
+
+B<Callback handler prototype:>
 
  sub vspan_cb_handler {
    my ($self, $line, $column) = @_
@@ -359,9 +395,11 @@ Default is 1 (no span).
 
 =back
 
-=item * B<WIDTH_CB>
+=item B<WIDTH_CB>
 
 Called when the controls needs to know the column width.
+
+B<Callback handler prototype:>
 
  sub width_cb_handler {
    my ($self, $column) = @_

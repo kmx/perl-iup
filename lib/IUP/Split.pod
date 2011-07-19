@@ -57,38 +57,50 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<AUTOHIDE> (non inheritable)
+=item B<AUTOHIDE>
+
+I<(non inheritable)>
 
 If the child client area is smaller than
 the bar size, then automatically hide the child. Default: NO.
 
-=item * B<BARSIZE> (non inheritable)
+=item B<BARSIZE>
+
+I<(non inheritable)>
 
 Controls the size of the bar handler. Default: 5.
 
-=item * B<COLOR>
+=item B<COLOR>
 
 Changes the color of the bar grip affordance. The value
 should be given in "R G B" color style. Default: "192 192 192".
 
-=item * B<ORIENTATION> (creation only)
+=item B<ORIENTATION>
+
+I<(creation only)>
 
 Indicates the orientation of the bar
 handler. The direction of the resize is perpendicular to the
 orientation. Possible values are "VERTICAL" or "HORIZONTAL". Default:
 "VERTICAL".
 
-=item * L<EXPAND|IUP::Manual::03_Attributes/EXPAND> (non inheritable)
+=item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
+
+I<(non inheritable)>
 
 The default value is "YES".
 
-=item * B<LAYOUTDRAG> (non inheritable)
+=item B<LAYOUTDRAG>
+
+I<(non inheritable)>
 
 When the bar is moved automatically
 update the children layout. Default: YES. If set to NO then the layout
 will be updated only when the mouse drag is released.
 
-=item * B<MINMAX> (non inheritable)
+=item B<MINMAX>
+
+I<(non inheritable)>
 
 Sets minimum and maximum crop values for
 VALUE, in the format "%d:%d" [min:max]. The min value can not be less
@@ -96,19 +108,25 @@ than 0, and the max value can not be larger than 1000. This will
 constrain the interactive change of the bar handler. Default: "0:1000".
 (Since iup-3.2)
 
-=item * B<SHOWGRIP> (non inheritable)
+=item B<SHOWGRIP>
+
+I<(non inheritable)>
 
 Shows the bar grip affordance. Default:
 YES. When set to NO, the BARSIZE is changed from 5 to 3.
 
-=item * B<VALUE> (non inheritable)
+=item B<VALUE>
+
+I<(non inheritable)>
 
 The proportion of the left or top (child1)
 client area relative to the full available area. It is an integer
 between 0 and 1000. If not defined or set to C<undef>, the Native size of
 the two children will define its initial size.
 
-=item * B<WID> (read-only)
+=item B<WID>
+
+I<(read-only)>
 
 Returns -1 if mapped.
 

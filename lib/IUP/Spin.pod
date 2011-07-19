@@ -48,6 +48,8 @@ Called each time the user clicks in the buttons. It will
 increment 1 and decrement -1 by default. Holding the Shift key will set
 a factor of 2, holding Ctrl a factor of 10, and both a factor of 100.
 
+B<Callback handler prototype:>
+
  sub spin_cb_handler {
    my ($self, $inc) = @_;
    #...

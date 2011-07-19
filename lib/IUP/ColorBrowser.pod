@@ -52,21 +52,27 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
+=item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
 
 The default is "NO".
 
-=item * L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE> (non inheritable)
+=item L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>
+
+I<(non inheritable)>
 
 The initial size is "181x181". Set to NULL to allow the automatic layout
 use smaller values.
 
-=item * B<RGB> (non inheritable)
+=item B<RGB>
+
+I<(non inheritable)>
 
 The color selected in the control, in the "r g b" format; r, g and b are integers ranging from 0 to 255.
 Default: "255 0 0".
 
-=item * B<HSI> (non inheritable)
+=item B<HSI>
+
+I<(non inheritable)>
 
 The color selected in the control, in the "h s i" format; h, s and i are floating point numbers ranging from
 0-360, 0-1 and 0-1 respectively.
@@ -96,10 +102,12 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * B<CHANGE_CB>
+=item B<CHANGE_CB>
 
 Called when the user releases the left mouse button over
 the control, defining the selected color.
+
+B<Callback handler prototype:>
 
  sub change_cb_handler {
    my ($self, $r, $g, $b) = @_;
@@ -114,10 +122,12 @@ B<$r, $g, $b:> color value.
 
 =back
 
-=item * B<DRAG_CB>
+=item B<DRAG_CB>
 
 Called several times while the color is being changed by
 dragging the mouse over the control.
+
+B<Callback handler prototype:>
 
  sub drag_cb_handler {
    my ($self, $r, $g, $b) = @_;
@@ -132,11 +142,13 @@ B<$r, $g, $b:> color value.
 
 =back
 
-=item * B<VALUECHANGED_CB>
+=item B<VALUECHANGED_CB>
 
 Called after the value was interactively changed by
 the user. It is called whenever a B<CHANGE_CB> or a B<DRAG_CB> would
 also be called, it is just called after them. 
+
+B<Callback handler prototype:>
 
  sub drag_cb_handler {
    my ($self) = @_;

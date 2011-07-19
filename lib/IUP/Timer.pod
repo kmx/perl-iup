@@ -56,6 +56,8 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 Called when the time is up.
 
+B<Callback handler prototype:>
+
  sub action_cb_handler {
    my ($self) = @_;
    #...

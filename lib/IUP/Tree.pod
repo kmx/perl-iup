@@ -246,6 +246,8 @@ mouse button.
 By default the Del key is not processed, but you can implement it using
 a simple K_ANY callback:
 
+B<Callback handler prototype:>
+
  sub k_any_handler {
    my ($self, $c) = @_
    if ($c == K_DEL) {
@@ -263,7 +265,9 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<ADDEXPANDED> (non inheritable)
+=item B<ADDEXPANDED>
+
+I<(non inheritable)>
 
 Defines if branches will be expanded
 when created. The branch will be actually expanded when it receives the
@@ -271,69 +275,87 @@ first child. Possible values: "YES" = The branches will be created
 expanded; "NO" = The branches will be created collapsed. Default:
 "YES".
 
-=item * B<ADDROOT> (non inheritable)
+=item B<ADDROOT>
+
+I<(non inheritable)>
 
 Automatically adds an empty branch as the
 first node when the tree is mapped. Default: "YES". (Since 3.1)
 
-=item * B<AUTOREDRAW> [Windows] (non inheritable)
+=item B<AUTOREDRAW>
+
+I<[Windows] (non inheritable)>
 
 Automatically redraws the
 tree when something has change. Set to NO to add many items to the tree
 without updating the display. Default: "YES". (since 3.3)
 
-=item * L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
+=item L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
 
 Background color of the tree.
 Default: the global attribute TXTBGCOLOR.
 
-=item * B<CANFOCUS> (creation only) (non inheritable)
+=item B<CANFOCUS>
+
+I<(creation only) (non inheritable)>
 
 Enables the focus
 traversal of the control. In Windows the control will still get the
 focus when clicked. Default: YES. 
 
-=item * B<COUNT> (read only) (non inheritable)
+=item B<COUNT>
+
+I<(read only) (non inheritable)>
 
 Returns the total number of
 nodes in the tree. 
 
-=item * B<DRAGDROP> [Windows and GTK Only] (non inheritable)
+=item B<DRAGDROP>
+
+I<[Windows and GTK Only] (non inheritable)>
 
 Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled. This
 is NOT related to the drag&drop of nodes inside the tree. 
 
-=item * B<DROPEQUALDRAG> (non inheritable)
+=item B<DROPEQUALDRAG>
+
+I<(non inheritable)>
 
 If enabled will allow a drop node
 to be equal to the drag node. Used only if SHOWDRAGDROP =Yes. In the
 case the nodes are equal the callback return value is ignored and
 nothing is done after. (since 3.3)
 
-=item * L<EXPAND|IUP::Manual::03_Attributes/EXPAND> (non inheritable)
+=item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
+
+I<(non inheritable)>
 
 The default value is "YES".
 
-=item * B<FGCOLOR>
+=item B<FGCOLOR>
 
 Default text foreground color. Once each node is created it
 will not change its color when FGCOLOR is changed. Default: the global
 attribute TXTFGCOLOR. 
 
-=item * B<HIDEBUTTONS> (creation only)
+=item B<HIDEBUTTONS>
+
+I<(creation only)>
 
 Hide the expand and collapse buttons.
 In GTK, branches will be only expanded programmatically. In Motif it
 did not work and crash the test.  (GTK 2.12)
 
-=item * B<HIDELINES> (creation only)
+=item B<HIDELINES>
+
+I<(creation only)>
 
 Hide the lines that connect the nodes in
 the hierarchy.  (GTK 2.10)
 
-=item * B<INDENTATION>
+=item B<INDENTATION>
 
 Sets the indentation level in pixels. The visual effect
 of changing the indentation is highly system dependent. In GTK it acts
@@ -341,23 +363,29 @@ as an additional indent value, and the lines do not follow the extra
 indent. In Windows is limited to a minimum of 5 pixels. 
 (GTK 2.12)
 
-=item * L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE> (non inheritable)
+=item L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>
+
+I<(non inheritable)>
 
 The initial size is "400x200". Set to NULL to allow the automatic layout
 use smaller values.
 
-=item * B<SHOWDRAGDROP> (creation only, non inheritable)
+=item B<SHOWDRAGDROP>
+
+I<(creation only, non inheritable)>
 
 Enables the drag and
 drop of nodes, and enables the B<DRAGDROP_CB> callback. Default: "NO".
 Works only if MARKMODE=SINGLE.
 
-=item * B<SPACING>
+=item B<SPACING>
 
 Vertical internal padding for each node. Notice that the
 distance between each node will be actually 2x the spacing. 
 
-=item * B<TOPITEM> (write-only)
+=item B<TOPITEM>
+
+I<(write-only)>
 
 Position the given node identifier at the top
 of the tree or near to make it visible. If any parent node is collapsed
@@ -748,11 +776,13 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * B<SELECTION_CB>
+=item B<SELECTION_CB>
 
 Action generated when a node is selected or
 deselected. This action occurs when the user clicks with the mouse or
 uses the keyboard with the appropriate combination of keys.
+
+B<Callback handler prototype:>
 
  sub selection_cb_handler {
    my ($self, $id, $status) = @_;
@@ -769,7 +799,7 @@ B<$status:> 1=node selected, 0=node unselected.
 
 =back
 
-=item * B<MULTISELECTION_CB>
+=item B<MULTISELECTION_CB>
 
 Action generated after a continuous range of
 nodes is selected in one single operation. If not defined the
@@ -779,8 +809,8 @@ already marked. That single operation also guaranties that all other
 nodes outside the range are already not selected. Called only if
 MARKMODE=MULTIPLE.
 
- int function(Ihandle *ih, int* ids, int n) [in C]
- elem:multiselection_cb(ids: table, n: number) -> (ret: number) [in Lua]
+B<Callback handler prototype:>
+
  sub multiselection_cb_handler {
    my ($self, $ids, $n) = @_;
    #...
@@ -799,13 +829,15 @@ B<$n:> Number of nodes in the array.
 
 =back
 
-=item * B<MULTIUNSELECTION_CB>
+=item B<MULTIUNSELECTION_CB>
 
 Action generated before multiple nodes are
 unselected in one single operation. If not defined the SELECTION_CB
 with status=0 will be called for all nodes in the range. The range is
 not necessarily continuous. Called only if MARKMODE=MULTIPLE. (Since
 3.1)
+
+B<Callback handler prototype:>
 
  sub multiunselection_cb_handler {
    my ($self, $ids, $n) = @_;
@@ -822,12 +854,14 @@ B<$n:> Number of nodes in the array.
 
 =back
 
-=item * B<BRANCHOPEN_CB>
+=item B<BRANCHOPEN_CB>
 
 Action generated when a branch is expanded. This
 action occurs when the user clicks the "+" sign on the left of the
 branch, or when double clicks the branch, or hits Enter on a collapsed
 branch.
+
+B<Callback handler prototype:>
 
  sub branchopen_cb_handler {
    my ($self, $id) = @_;
@@ -845,12 +879,14 @@ the branch to be opened.
 
 =back
 
-=item * B<BRANCHCLOSE_CB>
+=item B<BRANCHCLOSE_CB>
 
 Action generated when a branch is collapsed. This
 action occurs when the user clicks the "-" sign on the left of the
 branch, or when double clicks the branch, or hits Enter on an expanded
 branch.
+
+B<Callback handler prototype:>
 
  sub branchclose_cb_handler {
    my ($self, $id) = @_;
@@ -868,11 +904,13 @@ the branch to be closed.
 
 =back
 
-=item * B<EXECUTELEAF_CB>
+=item B<EXECUTELEAF_CB>
 
 Action generated when a leaf is to be executed. This
 action occurs when the user double clicks a leaf, or hits Enter on a
 leaf.
+
+B<Callback handler prototype:>
 
  sub executeleaf_cb_handler {
    my ($self, $id) = @_;
@@ -887,11 +925,13 @@ B<$id:> node identifier.
 
 =back
 
-=item * B<SHOWRENAME_CB>
+=item B<SHOWRENAME_CB>
 
 Action generated when a node is about to be renamed.
 It occurs when the user clicks twice the node or press B<F2>. Called
 only if SHOWRENAME=YES.
+
+B<Callback handler prototype:>
 
  sub showrename_cb_handler {
    my ($self, $id) = @_;
@@ -909,11 +949,13 @@ rename continuous but the edit box is read-only).
 
 =back
 
-=item * B<RENAME_CB>
+=item B<RENAME_CB>
 
 Action generated after a node was renamed in place. It
 occurs when the user press B<Enter> after editing the name, or when the
 text box looses it focus. Called only if SHOWRENAME=YES.
+
+B<Callback handler prototype:>
 
  sub rename_cb_handler {
    my ($self, $id, $title) = @_;
@@ -936,10 +978,12 @@ editing stops always.
 
 =back
 
-=item * B<DRAGDROP_CB>
+=item B<DRAGDROP_CB>
 
 Action generated when a drag & drop is executed. Only
 active if B<SHOWDRAGDROP=YES.>
+
+B<Callback handler prototype:>
 
  sub dragdrop_cb_handler {
    my ($self, $drag_id, $drop_id, $isshift, $iscontrol) = @_;
@@ -968,12 +1012,14 @@ drop node.
 
 =back
 
-=item * B<NODEREMOVED_CB>
+=item B<NODEREMOVED_CB>
 
 Action generated when a node is going to be removed.
 It is only a notification, the action can not be aborted. No node
 dependent attribute can be consulted during the callback. Not called
 when the tree is unmapped. 
+
+B<Callback handler prototype:>
 
  sub noderemoved_cb_handler {
    my ($self, $userdata_ref) = @_;
@@ -988,9 +1034,11 @@ B<$userdata_ref:> #XXX-check-implementation.
 
 =back
 
-=item * B<RIGHTCLICK_CB>
+=item B<RIGHTCLICK_CB>
 
 Action generated when the right mouse button is pressed over a node.
+
+B<Callback handler prototype:>
 
  sub rightclick_cb_handler {
    my ($self, $id) = @_;
@@ -1005,21 +1053,23 @@ B<$id:> node identifier.
 
 =back
 
-=item * L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB>
+=item L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB>
 
 Action generated when any
 mouse button is pressed or released inside the element. Use
 L<ConvertXYToPos|IUP::Manual::02_Elements/"ConvertXYToPos()"> to convert (x,y)
 coordinates in the node identifier. 
 
-=item * L<MOTION_CB|IUP::Manual::04_Callbacks/MOTION_CB>
+=item L<MOTION_CB|IUP::Manual::04_Callbacks/MOTION_CB>
 
 Action generated when the
 mouse is moved over the element. Use
 L<ConvertXYToPos|IUP::Manual::02_Elements/"ConvertXYToPos()"> to convert (x,y)
 coordinates in item the node identifier. 
 
-=item * L<DROPFILES_CB|IUP::Manual::04_Callbacks/DROPFILES_CB> [Windows and GTK Only]
+=item L<DROPFILES_CB|IUP::Manual::04_Callbacks/DROPFILES_CB>
+
+I<[Windows and GTK Only]>
 
 Action generated when one or more files are dropped in the element.
 

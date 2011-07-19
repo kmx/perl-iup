@@ -67,8 +67,7 @@ for each child inside the box.
 
 I<(non inheritable)>
 
-The default
-value is "YES".
+The default value is "YES".
 
 =item L<SIZE|[%m.at%]/SIZE> /
 L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)

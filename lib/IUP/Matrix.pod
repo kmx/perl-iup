@@ -235,20 +235,20 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<CURSOR>
+=item B<CURSOR>
 
 Default cursor used by the matrix. The default
 cursor is a symbol that looks like a cross. If you need to refer to
 this default cursor, use the name "IUP::MatrixCrossCursor".
 
-=item * B<EDIT_MODE>
+=item B<EDIT_MODE>
 
 When set to YES, programmatically puts the
 current cell in edition mode, allowing the user to modify its value.
 When consulted informs if the the current cell is being edited.
 Possible values: "YES" or "NO".
 
-=item * B<EDITNEXT>
+=item B<EDITNEXT>
 
 controls how the next cell after editing is
 chosen. Can be LIN, COL, LINCR, COLCR. Default: LIN. (since 3.4)
@@ -258,50 +258,50 @@ chosen. Can be LIN, COL, LINCR, COLCR. Default: LIN. (since 3.4)
  COL - go to the next column, if at last column then go to the next line at the same column;
  COLCR - go to the next column, if at last column then go to the next line at the first column;
 
-=item * B<FOCUS_CELL>
+=item B<FOCUS_CELL>
 
 Defines the current cell. Two numbers in
 the "B<(L)>:B<(C)>" format, (B<(L)> E<gt> 0 and B<(C)> E<gt> 0, a title
 cell can NOT be the current cell). Default: "1:1".
 
-=item * B<HIDEFOCUS>
+=item B<HIDEFOCUS>
 
 do not show the focus mark when drawing the
 matrix. Default is NO.
 
-=item * B<HIDDENTEXTMARKS>
+=item B<HIDDENTEXTMARKS>
 
 when text is greater than cell
 space, it is normally cropped, but when set to YES a "..." mark will be
 added at the crop point to indicate that there is more text not
 visible. Default: NO. (since 3.1)
 
-=item * B<LIMITEXPAND>
+=item B<LIMITEXPAND>
 
 limit expansion to the maximum size that shows all
 cells. (since 3.5)
 
-=item * B<ORIGIN>
+=item B<ORIGIN>
 
 Scroll the visible area to the given cell. Returns
 the cell at the upper left corner. To scroll to a line or a column, use
 a value such as "B<(L)>:*" or "*:B<(C)>" (where I<B<L>> E<gt> 0 and
 B<(C)> E<gt> 0). L and C can not be a non scrollable cell either.
 
-=item * B<ORIGINOFFSET>
+=item B<ORIGINOFFSET>
 
 complements the ORIGIN attribute by
 specifying the drag offset of the top left cell. Returns the current
 value. Has the format "XxY" or "%dx%d" in C. Used only the ORIGIN is
 set. (since 3.5)
 
-=item * B<READONLY>
+=item B<READONLY>
 
 disables the editing of all cells. EDITION_CB
 and VALUE_EDIT_CB will not be called anymore. The L:C attribute will
 still be able to change the cell value. 
 
-=item * B<RESIZEMATRIX>
+=item B<RESIZEMATRIX>
 
 Defines if the width of a column can be
 interactively changed. When this is possible, the user can change the
@@ -309,7 +309,9 @@ size of a column by dragging the column title right border. Possible
 values: "YES" or "NO". Default: "NO" (does not allow interactive width
 change).
 
-=item * B<USETITLESIZE:> Use the title size to define the cell
+=item B<USETITLESIZE>
+
+Use the title size to define the cell
 size if necessary. See WIDTHn and HEIGHTn. Default: NO. 
 
 =back
@@ -847,6 +849,8 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 Action generated when a keyboard event
 occurs.
 
+B<Callback handler prototype:>
+
  sub action_cb_handler {
    my ($self, $key, $lin, $col, $edition, $value) = @_;
    #...
@@ -883,6 +887,8 @@ Action generated when any mouse button is
 pressed over a cell. This callback is always called after other
 callbacks.
 
+B<Callback handler prototype:>
+
  sub click_cb_handler {
    my ($self, $lin, $col, $status) = @_;
    #...
@@ -910,6 +916,8 @@ Action generated when any mouse button is
 released over a cell. This callback is always called after other
 callbacks.
 
+B<Callback handler prototype:>
+
  sub click_cb_handler {
    my ($self, $lin, $col, $status) = @_;
    #...
@@ -936,6 +944,8 @@ B<Returns:> To avoid the display update return IUP_IGNORE.
 Action generated to notify the
 application that the mouse has moved over the matrix.
 
+B<Callback handler prototype:>
+
  sub mousemove_cb_handler {
    my ($self, $lin, $col) = @_;
    #...
@@ -956,6 +966,8 @@ Action generated when a matrix cell is
 selected, becoming the current cell. Also called when matrix is getting
 focus.
 
+B<Callback handler prototype:>
+
  sub enteritem_cb_handler {
    my ($self, $lin, $col) = @_;
    #...
@@ -973,6 +985,8 @@ B<$lin, $col:> Coordinates of the selected cell.
 
 Action generated when a cell is no
 longer the current cell. Also called when the matrix is losing focus.
+
+B<Callback handler prototype:>
 
  sub leaveitem_cb_handler {
    my ($self, $lin, $col) = @_;
@@ -999,6 +1013,8 @@ scrolled with the scrollbars or with the keyboard. Can be used together
 with the ORIGIN and ORIGINOFFSET attributes to synchronize the movement
 of two or more matrices.
 
+B<Callback handler prototype:>
+
  sub scrolltop_cb_handler {
    my ($self, $lin, $col) = @_;
    #...
@@ -1024,6 +1040,8 @@ corner of the matrix.
 
 Action generated to retrieve the background color of a cell when it needs to be redrawn.
 
+B<Callback handler prototype:>
+
  sub bgcolor_cb_handler {
    my ($self, $lin, $col) = @_;
    my ($red, $green, $blue, $ret);
@@ -1048,6 +1066,8 @@ returned values will be used as the background color.
 =item * B<FGCOLOR_CB>
 
 Action generated to retrieve the foreground color of a cell when it needs to be redrawn.
+
+B<Callback handler prototype:>
 
  sub fgcolor_cb_handler {
    my ($self, $lin, $col) = @_;
@@ -1075,6 +1095,8 @@ returned values will be used as the foreground color.
 Action generated to verify the font of a cell.
 Called both for common cells and for line and column titles. (since iup-3.0)
 
+B<Callback handler prototype:>
+
  sub value_cb_handler {
    my ($self, $lin, $col) = @_;
    #...
@@ -1097,6 +1119,8 @@ Action generated before a cell is drawn. Allows to draw a custom cell contents. 
 L<IUP::Canvas> methods. The clipping is set for the bounding rectangle. The callback is called
 after the cell background has been filled with the background color.
 The focus feedback area is not included in the decoration size.
+
+B<Callback handler prototype:>
 
  sub draw_cb_handler {
    my ($self, $lin, $col, $x1, $x2, $y1, $y2, $cnv) = @_;
@@ -1122,6 +1146,8 @@ B<Returns:> If IUP_IGNORE the normal text drawing will take place.
 Action generated before the current
 cell is redrawn to determine if a dropdown feedback should be shown. If
 this action is not registered, no feedback will be shown.
+
+B<Callback handler prototype:>
 
  sub dropcheck_cb_handler {
    my ($self, $lin, $col) = @_;
@@ -1159,6 +1185,8 @@ current value ("VALUE"), the default is always "1". The previously cell
 value can be verified from the given drop Ihandle via the
 "PREVIOUSVALUE" attribute.
 
+B<Callback handler prototype:>
+
  sub drop_cb_handler {
    my ($self, $drop, $lin, $col) = @_;
    #...
@@ -1182,6 +1210,8 @@ Action generated when an element in
 the dropdown list is selected. If returns IUP_CONTINUE the value is
 accepted as a new value and the matrix leaves edition mode, else the
 item is selected and editing remains.
+
+B<Callback handler prototype:>
 
  sub dropselect_cb_handler {
    my ($self, $lin, $col, $drop, $t, $i, $v) = @_;
@@ -1208,6 +1238,8 @@ B<$v:> Indicates if item was selected or unselected (1 or 0).
 
 Action generated when the current cell
 enters or leaves the edition mode. Not called if READONLY=YES.
+
+B<Callback handler prototype:>
 
  sub edition_cb_handler {
    my ($self, $lin, $col, $mode, $update) = @_;
@@ -1262,6 +1294,8 @@ called only with mode=1).
 Action generated to verify the value of a cell.
 Called both for common cells and for line and column titles.
 
+B<Callback handler prototype:>
+
  sub value_cb_handler {
    my ($self, $lin, $col) = @_;
    #...
@@ -1289,6 +1323,8 @@ done by the "EDITION_CB" callback). Not called if READONLY=YES. This
 callback is usually set in callback mode, but also works in normal
 mode.
 
+B<Callback handler prototype:>
+
  sub value_edit_cb_handler {
    my ($self, $lin, $col, $newval) = @_;
    #...
@@ -1313,6 +1349,8 @@ Action generated to verify the selection state of
 a cell. Called only for common cells, only when MARKMODE=CELL and only
 in callback mode.
 
+B<Callback handler prototype:>
+
  sub mark_cb_handler {
    my ($self, $lin, $col) = @_;
    #...
@@ -1335,6 +1373,8 @@ Action generated to notify the
 application that the selection state of a cell was changed. Since it is
 a notification, it cannot refuse the mark modification. Called only for
 common cells, only when MARKMODE=CELL and only in callback mode.
+
+B<Callback handler prototype:>
 
  sub markedit_cb_handler {
    my ($self, $lin, $col, $marked) = @_;

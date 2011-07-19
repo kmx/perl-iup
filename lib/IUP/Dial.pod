@@ -34,36 +34,42 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<DENSITY>
+=item B<DENSITY>
 
 Number of lines per pixel in the handle of the dial.
 Default is "0.2".
 
-=item * L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
+=item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
 
 The default is "NO".
 
-=item * L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
+=item L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
 
 Foreground color. The default
 value is "64 64 64". Not used for the circular dial.
 
-=item * L<SIZE|IUP::Manual::03_Attributes/SIZE> (non inheritable)
+=item L<SIZE|IUP::Manual::03_Attributes/SIZE>
+
+I<(non inheritable)>
 
 The initial size is "16x80", "80x16" or "40x35" according to the dial orientation. Set to
 C<undef> to allow the automatic layout use smaller values.
 
-=item * B<ORIENTATION> (creation only) (non inheritable)
+=item B<ORIENTATION>
+
+I<(creation only) (non inheritable)>
 
 Dial layout configuration "VERTICAL", "HORIZONTAL" or "CIRCULAR". Default:
 "HORIZONTAL".
 
-=item * B<UNIT>
+=item B<UNIT>
 
 Unit of the angle. Can be "DEGREES" or "RADIANS". Default is
 "RADIANS". Used only in the callbacks.
 
-=item * B<VALUE> (non inheritable)
+=item B<VALUE>
+
+I<(non inheritable)>
 
 The dial angular value in radians. The
 value is reset to zero when the interaction is started, except for
@@ -97,11 +103,13 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * B<BUTTON_PRESS_CB>
+=item B<BUTTON_PRESS_CB>
 
 Called when the user presses the left mouse button
 over the dial. The angle here is always zero, except for the circular
 dial.
+
+B<Callback handler prototype:>
 
  sub button_press_cb_handler {
    my ($self, $angle) = @_;
@@ -116,10 +124,12 @@ B<$angle:> the dial value converted according to UNIT.
 
 =back
 
-=item * B<BUTTON_RELEASE_CB>
+=item B<BUTTON_RELEASE_CB>
 
 Called when the user releases the left mouse
 button after pressing it over the dial.
+
+B<Callback handler prototype:>
 
  sub button_release_cb_handler {
    my ($self, $angle) = @_;
@@ -134,11 +144,13 @@ B<$angle:> the dial value converted according to UNIT.
 
 =back
 
-=item * B<MOUSEMOVE_CB>
+=item B<MOUSEMOVE_CB>
 
 Called each time the user moves the dial with the
 mouse button pressed. The angle the dial rotated since it was
 initialized is passed as a parameter.
+
+B<Callback handler prototype:>
 
  sub mousemove_cb_handler {
    my ($self, $angle) = @_;
@@ -153,12 +165,14 @@ B<$angle:> the dial value converted according to UNIT.
 
 =back
 
-=item * B<VALUECHANGED_CB>
+=item B<VALUECHANGED_CB>
 
 Called after the value was interactively changed by
 the user. It is called whenever a B<BUTTON_PRESS_CB>, a
 B<BUTTON_RELEASE_CB> or a B<MOUSEMOVE_CB> would also be called, but if
 defined those callbacks will not be called. 
+
+B<Callback handler prototype:>
 
  sub valuechanged_cb_handler {
    my ($self) = @_;

@@ -104,11 +104,11 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * L<OPEN_CB|IUP::Manual::04_Callbacks/OPEN_CB>
+=item L<OPEN_CB|IUP::Manual::04_Callbacks/OPEN_CB>
 
 Called just before the menu is opened.
 
-=item * L<MENUCLOSE_CB|IUP::Manual::04_Callbacks/MENUCLOSE_CB>
+=item L<MENUCLOSE_CB|IUP::Manual::04_Callbacks/MENUCLOSE_CB>
 
 Called just after the menu is closed.
 

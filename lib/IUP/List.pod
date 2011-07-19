@@ -56,19 +56,19 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<"1">
+=item B<"1">
 
 First item in the list.
 
-=item * B<"2">
+=item B<"2">
 
 Second item in the list.
 
-=item * B<"3">
+=item B<"3">
 
 Third item in the list.
 
-=item * B<< "<n>" >>
+=item B<< "<n>" >>
 
 n-th item in the list.
 
@@ -79,60 +79,72 @@ rules:
 
 =over
 
-=item * if "1" is set to C<undef>, all items are removed.
+=item if "1" is set to C<undef>, all items are removed.
 
-=item * if "n" is set to C<undef>, all items after n are removed.
+=item if "n" is set to C<undef>, all items after n are removed.
 
-=item * if "n" is between the first and the last item, the current nth
+=item if "n" is between the first and the last item, the current nth
 item is replaced. The effect is the same as removing the old item and
 inserting a new one at the old position.
 
-=item * if "n+1" is set then it is appended after the last item.
+=item if "n+1" is set then it is appended after the last item.
 
-=item * Items after "n+1" are ignored. 
+=item Items after "n+1" are ignored. 
 
 =back
 
-=item * B<APPENDITEM> (write-only)
+=item B<APPENDITEM>
+
+I<(write-only)>
 
 Inserts an item after the last item.
 Ignored if set before map. 
 
-=item * B<AUTOHIDE>
+=item B<AUTOHIDE>
 
 Scrollbars are shown only if they are necessary. Default: "YES".
 
-=item * B<AUTOREDRAW> [Windows] (non inheritable)
+=item B<AUTOREDRAW>
+
+I<[Windows] (non inheritable)>
 
 Automatically redraws the
 list when something has change. Set to NO to add many items to the list
 without updating the display. Default: "YES". (since iup-3.3)
 
-=item * L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
+=item L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
 
 Background color of the text.
 
 Default: the global attribute TXTBGCOLOR. In GTK does nothing when DROPDOWN=Yes.
 
-=item * B<CANFOCUS> (creation only) (non inheritable)
+=item B<CANFOCUS>
+
+I<(creation only) (non inheritable)>
 
 Enables the focus
 traversal of the control. In Windows the control will still get the
 focus when clicked. Default: YES. 
 
-=item * B<COUNT> (read-only) (non inheritable)
+=item B<COUNT>
+
+I<(read-only) (non inheritable)>
 
 Returns the number of items.
 Before mapping it counts the number of non C<undef> items before the first
 C<undef> item. 
 
-=item * B<DRAGDROP> [Windows and GTK Only] (non inheritable)
+=item B<DRAGDROP>
+
+I<[Windows and GTK Only] (non inheritable)>
 
 Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
 
-=item * B<DROPDOWN> (creation only)
+=item B<DROPDOWN>
+
+I<(creation only)>
 
 Changes the appearance of the list for the
 user: only the selected item is shown beside a button with the image of
@@ -140,41 +152,53 @@ an arrow pointing down. To select another option, the user must press
 this button, which displays all items in the list. Can be "YES" or
 "NO". Default "NO".
 
-=item * B<DROPEXPAND> [Windows Only]
+=item B<DROPEXPAND>
+
+I<[Windows Only]>
 
 When DROPDOWN=Yes the size of the dropped
 list will expand to include the largest text. Can be "YES" or "NO".
 Default: "YES".
 
-=item * B<EDITBOX> (creation only)
+=item B<EDITBOX>
+
+I<(creation only)>
 
 Adds an edit box to the list. Can be "YES"
 or "NO". Default "NO".
 
-=item * L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
+=item L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
 
 Text color. Default: the global
 attribute TXTFGCOLOR.
 
-=item * B<INSERTITEMn> (write-only)
+=item B<INSERTITEMn>
+
+I<(write-only)>
 
 Inserts an item before the given n
 position. n starts at 1. If n=COUNT+1 then it will append after the
 last item. Ignored if out of bounds. Ignored if set before map. (since
 3.0)
 
-=item * B<MULTIPLE> (creation only)
+=item B<MULTIPLE>
+
+I<(creation only)>
 
 Allows selecting several items
 simultaneously (multiple list). Default: "NO". Only valid when
 EDITBOX=NO and DROPDOWN=NO.
 
-=item * B<REMOVEITEM> (write-only)
+=item B<REMOVEITEM>
+
+I<(write-only)>
 
 Removes the given value. value starts at 1.
 If value is C<undef> removes all the items. Ignored if set before map.
 
-=item * B<SCROLLBAR> (creation only)
+=item B<SCROLLBAR>
+
+I<(creation only)>
 
 Associates automatic scrollbars to the
 list when DROPDOWN=NO. Can be: "YES" or "NO" (none). Default: "YES".
@@ -191,31 +215,37 @@ items are always visible. In Motif, the horizontal scrollbar is never
 shown. In Windows, if DROPEXPAND=YES then the horizontal scrollbar is
 never shown.
 
-=item * B<SHOWDROPDOWN> (write-only)
+=item B<SHOWDROPDOWN>
+
+I<(write-only)>
 
 Opens or closes the dropdown list. Can be
 "YES" or "NO". Valid only when DROPDOWN=YES. Ignored if set before map.
 
-=item * L<SIZE|IUP::Manual::03_Attributes/SIZE>
+=item L<SIZE|IUP::Manual::03_Attributes/SIZE>
 
 Size of the list. The B<Natural>
-=item * B<Size> is defined by the number of elements in the list and the with
+=item B<Size> is defined by the number of elements in the list and the with
 of the largest item, the default has room for 5 characters in 1 item.
 In IUP 3, the B<Natural> B<Size> ignores the list contents if
 VISIBLECOLUMNS or VISIBLELINES attributes are defined. The text in the
 edit box is ignored when considering the list contents.
 
-=item * B<SORT> (creation only)
+=item B<SORT>
+
+I<(creation only)>
 
 Force the list to be alphabetically sorted.
 When using INSERTITEMn or APPENDITEM the position will be ignored.
 
-=item * B<TOPITEM> (write-only)
+=item B<TOPITEM>
+
+I<(write-only)>
 
 Position the given item at the top of the list
 or near to make it visible. Valid only when DROPDOWN=NO. 
 
-=item * B<SPACING>
+=item B<SPACING>
 
 Internal padding for each item. Notice that vertically the
 distance between each item will be actually 2x the spacing. It also
@@ -223,36 +253,40 @@ affects the horizontal margin of the item. In Windows, the text is
 aligned at the top left of the item always. Valid only when
 DROPDOWN=NO. 
 
-=item * B<VALUE> (non inheritable)
+=item B<VALUE>
+
+I<(non inheritable)>
 
 Depends on the DROPDOWN+EDITBOX combination:
 
 =over
 
-=item * EDITBOX=YES: Text entered by the user.
+=item EDITBOX=YES: Text entered by the user.
 
-=item * DROPDOWN=YES or MULTIPLE=NO: Integer number representing the
+=item DROPDOWN=YES or MULTIPLE=NO: Integer number representing the
 selected item in the list (begins at 1). It can be zero if there is no
 selected item. The value can be C<undef> for no item selected 
 (In Motif when DROPDOWN=YES there is always an item selected, except
 only when the list is empty).
 
-=item * MULTIPLE=YES: Sequence of '+' and '-' symbols indicating the
+=item MULTIPLE=YES: Sequence of '+' and '-' symbols indicating the
 state of each item. When setting this value, the user must provide the
 same amount of '+' and '-' symbols as the amount of items in the list,
 otherwise the specified items will be deselected.
 
 =back
 
-=item * B<VISIBLE_ITEMS> [Windows and Motif Only]
+=item B<VISIBLE_ITEMS>
+
+I<[Windows and Motif Only]>
 
 Number of items that are
 visible when DROPDOWN=YES is used for the dropdown list. Default: 5.
 
-=item * B<VISIBLECOLUMNS>
+=item B<VISIBLECOLUMNS>
 
 Defines the number of visible columns for the
-=item * B<Natural> B<Size>, this means that will act also as minimum number of
+=item B<Natural> B<Size>, this means that will act also as minimum number of
 visible columns. It uses a wider character size then the one used for
 the SIZE attribute so strings will fit better without the need of extra
 columns. 
@@ -270,7 +304,7 @@ but  only when EDITBOX=YES and effective only for the edit box inside the list.
 
 =over
 
-=item * L<APPEND|IUP::Text/APPEND>,
+=item L<APPEND|IUP::Text/APPEND>,
 L<CARET|IUP::Text/CARET>,
 L<CARETPOS|IUP::Text/CARETPOS>,
 L<CLIPBOARD|IUP::Text/CLIPBOARD>,
@@ -313,11 +347,13 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * L<ACTION|IUP::Manual::04_Callbacks/ACTION>
+=item L<ACTION|IUP::Manual::04_Callbacks/ACTION>
 
 Action generated when the state of
 an item in the list is changed. Also provides information on the
 changed item:
+
+B<Callback handler prototype:>
 
  sub action_handler {
    my ($self, $text, $item, $state) = @_;
@@ -342,7 +378,7 @@ proper state=0 value.
 
 =back
 
-=item * L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB>
+=item L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB>
 
 Action generated when any
 mouse button is pressed or released inside the list. Called only when
@@ -351,10 +387,12 @@ cursor is at the listbox only (ignored at the editbox).
 Use L<ConvertXYToPos|IUP::Manual::02_Elements/"ConvertXYToPos()"> to convert (x,y)
 coordinates in item position. 
 
-=item * B<CARET_CB>
+=item B<CARET_CB>
 
 Action generated when the caret/cursor position is
 changed. Valid only when EDITBOX=YES.
+
+B<Callback handler prototype:>
 
  sub caret_cb_handler {
    my ($self, $lin, $col, $pos) = @_;
@@ -375,10 +413,12 @@ This is the same CARET_CB callback definition as for the L<IUP::Text|IUP::Text>.
 
 =back
 
-=item * B<DBLCLICK_CB>
+=item B<DBLCLICK_CB>
 
 Action generated when the user double click an item.
 Called only when DROPDOWN=NO. 
+
+B<Callback handler prototype:>
 
  sub dblclick_cb_handler {
    my ($self, $item, $text) = @_;
@@ -395,10 +435,12 @@ B<$text:> Text of the selected item.
 
 =back
 
-=item * B<DROPDOWN_CB>
+=item B<DROPDOWN_CB>
 
 Action generated when the list of a dropdown is shown
 or hidden. Called only when DROPDOWN=YES. 
+
+B<Callback handler prototype:>
 
  sub dropdown_cb_handler {
    my ($self, $state) = @_;
@@ -413,15 +455,19 @@ B<$state:> state of the list 1=shown, 0=hidden.
 
 =back
 
-=item * L<DROPFILES_CB|IUP::Manual::04_Callbacks/DROPFILES_CB> [Windows and GTK Only]
+=item L<DROPFILES_CB|IUP::Manual::04_Callbacks/DROPFILES_CB>
+
+I<[Windows and GTK Only]>
 
 Action generated when one or more files are dropped in the element.
 
-=item * B<EDIT_CB>
+=item B<EDIT_CB>
 
 Action generated when the text in the text box is manually
 changed by the user, but before its value is actually updated. Valid
 only when EDITBOX=YES.
+
+B<Callback handler prototype:>
 
  sub edit_cb_handler {
    my ($self, $c, $new_value) = @_;
@@ -446,7 +492,7 @@ This is the same ACTION callback definition as for the L<IUP::Text|IUP::Text>.
 
 =back
 
-=item * L<MOTION_CB|IUP::Manual::04_Callbacks/MOTION_CB>
+=item L<MOTION_CB|IUP::Manual::04_Callbacks/MOTION_CB>
 
 Action generated when the
 mouse is moved over the list. Called only when DROPDOWN=NO. If the list
@@ -454,11 +500,13 @@ has an editbox the message is called when cursor is at the listbox only
 (ignored at the editbox). Use L<ConvertXYToPos|IUP::Manual::02_Elements/"ConvertXYToPos()"> to convert (x,y)
 coordinates in item position. 
 
-=item * B<MULTISELECT_CB>
+=item B<MULTISELECT_CB>
 
 Action generated when the state of an item in the
 multiple selection list is changed. But it is called only when the
 interaction is over.
+
+B<Callback handler prototype:>
 
  sub multiselect_cb_handler {
    my ($self, $value) = @_;
@@ -483,11 +531,13 @@ attribute to ensure proper 'x' values.
 
 =back
 
-=item * B<VALUECHANGED_CB>
+=item B<VALUECHANGED_CB>
 
 Called after the value was interactively changed by
 the user. Called when the selection is changed or when the text is
 edited. 
+
+B<Callback handler prototype:>
 
  sub valuechanged_cb_handler {
    my ($self) = @_;

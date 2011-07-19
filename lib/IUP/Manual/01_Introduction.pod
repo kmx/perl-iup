@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Manual::03_Attributes - Attribute concept, using attributes, common + global attributes
+IUP::Manual::01_Introduction - Basic introduction to IUP concept
 
 =head1 IUP MANUAL
 
@@ -118,7 +118,7 @@ There are two functions to change them:
 =item * L<SetAttribute|IUP::Manual::02_Elements/"SetAttribute()"> stores only a pointer to the string and does
 not duplicate it.
 
-=item * L<IUP::StoreAtribute|IUP::StoreAtribute> duplicates the string, allowing you to use
+=item * L<StoreAtribute|xxx> duplicates the string, allowing you to use
 it for other purposes.
 
 =back

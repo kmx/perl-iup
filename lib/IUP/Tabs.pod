@@ -37,47 +37,57 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
+=item L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
 
 In Windows and in GTK when in
 Windows, the tab buttons background it will be always defined by the
 system. In Windows the default background is different from the dialog
 background. Default: the global attribute DLGBGCOLOR.
 
-=item * B<COUNT> (read-only) (non inheritable)
+=item B<COUNT>
+
+I<(read-only) (non inheritable)>
 
 Returns the number of tabs.
 Same value returned by L<GetChildCount|IUP::Manual::02_Elements/"GetChildCount()">. (since iup-3.3)
 
-=item * L<EXPAND|IUP::Manual::03_Attributes/EXPAND> (non inheritable)
+=item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
+
+I<(non inheritable)>
 
 The default value is "YES".
 
-=item * L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
+=item L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
 
 Tabs title color. Default: the global attribute DLGFGCOLOR.
 
-=item * B<MULTILINE> [Windows Only] (non inheritable)
+=item B<MULTILINE>
+
+I<[Windows Only] (non inheritable)>
 
 Enable multiple lines
 of tab buttons. This will hide the tab scroll and fits to make all tab
 buttons visible. Can be "YES" or "NO". Default "NO". It is always
 enabled when TABTYPE=LEFT or TABTYPE=RIGHT. 
 
-=item * B<PADDING> (non inheritable)
+=item B<PADDING>
+
+I<(non inheritable)>
 
 Internal margin of the tab title. Works
 just like the MARGIN attribute of the L<IUP::Hbox> and L<IUP::Vbox> containers,
 but uses a different name to avoid inheritance problems.
 Default value: "0x0". 
 
-=item * L<SIZE|IUP::Manual::03_Attributes/SIZE> (non inheritable)
+=item L<SIZE|IUP::Manual::03_Attributes/SIZE>
+
+I<(non inheritable)>
 
 The default size is
 the smallest size that fits its largest child. All child elements are
 considered even invisible ones.
 
-=item * B<< TABIMAGE(n) >>(non inheritable)
+=item B<< TABIMAGE(n) >>(non inheritable)
 
 E<lt>nE<gt> starts at 0. 
 
@@ -89,14 +99,16 @@ See also L<IUP::Image|IUP::Image>. In Motif, the image is shown only if
 B<< TABTITLE(n) >> is C<undef>. In Windows and Motif set the BGCOLOR attribute
 before setting the image. 
 
-=item * B<TABORIENTATION> (non inheritable)
+=item B<TABORIENTATION>
+
+I<(non inheritable)>
 
 Indicates the orientation of tab
 text, which can be "HORIZONTAL" or "VERTICAL". Default is "HORIZONTAL".
 VERTICAL is supported only in GTK and in Windows. In Windows, VERTICAL
 is only supported when TABTYPE=LEFT or TABTYPE=RIGHT. (GTK 2.6)
 
-=item * B<< TABTITLE(n) >> (non inheritable)
+=item B<< TABTITLE(n) >> (non inheritable)
 
 Contains the text to be shown in the
 respective tab title. n starts at 0. If this value is NULL, it will
@@ -106,7 +118,9 @@ instead on defining a mnemonic. The button can be activated from any
 control in the dialog using the "Alt+key" combination. (mnemonic
 support since iup-3.3) 
 
-=item * B<TABTYPE> (non inheritable, creation only in Windows)
+=item B<TABTYPE>
+
+I<(non inheritable, creation only in Windows)>
 
 Indicates the
 type of tab, which can be "TOP", "BOTTOM", "LEFT" or "RIGHT". Default
@@ -114,7 +128,9 @@ is "TOP". In Windows, if LEFT or RIGHT, then MULTILINE=YES and
 TABORIENTATIONB<=>VERTICAL always. In Windows, when not TOP, then
 visual style is removed from tabs.
 
-=item * B<VALUE> (non inheritable)
+=item B<VALUE>
+
+I<(non inheritable)>
 
 Changes the active tab by its name. The
 value passed must be the name of one of the elements contained in the
@@ -122,14 +138,18 @@ tabs. Use L<SetName|IUP::Manual::02_Elements/"SetName()"> or XXX-FIX_ME to assoc
 a child to a name. In Lua (XXX-check-this-for-perl) you can also use the element reference
 directly.
 
-=item * B<VALUE_HANDLE> (non inheritable)
+=item B<VALUE_HANDLE>
+
+I<(non inheritable)>
 
 Changes the active tab by its
 handle. The value passed must be the handle of a child contained in the
 tabs. When the tabs is created, the first element inserted is set as
 the visible child. 
 
-=item * B<VALUEPOS> (non inheritable)
+=item B<VALUEPOS>
+
+I<(non inheritable)>
 
 Changes the active tab by its position,
 starting at 0. When the tabs is created, the first element inserted is
@@ -163,9 +183,11 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * B<TABCHANGE_CB>
+=item B<TABCHANGE_CB>
 
 Callback called when the user shifts the active tab.
+
+B<Callback handler prototype:>
 
  sub tabchange_cb_handler {
    my ($self, $new_tab, $old_tab) = @_;
@@ -182,10 +204,12 @@ B<$old_tab:> the previously selected tab
 
 =back
 
-=item * B<TABCHANGEPOS_CB>
+=item B<TABCHANGEPOS_CB>
 
 Callback called when the user shifts the active
 tab. Called only when TABCHANGE_CB is not defined. (since iup-3.3)
+
+B<Callback handler prototype:>
 
  sub tabchangepos_cb_handler {
    my ($self, $new_tab, $old_tab) = @_;

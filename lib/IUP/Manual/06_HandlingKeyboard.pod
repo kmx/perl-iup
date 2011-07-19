@@ -34,9 +34,23 @@ IUP::Manual::06_HandlingKeyboard - Manuals element guide
 
 =item * testing5
 
-=item * testing6
+=item * testing6 xx
 
-=item * testing7
+=back
+
+=over
+
+=item testing7
+
+=item testing8 xx
+
+=back
+
+=over
+
+=item B<testing9>
+
+=item B<testing10> (xx yy)
 
 =back
 

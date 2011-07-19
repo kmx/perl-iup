@@ -32,7 +32,9 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<BACKGROUND> (non inheritable)
+=item B<BACKGROUND>
+
+I<(non inheritable)>
 
 Dialog background color or image. Can
 be a non inheritable alternative to BGCOLOR or can be the name of an
@@ -42,40 +44,50 @@ See also the screenshots of the sample dialog: XXX-fix-the-following-links
 
 =over
 
-=item * L<results with normal background|xxx.html>
+=item L<results with normal background|xxx.html>
 
-=item * L<changing the dialog BACKGROUND|xxx.html>
+=item L<changing the dialog BACKGROUND|xxx.html>
 
-=item * L<changing the dialog BGCOLOR|xxx.html>
+=item L<changing the dialog BGCOLOR|xxx.html>
 
-=item * L<changing the children BGCOLOR|xxx.html>
+=item L<changing the children BGCOLOR|xxx.html>
 
 =back
 
-=item * B<BORDER> (non inheritable) (creation only)
+=item B<BORDER>
+
+I<(non inheritable) (creation only)>
 
 Shows a resize border
 around the dialog. Default: "YES". BORDER=NO is useful only when
 RESIZE=NO, MAXBOX=NO, MINBOX=NO, MENUBOX=NO and TITLE=NULL, if any of
 these are defined there will be always some border.
 
-=item * L<CURSOR|IUP::Manual::03_Attributes/CURSOR> (non inheritable)
+=item L<CURSOR|IUP::Manual::03_Attributes/CURSOR>
+
+I<(non inheritable)>
 
 Defines a cursor
 for the dialog.
 
-=item * B<DRAGDROP> [Windows and GTK Only] (non inheritable)
+=item B<DRAGDROP>
+
+I<[Windows and GTK Only] (non inheritable)>
 
 Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
 
-=item * L<EXPAND|IUP::Manual::03_Attributes/EXPAND> (non inheritable)
+=item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
+
+I<(non inheritable)>
 
 The default
 value is "YES".
 
-=item * L<SIZE|IUP::Manual::03_Attributes/SIZE> (non inheritable)
+=item L<SIZE|IUP::Manual::03_Attributes/SIZE>
+
+I<(non inheritable)>
 
 Dialogs size.
 Additionally the following values can also be defined for width and/or
@@ -83,19 +95,19 @@ height:
 
 =over
 
-=item * "FULL": Defines the dialogs width (or height) equal to the
+=item "FULL": Defines the dialogs width (or height) equal to the
 screen's width (or height)
 
-=item * "HALF": Defines the dialogs width (or height) equal to half the
+=item "HALF": Defines the dialogs width (or height) equal to half the
 screen's width (or height)
 
-=item * "THIRD": Defines the dialogs width (or height) equal to 1/3 the
+=item "THIRD": Defines the dialogs width (or height) equal to 1/3 the
 screen's width (or height)
 
-=item * "QUARTER": Defines the dialogs width (or height) equal to 1/4
+=item "QUARTER": Defines the dialogs width (or height) equal to 1/4
 of the screen's width (or height)
 
-=item * "EIGHTH": Defines the dialogs width (or height) equal to 1/8 of
+=item "EIGHTH": Defines the dialogs width (or height) equal to 1/8 of
 the screen's width (or height)
 
 =back
@@ -105,7 +117,7 @@ not defined or when it is bigger than the B<Current> size. This
 behavior is different from a control that goes inside the dialog.
 Because of that, when SIZE or RASTERSIZE are set (changing the B<User>
 size), the B<Current> size is internally reset to 0x0, so the the
-=item * B<Natural> size can be considered when re-computing the B<Current> size
+=item B<Natural> size can be considered when re-computing the B<Current> size
 of the dialog.
 
 Values set at SIZE or RASTERSIZE attributes of a dialog are always
@@ -121,14 +133,16 @@ that limitation set SHRINK=YES.
 
 For more information see L<Layout Guide|XXX>.
 
-=item * L<TITLE|IUP::Manual::03_Attributes/TITLE> (non inheritable)
+=item L<TITLE|IUP::Manual::03_Attributes/TITLE>
+
+I<(non inheritable)>
 
 Dialogs title.
 Default: NULL. If you want to remove the title bar you must also set
 MENUBOX=NO, MAXBOX=NO and MINBOX=NO, before map. But in Motif and GTK
 it will hide it only if RESIZE=NO also.
 
-=item * L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+=item L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
 
 Simply call L<Show|IUP::Manual::02_Elements/"Show()"> or L<Hide|IUP::Manual::02_Elements/"Hide()"> for the dialog.
 
@@ -480,15 +494,19 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * L<CLOSE_CB|IUP::Manual::04_Callbacks/CLOSE_CB>
+=item L<CLOSE_CB|IUP::Manual::04_Callbacks/CLOSE_CB>
 
 Called right before the dialog is closed.
 
-=item * B<COPYDATA_CB> [Windows Only]
+=item B<COPYDATA_CB>
+
+I<[Windows Only]>
 
 Called at the first instance, when a
 second instance is running. Must set the global attribute
 SINGLEINSTANCE to be called. (since iup-3.2)
+
+B<Callback handler prototype:>
 
  sub copydata_cb_handler {
    my ($self, $cmdLine, $size) = @_;
@@ -505,15 +523,21 @@ B<$size:> size of the command line string including the null character.
 
 =back
 
-=item * L<DROPFILES_CB|IUP::Manual::04_Callbacks/DROPFILES_CB> [Windows and GTK Only]
+=item L<DROPFILES_CB|IUP::Manual::04_Callbacks/DROPFILES_CB>
+
+I<[Windows and GTK Only]>
 
 Action generated when one or more files are dropped in the dialog.
 
-=item * B<MDIACTIVATE_CB> [Windows Only]
+=item B<MDIACTIVATE_CB>
+
+I<[Windows Only]>
 
 Called when a MDI child window is
 activated. Only the MDI child receive this message. It is not called
 when the child is shown for the first time.
+
+B<Callback handler prototype:>
 
  sub mdiactivate_cb_handler {
    my ($self) = @_;
@@ -526,10 +550,14 @@ B<$self:> reference to the element (IUP::Dialog) that activated the event
 
 =back
 
-=item * B<MOVE_CB> [Windows and GTK Only]
+=item B<MOVE_CB>
+
+I<[Windows and GTK Only]>
 
 Called after the dialog was moved on
 screen. The coordinates are the same as the L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION> attribute. (since iup-3.0)
+
+B<Callback handler prototype:>
 
  sub mdiactivate_cb_handler {
    my ($self, $x, $y) = @_;
@@ -544,22 +572,26 @@ B<$x, y:> coordinates of the new position.
 
 =back
 
-=item * L<RESIZE_CB|IUP::Manual::04_Callbacks/RESIZE_CB>
+=item L<RESIZE_CB|IUP::Manual::04_Callbacks/RESIZE_CB>
 
 Action generated when the
 dialog size is changed. If returns IUP_IGNORE the dialog layout is NOT
 recalculated. 
 
-=item * L<SHOW_CB|IUP::Manual::04_Callbacks/SHOW_CB>
+=item L<SHOW_CB|IUP::Manual::04_Callbacks/SHOW_CB>
 
 Called right after the dialog is
 showed, hidden, maximized, minimized or restored from
 minimized/maximized.
 
-=item * B<TRAYCLICK_CB> [Windows and GTK Only]
+=item B<TRAYCLICK_CB>
+
+I<[Windows and GTK Only]>
 
 Called right after the mouse
 button is pressed or released over the tray icon. (GTK 2.10)
+
+B<Callback handler prototype:>
 
  sub trayclick_cb_handler {
    my ($self, $but, $pressed, $dclick) = @_;

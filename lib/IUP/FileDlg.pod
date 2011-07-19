@@ -231,6 +231,8 @@ Action generated when a file is selected. Not called when
 DIALOGTYPE=DIR. When MULTIPLEFILES=YES it is called only for one file.
 Can be used with SHOWPREVIEW=NO also. (Windows only in 2.x)
 
+B<Callback handler prototype:>
+
  sub file_cb_handler {
    my ($self, $file_name, $status) = @_;
    #...

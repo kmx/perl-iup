@@ -65,18 +65,20 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
+=item L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
 
 Transparent in all systems
 except in Motif. It will use the background color of the native parent.
 
-=item * B<CANFOCUS> (creation only) (non inheritable)
+=item B<CANFOCUS>
+
+I<(creation only) (non inheritable)>
 
 Enables the focus
 traversal of the control. In Windows the control will still get the
 focus when clicked. Default: YES. 
 
-=item * B<INVERTED>
+=item B<INVERTED>
 
 Invert the minimum and maximum positions on screen. When
 INVERTED=YES maximum is at top and left (minimum is bottom and right),
@@ -85,24 +87,26 @@ left). The initial value depends on ORIENTATION passed as parameter on
 creation, if ORIENTATION=VERTICAL default is YES, if
 ORIENTATION=HORIZONTAL default is NO. 
 
-=item * B<MAX>
+=item B<MAX>
 
 Contains the maximum valuator value. Default is "1". When
 changed the display will not be updated until VALUE is set.
 
-=item * B<MIN>
+=item B<MIN>
 
 Contains the minimum valuator value. Default is "0". When
 changed the display will not be updated until VALUE is set.
 
-=item * B<PAGESTEP>
+=item B<PAGESTEP>
 
 Controls the increment for pagedown and pageup keys. It is
 not the size of the increment. The increment size is
 "pagestep*(max-min)", so it must be 0E<lt>pagestepE<lt>1. Default is
 "0.1".
 
-=item * L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE> (non inheritable)
+=item L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>
+
+I<(non inheritable)>
 
 The initial size is 100 pixels along the major axis, and the handler normal
 size on the minor axis. If there are ticks then they are added to the
@@ -110,7 +114,9 @@ natural size on the minor axis. The handler can be smaller than the
 normal size. Set to C<undef> to allow the automatic layout use smaller
 values.
 
-=item * B<SHOWTICKS> [Windows and Motif Only]
+=item B<SHOWTICKS>
+
+I<[Windows and Motif Only]>
 
 The number of tick marks along
 the valuator trail. Minimum value is "2". Default is "0", in this case
@@ -118,13 +124,15 @@ the ticks are not shown. It can not be changed to 0 from a non zero
 value, or vice-versa, after the control is mapped. GTK does not support
 ticks.
 
-=item * B<STEP>
+=item B<STEP>
 
 Controls the increment for keyboard control and the mouse
 wheel. It is not the size of the increment. The increment size is
 "step*(max-min)", so it must be 0E<lt>stepE<lt>1. Default is "0.01".
 
-=item * B<TICKSPOS> [Windows Only] (creation only)
+=item B<TICKSPOS>
+
+I<[Windows Only] (creation only)>
 
 Allows to position the
 ticks in both sides (BOTH) or in the reverse side (REVERSE). Default:
@@ -132,14 +140,18 @@ NORMAL. The normal position for horizontal orientation is at the top of
 the control, and for vertical orientation is at the left of the
 control. In Motif, the ticks position is always normal. 
 
-=item * B<ORIENTATION> (non inheritable)
+=item B<ORIENTATION>
+
+I<(non inheritable)>
 
 Informs whether the valuator is
 "VERTICAL" or "HORIZONTAL". Vertical valuators are bottom to up, and
 horizontal valuators are left to right variations of min to max (but
 can be inverted using INVERTED). Default: "HORIZONTAL".
 
-=item * B<VALUE> (non inheritable)
+=item B<VALUE>
+
+I<(non inheritable)>
 
 Contains a number between MIN and MAX,
 indicating the valuator position. Default: "0.0".
@@ -169,9 +181,11 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * B<VALUECHANGED_CB>
+=item B<VALUECHANGED_CB>
 
 Called after the value was interactively changed by the user.
+
+B<Callback handler prototype:>
 
  sub valuechanged_cb_handler {
    my ($self) = @_;

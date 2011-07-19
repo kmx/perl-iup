@@ -23,6 +23,8 @@ Example:
  use IUP ':all';
  use OpenGL ':all';
  
+B<Callback handler prototype:>
+
  sub action_callback {
    my ($self, $x, $y) = @_;
    $self->GLMakeCurrent();
@@ -77,88 +79,94 @@ special attributes has no effect.
 
 =over
 
-=item * B<ACCUM_RED_SIZE>, B<ACCUM_GREEN_SIZE>, B<ACCUM_BLUE_SIZE> and B<ACCUM_ALPHA_SIZE>
+=item B<ACCUM_RED_SIZE>, B<ACCUM_GREEN_SIZE>, B<ACCUM_BLUE_SIZE> and B<ACCUM_ALPHA_SIZE>
 
 Indicate the number of bits for representing the
 color components in the accumulation buffer. Value 0 means the
 accumulation buffer is not necessary. Default is 0.
 
-=item * B<ALPHA_SIZE>
+=item B<ALPHA_SIZE>
 
 Indicates the number of bits for representing each
 colors alpha component (valid only for RGBA and for hardware that store
 the alpha component). Default is "0".
 
-=item * B<BUFFER>
+=item B<BUFFER>
 
 Indicates if the buffer will be single "SINGLE" or double
 "DOUBLE". Default is "SINGLE".
 
-=item * B<BUFFER_SIZE>
+=item B<BUFFER_SIZE>
 
 Indicates the number of bits for representing the color
 indices (valid only for INDEX). The system default is 8 (256-color
 palette).
 
-=item * B<COLOR>
+=item B<COLOR>
 
 Indicates the color model to be adopted: "INDEX" or "RGBA".
 Default is "RGBA".
 
-=item * B<COLORMAP> (read-only)
+=item B<COLORMAP>
+
+I<(read-only)>
 
 Returns "Colormap" in UNIX and "HPALETTE"
 in Win32, if COLOR=INDEX.
 
-=item * B<CONTEXT> (read-only)
+=item B<CONTEXT>
 
-Returns "GLXContext" in UNIX and "HGLRC" in
-Win32.
+I<(read-only)>
 
-=item * B<DEPTH_SIZE>
+Returns "GLXContext" in UNIX and "HGLRC" in Win32.
+
+=item B<DEPTH_SIZE>
 
 Indicates the number of bits for representing the I<z>
 coordinate in the z-buffer. Value 0 means the z-buffer is not
 necessary.
 
-=item * B<ERROR> (read-only)
+=item B<ERROR>
+
+I<(read-only)>
 
 If an error is found, returns a string containing
 a description of the error in English.
 
-=item * B<RED_SIZE>, B<GREEN_SIZE> and B<BLUE_SIZE>
+=item B<RED_SIZE>, B<GREEN_SIZE> and B<BLUE_SIZE>
 
 Indicate the number of
 bits for representing each color component (valid only for RGBA). The
 system default is usually 8 for each component (True Color support).
 
-=item * B<REFRESHCONTEXT> (write-only) [Windows Only]
+=item B<REFRESHCONTEXT> (write-only) [Windows Only]
 
-action attribute to
+Action attribute to
 refresh the internal device context when it is not owned by the window
-class. The IUP::Canvas of the Win32 driver will always create a window
+class. The L<IUP::Canvas> of the Win32 driver will always create a window
 with an owned DC, but GTK in Windows will not. 
 
-=item * B<STENCIL_SIZE>
+=item B<STENCIL_SIZE>
 
 Indicates the number of bits in the stencil buffer.
 Value 0 means the stencil buffer is not necessary. Default is 0.
 
-=item * B<STEREO>
+=item B<STEREO>
 
 Creates a stereo GL canvas (special glasses are required to
 visualize it correctly). Possible values: "YES" or "NO". Default: "NO".
 
-=item * B<SHAREDCONTEXT>
+=item B<SHAREDCONTEXT>
 
-name of another IUP::GLCanvas that will share its
+Name of another IUP::GLCanvas that will share its
 display lists and textures. That canvas must be mapped before this
 canvas.
 
-=item * B<VISUAL> (read-only)
+=item B<VISUAL>
 
-Returns "XVisualInfo*" in UNIX and "HDC" in
-Win32.
+I<(read-only)>
+
+Returns "XVisualInfo*" in UNIX and "HDC" in Win32.
 
 =back
 
@@ -175,7 +183,9 @@ Additionally:
 
 =over
 
-=item * L<RESIZE_CB|IUP::Manual::03_Attributes/RESIZE_CB>
+=item L<RESIZE_CB|IUP::Manual::03_Attributes/RESIZE_CB>
+
+B<Callback handler prototype:>
 
  sub resize_cb_handler {
    my ($self, $width, $heght) = @_;

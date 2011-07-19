@@ -33,25 +33,33 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * L<EXPAND|IUP::Manual::03_Attributes/EXPAND> (non inheritable)
+=item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
+
+I<(non inheritable)>
 
 The default value is "YES".
 
-=item * B<VALUE> (non inheritable)
+=item B<VALUE>
+
+I<(non inheritable)>
 
 Name identifier of the active toggle. The name is set by means of L<SetName|IUP::Manual::02_Elements/"SetName()">. 
 In Lua(XXX) you can also use the element reference directly. XXX-check-this
 When consulted if the toggles are not mapped into the native
 system the return value may be C<undef> or invalid.
 
-=item * B<VALUE_HANDLE> (non inheritable)
+=item B<VALUE_HANDLE>
+
+I<(non inheritable)>
 
 Changes the active toggle. The value
 passed must be the handle of a child contained in the radio. When
 consulted if the toggles are not mapped into the native system the
 return value may be C<undef> or invalid. 
 
-=item * B<WID> (read-only)
+=item B<WID>
+
+I<(read-only)>
 
 Returns -1 if mapped.
 

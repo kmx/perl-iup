@@ -1139,6 +1139,8 @@ xxxTODO
 
 Associates a callback to an event.
 
+B<Callback handler prototype:>
+
  sub cb_handler {
    #...
  }

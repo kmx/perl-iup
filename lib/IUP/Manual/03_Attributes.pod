@@ -148,13 +148,17 @@ BGCOLOR|../sample_results_bgcolor_indiv.html>.
 
 B<See Also:> L</IUP::Manual::03_Attributes/FGCOLOR>, L</iup_globals.html#DLGBGCOLOR>
 
-=item B<CHARSIZE> (read-only, non inheritable)
+=item B<CHARSIZE>
+
+I<(read-only, non inheritable)>
 
 Returns the average character size of the current FONT attribute. This
 is the factor used by the SIZE attribute to convert its units to
 pixels.
 
-=item B<CLIENTOFFSET> (read-only, non inheritable)
+=item B<CLIENTOFFSET>
+
+I<(read-only, non inheritable)>
 
 Returns the container offset to the B<Client> area, see the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>.
 Useful for L<IUP::Frame|IUP::Frame>, L<IUP::Tabs|IUP::Tabs> and
@@ -183,7 +187,9 @@ B<Affects:> All elements that are containers, except menus.
 B<See Also:> L<SIZE|/SIZE>, L<RASTERSIZE|/RASTERSIZE>,
 L<CLIENTSIZE|/CLIENTSIZE>, L<POSITION|iup_position.html>
 
-=item B<CLIENTSIZE> (read-only**, non inheritable)
+=item B<CLIENTSIZE>
+
+I<(read-only**, non inheritable)>
 
 Returns the container B<Current> size, in pixels, excluding the
 decorations, i.e. the size of the B<Client> area, see the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>.
@@ -206,7 +212,9 @@ RASTERSIZE by adding the decorations to the Client size. (Since iup-3.3)
 B<See Also:> L<SIZE|/SIZE>, L<RASTERSIZE|/RASTERSIZE>,
 L<CLIENTOFFSET|/CLIENTOFFSET>
 
-=item B<EXPAND> (non inheritable)
+=item B<EXPAND>
+
+I<(non inheritable)>
 
 Allows the element to expand, fulfilling empty spaces inside its
 container.
@@ -242,7 +250,9 @@ B<Affects:> All.
 
 B<See Also:> L</IUP::Manual::03_Attributes/BGCOLOR>
 
-=item B<FLOATING> (non inheritable)
+=item B<FLOATING>
+
+I<(non inheritable)>
 
 If an element has FLOATING=YES then its size and position will be
 ignored by the layout processing in L<IUP::Vbox|IUP::Vbox>, L<IUP::Hbox|IUP::Hbox> and
@@ -432,24 +442,34 @@ B<See Also:> L<IUP::MapFont|IUP::MapFont>, L<IUP::UnMapFont|IUP::UnMapFont>. xxx
 
 xxx_xxx_xxx
 
-=item B<FONTFACE> (read-only, non inheritable)
+=item B<FONTFACE>
+
+I<(read-only, non inheritable)>
 
 Returns the face name of the current FONT attribute.
 
-=item B<FONTSIZE> (non inheritable)
+=item B<FONTSIZE>
+
+I<(non inheritable)>
 
 Replaces or returns the size of the current FONT attribute.
 
-=item B<FONTSTYLE> (non inheritable)
+=item B<FONTSTYLE>
+
+I<(non inheritable)>
 
 Replaces or returns the style of the current FONT attribute.
 
-=item B<FOUNDRY> (non inheritable) [Motif Only]
+=item B<FOUNDRY>
+
+I<(non inheritable) [Motif Only]>
 
 Allows to select a foundry for the FONT being selected. Must be set
 before setting the FONT attribute.
 
-=item B<MAXSIZE> (non inheritable)
+=item B<MAXSIZE>
+
+I<(non inheritable)>
 
 Specifies the element maximum size in pixels during the layout process.
 
@@ -481,7 +501,9 @@ See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for mode de
 
 B<See Also:> L<RASTERSIZE|/RASTERSIZE>, L<MINSIZE|iup_minsize.html>
 
-=item B<MINSIZE> (non inheritable)
+=item B<MINSIZE>
+
+I<(non inheritable)>
 
 Specifies the element minimum size in pixels during the layout process.
 
@@ -513,7 +535,9 @@ See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for mode de
 
 B<See Also:> L<RASTERSIZE|/RASTERSIZE>, L<MAXSIZE|iup_maxsize.html>
 
-=item B<NAME> (non inheritable)
+=item B<NAME>
+
+I<(non inheritable)>
 
 Name of the control inside the dialog. Not releated to
 L<SetName|IUP::Manual::02_Elements/"SetName()">.
@@ -530,7 +554,9 @@ B<Affects:> All controls.
 
 B<See Also:> L<GetDialogChild|IUP::Manual::02_Elements/"GetDialogChild()">
 
-=item B<POSITION> (read-only) (non inheritable)
+=item B<POSITION>
+
+I<(read-only) (non inheritable)>
 
 The position of the element relative to the origin of the B<Client>
 area of the native parent. If you add the CLIENTOFFSET attribute of the
@@ -548,7 +574,9 @@ B<Affects:> All, except menus.
 B<See Also:> L<SIZE|/SIZE>, L<RASTERSIZE|/RASTERSIZE>,
 L<FLOATING|/FLOATING>, L<CLIENTOFFSET|/CLIENTOFFSET>
 
-=item B<RASTERSIZE> (non inheritable)
+=item B<RASTERSIZE>
+
+I<(non inheritable)>
 
 Specifies the element B<User> size, and returns the B<Current> size, in
 pixels.
@@ -592,7 +620,9 @@ See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for mode de
 
 B<See Also:> L<SIZE|/SIZE>, L<FONT|/FONT>
 
-=item B<SIZE> (non inheritable)
+=item B<SIZE>
+
+I<(non inheritable)>
 
 Specifies the element B<User> size, and returns the B<Current> size, in
 units proportional to the size of a character.
@@ -664,7 +694,9 @@ B<Affects:> All, except menus.
 B<See Also:> L<FONT|/FONT>, L<RASTERSIZE|/RASTERSIZE>,
 L<Refresh|IUP::Manual::02_Elements/"Refresh()">
 
-=item B<TIP> (non inheritable)
+=item B<TIP>
+
+I<(non inheritable)>
 
 Text to be shown when the mouse lies over the element.
 
@@ -672,7 +704,9 @@ B<Value:> Text.
 
 B<Notes:> Check also additional TIP* attributes (Windows / Motif / GTK specific). These attributes affect the TIP display.
 
-=item B<TIPBALLON> [Windows Only]
+=item B<TIPBALLON>
+
+I<[Windows Only]>
 
 The tip window will have the appearance of
 a cartoon "balloon" with rounded corners and a stem pointing to the
@@ -680,12 +714,16 @@ item.
 
 B<Default:> "NO"
 
-=item B<TIPBALLONTITLE> [Windows Only]
+=item B<TIPBALLONTITLE>
+
+I<[Windows Only]>
 
 When using the ballon format, the tip
 can also has a title in a separate area.
 
-=item B<TIPBALLONTITLEICON> [Windows Only]
+=item B<TIPBALLONTITLEICON>
+
+I<[Windows Only]>
 
 When using the ballon format, the
 tip can also has a pre-defined icon in the title area. Values can be:
@@ -695,36 +733,48 @@ tip can also has a pre-defined icon in the title area. Values can be:
  "2" - Warning icon
  "3" - Error Icon
 
-=item B<TIPBGCOLOR> [Windows and Motif Only]
+=item B<TIPBGCOLOR>
+
+I<[Windows and Motif Only]>
 
 The tip background color.
 
 B<Default:> "255 255 225" (Light Yellow)
 
-=item B<TIPDELAY> [Windows and Motif Only]
+=item B<TIPDELAY>
+
+I<[Windows and Motif Only]>
 
 Time the tip will remain visible.
 
 B<Default:> "5000"
 
-=item B<TIPFGCOLOR> [Windows and Motif Only]
+=item B<TIPFGCOLOR>
+
+I<[Windows and Motif Only]>
 
 The tip text color.
 
 B<Default:> "0 0 0" (Black)
 
-=item B<TIPFONT> [Windows and Motif Only]
+=item B<TIPFONT>
+
+I<[Windows and Motif Only]>
 
 The font for the tip text. If not
 defined the font used for the text is the same as the FONT attribute
 for the element. If the value is SYSTEM then, no font is selected and
 the default system font for the tip will be used.
 
-=item B<TIPICON> [GTK only]
+=item B<TIPICON>
+
+I<[GTK only]>
 
 Name of an image to be displayed in the TIP. See L<IUP::Image|IUP::Image>. (GTK 2.12)
 
-=item B<TIPMARKUP> [GTK only]
+=item B<TIPMARKUP>
+
+I<[GTK only]>
 
 Allows the tip string to contains pango markupcommands. Can be "YES" or "NO".
 
@@ -732,7 +782,9 @@ B<Default:> "NO"
 
 Must be set before setting the TIP attribute. (GTK 2.12)
 
-=item B<TIPRECT> (non inheritable)
+=item B<TIPRECT>
+
+I<(non inheritable)>
 
 Specifies a rectangle inside the element where the tip will be activated.
 
@@ -748,7 +800,9 @@ will trigger the tip state, the given value will be ignored. (GTK 2.12)
 
 B<Affects:> All except label, menu item and submenu item.
 
-=item B<TITLE> (non inheritable)
+=item B<TITLE>
+
+I<(non inheritable)>
 
 ElementE<rsquo>s title. It is often used to modify some static text of
 the element (which cannot be changed by the user).
@@ -781,7 +835,9 @@ B<Affects:> All elements with an associated text.
 
 B<See Also:> L<FONT|/FONT>
 
-=item B<VALUE> (non inheritable)
+=item B<VALUE>
+
+I<(non inheritable)>
 
 Affects several elements differently - that is, its behavior is element
 dependent. It is often used to change the control's main value, such as
@@ -821,7 +877,9 @@ B<Affects:>
 
 All controls that have visual representation.
 
-=item B<WID> (read-only) (non inheritable)
+=item B<WID>
+
+I<(read-only) (non inheritable)>
 
 Element identifier in the native interface system.
 
@@ -860,7 +918,9 @@ B<Value:> Integer number.
 
 B<Affects:> All controls that have visual representation.
 
-=item B<ZORDER> (write-only, non inheritable)
+=item B<ZORDER>
+
+I<(write-only, non inheritable)>
 
 Change the ZORDER of a dialog or control. It is commonly used for
 dialogs, but it can be used to control the z-order of controls in a
@@ -901,7 +961,9 @@ B<Affects:> IUP::Dialog
 
 B<See Also:> L<NATIVEPARENT|/NATIVEPARENT>, L<PARENTDIALOG|/PARENTDIALOG>, L<RASTERSIZE|/RASTERSIZE>
 
-=item B<CURSOR> (non inheritable)
+=item B<CURSOR>
+
+I<(non inheritable)>
 
 Defines the element's cursor.
 
@@ -1036,7 +1098,9 @@ B<Affects:> L<IUP::Dialog|IUP::Dialog>
 
 B<See Also:> L<IUP::Image|IUP::Image>
 
-=item B<MASK> (non inheritable)
+=item B<MASK>
+
+I<(non inheritable)>
 
 Defines a mask that will filter interactive text input. See also related attributes MASKCASEI, MASKINT, MASKFLOAT.
 
@@ -1146,7 +1210,9 @@ B<Examples:>
 B<Affects:> L<IUP::Text|IUP::Text>,L<IUP::Multiline|IUP::Multiline>,
 L<IUP::List|IUP::List> and L<IUP::Matrix|IUP::Matrix>
 
-=item B<MASKCASEI> (non inheritable)
+=item B<MASKCASEI>
+
+I<(non inheritable)>
 
 If YES, will turn the filter case insensitive.
 
@@ -1157,7 +1223,9 @@ Must be set before MASK.
 B<Affects:> L<IUP::Text|IUP::Text>,L<IUP::Multiline|IUP::Multiline>,
 L<IUP::List|IUP::List> and L<IUP::Matrix|IUP::Matrix>
 
-=item B<MASKFLOAT> (non inheritable, write only)
+=item B<MASKFLOAT>
+
+I<(non inheritable, write only)>
 
 Defines a floating point mask with limits. Format: "%f:%f" ("min:max").
 It will replace MASK.
@@ -1165,7 +1233,9 @@ It will replace MASK.
 B<Affects:> L<IUP::Text|IUP::Text>,L<IUP::Multiline|IUP::Multiline>,
 L<IUP::List|IUP::List> and L<IUP::Matrix|IUP::Matrix>
 
-=item B<MASKINT> (non inheritable, write only)
+=item B<MASKINT>
+
+I<(non inheritable, write only)>
 
 Defines an integer mask with limits. Format: "%d:%d" ("min:max"). It
 will replace MASK.
@@ -1241,7 +1311,9 @@ B<Affects:> L<IUP::Canvas|IUP::Canvas>
 
 B<See Also:> L<SCROLLBAR|/SCROLLBAR>
 
-=item B<SCROLLBAR> (creation only)
+=item B<SCROLLBAR>
+
+I<(creation only)>
 
 Associates a horizontal and/or vertical scrollbar to the element.
 
@@ -1400,13 +1472,17 @@ B<See Also:> L<SCROLLBAR|/SCROLLBAR>
 
 =over
 
-=item B<COPYRIGHT> (read-only)
+=item B<COPYRIGHT>
+
+I<(read-only)>
 
 Returns the IUP's copyright.
 
 Ex: "Copyright (C) 1994-2004 Tecgraf/PUC-Rio and PETROBRAS S/A".
 
-=item B<DRIVER> (read-only)
+=item B<DRIVER>
+
+I<(read-only)>
 
 Informs the current driver being used.
 
@@ -1423,7 +1499,9 @@ B<Default:> "ENGLISH"
 
 Can also be set by L<SetLanguage|IUP/"SetLanguage()">.
 
-=item B<VERSION> (read-only)
+=item B<VERSION>
+
+I<(read-only)>
 
 Returns the name of IUP's version.
 
@@ -1437,13 +1515,17 @@ referring to corrections only. Ex.: "1.7.2".
 
 =over
 
-=item B<AUTOREPEAT> [Motif Only]
+=item B<AUTOREPEAT>
+
+I<[Motif Only]>
 
 Turns on/off ("YES" or "NO") the autorepeat of keyboard keys in the
 whole system - may be used as an optimization in high performance
 applications.
 
-=item B<CONTROLKEY> (read-only)
+=item B<CONTROLKEY>
+
+I<(read-only)>
 
 Returns the state of the Control keys (left and right). Possible
 values: "ON" or "OFF".
@@ -1454,19 +1536,25 @@ The cursor position in absolute coordinates relative to the upper left
 corner of the screen. Accept values in the format "XB<x>Y" (in C
 "%dx%d), example "200x200". (since GTK 2.8)
 
-=item B<KEY> (write-only)
+=item B<KEY>
+
+I<(write-only)>
 
 Sends a key press and a key release messages to the element with the
 focus. The value is a key code. See the L<Keyboard Codes|key.html>
 table for a list of the possible values.
 
-=item B<KEYPRESS> (write-only)
+=item B<KEYPRESS>
+
+I<(write-only)>
 
 Sends a key press message to the element with the focus. The value is a
 key code. See the L<Keyboard Codes|key.html> table for a list of the
 possible values.
 
-=item B<KEYRELEASE> (write-only)
+=item B<KEYRELEASE>
+
+I<(write-only)>
 
 Sends a key release message to the element with the focus. The value is
 a key code. See the L<Keyboard Codes|key.html> table for a list of the
@@ -1481,7 +1569,9 @@ Possible values: "YES" or "NO".
 
 B<Default:> "NO"
 
-=item B<MODKEYSTATE> (read-only)
+=item B<MODKEYSTATE>
+
+I<(read-only)>
 
 Returns the state of the keyboard modifier keys: Shift, Ctrl, Alt and
 sYs(Win/Apple). In the format of 4 characters: "SCAY". When not pressed
@@ -1496,12 +1586,16 @@ of the screen. Accept values in the format "XB<x>Y button state" (in C
 IUP_BUTTON1,... definitions. B<state> can be 1=pressed, or 0=released.
 The cursor position is always updated. (since GTK 2.8)
 
-=item B<SHIFTKEY> (read-only)
+=item B<SHIFTKEY>
+
+I<(read-only)>
 
 Returns the state of the Shit keys (left and right). Possible values:
 "ON" or "OFF".
 
-=item B<SINGLEINSTANCE> [Windows Only]
+=item B<SINGLEINSTANCE>
+
+I<[Windows Only]>
 
 Restricts the number of instances of the application by using a name to
 identify it. The value must also be a partial match to the title of a
@@ -1512,7 +1606,9 @@ L<IUP->Open|IUP/"Open">, set SINGLEINSTANCE and then consult its value, if C<und
 abort the second instance by calling L<IUP->Close|IUP/"Close"> and returning from
 I<main>.
 
-=item B<UTF8AUTOCONVERT> [GTK Only]
+=item B<UTF8AUTOCONVERT>
+
+I<[GTK Only]>
 
 GTK uses UTF-8 as its charset for all displayed text, so IUP will
 automatically convert all strings to (SetAttribute) and from
@@ -1530,30 +1626,42 @@ the string uses the ISO8859-1 charset.
 
 =over
 
-=item B<COMPUTERNAME> (read-only)
+=item B<COMPUTERNAME>
+
+I<(read-only)>
 
 Returns the hostname.
 
-=item B<GTKDEVVERSION> (read-only) [GTK Only]
+=item B<GTKDEVVERSION>
+
+I<(read-only) [GTK Only]>
 
 Returns the development version of the GTK toolkit. This is the version
 at the time the IUP library was compiled.
 
-=item B<GTKVERSION> (read-only) [GTK Only]
+=item B<GTKVERSION>
+
+I<(read-only) [GTK Only]>
 
 Returns the run time version of the GTK toolkit. This is the version
 being used at the time of the IUP::Open function was called by the
 application.
 
-=item B<MOTIFNUMBER> (read-only) [Motif Only]
+=item B<MOTIFNUMBER>
+
+I<(read-only) [Motif Only]>
 
 Returns the number of the Motif Version if full form, e.x: 2.2.3 = "2203".
 
-=item B<MOTIFVERSION> (read-only) [Motif Only]
+=item B<MOTIFVERSION>
+
+I<(read-only) [Motif Only]>
 
 Returns the version of the run time Motif.
 
-=item B<SYSTEM> (read-only)
+=item B<SYSTEM>
+
+I<(read-only)>
 
 Informs the current operating system. On UNIX, it is equivalent to the
 command "uname -s" (sysname). On Windows, it identifies if you are on
@@ -1587,11 +1695,15 @@ Windows 2000, Windows XP or Windows Vista. Some known names:
 
 =back
 
-=item B<SYSTEMLANGUAGE> (read-only)
+=item B<SYSTEMLANGUAGE>
+
+I<(read-only)>
 
 Return respectively a text with a description of the system language.
 
-=item B<SYSTEMVERSION> (read-only)
+=item B<SYSTEMVERSION>
+
+I<(read-only)>
 
 Informs the current operating system version number.
 
@@ -1599,15 +1711,21 @@ On UNIX, it is equivalent to the command "uname -r" (release). On
 Windows, it identifies the system version number and service pack
 version. On MacOSX is system version.
 
-=item B<USERNAME> (read-only)
+=item B<USERNAME>
+
+I<(read-only)>
 
 Returns the user logged in.
 
-=item B<XSERVERVENDOR> (read-only) [GTK and Motif Only]
+=item B<XSERVERVENDOR>
+
+I<(read-only) [GTK and Motif Only]>
 
 X-Windows Server Vendor string.
 
-=item B<XVENDORRELEASE> (read-only) [GTK and Motif Only]
+=item B<XVENDORRELEASE>
+
+I<(read-only) [GTK and Motif Only]>
 
 X-Windows Server Vendor release number.
 
@@ -1617,24 +1735,32 @@ X-Windows Server Vendor release number.
 
 =over
 
-=item B<FULLSIZE> (read-only)
+=item B<FULLSIZE>
+
+I<(read-only)>
 
 Returns the full screen size in pixels.
 
 String in the C<< "<width>x<height>" >> format (e.g. C<"800x600">).
 
-=item B<MONITORSINFO> (read-only) [Win32 and GTK Only]
+=item B<MONITORSINFO>
+
+I<(read-only) [Win32 and GTK Only]>
 
 Returns the position and size in pixels of all monitors. Each monitor
 information is terminated by a C<"\n"> character.
 
 String in the C<< "<x> <y> <width> <height>\n<x> <y> <width> <height>\n..." >> format.
 
-=item B<SCREENDEPTH> (read-only)
+=item B<SCREENDEPTH>
+
+I<(read-only)>
 
 Returns the screen depth in bits per pixel.
 
-=item B<SCREENSIZE> (read-only)
+=item B<SCREENSIZE>
+
+I<(read-only)>
 
 Returns the screen size in pixels available for dialogs, i.e. not
 including menu bars, task bars, etc. In Motif has the same value as the
@@ -1643,13 +1769,17 @@ monitors.
 
 String in the C<< "<width>x<height>" >> format (e.g. C<"300x400">).
 
-=item B<TRUECOLORCANVAS> (read-only)
+=item B<TRUECOLORCANVAS>
+
+I<(read-only)>
 
 Indicates if the display allows creating TrueColor (E<gt> 8bpp)
 L<IUP::Canvas|IUP::Canvas> controls, even if PseudoColor is the default, i.e. even if
 SCREENDEPTHE<lt>=8 . Returns "YES" or "NO". Usefull in Motif.
 
-=item B<VIRTUALSCREEN> (read-only)  [Win32 and GTK Only]
+=item B<VIRTUALSCREEN>
+
+I<(read-only)  [Win32 and GTK Only]>
 
 Returns the virtual screen position and size in pixels. It is the
 virtual space defined by all monitors in the system.
@@ -1662,25 +1792,35 @@ String in the C<< "<x> <y> <width> <height>" >> format (e.g. C<"100 50 800 600">
 
 =over
 
-=item B<APPSHELL> (read-only) [Motif Only]
+=item B<APPSHELL>
+
+I<(read-only) [Motif Only]>
 
 Returns the shell Widget created by XtOpenApplication.
 
-=item B<DLL_HINSTANCE> [Win32 Only]
+=item B<DLL_HINSTANCE>
+
+I<[Win32 Only]>
 
 Changes and returns a handle (HINSTANCE) that identifies the DLL where
 resources are stored.
 
-=item B<HINSTANCE> (read-only) [Win32 Only]
+=item B<HINSTANCE>
+
+I<(read-only) [Win32 Only]>
 
 Returns a handle (HINSTANCE) that identifies the application in the
 native system.
 
-=item B<XDISPLAY> (read-only) [GTK and Motif Only]
+=item B<XDISPLAY>
+
+I<(read-only) [GTK and Motif Only]>
 
 Returns the X-Windows Display.
 
-=item B<XSCREEN> (read-only) [GTK and Motif Only]
+=item B<XSCREEN>
+
+I<(read-only) [GTK and Motif Only]>
 
 Returns the X-Windows Screen.
 
