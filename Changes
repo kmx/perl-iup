@@ -2,7 +2,8 @@
 
 =head2 NEXT - 0.001_02
 
- - XXX
+ - pod hacking
+ - reverting IUP::Plot back to IUP::PPlot
 
 =head2 19/07/2011 - 0.001_01
 

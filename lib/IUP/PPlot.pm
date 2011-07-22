@@ -1,4 +1,4 @@
-package IUP::Plot;
+package IUP::PPlot;
 use strict;
 use warnings;
 use base 'IUP::Internal::Element';
@@ -6,7 +6,7 @@ use IUP::Internal::LibraryIup;
 use Carp;
 
 sub BEGIN {
-  #warn "[DEBUG] IUP::Plot::BEGIN() started\n";
+  #warn "[DEBUG] IUP::PPlot::BEGIN() started\n";
   IUP::Internal::LibraryIup::_IupPPlotOpen();
 }
 
@@ -21,14 +21,14 @@ sub PlotBegin {
   #iup.PlotBegin(ih: ihandle, strXdata: number) [in Lua]
   my ($self, $strXdata) = @_;
   $self->{'!int!last_begin_param'} = $strXdata;
-  return IUP::Internal::LibraryIup::_IupPlotBegin($self->ihandle, $strXdata);
+  return IUP::Internal::LibraryIup::_IupPPlotBegin($self->ihandle, $strXdata);
 }
 
 sub PlotEnd {
   #int IupPlotEnd(Ihandle* ih); [in C]
   #iup.PlotEnd(ih: ihandle) -> (index: number) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupPlotEnd($self->ihandle);
+  return IUP::Internal::LibraryIup::_IupPPlotEnd($self->ihandle);
 }
 
 sub PlotAdd {
@@ -36,7 +36,7 @@ sub PlotAdd {
   my $self = shift;
   my $c = scalar @_;
   if ( $c>=2 && ($c%2)==0 ) {
-    return IUP::Internal::LibraryIup::_IupPlotAdd($self->ihandle, $self->{'!int!last_begin_param'}, @_);
+    return IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $self->{'!int!last_begin_param'}, @_);
   }
   else {
     carp "Warning: wrong number of parameters";
@@ -46,7 +46,7 @@ sub PlotAdd {
 sub PlotAddPoints {
   # params: ($index, \@xylist)
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupPlotAddPoints($self->ihandle, $self->{'!int!last_begin_param'}, @_);
+  return IUP::Internal::LibraryIup::_IupPPlotAddPoints($self->ihandle, $self->{'!int!last_begin_param'}, @_);
 }
 
 sub PlotInsert {
@@ -56,7 +56,7 @@ sub PlotInsert {
   my $sample_index = shift;
   my $c = scalar @_;
   if ( $c>=2 && ($c%2)==0 ) {
-    return IUP::Internal::LibraryIup::_IupPlotInsert($self->ihandle, $self->{'!int!last_begin_param'},
+    return IUP::Internal::LibraryIup::_IupPPlotInsert($self->ihandle, $self->{'!int!last_begin_param'},
                                                       $index, $sample_index, @_);
   }
   else {
@@ -67,14 +67,14 @@ sub PlotInsert {
 sub PlotInsertPoints {
   # params: ($index, $sample_index, \@xylist)
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupPlotInsertPoints($self->ihandle, $self->{'!int!last_begin_param'}, @_);
+  return IUP::Internal::LibraryIup::_IupPPlotInsertPoints($self->ihandle, $self->{'!int!last_begin_param'}, @_);
 }
 
 sub PlotTransform {
   #void IupPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy); [in C]
   #iup.PlotTransform(ih: ihandle, x, y: number) -> (ix, iy: number) [in Lua]
   my ($self, $x, $y) = @_;
-  my ($new_x, $new_y) = return IUP::Internal::LibraryIup::_IupPlotTransform($self->ihandle, $x, $y);
+  my ($new_x, $new_y) = return IUP::Internal::LibraryIup::_IupPPlotTransform($self->ihandle, $x, $y);
   return ($new_x, $new_y);
 }
 
@@ -82,7 +82,7 @@ sub PlotPaintTo {
   #void IupPlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C]
   #iup.PlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
   my ($self, $cnv) = @_;
-  return IUP::Internal::LibraryIup::_IupPlotPaintTo($self->ihandle, $cnv->cnvhandle);
+  return IUP::Internal::LibraryIup::_IupPPlotPaintTo($self->ihandle, $cnv->cnvhandle);
 }
 
 1;

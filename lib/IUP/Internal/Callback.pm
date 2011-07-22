@@ -96,7 +96,7 @@ my $cb_table = {
     MENUCLOSE_CB => \&_init_cb_MENUCLOSE_CB_,
     OPEN_CB => \&_init_cb_OPEN_CB_,
   },
-  'IUP::Plot' => {
+  'IUP::PPlot' => {
     DELETEBEGIN_CB => \&_init_cb_DELETEBEGIN_CB_,
     DELETEEND_CB => \&_init_cb_DELETEEND_CB_,
     DELETE_CB => \&_init_cb_DELETE_CB_iiff,

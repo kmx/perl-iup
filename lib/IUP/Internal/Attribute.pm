@@ -371,7 +371,7 @@ my $attrib_table = {
     'IUNKNOWN' => 1,
     'PROGID' => 1,
   },
-  'IUP::Plot' => {
+  'IUP::PPlot' => {
     'AXS_XAUTOMAX' => 1,
     'AXS_XAUTOMIN' => 1,
     'AXS_XAUTOTICK' => 1,

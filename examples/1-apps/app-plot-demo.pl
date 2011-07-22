@@ -331,7 +331,7 @@ my $bt2 = IUP::Button->new( TITLE=>"Autofocus", ACTION=>\&bt2_cb );
 my $vboxl = IUP::Vbox->new( child=>[$f1, $f2, $lbl1, $tgg3, $tgg4, $lbl2, $tgg5, $lbl3, $bt1, $bt2], GAP=>"4", EXPAND=>"NO" );
 
 ### right panel: plot control
-$mainplot = IUP::Plot->new();
+$mainplot = IUP::PPlot->new();
 $mainfunc = IUP::Text->new( VALUE=>'sin($x)', VISIBLECOLUMNS=>50, VISIBLELINES=>3, MULTILINE=>'YES', EXPAND=>'YES');
 
 ### the main dialog

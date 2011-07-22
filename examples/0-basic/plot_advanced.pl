@@ -552,7 +552,7 @@ my ($dlg, $vboxl, $hbox, $lbl1, $lbl2, $lbl3, $bt1, $boxinfo, $boxdial1, $boxdia
 
 # create plots
 for (my $ii=0; $ii<$MAXPLOT; $ii++) {
-  $plot[$ii] = IUP::Plot->new();
+  $plot[$ii] = IUP::PPlot->new();
 }
 
 # left panel: plot control

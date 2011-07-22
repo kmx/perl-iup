@@ -22,7 +22,7 @@ However the standard PPlot distribution source code was changed for iup_pplot li
 
 [% h.create %]
 
- $pplot = IUP::Plot->new( TITLE=>"Simple Data", GRID=>"YES" );
+ $pplot = IUP::PPlot->new( TITLE=>"Simple Data", GRID=>"YES" );
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
@@ -34,7 +34,7 @@ Each plot can contain 2 B<axis> (X and Y), a B<title>, a B<legend>
 B<box>, a B<grid>, a B<dataset> B<area> and as many B<datasets> you
 want.
 
-Each data set is added using the L<IUP::PlotAdd |IUP::PlotAdd> function. All other plot
+Each data set is added using the L<IUP::PPlotAdd |IUP::PPlotAdd> function. All other plot
 parameters are configured by attributes.
 
 If no attribute is set, the default values were selected to best
@@ -139,7 +139,7 @@ Adds a 2D dataset to the plot and returns the dataset B<index>. The
 data set can be empty. Redraw is NOT done until the REDRAW attribute is
 set. Also it will change the current dataset index to the return value.
 You can only set attributes of a dataset AFTER you added the dataset.
-Can only be called if L<PlotBegin|IUP::Plot/"PlotBegin()"> was called. Whenever you create a
+Can only be called if L<PlotBegin|IUP::PPlot/"PlotBegin()"> was called. Whenever you create a
 dataset all its "DS_*" attributes will be set to the default values.
 Notice that DS_MODE must be set before other "DS_*" attributes.
 
@@ -707,7 +707,7 @@ Actions generated before and after the
 redraw operation. Predraw can be used to draw a different background
 and Postdraw can be used to draw additional information in the plot.
 Predraw has no restrictions, but Postdraw is clipped to the dataset
-area. To position elements in plot units, use the L<PlotTransform|IUP::Plot/"PlotTransform()">
+area. To position elements in plot units, use the L<PlotTransform|IUP::PPlot/"PlotTransform()">
 function.
 
 [%h.at_handler%]
@@ -749,7 +749,7 @@ L<K_ANY|[%m.cb%]/K_ANY>, L<HELP_CB|[%m.cb%]/HELP_CB>
 [% h.examples %]
 
 [% IF examples.iupplot %]
-The element B<IUP::Plot> is used in the following sample scripts:
+The element B<IUP::PPlot> is used in the following sample scripts:
 
 =over
 [%FOREACH e IN examples.iupplot %]

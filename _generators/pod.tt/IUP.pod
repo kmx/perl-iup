@@ -45,7 +45,7 @@ perl GUI toolkits. Good starting points are L<IUP|IUP> and L<[%m.intro%]>.
 
 =item * B<Advanced Visualization Elements:> Thanks to IUP'S academic origin
 it has several fairly advanced GUI elemts handy for visualisation of scientific
-data (L<IUP::Plot|IUP::Plot>, L<IUP::Matrix|IUP::Matrix>) and 2D
+data (L<IUP::PPlot|IUP::PPlot>, L<IUP::Matrix|IUP::Matrix>) and 2D
 drawing (L<IUP::Canvas|IUP::Canvas>).
 
 =back
@@ -299,7 +299,7 @@ L<IUP::Matrix|IUP::Matrix>,
 L<IUP::Menu|IUP::Menu>,
 L<IUP::Normalizer|IUP::Normalizer>,
 L<IUP::Ole|IUP::Ole>,
-L<IUP::Plot|IUP::Plot>,
+L<IUP::PPlot|IUP::PPlot>,
 L<IUP::ProgressBar|IUP::ProgressBar>,
 L<IUP::Radio|IUP::Radio>,
 L<IUP::Sbox|IUP::Sbox>,

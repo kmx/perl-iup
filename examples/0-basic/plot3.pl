@@ -1,11 +1,11 @@
-# IUP::Plot example
+# IUP::PPlot example
 
 use strict;
 use warnings;
 
 use IUP ':all';
 
-my $plot = IUP::Plot->new(
+my $plot = IUP::PPlot->new(
              TITLE        => "Sine and Cosine",
              MARGINBOTTOM => 40,
              MARGINLEFT   => 40,

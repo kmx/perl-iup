@@ -1922,7 +1922,7 @@ _IupPPlot()
 #### Original C function from <iup_pplot.h>
 # void IupPlotBegin(Ihandle *ih, int strXdata);
 void
-_IupPlotBegin(ih,strXdata)
+_IupPPlotBegin(ih,strXdata)
 		Ihandle* ih;
 		int strXdata;
 	CODE:
@@ -1933,7 +1933,7 @@ _IupPlotBegin(ih,strXdata)
 #### Original C function from <iup_pplot.h>
 # int IupPlotEnd(Ihandle *ih);
 int
-_IupPlotEnd(ih)
+_IupPPlotEnd(ih)
 		Ihandle* ih;
 	CODE:
 #ifdef HAVELIB_IUP_PPLOT
@@ -1948,7 +1948,7 @@ _IupPlotEnd(ih)
 # void IupPlotAdd(Ihandle *ih, float x, float y);
 # void IupPlotAddStr(Ihandle *ih, const char* x, float y);
 void
-_IupPlotAdd(ih,xaxis,...)
+_IupPPlotAdd(ih,xaxis,...)
 		Ihandle* ih;
 		int xaxis;
 	INIT:
@@ -1970,7 +1970,7 @@ _IupPlotAdd(ih,xaxis,...)
 # void IupPlotAddPoints(Ihandle* ih, int index, float *x, float *y, int count);
 # void IupPlotAddStrPoints(Ihandle* ih, int index, const char** x, float* y, int count);
 void
-_IupPlotAddPoints(ih,xaxis,index,xylist)
+_IupPPlotAddPoints(ih,xaxis,index,xylist)
 		Ihandle* ih;
 		int xaxis;
 		int index;
@@ -2011,7 +2011,7 @@ _IupPlotAddPoints(ih,xaxis,index,xylist)
 # void IupPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
 # void IupPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y);
 void
-_IupPlotInsert(ih,xaxis,index,sample_index,...)
+_IupPPlotInsert(ih,xaxis,index,sample_index,...)
 		Ihandle* ih;
 		int xaxis;
 		int index;
@@ -2037,7 +2037,7 @@ _IupPlotInsert(ih,xaxis,index,sample_index,...)
 # void IupPlotInsertStrPoints(Ihandle* ih, int index, int sample_index, const char** x, float* y, int count);
 # void IupPlotInsertPoints(Ihandle* ih, int index, int sample_index, float *x, float *y, int count);
 void
-_IupPlotInsertPoints(ih,xaxis,index,sample_index,xylist)
+_IupPPlotInsertPoints(ih,xaxis,index,sample_index,xylist)
 		Ihandle* ih;
 		int xaxis;
 		int index;
@@ -2077,7 +2077,7 @@ _IupPlotInsertPoints(ih,xaxis,index,sample_index,xylist)
 #### Original C function from <iup_pplot.h>
 # void IupPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy);
 void
-_IupPlotTransform(ih,x,y);
+_IupPPlotTransform(ih,x,y);
 		Ihandle* ih;
 		float x;
 		float y
@@ -2094,7 +2094,7 @@ _IupPlotTransform(ih,x,y);
 #### Original C function from <iup_pplot.h>
 # void IupPlotPaintTo(Ihandle *ih, void *cnv);
 void
-_IupPlotPaintTo(ih,cnv)
+_IupPPlotPaintTo(ih,cnv)
 		Ihandle *ih;
 		void *cnv;
 	CODE:

@@ -240,7 +240,6 @@ sub HasValidClassName {
   $c = 'image' if $c eq 'imagergb';
   $c = 'image' if $c eq 'imagergba';
   $c = 'canvasgl' if $c eq 'glcanvas';
-  $c = 'plot' if $c eq 'pplot';
   $p = 'iup::dialog' if ($p eq 'iup::layoutdialog') && ($c eq 'dialog'); #xxxCHECKLATER seems like a bug
   return lc($p) eq "iup::$c" ? 1 : 0;
 }

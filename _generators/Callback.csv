@@ -60,17 +60,17 @@ IUP::Matrix;VALUE_CB;ii;char*;Ihandle* ih,int lin,int col
 IUP::Matrix;VALUE_EDIT_CB;iis;int;Ihandle* ih,int lin,int col,char* newval
 IUP::Menu;MENUCLOSE_CB;;int;Ihandle* ih
 IUP::Menu;OPEN_CB;;int;Ihandle* ih
-IUP::Plot;DELETEBEGIN_CB;;int;Ihandle* ih
-IUP::Plot;DELETEEND_CB;;int;Ihandle* ih
-IUP::Plot;DELETE_CB;iiff;int;Ihandle* ih,int index,int sample_index,float x,float y
-IUP::Plot;EDITBEGIN_CB;;int;Ihandle* ih
-IUP::Plot;EDITEND_CB;;int;Ihandle* ih
-IUP::Plot;EDIT_CB;iiffFF;int;Ihandle* ih,int index,int sample_index,float x,float y,float* new_x,float* new_y
-IUP::Plot;POSTDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
-IUP::Plot;PREDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
-IUP::Plot;SELECTBEGIN_CB;;int;Ihandle* ih
-IUP::Plot;SELECTEND_CB;;int;Ihandle* ih
-IUP::Plot;SELECT_CB;iiffi;int;Ihandle* ih,int index,int sample_index,float x,float y,int select
+IUP::PPlot;DELETEBEGIN_CB;;int;Ihandle* ih
+IUP::PPlot;DELETEEND_CB;;int;Ihandle* ih
+IUP::PPlot;DELETE_CB;iiff;int;Ihandle* ih,int index,int sample_index,float x,float y
+IUP::PPlot;EDITBEGIN_CB;;int;Ihandle* ih
+IUP::PPlot;EDITEND_CB;;int;Ihandle* ih
+IUP::PPlot;EDIT_CB;iiffFF;int;Ihandle* ih,int index,int sample_index,float x,float y,float* new_x,float* new_y
+IUP::PPlot;POSTDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
+IUP::PPlot;PREDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
+IUP::PPlot;SELECTBEGIN_CB;;int;Ihandle* ih
+IUP::PPlot;SELECTEND_CB;;int;Ihandle* ih
+IUP::PPlot;SELECT_CB;iiffi;int;Ihandle* ih,int index,int sample_index,float x,float y,int select
 IUP::Spin;SPIN_CB;i;int;Ihandle* ih,int inc
 IUP::SpinBox;SPIN_CB;i;int;Ihandle* ih,int inc
 IUP::Submenu;HIGHLIGHT_CB;;int;Ihandle* ih
