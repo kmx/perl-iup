@@ -57,7 +57,7 @@ my $builder = $class->new(
   },
   build_requires       => { # need to have for running: ./Build (install|test)
     'Module::Build'        => 0,
-    'Alien::IUP'           => 0.115,
+    'Alien::IUP'           => 0.300,
     'Test::More'           => 0,
     'Carp'                 => 0,
     'constant'             => 0,

@@ -64,6 +64,8 @@ my @ex_basic = qw(
 
   IUP_PRIMARY
   IUP_SECONDARY
+  IUP_RECBINARY
+  IUP_RECTEXT
 );
 
 my @ex_keys = qw(
@@ -723,12 +725,9 @@ use constant IUP_MINIMIZE      => 2;
 use constant IUP_MAXIMIZE      => 3;
 use constant IUP_HIDE          => 4;
 
-# Pre-Defined Masks
-use constant IUP_MASK_FLOAT    => "[+/-]?(/d+/.?/d*|/./d+)";
-use constant IUP_MASK_UFLOAT   => "(/d+/.?/d*|/./d+)";
-use constant IUP_MASK_EFLOAT   => "[+/-]?(/d+/.?/d*|/./d+)([eE][+/-]?/d+)?";
-use constant IUP_MASK_INT      => "[+/-]?/d+";
-use constant IUP_MASK_UINT     => "/d+";
+# record/play constants
+use constant IUP_RECBINARY => 0;
+use constant IUP_RECTEXT   => 1;
 
 # Pre-Defined Colors
 use constant IUP_RED           => "255 0 0";
@@ -737,6 +736,13 @@ use constant IUP_BLUE          => "0 0 255";
 use constant IUP_BLACK         => "0 0 0";
 use constant IUP_WHITE         => "1 1 1";
 use constant IUP_YELLOW        => "1 1 0";
+
+# Pre-Defined Masks
+use constant IUP_MASK_FLOAT    => "[+/-]?(/d+/.?/d*|/./d+)";
+use constant IUP_MASK_UFLOAT   => "(/d+/.?/d*|/./d+)";
+use constant IUP_MASK_EFLOAT   => "[+/-]?(/d+/.?/d*|/./d+)([eE][+/-]?/d+)?";
+use constant IUP_MASK_INT      => "[+/-]?/d+";
+use constant IUP_MASK_UINT     => "/d+";
 
 # Used by IupColorbar
 use constant IUP_PRIMARY   => -1;
