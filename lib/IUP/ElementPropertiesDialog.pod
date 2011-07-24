@@ -11,6 +11,14 @@ the properties of an element in run time. It is a standard L<IUP::Dialog|IUP::Di
 constructed with other IUP elements. The dialog can be shown with any
 of the show functions L<Show|IUP::Manual::02_Elements/"Show()">, L<ShowXY|IUP::Manual::02_Elements/"ShowXY()"> or L<Popup|IUP::Manual::02_Elements/"Popup()">.
 
+=begin HTML
+
+<p>
+<img src="http://kmx.github.com/perl-iup/img-3.5/dlg/layoutdlg2.png">
+</p>
+
+=end HTML
+
 Any existent element can be edited. It does not need to be mapped on
 the native system nor visible.
 

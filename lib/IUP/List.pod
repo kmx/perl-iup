@@ -16,21 +16,30 @@ down case is called Combo Box.
 <p>
   <table border="1">
     <tbody align="center">
+      <col style="background-color: rgb(239, 235, 231);">
+      <col style="background-color: rgb(173, 177, 194);">
       <tr>
-        <th style="text-align: center;">GTK</th>
-        <th style="text-align: center;">Motif</th>
+        <th>GTK</th>
+        <th>Motif</th>
       </tr>
       <tr>
-        <td style="background-color: rgb(239, 235, 231);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_gtk.png"></td>
-        <td style="background-color: rgb(173, 177, 194);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_mot.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_gtk.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_mot.png"></td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <table border="1">
+    <tbody align="center">
+      <col style="background-color: rgb(212, 208, 200);">
+      <col style="background-color: rgb(236, 233, 216);">
+      <tr>
+        <th>Windows Classic</th>
+        <th>Windows XP Style</th>
       </tr>
       <tr>
-        <th style="text-align: center;">Windows<br>Classic</th>
-        <th style="text-align: center;">Windows<br>XP Style</th>
-      </tr>
-      <tr>
-        <td style="background-color: rgb(212, 208, 200);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_win2k.png"></td>
-        <td style="background-color: rgb(236, 233, 216);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_winxp.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_win2k.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_winxp.png"></td>
       </tr>
     </tbody>
   </table>
@@ -633,23 +642,23 @@ The element B<IUP::List> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/cbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_05/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_06/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=item * L<0-basic/layoutdialog.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_05/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_06/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/list1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_05/examples/0-basic/list1.pl> - IUP::List example
+=item * L<0-basic/list1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_06/examples/0-basic/list1.pl> - IUP::List example
 
-=item * L<0-basic/list2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_05/examples/0-basic/list2.pl> - IUP::List example
+=item * L<0-basic/list2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_06/examples/0-basic/list2.pl> - IUP::List example
 
-=item * L<0-basic/text_font.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_05/examples/0-basic/text_font.pl> - IUP::Text (font) example
+=item * L<0-basic/text_font.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_06/examples/0-basic/text_font.pl> - IUP::Text (font) example
 
-=item * L<0-basic/zbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_05/examples/0-basic/zbox.pl> - IUP::Zbox example
+=item * L<0-basic/zbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_06/examples/0-basic/zbox.pl> - IUP::Zbox example
 
-=item * L<1-apps/app-mdi.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_05/examples/1-apps/app-mdi.pl> - IUP app example
+=item * L<1-apps/app-mdi.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_06/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_05/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_06/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-=item * L<1-apps/app-sample2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_05/examples/1-apps/app-sample2.pl> - xxxTODO xxx some better callback
+=item * L<1-apps/app-sample2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_06/examples/1-apps/app-sample2.pl> - xxxTODO xxx some better callback
 
 =back 
 

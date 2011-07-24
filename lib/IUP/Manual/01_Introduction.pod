@@ -118,8 +118,20 @@ There are two functions to change them:
 =item * L<SetAttribute|IUP::Manual::02_Elements/"SetAttribute()"> stores only a pointer to the string and does
 not duplicate it.
 
-=item * L<StoreAtribute|xxx> duplicates the string, allowing you to use
-it for other purposes.
+ $element->SetAttribute("ATTRNAME", "VALUE");
+ 
+ $element->SetAttribute( ATTRNAME=>"VALUE" );
+ 
+ $element->SetAttribute( ATTRNAME1=>"VALUE1", ATTRNAME2=>"VALUE2" );
+ 
+ $element->TITLE("VALUE");
+ 
+ $element->IUP::Label->new( TITLE=>"Text", ATTRNAME1=>"VALUE1", ATTRNAME2=>"VALUE2" );
+ #equivalent to
+ $element->IUP::Label->new();
+ $element->SetAttribute("TITLE", "Text");
+ $element->SetAttribute("ATTRNAME1", "VALUE1");
+ $element->SetAttribute("ATTRNAME2", "VALUE2");
 
 =back
 
@@ -133,7 +145,7 @@ callback can be used for several objects, even of different types.
 
 When an attribute is updated (B<Set>) it is stored internally at the
 hash table of the control only if the control class allows it. If the
-value is NULL, the attribute will also be removed from the hash table
+value is C<undef>, the attribute will also be removed from the hash table
 and the default value will be used if there is one defined. Finally the
 attribute is updated for the children of the control if they do not
 have the attribute defined in their own hash table. Here is a
@@ -359,7 +371,7 @@ This policy is very useful for associating two interface elements,
 because you can abstract the fact that IUP uses a string to make
 associations and imagine the interface element itself is being used.
 
-=head1 ATTRIBUTES CONCEPT
+=head1 CALLBACKS CONCEPT
 
 IUP is a graphics interface library, so most of the time it waits for
 an event to occur, such as a button click or a mouse leaving a window.
@@ -474,21 +486,17 @@ function L<MainLoop|IUP/"MainLoop()"> will return.
 The L<LoopStep|IUP/"LoopStep()"> and the L<Flush|IUP::Manual::02_Elements/"Flush()"> functions force the processing
 of incoming events while inside an application callback.
 
-=head2 IUP::Lua
+=head2 IUP perl specifics xxxTODOxxx
 
-Callbacks in Lua have the same names and receive the same parameters as
-callbacks in C, in the same order. In Lua the callbacks they can either
-return a value or not, the IUP::Lua binding will automatically return
-IUP_DEFAULT if no value is returned. In Lua callbacks can be Lua
-functions or strings with Lua code.
+XXX-maybe move to Callbacks
 
-The callbacks can also be implemented as methods, using the
-languageE<rsquo>s resources for object orientation. Thus, the element
-is implicitly passed as the B<self> parameter.
+In perl the callbacks they can either return a value or not, the
+perl binding will automatically return IUP_DEFAULT if no value is returned.
+In perl callbacks has to be a code reference.
 
 The following example shows the definition of an action for a button.
 
- function myButton:action ()
+ xxxfunction myButton:action ()
    local aux = self.fgcolor
    self.fgcolor = self.bgcolor
    self.bgcolor = aux
@@ -496,20 +504,20 @@ The following example shows the definition of an action for a button.
 
 Or you can do
 
- function myButton_action(self)
+ xxxfunction myButton_action(self)
    ...
  end
  myButton.action = myButton_action
 
 Or also
 
- myButton.action = function (self)
+ xxxmyButton.action = function (self)
    ...
  end
 
 Or, as a string
 
- myButton.action = "local aux = self.fgcolor; 
+ xxxmyButton.action = "local aux = self.fgcolor; 
                     self.fgcolor = self.bgcolor; 
                     self.bgcolor = aux"
 

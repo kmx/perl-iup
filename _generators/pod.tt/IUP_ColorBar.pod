@@ -17,7 +17,7 @@ secondary colors.
 
 [% html.iupcolorbar %]
 
-=end HTML 
+=end HTML
 
 [% h.usage %]
 

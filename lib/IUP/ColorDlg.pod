@@ -14,23 +14,25 @@ selecting a color.
 <p>
   <table border="1">
     <tbody align="center">
+      <col style="text-align: center;">
+      <col style="text-align: left;">
       <tr>
-        <th style="text-align: center;">GTK</th>
-        <td style="text-align: left;"><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/colordlg_gtk.png"></td>
+        <th>GTK</th>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/colordlg_gtk.png"></td>
       </tr>
       <tr>
-        <th style="text-align: center;">Windows</th>
-	<td style="text-align: left;"><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/colordlg_win.png"></td>
+        <th>Windows</th>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/colordlg_win.png"></td>
       </tr>
       <tr>
-        <th style="text-align: center;">ColorBrowser<br>based</th>
-	<td style="text-align: left;"><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/colordlg_cb.png"></td>
+        <th>ColorBrowser<br>based</th>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/colordlg_cb.png"></td>
       </tr>
     </tbody>
   </table>
 </p>
 
-=end HTML 
+=end HTML
 
 There are 3 versions of the dialog. One for Windows only, one for GTK
 only and one for all systems, but it is based on the L<IUP::ColorBrowser|IUP::ColorBrowser>.
@@ -167,7 +169,7 @@ The element B<IUP::ColorDlg> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/colordlg.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_05/examples/0-basic/colordlg.pl> - IUP::ColorDlg example (used for screenshot - IUP.pod)
+=item * L<0-basic/colordlg.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_06/examples/0-basic/colordlg.pl> - IUP::ColorDlg example (used for screenshot - IUP.pod)
 
 =back 
 

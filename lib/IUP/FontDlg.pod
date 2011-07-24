@@ -15,17 +15,19 @@ only.
 <p>
   <table border="1">
     <tbody align="center">
+      <col style="text-align: center;">
+      <col style="text-align: left;">
       <tr>
-        <th style="text-align: center;">GTK</th>
-        <td style="text-align: left;"><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_gtk.png"></td>
+        <th>GTK</th>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_gtk.png"></td>
       </tr>
       <tr>
-        <th style="text-align: center;">Motif</th>
-	<td style="text-align: left;"><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_mot.png"></td>
+        <th>Motif</th>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_mot.png"></td>
       </tr>
       <tr>
-        <th style="text-align: center;">Windows</th>
-	<td style="text-align: left;"><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_win.png"></td>
+        <th>Windows</th>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_win.png"></td>
       </tr>
     </tbody>
   </table>

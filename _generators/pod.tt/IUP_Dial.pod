@@ -12,7 +12,7 @@ Creates a dial for regulating a given angular variable.
 
 [% html.iupdial %]
 
-=end HTML 
+=end HTML
 
 [% h.usage %]
 

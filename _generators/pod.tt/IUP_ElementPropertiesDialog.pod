@@ -11,6 +11,12 @@ the properties of an element in run time. It is a standard L<IUP::Dialog|IUP::Di
 constructed with other IUP elements. The dialog can be shown with any
 of the show functions L<Show|[%m.elem%]/"Show()">, L<ShowXY|[%m.elem%]/"ShowXY()"> or L<Popup|[%m.elem%]/"Popup()">.
 
+=begin HTML
+
+[% html.iupelementpropertiesdialog %]
+
+=end HTML
+
 Any existent element can be edited. It does not need to be mapped on
 the native system nor visible.
 

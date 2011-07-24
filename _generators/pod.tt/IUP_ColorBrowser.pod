@@ -27,7 +27,7 @@ linear, see L<Notes|#Notes> below.
 
 [% html.iupcolorbrowser %]
 
-=end HTML 
+=end HTML
 
 NOTE: For a dialog that simply returns the selected color, you can use
 function L<GetColor|IUP/"GetColor()"> or L<IUP::ColorDlg|IUP::ColorDlg>.

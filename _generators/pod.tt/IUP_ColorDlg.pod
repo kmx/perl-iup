@@ -13,7 +13,7 @@ selecting a color.
 
 [% html.iupcolordlg %]
 
-=end HTML 
+=end HTML
 
 There are 3 versions of the dialog. One for Windows only, one for GTK
 only and one for all systems, but it is based on the L<IUP::ColorBrowser|IUP::ColorBrowser>.
