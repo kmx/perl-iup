@@ -1,6 +1,6 @@
 #!perl -T
 
-use Test::More tests => 44;
+use Test::More tests => 43;
 
 use_ok('IUP::Button');
 use_ok('IUP::Canvas');
@@ -27,7 +27,6 @@ use_ok('IUP::Matrix');
 use_ok('IUP::Menu');
 use_ok('IUP::MessageDlg');
 use_ok('IUP::Normalizer');
-use_ok('IUP::OleControl');
 use_ok('IUP::PPlot');
 use_ok('IUP::ProgressBar');
 use_ok('IUP::Radio');

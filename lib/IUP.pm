@@ -10,7 +10,7 @@ use IUP::Internal::LibraryIup;
 use IUP::Constants;
 
 # following recommendation from http://www.dagolden.com/index.php/369/version-numbers-should-be-boring/
-our $VERSION = "0.001_07";
+our $VERSION = "0.001_08";
 $VERSION = eval $VERSION;
 
 sub BEGIN {
@@ -33,7 +33,7 @@ sub import {
      #UPDATE when element list change
      ':basic' => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg Dial Dialog FileDlg Fill FontDlg Frame
                      Hbox Image Item Label LayoutDialog List Menu MessageDlg Normalizer ProgressBar Radio 
-                     Sbox Separator Spin SpinBox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox OleControl/], 
+                     Sbox Separator Spin SpinBox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox/], 
 		     #xxxFIXME add OleControl conditionally
      ':extended' => [qw/Matrix Cells Canvas CanvasGL PPlot/],
      ':all' => [],

@@ -1,9 +1,8 @@
 =head1 Revision history for IUP
 
-=head2 NEXT - 0.001_02
+=head2 25/07/2011 - 0.001_08
 
- - pod hacking
- - reverting IUP::Plot back to IUP::PPlot
+ - fix for "Can't locate IUP/OleControl.pm"
 
 =head2 19/07/2011 - 0.001_01
 

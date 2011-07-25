@@ -169,7 +169,7 @@ The element B<IUP::ColorDlg> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/colordlg.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_07/examples/0-basic/colordlg.pl> - IUP::ColorDlg example (used for screenshot - IUP.pod)
+=item * L<0-basic/colordlg.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_08/examples/0-basic/colordlg.pl> - IUP::ColorDlg example (used for screenshot - IUP.pod)
 
 =back 
 
