@@ -52,7 +52,6 @@ Creates an editable text field.
         <td style="text-align: left;">
 <pre>
 $txt = IUP::Text->new( MULTILINE=>"YES", FORMATTING=>"YES");
-
 $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
     ALIGNMENT=>"CENTER", 
     SPACEAFTER=>"10",

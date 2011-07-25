@@ -131,6 +131,7 @@ my $ttdata = {
     imglib   => 'IUP::Manual::07_UsingImageLibrary',
     led      => 'IUP::Manual::08_UsingLED',
     examples => 'IUP::Manual::09_Examples',
+    test     => 'IUP::Manual::99_Test',
     
     predlg   => 'IUP::Manual::07_PredefinedDialogs',
     asimple  => 'IUP::Manual::09_SimpleApplication',
@@ -184,8 +185,14 @@ sub load_htmlinc {
     (my $n = $f) =~ s/\.html$//;
     my $content = read_file($html) or die "No content for '$html'\n";
     $content =~ s/^\s*(.*?)\s*$/$1/;
+    $content =~ s/[\n\r]+/\n/g;
     $ttdata->{html}->{$n} = $content;
-  }  
+  }
+  my @html_list;
+  for my $k (keys %{$ttdata->{html}}) {
+    push @html_list, { name=>$k, html=>$ttdata->{html}->{$k} };
+  }
+  $ttdata->{html_list} = \@html_list;
 }
 
 sub load_examples {
