@@ -10,7 +10,7 @@ use IUP::Internal::LibraryIup;
 use IUP::Constants;
 
 # following recommendation from http://www.dagolden.com/index.php/369/version-numbers-should-be-boring/
-our $VERSION = "0.001_09";
+our $VERSION = "0.001_14";
 $VERSION = eval $VERSION;
 
 sub BEGIN {

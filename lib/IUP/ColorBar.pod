@@ -15,9 +15,7 @@ secondary colors.
 
 =begin HTML
 
-<p>
-<img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupcolorbar.gif">
-</p>
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupcolorbar.gif"></p>
 
 =end HTML
 
@@ -285,7 +283,7 @@ The element B<IUP::ColorBar> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/colorbar.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_09/examples/0-basic/colorbar.pl> - IUP::ColorBar example
+=item * L<0-basic/colorbar.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_14/examples/0-basic/colorbar.pl> - IUP::ColorBar example
 
 =back 
 

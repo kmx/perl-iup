@@ -10,6 +10,12 @@ Creates a dialog element. It manages user interaction with the
 interface elements. For any interface element to be shown, it must be
 encapsulated in a dialog.
 
+=begin HTML
+
+[% html.iupdialog %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]
@@ -651,7 +657,11 @@ dialog that will be the MDI frame, other controls can also be available
 in the same dialog, like buttons and other canvases composing toolbars
 and status area. The following picture illustrates the e components:
 
-=for html <p><img src="[%url.ghwebroot%]/img-3.5/dlg/mdi.gif"></p> 
+=begin HTML
+
+[% html.iupdialog_mdi %]
+
+=end HTML
 
 [% h.examples %]
 

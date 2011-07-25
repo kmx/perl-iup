@@ -10,9 +10,7 @@ Creates an OpenGL canvas (drawing area for OpenGL).
 
 =begin HTML
 
-<p>
-<img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupglcanvas.png">
-</p>
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupglcanvas.png"></p>
 
 =end HTML
 
@@ -259,9 +257,9 @@ The element B<IUP::CanvasGL> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/glcanvas1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_09/examples/0-basic/glcanvas1.pl> - IUP::CanvasGL example
+=item * L<0-basic/glcanvas1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_14/examples/0-basic/glcanvas1.pl> - IUP::CanvasGL example
 
-=item * L<0-basic/glcanvas2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_09/examples/0-basic/glcanvas2.pl> - IUP::CanvasGL example
+=item * L<0-basic/glcanvas2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_14/examples/0-basic/glcanvas2.pl> - IUP::CanvasGL example
 
 =back 
 

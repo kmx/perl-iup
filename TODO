@@ -4,6 +4,11 @@
 
 ##########################################################
 
+POD+HTML
+- iupprogressbar
+- iupcanvas
+- iupmatrix <br> vs. <p>
+
 IDEA
 - nicer pod http://search.cpan.org/~jfearn/HTML-Tree-4.2/lib/HTML/Element.pm (related modules)
 

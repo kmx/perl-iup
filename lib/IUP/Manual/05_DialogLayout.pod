@@ -108,9 +108,7 @@ Layout Visualization
 
 =begin html
 
-<p>
-<img src="http://kmx.github.com/perl-iup/img-3.5/images/dlg_led.png">
-</p>
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/dlg_led.png"></p>
 
 =end html
 
@@ -194,9 +192,7 @@ buttons do not move or change their sizes.
 
 =begin html
 
-<p>
-<img src="http://kmx.github.com/perl-iup/img-3.5/images/naturalsize.gif">
-</p>
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/naturalsize.gif"></p>
 
 =end html
 
@@ -242,9 +238,7 @@ changed after it was displayed on screen)
 
 =begin html
  
-<p>
-<img src="http://kmx.github.com/perl-iup/img-3.5/images/usersize.gif">
-</p>
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/usersize.gif"></p>
 
 =end html
 
@@ -281,9 +275,7 @@ Using EXPAND in the example, we obtain the following result:
 
 =begin html
  
-<p>
-<img src="http://kmx.github.com/perl-iup/img-3.5/images/expand.gif">
-</p>
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/expand.gif"></p>
 
 =end html
 
@@ -300,9 +292,7 @@ and they will be clipped at right and bottom.
 
 =begin html
  
-<p>
-<img src="http://kmx.github.com/perl-iup/img-3.5/images/no_shrink.gif">
-</p>
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/no_shrink.gif"></p>
 
 =end html
 
@@ -340,9 +330,7 @@ set the dialog initial size.
 
 =begin html
  
-<p>
-<img src="http://kmx.github.com/perl-iup/img-3.5/images/shrink.gif">
-</p>
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/shrink.gif"></p>
 
 =end html
 

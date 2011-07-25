@@ -1,3 +1,5 @@
+#example based on the original sample.c
+
 use strict;
 use warnings;
 
