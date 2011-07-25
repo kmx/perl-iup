@@ -23,10 +23,10 @@ It does not have a native representation.
 [% h.create %]
 
  #standard way
- my $vbox = IUP::Vbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'XXX' );
+ my $vbox = IUP::Vbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
  
  #or with just a single child
- my $vbox = IUP::Vbox->new( child=>$elem, ANYATTRIBUTE=>'XXX' );
+ my $vbox = IUP::Vbox->new( child=>$elem, ANYATTRIBUTE=>'any value' );
  
  #or with just 1 parameter (arrayref)
  my $vbox = IUP::Vbox->new( [$elem1, $elem2] );

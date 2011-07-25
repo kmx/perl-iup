@@ -23,10 +23,10 @@ a menu will be an error.
 
  $menu = IUP::Menu->new(Ihandle *child, ...);
  #standard way
- my $menu = IUP::Menu->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'XXX' );
+ my $menu = IUP::Menu->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
  
  #or with just a single child
- my $menu = IUP::Menu->new( child=>$elem, ANYATTRIBUTE=>'XXX' );
+ my $menu = IUP::Menu->new( child=>$elem, ANYATTRIBUTE=>'any value' );
  
  #or with just 1 parameter (arrayref)
  my $menu = IUP::Menu->new( [$elem1, $elem2] );
