@@ -41,10 +41,10 @@ It does not have a native representation.
 =head2 CREATION - new() method
 
  #standard way
- my $hbox = IUP::Hbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'XXX' );
+ my $hbox = IUP::Hbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
  
  #or with just a single child
- my $hbox = IUP::Hbox->new( child=>$elem, ANYATTRIBUTE=>'XXX' );
+ my $hbox = IUP::Hbox->new( child=>$elem, ANYATTRIBUTE=>'any value' );
  
  #or with just 1 parameter (arrayref)
  my $hbox = IUP::Hbox->new( [$elem1, $elem2] );

@@ -80,8 +80,8 @@ automatically set to "NO". Default: "NO".
 
 I<(read-only, non inheritable)>
 
-Returns the internal CD canvas xxx???. This attribute should be used only in specific cases and by
-experienced IUP::Canvas programmers.
+Returns the internal CD canvas (reference to L<IUP::Canvas). ZZZ-test-this
+This attribute should be used only in specific cases and by experienced programmers.
 
 =item B<CLIPPED>
 
@@ -115,9 +115,8 @@ column integer indexes respectively.
 
 I<(read-only, non inheritable)>
 
-Returns the internal
-image CD canvas xxx???. This attribute should be used only in specific cases
-and by experienced CD programmers.
+Returns the internal image CD canvas (reference to L<IUP::Canvas) ZZZ-test-this
+This attribute should be used only in specific cases and by experienced programmers.
 
 =item B<LIMITS(L):(C)>
 
@@ -277,8 +276,7 @@ B<Callback handler prototype:>
 
 B<$self> - reference to the element (IUP::Cells) that activated the event
 
-B<$button, $pressed, $x, $y, $status> - same as the L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB>
-by IUP::Canvas xxx??? callback.
+B<$button, $pressed, $x, $y, $status> - same as the L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB> by L<IUP::Canvas>.
 
 B<$line, $column> - the grid position in the control where the event
 has occurred, in grid coordinates.
@@ -300,8 +298,7 @@ B<Callback handler prototype:>
 
 B<$self> - reference to the element (IUP::Cells) that activated the event
 
-B<$x, $y, $status> - same as the L<MOTION_CB|IUP::Manual::04_Callbacks/MOTION_CB>
-by IUP::Canvas xxx??? callback.
+B<$x, $y, $status> - same as the L<MOTION_CB|IUP::Manual::04_Callbacks/MOTION_CB> by L<IUP::Canvas>.
 
 B<$line, $column> - the grid position in the control where the event
 has occurred, in grid coordinates.

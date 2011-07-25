@@ -21,10 +21,10 @@ POSITION attribute.
 =head2 CREATION - new() method
 
  #standard way
- my $cbox = IUP::Cbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'XXX' );
+ my $cbox = IUP::Cbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
  
  #or with just a single child
- my $cbox = IUP::Cbox->new( child=>$elem, ANYATTRIBUTE=>'XXX' );
+ my $cbox = IUP::Cbox->new( child=>$elem, ANYATTRIBUTE=>'any value' );
  
  #or with just 1 parameter (arrayref)
  my $cbox = IUP::Cbox->new( [$elem1, $elem2] );

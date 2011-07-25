@@ -101,12 +101,13 @@ Text color. Default: the global attribute DLGFGCOLOR.
 
 I<(non inheritable)>
 
-Image name. If set before map defines the
+Image name or L<IUP::Image> reference. If set before map defines the
 behavior of the button to contain an image. The natural size will be
 size of the image in pixels, plus the button borders. 
-Use L<IUP->SetHandle|IUP::SetHandle> or XXX-FIX_ME
-to associate an image to a name. See also L<IUP::Image|IUP::Image>. If
-TITLE is also defined and not empty both will be shown (except in
+
+See - L<Using Images in Other Elements (via IMAGE Attribute)|IUP::Image/"Using Images in Other Elements (via IMAGE Attribute)">
+
+If TITLE is also defined and not empty both will be shown (except in
 Motif). (GTK 2.6)
 
 =item B<IMINACTIVE>

@@ -181,7 +181,7 @@ Can be used only after the dataset is added to the plot e.g.
 
   $plot->PlotBegin(0);
   $index = $mainplot->PlotEnd();
-  $plot->PlotInsertPoints($index, 2, \@values); ###XXX-FIXME-check-this 
+  $plot->PlotInsertPoints($index, 2, \@values); ###ZZZ-test-this(maybe add example)
 
 NOTE: there is an autodetection whether it calls iupPlotInsertStrPoints
 or iupPlotInsertPoints behind the scene.
@@ -664,10 +664,11 @@ points are selected it is called once for each new selected point. It
 is called only if the selection state of the sample is about to be
 changed.
 
- #XXX-FIXME-check-implementation
+#XXX-FIXME-not-implemented-correctly
+
 B<Callback handler prototype:>
 
- sub selectend_cb_handler {
+ sub edit_cb_handler {
    my ($self, $index, $sample_index, $x, $y) = @_;
    my $new_x, $new_y, $retval;
    #...

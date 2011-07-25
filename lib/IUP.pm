@@ -32,10 +32,9 @@ sub import {
   my %tags = (
      #UPDATE when element list change
      ':basic' => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg Dial Dialog FileDlg Fill FontDlg Frame
-                     Hbox Image Item Label LayoutDialog List Menu MessageDlg Normalizer ProgressBar Radio 
+                     Hbox Image Item Label List Menu MessageDlg Normalizer ProgressBar Radio 
                      Sbox Separator Spin SpinBox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox/], 
-		     #xxxFIXME add OleControl conditionally
-     ':extended' => [qw/Matrix Cells Canvas CanvasGL PPlot/],
+     ':extended' => [qw/Matrix Cells Canvas CanvasGL PPlot LayoutDialog ElementPropertiesDialog/],
      ':all' => [],
   );  
   @{$tags{':all'}} = ( @{$tags{':basic'}}, @{$tags{':extended'}} );

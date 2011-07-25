@@ -1,16 +1,8 @@
 ################ the last time working on ################ 
 
-- POD hacking - tuning CPAN visage
+- POD hacking - cleaning XXX marks
 
 ##########################################################
-
-POD+HTML
-- iupprogressbar
-- iupcanvas
-- iupmatrix <br> vs. <p>
-
-IDEA
-- nicer pod http://search.cpan.org/~jfearn/HTML-Tree-4.2/lib/HTML/Element.pm (related modules)
 
 !!Decide!!######## move to separate dist
 - IUP::OLE
@@ -18,7 +10,6 @@ IDEA
 
 !!Big Task!!######## doc
 - Cleanup first (in this order):
-  - IUP.pod
   - I::M::Elements.pod
   - I::M::Callbacks.pod
   - I::M::Attributes.pod

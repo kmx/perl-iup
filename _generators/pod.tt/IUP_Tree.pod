@@ -474,13 +474,12 @@ The user data associated with the specified node. (since iup-3.0)
 
 =item * B<IMAGE(id)>
 
-Image name to be used in the specified node, where id is
+Image name or reference to L<IUP::Image> to be used in the specified node, where id is
 the specified node identifier. If id is empty, then the focus node is
 used as the specified node. 
-XXX-check-this Use L<SetName|[%m.elem%]/"SetName()"> 
-XXX-check-this or XXX-FIX_ME to
-XXX-check-this associate an image to a name. 
-See also L<IUP::Image|IUP::Image>. 
+
+See - L<Using Images in Other Elements (via IMAGE Attribute)|IUP::Image/"Using Images in Other Elements (via IMAGE Attribute)">
+
 In Windows and Motif set the BGCOLOR attribute before setting the image.
 If node is a branch it is used when collapsed.
 

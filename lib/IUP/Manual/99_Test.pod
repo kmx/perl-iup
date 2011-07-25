@@ -7,7 +7,15 @@ IUP::Manual::99_Test - Testing HTML+POD
 =head1 TEST1
 
 
-=head2 Screenshot (uppercase) - iuptext1
+=head2 Screenshot - pre_listdialog
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/listdialog.png"></p>
+
+=end html
+
+=head2 Screenshot - iuptext1
 
 =begin html
 
@@ -45,7 +53,7 @@ IUP::Manual::99_Test - Testing HTML+POD
 
 =end html
 
-=head2 Screenshot (uppercase) - iupweb
+=head2 Screenshot - iupweb
 
 =begin html
 
@@ -53,7 +61,32 @@ IUP::Manual::99_Test - Testing HTML+POD
 
 =end html
 
-=head2 Screenshot (uppercase) - iupcolorbrowser
+=head2 Screenshot - pre_getfile
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="left">
+      <tr>
+        <th>MS&nbsp;Windows</th>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_win.png"></td>
+      </tr>
+      <tr>
+        <th>GTK</th>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_gtk.png"></td>
+      </tr>
+      <tr>
+        <th>Motif</th>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_mot.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head2 Screenshot - iupcolorbrowser
 
 =begin html
 
@@ -61,7 +94,7 @@ IUP::Manual::99_Test - Testing HTML+POD
 
 =end html
 
-=head2 Screenshot (uppercase) - iup_custom
+=head2 Screenshot - iup_custom
 
 =begin html
 
@@ -82,7 +115,7 @@ IUP::Manual::99_Test - Testing HTML+POD
 
 =end html
 
-=head2 Screenshot (uppercase) - pre_alarm
+=head2 Screenshot - pre_alarm
 
 =begin html
 
@@ -90,7 +123,45 @@ IUP::Manual::99_Test - Testing HTML+POD
 
 =end html
 
-=head2 Screenshot (uppercase) - iupmenu_fromsyntax
+=head2 Screenshot - iuplist
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <col style="background-color: rgb(239, 235, 231);" width="530">
+      <col style="background-color: rgb(173, 177, 194);" width="530">
+      <tr>
+        <th>GTK</th>
+        <th>Motif</th>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_gtk.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_mot.png"></td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  <table border="1">
+    <tbody align="center">
+      <col style="background-color: rgb(212, 208, 200);" width="530">
+      <col style="background-color: rgb(236, 233, 216);" width="530">
+      <tr>
+        <th>Windows Classic</th>
+        <th>Windows XP Style</th>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_win2k.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_winxp.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head2 Screenshot - iupmenu_fromsyntax
 
 =begin html
 
@@ -98,7 +169,15 @@ IUP::Manual::99_Test - Testing HTML+POD
 
 =end html
 
-=head2 Screenshot (uppercase) - iupsplit
+=head2 Screenshot - pre_gettext
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/gettext.png"></p>
+
+=end html
+
+=head2 Screenshot - iupsplit
 
 =begin html
 
@@ -119,14 +198,14 @@ IUP::Manual::99_Test - Testing HTML+POD
 
 =end html
 
-=head2 Screenshot (uppercase) - iupframe
+=head2 Screenshot - iupframe
 
 =begin html
 
 <p>
   <table border="1">
-    <col style="background-color: rgb(236, 233, 216);">
-    <col style="background-color: rgb(173, 177, 194);">
+    <col style="background-color: rgb(236, 233, 216);" width="350">
+    <col style="background-color: rgb(173, 177, 194);" width="350">
     <tbody align="center">
       <tr>
         <th style="text-align: center;">GTK</th>
@@ -140,8 +219,8 @@ IUP::Manual::99_Test - Testing HTML+POD
   </table>
   <br>
   <table border="1">
-    <col style="background-color: rgb(212, 208, 200);">
-    <col style="background-color: rgb(239, 235, 231);">
+    <col style="background-color: rgb(212, 208, 200);" width="350">
+    <col style="background-color: rgb(239, 235, 231);" width="350">
     <tbody align="center">
       <tr>
         <th style="text-align: center;">Windows Classic</th>
@@ -157,7 +236,31 @@ IUP::Manual::99_Test - Testing HTML+POD
 
 =end html
 
-=head2 Screenshot (uppercase) - pre_message
+=head2 Screenshot - layout_expand1
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/expand.gif"></p>
+
+=end html
+
+=head2 Screenshot - iupole
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupwebbrowser.png"></p>
+
+=end html
+
+=head2 Screenshot - layout_shrink
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/shrink.gif"></p>
+
+=end html
+
+=head2 Screenshot - pre_message
 
 =begin html
 
@@ -182,7 +285,28 @@ IUP::Manual::99_Test - Testing HTML+POD
 
 =end html
 
-=head2 Screenshot (uppercase) - iuptext2
+=head2 Screenshot - iup_predefined
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th>Application</th>
+        <th>After "OK"</th>
+      </tr>
+      <tr>      
+        <td><img src="http://kmx.github.com/perl-iup/spec/app_predefined1.png"></td>
+	<td><img src="http://kmx.github.com/perl-iup/spec/app_predefined2.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head2 Screenshot - iuptext2
 
 =begin html
 
@@ -223,567 +347,7 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iupprogressbar
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody align="center">    
-        <tr>
-		<td></td>
-		<th>DASHED=NO</th>
-		<th>DASHED=YES</th>
-		<th>MARQUEE=YES</th>
-	</tr>
-	<tr>
-		<th style="text-align: center;">Motif</th>
-		<td style="background-color: rgb(173, 177, 194);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_mot_continuous.png"></td>
-		<td style="background-color: rgb(173, 177, 194);">(same as DASHED=NO)</td>
-		<td style="background-color: rgb(173, 177, 194);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_mot_marquee.png"></td>
-	</tr>
-	<tr>
-		<th style="text-align: center;">Windows Classic</th>
-		<td style="background-color: rgb(212, 208, 200);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_win2k_continuous.png"></td>
-		<td style="background-color: rgb(212, 208, 200);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_win2k_dash.png"></td>
-		<td style="background-color: rgb(212, 208, 200);">(same as DASHED)</td>
-	</tr>
-	<tr>
-		<th style="text-align: center;">Windows w/ Styles</th>
-		<td style="background-color: rgb(239, 235, 231);">(same as DASHED=YES)</td>
-		<td style="background-color: rgb(239, 235, 231);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_winxp_dash.png"></td>
-		<td style="background-color: rgb(239, 235, 231);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_winxp_marquee.png"></td>
-	</tr>
-	<tr>
-		<th style="text-align: center;">Windows Vista</th>
-		<td style="background-color: rgb(239, 235, 231);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_vista_continuous.png"></td>
-		<td style="background-color: rgb(239, 235, 231);">(same as DASHED=NO)</td>
-		<td style="background-color: rgb(239, 235, 231);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_vista_marquee.png"></td>
-	</tr>
-	<tr>
-		<th style="text-align: center;">GTK</th>
-		<td style="background-color: rgb(236, 233, 216);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_gtk_continuous.png"></td>
-		<td style="background-color: rgb(236, 233, 216);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_gtk_dashed.png"></td>
-		<td style="background-color: rgb(236, 233, 216);"><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_gtk_marquee.png"></td>
-	</tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iupelementpropertiesdialog
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/layoutdlg2.png"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iupmessagedlg
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody align="center">
-      <tr>
-        <th>GTK</th>
-        <th>Motif</th>
-        <th>Windows</th>
-      </tr>
-      <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_gtk.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_mot.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_win.png"></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iupvbox1
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupvbox_align.png"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iupsbox
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody align="center">    
-        <tr>
-	  <th>Natural Size</th>
-	  <th>After Expanding the Sbox</th>
-	  <th>Expanding the Dialog</th>
-	  <th>After Expanding the Sbox</th>
-	</tr>
-	<tr>
-	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox1.png"></td>
-	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox2.png"></td>
-	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox3.png"></td>
-	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox4.png"></td>
-	</tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iupfiledlg
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody align="left">
-      <tr>
-        <th>GTK</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_gtk.png"></td>
-      </tr>
-      <tr>
-        <th>Motif</th>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_mot.png"></td>
-      </tr>
-      <tr>
-        <th>Windows</th>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_win.png"></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iupval
-
-=begin html
-
-<p>
-  <table border="1">
-    <col style="background-color: rgb(173, 177, 194);">
-    <col style="background-color: rgb(212, 208, 200);">
-    <col style="background-color: rgb(236, 233, 216);">
-    <col style="background-color: rgb(240, 240, 240);">
-    <col style="background-color: rgb(239, 235, 231);">
-    <tbody align="center">
-      <tr>
-        <th>Motif</th>
-        <th>Windows<br>Classic</th>
-        <th>Windows<br>w/ Styles</th>
-	<th>Windows<br>Vista</th>
-        <th>GTK</th>
-      </tr>
-      <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_mot_horiz.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_win2k_horiz.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_winxp_horiz.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_vista_horiz.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_gtk_horiz.png"></td>
-      </tr>
-      <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_mot_vert.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_win2k_vert.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_winxp_vert.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_vista_vert.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_gtk_vert.png"></td>
-      </tr>
-      <tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - layout_natural
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/naturalsize.gif"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iupplot
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody>
-    <tr>
-      <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot0.gif" border="0"></td>
-      <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot1.gif" border="0"></td>
-    </tr>
-    <tr>
-      <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot2.gif" border="0"></td>
-      <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot3.gif" border="0"></td>
-    </tr>
-    <tr>
-      <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot4.gif" border="0"></td>
-      <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot5.gif" border="0"></td>
-    </tr>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iuptree4
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody align="center">
-      <tr>
-        <th>Initial layout</th>
-        <th>After calling: <pre>$tree->SetAttribute(INSERTBRANCH9, "new branch");</pre></th>
-      </tr>
-      <tr>
-        <td><img src="http://kmx.github.com/perl-iup/spec/iuptree1.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/spec/iuptree3_insertbranch9.png"></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iupmatrix
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupmatrix1.png"></p><p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupmatrix2.png"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - layout_client
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/usersize.gif"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iup_simple
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody align="center">
-      <tr>
-        <th>Application</th>
-        <th>After "OK"</th>
-      </tr>
-      <tr>      
-        <td><img src="http://kmx.github.com/perl-iup/spec/app_simple1.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/spec/app_simple2.png"></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iupcells
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody align="center">
-      <tr>
-        <th>Checkerboard Pattern</th>
-        <th>Numbering Cells</th>
-      </tr>
-      <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupcells_chess.jpg"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupcells_num.jpg"></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iup_main
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody align="center">
-      <tr>
-        <th>GTK</th>
-        <th>Windows Vista</th>
-      </tr>
-      <tr>      
-        <td><img src="http://kmx.github.com/perl-iup/spec/sample_gtk_small.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/spec/sample_vista_small.png"></td>
-      </tr>
-    </tbody>
-  </table>
-<p>  
-  <table border="1">
-    <tbody align="center">
-      <tr>
-	<th>Motif</th>
-	<th>Windows Classic</th>
-      </tr>
-      <tr>      
-	<td><img src="http://kmx.github.com/perl-iup/spec/sample_mot_small.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/spec/sample_win2k_small.png"></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - pre_getparam
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/getparam.png"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - layout_composition
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/dlg_led.png"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - layout_expand2
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/no_shrink.gif"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iupfontdlg
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody align="center">
-      <col style="text-align: center;">
-      <col style="text-align: left;">
-      <tr>
-        <th>GTK</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_gtk.png"></td>
-      </tr>
-      <tr>
-        <th>Motif</th>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_mot.png"></td>
-      </tr>
-      <tr>
-        <th>Windows</th>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_win.png"></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iuphbox1
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuphbox_align.png"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - pre_listdialog
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/listdialog.png"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - pre_getfile
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody align="left">
-      <tr>
-        <th>MS&nbsp;Windows</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_win.png"></td>
-      </tr>
-      <tr>
-        <th>GTK</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_gtk.png"></td>
-      </tr>
-      <tr>
-        <th>Motif</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_mot.png"></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iuplist
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody align="center">
-      <col style="background-color: rgb(239, 235, 231);">
-      <col style="background-color: rgb(173, 177, 194);">
-      <tr>
-        <th>GTK</th>
-        <th>Motif</th>
-      </tr>
-      <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_gtk.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_mot.png"></td>
-      </tr>
-    </tbody>
-  </table>
-  <br>
-  <table border="1">
-    <tbody align="center">
-      <col style="background-color: rgb(212, 208, 200);">
-      <col style="background-color: rgb(236, 233, 216);">
-      <tr>
-        <th>Windows Classic</th>
-        <th>Windows XP Style</th>
-      </tr>
-      <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_win2k.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_winxp.png"></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - pre_gettext
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/gettext.png"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - layout_expand1
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/expand.gif"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iupole
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupwebbrowser.png"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - layout_shrink
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/shrink.gif"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iuptab_win
-
-=begin html
-
-<p>
-  <table border="1">
-    <col style="background-color: rgb(212, 208, 200);">
-    <col style="background-color: rgb(239, 235, 231);">
-    <tbody align="center">    
-      <tr>
-        <th>Windows<br>Classic</th>
-        <th>Windows<br>w/ Style</th>
-      </tr>
-      <tr>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_win2k_top.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_winxp_top.png"></td>
-      </tr>
-      <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_win2k_left.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_winxp_left.png"></td>
-      </tr>
-      <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_win2k_top_multi.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_winxp_top_multi.png"></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iuptab_motif
-
-=begin html
-
-<p>
-  <table border="1">
-    <col style="background-color: rgb(173, 177, 194);">
-    <col style="background-color: rgb(173, 177, 194);">
-    <tbody align="center">    
-      <tr>
-        <th>Motif</th>
-	<th>Motif</th>
-      </tr>
-      <tr>          
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_mot_top.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_mot_left.png"></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iup_predefined
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody align="center">
-      <tr>
-        <th>Application</th>
-        <th>After "OK"</th>
-      </tr>
-      <tr>      
-        <td><img src="http://kmx.github.com/perl-iup/spec/app_predefined1.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/spec/app_predefined2.png"></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iupvbox2
+=head2 Screenshot - iupvbox2
 
 =begin html
 
@@ -819,15 +383,7 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iuplayoutdialog
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/layoutdlg1.png"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iuptree3
+=head2 Screenshot - iuptree3
 
 =begin html
 
@@ -848,7 +404,15 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iuphbox2
+=head2 Screenshot - iuplayoutdialog
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/layoutdlg1.png"></p>
+
+=end html
+
+=head2 Screenshot - iuphbox2
 
 =begin html
 
@@ -874,7 +438,7 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iuptree6
+=head2 Screenshot - iuptree6
 
 =begin html
 
@@ -895,7 +459,15 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iupcolordlg
+=head2 Screenshot - iupdial
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupdial.gif"></p>
+
+=end html
+
+=head2 Screenshot - iupcolordlg
 
 =begin html
 
@@ -922,15 +494,127 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iupdial
+=head2 Screenshot - iupprogressbar
 
 =begin html
 
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupdial.gif"></p>
+<p>
+  <table border="1">
+    <tbody align="center">    
+        <tr>
+		<td></td>
+		<th>DASHED=NO</th>
+		<th>DASHED=YES</th>
+		<th>MARQUEE=YES</th>
+	</tr>
+	<tr style="background-color: rgb(173, 177, 194);">
+		<th style="text-align: center;">Motif</th>
+		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_mot_continuous.png"></td>
+		<td>(same as DASHED=NO)</td>
+		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_mot_marquee.png"></td>
+	</tr>
+	<tr style="background-color: rgb(212, 208, 200);">
+		<th style="text-align: center;">Windows Classic</th>
+		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_win2k_continuous.png"></td>
+		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_win2k_dash.png"></td>
+		<td>(same as DASHED)</td>
+	</tr>
+	<tr style="background-color: rgb(239, 235, 231);">
+		<th style="text-align: center;">Windows w/ Styles</th>
+		<td>(same as DASHED=YES)</td>
+		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_winxp_dash.png"></td>
+		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_winxp_marquee.png"></td>
+	</tr>
+	<tr style="background-color: rgb(239, 235, 231);">
+		<th style="text-align: center;">Windows Vista</th>
+		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_vista_continuous.png"></td>
+		<td>(same as DASHED=NO)</td>
+		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_vista_marquee.png"></td>
+	</tr>
+	<tr style="background-color: rgb(236, 233, 216);">
+		<th style="text-align: center;">GTK</th>
+		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_gtk_continuous.png"></td>
+		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_gtk_dashed.png"></td>
+		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupprogressbar_gtk_marquee.png"></td>
+	</tr>
+    </tbody>
+  </table>
+</p>
 
 =end html
 
-=head2 Screenshot (uppercase) - iupcolorbar
+=head2 Screenshot - iuptabs
+
+=begin html
+
+<p>
+  <table border="1">
+    <col style="background-color: rgb(212, 208, 200);" width="350">
+    <col style="background-color: rgb(239, 235, 231);" width="350">
+    <tbody align="center">    
+      <tr>
+        <th>Windows Classic</th>
+        <th>Windows w/ Style</th>
+      </tr>
+      <tr>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_win2k_top.png"></td>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_winxp_top.png"></td>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_win2k_left.png"></td>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_winxp_left.png"></td>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_win2k_top_multi.png"></td>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_winxp_top_multi.png"></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+  <table border="1">
+    <col style="background-color: rgb(239, 235, 231);" width="350">
+    <col style="background-color: rgb(239, 235, 231);" width="350">
+    <tbody align="center">
+      <tr>
+        <th colspan="2">GTK</th>
+      </tr>
+      <tr>          
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_gtk_top.png"></td>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_gtk_left.png"></td>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_gtk_top_vert.png"></td>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_gtk_left_vert.png"></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>
+  <table border="1">
+    <col style="background-color: rgb(173, 177, 194);" width="350">
+    <col style="background-color: rgb(173, 177, 194);" width="350">
+    <tbody align="center">
+      <tr>
+        <th colspan="2">Motif</th>
+      </tr>
+      <tr>          
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_mot_top.png"></td>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_mot_left.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head2 Screenshot - iupelementpropertiesdialog
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/layoutdlg2.png"></p>
+
+=end html
+
+=head2 Screenshot - iupcolorbar
 
 =begin html
 
@@ -938,7 +622,30 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iupmenu
+=head2 Screenshot - layout_native
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th>IUP::Dialog</th>
+        <th>IUP::Frame</th>
+	<th>IUP::Canvas</th>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/images/nativesize1.gif"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/images/nativesize2.gif"></td>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/images/nativesize3.gif"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head2 Screenshot - iupmenu
 
 =begin html
 
@@ -948,8 +655,8 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
       <tr>
         <th>GTK</th>
         <th>Motif</th>
-        <th>Windows<br>Classic</th>
-        <th>Windows<br>w/ Style</th>
+        <th>Windows Classic</th>
+        <th>Windows w/ Style</th>
       </tr>
       <tr>
         <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_gtk.png"></td>
@@ -975,7 +682,7 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - layout_native
+=head2 Screenshot - iupmessagedlg
 
 =begin html
 
@@ -983,14 +690,14 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
   <table border="1">
     <tbody align="center">
       <tr>
-        <th>IUP::Dialog</th>
-        <th>IUP::Frame</th>
-	<th>IUP::Canvas</th>
+        <th>GTK</th>
+        <th>Motif</th>
+        <th>Windows</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/images/nativesize1.gif"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/images/nativesize2.gif"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/images/nativesize3.gif"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_gtk.png"></td>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_mot.png"></td>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_win.png"></td>
       </tr>
     </tbody>
   </table>
@@ -998,7 +705,7 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iupspin
+=head2 Screenshot - iupspin
 
 =begin html
 
@@ -1006,7 +713,15 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iupdialog
+=head2 Screenshot - iupvbox1
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupvbox_align.png"></p>
+
+=end html
+
+=head2 Screenshot - iupdialog
 
 =begin html
 
@@ -1014,7 +729,57 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iuplabel
+=head2 Screenshot - iupsbox
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">    
+        <tr>
+	  <th>Natural Size</th>
+	  <th>After Expanding the Sbox</th>
+	  <th>Expanding the Dialog</th>
+	  <th>After Expanding the Sbox</th>
+	</tr>
+	<tr>
+	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox1.png"></td>
+	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox2.png"></td>
+	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox3.png"></td>
+	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox4.png"></td>
+	</tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head2 Screenshot - iupfiledlg
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="left">
+      <tr>
+        <th>GTK</th>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_gtk.png"></td>
+      </tr>
+      <tr>
+        <th>Motif</th>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_mot.png"></td>
+      </tr>
+      <tr>
+        <th>Windows</th>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_win.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head2 Screenshot - iuplabel
 
 =begin html
 
@@ -1022,7 +787,28 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iuptoggle
+=head2 Screenshot - pre_getcolor
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="left">
+      <tr>
+        <th>MS&nbsp;Windows</th>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/colordlg_cb.png"></td>
+      </tr>
+      <tr>
+        <th>GTK</th>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/colordlg_gtk.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head2 Screenshot - iuptoggle
 
 =begin html
 
@@ -1069,28 +855,47 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - pre_getcolor
+=head2 Screenshot - iupval
 
 =begin html
 
 <p>
   <table border="1">
-    <tbody align="left">
+    <col style="background-color: rgb(173, 177, 194);">
+    <col style="background-color: rgb(212, 208, 200);">
+    <col style="background-color: rgb(236, 233, 216);">
+    <col style="background-color: rgb(240, 240, 240);">
+    <col style="background-color: rgb(239, 235, 231);">
+    <tbody align="center">
       <tr>
-        <th>MS&nbsp;Windows</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/colordlg_cb.png"></td>
-      </tr>
-      <tr>
+        <th>Motif</th>
+        <th>Windows<br>Classic</th>
+        <th>Windows<br>w/ Styles</th>
+	<th>Windows<br>Vista</th>
         <th>GTK</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/colordlg_gtk.png"></td>
       </tr>
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_mot_horiz.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_win2k_horiz.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_winxp_horiz.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_vista_horiz.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_gtk_horiz.png"></td>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_mot_vert.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_win2k_vert.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_winxp_vert.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_vista_vert.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_gtk_vert.png"></td>
+      </tr>
+      <tr>
     </tbody>
   </table>
 </p>
 
 =end html
 
-=head2 Screenshot (uppercase) - iuptree2
+=head2 Screenshot - iuptree2
 
 =begin html
 
@@ -1098,7 +903,76 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iuptree5
+=head2 Screenshot - layout_natural
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/naturalsize.gif"></p>
+
+=end html
+
+=head2 Screenshot - iupplot
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody>
+    <tr>
+      <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot0.gif" border="0"></td>
+      <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot1.gif" border="0"></td>
+    </tr>
+    <tr>
+      <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot2.gif" border="0"></td>
+      <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot3.gif" border="0"></td>
+    </tr>
+    <tr>
+      <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot4.gif" border="0"></td>
+      <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iup_pplot5.gif" border="0"></td>
+    </tr>
+  </table>
+</p>
+
+=end html
+
+=head2 Screenshot - iuptree4
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th>Initial layout</th>
+        <th>After calling: <pre>$tree->SetAttribute(INSERTBRANCH9, "new branch");</pre></th>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/spec/iuptree1.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/spec/iuptree3_insertbranch9.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head2 Screenshot - iupmatrix
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupmatrix1.png"></p><p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupmatrix2.png"></p>
+
+=end html
+
+=head2 Screenshot - layout_client
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/usersize.gif"></p>
+
+=end html
+
+=head2 Screenshot - iuptree5
 
 =begin html
 
@@ -1119,7 +993,28 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iupsubmenu
+=head2 Screenshot - iup_simple
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th>Application</th>
+        <th>After "OK"</th>
+      </tr>
+      <tr>      
+        <td><img src="http://kmx.github.com/perl-iup/spec/app_simple1.png"></td>
+	<td><img src="http://kmx.github.com/perl-iup/spec/app_simple2.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head2 Screenshot - iupsubmenu
 
 =begin html
 
@@ -1127,7 +1022,62 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iupcanvas
+=head2 Screenshot - iupcells
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th>Checkerboard Pattern</th>
+        <th>Numbering Cells</th>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupcells_chess.jpg"></td>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupcells_num.jpg"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head2 Screenshot - iup_main
+
+=begin html
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <th>GTK</th>
+        <th>Windows Vista</th>
+      </tr>
+      <tr>      
+        <td><img src="http://kmx.github.com/perl-iup/spec/sample_gtk_small.png"></td>
+        <td><img src="http://kmx.github.com/perl-iup/spec/sample_vista_small.png"></td>
+      </tr>
+    </tbody>
+  </table>
+<p>  
+  <table border="1">
+    <tbody align="center">
+      <tr>
+	<th>Motif</th>
+	<th>Windows Classic</th>
+      </tr>
+      <tr>      
+	<td><img src="http://kmx.github.com/perl-iup/spec/sample_mot_small.png"></td>
+	<td><img src="http://kmx.github.com/perl-iup/spec/sample_win2k_small.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+=end html
+
+=head2 Screenshot - iupcanvas
 
 =begin html
 
@@ -1164,7 +1114,31 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iupdialog_mdi
+=head2 Screenshot - pre_getparam
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/getparam.png"></p>
+
+=end html
+
+=head2 Screenshot - layout_composition
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/dlg_led.png"></p>
+
+=end html
+
+=head2 Screenshot - layout_expand2
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/images/no_shrink.gif"></p>
+
+=end html
+
+=head2 Screenshot - iupdialog_mdi
 
 =begin html
 
@@ -1172,62 +1146,26 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iuptab
+=head2 Screenshot - iupfontdlg
 
 =begin html
 
 <p>
   <table border="1">
-    <col style="background-color: rgb(212, 208, 200);">
-    <col style="background-color: rgb(239, 235, 231);">
-    <tbody align="center">    
-      <tr>
-        <th>Windows<br>Classic</th>
-        <th>Windows<br>w/ Style</th>
-      </tr>
-      <tr>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_win2k_top.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_winxp_top.png"></td>
-      </tr>
-      <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_win2k_left.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_winxp_left.png"></td>
-      </tr>
-      <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_win2k_top_multi.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_winxp_top_multi.png"></td>
-      </tr>
-    </tbody>
-  </table>
-  <p>
-  <table border="1">
-    <col style="background-color: rgb(239, 235, 231);">
-    <col style="background-color: rgb(239, 235, 231);">
     <tbody align="center">
+      <col style="text-align: center;">
+      <col style="text-align: left;">
       <tr>
-        <th colspan="2">GTK</th>
-      </tr>
-      <tr>          
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_gtk_top.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_gtk_left.png"></td>
+        <th>GTK</th>
+        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_gtk.png"></td>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_gtk_top_vert.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_gtk_left_vert.png"></td>
+        <th>Motif</th>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_mot.png"></td>
       </tr>
-    </tbody>
-  </table>
-  <p>
-  <table border="1">
-    <col style="background-color: rgb(173, 177, 194);">
-    <col style="background-color: rgb(173, 177, 194);">
-    <tbody align="center">
       <tr>
-        <th colspan="2">Motif</th>
-      </tr>
-      <tr>          
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_mot_top.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_mot_left.png"></td>
+        <th>Windows</th>
+	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/fontdlg_win.png"></td>
       </tr>
     </tbody>
   </table>
@@ -1235,41 +1173,15 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iuptab_gtk
+=head2 Screenshot - iuphbox1
 
 =begin html
 
-<p>
-  <table border="1">
-    <col style="background-color: rgb(239, 235, 231);">
-    <col style="background-color: rgb(239, 235, 231);">
-    <tbody align="center">    
-      <tr>
-        <th colspan="2">GTK</th>
-      </tr>
-      <tr>          
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_gtk_top.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_gtk_left.png"></td>
-      </tr>
-      <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_gtk_top_vert.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptabs_gtk_left_vert.png"></td>
-      </tr>
-    </tbody>
-  </table>
-</p>
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuphbox_align.png"></p>
 
 =end html
 
-=head2 Screenshot (uppercase) - iupcanvasgl
-
-=begin html
-
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupglcanvas.png"></p>
-
-=end html
-
-=head2 Screenshot (uppercase) - iuptree1
+=head2 Screenshot - iuptree1
 
 =begin html
 
@@ -1296,7 +1208,15 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =end html
 
-=head2 Screenshot (uppercase) - iupbutton
+=head2 Screenshot - iupcanvasgl
+
+=begin html
+
+<p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupglcanvas.png"></p>
+
+=end html
+
+=head2 Screenshot - iupbutton
 
 =begin html
 
@@ -1352,111 +1272,4 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
 
 =head1 TEST2
 
-=head2 tr+style
-
-=begin html
-
-<p>
-  <table border="1">
-    <tbody align="center">    
-        <tr>
-		<td></td>
-		<th>DASHED=NO</th>
-		<th>DASHED=YES</th>
-	</tr>
-	<tr style="background-color: #6374AB;">
-		<th>Windows Classic</th>
-		<td>aaa</td>
-		<td>bbb</td>
-	</tr>
-	<tr style="background-color: #7400AB;">
-                <th>GTK</th>
-		<td>xxx</td>
-		<td>yyy</td>
-	</tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 tr+style+width
-
-=begin html
-
-<p>
-  <table border="1">
-    <col width="200">
-    <col width="200">
-    <col width="200">
-    <tbody align="center">    
-        <tr>
-		<td></td>
-		<th>DASHED=NO</th>
-		<th>DASHED=YES</th>
-	</tr>
-	<tr style="background-color: #6374AB;">
-		<th>Windows Classic</th>
-		<td>aaa</td>
-		<td>bbb</td>
-	</tr>
-	<tr style="background-color: #7400AB;">
-                <th>GTK</th>
-		<td>xxx</td>
-		<td>yyy</td>
-	</tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
-
-=head2 tr+style+width+multitable
-
-=begin html
-
-<p>
-  <table border="1">
-    <col width="200">
-    <col width="200">
-    <col width="200">
-    <tbody align="center">    
-        <tr>
-		<td></td>
-		<th>DASHED=NO</th>
-		<th>DASHED=YES</th>
-	</tr>
-	<tr>
-		<th>Windows Classic</th>
-		<td>aaa</td>
-		<td>bbb</td>
-	</tr>
-    </tbody>
-  </table>
-  <table border="1">
-    <col width="200">
-    <col width="200">
-    <col width="200">
-    <tbody align="center">    
-	<tr>
-                <th>GTK</th>
-		<td>xxx</td>
-		<td>yyy</td>
-	</tr>
-    </tbody>
-  </table>
-  <table border="1">
-    <col width="200">
-    <col width="200">
-    <col width="200">
-    <tbody align="center">    
-	<tr>
-		<th>Windows Classic</th>
-		<td>aaa</td>
-		<td>bbb</td>
-	</tr>
-    </tbody>
-  </table>
-</p>
-
-=end html
+None.

@@ -498,6 +498,7 @@ sub GetParamValue {
   #iup.GetParamParam(dialog: ihandle, param_index: number)-> (param: ihandle) [in Lua]
   my ($self, $param_index, $newval) = @_;
   my $ih = IUP::Internal::LibraryIup::_IupGetAttributeIH($self->ihandle, "PARAM" . $param_index);
+  my $ct = IUP::Internal::LibraryIup::_IupGetAttributeIH($ih, "CONTROL");
   if (defined $newval) {
     #xxxWORKAROUND
     #when setting listindex values there is a mismatch 0-based vs 1-based indexes
@@ -505,12 +506,13 @@ sub GetParamValue {
     my $t = IUP::Internal::LibraryIup::_IupGetAttribute($ih, "TYPE");
     $newval++ if ($t && $t eq 'LIST' && looks_like_number($newval) && $newval >=0);
     #xxxWORKAROUND-FINISHED
-    my $ct = IUP::Internal::LibraryIup::_IupGetAttributeIH($ih, "CONTROL");    
     IUP::Internal::LibraryIup::_IupStoreAttribute($ih, "VALUE", $newval);
     IUP::Internal::LibraryIup::_IupStoreAttribute($ct, "VALUE", $newval); 
   }
   else {
-    return IUP::Internal::LibraryIup::_IupGetAttribute($ih, "VALUE");
+    return IUP::Internal::LibraryIup::_IupGetAttribute($ih, "VALUE"); #usually the new value
+    #XXX-beware it might be dufferent from:
+    #return IUP::Internal::LibraryIup::_IupGetAttribute($ct, "VALUE"); #usually the old value    
   }  
 }
 

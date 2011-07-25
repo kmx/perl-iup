@@ -89,13 +89,12 @@ considered even invisible ones.
 
 E<lt>nE<gt> starts at 0. 
 
-Image name to be used in the respective tab.
-Use L<SetName|[%m.elem%]/"SetName()"> or XXX-FIX_ME to
-associate an image to a name. XXX-check-this
+Image name or L<IUP::Image> reference to be used in the respective tab.
 
-See also L<IUP::Image|IUP::Image>. In Motif, the image is shown only if
-B<< TABTITLE(n) >> is C<undef>. In Windows and Motif set the BGCOLOR attribute
-before setting the image. 
+See - L<Using Images in Other Elements (via IMAGE Attribute)|IUP::Image/"Using Images in Other Elements (via IMAGE Attribute)">
+
+In Motif, the image is shown only if B<< TABTITLE(n) >> is C<undef>.
+In Windows and Motif set the BGCOLOR attribute before setting the image. 
 
 =item B<TABORIENTATION>
 

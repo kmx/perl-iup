@@ -18,8 +18,8 @@ a menu will be an error.
       <tr>
         <th>GTK</th>
         <th>Motif</th>
-        <th>Windows<br>Classic</th>
-        <th>Windows<br>w/ Style</th>
+        <th>Windows Classic</th>
+        <th>Windows w/ Style</th>
       </tr>
       <tr>
         <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_gtk.png"></td>
@@ -52,10 +52,10 @@ a menu will be an error.
 
  $menu = IUP::Menu->new(Ihandle *child, ...);
  #standard way
- my $menu = IUP::Menu->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'XXX' );
+ my $menu = IUP::Menu->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
  
  #or with just a single child
- my $menu = IUP::Menu->new( child=>$elem, ANYATTRIBUTE=>'XXX' );
+ my $menu = IUP::Menu->new( child=>$elem, ANYATTRIBUTE=>'any value' );
  
  #or with just 1 parameter (arrayref)
  my $menu = IUP::Menu->new( [$elem1, $elem2] );

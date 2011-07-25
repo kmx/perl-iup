@@ -417,7 +417,7 @@ You may, however, instruct IUP to import all modules by using the following synt
  # import IUP + all IUP::* modules - short, easy but memory consuming
  use IUP ':all';
 
-Or you can import just basic elements (all except Canvas, Matrix, Cell, PPlot ....) xxxTODO:
+Or you can import just basic elements (all except Matrix, Cells, Canvas, CanvasGL, PPlot, LayoutDialog, ElementPropertiesDialog)
 
  use IUP ':basic';
 
@@ -788,8 +788,8 @@ names, like those which has a complementary number, can NOT have a
 default value. Some attributes can NOT have a default value by
 definition.
 
-If the new default value is C<-1> xxxcheck thisxxx, then the default value is set to
-be the system default if any is defined.
+If the new default value is C<-1>, ZZZ-test-this
+then the default value is set to be the system default if any is defined.
 
 B<See Also:>
 L<GetClassName|IUP::Manual::02_Elements/"GetClassName()"> (element method),
@@ -891,7 +891,7 @@ B<$r, $g, $b:>Initialization values defining the color being selected when
 the dialog is shown.
 
 B<Returns:> List of three (R, G, B) values are returned if the OK button
-is pressed or three C<undef> otherwise. xxxcheckthis is 3x udef necessary?
+is pressed or three C<undef> otherwise.
 
 B<Notes:>
 
@@ -1020,9 +1020,9 @@ B<< <x> >> is the type of the parameter (always a single character). The valid o
 
 =item * B<a> = angle in degrees (shows a real number filtered text box and a dial)
 
-=item * B<s> = string (shows a text box, xxxsize of string limitation)
+=item * B<s> = string (shows a text box, BEWARE: there is hardcoded string size limitation 10240bytes)
 
-=item * B<m> = multiline string (shows a multiline text box, xxxsize of string limitation)
+=item * B<m> = multiline string (shows a multiline text box, BEWARE: there is hardcoded string size limitation 10240bytes)
 
 =item * B<l> = list (shows a dropdown list box)
 
@@ -1043,7 +1043,7 @@ selection dialog box)
 =item * B<u> = buttons names (allow to redefine the OK and Cancel button names,
 and to add a Help button, use [ok,cancel,help] as extra data,
 can omit one of them, it will use the default name, not included
-in parameter count)
+in parameter count) - B<BEWARE> C<%u> has to be the last item in C<$format> string.
 
 =back
 
@@ -1131,7 +1131,7 @@ the user pressed the OK button.
 
 B<$dialog:> Reference to the dialog object (L<IUP::Dialog|IUP::Dialog>).
 
-B<param_index:> Current parameter index (0 based) being changed. 
+B<$param_index:> Current parameter index (0 based) being changed. 
 It is -1 if the user pressed the B<OK> button. It is -2 after the dialog
 is B<mapped> and just before it is shown. It is -3 if the user pressed
 the B<Cancel> button. It is -4 if the user pressed the B<Help> button, if any.
@@ -1139,90 +1139,55 @@ the B<Cancel> button. It is -4 if the user pressed the B<Help> button, if any.
 B<Returns:> You can reject the change or the OK action by returning 0 in
 the callback, otherwise you must return 1.
 
-B<You should not programmatically change the current parameter value
-during the callback>. On the other hand you can freely change the value
-of other parameters.
-
-xxxcheckthis Use the dialog attribute "PARAMn" to get the parameter "Ihandle*",
-where "n" is the parameter index in the order they are specified
-starting at 0, but separators and button names are not counted. Notice
-that this is not the actual control, use the parameter attribute
-"CONTROL" to get the actual control. For example:
+The easiest way to retrieve a parameter inside the callback is via
+L<GetParamValue|IUP::Manual::02_Elements/"GetParamValue()"> method:
 
  sub getparam_cb {
    my ($dialog, $param_index) = @_;
-   
-   my $param2 = $dialog->GetAttribute("PARAM2"); #xxx maybe use $dialog->GetParamParam(2)
-   my $value2 = $param2->GetInt(param2, IUP_VALUE);
- 
-   my $param5 = $dialog->GetAttribute("PARAM5"); #xxx maybe use $dialog->GetParamParam(5)
-   my $ctrl5 = $param5->GetAttribute("CONTROL");
- 
-   if ($value2 == 0) {
-     $param5->SetAttribute("IUP_VALUE", "New Value");
-     $ctrl5->SetAttribute("IUP_VALUE", "New Value");
-   }
-   
+   my $oldvalue = $dialog->GetParamValue(2); #get value of the element with index 2 (index is 0-based)
+   my $newvalue;
+   #...   
+   $dialog->GetParamValue(2, $newvalue); #set value of the element with index 2 to $newvalue
    return 1;
  }
 
-Since parameters are user controls and not real controls, you must
-update the control value and the parameter value.
+B<BEWARE: You should not programmatically change the current parameter value (with index == $param_index)
+during the callback>. On the other hand you can freely change the value of other parameters.   
 
-Be aware that programmatically changes are not filtered. The valuator,
-when available, can be retrieved using the parameter attribute
-"AUXCONTROL". The valuator is not automatically updated when the text
-box is changed programmatically. The parameter label is also available
-using the parameter attribute "LABEL".
+B<BEWARE:> Programmatical changes are not filtered.
 
 =back
 
-B<Attributes Inside GetParam Callback:>
+B<Handling GetParam Callback (even more advanced):>
 
 =over
 
-For the dialog:
+Use the $dialog method L<GetParamParam|IUP::Manual::02_Elements/"GetParamParam()"> to get the reference
+to element representing given parameter:
+
+ my $parameter = $dialog->GetParamParam($n);
+
+where C<$n> is the parameter index in the order they are specified
+starting at 0, but separators and button names are not counted. Notice
+that this is not the actual control, which is internally stored in parameter's
+attribute "CONTROL".
+
+Avaliable attributes of C<$parameter> (do not try to use them from perl unless you know what can happen):
 
 =over
 
-=item * "PARAMn" - returns an IUP Ihandle* representing the nth parameter,
-indexed by the declaration order, not counting separators or button
-names.
+=item * "LABEL" - returns an IUP Ihandle, the label associated with the parameter.
 
-=item * "OK" - returns an IUP Ihandle*, the main button.
+=item * "CONTROL" - returns an IUP Ihandle, the real control associated with the parameter.
 
-=item * "CANCEL" - returns an IUP Ihandle*, the close button.
-
-=back
-
-For a parameter:
-
-=over
-
-=item * "LABEL" - returns an IUP Ihandle*, the label associated with the
-parameter.
-
-=item * "CONTROL" - returns an IUP Ihandle*, the real control associated with
-the parameter.
-
-=item * "AUXCONTROL" - returns an IUP Ihandle*, the auxiliary control
-associated with the parameter (only for Valuators).
+=item * "AUXCONTROL" - returns an IUP Ihandle, the auxiliary control associated with the parameter (only for Valuators).
 
 =item * "INDEX" - returns an integer value associated with the parameter index.
-L<GetInt|IUP::Manual::02_Elements/"GetInt()"> xxxcheckthisxxx can also be used.
 
-=item * "VALUE" - returns the parameter value as a string, but L<GetFloat|IUP::Manual::02_Elements/"GetFloat()">
-and L<GetInt|IUP::Manual::02_Elements/"GetInt"> can also be used. It usually contains the new value of
-the control while the VALUE attribute of the control still has the old
-value.
+=item * "VALUE" - returns the parameter value as a string. It usually contains the new value of
+the control while the VALUE attribute of the control still has the old value.
 
 =back
-
-xxxcheckthisxxx To retrieve a parameter you must use the following function:
-
- IUP->GetParamParam($dialog, $param_index);
- #xxxmaybe
- $dialog->GetParamParam($param_index);
 
 =back
 
@@ -1273,34 +1238,37 @@ selection list.
 
 =end html
 
- my $status = IUP->ListDialog($type, $title, $list, $op, $max_col, $max_lin, $marks);
+ my $list = ["Blue", "Red", "Green", "Yellow", "Black", "White", "Gray", "Brown"];
+ 
+ #simple selection
+ my $status = IUP->ListDialog($title, $list, $mark, $max_lin, $max_col);
+ 
+ #multi selection
+ my $status = IUP->ListDialog($title, $list, [0, 1, 0, 0, 1, 1, 0, 0], $max_lin, $max_col);
 
-B<$type:> 1=simple selection; 2=multiple selection
 
 B<$title:> Text for the dialog's title
 
 B<$list:> A reference to array of list items.
 
-B<$op:> Initial selected item when B<$type> is 1. Index starts at 1
-(note that this index is different from the return value, 
-kept for compability reasons). xxxcheck this
+B<$mark:> Initial selected item. For simple selection - has to be a scalar value (0-based index into $list array).
+For multiple selection - has to be an arrayref (must have the same numer of elements as $list size)
+with values "1" for selected items, "0" for unselected items.
 
 B<$max_col:> Maximum number of columns in the list.
 
 B<$max_lin:> Maximum number of lines in the list.
 
-B<$marks:> A refence to array of selection states (1 for selected items,
-0 for unselected items), used only when B<$type> is 2.
+B<$marks:> A refence to array of selection states , used only when B<$type> is 2.
 Can be C<undef> when B<$type> is 1. When defined must have
 the same number of elements as B<$list>.
 
-B<Returns:> When $type is 1, the function returns the number of the selected
+B<Returns:> When simple selection, the function returns the index of the selected
 option (starts at 0), or -1 if the user cancels the operation.
 
-When $type is 2, the function returns -1 when the user cancels the
+When multiple selection, the function returns -1 when the user cancels the
 operation. If the user does not cancel the operation the function
-returns 1 and the B<$marks> parameter will have value 1 for the options
-selected by the user and value 0 for non-selected options.
+returns arrayref with a list of values "1" for selected items, "0" for non-selected items.
 
 B<Notes:>
 
@@ -1635,7 +1603,11 @@ L<SetFocus|IUP::Manual::02_Elements/"SetFocus()"> (element method).
 
 =over
 
-xxxTODO
+ my $classname = GetIhClassName($elem->ihandle); 
+ # gives the same output as
+ $elem->GetClassName(); 
+
+The same as element method L<GetClassName|IUP::Manual::02_Elements/"GetClassName()">.
 
 =back
 
@@ -1644,13 +1616,11 @@ xxxTODO
 =over
 
 Returns the reference to a GUI element that is associated with internal C<ihandle>
-given as a parameter.
+given as a parameter. (avoid this function if possible)
 
-  my $elem = IUP->GetByName($ihandle);
+  my $elem = IUP->GetByIhandle($ihandle);
 
-B<$ihandle:> xxxin fact C pointer
-
-xxxcheckthis
+B<$ihandle:> In fact C pointer - be carefull.
 
 =back
 

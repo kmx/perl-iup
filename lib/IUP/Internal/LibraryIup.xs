@@ -1479,17 +1479,17 @@ _IupGetParam(title,action,action_data,format,...)
 		    case 'c':
 		    case 's':
 		    case 'm':
-		      if (varparam > items-1) {
-		        // xxx warn("FATAL.s!!! cur=%d items=%d", varparam, items);
+		      if (varparam > items-1)
 		        s = "";
-		      }
-		      else s = SvPV_nolen(ST(varparam));
+		      else
+                        s = SvPV_nolen(ST(varparam));
 		      varparam++;
 		      size = strlen(s);
-		      if (size < 512) /* xxx not nice */
-		        param_data[i] = malloc(512);
-		      else
-		        param_data[i] = malloc(2*size);
+                      param_data[i] = malloc(10240); /* XXX hardcoded in iup - not nice */
+		      if (size > 10240) {
+                        warn("Warning: initial string size %d too big, truncating", size);
+                        size = 1024-1;
+		      }
 		      memcpy(param_data[i], s, size+1);
 		      break;
 		  }

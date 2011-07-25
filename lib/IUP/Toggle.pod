@@ -120,21 +120,21 @@ only when IMAGE is defined. Can be YES or NO. Default: NO. (since iup-3.3)
 
 =item B<IMAGE>
 
-I<(non inheritable)>
+I<(non inheritable) [GTK 2.6]>
 
-Image name. When the IMAGE attribute is
+Image name or L<IUP::Image> reference. When the IMAGE attribute is
 defined, the TITLE is not shown. This makes the toggle looks just like
 a button with an image, but its behavior remains the same. 
-Use L<SetName|IUP::Manual::02_Elements/"SetName()"> or XXX-FIX_ME to associate
-an image to a name. See also L<IUP::Image|IUP::Image>. (GTK 2.6)
+
+See - L<Using Images in Other Elements (via IMAGE Attribute)|IUP::Image/"Using Images in Other Elements (via IMAGE Attribute)">
 
 =item B<IMPRESS>
 
-I<(non inheritable)>
+I<(non inheritable) [GTK 2.6]>
 
 Image name of the pressed toggle. Unlike
 buttons, toggles always display the button border when IMAGE and
-IMPRESS are both defined. (GTK 2.6)
+IMPRESS are both defined.
 
 =item B<IMINACTIVE>
 

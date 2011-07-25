@@ -40,10 +40,10 @@ L<IUP::Canvas|IUP::Canvas> to implement the bar handler. XXX-check-this
 =head2 CREATION - new() method
 
  #standard way
- my $sbox = IUP::Sbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'XXX' );
+ my $sbox = IUP::Sbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
  
  #or with just a single child
- my $sbox = IUP::Sbox->new( child=>$elem, ANYATTRIBUTE=>'XXX' );
+ my $sbox = IUP::Sbox->new( child=>$elem, ANYATTRIBUTE=>'any value' );
  
  #or with just 1 parameter (arrayref)
  my $sbox = IUP::Sbox->new( [$elem1, $elem2] );
