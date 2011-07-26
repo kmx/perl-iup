@@ -40,23 +40,14 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 I<(non inheritable)>
 
-Dialog background color or image. Can
-be a non inheritable alternative to BGCOLOR or can be the name of an
-image to be tiled on the background. 
+Dialog background color or image. Can be a non inheritable alternative to BGCOLOR or can be the name of an
+image to be tiled on the background. See also the screenshots:
 
-See also the screenshots of the sample dialog: XXX-fix-the-following-links
+=begin HTML
 
-=over
+[%html.iupdialog_background%]
 
-=item L<results with normal background|xxx.html>
-
-=item L<changing the dialog BACKGROUND|xxx.html>
-
-=item L<changing the dialog BGCOLOR|xxx.html>
-
-=item L<changing the children BGCOLOR|xxx.html>
-
-=back
+=end HTML
 
 =item B<BORDER>
 
@@ -135,7 +126,7 @@ so the dialog can be resized to smaller values. But notice that its
 contents will still be limited by the B<Natural> size, to also remove
 that limitation set SHRINK=YES.
 
-For more information see L<Layout Guide|XXX>.
+For more information see L<[%m.dlg%]>.
 
 =item L<TITLE|[%m.at%]/TITLE>
 
@@ -175,17 +166,15 @@ Note that ACTIVE, BGCOLOR and FONT will also affect all the controls inside the 
 
 =item * B<DEFAULTENTER>
 
-Name of the button activated when the user press Enter
-when focus is in another control of the dialog. Use L<SetName|[%m.elem%]/"SetName()"> or
-XXX-FIX_ME to
-associate a button to a name.
+Name of the button activated when the user press Enter when focus is in another control of the dialog.
+
+To associate a name to element use L<SetName|/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
 
 =item * B<DEFAULTESC>
 
-Name of the button activated when the user press Esc
-when focus is in another control of the dialog. Use L<SetName|[%m.elem%]/"SetName()"> or
-XXX-FIX_ME to
-associate a button to a name.
+Name of the button activated when the user press Esc when focus is in another control of the dialog.
+
+To associate a name to element use L<SetName|/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
 
 =item * B<DIALOGFRAME>
 
@@ -232,10 +221,8 @@ Default: 65535x65535.
 
 =item * B<MENU>
 
-Name of a menu. Associates a menu to the dialog as a menu bar.
-The previous menu, if any, is unmapped. Use L<SetName|[%m.elem%]/"SetName()"> or
-XXX-FIX_ME to
-associate a menu to a name. See also L<IUP::Menu|IUP::Menu>.
+Name of a menu or L<IUP::Menu> reference. Associates a menu to the dialog as a menu bar.
+The previous menu, if any, is unmapped.
 
 =item * B<MENUBOX> (creation only)
 

@@ -1,0 +1,21 @@
+=pod
+
+[% h.name %]
+
+[% m.test %] - Testing HTML+POD
+
+=head1 TEST1
+
+[%FOREACH h IN html_list%]
+=head2 Screenshot - [%h.name%]
+
+=begin html
+
+[%h.html%]
+
+=end html
+[%END%]
+
+=head1 TEST2
+
+None.
