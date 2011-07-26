@@ -1,15 +1,21 @@
 ################ the last time working on ################ 
 
-- POD hacking - cleaning XXX marks
+- POD hacking - IUP::Manual::*
 
 ##########################################################
 
-IMPORTANT: FIX callbacks:
+######## CRITICAL: FIX callbacks:
 - FIX XS+DOC - internal_cb_VALUE_EDIT_CB_iis (should return multiple values)
 - FIX XS+DOC - Canvas: internal_cb_MULTITOUCH_CB_iIIII (should be _iAAAA)
-- FIX XS+DOC - Tree: NODEREMOVED_CB
+- FIX XS+DOC - Tree: NODEREMOVED_CB (userid related)
 
-!!Big Task!!######## doc
+######## IMPORTANT: consider IDEA
+- $element_reference = $radio->GetAttributeAsElement("VALUE"); (Radio, Toggle)
+
+######## IMPORTANT:
+- imglib - Other: B<NOTE:> NOT included in the pre-compiled library XXX-FIXME
+
+######## IMPORTANT: finish doc - espec. IUP::Manual::*
 - Cleanup first (in this order):
   - I::M::Elements.pod
   - I::M::Callbacks.pod
@@ -19,7 +25,7 @@ IMPORTANT: FIX callbacks:
   - pplot: note in doc that DS_ has to be set after ->PPlotEnd()
   - tree: note in doc that tree->SetAttribude has to go after dialog->Show
 
-!!Big Task!!######## tests
+######## IMPORTANT: add more tests
 - CHECK Test::NeedsDisplay
   use Test::NeedsDisplay ':skip_all';
 - skip pattern
@@ -30,23 +36,7 @@ IMPORTANT: FIX callbacks:
 - consider moving cross-check-... into xt/*
 - maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
 
-!!Big Task!! ######## IUP::OLE (extra module)
-- $o->IUNKNOWN ... pointer created by CoCreateInstance Function http://msdn.microsoft.com/en-us/library/ms686615%28v=vs.85%29.aspx
-- perahps integrate with Win32::OLE like $o->ole->methodname(...)
-- Win32::OLE needs something like new_from_iunknown
-  IUnknown *punk = ... value from $olecontrol->IUNKNOWN;
-  HRESULT hr;
-  IDispatch *pDispatch = NULL;
-  hr = punk->QueryInterface(IID_IDispatch, (void**)&pDispatch);
-  punk->Release();
-  ST(0) = CreatePerlObject(aTHX_ stash, pDispatch, destroy);
-- see Wx+OLE/ActiveX integration http://search.cpan.org/~mdootson/Wx-ActiveX-0.15/lib/Wx/ActiveX.pm
-- missing example: notepad.wlua? olecontrol_browser.wlua?
-- missing -> add
-- conditionally only on Win32
-- we probably need IUP::ConfigData for listing available features (iupole, iupgl ...)
-
-!!Big Task!!######## IUP::Canvas (now works without Bitmap/Image/Palette/Pattern related functions)
+######## IMPORTANT: IUP::Canvas (now works without Bitmap/Image/Palette/Pattern related functions)
 - implement missing XS methods to IUP::Internal::Canvas (see notes in Canvas.xs)
 
 1/ non-Bitmap (easier to implement)
@@ -218,6 +208,22 @@ cd.KillImageMap
 - SetAttribute("ATT", $elem) vs. $elem = GetAttribute("ATT") (now Get does not work)
 
 ### NOT NOW, MAYBE LATER ################################################################################################
+
+(not now, maybe later)!!Big Task!! ######## IUP::OLE (extra module)
+- $o->IUNKNOWN ... pointer created by CoCreateInstance Function http://msdn.microsoft.com/en-us/library/ms686615%28v=vs.85%29.aspx
+- perahps integrate with Win32::OLE like $o->ole->methodname(...)
+- Win32::OLE needs something like new_from_iunknown
+  IUnknown *punk = ... value from $olecontrol->IUNKNOWN;
+  HRESULT hr;
+  IDispatch *pDispatch = NULL;
+  hr = punk->QueryInterface(IID_IDispatch, (void**)&pDispatch);
+  punk->Release();
+  ST(0) = CreatePerlObject(aTHX_ stash, pDispatch, destroy);
+- see Wx+OLE/ActiveX integration http://search.cpan.org/~mdootson/Wx-ActiveX-0.15/lib/Wx/ActiveX.pm
+- missing example: notepad.wlua? olecontrol_browser.wlua?
+- missing -> add
+- conditionally only on Win32
+- we probably need IUP::ConfigData for listing available features (iupole, iupgl ...)
 
 (not now, maybe later)######## implement threads demo
 - threads+Wx - http://use.perl.org/~Alias/journal/40377

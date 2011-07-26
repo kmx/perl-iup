@@ -11,8 +11,7 @@ biggest natural size among them. All natural width will be set to the
 biggest width, and all natural height will be set to the biggest height
 according to is value.
 
- my $normalizer = IUP::Normalizer( child=>[$elem1, $elem2, $elem3],
-                                   NORMALIZE=>"HORIZONTAL" );
+ my $normalizer = IUP::Normalizer->new( child=>[$elem1, $elem2, $elem3], NORMALIZE=>"HORIZONTAL" );
  #at his point $elem1 ... $elem3 are normalized, IUP::Normalizer instance can be destroyed
  undef $normalizer;
 
@@ -20,9 +19,20 @@ according to is value.
 
 =head2 CREATION - new() method
 
- $normalizer = IUP::Normalizer->new( );
+ #standard way
+ $normalizer = IUP::Normalizer->new( child=>[$elem1, $elem2], NORMALIZE=>"HORIZONTAL" );
+ 
+ #or with just a single child
+ $normalizer = IUP::Normalizer->new( child=>$elem1, NORMALIZE=>"HORIZONTAL" );
+ 
+ #or with just 1 parameter (arrayref)
+ $normalizer = IUP::Normalizer->new( [$elem1, $elem2] );
+ 
+ #or with just 1 parameter (reference to child elements)
+ $normalizer = IUP::Normalizer->new( $elem1 );
 
-XXX-child-named-param-not implemented-yet
+B<child:> (named parameter) List of the references to elements (or just a single element) that
+will be normalized.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
@@ -49,12 +59,9 @@ with that name does not exists then one is created.
 
 =item * B<ADDCONTROL> (non inheritable)
 
-Adds a control to the normalizer. The
-value passed must be the name of an element. Use
-L<SetName|IUP::Manual::02_Elements/"SetName()"> or
-XXX-FIX_ME to
-associate an element to a name. In Lua you can also use the element
-reference directly.
+Adds a control to the normalizer. The value passed must be the perl reference or name of the element.
+
+To associate a name to element use L<SetName|/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
 
 =item * B<ADDCONTROL_HANDLE> (non inheritable)
 

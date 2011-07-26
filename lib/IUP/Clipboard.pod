@@ -7,18 +7,28 @@ IUP::Clipboard - [special] allows access to the clipboard
 =head1 DESCRIPTION 
 
 Creates an element that allows access to the clipboard. Each clipboard
-should be destroyed using L<Destroy|IUP::Element::XXX/"Destroy()"> method, but
+should be destroyed using L<Destroy|IUP::Manual::02_Elements/"Destroy()"> method, but
 you can use only one for entire application because it does not store
 any data inside. Or you can simply create and destroy everytime you
 need to copy or paste.
 
-Example: XXX-TODO
+Example - copy to clipboard:
 
  $text = IUP::Text->new();
  #...
  $clipboard = IUP::Clipboard->new();
  $clipboard->TEXT( $text->VALUE );
  $clipboard->Destroy();
+ ###ZZZ-test-this
+
+Example - paste from clipboard:
+
+ $text = IUP::Text->new();
+ #...
+ $clipboard = IUP::Clipboard->new();
+ $text->VALUE( $clipboard->TEXT );
+ $clipboard->Destroy();
+ ###ZZZ-test-this
 
 =head1 USAGE
 
@@ -55,6 +65,8 @@ at the clipboard. (GTK 2.6)
 
 =item * B<NATIVEIMAGE>
 
+XXX-FIXME-not-implemented-in-perl-bindings
+
 native handle of an image to copy or paste, to or from
 the clipboard.
 
@@ -64,11 +76,9 @@ In GTK is a B<GdkPixbuf*>.
 
 In Motif is a B<Pixmap>. 
 
-XXX-TODO-FIXME
 The returned handle in a paste must be released after used (GlobalFree(handle), g_object_unref(pixbuf)
 or XFreePixmap(display, pixmap)). After copy, do NOT release the given
-handle. See L<IUP-IM Functions|XXX> for utility functions on
-image native handles. (GTK 2.6)
+handle. See IUP-IM Functions for utility functions on image native handles. (GTK 2.6)
 
 =item * B<SAVEEMF> (write-only) [Windows Only]
 

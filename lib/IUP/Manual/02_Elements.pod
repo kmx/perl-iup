@@ -585,9 +585,8 @@ L<NAME|IUP::Manual::03_Attributes/NAME>.
 
 =over
 
-Returns the name of an interface element, if the element has an
-associated name using L<SetName|/"SetName()"> or using LED or
-by C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
+Returns the name of an interface element, if the element has an associated name using 
+L<SetName|/"SetName()"> or by C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor or using LED.
 
  my $name = $element->GetName();
 

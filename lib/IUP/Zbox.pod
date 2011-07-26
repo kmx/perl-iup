@@ -35,10 +35,6 @@ Zbox will NOT change its state.
 B<child:> (named parameter) List of the references to elements (or just a single element) that
 will be placed in the box. Can be C<undef>.
 
-B<IMPORTANT>: Each element must have a name defined by
-L<SetName|IUP::Manual::02_Elements/"SetName()">. In perl a name is always
-automatically created, but you can change it later. xxx-check-this
-
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
@@ -81,11 +77,9 @@ will be ignored by the layout processing. Default: "NO".
 
 I<(non inheritable)>
 
-The visible child accessed by its name. The value passed must be
-the perl reference or name of one of the children contained in the zbox.
+The visible child. The value passed must be the perl reference or name of one of the children contained in the zbox.
 
-Use C<< $child->SetName('...') >> or C<< $child = IUP::AnyElement->new( name=>'...' ) >>
-to associate a child to a name. XXX-test-this
+To associate a name to element use L<SetName|/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
 
 When the value is changed the selected child is made visible and all
 other children are made invisible, regardless their previous visible state.
@@ -147,7 +141,7 @@ The element B<IUP::Zbox> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/zbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_15/examples/0-basic/zbox.pl> - IUP::Zbox example
+=item * L<0-basic/zbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_16/examples/0-basic/zbox.pl> - IUP::Zbox example
 
 =back 
 

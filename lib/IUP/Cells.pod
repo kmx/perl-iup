@@ -434,11 +434,11 @@ The element B<IUP::Cells> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/cells_checkboard.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_15/examples/0-basic/cells_checkboard.pl> - IUP::Cells example
+=item * L<0-basic/cells_checkboard.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_16/examples/0-basic/cells_checkboard.pl> - IUP::Cells example
 
-=item * L<0-basic/cells_degrade.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_15/examples/0-basic/cells_degrade.pl> - IUP::Cells example
+=item * L<0-basic/cells_degrade.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_16/examples/0-basic/cells_degrade.pl> - IUP::Cells example
 
-=item * L<0-basic/cells_numbering.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_15/examples/0-basic/cells_numbering.pl> - IUP::Cells example
+=item * L<0-basic/cells_numbering.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_16/examples/0-basic/cells_numbering.pl> - IUP::Cells example
 
 =back 
 
