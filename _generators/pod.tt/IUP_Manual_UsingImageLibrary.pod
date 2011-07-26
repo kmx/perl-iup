@@ -1,0 +1,83 @@
+=pod
+
+=head1 NAME
+
+[% m.imglib %] - Manuals element guide
+
+=head1 IUP MANUAL
+
+=over
+
+=item * L<[%m.intro%]|[%m.intro%]>
+
+=item * L<[%m.elem%]|[%m.elem%]>
+
+=item * L<[%m.at%]|[%m.at%]>
+
+=item * L<[%m.cb%]|[%m.cb%]>
+
+=item * L<[%m.keys%]|[%m.keys%]>
+
+=item * L<[%m.dlg%]|[%m.dlg%]>
+
+=item * [%m.imglib%] E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
+
+=back
+
+=head1 Available Images
+
+All built-in images from ImageLibrary are available automatically after C<use IUP>
+
+To use/reference build-in images you have to use symbolic names like C<"IUP_LogoTecgraf"> - BEWARE: the names are strings not constants/bare words.
+
+See - L<Using Images in Other Elements (via IMAGE Attribute)|IUP::Image/"Using Images in Other Elements (via IMAGE Attribute)">
+
+=head2 Bitmap Group
+
+These bitmaps are 16x16-8bpp (Motif), 16x16-32bpp (Win32) or
+24x24-32bpp (GTK) pixels size images that can be used in Buttons,
+usually inside toolbars. Do not set RASTERSIZE of buttons so they can
+expand when switching to GTK.
+
+=begin HTML
+
+[%html.imglib_bitmap%]
+
+=end HTML
+
+=head2 Icon Group
+
+These icons are 32x32 pixels size (or just 32 pixels height) images
+that can be used in Labels, usually inside toolbars.
+
+=begin HTML
+
+[%html.imglib_icon%]
+
+=end HTML
+
+=head2 Logo Group
+
+These logos are 48x48 pixels size (or just 48 pixels height) images
+that can be used in Labels, usually inside dialogs.
+
+=begin HTML
+
+[%html.imglib_logo%]
+
+=end HTML
+
+=head2 Other
+
+B<NOTE:> NOT included in the pre-compiled library XXX-FIXME
+
+Here are other images available in the IUP stock library, commonly used
+by the respective systems. All images are 48x48 pixels size and 32bpp.
+
+=begin HTML
+
+[%html.imglib_other%]
+
+=end HTML
+
+=cut
