@@ -213,7 +213,7 @@ sub load_examples {
     }
     my $plshort = File::Spec->abs2rel($pl, $exdir);    
     $plshort =~ s|\\|/|;
-    for my $e (keys %$allelems) {  
+    for my $e (sort keys %$allelems) {  
       my $nick = $allelems->{$e};
       if ($content =~ /\Q$e\E\->new/s) {
         push @{$ttdata->{examples}->{$nick}}, { pl=>$plshort, desc=>$desc };
