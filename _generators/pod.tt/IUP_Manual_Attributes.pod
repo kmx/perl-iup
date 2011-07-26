@@ -2,7 +2,7 @@
 
 [% h.name %]
 
-[% m.at %] - Attribute concept, using attributes, common + global attributes
+[% m.at %] - Attributes concept, using attributes, common + global attributes
 
 =head1 IUP MANUAL
 
@@ -20,9 +20,13 @@
 
 =item * L<[%m.dlg%]|[%m.dlg%]>
 
+=item * L<[%m.imglib%]|[%m.imglib%]>
+
 =back
 
 =head1 INTRODUCTION
+
+B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
 
 This document is intended as a reference list for common attributes used by several
 (or all) GUI elements and global attributes which are not associated with any element.

@@ -20,9 +20,13 @@ IUP::Manual::01_Introduction - Basic introduction to IUP concept
 
 =item * L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>
 
+=item * L<IUP::Manual::07_UsingImageLibrary|IUP::Manual::07_UsingImageLibrary>
+
 =back
 
 =head1 INTRODUCTION
+
+B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
 
 IUP uses an abstract layout model based on the boxes-and-glue paradigm
 from the TEX text editor. This model makes the dialog creation

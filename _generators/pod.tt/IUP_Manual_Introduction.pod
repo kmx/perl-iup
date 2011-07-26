@@ -20,9 +20,13 @@
 
 =item * L<[%m.dlg%]|[%m.dlg%]>
 
+=item * L<[%m.imglib%]|[%m.imglib%]>
+
 =back
 
 =head1 INTRODUCTION
+
+B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
 
 IUP uses an abstract layout model based on the boxes-and-glue paradigm
 from the TEX text editor. This model makes the dialog creation

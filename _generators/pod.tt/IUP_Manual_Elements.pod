@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-[% m.elem %] - Manuals element guide
+[% m.elem %] - GUI elements guide, methods common for all IUP elements
 
 =head1 IUP MANUAL
 
@@ -20,9 +20,13 @@
 
 =item * L<[%m.dlg%]|[%m.dlg%]>
 
+=item * L<[%m.imglib%]|[%m.imglib%]>
+
 =back
 
 =head1 INTRODUCTION
+
+B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
 
 This document is intended as a reference list for common methods used by all IUP elements.
 

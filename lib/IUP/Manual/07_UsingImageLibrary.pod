@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Manual::07_UsingImageLibrary - Manuals element guide
+IUP::Manual::07_UsingImageLibrary - Using IUP buil-in image library
 
 =head1 IUP MANUAL
 

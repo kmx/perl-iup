@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Manual::02_Elements - Manuals element guide
+IUP::Manual::02_Elements - GUI elements guide, methods common for all IUP elements
 
 =head1 IUP MANUAL
 
@@ -20,9 +20,13 @@ IUP::Manual::02_Elements - Manuals element guide
 
 =item * L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>
 
+=item * L<IUP::Manual::07_UsingImageLibrary|IUP::Manual::07_UsingImageLibrary>
+
 =back
 
 =head1 INTRODUCTION
+
+B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
 
 This document is intended as a reference list for common methods used by all IUP elements.
 

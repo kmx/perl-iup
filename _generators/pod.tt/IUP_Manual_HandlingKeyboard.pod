@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-[% m.keys %] - Manuals element guide
+[% m.keys %] - Handling keyboard in IUP applications
 
 =head1 IUP MANUAL
 
@@ -20,45 +20,13 @@
 
 =item * L<[%m.dlg%]|[%m.dlg%]>
 
-=back
-
-=head1 TESTING1
-
-=head2 TESTING2
-
-=head3 TESTING3
-
-=head4 TESTING4
-
-=over
-
-=item * testing5
-
-=item * testing6 xx
+=item * L<[%m.imglib%]|[%m.imglib%]>
 
 =back
-
-=over
-
-=item testing7
-
-=item testing8 xx
-
-=back
-
-=over
-
-=item B<testing9>
-
-=item B<testing10> (xx yy)
-
-=back
-
-X<testing7> bleeee7
-
-X<testing8> bleeee7
 
 =head1 INTRODUCTION
+
+B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
 
 xxxTODO text text
 

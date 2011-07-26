@@ -2,7 +2,7 @@
 
 [% h.name %]
 
-[% m.dlg %] - Dialor Layout Composition
+[% m.dlg %] - Dialog layout composition
 
 =head1 IUP MANUAL
 
@@ -20,12 +20,13 @@
 
 =item * [%m.dlg%] E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
 
+=item * L<[%m.imglib%]|[%m.imglib%]>
+
 =back
 
 =head1 INTRODUCTION
 
-xxxTODO text text text text text text text text text text text text
-text text text text text text text text text text text text text text
+B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
 
 xxxhave a look at: http://www.tecgraf.puc-rio.br/iup/download/spe95.pdf
 

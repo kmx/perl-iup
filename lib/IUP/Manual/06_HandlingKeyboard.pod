@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Manual::06_HandlingKeyboard - Manuals element guide
+IUP::Manual::06_HandlingKeyboard - Handling keyboard in IUP applications
 
 =head1 IUP MANUAL
 
@@ -20,45 +20,13 @@ IUP::Manual::06_HandlingKeyboard - Manuals element guide
 
 =item * L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>
 
-=back
-
-=head1 TESTING1
-
-=head2 TESTING2
-
-=head3 TESTING3
-
-=head4 TESTING4
-
-=over
-
-=item * testing5
-
-=item * testing6 xx
+=item * L<IUP::Manual::07_UsingImageLibrary|IUP::Manual::07_UsingImageLibrary>
 
 =back
-
-=over
-
-=item testing7
-
-=item testing8 xx
-
-=back
-
-=over
-
-=item B<testing9>
-
-=item B<testing10> (xx yy)
-
-=back
-
-X<testing7> bleeee7
-
-X<testing8> bleeee7
 
 =head1 INTRODUCTION
+
+B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
 
 xxxTODO text text
 

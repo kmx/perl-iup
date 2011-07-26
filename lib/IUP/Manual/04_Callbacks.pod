@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Manual::04_Callbacks - Common callbacks, reference guide
+IUP::Manual::04_Callbacks - Callbacks concept, using callbacks, common + global callbacks
 
 =head1 IUP MANUAL
 
@@ -20,9 +20,13 @@ IUP::Manual::04_Callbacks - Common callbacks, reference guide
 
 =item * L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>
 
+=item * L<IUP::Manual::07_UsingImageLibrary|IUP::Manual::07_UsingImageLibrary>
+
 =back
 
 =head1 INTRODUCTION
+
+B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
 
 This document is intended as a reference list for common callbacks used by several
 or all GUI elements + global B<IDLE_ACTION> callback.

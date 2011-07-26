@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Manual::03_Attributes - Attribute concept, using attributes, common + global attributes
+IUP::Manual::03_Attributes - Attributes concept, using attributes, common + global attributes
 
 =head1 IUP MANUAL
 
@@ -20,9 +20,13 @@ IUP::Manual::03_Attributes - Attribute concept, using attributes, common + globa
 
 =item * L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>
 
+=item * L<IUP::Manual::07_UsingImageLibrary|IUP::Manual::07_UsingImageLibrary>
+
 =back
 
 =head1 INTRODUCTION
+
+B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
 
 This document is intended as a reference list for common attributes used by several
 (or all) GUI elements and global attributes which are not associated with any element.

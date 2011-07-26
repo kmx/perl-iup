@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Manual::05_DialogLayout - Dialor Layout Composition
+IUP::Manual::05_DialogLayout - Dialog layout composition
 
 =head1 IUP MANUAL
 
@@ -20,12 +20,13 @@ IUP::Manual::05_DialogLayout - Dialor Layout Composition
 
 =item * IUP::Manual::05_DialogLayout E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
 
+=item * L<IUP::Manual::07_UsingImageLibrary|IUP::Manual::07_UsingImageLibrary>
+
 =back
 
 =head1 INTRODUCTION
 
-xxxTODO text text text text text text text text text text text text
-text text text text text text text text text text text text text text
+B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
 
 xxxhave a look at: http://www.tecgraf.puc-rio.br/iup/download/spe95.pdf
 

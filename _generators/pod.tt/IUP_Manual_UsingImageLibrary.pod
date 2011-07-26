@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-[% m.imglib %] - Manuals element guide
+[% m.imglib %] - Using IUP buil-in image library
 
 =head1 IUP MANUAL
 
