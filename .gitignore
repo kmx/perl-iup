@@ -14,3 +14,5 @@ _internal
 META.yml
 MYMETA.yml
 MANIFEST
+/META.json
+/MYMETA.json

@@ -39,7 +39,7 @@ if (-d '.git') { #adding some custom actions relevant only for module developmen
 
   sub ACTION_doc {
     system($^X, qw[_generators/proc-pod.tt2pod.pl -podtt _generators/pod.tt -pod lib]);
-    system($^X, qw[_generators/proc-pod2cpan.html.pl -html doc.html.tmp -pod lib]);
+    system($^X, qw[_generators/proc-pod2cpan.html.pl -html tmp.cpan-like.html -pod lib]);
   }
 
 SUBCLASS
