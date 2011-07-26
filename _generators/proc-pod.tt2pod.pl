@@ -189,7 +189,7 @@ sub load_htmlinc {
     $ttdata->{html}->{$n} = $content;
   }
   my @html_list;
-  for my $k (keys %{$ttdata->{html}}) {
+  for my $k (sort keys %{$ttdata->{html}}) {
     push @html_list, { name=>$k, html=>$ttdata->{html}->{$k} };
   }
   $ttdata->{html_list} = \@html_list;
@@ -213,7 +213,7 @@ sub load_examples {
     }
     my $plshort = File::Spec->abs2rel($pl, $exdir);    
     $plshort =~ s|\\|/|;
-    for my $e (sort keys %$allelems) {  
+    for my $e (keys %$allelems) {  
       my $nick = $allelems->{$e};
       if ($content =~ /\Q$e\E\->new/s) {
         push @{$ttdata->{examples}->{$nick}}, { pl=>$plshort, desc=>$desc };
