@@ -1,0 +1,58 @@
+=head1 IupElementPropertiesDialog (since 3.5)
+
+Creates an Element Properties Dialog. It is a predefined dialog to edit
+the properties of an element in run time. It is a standard B<IupDialog>
+constructed with other IUP elements. The dialog can be shown with any
+of the show functions B<IupShow>, B<IupShowXY> or B<IupPopup>.
+
+Any existent element can be edited. It does not need to be mapped on
+the native system nor visible. It could have been created in C, LED or
+Lua.
+
+This is a dialog intended for developers, so they can see and inspect
+their elements in other ways.
+
+It contains 3 Tab sections: one for the registered attributes of the
+element, one for custom attributes set at the hash table, and one for
+the callbacks. The callbacks are just for inspection, and custom
+attribute should be handled carefully because they may be not strings.
+Registered attributes values are shown in red when they were changed by
+the application.
+
+=head2 Creation
+
+ Ihandle* IupElementPropertiesDialog(Ihandle* elem); [in C]
+ iup.ElementPropertiesDialog(elem: ihandle) -> (dlg: ihandle) [in Lua]
+ [NOT available in LED]
+
+B<elem>: identifier of the element to display the properties. Not
+optional.
+
+Returns: the identifier of the created dialog, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+Check the L<IupDialog|iupdialog.html#Attributes> attributes.
+
+=head2 Callbacks
+
+Check the L<IupDialog|iupdialog.html#Callbacks> callbacks.
+
+=head2 Examples
+
+ IupShow(IupElementPropertiesDialog(button));   [in C]
+ 
+ iup.Show(iup.ElementPropertiesDialog(button))    [in Lua]
+
+The following dialog layout is displayed next.
+
+[IMAGE]
+
+=head2 X<SeeAlso>See Also
+
+L<IupDialog|iupdialog.html>, L< IupShow|../func/iupshow.html>,
+L<IupShowXY|../func/iupshowxy.html>, L<IupPopup|../func/iuppopup.html>,
+L<IupLayoutDialog|iuplayoutdialog.html>
+
+=cut
