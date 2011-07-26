@@ -31,8 +31,8 @@ application.
     <col style="background-color: rgb(236, 233, 216);">
     <tbody align="center">
       <tr>
-        <th style="text-align: center;">Windows<br>Classic</th>
-        <th style="text-align: center;">Windows<br>XP Style</th>
+        <th style="text-align: center;">Windows Classic</th>
+        <th style="text-align: center;">Windows XP Style</th>
       </tr>
       <tr>
         <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupcanvas_win2k.png"></td>

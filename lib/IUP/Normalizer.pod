@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Normalizer - [GUI element] normalizes all controls from a list to be the biggest natural size
+IUP::Normalizer - [special] normalizes all controls from a list to be the biggest natural size
 
 =head1 DESCRIPTION 
 

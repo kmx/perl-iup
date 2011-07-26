@@ -4,6 +4,9 @@
 
 ##########################################################
 
+CRITICAL:
+- PPlot - EDIT_CB callback
+
 !!Decide!!######## move to separate dist
 - IUP::OLE
 - we probably need IUP::ConfigData for listing available features (iupole, iupgl ...)

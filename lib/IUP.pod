@@ -1259,10 +1259,6 @@ B<$max_col:> Maximum number of columns in the list.
 
 B<$max_lin:> Maximum number of lines in the list.
 
-B<$marks:> A refence to array of selection states , used only when B<$type> is 2.
-Can be C<undef> when B<$type> is 1. When defined must have
-the same number of elements as B<$list>.
-
 B<Returns:> When simple selection, the function returns the index of the selected
 option (starts at 0), or -1 if the user cancels the operation.
 
@@ -1271,7 +1267,6 @@ operation. If the user does not cancel the operation the function
 returns arrayref with a list of values "1" for selected items, "0" for non-selected items.
 
 B<Notes:>
-
 The dialog uses a global attribute called "PARENTDIALOG" as the parent
 dialog if it is defined. It also uses a global attribute called "ICON"
 as the dialog icon if it is defined.
