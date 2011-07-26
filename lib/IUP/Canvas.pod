@@ -375,21 +375,19 @@ B<Callback handler prototype:>
    my ($self, $count, $pid, $px, $py, $pstate) = @_;
    #...
  }
+ #ZZZ-test-this
 
 B<$self:> identifier of the element that activated the event.
 
-B<$count:> Number of touch points in the array.
+B<$count:> Number of touch points in the array (should correspond to the sizes of $pid, $px, $py, $pstate).
 
-B<$pid:> Array of touch point ids.
+B<$pid:> Reference to array of touch point ids.
 
-B<$px:> Array of touch point x coordinates in pixels, relative to the
-top-left corner of the canvas.
+B<$px:> Reference to array of touch point x coordinates in pixels, relative to the top-left corner of the canvas.
 
-B<$py:> Array of touch point y coordinates in pixels, relative to the
-top-left corner of the canvas.
+B<$py:> Reference to array of touch point y coordinates in pixels, relative to the top-left corner of the canvas.
 
-B<$pstate:> Array of touch point states. Can be 'D' (DOWN), 'U' (UP) or
-'M' (MOVE).
+B<$pstate:> Reference to array of touch point states. Can be 'D' (DOWN), 'U' (UP) or 'M' (MOVE).
 
 B<Returns:> IUP_CLOSE will be processed.
 

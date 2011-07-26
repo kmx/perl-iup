@@ -10,7 +10,7 @@ Creates a void container that allows its child to be resized. Allows
 expanding and contracting the child B<size> in one direction.
 
 It does not have a native representation but it contains also a
-L<IUP::Canvas|IUP::Canvas> to implement the bar handler. XXX-check-this
+L<IUP::Canvas> to implement the bar handler.
 
 =begin HTML
 
@@ -94,8 +94,7 @@ L<MAXSIZE|[%m.at%]/MAXSIZE>
 
 The controls that you want to be resized must have the EXPAND=YES
 attribute set. The control inside the sbox will not be resized with a
-size lesser than its B<Natural> size. See the L<Layout
-Guide|xxx.html> for mode details on sizes.
+size lesser than its B<Natural> size. See the L<[%m.dlg%]> for mode details on sizes.
 
 The L<IUP::Canvas|IUP::Canvas> bar handler is always the first child of the sbox. It
 can be obtained using L<GetChild|[%m.elem%]/"GetChild()"> or L<GetNextChild|[%m.elem%]/"GetNextChild()">.

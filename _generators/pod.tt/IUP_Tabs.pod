@@ -129,11 +129,8 @@ visual style is removed from tabs.
 
 I<(non inheritable)>
 
-Changes the active tab by its name. The
-value passed must be the name of one of the elements contained in the
-tabs. Use L<SetName|[%m.elem%]/"SetName()"> or XXX-FIX_ME to associate
-a child to a name. In Lua (XXX-check-this-for-perl) you can also use the element reference
-directly.
+Changes the active tab.  The value passed must be the name (see L<SetName|[%m.elem%]/"SetName()">) of one of 
+the elements contained in the tabs or a reference to such an element.
 
 =item B<VALUE_HANDLE>
 

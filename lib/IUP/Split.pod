@@ -150,8 +150,7 @@ L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>
 
 The controls that you want to be resized must have the EXPAND=YES
 attribute set. The control inside the split will not be resized with a
-size lesser than its B<Natural> size. See the L<Layout
-Guide|xxx> for mode details on sizes.
+size lesser than its B<Natural> size. See the L<IUP::Manual::05_DialogLayout> for mode details on sizes.
 
 L<IUP::Split|IUP::Split> is not capable of detecting a child minimum size, so if a
 child has a minimum size, then manually set the B<MINMAX> attribute to

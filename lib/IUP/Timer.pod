@@ -6,8 +6,8 @@ IUP::Timer - [special] periodicaly invokes a callback when the time is up
 
 =head1 DESCRIPTION
 
-Creates a timer which periodicaly invokes a callback when the time is
-up. Each timer should be destroyed using L<Destroy|IUP::Manual::02_Elements/"Destroy()"> (XXX-more-perlish C<undef $timer>).
+Creates a timer which periodicaly invokes a callback when the time is up.
+Each timer should be destroyed using L<Destroy|IUP::Manual::02_Elements/"Destroy()"> (or simply by C<undef $timer>).
 
 =head1 USAGE
 

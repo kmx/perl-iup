@@ -125,8 +125,6 @@ different elements.
 The images should be destroyed when they are no longer necessary, by
 means of the L<Destroy|IUP::Manual::02_Elements/"Destroy()"> function. To destroy an image, it cannot be
 in use, i.e the controls where it is used should be destroyed first.
-Images that were associated with controls by names are automatically
-destroyed in B<IUP::Close> XXX-iup-close-XXX.
 
 Please observe the rules for creating cursor images: L<CURSOR|IUP::Manual::03_Attributes/CURSOR>.
 
@@ -168,15 +166,12 @@ The alternative approach to load an image from file is:
 Which internally uses L<im library|http://www.tecgraf.puc-rio.br/im/> to load the image
 and supports the given set of image formats (BMP PCX GIF TIFF SGI JPEG TGA ICO PNG PPM PBM PNM PGM LED) B<on all drivers>.
 
-B<XXX-check-this---probably-not-relevant-for-perl-XXX>
 In Windows, names of resources in RC files linked with the application
-are also accepted. In GTK, names of GTK Stock Items are also accepted.
+are also accepted (not true for perl IUP bindings). In GTK, names of GTK Stock Items are also accepted.
 In Motif, names of bitmaps installed on the system are also accepted.
 For example:
 
  $label->IUP::Label->new();
- $label->SetAttribute( IMAGE=>"TECGRAF_BITMAP" );  #available in the "etc/iup.rc" file
- #or
  $label->SetAttribute( IMAGE=>"gtk-open");  # available in the GTK Stock Items
 
 =head2 Using Colors

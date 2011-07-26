@@ -664,8 +664,6 @@ points are selected it is called once for each new selected point. It
 is called only if the selection state of the sample is about to be
 changed.
 
-#XXX-FIXME-not-implemented-correctly
-
 B<Callback handler prototype:>
 
  sub edit_cb_handler {
@@ -674,6 +672,7 @@ B<Callback handler prototype:>
    #...
    return ($new_x, $new_y, $retval);
  }
+ #ZZZ-test-this
 
 =over
 

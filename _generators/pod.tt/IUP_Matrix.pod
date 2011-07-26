@@ -1038,8 +1038,9 @@ Action generated to retrieve the background color of a cell when it needs to be 
    my ($self, $lin, $col) = @_;
    my ($red, $green, $blue, $ret);
    #...
-   return ($red, $green, $blue, $ret); #xxx check-the-implementation
+   return ($red, $green, $blue, $ret);  
  }
+ #ZZZ-test-this
 
 =over
 
@@ -1065,8 +1066,9 @@ Action generated to retrieve the foreground color of a cell when it needs to be 
    my ($self, $lin, $col) = @_;
    my ($red, $green, $blue, $ret);
    #...
-   return ($red, $green, $blue, $ret); #xxx check-implementation
+   return ($red, $green, $blue, $ret);   
  }
+ #ZZZ-test-this
 
 =over
 
@@ -1188,7 +1190,7 @@ value can be verified from the given drop Ihandle via the
 
 B<$self:> reference to the element (IUP::Matrix) interacting with the user
 
-B<$drop:> reference to dropdown list element (IUP::List xxx) which will be shown to the user.
+B<$drop:> reference to dropdown list element (IUP::List) which will be shown to the user.
 
 B<$lin, $col>: Coordinates of the current cell.
 
@@ -1216,7 +1218,7 @@ B<$self:> reference to the element (IUP::Matrix) interacting with the user
 
 B<$lin, $col:> Coordinates of the current cell.
 
-B<$drop:> reference to the dropdown list element (IUP::List xxx) shown to the user.
+B<$drop:> reference to the dropdown list element (IUP::List) shown to the user.
 
 B<$t:> Text of the item whose state was changed.
 
@@ -1402,9 +1404,7 @@ L<KEYPRESS_CB|[%m.cb%]/KEYPRESS_CB>,
 L<MOTION_CB|[%m.cb%]/MOTION_CB>,
 L<MAP_CB|[%m.cb%]/MAP_CB>
 
-=item * L<RESIZE_CB|[%m.cb%]/RESIZE_CB> and L<BUTTON_CB|[%m.cb%]/BUTTON_CB> can be changed but you should
-save and call the original definition from inside your own callback, or
-the matrix will not correctly work. This can not be done in Lua (XXX).
+=item * L<RESIZE_CB|[%m.cb%]/RESIZE_CB> and L<BUTTON_CB|[%m.cb%]/BUTTON_CB> cannot be changed from perl IUP bindings.
 
 Use L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
 coordinates in the cell position: C<pos = lin * numcol + col>

@@ -845,9 +845,9 @@ B<Callback handler prototype:>
 
 B<$self:> identifier of the element that activated the event.
 
-B<$ids:> Array of node identifiers. XXX-check-implementation
+B<$ids:> Reference to array of node identifiers.
 
-B<$n:> Number of nodes in the array.
+B<$n:> Number of nodes in the array (should correspond to the size of $ids).
 
 =back
 
@@ -1027,7 +1027,7 @@ B<Callback handler prototype:>
 
 B<$self:> identifier of the element that activated the event.
 
-B<$userdata_ref:> #XXX-check-implementation.
+B<$userdata_ref:> #XXX-FIXME-not-implemented-correctly
 
 =back
 

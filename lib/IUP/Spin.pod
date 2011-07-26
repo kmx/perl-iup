@@ -24,7 +24,7 @@ inserted inside the L<IUP::Text|IUP::Text> area.
 
 =head2 CREATION - new() method
 
-L<IUP::Spin|IUP::Spin> inherits (xxx-better-explanation) from a L<IUP::Vbox|IUP::Vbox>, and contains two L<IUP::Button|IUP::Button>.
+L<IUP::Spin|IUP::Spin> is based on L<IUP::Vbox|IUP::Vbox>, and contains two L<IUP::Button|IUP::Button>.
 
  $spin = IUP::Spin->new();
 

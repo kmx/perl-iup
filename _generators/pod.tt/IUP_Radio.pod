@@ -41,10 +41,10 @@ The default value is "YES".
 
 I<(non inheritable)>
 
-Name identifier of the active toggle. The name is set by means of L<SetName|[%m.elem%]/"SetName()">. 
-In Lua(XXX) you can also use the element reference directly. XXX-check-this
-When consulted if the toggles are not mapped into the native
-system the return value may be C<undef> or invalid.
+Name identifier or reference to the active toggle element.
+When consulted if the toggles are not mapped into the native system the return value may be C<undef> or invalid.
+
+ZZZ-test-this(reading the value)
 
 =item B<VALUE_HANDLE>
 
