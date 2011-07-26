@@ -80,7 +80,7 @@ automatically set to "NO". Default: "NO".
 
 I<(read-only, non inheritable)>
 
-Returns the internal CD canvas (reference to L<IUP::Canvas). ZZZ-test-this
+Returns the internal CD canvas (reference to L<IUP::Canvas>). ZZZ-test-this
 This attribute should be used only in specific cases and by experienced programmers.
 
 =item B<CLIPPED>
@@ -115,7 +115,7 @@ column integer indexes respectively.
 
 I<(read-only, non inheritable)>
 
-Returns the internal image CD canvas (reference to L<IUP::Canvas) ZZZ-test-this
+Returns the internal image CD canvas (reference to L<IUP::Canvas>) ZZZ-test-this
 This attribute should be used only in specific cases and by experienced programmers.
 
 =item B<LIMITS(L):(C)>
