@@ -150,6 +150,71 @@ my $ttdata = {
                  "see L<[%m.cb%]|[%m.cb%]>. Callbacks specific to this element:",
     cb_common => "The following L<common callbacks|[%m.cb%]/Common Callbacks> are also accepted:",
     cb_ih     => 'B<$self:> reference to the element that activated the event.',
+    modlist   => <<'MARKER'
+B<Currently available IUP elements:>
+
+=over
+
+=item * The most important GUI element used for the main applications window:
+
+L<IUP::Dialog>
+
+=item * GUI elements:
+
+L<IUP::Button|IUP::Button>,
+L<IUP::Canvas|IUP::Canvas>,
+L<IUP::CanvasGL|IUP::CanvasGL>,
+L<IUP::Cbox|IUP::Cbox>,
+L<IUP::Cells|IUP::Cells>,
+L<IUP::ColorBar|IUP::ColorBar>,
+L<IUP::ColorBrowser|IUP::ColorBrowser>,
+L<IUP::Dial|IUP::Dial>,
+L<IUP::Dialog|IUP::Dialog>,
+L<IUP::Fill|IUP::Fill>,
+L<IUP::Frame|IUP::Frame>,
+L<IUP::Hbox|IUP::Hbox>,
+L<IUP::Image|IUP::Image>,
+L<IUP::Item|IUP::Item>,
+L<IUP::Label|IUP::Label>,
+L<IUP::List|IUP::List>,
+L<IUP::Matrix|IUP::Matrix>,
+L<IUP::Menu|IUP::Menu>,
+L<IUP::Normalizer|IUP::Normalizer>,
+L<IUP::Ole|IUP::Ole>,
+L<IUP::PPlot|IUP::PPlot>,
+L<IUP::ProgressBar|IUP::ProgressBar>,
+L<IUP::Radio|IUP::Radio>,
+L<IUP::Sbox|IUP::Sbox>,
+L<IUP::Separator|IUP::Separator>,
+L<IUP::Spin|IUP::Spin>,
+L<IUP::SpinBox|IUP::SpinBox>,
+L<IUP::Split|IUP::Split>,
+L<IUP::Submenu|IUP::Submenu>,
+L<IUP::Tabs|IUP::Tabs>,
+L<IUP::Text|IUP::Text>,
+L<IUP::Toggle|IUP::Toggle>,
+L<IUP::Tree|IUP::Tree>,
+L<IUP::Val|IUP::Val>,
+L<IUP::Vbox|IUP::Vbox>,
+L<IUP::Zbox|IUP::Zbox>
+
+=for comment generated list - predefined dialogs
+
+=item * Pre-defined dialogs:
+
+L<IUP::ColorDlg|IUP::ColorDlg>,
+L<IUP::FileDlg|IUP::FileDlg>,
+L<IUP::FontDlg|IUP::FontDlg>,
+L<IUP::MessageDlg|IUP::MessageDlg>
+
+=item * Special non-GUI elements:
+
+L<IUP::Clipboard|IUP::Clipboard>,
+L<IUP::Timer|IUP::Timer>,
+L<IUP::User|IUP::User>
+
+=back
+MARKER
   },
   url => {
     gitroot  => 'https://github.com/kmx/perl-iup/tree/master',

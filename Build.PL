@@ -73,7 +73,7 @@ my $builder = $class->new(
   meta_merge => {
     keywords => [ qw[IUP portable toolkit graphical user interfaces tecgraf cross-platform GUI Windows GTK Motif X11] ],
     resources => {
-      bugtracker => 'https://rt.cpan.org/Public/Dist/Display.html?Status=Active&Name=IUP',
+      bugtracker => 'http://rt.cpan.org/NoAuth/Bugs.html?Dist=IUP',
       repository => 'https://github.com/kmx/perl-iup',
     }
   },

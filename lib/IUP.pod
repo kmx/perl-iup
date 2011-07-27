@@ -42,7 +42,7 @@ On all platform it uses native GUI widgets.
 
 =end html
 
-B<Source code:> see L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_17/examples//1-apps/app-sample1.pl>
+B<Source code:> see L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_18/examples//1-apps/app-sample1.pl>
 
 =head2 IUP's Strengths
 
@@ -99,10 +99,10 @@ they are handled by separate L<Alien::IUP|Alien::IUP> module.
 
 At this point we show just basic ideas behind IUP based GUI applications.
 For more details see L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>.
-Or if you wanna skip the theory you can go directly to L<examples|http://cpansearch.perl.org/src/KMX/IUP-0.001_17/examples/>
+Or if you wanna skip the theory you can go directly to L<examples|http://cpansearch.perl.org/src/KMX/IUP-0.001_18/examples/>
 directory of IUP distribution.
 
-=head3 Simple GUI Dialogs
+=head2 Simple GUI Dialogs
 
  use IUP ':all';
 
@@ -158,7 +158,7 @@ L<GetText|/"GetText()">,
 L<ListDialog|/"ListDialog()">,
 L<Message|Message> - see L<simple GUI dialogs|/"Simple GUI dialogs"> section.
 
-=head3 Pre-defined Dialogs
+=head2 Pre-defined Dialogs
 
  use IUP ':all';
  
@@ -197,7 +197,7 @@ L<IUP::FileDlg|IUP::FileDlg>,
 L<IUP::FontDlg|IUP::FontDlg>,
 L<IUP::MessageDlg|IUP::MessageDlg>.
 
-=head3 Custom Dialogs
+=head2 Custom Dialogs
 
  use IUP ':all';
  
@@ -332,15 +332,13 @@ interpolate in interpolation contexts such as double-quoted strings
 
 =head3 IUP Elemenets
 
-Currently available IUP elements:
+B<Currently available IUP elements:>
 
 =over
 
 =item * The most important GUI element used for the main applications window:
 
 L<IUP::Dialog>
-
-=for comment generated list - GUI elements
 
 =item * GUI elements:
 
@@ -397,6 +395,7 @@ L<IUP::Timer|IUP::Timer>,
 L<IUP::User|IUP::User>
 
 =back
+
 
 All IUP elements are perl classes with C<new()> constructor. The are used in this way:
 

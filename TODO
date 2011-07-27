@@ -15,6 +15,12 @@
 ######## IMPORTANT:
 - imglib - Other: B<NOTE:> NOT included in the pre-compiled library XXX-FIXME
 
+######## MAYBE: access child=>[...] items like this
+ $mybox = IUP::Hbox->new( child=>[ $bt1, $bt2, $bt3] );
+ #XXX-FIXME THIS DOES NOT WORK IN PERL-XXX
+ $mybox->[0]->FGCOLOR("255 0 0");   # changes bt1 foreground color
+ $mybox->[1]->FGCOLOR("255 0 255"); # changes bt2 foreground color
+
 ######## IMPORTANT: finish doc - espec. IUP::Manual::*
 - Cleanup first (in this order):
   - I::M::Elements.pod

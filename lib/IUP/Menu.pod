@@ -149,27 +149,27 @@ The element B<IUP::Menu> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/dialog2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_17/examples/0-basic/dialog2.pl> - IUP::Dialog example
+=item * L<0-basic/dialog2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_18/examples/0-basic/dialog2.pl> - IUP::Dialog example
 
-=item * L<0-basic/item.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_17/examples/0-basic/item.pl> - IUP::Item Example
+=item * L<0-basic/item.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_18/examples/0-basic/item.pl> - IUP::Item Example
 
-=item * L<0-basic/layoutdialog.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_17/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_18/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/menu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_17/examples/0-basic/menu.pl> - IUP::Menu example
+=item * L<0-basic/menu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_18/examples/0-basic/menu.pl> - IUP::Menu example
 
-=item * L<0-basic/separator.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_17/examples/0-basic/separator.pl> - IUP::Separator example
+=item * L<0-basic/separator.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_18/examples/0-basic/separator.pl> - IUP::Separator example
 
-=item * L<0-basic/submenu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_17/examples/0-basic/submenu.pl> - IUP::Submenu example
+=item * L<0-basic/submenu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_18/examples/0-basic/submenu.pl> - IUP::Submenu example
 
-=item * L<0-basic/tray.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_17/examples/0-basic/tray.pl> - IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
+=item * L<0-basic/tray.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_18/examples/0-basic/tray.pl> - IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
 
-=item * L<1-apps/app-mdi.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_17/examples/1-apps/app-mdi.pl> - IUP app example
+=item * L<1-apps/app-mdi.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_18/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_17/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_18/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-=item * L<1-apps/app-sample2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_17/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_18/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
-=item * L<1-apps/app-simple-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_17/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-simple-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.001_18/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
 =back 
 

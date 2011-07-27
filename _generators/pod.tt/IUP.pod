@@ -76,7 +76,7 @@ For more details see L<[%m.intro%]|[%m.intro%]>.
 Or if you wanna skip the theory you can go directly to L<examples|[%url.examples%]>
 directory of IUP distribution.
 
-=head3 Simple GUI Dialogs
+=head2 Simple GUI Dialogs
 
  use IUP ':all';
 
@@ -119,7 +119,7 @@ L<GetText|/"GetText()">,
 L<ListDialog|/"ListDialog()">,
 L<Message|Message> - see L<simple GUI dialogs|/"Simple GUI dialogs"> section.
 
-=head3 Pre-defined Dialogs
+=head2 Pre-defined Dialogs
 
  use IUP ':all';
  
@@ -145,7 +145,7 @@ L<IUP::FileDlg|IUP::FileDlg>,
 L<IUP::FontDlg|IUP::FontDlg>,
 L<IUP::MessageDlg|IUP::MessageDlg>.
 
-=head3 Custom Dialogs
+=head2 Custom Dialogs
 
  use IUP ':all';
  
@@ -267,71 +267,7 @@ interpolate in interpolation contexts such as double-quoted strings
 
 =head3 IUP Elemenets
 
-Currently available IUP elements:
-
-=over
-
-=item * The most important GUI element used for the main applications window:
-
-L<IUP::Dialog>
-
-=for comment generated list - GUI elements
-
-=item * GUI elements:
-
-L<IUP::Button|IUP::Button>,
-L<IUP::Canvas|IUP::Canvas>,
-L<IUP::CanvasGL|IUP::CanvasGL>,
-L<IUP::Cbox|IUP::Cbox>,
-L<IUP::Cells|IUP::Cells>,
-L<IUP::ColorBar|IUP::ColorBar>,
-L<IUP::ColorBrowser|IUP::ColorBrowser>,
-L<IUP::Dial|IUP::Dial>,
-L<IUP::Dialog|IUP::Dialog>,
-L<IUP::Fill|IUP::Fill>,
-L<IUP::Frame|IUP::Frame>,
-L<IUP::Hbox|IUP::Hbox>,
-L<IUP::Image|IUP::Image>,
-L<IUP::Item|IUP::Item>,
-L<IUP::Label|IUP::Label>,
-L<IUP::List|IUP::List>,
-L<IUP::Matrix|IUP::Matrix>,
-L<IUP::Menu|IUP::Menu>,
-L<IUP::Normalizer|IUP::Normalizer>,
-L<IUP::Ole|IUP::Ole>,
-L<IUP::PPlot|IUP::PPlot>,
-L<IUP::ProgressBar|IUP::ProgressBar>,
-L<IUP::Radio|IUP::Radio>,
-L<IUP::Sbox|IUP::Sbox>,
-L<IUP::Separator|IUP::Separator>,
-L<IUP::Spin|IUP::Spin>,
-L<IUP::SpinBox|IUP::SpinBox>,
-L<IUP::Split|IUP::Split>,
-L<IUP::Submenu|IUP::Submenu>,
-L<IUP::Tabs|IUP::Tabs>,
-L<IUP::Text|IUP::Text>,
-L<IUP::Toggle|IUP::Toggle>,
-L<IUP::Tree|IUP::Tree>,
-L<IUP::Val|IUP::Val>,
-L<IUP::Vbox|IUP::Vbox>,
-L<IUP::Zbox|IUP::Zbox>
-
-=for comment generated list - predefined dialogs
-
-=item * Pre-defined dialogs:
-
-L<IUP::ColorDlg|IUP::ColorDlg>,
-L<IUP::FileDlg|IUP::FileDlg>,
-L<IUP::FontDlg|IUP::FontDlg>,
-L<IUP::MessageDlg|IUP::MessageDlg>
-
-=item * Special non-GUI elements:
-
-L<IUP::Clipboard|IUP::Clipboard>,
-L<IUP::Timer|IUP::Timer>,
-L<IUP::User|IUP::User>
-
-=back
+[%txt.modlist%]
 
 All IUP elements are perl classes with C<new()> constructor. The are used in this way:
 
