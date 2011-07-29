@@ -201,7 +201,6 @@ my $attrib_table = {
     'ALIGNMENT' => 1,
   },
   'IUP::Image' => {
-    '0' => 1,
     'BGCOLOR' => 1,
     'BPP' => 1,
     'CHANNELS' => 1,
@@ -239,7 +238,6 @@ my $attrib_table = {
     'DESTROYWHENCLOSED' => 1,
   },
   'IUP::List' => {
-    '1' => 1,
     'APPEND' => 1,
     'APPENDITEM' => 1,
     'AUTOHIDE' => 1,

@@ -4,6 +4,37 @@
 
 ##########################################################
 
+cpanm --verbose KMX/IUP-0.001_18.tar.gz
+sudo yum install 
+
+
+IUP::Manual::90_Hints::AnyEventIntegration
+IUP::Manual::90_Hints::POEIntegration
+IUP::Manual::90_Hints::MultiThreading
+IUP::Manual::90_Hints::PARPacking
+IUP::Manual::90_Hints::Unicode
+IUP::Manual::90_Hints::Win32::MSIPacking
+IUP::Manual::90_Hints::Win32::UnicodeFilenames
+IUP::Manual::90_Hints::Win32::CustomAppIcon
+IUP::Manual::90_Hints::Win32::EnablingStyles
+?SplashScreen
+?AnyEvent: Prima is not supported as nobody seems to be using it, but it has a POE backend, so it can be supported through POE.
+?Unicode: http://search.cpan.org/~karasik/Prima-1.31/pod/Prima/faq.pod#How_would_I_use_unicode/UTF8_in_Prima?
+?Threads: http://search.cpan.org/~karasik/Prima-1.31/pod/Prima/faq.pod#How_to_implement_parallel_processing?
+?Threads: http://search.cpan.org/~karasik/Prima-1.31/pod/Prima/faq.pod#How_do_I_post_an_asynchronous_message?
+?Threads: http://search.cpan.org/~mdootson/Wx-0.9901/lib/Wx/Thread.pod
+?IOevents: http://search.cpan.org/~karasik/Prima-1.31/pod/Prima/File.pod
+
+http://search.cpan.org/~sanko/FLTK-0.532009/lib/FLTK/AssociationType.pod
+http://search.cpan.org/~sanko/FLTK-0.532009/lib/FLTK/Cookbook/ProgressBar/Process.pod
+http://search.cpan.org/~sanko/AnyEvent-Impl-FLTK-v0.0.1/lib/AnyEvent/Impl/FLTK.pm
+
+#in the main thread
+IUP->RegisterEvent( KEY=>'65646545f4654a65', ACTION=>\&handler );
+
+#in the worker thread
+IUP->CreateEvent( KEY=>'65646545f4654a65', DATA=>'xxyyzz');
+
 ######## CRITICAL: FIX callbacks:
 - FIX XS+DOC - internal_cb_VALUE_EDIT_CB_iis (should return multiple values)
 - FIX XS+DOC - Canvas: internal_cb_MULTITOUCH_CB_iIIII (should be _iAAAA)
@@ -14,6 +45,11 @@
 
 ######## IMPORTANT:
 - imglib - Other: B<NOTE:> NOT included in the pre-compiled library XXX-FIXME
+
+######## IMPORTANT: par packer
+- better handle use IUP ':all';
+- no error on missing .pm
+- or par packing recommendation into DOC
 
 ######## MAYBE: access child=>[...] items like this
  $mybox = IUP::Hbox->new( child=>[ $bt1, $bt2, $bt3] );
