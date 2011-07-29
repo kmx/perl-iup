@@ -281,7 +281,7 @@ B<See Also:> L<IUP::Zbox|IUP::Zbox>, L<IUP::Vbox|IUP::Vbox>, L<IUP::Hbox|IUP::Hb
 
 =item B<FONT>
 
-Character font of the text shown in the element. See L<FONT|XXX.html>
+Character font of the text shown in the element. See L<FONT|XXX-FIXME>
 definition up to IUP 2.x. Although it is an
 inheritable attribute, it is defined only on elements that have a
 native representation.
@@ -389,7 +389,7 @@ names always have a native system name equivalent. If you use those
 names IUP will automatically map to the native system equivalent. See
 the table bellow:
 
-xxxTODO table xxx
+XXX-FIXME-missing-table
 
 B<Notes: Font - Auxiliary Attributes>
 
@@ -401,7 +401,7 @@ X-Windows format or in the old Windows and IUP formats, the previous
 value will be replaced by a new value in the common format definition.
 Pango additional styles will also be removed.
 
-xxx_perhaps_remove_xxx Font - Encoding
+Font - Encoding XXX-FIXME_replce_after_unicode support
 
 The number that represents each character is dependent on the encoding
 used. For example, in ASCII encoding the letter A has code 65, but
@@ -427,24 +427,7 @@ assumed that the string uses the ISO8859-1 charset.
 In the future IUP should also support Unicode strings, increasing
 application portability.
 
-xxxx ISO8859-1 and Windows-1252 Displayable Characters
-
-The Latin-1 charset (ISO8859-1) defines an encoding for all of the
-characters used in Western languages. The first half of Latin-1 is
-standard ASCII, while the second half (with the eighth bit set)
-contains accented characters needed for Western languages other than
-English. In Windows, the ISO8859-1 charset was changed, and some
-control characters were replaced to include more display characters,
-this new charset is named Windows-1252. These characters are marked in
-the table bellow with thick borders.
-
-xxxTODO xxx table
-
-Adapted from L<http:E<47>E<47>en.wikipedia.orgE<47>wikiE<47>Windows-1252|http://en.wikipedia.org/wiki/Windows-1252>.
-
-B<See Also:> L<IUP::MapFont|IUP::MapFont>, L<IUP::UnMapFont|IUP::UnMapFont>. xxxTODOXX(maybe remove)
-
-xxx_xxx_xxx
+B<See Also:> L<IUP::MapFont|IUP::MapFont>, L<IUP::UnMapFont|IUP::UnMapFont>
 
 =item B<FONTFACE>
 
@@ -543,8 +526,7 @@ B<See Also:> L<RASTERSIZE|/RASTERSIZE>, L<MAXSIZE|iup_maxsize.html>
 
 I<(non inheritable)>
 
-Name of the control inside the dialog. Not releated to
-L<SetName|IUP::Manual::02_Elements/"SetName()">.
+Name of the control inside the dialog. Not releated to L<SetName|IUP::Manual::02_Elements/"SetName()">.
 
 B<Value:> Text.
 
@@ -975,7 +957,7 @@ B<Value:> Name of a cursor.
 
 It will check first for the following predefined names:
 
-[IMAGE] xxxTODO html xxx
+XXX-FIXME-missing-image
 
 B<Default:> "ARROW"
 
@@ -1094,9 +1076,7 @@ On Motif, it only works with some window managers, like I<mwm> and
 I<gnome>. Icon colors can have the BGCOLOR values, but it works better
 if it is at index 0.
 
-Use L<SetName|IUP::Manual::02_Elements/"SetName()"> or
-XXX-FIX_ME to
-associate an image to a name.
+To associate a name to element use L<SetName|/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
 
 B<Affects:> L<IUP::Dialog|IUP::Dialog>
 
@@ -1263,9 +1243,7 @@ must be mapped before mapping the child dialog. If PARENTDIALOG is not
 defined then the NATIVEPARENT attribute is consulted. This one must be
 a native handle of an existing dialog.
 
-Use L<SetName|IUP::Manual::02_Elements/"SetName()"> or
-XXX-FIX_ME to
-associate a dialog to a name.
+To associate a name to element use L<SetName|/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor. 
 
 B<IMPORTANT>: When the parent is destroyed the child dialog is also
 destroyed, then the CLOSE_CB callback of the child dialog is NOT
@@ -1873,4 +1851,3 @@ The default foreground color for editable text, also used by lists and
 tree. Usually is C<"0 0 0">.
 
 =back
-

@@ -1,7 +1,8 @@
 =head1 Revision history for IUP
 
-=head2 25/07/2011 - 0.001_08
+=head2 29/07/2011 - 0.002
 
+ - removing invalid accessors "0" and "1"
  - fix for "Can't locate IUP/OleControl.pm"
  - fixing documentation
 
