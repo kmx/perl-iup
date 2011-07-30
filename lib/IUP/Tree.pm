@@ -6,7 +6,6 @@ use IUP::Internal::LibraryIup;
 
 use Scalar::Util 'refaddr'; # http://stackoverflow.com/questions/4064001/how-should-i-compare-perl-references
 use Carp;
-use Data::Dump 'pp'; #xxxREMOVE
 
 sub _create_element {
   #my ($self, $args, $firstonly) = @_;

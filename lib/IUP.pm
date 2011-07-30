@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use Carp;
-use Data::Dumper;
 
 use IUP::Internal::LibraryIup;
 use IUP::Constants;
