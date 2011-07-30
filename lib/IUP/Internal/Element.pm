@@ -436,7 +436,7 @@ sub ShowXY {
   my ($self, $x, $y) = @_;
   $x = IUP_CURRENT unless defined $x;
   $y = IUP_CURRENT unless defined $y;
-  return IUP::Internal::LibraryIup::_IupShowXY($self->ihandle, $x, $y);  
+  return IUP::Internal::LibraryIup::_IupShowXY($self->ihandle, $x, $y);
 }
 
 sub GetNextChild {

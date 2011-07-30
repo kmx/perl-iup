@@ -3,14 +3,16 @@ use strict;
 use warnings;
 use base qw(IUP::Internal::Element IUP::Internal::Canvas);
 use IUP::Internal::LibraryIup;
+use IUP::Constants;
 
 sub _special_initial_map_cb {
   my $self = shift;
-  if (!$self->cnvhandle) {
+  if (defined $self && !$self->cnvhandle) {
     my $ch = IUP::Internal::Canvas::_cdCreateCanvas_CD_IUP($self->ihandle);  
     $self->cnvhandle($ch);
     $self->MAP_CB(undef); #deactivate callback    
   }
+  return IUP_DEFAULT;
 }
 
 sub _create_element {
