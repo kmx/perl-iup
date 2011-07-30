@@ -5,6 +5,9 @@
 ##########################################################
 
 ######## CRITICAL: FIX callbacks:
+default return value IUP_DEFAULT does not work - note in pod that sub returns value even without explicit return
+
+######## CRITICAL: FIX callbacks:
 - FIX XS+DOC - internal_cb_VALUE_EDIT_CB_iis (should return multiple values)
 - FIX XS+DOC - Canvas: internal_cb_MULTITOUCH_CB_iIIII (should be _iAAAA)
 - FIX XS+DOC - Tree: NODEREMOVED_CB (userid related)
