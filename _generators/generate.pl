@@ -122,12 +122,14 @@ sub cb_generate1 {
       my $rv_count = 1;
       my @fp = split(',', $h->{$m}->{$a}->{c_params});
       die "###FATAL### invalid value '$fp[0]'" if $fp[0] ne 'Ihandle* ih';      
-      my @tp = split('', $h->{$m}->{$a}->{type});
+      my $tp_all_in_one = $h->{$m}->{$a}->{type};
+      my @tp = split('', $tp_all_in_one);
       unless (scalar(@tp)+1==scalar(@fp)) {
         warn "###WARNING### [$m|$a] mismatch: '$h->{$m}->{$a}->{type}' vs. '$h->{$m}->{$a}->{c_params}'";
 	warn "###WARNING### tp=", Dumper(\@tp);
 	warn "###WARNING### fp=", Dumper(\@fp);
       }
+      my $MULTITOUCH_CB_marker;
       for(my $i=1; $i<scalar(@fp); $i++) {
         my $n = 'xxx';
         if ($fp[$i] =~ /^.*?([^ ]*)$/) {
@@ -158,13 +160,34 @@ sub cb_generate1 {
 	  $rv_count++;
 	  push @l_rvname, "\$$n";
 	}
-	elsif ($tp[$i-1] =~ /^(A)$/) {  # xxxTODO needs testing + pod update
-	  push @l_name, "\@$n\_list";
-	  # xxx hack for MULTISELECTION_CB MULTIUNSELECTION_CB - do not use 'A' for anything else
-	  push @l_xspush, "for(loc_i=0; loc_i<n; loc_i++) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));";
-	  push @l_xslocvar, "int loc_i;";
-	  last;
+	elsif ($tp[$i-1] =~ /^(A)$/ && $tp_all_in_one eq 'Ai') {
+          # hack for MULTISELECTION_CB MULTIUNSELECTION_CB
+	  push @l_name, "\@$n\_list";	  
+          push @l_xslocvar, "int loc_i;";
+          push @l_xslocvar, "AV * r_$n;";
+	  #XXX-NOTSURE push @l_xspush, "r_$n = (AV *)sv_2mortal((SV *)newAV());";
+          push @l_xspush, "r_$n = newAV();";
+          push @l_xspush, "for(loc_i=0; loc_i<n; loc_i++) av_push(r_$n, newSViv($n\[loc_i]));";
+          #XXX-NOTSURE push @l_xspush, "XPUSHs(sv_2mortal(newRV((SV *)r_$n)));";	  
+          push @l_xspush, "XPUSHs(sv_2mortal(newRV_noinc((SV *)r_$n)));";
 	}
+        elsif ($tp[$i-1] =~ /^(A)$/ && $tp_all_in_one eq 'iAAAA') {
+          # hack for MULTITOUCH_CB
+          warn "###FATAL: not implemented yet - '$tp_all_in_one'\n";
+          push @l_name, "\@$n\_list";
+          push @l_xslocvar, "int loc_i;" unless $MULTITOUCH_CB_marker;
+	  push @l_xslocvar, "AV * r_$n;";
+          #XXX-NOTSURE push @l_xspush, "r_$n = (AV *)sv_2mortal((SV *)newAV());";
+          push @l_xspush, "r_$n = newAV();";
+          push @l_xspush, "r_$n = (AV *)sv_2mortal((SV *)newAV());";
+          push @l_xspush, "for(loc_i=0; loc_i<count_; loc_i++) av_push(r_$n, newSViv($n\[loc_i]));";
+          #XXX-NOTSURE push @l_xspush, "XPUSHs(sv_2mortal(newRV((SV *)r_$n)));";	  
+          push @l_xspush, "XPUSHs(sv_2mortal(newRV_noinc((SV *)r_$n)));";
+          $MULTITOUCH_CB_marker = 1;
+        }        
+        elsif ($tp[$i-1] =~ /^(A)$/) {
+          warn "###FATAL: do not know how to handle '$tp_all_in_one'\n";
+        }
 	elsif ($tp[$i-1] =~ /^(f|d)$/) {
 	  push @l_name, "\$$n";
 	  push @l_xspush, "XPUSHs(sv_2mortal(newSVnv($n)));";

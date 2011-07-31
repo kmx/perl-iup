@@ -16,6 +16,11 @@ $tree->RIGHTCLICK_CB( sub { print STDERR "RIGHTCLICK_CB\n" } );
 
 $tree->RENAME_CB( sub { print STDERR "RENAME_CB\n" } );
 
+$tree->MULTISELECTION_CB( sub { 
+  my ($self, $ids, $n) = @_;
+  print STDERR "MULTISELECTION_CB ids.count=",join('-',@$ids)," n=$n\n" 
+} );
+
 $tree->K_ANY( sub {
   my ($self, $c) = @_;
   $tree->SetAttribute("DELNODE", "MARKED") if ( $c == K_DEL );

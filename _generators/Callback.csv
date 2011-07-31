@@ -100,7 +100,7 @@ IUP::Tree;RENAME_CB;is;int;Ihandle* ih,int id,char* title
 IUP::Tree;RIGHTCLICK_CB;i;int;Ihandle* ih,int id
 IUP::Tree;SELECTION_CB;ii;int;Ihandle* ih,int id,int status
 IUP::Tree;SHOWRENAME_CB;i;int;Ihandle* ih,int id
-IUP::TuioClient;MULTITOUCH_CB;iIIII;int;Ihandle* ih, int count, int* pid, int* px, int* py, int* pstate
+IUP::TuioClient;MULTITOUCH_CB;iAAAA;int;Ihandle* ih, int count, int* pid, int* px, int* py, int* pstate
 IUP::TuioClient;TOUCH_CB;iiis;int;Ihandle* ih, int id, int x, int y, char* state
 IUP::Val;VALUECHANGED_CB;;int;Ihandle* ih
 IUP::WebBrowser;COMPLETED_CB;s;int;Ihandle* ih,char* url
@@ -121,7 +121,7 @@ _canvas;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int
 _canvas;FOCUS_CB;i;int;Ihandle* ih,int focus
 _canvas;KEYPRESS_CB;ii;int;Ihandle* ih,int c,int press
 _canvas;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
-_canvas;MULTITOUCH_CB;iIIII;int;Ihandle* ih,int count,int* pid,int* px,int* py,int* pstate
+_canvas;MULTITOUCH_CB;iAAAA;int;Ihandle* ih,int count,int* pid,int* px,int* py,int* pstate
 _canvas;RESIZE_CB;ii;int;Ihandle* ih,int width,int height
 _canvas;SCROLL_CB;iff;int;Ihandle* ih,int op,float posx,float posy
 _canvas;TOUCH_CB;iiis;int;Ihandle* ih,int id,int x,int y,char* state

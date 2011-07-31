@@ -3174,6 +3174,7 @@ internal_cb_MULTISELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	  return rv;
 	}
 	int loc_i;
+	AV * r_ids;
 
 	ENTER;
 	SAVETMPS;
@@ -3181,7 +3182,10 @@ internal_cb_MULTISELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(element);
-	for(loc_i=0; loc_i<n; loc_i++) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));
+	r_ids = newAV();
+	for(loc_i=0; loc_i<n; loc_i++) av_push(r_ids, newSViv(ids[loc_i]));
+	XPUSHs(sv_2mortal(newRV_noinc((SV *)r_ids)));
+	XPUSHs(sv_2mortal(newSViv(n)));
 	PUTBACK;
 
 	count = call_cb_func(element,"!int!cb!MULTISELECTION_CB!func");
@@ -3215,6 +3219,7 @@ internal_cb_MULTIUNSELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	  return rv;
 	}
 	int loc_i;
+	AV * r_ids;
 
 	ENTER;
 	SAVETMPS;
@@ -3222,7 +3227,10 @@ internal_cb_MULTIUNSELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(element);
-	for(loc_i=0; loc_i<n; loc_i++) XPUSHs(sv_2mortal(newSViv(ids[loc_i])));
+	r_ids = newAV();
+	for(loc_i=0; loc_i<n; loc_i++) av_push(r_ids, newSViv(ids[loc_i]));
+	XPUSHs(sv_2mortal(newRV_noinc((SV *)r_ids)));
+	XPUSHs(sv_2mortal(newSViv(n)));
 	PUTBACK;
 
 	count = call_cb_func(element,"!int!cb!MULTIUNSELECTION_CB!func");
@@ -3879,7 +3887,7 @@ internal_cb_KEYPRESS_CB_ii (Ihandle* ih,int c,int press)
 } 
 
 int
-internal_cb_MULTITOUCH_CB_iIIII (Ihandle* ih,int count_,int* pid,int* px,int* py,int* pstate)
+internal_cb_MULTITOUCH_CB_iAAAA (Ihandle* ih,int count_,int* pid,int* px,int* py,int* pstate)
 {
 	dSP;
 	int count;
@@ -3892,6 +3900,11 @@ internal_cb_MULTITOUCH_CB_iIIII (Ihandle* ih,int count_,int* pid,int* px,int* py
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
+	int loc_i;
+	AV * r_pid;
+	AV * r_px;
+	AV * r_py;
+	AV * r_pstate;
 
 	ENTER;
 	SAVETMPS;
@@ -3900,18 +3913,30 @@ internal_cb_MULTITOUCH_CB_iIIII (Ihandle* ih,int count_,int* pid,int* px,int* py
 	PUSHMARK(SP);
 	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSViv(count_)));
+	r_pid = newAV();
+	r_pid = (AV *)sv_2mortal((SV *)newAV());
+	for(loc_i=0; loc_i<count_; loc_i++) av_push(r_pid, newSViv(pid[loc_i]));
+	XPUSHs(sv_2mortal(newRV_noinc((SV *)r_pid)));
+	r_px = newAV();
+	r_px = (AV *)sv_2mortal((SV *)newAV());
+	for(loc_i=0; loc_i<count_; loc_i++) av_push(r_px, newSViv(px[loc_i]));
+	XPUSHs(sv_2mortal(newRV_noinc((SV *)r_px)));
+	r_py = newAV();
+	r_py = (AV *)sv_2mortal((SV *)newAV());
+	for(loc_i=0; loc_i<count_; loc_i++) av_push(r_py, newSViv(py[loc_i]));
+	XPUSHs(sv_2mortal(newRV_noinc((SV *)r_py)));
+	r_pstate = newAV();
+	r_pstate = (AV *)sv_2mortal((SV *)newAV());
+	for(loc_i=0; loc_i<count_; loc_i++) av_push(r_pstate, newSViv(pstate[loc_i]));
+	XPUSHs(sv_2mortal(newRV_noinc((SV *)r_pstate)));
 	PUTBACK;
 
 	count = call_cb_func(element,"!int!cb!MULTITOUCH_CB!func");
 
 	SPAGAIN;
 
-	if (count != 5) { warn("Warning: callback MULTITOUCH_CB has returned %d instead of 5 values!\n",count); }
+	if (count != 1) { /* no warning, use default retval */ }
 	else {
-	  *pstate = POPi;
-	  *py = POPi;
-	  *px = POPi;
-	  *pid = POPi;
 	  rv = POPi;
 	}
 
@@ -4899,10 +4924,10 @@ _init_cb_KEYPRESS_CB_ii(ih)
 		IupSetCallback(ih, "KEYPRESS_CB", (Icallback)internal_cb_KEYPRESS_CB_ii);
 
 void
-_init_cb_MULTITOUCH_CB_iIIII(ih)
+_init_cb_MULTITOUCH_CB_iAAAA(ih)
 		Ihandle* ih;
 	CODE:
-		IupSetCallback(ih, "MULTITOUCH_CB", (Icallback)internal_cb_MULTITOUCH_CB_iIIII);
+		IupSetCallback(ih, "MULTITOUCH_CB", (Icallback)internal_cb_MULTITOUCH_CB_iAAAA);
 
 void
 _init_cb_SCROLL_CB_iff(ih)
