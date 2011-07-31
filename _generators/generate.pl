@@ -78,6 +78,7 @@ sub cb_generate1 {
       my @l_rvname;
       my $c_retval = $h->{$m}->{$a}->{c_retval};
       if ($c_retval eq 'int') {
+        $h->{$m}->{$a}->{xs_declare_sv_rv} = 'SV * SV_rv';
         $h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPi';
 	$h->{$m}->{$a}->{xs_internal_default_rv} = 'IUP_DEFAULT';
 	push @l_rvname, '$rv_num';
@@ -90,7 +91,7 @@ sub cb_generate1 {
       else {
         warn "###WARNING### This should not happen m=$m a=$a c_retval=$c_retval (assuming retval='int')";
 	$c_retval = 'int';
-	$h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPi';
+        $h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPi';
 	$h->{$m}->{$a}->{xs_internal_default_rv} = '0';
 	push @l_rvname, '$rv_num';
       }      
@@ -165,24 +166,19 @@ sub cb_generate1 {
 	  push @l_name, "\@$n\_list";	  
           push @l_xslocvar, "int loc_i;";
           push @l_xslocvar, "AV * r_$n;";
-	  #XXX-NOTSURE push @l_xspush, "r_$n = (AV *)sv_2mortal((SV *)newAV());";
           push @l_xspush, "r_$n = newAV();";
           push @l_xspush, "for(loc_i=0; loc_i<n; loc_i++) av_push(r_$n, newSViv($n\[loc_i]));";
-          #XXX-NOTSURE push @l_xspush, "XPUSHs(sv_2mortal(newRV((SV *)r_$n)));";	  
-          push @l_xspush, "XPUSHs(sv_2mortal(newRV_noinc((SV *)r_$n)));";
+          push @l_xspush, "XPUSHs(sv_2mortal(newRV_noinc((SV *)r_$n)));"; #XXX-CHECKLATER-not-sure-about-this
 	}
         elsif ($tp[$i-1] =~ /^(A)$/ && $tp_all_in_one eq 'iAAAA') {
           # hack for MULTITOUCH_CB
-          warn "###FATAL: not implemented yet - '$tp_all_in_one'\n";
           push @l_name, "\@$n\_list";
           push @l_xslocvar, "int loc_i;" unless $MULTITOUCH_CB_marker;
 	  push @l_xslocvar, "AV * r_$n;";
-          #XXX-NOTSURE push @l_xspush, "r_$n = (AV *)sv_2mortal((SV *)newAV());";
           push @l_xspush, "r_$n = newAV();";
           push @l_xspush, "r_$n = (AV *)sv_2mortal((SV *)newAV());";
           push @l_xspush, "for(loc_i=0; loc_i<count_; loc_i++) av_push(r_$n, newSViv($n\[loc_i]));";
-          #XXX-NOTSURE push @l_xspush, "XPUSHs(sv_2mortal(newRV((SV *)r_$n)));";	  
-          push @l_xspush, "XPUSHs(sv_2mortal(newRV_noinc((SV *)r_$n)));";
+          push @l_xspush, "XPUSHs(sv_2mortal(newRV_noinc((SV *)r_$n)));"; #XXX-CHECKLATER-not-sure-about-this
           $MULTITOUCH_CB_marker = 1;
         }        
         elsif ($tp[$i-1] =~ /^(A)$/) {
@@ -195,6 +191,14 @@ sub cb_generate1 {
 	elsif ($tp[$i-1] =~ /^(s)$/) {
 	  push @l_name, "\$$n";
 	  push @l_xspush, "XPUSHs(sv_2mortal(newSVpv($n, 0)));";
+	}
+	elsif ($tp[$i-1] =~ /^(S)$/) {
+          warn "###ERROR THIS-IS-BROKEN\n";
+          push @l_xslocvar, "SV * SV_$n;";
+          push @l_xspop, "*$n = (SvOK(SV_$n)) ? SvPV_nolen(SV_$n) : NULL; /* XXX-not-sure-about-NULL */;";
+      	  push @l_xspop, "*SV_$n = POPs;";
+	  $rv_count++;
+	  push @l_rvname, "\$$n";
 	}
 	else {
 	  warn "###WARNING### [$m|$a] mismatch: '$h->{$m}->{$a}->{type}' vs. '$h->{$m}->{$a}->{c_params}'";

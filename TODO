@@ -4,11 +4,10 @@
 
 ##########################################################
 
-######## CRITICAL: FIX callbacks:
-default return value IUP_DEFAULT does not work - note in pod that sub returns value even without explicit return
+######## IMPORTANT: FIX callbacks:
+note in pod that sub returns value even without explicit return (IUP_DEFAULT related)
 
 ######## CRITICAL: FIX callbacks:
-- FIX XS+DOC - internal_cb_VALUE_EDIT_CB_iis (should return multiple values)
 - FIX XS+DOC - Tree: NODEREMOVED_CB (userid related)
 
 ######## IMPORTANT: consider IDEA

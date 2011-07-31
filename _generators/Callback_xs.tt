@@ -121,6 +121,7 @@ int call_cb_func(SV* element, char *actionkey) {
 	dSP;
 	int count;
 	[% i.c_retval %] rv;
+	[%IF i.xs_declare_sv_rv%][% i.xs_declare_sv_rv %];[%END%]
 	SV* element;
 	
 	rv = [% i.xs_internal_default_rv %];
@@ -153,7 +154,12 @@ int call_cb_func(SV* element, char *actionkey) {
 [% FOR j IN i.xs_internal_cb_extrapop -%]
 	  [% j %]
 [% END -%]
+[% IF i.xs_declare_sv_rv -%]
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+[% ELSE -%]
 	  rv = [% i.xs_internal_cb_pop %];
+[% END -%]
 	}
 
 	PUTBACK;
