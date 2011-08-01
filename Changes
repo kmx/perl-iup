@@ -1,8 +1,8 @@
 =head1 Revision history for IUP
 
-=head2 NEXT - 0.002_01
+=head2 NEXT - 0.002_02
 
- - added: IUP::Canvas::(Pattern|Palette|Stipple)
+ - added: IUP::Canvas::(Pattern|Palette|Stipple|Bitmap|Image) - XXX-FIXME no implementation yet
  - all callbacks: better handling of callbacks with no return value (fallback to IUP_DEFAULT) 
  - fixed callbacks: MULTITOUCH_CB, MULTISELECTION_CB, MULTIUNSELECTION_CB, NODEREMOVED_CB
  - removing debug stuff 'use Data::Dump(er)'

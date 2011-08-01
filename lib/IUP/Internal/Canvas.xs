@@ -63,6 +63,28 @@ _Stipple_test(a)
 	OUTPUT:
 		RETVAL
 
+MODULE = IUP::Canvas::Stipple	PACKAGE = IUP::Canvas::Bitmap
+
+int
+_Bitmap_test(a)
+		int a;
+	CODE:
+		warn("XXX-DEBUG: _Bitmap_test '%d'\n",a);
+		RETVAL = a+1;
+	OUTPUT:
+		RETVAL
+
+MODULE = IUP::Canvas::Stipple	PACKAGE = IUP::Canvas::Image
+
+int
+_Image_test(a)
+		int a;
+	CODE:
+		warn("XXX-DEBUG: _Image_test '%d'\n",a);
+		RETVAL = a+1;
+	OUTPUT:
+		RETVAL
+
 MODULE = IUP::Internal::Canvas	PACKAGE = IUP::Internal::Canvas
 
 ### special internal functions ###

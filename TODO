@@ -50,7 +50,11 @@
 - maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
 
 ######## IMPORTANT: IUP::Canvas (now works without Bitmap/Image/Palette/Pattern related functions)
-- implement missing XS methods to IUP::Internal::Canvas (see notes in Canvas.xs)
+- implement missing XS methods - see Canvas.xs
+- implement IUP::Canvas::(Pattern|Palette|Stipple|Bitmap|Image) modules - see Canvas.xs
+- check lua implementation cdImage vs. cdBitmap
+  cdBitmap = Client Image (used together with cd+im libs)
+  cdImage  = Server Image (faster, but less flexible, the data is stored in a system private format, that the application does not have access)
 
 1/ non-Bitmap (easier to implement)
 # void cdCanvasTransform(cdCanvas* canvas, const double* matrix);
