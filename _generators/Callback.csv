@@ -95,7 +95,7 @@ IUP::Tree;EXECUTELEAF_CB;i;int;Ihandle* ih,int id
 IUP::Tree;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
 IUP::Tree;MULTISELECTION_CB;Ai;int;Ihandle* ih,int* ids,int n
 IUP::Tree;MULTIUNSELECTION_CB;Ai;int;Ihandle* ih,int* ids,int n
-IUP::Tree;NODEREMOVED_CB;s;int;Ihandle* ih,void* userdata
+IUP::Tree;NODEREMOVED_CB;U;int;Ihandle* ih,void* userdata
 IUP::Tree;RENAME_CB;is;int;Ihandle* ih,int id,char* title
 IUP::Tree;RIGHTCLICK_CB;i;int;Ihandle* ih,int id
 IUP::Tree;SELECTION_CB;ii;int;Ihandle* ih,int id,int status

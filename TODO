@@ -4,28 +4,31 @@
 
 ##########################################################
 
-######## IMPORTANT: FIX callbacks:
-note in pod that sub returns value even without explicit return (IUP_DEFAULT related)
+######## IMPORTANT: minor issues in element destruction
+- Element.pm (look for XXX-FIXME)
+- Canvas.pm (look for XXX-FIXME)
 
-######## CRITICAL: FIX callbacks:
-- FIX XS+DOC - Tree: NODEREMOVED_CB (userid related)
+######## NICE-TO-HAVE: pre-built images
+- imglib - Other: B<NOTE:> NOT included in the pre-compiled library
 
-######## IMPORTANT: consider IDEA
-- $element_reference = $radio->GetAttributeAsElement("VALUE"); (Radio, Toggle)
-
-######## IMPORTANT:
-- imglib - Other: B<NOTE:> NOT included in the pre-compiled library XXX-FIXME
-
-######## IMPORTANT: par packer
-- mention PAR packing recommendation in DOC
+######## NICE-TO-HAVE: consider IDEA
+- $element_reference = $radio->GetAttributeAsElement("VALUE");
+- handy for: Radio, Toggle
+- implementation:
+  => $elem_name = $radio->GetAttribute("VALUE");
+     $element = IUP->GetByName($elem_name);
 
 ######## MAYBE: access child=>[...] items like this
  $mybox = IUP::Hbox->new( child=>[ $bt1, $bt2, $bt3] );
- #XXX-FIXME THIS DOES NOT WORK IN PERL-XXX
  $mybox->[0]->FGCOLOR("255 0 0");   # changes bt1 foreground color
  $mybox->[1]->FGCOLOR("255 0 255"); # changes bt2 foreground color
+- beware: somehow handle AddChild & co.
 
-######## IMPORTANT: finish doc - espec. IUP::Manual::*
+######## POD: mention in POD/DOC
+- mention PAR packing recommendation in DOC
+- beware: (IUP_DEFAULT related) sub returns value even without explicit return
+
+######## POD: finish doc - espec. IUP::Manual::*
 - Cleanup first (in this order):
   - I::M::Elements.pod
   - I::M::Callbacks.pod
@@ -175,7 +178,6 @@ cd.KillImageMap
 
 (cosmetics)######## global
 - icon - see y:\IUP3.3\fltk\FLTK-0.532007\inc\MBX\FLTK.pm  (ACTION_code)
-- Build.PL: no_index => {directory => [qw[examples inc t]], files => [qw[xs/include/ppport.h]]
 
 (cosmetics)######## Check this:
 - consider return; vs. return undef;
@@ -188,10 +190,10 @@ cd.KillImageMap
 (cosmetics)######## IUP::Matrix (same as with common attributes)
 - try to implement:
   my $m = IUP::Matrix->new(...);
-  $m->[12,44] = 'value';
-  $m->data->[12,44] = 'value';
+  $m->[12]->[44] = 'value';
+  $m->data->[12]->[44] = 'value';
   $m->{"BGCOLOR12:44"} = '12 12 12';
-  (see SDLx::Surface + SDLx::Surface::TiedMatrix)
+  (see implementation of SDLx::Surface + SDLx::Surface::TiedMatrix)
 
 (cosmetics)######## global
 - cleanup unused funcs from LibraryIup.XS - cross-check-xs-func.pl
@@ -211,11 +213,10 @@ cd.KillImageMap
 - FGCOLOR seems to be ignored
 
 (cosmetics)######## IUP::Split
-- maybe support new($child1, $child2) instead of new(child1=>$child1, child2=>$child2)
+- maybe support also new($child1, $child2) instead of new(child1=>$child1, child2=>$child2)
 
 (cosmetics)######## IUP::Internal::Element
 - change: _create_element should set $self->ihandle value
-- SetAttribute("ATT", $elem) vs. $elem = GetAttribute("ATT") (now Get does not work)
 
 ### NOT NOW, MAYBE LATER ################################################################################################
 
@@ -256,9 +257,6 @@ http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-
 - no example for: ColorDlg.pm ?
 - no example for: FontDlg.pm ?
 
-(not now, maybe later)######## IUP::LayoutDialog
-- somehow works but generaly not usable
-
 (not now, maybe later)######## Ideas from lua bindings:
 - global registers _IUPLUA_WIDGET_TABLE_REF
 
@@ -273,7 +271,7 @@ http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-
 (not now, maybe later)######## Linux - platform specific issues
 - (<unknown>:4352): Pango-WARNING **: Error loading GSUB table 85
   before MainLoop
-- 'Quit' in main menu requires double click
+- GTK: 'Quit' in main menu requires double click
 
 (not now, maybe later)######## Packaging (not a priority)
 - RHEL 5 + FC 13,12,11
@@ -299,7 +297,6 @@ http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-
 
 #IUP - consider adding iupKeyCodeToName
 #IUP - consider adding iupKeyNameToCode
-#IUP - ListDialog() decide whether multiselect API (returning array, not arrayref) is OK - yes for now
 #IUP - Idle? #xxxsomething causes progressbar3.pl to hangup/crash (after pressing accel/decel) - cannot reproduce
 #IUP - is GetIhClassName() func name OK - yes for now
 #IUP - IUP->GetIdle? or IUP->CheckIdle? #xxx how to check existing idle handler? - not for now
@@ -316,4 +313,3 @@ http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-
 
 #IUP::PPlot - maybe add AxsBounds() to IUP::PPlot # see examples\0-basic\pplot4.pl - not now
 #IUP::PPlot - maybe add AxsBoundsAuto() - not now
-#IUP::PPlot - PPlotInsertPoints - CRASHES!!! seems to be a bug iup (asked scuri)

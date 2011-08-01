@@ -184,6 +184,11 @@ sub cb_generate1 {
         elsif ($tp[$i-1] =~ /^(A)$/) {
           warn "###FATAL: do not know how to handle '$tp_all_in_one'\n";
         }
+        elsif ($tp[$i-1] =~ /^(U)$/ && $tp_all_in_one eq 'U') {
+          # hack for NODEREMOVED_CB
+          $h->{$m}->{$a}->{xs_spec_NODEREMOVED_CB} = 1;
+          last;
+        }
 	elsif ($tp[$i-1] =~ /^(f|d)$/) {
 	  push @l_name, "\$$n";
 	  push @l_xspush, "XPUSHs(sv_2mortal(newSVnv($n)));";

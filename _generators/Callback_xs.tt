@@ -26,7 +26,7 @@ SV* ihandle2SV_nocreate(Ihandle* ih) {
   return &PL_sv_undef;
 }
 
-SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxFIXME should be OK but was not tested yet*/
+SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKLATER should be OK but was not tested yet*/
   SV *ptrSV, *obj, **ref;
   HV *globreg, *newhash, *element_hash, *element_cbrelated_hash;
   char* hkey; /*string with numeric representation of canvas pointer*/
@@ -130,8 +130,14 @@ int call_cb_func(SV* element, char *actionkey) {
 	  warn("Warning: callback [%xs_init_cb_action%] - cannot convert ihandle!\n");
 	  return rv;
 	}
-[% FOR j IN i.xs_internal_cb_locvar -%]
+[% IF i.xs_spec_NODEREMOVED_CB -%]
+	SV * SV_userdata, **SV_ref;
+	char * hkey_userdata;
+	HV *element_hash;
+[% ELSE -%]
+  [% FOR j IN i.xs_internal_cb_locvar -%]
 	[% j %]
+  [% END -%]
 [% END -%]
 
 	ENTER;
@@ -140,8 +146,30 @@ int call_cb_func(SV* element, char *actionkey) {
 	/* push params for [% i.xs_internal_cb_pfunc %]() */
 	PUSHMARK(SP);
 	XPUSHs(element);
-[% FOREACH j IN i.xs_internal_cb_push -%]
+[% IF i.xs_spec_NODEREMOVED_CB -%]
+       /* converting userdata to  $self->{'!int!treedata'}->{$userdata_pointer} */
+	SV_userdata = newSViv(PTR2IV(userdata));
+	hkey_userdata = SvPV_nolen(SV_userdata); /*xxxCHECKLATER find more effective way*/
+	element_hash = MUTABLE_HV(SvRV(element));
+	SV_ref = hv_fetch(element_hash, "!int!treedata", 13, 0);
+	if ((SV_ref == NULL) || !SvOK(*SV_ref)) {
+	  warn("Warning: This shouldn't happen NODEREMOVED_CB/1\n"); 
+	  XPUSHs(&PL_sv_undef);
+	}
+	else {
+	  element_hash = MUTABLE_HV(SvRV(*SV_ref));
+	  SV_ref = hv_fetch(element_hash, hkey_userdata, strlen(hkey_userdata), 0);
+	  if ((SV_ref == NULL) || !SvOK(*SV_ref)) {
+	    warn("Warning: This shouldn't happen NODEREMOVED_CB/2\n"); 
+	    XPUSHs(&PL_sv_undef);
+	  }
+          else XPUSHs(*SV_ref);
+        }        
+        /* converting userdata - done */
+[% ELSE -%]
+  [% FOREACH j IN i.xs_internal_cb_push -%]
 	[% j %]
+  [% END -%]
 [% END -%]
 	PUTBACK;
 

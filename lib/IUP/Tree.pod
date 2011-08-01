@@ -1027,7 +1027,7 @@ B<Callback handler prototype:>
 
 B<$self:> identifier of the element that activated the event.
 
-B<$userdata_ref:> #XXX-FIXME-not-implemented-correctly
+B<$userdata_ref:> perl reference associated via L<TreeSetUserId|/"TreeSetUserId()"> with a node being removed
 
 =back
 
