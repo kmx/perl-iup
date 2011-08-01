@@ -30,10 +30,40 @@ cdCanvas* ref2cnv(SV* ref) {
   return NULL;
 }
 
-MODULE = IUP::Internal::Canvas	PACKAGE = IUP::Internal::Canvas
+MODULE = IUP::Canvas::Pattern	PACKAGE = IUP::Canvas::Pattern
 
-# http://perldoc.perl.org/perlxs.html
-# http://perldoc.perl.org/perlxstut.html
+int
+_Pattern_test(a)
+		int a;
+	CODE:
+		warn("XXX-DEBUG: _Pattern_test '%d'\n",a);
+		RETVAL = a+1;
+	OUTPUT:
+		RETVAL
+
+MODULE = IUP::Canvas::Palette	PACKAGE = IUP::Canvas::Palette
+
+int
+_Palette_test(a)
+		int a;
+	CODE:
+		warn("XXX-DEBUG: _Palette_test '%d'\n",a);
+		RETVAL = a+1;
+	OUTPUT:
+		RETVAL
+
+MODULE = IUP::Canvas::Stipple	PACKAGE = IUP::Canvas::Stipple
+
+int
+_Stipple_test(a)
+		int a;
+	CODE:
+		warn("XXX-DEBUG: _Stipple_test '%d'\n",a);
+		RETVAL = a+1;
+	OUTPUT:
+		RETVAL
+
+MODULE = IUP::Internal::Canvas	PACKAGE = IUP::Internal::Canvas
 
 ### special internal functions ###
 
