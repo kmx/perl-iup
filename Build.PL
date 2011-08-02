@@ -79,4 +79,11 @@ my $builder = $class->new(
   },
 );
 
+#set features for later use vie IUP::ConfigData->feature('name');
+$builder->feature('CanvasGL', 1)   if Alien::IUP->havelib('iupgl');
+$builder->feature('PPlot', 1)      if Alien::IUP->havelib('iup_pplot');
+$builder->feature('OLE', 1)        if Alien::IUP->havelib('iupole');
+$builder->feature('ImgLib', 1)     if Alien::IUP->havelib('iupimglib');
+$builder->feature('Controls', 1)     if Alien::IUP->havelib('iupcontrols');
+
 $builder->create_build_script();

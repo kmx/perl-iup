@@ -1,11 +1,8 @@
 #!perl -T
 
 use Test::More tests => 44;
-
+use IUP::ConfigData;
 use IUP ':all';
-
-#xxxTODO: not tested, skip on non-Windows platform
-#isnt(IUP::OleControl->new(),undef,'Testing IUP::OleControl->new()');
 
 isnt(IUP::Button->new(),undef,'Testing IUP::Button->new()');
 isnt(IUP::Canvas->new(),undef,'Testing IUP::Canvas->new()');
@@ -21,7 +18,6 @@ isnt(IUP::FileDlg->new(),undef,'Testing IUP::FileDlg->new()');
 isnt(IUP::Fill->new(),undef,'Testing IUP::Fill->new()');
 isnt(IUP::FontDlg->new(),undef,'Testing IUP::FontDlg->new()');
 isnt(IUP::Frame->new(),undef,'Testing IUP::Frame->new()');
-isnt(IUP::CanvasGL->new(),undef,'Testing IUP::CanvasGL->new()');
 isnt(IUP::Hbox->new(),undef,'Testing IUP::Hbox->new()');
 isnt(IUP::Image->new(WIDTH=>1, HEIGHT=>1, pixels=>[0]),undef,'Testing IUP::Image->new()');
 isnt(IUP::Image->new(WIDTH=>1, HEIGHT=>1, pixels=>[0,1,2]),undef,'Testing IUP::Image->new() - RGB');
@@ -33,7 +29,6 @@ isnt(IUP::Matrix->new(),undef,'Testing IUP::Matrix->new()');
 isnt(IUP::Menu->new(),undef,'Testing IUP::Menu->new()');
 isnt(IUP::MessageDlg->new(),undef,'Testing IUP::MessageDlg->new()');
 isnt(IUP::Normalizer->new(),undef,'Testing IUP::Normalizer->new()');
-isnt(IUP::PPlot->new(),undef,'Testing IUP::PPlot->new()');
 isnt(IUP::ProgressBar->new(),undef,'Testing IUP::ProgressBar->new()');
 isnt(IUP::Radio->new(),undef,'Testing IUP::Radio->new()');
 isnt(IUP::Sbox->new(),undef,'Testing IUP::Sbox->new()');
@@ -51,3 +46,13 @@ isnt(IUP::User->new(),undef,'Testing IUP::User->new()');
 isnt(IUP::Val->new(),undef,'Testing IUP::Val->new()');
 isnt(IUP::Vbox->new(),undef,'Testing IUP::Vbox->new()');
 isnt(IUP::Zbox->new(),undef,'Testing IUP::Zbox->new()');
+
+SKIP: {
+  skip 'IUP not compiled with CanvasGL support', 1 unless IUP::ConfigData->feature('CanvasGL');
+  isnt(IUP::CanvasGL->new(),undef,'Testing IUP::CanvasGL->new()');
+}
+
+SKIP: {
+  skip 'IUP not compiled with PPlot support', 1 unless IUP::ConfigData->feature('PPlot');
+  isnt(IUP::PPlot->new(),undef,'Testing IUP::PPlot->new()');
+}
