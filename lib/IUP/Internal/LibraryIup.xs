@@ -1786,7 +1786,7 @@ _IupColorBrowser()
 #ifdef HAVELIB_IUPCONTROLS	
 		RETVAL = IupColorBrowser();
 #else
-		warn("IupOleControl() not available");
+		warn("Error: IUP was built without IupOleControl() support");
 		RETVAL = NULL;
 #endif
 	OUTPUT:
@@ -1801,7 +1801,7 @@ _IupDial(type)
 #ifdef HAVELIB_IUPCONTROLS
 		RETVAL = IupDial(type);
 #else
-		warn("IupOleControl() not available");
+		warn("Error: IUP was built without IupOleControl() support");
 		RETVAL = NULL;
 #endif
 	OUTPUT:
@@ -1828,7 +1828,7 @@ _IupColorbar()
 #ifdef HAVELIB_IUPCONTROLS
 		RETVAL = IupColorbar();
 #else
-		warn("IupColorbar() not available");
+		warn("Error: IUP was built without IupColorbar() support");
 		RETVAL = NULL;
 #endif
 	OUTPUT:
@@ -1842,7 +1842,7 @@ _IupCells()
 #ifdef HAVELIB_IUPCONTROLS
 		RETVAL = IupCells();
 #else
-		warn("IupCells() not available");
+		warn("Error: IUP was built without IupCells() support");
 		RETVAL = NULL;
 #endif
 	OUTPUT:
@@ -1857,7 +1857,7 @@ _IupMatrix(action)
 #ifdef HAVELIB_IUPCONTROLS
 		RETVAL = IupMatrix(action);
 #else
-		warn("IupMatrix() not available");
+		warn("Error: IUP was built without IupMatrix() support");
 		RETVAL = NULL;
 #endif
 	OUTPUT:
@@ -1913,7 +1913,7 @@ _IupPPlot()
 #ifdef HAVELIB_IUP_PPLOT
 		RETVAL = IupPPlot();
 #else
-		warn("IupPPlot() not available");
+		warn("Error: IUP was built without IupPPlot() support");
 		RETVAL = NULL;
 #endif
 	OUTPUT:
@@ -2113,7 +2113,7 @@ _IupOleControl(progid)
 #ifdef HAVELIB_IUPOLE
 		RETVAL = IupOleControl(progid);
 #else
-		warn("IupOleControl() not available");
+		warn("Error: IUP was built without IupOleControl() support");
 		RETVAL = NULL;
 #endif
 	OUTPUT:
@@ -2152,7 +2152,7 @@ _IupGLCanvas(action)
 #ifdef HAVELIB_IUPGL
 		RETVAL = IupGLCanvas(action);
 #else
-		warn("IupGLCavnas() not available");
+		warn("Error: IUP was built without IupGLCavnas() support");
 		RETVAL = NULL;
 #endif
 	OUTPUT:
@@ -2240,7 +2240,7 @@ _IupLoadImage(file_name)
 #ifdef HAVELIB_IUPIM
 		RETVAL = IupLoadImage(file_name);
 #else
-		warn("IupLoadImage() not available");
+		warn("Error: IUP was built without IupLoadImage() support");
 		RETVAL = NULL;
 #endif
 	OUTPUT:
@@ -2257,7 +2257,7 @@ _IupSaveImage(ih,file_name,format)
 #ifdef HAVELIB_IUPIM
 		RETVAL = IupSaveImage(ih,file_name,format);
 #else
-		warn("IupSaveImage() not available");
+		warn("Error: IUP was built without IupSaveImage() support");
 		RETVAL = 0;
 #endif
 	OUTPUT:
