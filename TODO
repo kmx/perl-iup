@@ -5,6 +5,11 @@
 
 ##########################################################
 
+######## CRITICAL (before 0.003): skip GUI tests on systems without graphical display
+- plan skip_all => "No GUI available, skipping" unless IUP->Open == IUP_OPENED;
+- use Test::NeedsDisplay ':skip_all'; + add Test::NeedsDisplay to prereqs + BEWARE: does not work correctly on cygwin!!!
+- split tests: t\*.t + all GUI-related >>> t\gui\*.t
+
 ######## IMPORTANT: IUP::Canvas::PNG
 - or other bitmap format (via CD_IMAGERGB canvas)
 - see http://www.tecgraf.puc-rio.br/im/en/samples.html
@@ -276,8 +281,7 @@ FT_Write( ftHandle, Buffer, nBufferSize, BytesWritten)
 - skip pattern
   plan skip_all => "\$ENV{RELEASE_TESTING} required fot testing", unless $ENV{RELEASE_TESTING};
   eval "use Win32::Job ()";
-  plan skip_all => "Can't interrupt hung processes without Win32::Job" if $@;
-  plan skip_all => "No GUI available, skipping" unless IUP->Open == IUP_OPENED;
+  plan skip_all => "Can't interrupt hung processes without Win32::Job" if $@;  
 - consider moving cross-check-... into xt/*
 - maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
 
