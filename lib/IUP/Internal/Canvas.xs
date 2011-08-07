@@ -63,14 +63,67 @@ _Stipple_test(a)
 	OUTPUT:
 		RETVAL
 
-MODULE = IUP::Canvas::Stipple	PACKAGE = IUP::Canvas::Bitmap
+MODULE = IUP::Canvas::Stipple	PACKAGE = IUP::Canvas::Bitmap   PREFIX = __Bitmap__
+
+cdBitmap *
+__Bitmap__new(CLASS,...)
+                char *CLASS
+        INIT:
+                cdBitmap * b;
+                int w, h, type;
+                void * data;
+        CODE:
+                if (items==2) {
+                  warn("XXX->new($file)");
+                }
+                else if (items==3) {
+                  warn("XXX->new($type,[...])");
+                  type = SvIV(ST(1));
+                  if (type==CD_RGB) {
+                    //data = AV2ulong(ST(2),&w,&h);
+                  }
+                  else if (type==CD_MAP) {
+                    //data = AV2uchar(ST(2),&w,&h);
+                  }
+                  else if (type==CD_RGBA) {
+                    //data = AV2ulong(ST(2),&w,&h);
+                  }
+                }
+                else if (items==4) {
+                  warn("XXX->new($w,$h,$type)");
+                  w = SvIV(ST(1));
+                  h = SvIV(ST(2));
+                  type = SvIV(ST(3));
+                }
+                else if (items==5) {
+                  warn("XXX->new($w,$h,$type,$rawbuffer)");
+                }
+                else {
+                  warn("Error: invalid param count xxx");
+                }
+                b = (cdBitmap *) malloc(sizeof(cdBitmap));
+                b->w = w;
+                b->h = h;
+                b->type = type;
+                RETVAL = b;
+        OUTPUT:
+                RETVAL
 
 int
-_Bitmap_test(a)
-		int a;
-	CODE:
-		warn("XXX-DEBUG: _Bitmap_test '%d'\n",a);
-		RETVAL = a+1;
+__Bitmap__test(self)
+                cdBitmap * self;
+        CODE:
+		warn("XXX-DEBUG-XXX: w=%d h=%d type=%d\n",self->w, self->h, self->type);
+		RETVAL = 1;
+	OUTPUT:
+		RETVAL
+
+int
+__Bitmap__Dump(self)
+                cdBitmap * self;
+        CODE:
+		warn("Dumping: w=%d h=%d type=%d\n",self->w, self->h, self->type);
+		RETVAL = 1;
 	OUTPUT:
 		RETVAL
 
@@ -1778,37 +1831,37 @@ cdScrollArea(canvas,xmin,xmax,ymin,ymax,dx,dy)
 #### Original C function from <.../cd/include/cd.h>
 # cdBitmap* cdCreateBitmap(int w, int h, int type);
 #xxxTODO/important (cdBitmap) - maybe OK (no need to be Canvas method)
-cdBitmap*
-cdCreateBitmap(w,h,type)
-		int w;
-		int h;
-		int type;
-	CODE:
-		RETVAL = cdCreateBitmap(w,h,type);
-	OUTPUT:
-		RETVAL
+#cdBitmap*
+#cdCreateBitmap(w,h,type)
+#		int w;
+#		int h;
+#		int type;
+#	CODE:
+#		RETVAL = cdCreateBitmap(w,h,type);
+#	OUTPUT:
+#		RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
 # cdBitmap* cdInitBitmap(int w, int h, int type, ...);
 #xxxTODO/important (cdBitmap) - variable arg list? (no need to be Canvas method) what is the diff cdCreateBitmap vs. cdInitBitmap?
-cdBitmap*
-cdInitBitmap(w,h,type,...)
-		int w;
-		int h;
-		int type;
-	CODE:
-		RETVAL = cdInitBitmap(w,h,type);
-	OUTPUT:
-		RETVAL
+#cdBitmap*
+#cdInitBitmap(w,h,type,...)
+#		int w;
+#		int h;
+#		int type;
+#	CODE:
+#		RETVAL = cdInitBitmap(w,h,type);
+#	OUTPUT:
+#		RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdKillBitmap(cdBitmap* bitmap);
 #xxxTODO/important (cdBitmap) - maybe OK (no need to be Canvas method)
-void
-cdKillBitmap(bitmap)
-		cdBitmap* bitmap;
-	CODE:
-		cdKillBitmap(bitmap);
+#void
+#cdKillBitmap(bitmap)
+#		cdBitmap* bitmap;
+#	CODE:
+#		cdKillBitmap(bitmap);
 
 #### Original C function from <.../cd/include/cd.h>
 # unsigned char* cdBitmapGetData(cdBitmap* bitmap, int dataptr);

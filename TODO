@@ -9,6 +9,32 @@
 - plan skip_all => "No GUI available, skipping" unless IUP->Open == IUP_OPENED;
 - use Test::NeedsDisplay ':skip_all'; + add Test::NeedsDisplay to prereqs + BEWARE: does not work correctly on cygwin!!!
 - split tests: t\*.t + all GUI-related >>> t\gui\*.t
+- GTK/NODISPLAY (error during gtk_init_check)
+  (<unknown>:7541): GLib-GObject-CRITICAL **: g_object_unref: assertion `G_IS_OBJECT (object)' failed
+  IUP->Open == -1
+  [http://developer.gnome.org/doc/API/2.2/gtk/gtk-General.html]
+  []
+
+  
+bool XDisplayExists() {
+  return (gdk_display_get_default() != NULL);
+}
+  
+++        if (!gdk_display_get_default ()) {
+++                if (!gtk_init_check (NULL, NULL)) {
+++                        /* Oh well, no X for you! */
+++                        g_printerr (_("Unable to connect to the X server"));
+++                        g_printerr ("%s", message);
+++                        exit (1);
+++                }
+++        }
+++ 
+  
+- GTK/NOT-WORKING-DISPLAY 
+  The application '<unknown>' lost its connection to the display localhost:10.0;
+  most likely the X server was shut down or you killed/destroyed
+  the application.
+
 
 ######## IMPORTANT: IUP::Canvas::PNG
 - or other bitmap format (via CD_IMAGERGB canvas)

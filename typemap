@@ -6,7 +6,7 @@ const char *		T_STR_OR_NULL
 unsigned char *		T_PTR_OR_NULL
 Ihandle *		T_PTR_OR_NULL
 cdCanvas *		T_PTR_OR_NULL
-cdBitmap *		T_PTR_OR_NULL
+cdBitmap *		O_OBJECT
 cdPattern *		T_PTR_OR_NULL
 cdStipple *		T_PTR_OR_NULL
 Icallback		T_PTR_OR_NULL
@@ -16,27 +16,38 @@ cdState *		T_PTR_OR_NULL
 cdContext *		T_PTR_OR_NULL
 cdImage *		T_PTR_OR_NULL
 
-### pointer with automatic NULL<->undef conversion on input/output
+### T_STR_OR_NULL ### string (char*) with automatic NULL<->undef conversion on input/output
+### T_PTR_OR_NULL ### pointer with automatic NULL<->undef conversion on input/output
+
 INPUT
 T_PTR_OR_NULL
 	$var = (SvIOK($arg)) ? INT2PTR($type,SvIVX($arg)) : NULL;
+
+T_STR_OR_NULL
+	$var = (SvOK($arg)) ? SvPV_nolen($arg) : NULL;
+
+T_PTROBJ
+	if (SvROK($arg) && sv_derived_from($arg, \"${ntype}\")) {
+	    IV tmp = SvIV((SV*)SvRV($arg));
+	    $var = INT2PTR($type,tmp);
+	}
+	else
+	    Perl_croak(aTHX_ \"%s: %s is not of type %s\",
+			${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]},
+			\"$var\", \"$ntype\") 
 
 OUTPUT
 T_PTR_OR_NULL
 	if ($var==NULL) XSRETURN_UNDEF;
 	else sv_setiv($arg, PTR2IV($var));
 
-### string (char*) with automatic NULL<->undef conversion on input/output
-# old approach: $var = (SvPOK($arg)) ? SvPVX($arg) : NULL; (this does not stringify numeric values)
-INPUT
-T_STR_OR_NULL
-	$var = (SvOK($arg)) ? SvPV_nolen($arg) : NULL;
-
-OUTPUT
 T_STR_OR_NULL
 	if ($var==NULL) XSRETURN_UNDEF;
 	else sv_setpv($arg, $var);
 
+T_PTROBJ
+        sv_setref_pv($arg, \"${ntype}\", (void*)$var);
+        
 ### common stuff
 
 # The Perl object is blessed into 'CLASS', which should be a
