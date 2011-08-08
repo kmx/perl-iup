@@ -30,6 +30,30 @@ cdCanvas* ref2cnv(SV* ref) {
   return NULL;
 }
 
+int AV2long(SV *av, long **data, int *n) {
+  long * buffer;
+  int lastindex, i;
+  AV *array;
+
+  if( (!SvROK(av)) || (SvTYPE(SvRV(av)) != SVt_PVAV) ) return 0;
+  
+  array = (AV *)SvRV(av);
+  lastindex = av_len(array);
+  
+  buffer = malloc(sizeof(long)*(lastindex+1));
+  if (!buffer) return 0;
+  
+  for(i=0; i<=lastindex; i++) buffer[i] = (long)SvIV(*av_fetch(array,i,0)); 
+  *data = buffer;
+  *n = lastindex+1;
+  return 1;
+}
+
+typedef struct __IUPinternal_cdPalette {
+  int n;
+  long *palette;
+} IUPinternal_cdPalette;
+
 MODULE = IUP::Canvas::Pattern	PACKAGE = IUP::Canvas::Pattern   PREFIX = __Pattern__
 
 int
@@ -43,14 +67,58 @@ __Pattern__test(a)
 
 MODULE = IUP::Canvas::Palette	PACKAGE = IUP::Canvas::Palette   PREFIX = __Palette__
 
-int
-__Palette__test(a)
-		int a;
+IUPinternal_cdPalette *
+__Palette__new(CLASS,...)
+                char *CLASS
+        INIT:
+                IUPinternal_cdPalette * p;
+                int n, i;
+                long *data, c;
+        CODE:
+                if (items==2) {
+                  if (!AV2long(ST(1), &data, &n)) XSRETURN_UNDEF;
+                }
+                else {
+                  n = SvIV(ST(1)); /* size */
+                  c = SvIV(ST(2)); /* color */
+                  if (n<=0) XSRETURN_UNDEF; /* XXX-TODO maybe check also maximum size */
+                  data = malloc(sizeof(long)*n);
+                  if (!data) XSRETURN_UNDEF;
+                  for(i=0; i<n; i++) data[i] = c;
+                }
+                p = malloc(sizeof(IUPinternal_cdPalette));
+                p->n = n;
+                p->palette = data;
+                RETVAL = p;
+        OUTPUT:
+                RETVAL
+
+void
+__Palette__DESTROY(self)
+                IUPinternal_cdPalette * self;
+        CODE:
+                if (self) {
+                  if (self->palette) free(self->palette);
+                  free(self);
+                }
+
+long
+__Palette__Color(self,i,...)
+                IUPinternal_cdPalette * self;
+                int i;
+        CODE:
+                if ((i >= self->n) || (i < 0)) XSRETURN_UNDEF;
+                if (items>2) self->palette[i] = SvIV(ST(2));
+                RETVAL = self->palette[i];
+        OUTPUT:
+                RETVAL
+
+void
+__Palette__Dump(self)
+		IUPinternal_cdPalette * self;
 	CODE:
-		warn("XXX-DEBUG: _Palette_test '%d'\n",a);
-		RETVAL = a+1;
-	OUTPUT:
-		RETVAL
+		int i;
+                for(i=0; i<self->n; i++) warn("XXX-DEBUG: palette[%d] = %d\n", i, self->palette[i]);
 
 MODULE = IUP::Canvas::Stipple	PACKAGE = IUP::Canvas::Stipple   PREFIX = __Stipple__
 
@@ -80,13 +148,16 @@ __Bitmap__new(CLASS,...)
                   warn("XXX->new($type,[...])");
                   type = SvIV(ST(1));
                   if (type==CD_RGB) {
-                    //data = AV2ulong(ST(2),&w,&h);
+                    //data = AV2ulong(ST(2),&w,&h);                                        
+                    //b = cdInitBitmap(int w, int h, int type, ...);
                   }
                   else if (type==CD_MAP) {
                     //data = AV2uchar(ST(2),&w,&h);
+                    //b = cdInitBitmap(int w, int h, int type, ...);
                   }
                   else if (type==CD_RGBA) {
                     //data = AV2ulong(ST(2),&w,&h);
+                    //b = cdInitBitmap(int w, int h, int type, ...);
                   }
                 }
                 else if (items==4) {
@@ -94,20 +165,23 @@ __Bitmap__new(CLASS,...)
                   w = SvIV(ST(1));
                   h = SvIV(ST(2));
                   type = SvIV(ST(3));
+                  b = cdCreateBitmap(w, h, type);
                 }
                 else if (items==5) {
                   warn("XXX->new($w,$h,$type,$rawbuffer)");
                 }
                 else {
                   warn("Error: invalid param count xxx");
-                }
-                b = (cdBitmap *) malloc(sizeof(cdBitmap));
-                b->w = w;
-                b->h = h;
-                b->type = type;
+                }                
                 RETVAL = b;
         OUTPUT:
                 RETVAL
+
+void
+__Bitmap__DESTROY(self)
+                cdBitmap * self;
+        CODE:
+                cdKillBitmap(self);
 
 int
 __Bitmap__test(self)
@@ -1655,23 +1729,16 @@ cdGetColorPlanes(canvas)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPalette(cdCanvas* canvas, int n, const long *palette, int mode);
 # canvas:Palette(palette: cdPalette; mode: number) [in Lua]
-#xxxTODO/important (cdPallete)
-#!!!NOTE!!!
-# cd.CreatePalette(size: number) -> (palette: cdPalette) [in Lua Only]
-# palette[index] = cd.EncodeColor(r, g, b)
-# cd.KillPalette(palette: cdPalette) [in Lua Only]
 void
-cdPalette(canvas,n,palette,mode)
-		SV* canvas;
-		SV* palette;
+cdPalette(canvas,palette,mode)
+		SV *canvas;
+		IUPinternal_cdPalette *palette;
 		int mode;
 	INIT:
 		int n;
 		long* tmppalette;
 	CODE:
-		/* xxx convert: palette > n+tmppalette */
-		/* xxxTODO call:SV2n_ldata(palette,&n,tmppalette) */
-		cdCanvasPalette(ref2cnv(canvas),n,tmppalette,mode);
+		cdCanvasPalette(ref2cnv(canvas),palette->n,palette->palette,mode);
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetImageRGB(cdCanvas* canvas, unsigned char* r, unsigned char* g, unsigned char* b, int x, int y, int w, int h);
@@ -1895,14 +1962,22 @@ cdPutBitmap(canvas,bitmap,x,y,w,h)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetBitmap(cdCanvas* canvas, cdBitmap* bitmap, int x, int y);
-void
-cdGetBitmap(canvas,bitmap,x,y)
+cdBitmap*
+cdGetBitmap(canvas,x,y,w,h)
 		SV* canvas;
-		cdBitmap* bitmap;
 		int x;
 		int y;
+                int w;
+                int h;
+        INIT:
+		cdBitmap* bmp;
+                char *CLASS = "IUP::Canvas::Bitmap"; /* XXX-FIXME ugly hack to handle return value conversion */
 	CODE:
-		cdCanvasGetBitmap(ref2cnv(canvas),bitmap,x,y);
+                bmp = cdCreateBitmap(w, h, CD_RGB); /* XXX-FIXME not sure what is correct type XXX */
+                cdCanvasGetBitmap(ref2cnv(canvas),bmp,x,y);
+		RETVAL = bmp;
+        OUTPUT:
+		RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdBitmapRGB2Map(cdBitmap* bitmap_rgb, cdBitmap* bitmap_map);

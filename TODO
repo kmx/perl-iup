@@ -5,37 +5,6 @@
 
 ##########################################################
 
-######## CRITICAL (before 0.003): skip GUI tests on systems without graphical display
-- plan skip_all => "No GUI available, skipping" unless IUP->Open == IUP_OPENED;
-- use Test::NeedsDisplay ':skip_all'; + add Test::NeedsDisplay to prereqs + BEWARE: does not work correctly on cygwin!!!
-- split tests: t\*.t + all GUI-related >>> t\gui\*.t
-- GTK/NODISPLAY (error during gtk_init_check)
-  (<unknown>:7541): GLib-GObject-CRITICAL **: g_object_unref: assertion `G_IS_OBJECT (object)' failed
-  IUP->Open == -1
-  [http://developer.gnome.org/doc/API/2.2/gtk/gtk-General.html]
-  []
-
-  
-bool XDisplayExists() {
-  return (gdk_display_get_default() != NULL);
-}
-  
-++        if (!gdk_display_get_default ()) {
-++                if (!gtk_init_check (NULL, NULL)) {
-++                        /* Oh well, no X for you! */
-++                        g_printerr (_("Unable to connect to the X server"));
-++                        g_printerr ("%s", message);
-++                        exit (1);
-++                }
-++        }
-++ 
-  
-- GTK/NOT-WORKING-DISPLAY 
-  The application '<unknown>' lost its connection to the display localhost:10.0;
-  most likely the X server was shut down or you killed/destroyed
-  the application.
-
-
 ######## IMPORTANT: IUP::Canvas::PNG
 - or other bitmap format (via CD_IMAGERGB canvas)
 - see http://www.tecgraf.puc-rio.br/im/en/samples.html
@@ -162,21 +131,12 @@ $canvas->cdPattern($pat);
 $canvas->wdPattern($pat, $w_mm, $h_mm);
 $curpat = $canvas->cdGetPattern();
 
-3/ IUP::Canvas::Palette - new(), Handle(), Kill()
-
-# void cdCanvasPalette(cdCanvas* canvas, int n, const long *palette, int mode);
-
-LUA:
-cd.CreatePalette(size: number) -> (palette: cdPalette) [in Lua Only]
-cd.KillPalette(palette: cdPalette) [in Lua Only]
-
-Perl (idea):
-$pal = IUP::Canvas::Palette->new( [...] );
-$pal = IUP::Canvas::Palette->new( $col1, $col2, ... );
-$value = $pat->Color($n);
-$pat->Color($n);
-$pal->Destroy();
-$pal->handle;   # = BUFFER: long int *color
+3/ IUP::Canvas::Palette - FINISHED!!!
+$pal = IUP::Canvas::Palette->new( [$col0, $col1, $col2, ...] );
+$pal = IUP::Canvas::Palette->new( $n, $color );
+$value = $pal->Color($n);
+$pal->Color($n, $color);
+$canvas->cdPalette($pal, $mode);
 
 4/ IUP::Canvas::Bitmap - new(), Handle(), Pixel(), Kill()
 ## bitmap methods
@@ -186,11 +146,11 @@ $pal->handle;   # = BUFFER: long int *color
 # unsigned char* cdBitmapGetData(cdBitmap* bitmap, int dataptr);
 # void cdBitmapSetRect(cdBitmap* bitmap, int xmin, int xmax, int ymin, int ymax);
 # void cdBitmapRGB2Map(cdBitmap* bitmap_rgb, cdBitmap* bitmap_map);
-## canvas methods:
+## canvas methods
 # void cdCanvasPutBitmap(cdCanvas* canvas, cdBitmap* bitmap, int x, int y, int w, int h);
-# void cdCanvasGetBitmap(cdCanvas* canvas, cdBitmap* bitmap, int x, int y);
 # void wdCanvasPutBitmap(cdCanvas* canvas, cdBitmap* bitmap, double x, double y, double w, double h);
-
+# void cdCanvasGetBitmap(cdCanvas* canvas, cdBitmap* bitmap, int x, int y);
+#XXX-FIXME - MAYBE CHANGE TO: $bitmap = $canvas->cdGetBitmap($x, $y, $w, $h);
 LUA:
 cd.CreateBitmap(w, h, type: number) -> (bitmap: cdBitmap)
 cd.KillBitmap(bitmap: cdBitmap)
@@ -202,14 +162,12 @@ image:cdInitBitmap() -> bitmap: cdBitmap
 + MAYBE: bitmap.r[n] = color
 
 Perl (idea):
-$bmp = IUP::Canvas::Bitmap->new( $w, $h, $type );        + $bm = IUP::Canvas::Bitmap->new( $filename );
-$bmp->Handle()
-$bmp->Kill()
-$bmp->Pixel($x, $y);                     + IUP::Canvas::Bitmap->Pixel($x, $y, $newvalue);
-$bmp->PixelR...
-$bmp->PixelG...
-$bmp->PixelB...
-$bmp->PixelA...
+$bmp = IUP::Canvas::Bitmap->new(...);
+$bmp->DESTROY();
+
+($r,$g,$b)    = $bmp->Data($x, $y);
+($r,$g,$b,$a) = $bmp->Data($x, $y);
+$n            = $bmp->Data($x, $y);
 
 5/ IUP::Canvas::Image
 ## image methods
@@ -302,16 +260,42 @@ FT_Write( ftHandle, Buffer, nBufferSize, BytesWritten)
 		BytesWritten   
 
 ######## IMPORTANT: add more tests
-- CHECK Test::NeedsDisplay
-  use Test::NeedsDisplay ':skip_all';
-- skip pattern
+- split tests: t\*.t + all GUI-related >>> t\gui\*.t
+- maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
+- skip example:
   plan skip_all => "\$ENV{RELEASE_TESTING} required fot testing", unless $ENV{RELEASE_TESTING};
   eval "use Win32::Job ()";
   plan skip_all => "Can't interrupt hung processes without Win32::Job" if $@;  
-- consider moving cross-check-... into xt/*
-- maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
 
 ### COSMETICS ################################################################################################
+
+(cosmetics)######## IDEA: 
+use IUP qw/:basic iup_NO_INIT/; #generally iup_ANY_OTHER_FLAG
+
+(cosmetics)######## GTK too noisy when no DISPLAY: asck scuri
+- GTK + no DISPLAY set - error during gtk_init_check (= during 'use IUP'):
+  (<unknown>:7541): GLib-GObject-CRITICAL **: g_object_unref: assertion `G_IS_OBJECT (object)' failed
+  IUP->Open == -1
+  [http://developer.gnome.org/doc/API/2.2/gtk/gtk-General.html]
+  
+bool XDisplayExists() {
+  return (gdk_display_get_default() != NULL);
+}
+  
+++        if (!gdk_display_get_default ()) {
+++                if (!gtk_init_check (NULL, NULL)) {
+++                        /* Oh well, no X for you! */
+++                        g_printerr (_("Unable to connect to the X server"));
+++                        g_printerr ("%s", message);
+++                        exit (1);
+++                }
+++        }
+++ 
+  
+- GTK/NOT-WORKING-DISPLAY 
+  The application '<unknown>' lost its connection to the display localhost:10.0;
+  most likely the X server was shut down or you killed/destroyed
+  the application.
 
 (cosmetics)######## IUP::Canvas
 - XS autodetection cdCanvasLine vs. cdfCanvasLine
@@ -421,9 +405,6 @@ http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-
 - vmware images: 
   - http://chrysaor.info/?page=images&filter=Ubuntu
   - http://www.thoughtpolice.co.uk/vmware/
-
-(not now, maybe later)######## Callbacks generation (not a priority)
-- missing support for K_* callbacks (no hurry, lua does not implement them as well)
 
 ### REJECTED FOR NOW ################################################################################################
 

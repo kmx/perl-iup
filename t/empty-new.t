@@ -8,7 +8,6 @@ BEGIN {
 }
 
 use Test::More;
-use Test::Simple;
 use IUP::ConfigData;
 use IUP ':all';
 
