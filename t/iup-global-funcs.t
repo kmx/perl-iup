@@ -1,8 +1,15 @@
 #!perl -T
 
-use Test::More tests => 5;
+BEGIN {
+  if (!$ENV{DISPLAY} && $^O ne 'MSWin32' && $^O ne 'cygwin') {
+    print "1..0 # skip: no display available for GUI tests\n";
+    exit;
+  }
+}
+
+use Test::More;
 use IUP ':all';
-use Data::Dumper;
+#use Data::Dumper;
 
 like(IUP->Version, qr/^[0-9]\.[0-9]$/, 'IUP->Version' );
 like(IUP->VersionNumber, qr/^[0-9]+$/, 'IUP->VersionNumber' );
@@ -72,3 +79,5 @@ my $i = -1;
 $i=IUP->GetByName('xxx')->ihandle;
 #diag "IH=$i";
 #diag "CL=".Dumper(IUP->GetByIhandle($i));
+
+done_testing();

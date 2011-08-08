@@ -1,6 +1,14 @@
 #!perl -T
 
-use Test::More tests => 44;
+BEGIN {
+  if (!$ENV{DISPLAY} && $^O ne 'MSWin32' && $^O ne 'cygwin') {
+    print "1..0 # skip: no display available for GUI tests\n";
+    exit;
+  }
+}
+
+use Test::More;
+use Test::Simple;
 use IUP::ConfigData;
 use IUP ':all';
 
@@ -56,3 +64,5 @@ SKIP: {
   skip 'IUP not compiled with PPlot support', 1 unless IUP::ConfigData->feature('PPlot');
   isnt(IUP::PPlot->new(),undef,'Testing IUP::PPlot->new()');
 }
+
+done_testing();
