@@ -30,10 +30,10 @@ cdCanvas* ref2cnv(SV* ref) {
   return NULL;
 }
 
-MODULE = IUP::Canvas::Pattern	PACKAGE = IUP::Canvas::Pattern
+MODULE = IUP::Canvas::Pattern	PACKAGE = IUP::Canvas::Pattern   PREFIX = __Pattern__
 
 int
-_Pattern_test(a)
+__Pattern__test(a)
 		int a;
 	CODE:
 		warn("XXX-DEBUG: _Pattern_test '%d'\n",a);
@@ -41,10 +41,10 @@ _Pattern_test(a)
 	OUTPUT:
 		RETVAL
 
-MODULE = IUP::Canvas::Palette	PACKAGE = IUP::Canvas::Palette
+MODULE = IUP::Canvas::Palette	PACKAGE = IUP::Canvas::Palette   PREFIX = __Palette__
 
 int
-_Palette_test(a)
+__Palette__test(a)
 		int a;
 	CODE:
 		warn("XXX-DEBUG: _Palette_test '%d'\n",a);
@@ -52,10 +52,10 @@ _Palette_test(a)
 	OUTPUT:
 		RETVAL
 
-MODULE = IUP::Canvas::Stipple	PACKAGE = IUP::Canvas::Stipple
+MODULE = IUP::Canvas::Stipple	PACKAGE = IUP::Canvas::Stipple   PREFIX = __Stipple__
 
 int
-_Stipple_test(a)
+__Stipple__test(a)
 		int a;
 	CODE:
 		warn("XXX-DEBUG: _Stipple_test '%d'\n",a);
@@ -118,19 +118,10 @@ __Bitmap__test(self)
 	OUTPUT:
 		RETVAL
 
-int
-__Bitmap__Dump(self)
-                cdBitmap * self;
-        CODE:
-		warn("Dumping: w=%d h=%d type=%d\n",self->w, self->h, self->type);
-		RETVAL = 1;
-	OUTPUT:
-		RETVAL
-
-MODULE = IUP::Canvas::Stipple	PACKAGE = IUP::Canvas::Image
+MODULE = IUP::Canvas::Image	PACKAGE = IUP::Canvas::Image   PREFIX = __Image__
 
 int
-_Image_test(a)
+__Image__test(a)
 		int a;
 	CODE:
 		warn("XXX-DEBUG: _Image_test '%d'\n",a);
@@ -1891,7 +1882,6 @@ cdBitmapSetRect(bitmap,xmin,xmax,ymin,ymax)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPutBitmap(cdCanvas* canvas, cdBitmap* bitmap, int x, int y, int w, int h);
-#xxxTODO/important (cdBitmap) - maybe OK
 void
 cdPutBitmap(canvas,bitmap,x,y,w,h)
 		SV* canvas;
@@ -1905,7 +1895,6 @@ cdPutBitmap(canvas,bitmap,x,y,w,h)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetBitmap(cdCanvas* canvas, cdBitmap* bitmap, int x, int y);
-#xxxTODO/important (cdBitmap) - maybe OK
 void
 cdGetBitmap(canvas,bitmap,x,y)
 		SV* canvas;
@@ -2453,7 +2442,6 @@ wdPutImageRect(canvas,image,x,y,xmin,xmax,ymin,ymax)
 
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasPutBitmap(cdCanvas* canvas, cdBitmap* bitmap, double x, double y, double w, double h);
-#xxxTODO/important (cdBitmap) - maybe OK
 void
 wdPutBitmap(canvas,bitmap,x,y,w,h)
 		SV* canvas;
