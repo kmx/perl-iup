@@ -61,69 +61,21 @@
 
 ######## IMPORTANT: IUP::Canvas (now works without Bitmap/Image/Palette/Pattern related functions)
 - fix missing/unfinished XS methods - see Canvas.xs (look for XXX)
-- implement IUP::Canvas::(Pattern|Palette|Stipple|Bitmap|Image) modules - see Canvas.xs
-- check lua implementation cdImage vs. cdBitmap
-  cdBitmap = Client Image (used together with cd+im libs)
-  cdImage  = Server Image (faster, but less flexible, the data is stored in a system private format, that the application does not have access)
 
-1/ IUP::Canvas::Stipple - new(), Handle(), Kill()
-
-# void cdCanvasStipple(cdCanvas* canvas, int w, int h, const unsigned char* stipple);
-# unsigned char* cdCanvasGetStipple(cdCanvas* canvas, int *n, int *m);
-# void wdCanvasStipple(cdCanvas* canvas, int w, int h, const unsigned char *fgbg, double w_mm, double h_mm);
-
-LUA:
-cd.CreateStipple(width, height: number) -> (stipple: cdStipple)
-cd.KillStipple(stipple: cdStipple)
-canvas:Stipple(stipple: cdStipple)
-canvas:wStipple(stipple: cdStipple, w_mm, h_mm: number)
-canvas:GetStipple() - > (stipple: cdStipple)
-
-Perl (idea):
+1/ IUP::Canvas::Stipple - FINISHED!!!
 $sti= IUP::Canvas::Stipple->new( [ [...], [...], [...] ] );     #1 param
 $sti= IUP::Canvas::Stipple->new( $w, $h );                      #2 params
-$sti= IUP::Canvas::Stipple->new( $w, $h, $rawdata );            #3 params
 $value = $sti->Pixel($x, $y);
 $sti->Pixel($x, $y, $value);
-$sti->Destroy();
-$sti->handle;   # = BUFFER: unsigned char* stipple
+$canvas->cdStipple($sti);
+$canvas->wdStipple($sti, $w_mm, $h_mm);
+$cursti = $canvas->cdGetStipple();
 
-Hint - GOOD EXAMPLES:
-http://www.lemoda.net/xs/xs-intro/set-bit.html
-http://www.gossamer-threads.com/lists/perl/porters/7696
-
-2/ IUP::Canvas::Pattern - new(), Handle(), Kill()
-
-# void cdCanvasPattern(cdCanvas* canvas, int w, int h, long const int *pattern);
-# long* cdCanvasGetPattern(cdCanvas* canvas, int* n, int* m);
-# void wdCanvasPattern(cdCanvas* canvas, int w, int h, const long *color, double w_mm, double h_mm);
-
-LUA:
-cd.CreatePattern(width, height: number) -> (pattern: cdPattern)
-cd.KillPattern(pattern: cdPattern)
-canvas:Pattern(pattern: cdPattern) [in Lua]
-canvas:wPattern(pattern: cdPattern, w_mm, h_mm: number) [in Lua]
-canvas:GetPattern() - > (pattern: cdPattern) [in Lua]
-
-LUA example:
-canvas = cd.CreateCanvas(cd.SVG, "cd_svg.svg 270.933x198.543 4.72441") 
-pattern = cd.CreatePattern(10,10)
-pattern[<n>] = CD_RED
-...
-canvas:Pattern(pattern)
-canvas:Begin(cd.FILL)
-canvas:Vertex(w - 100, h/2)
-canvas:Vertex(w - 150, h/2 + 50)
-canvas:Vertex(w - 200, h/2)
-canvas:Vertex(w - 150, h/2 - 50)
-canvas:End()
-
-Perl (idea):
+2/ IUP::Canvas::Pattern - FINISHED!!!
 $pat = IUP::Canvas::Pattern->new( [ [...], [...] ] );   #1 param
 $pat = IUP::Canvas::Pattern->new( $w, $h );             #2 params
 $value = $pat->Pixel($x, $y);
 $pat->Pixel($x, $y, $value);
-
 $canvas->cdPattern($pat);
 $canvas->wdPattern($pat, $w_mm, $h_mm);
 $curpat = $canvas->cdGetPattern();
@@ -136,6 +88,10 @@ $pal->Color($n, $color);
 $canvas->cdPalette($pal, $mode);
 
 4/ IUP::Canvas::Bitmap - new(), Handle(), Pixel(), Kill()
+Hint - GOOD EXAMPLES:
+http://www.lemoda.net/xs/xs-intro/set-bit.html
+http://www.gossamer-threads.com/lists/perl/porters/7696
+
 ## bitmap methods
 # cdBitmap* cdCreateBitmap(int w, int h, int type);
 # cdBitmap* cdInitBitmap(int w, int h, int type, ...);
@@ -187,7 +143,6 @@ image:KillImage()
 
 #? void wdCanvasHardcopy(cdCanvas* canvas, cdContext* ctx, void *data, void(*draw_func)(cdCanvas *canvas_copy));
 #? void cdRGB2Map(int width, int height, const unsigned char* red, const unsigned char* green, const unsigned char* blue, unsigned char* index, int pal_size, long *color);
-#? void cdCanvasScrollArea(cdCanvas* canvas, int xmin, int xmax, int ymin, int ymax, int dx, int dy); [in C]
 
 # void cdCanvasTransform(cdCanvas* canvas, const double* matrix);
 # double* cdCanvasGetTransform(cdCanvas* canvas);
@@ -203,6 +158,13 @@ image:KillImage()
     transf_matrix2SV(matrix_2x3)
     SV2transf_matrix(srcSV,&matrix_2x3)
 
+- fix: cdTransform cdGetTransform cdTransformMultiply cdLineStyleDashes cdVectorTextTransform
+- helpers: 
+  AV2int
+  AV2transmatrix  or AV2double2D
+  transmatrix2AV  or double2D2AV
+
+    
 sample XS code from FTDI::D2XX:
 
 FT_STATUS

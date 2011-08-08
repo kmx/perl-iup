@@ -8,6 +8,8 @@ Ihandle *		T_PTR_OR_NULL
 cdCanvas *		T_PTR_OR_NULL
 cdBitmap *		O_OBJECT
 IUPinternal_cdPalette * O_OBJECT
+IUPinternal_cdPattern * O_OBJECT
+IUPinternal_cdStipple * O_OBJECT
 cdPattern *		T_PTR_OR_NULL
 cdStipple *		T_PTR_OR_NULL
 Icallback		T_PTR_OR_NULL

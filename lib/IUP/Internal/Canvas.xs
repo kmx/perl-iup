@@ -30,14 +30,14 @@ cdCanvas* ref2cnv(SV* ref) {
   return NULL;
 }
 
-int AV2long(SV *av, long **data, int *n) {
+int AV2long(SV *A, long **data, int *n) {
   long * buffer;
   int lastindex, i;
   AV *array;
 
-  if( (!SvROK(av)) || (SvTYPE(SvRV(av)) != SVt_PVAV) ) return 0;
+  if( (!SvROK(A)) || (SvTYPE(SvRV(A)) != SVt_PVAV) ) return 0;
   
-  array = (AV *)SvRV(av);
+  array = (AV *)SvRV(A);
   lastindex = av_len(array);
   
   buffer = malloc(sizeof(long)*(lastindex+1));
@@ -49,8 +49,86 @@ int AV2long(SV *av, long **data, int *n) {
   return 1;
 }
 
-int AV2long2D(SV *av, long **data, int *w, int *h) {
-  /* XXX-FIXME TODO */
+int AV2long2D(SV *A1, long **data, int *w, int *h) {
+  long * buffer;
+  int lastindex1, lastindex2, i, j, error;
+  AV *array1, *array2;
+  SV *A2;
+  
+  if( (!SvROK(A1)) || (SvTYPE(SvRV(A1)) != SVt_PVAV) ) return 0;
+  array1 = (AV *)SvRV(A1);
+  lastindex1 = av_len(array1);
+  
+  A2 = (SV*)(*av_fetch(array1,0,0));
+  if( (!SvROK(A2)) || (SvTYPE(SvRV(A2)) != SVt_PVAV) ) return 0;
+  array2 = (AV *)SvRV(A2);
+  lastindex2 = av_len(array2);
+  
+  warn("li1=%d li2=%d", lastindex1, lastindex2);
+  buffer = malloc( sizeof(long) * (lastindex2+1) * (lastindex1+1) );
+  if (!buffer) return 0;
+  
+  for(error=0, i=0; (i<=lastindex1 && !error); i++) {
+    A2 = (SV*)(*av_fetch(array1,i,0));
+    array2 = (AV *)SvRV(A2);
+    if (lastindex2 != av_len(array2)) {
+      error=1;
+    }
+    else {
+      for(j=0; j<=lastindex2; j++) {
+        buffer[i*(lastindex2+1)+j] = (long)SvIV(*av_fetch(array2,j,0));
+      }
+    }
+  }
+  if (error) {
+    free(buffer);
+    return 0;
+  }
+  *data = buffer;
+  *h = lastindex1+1;
+  *w = lastindex2+1;
+  return 1;
+}
+
+int AV2uchar2D(SV *A1, unsigned char **data, int *w, int *h) {
+  unsigned char * buffer;
+  int lastindex1, lastindex2, i, j, error;
+  AV *array1, *array2;
+  SV *A2;
+  
+  if( (!SvROK(A1)) || (SvTYPE(SvRV(A1)) != SVt_PVAV) ) return 0;
+  array1 = (AV *)SvRV(A1);
+  lastindex1 = av_len(array1);
+  
+  A2 = (SV*)(*av_fetch(array1,0,0));
+  if( (!SvROK(A2)) || (SvTYPE(SvRV(A2)) != SVt_PVAV) ) return 0;
+  array2 = (AV *)SvRV(A2);
+  lastindex2 = av_len(array2);
+  
+  warn("li1=%d li2=%d", lastindex1, lastindex2);
+  buffer = malloc( sizeof(unsigned char) * (lastindex2+1) * (lastindex1+1) );
+  if (!buffer) return 0;
+  
+  for(error=0, i=0; (i<=lastindex1 && !error); i++) {
+    A2 = (SV*)(*av_fetch(array1,i,0));
+    array2 = (AV *)SvRV(A2);
+    if (lastindex2 != av_len(array2)) {
+      error=1;
+    }
+    else {
+      for(j=0; j<=lastindex2; j++) {
+        buffer[i*(lastindex2+1)+j] = (unsigned char)SvUV(*av_fetch(array2,j,0));
+      }
+    }
+  }
+  if (error) {
+    free(buffer);
+    return 0;
+  }
+  *data = buffer;
+  *h = lastindex1+1;
+  *w = lastindex2+1;
+  return 1;
 }
 
 typedef struct __IUPinternal_cdPalette {
@@ -58,16 +136,126 @@ typedef struct __IUPinternal_cdPalette {
   long *palette;
 } IUPinternal_cdPalette;
 
+typedef struct __IUPinternal_cdPattern {
+  int w;
+  int h;
+  long *pattern;
+} IUPinternal_cdPattern;
+
+typedef struct __IUPinternal_cdStipple {
+  int w;
+  int h;
+  unsigned char *fgbg;
+} IUPinternal_cdStipple;
+
+MODULE = IUP::Canvas::Stipple	PACKAGE = IUP::Canvas::Stipple   PREFIX = __Stipple__
+
+IUPinternal_cdStipple *
+__Stipple__new(CLASS,...)
+                char *CLASS
+        INIT:
+                IUPinternal_cdStipple *p;
+                int w, h, i;
+                unsigned char *data;
+        CODE:
+                if (items==2) {
+                  if (!AV2uchar2D(ST(1), &data, &w, &h)) XSRETURN_UNDEF;
+                  /* XXX-TODO check for valid value 0 or 1 */
+                }
+                else {
+                  w = SvIV(ST(1));
+                  h = SvIV(ST(2));
+                  if (w<=0 || h<=0) XSRETURN_UNDEF;
+                  data = malloc(sizeof(long)*w*h);
+                  if (!data) XSRETURN_UNDEF;
+                  for(i=0; i<w*h; i++) data[i] = 0;
+                }
+                p = malloc(sizeof(IUPinternal_cdStipple));                
+                p->w = w;
+                p->h = h;
+                p->fgbg = data;
+                RETVAL = p;
+        OUTPUT:
+                RETVAL
+
+unsigned char
+__Stipple__Pixel(self,x,y,...)
+                IUPinternal_cdStipple *self;
+                int x;
+                int y;
+        CODE:
+                if ((x >= self->w) || (x < 0)) XSRETURN_UNDEF;
+                if ((y >= self->h) || (y < 0)) XSRETURN_UNDEF;
+                if (items>3) self->fgbg[x+y*self->w] = SvUV(ST(3)); /* XXX-TODO check for valid value 0 or 1 */
+                RETVAL = self->fgbg[x+y*self->w];
+        OUTPUT:
+                RETVAL
+
+void
+__Stipple__Dump(self)
+		IUPinternal_cdStipple *self;
+	CODE:
+		int i, j;
+                fprintf(stderr,"XXX-DEBUG: gonna Dump IUP::Canvas::Stipple [h=%d,w=%d]\n", self->h, self->w);
+                for(i=0; i<self->h; i++) {
+                  fprintf(stderr,"XXX-DEBUG:");
+                  for(j=0; j<self->w; j++) fprintf(stderr,"% 1d", self->fgbg[j+self->w*i]);
+                  fprintf(stderr,"\n");
+                }
+
 MODULE = IUP::Canvas::Pattern	PACKAGE = IUP::Canvas::Pattern   PREFIX = __Pattern__
 
-int
-__Pattern__test(a)
-		int a;
+IUPinternal_cdPattern *
+__Pattern__new(CLASS,...)
+                char *CLASS
+        INIT:
+                IUPinternal_cdPattern *p;
+                int w, h, i;
+                long *data;
+        CODE:
+                if (items==2) {
+                  if (!AV2long2D(ST(1), &data, &w, &h)) XSRETURN_UNDEF;
+                }
+                else {
+                  w = SvIV(ST(1));
+                  h = SvIV(ST(2));
+                  if (w<=0 || h<=0) XSRETURN_UNDEF;
+                  data = malloc(sizeof(long)*w*h);
+                  if (!data) XSRETURN_UNDEF;
+                  for(i=0; i<w*h; i++) data[i] = 0;
+                }
+                p = malloc(sizeof(IUPinternal_cdPattern));                
+                p->w = w;
+                p->h = h;
+                p->pattern = data;
+                RETVAL = p;
+        OUTPUT:
+                RETVAL
+
+long
+__Pattern__Pixel(self,x,y,...)
+                IUPinternal_cdPattern *self;
+                int x;
+                int y;
+        CODE:
+                if ((x >= self->w) || (x < 0)) XSRETURN_UNDEF;
+                if ((y >= self->h) || (y < 0)) XSRETURN_UNDEF;
+                if (items>3) self->pattern[x+y*self->w] = SvIV(ST(3));
+                RETVAL = self->pattern[x+y*self->w];
+        OUTPUT:
+                RETVAL
+
+void
+__Pattern__Dump(self)
+		IUPinternal_cdPattern *self;
 	CODE:
-		warn("XXX-DEBUG: _Pattern_test '%d'\n",a);
-		RETVAL = a+1;
-	OUTPUT:
-		RETVAL
+		int i, j;
+                fprintf(stderr,"XXX-DEBUG: gonna Dump IUP::Canvas::Palette [h=%d,w=%d]\n", self->h, self->w);
+                for(i=0; i<self->h; i++) {
+                  fprintf(stderr,"XXX-DEBUG:");
+                  for(j=0; j<self->w; j++) fprintf(stderr,"% 12d", self->pattern[j+self->w*i]);
+                  fprintf(stderr,"\n");
+                }
 
 MODULE = IUP::Canvas::Palette	PACKAGE = IUP::Canvas::Palette   PREFIX = __Palette__
 
@@ -124,18 +312,7 @@ __Palette__Dump(self)
 		int i;
                 for(i=0; i<self->n; i++) warn("XXX-DEBUG: palette[%d] = %d\n", i, self->palette[i]);
 
-MODULE = IUP::Canvas::Stipple	PACKAGE = IUP::Canvas::Stipple   PREFIX = __Stipple__
-
-int
-__Stipple__test(a)
-		int a;
-	CODE:
-		warn("XXX-DEBUG: _Stipple_test '%d'\n",a);
-		RETVAL = a+1;
-	OUTPUT:
-		RETVAL
-
-MODULE = IUP::Canvas::Stipple	PACKAGE = IUP::Canvas::Bitmap   PREFIX = __Bitmap__
+MODULE = IUP::Canvas::Bitmap	PACKAGE = IUP::Canvas::Bitmap   PREFIX = __Bitmap__
 
 cdBitmap *
 __Bitmap__new(CLASS,...)
@@ -1308,70 +1485,68 @@ cdHatch(canvas,style)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasStipple(cdCanvas* canvas, int w, int h, const unsigned char* stipple);
-#xxxTODO/important (cdStipple)
 void
 cdStipple(canvas,stipple)
 		SV* canvas;
-		SV* stipple;
-	INIT:
-		int w;
-		int h;
-		unsigned char* tmpstipple;
+		IUPinternal_cdStipple *stipple;
 	CODE:
-		/* xxxTODO cdstipple > rawdata */
-		/* xxxTODO call:SV2r_c_cdata(stipple,&w,&h,&tmpstipple) */
-		cdCanvasStipple(ref2cnv(canvas),w,h,tmpstipple);
+		cdCanvasStipple(ref2cnv(canvas),stipple->w,stipple->h,stipple->fgbg);
 
 #### Original C function from <.../cd/include/cd.h>
 # unsigned char* cdCanvasGetStipple(cdCanvas* canvas, int *n, int *m);
 # canvas:GetStipple() - > (stipple: cdStipple) [in Lua]
-#xxxTODO/important (cdStipple)
-SV*
-cdGetStipple(canvas,n,m)
+IUPinternal_cdStipple *
+cdGetStipple(canvas)
 		SV* canvas;
 	INIT:
-		int n;
-		int m;
-		unsigned char* stipple;
+		int w, h;
+		unsigned char* data;
+                IUPinternal_cdStipple *s;
+                char *CLASS = "IUP::Canvas::Stipple";  /* XXX-FIXME ugly hack to handle return value conversion */
 	CODE:
-		stipple = cdCanvasGetStipple(ref2cnv(canvas),&n,&m);
-		/* xxxTODO call:r_c_cdata2SV(n,m,stipple) */
-		/* xxxTODO rawdata > cdstipple */
+		data = cdCanvasGetStipple(ref2cnv(canvas),&w,&h);
+                if (!data) XSRETURN_UNDEF;
+                s = malloc(sizeof(IUPinternal_cdStipple));
+                if (!s) XSRETURN_UNDEF;
+                s->w = w;
+                s->h = h;
+                s->fgbg = data; /* XXX-FIXME DESTROYing the returning object destroys the pattern !!! - XXX-NEEDS-TO-BE-FIXED-XXX maybe copy data? */
+		RETVAL = s;
 	OUTPUT:
 		RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPattern(cdCanvas* canvas, int w, int h, long const int *pattern);
 # canvas:Pattern(pattern: cdPattern) [in Lua]
-#xxxTODO/important (cdPattern)
 void
 cdPattern(canvas,pattern)
 		SV* canvas;
-		SV* pattern;
-	INIT:
-		int w;
-		int h;
-		long int* tmppattern; /* xxx maybe size of [100] will be enough - ruby is wrong */
+		IUPinternal_cdPattern *pattern;
 	CODE:
-		/* xxx pattern > raw data (w/h/tmppaterrn) */
-		/* xxxTODO call:SV2r_c_ldata(pattern,&w,&h,&tmppattern) */
-		cdCanvasPattern(ref2cnv(canvas),w,h,tmppattern);
+		cdCanvasPattern(ref2cnv(canvas),pattern->w,pattern->h,pattern->pattern);
 
 #### Original C function from <.../cd/include/cd.h>
-# long* cdCanvasGetPattern(cdCanvas* canvas, int* n, int* m);
+# long* cdCanvasGetPattern(cdCanvas* canvas, int* w, int* h);
 # canvas:GetPattern() - > (pattern: cdPattern) [in Lua]
-#xxxTODO/important (cdPattern)
-void
-cdGetPattern(canvas,n,m)
-		SV* canvas;
+IUPinternal_cdPattern *
+cdGetPattern(canvas)
+		SV* canvas;                
 	INIT:
-		int n;
-		int m;
+		int w, h;
 		long *data;
-	PPCODE:
-		data = cdCanvasGetPattern(ref2cnv(canvas),&n,&m);
-		/* xxxTODO call:r_c_ldata2SV(n,m,data) */
-		/* xxx data > retval stucture */
+                IUPinternal_cdPattern *p;
+                char *CLASS = "IUP::Canvas::Pattern";  /* XXX-FIXME ugly hack to handle return value conversion */
+	CODE:
+		data = cdCanvasGetPattern(ref2cnv(canvas),&w,&h);
+                if (!data) XSRETURN_UNDEF;
+                p = malloc(sizeof(IUPinternal_cdPattern));
+                if (!p) XSRETURN_UNDEF;
+                p->w = w;
+                p->h = h;
+                p->pattern = data; /* XXX-FIXME DESTROYing the returning object destroys the pattern !!! - XXX-NEEDS-TO-BE-FIXED-XXX maybe copy data? */
+                RETVAL = p;
+        OUTPUT:
+                RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
 # int cdCanvasFillMode(cdCanvas* canvas, int mode);
@@ -1940,7 +2115,7 @@ cdBitmapGetData(bitmap,dataptr)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdBitmapSetRect(cdBitmap* bitmap, int xmin, int xmax, int ymin, int ymax);
-#xxxTODO/important (cdBitmap) - maybe OK (no need to be Canvas method)
+#xxxTODO/important (cdBitmap) - maybe OK (no need to be Canvas method) XXX-MAYBE-BITMAP-METHOD-XXX
 void
 cdBitmapSetRect(bitmap,xmin,xmax,ymin,ymax)
 		cdBitmap* bitmap;
@@ -1985,7 +2160,7 @@ cdGetBitmap(canvas,x,y,w,h)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdBitmapRGB2Map(cdBitmap* bitmap_rgb, cdBitmap* bitmap_map);
-#xxxTODO/important (cdBitmap) (no need to be Canvas method)
+#xxxTODO/important (cdBitmap) (no need to be Canvas method) XXX-MAYBE-BITMAP-METHOD-XXX
 void
 cdBitmapRGB2Map(bitmap_rgb,bitmap_map)
 		cdBitmap* bitmap_rgb;
@@ -2666,38 +2841,26 @@ wdGetTextBounds(canvas,x,y,s,rect)
 
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasStipple(cdCanvas* canvas, int w, int h, const unsigned char*fgbg, double w_mm, double h_mm);
-#xxxTODO/important (cdStipple)
 void
 wdStipple(canvas,stipple,w_mm,h_mm)
 		SV* canvas;
-		SV* stipple;
+		IUPinternal_cdStipple *stipple;
 		double w_mm;
 		double h_mm;
-	INIT:
-		int w;
-		int h;
-		unsigned char* fgbg;
 	CODE:
-		/* xxxTODO cdstipple > rawdata */
-		wdCanvasStipple(ref2cnv(canvas),w,h,fgbg,w_mm,h_mm);
+		wdCanvasStipple(ref2cnv(canvas),stipple->w,stipple->h,stipple->fgbg,w_mm,h_mm);
 
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasPattern(cdCanvas* canvas, int w, int h, const long *color, double w_mm, double h_mm);
 # canvas:wPattern(pattern: cdPattern, w_mm, h_mm: number) [in Lua]
-#xxxTODO/important (cdPattern)
 void
 wdPattern(canvas,pattern,w_mm,h_mm)
 		SV* canvas;
-		SV* pattern;
+		IUPinternal_cdPattern *pattern;
 		double w_mm;
 		double h_mm;
-	INIT:
-		int w;
-		int h;
-		const long* color;
 	CODE:
-		/* xxx convert: pattern > w/h/color */
-		wdCanvasPattern(ref2cnv(canvas),w,h,color,w_mm,h_mm);
+                wdCanvasPattern(ref2cnv(canvas),pattern->w,pattern->h,pattern->pattern,w_mm,h_mm);
 
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasVectorTextDirection(cdCanvas* canvas, double x1, double y1, double x2, double y2);

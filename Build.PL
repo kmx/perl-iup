@@ -57,7 +57,7 @@ my $builder = $class->new(
   },
   build_requires       => { # need to have for running: ./Build (install|test)
     'Module::Build'        => 0,
-    'Alien::IUP'           => 0.302,
+    'Alien::IUP'           => 0.303,
     'Test::More'           => 0,
     'Carp'                 => 0,
     'constant'             => 0,
@@ -84,6 +84,6 @@ $builder->feature('CanvasGL', 1)   if Alien::IUP->havelib('iupgl');
 $builder->feature('PPlot', 1)      if Alien::IUP->havelib('iup_pplot');
 $builder->feature('OLE', 1)        if Alien::IUP->havelib('iupole');
 $builder->feature('ImgLib', 1)     if Alien::IUP->havelib('iupimglib');
-$builder->feature('Controls', 1)     if Alien::IUP->havelib('iupcontrols');
+$builder->feature('Controls', 1)   if Alien::IUP->havelib('iupcontrols');
 
 $builder->create_build_script();
