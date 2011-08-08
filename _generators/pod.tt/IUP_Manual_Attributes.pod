@@ -130,7 +130,7 @@ the close box.
 
 =item B<BGCOLOR>
 
-ElementE<rsquo>s background color.
+Element's background color.
 
 [% h.at_value %] The RGB components.
 
@@ -242,7 +242,7 @@ See the L<[%m.dlg%]|[%m.dlg%]> for more details on sizes.
 
 =item B<FGCOLOR>
 
-ElementE<rsquo>s foreground color. Usually it is the color of the
+Element's foreground color. Usually it is the color of the
 associated text.
 
 [% h.at_value %] The RGB components. Values should be between 0 and 255, separated by a
@@ -790,7 +790,7 @@ will trigger the tip state, the given value will be ignored. (GTK 2.12)
 
 I<(non inheritable)>
 
-ElementE<rsquo>s title. It is often used to modify some static text of
+Element's title. It is often used to modify some static text of
 the element (which cannot be changed by the user).
 
 [% h.at_value %] Text.

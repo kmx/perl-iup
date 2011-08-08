@@ -121,11 +121,8 @@ canvas:End()
 Perl (idea):
 $pat = IUP::Canvas::Pattern->new( [ [...], [...] ] );   #1 param
 $pat = IUP::Canvas::Pattern->new( $w, $h );             #2 params
-$pat = IUP::Canvas::Pattern->new( $w, $h, $rawdata );   #3 params
 $value = $pat->Pixel($x, $y);
 $pat->Pixel($x, $y, $value);
-$pat->Destroy();
-$pat->handle;   # = BUFFER: long int *pattern
 
 $canvas->cdPattern($pat);
 $canvas->wdPattern($pat, $w_mm, $h_mm);
@@ -232,32 +229,6 @@ FT_Read( pHandle, Buffer, nBufferSize, lpBytesReturned)
 		Buffer
 		lpBytesReturned
 		RETVAL
-
-FT_STATUS
-FT_Write( ftHandle, Buffer, nBufferSize, BytesWritten)
-    	FT_HANDLE  ftHandle
-    	SV * Buffer
-    	DWORD nBufferSize
-    	DWORD BytesWritten = NO_INIT
-    	PREINIT:
-		AV * arrayBuffer;
-		char * lpBuffer;
-		DWORD i;
-	CODE:	
-		if( (!SvROK(Buffer)) || (SvTYPE(SvRV(Buffer)) != SVt_PVAV) || !((DWORD)av_len((AV *)SvRV(Buffer)) < nBufferSize)) {
-		  printf("Data type error\n");			
-		  XSRETURN_UNDEF;
-		}
-		lpBuffer = malloc(nBufferSize);
-		arrayBuffer = (AV *)SvRV(Buffer);
-		for(i=0; i<nBufferSize;i++) {
-		  lpBuffer[i] = (char)SvUV(*av_fetch(arrayBuffer,i,0));
-		}
-		RETVAL = FT_Write( ftHandle, lpBuffer, nBufferSize, &BytesWritten);
-		free(lpBuffer);
-	OUTPUT:
-		RETVAL
-		BytesWritten   
 
 ######## IMPORTANT: add more tests
 - split tests: t\*.t + all GUI-related >>> t\gui\*.t

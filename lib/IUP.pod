@@ -629,8 +629,8 @@ B<Returns:> the attribute value. If the attribute does not exist C<undef> is ret
 
 B<Notes:>
 
-This functionE<rsquo>s return value is not necessarily the same one
-used by the application to define the attributeE<rsquo>s value.
+This function's return value is not necessarily the same one
+used by the application to define the attribute's value.
 
 B<See Also:>
 L<SetGlobal|/"SetGlobal"> (global function).
@@ -1957,7 +1957,7 @@ environment variables, see each driver documentation.
 =item * QUIET
 
 When this variable is set to NO, IUP will generate a message in console
-indicating the driverE<rsquo>s version when initializing. Default: YES.
+indicating the driver's version when initializing. Default: YES.
 
 =item * VERSION
 

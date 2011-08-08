@@ -383,7 +383,7 @@ If you want the same button with changed background color, you can:
 =back
 
 Some interface elements can contain one or more elements, as is the
-case of dialogs, lists and boxes. In such cases, the objectE<rsquo>s
+case of dialogs, lists and boxes. In such cases, the object's
 element list items can be accessed by indexing the object containing
 them, as can be seen in this example:
 

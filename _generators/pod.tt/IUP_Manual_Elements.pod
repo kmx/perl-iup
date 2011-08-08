@@ -1294,7 +1294,7 @@ xxx IUP::Dialog, IUP::ColorDlg etc
 =over
 
 Hides an interface element. This function has the same effect as
-attributing value "NO" to the interface elementE<rsquo>s VISIBLE
+attributing value "NO" to the interface element's VISIBLE
 attribute.
 
  $element->Hide();

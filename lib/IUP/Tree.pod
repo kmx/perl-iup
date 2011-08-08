@@ -746,7 +746,7 @@ Forces a rename action to take place. Valid only when SHOWRENAME=YES.
 
 =item * B<RENAMECARET> (write only)
 
-The caretE<rsquo>s position of the text
+The caret's position of the text
 box when in-place renaming. Same as the CARET attribute for
 L<IUP::Text|IUP::Text>, but here is used only once after
 SHOWRENAME_CB is called and before the text box is shown.

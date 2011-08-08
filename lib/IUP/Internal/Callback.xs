@@ -54,11 +54,11 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKL
   hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */  
 
   /*### $element->{'!int!cb!<action>!related'}->{<hkey>} = newSVsv(obj) */
-  element_hash = MUTABLE_HV(SvRV(element));
+  element_hash = (HV*)MUTABLE_HV(SvRV(element));
   ref = hv_fetch(element_hash, action_related_key, strlen(action_related_key), 0);
   if (ref == NULL) { warn("Warning: This shouldn't happen ih2\n"); return sv_2mortal(obj); }
   if (!SvOK(*ref)) { warn("Warning: This shouldn't happen ih3\n"); return sv_2mortal(obj); }
-  element_cbrelated_hash = MUTABLE_HV(SvRV(*ref));
+  element_cbrelated_hash = (HV*)MUTABLE_HV(SvRV(*ref));
   hv_store(element_cbrelated_hash, hkey, strlen(hkey), newSVsv(obj), 0); /* nonweaken */
   
   return sv_2mortal(obj);
@@ -92,11 +92,11 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
   hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */  
 
   /*### $element->{'!int!cb!<action>!related'}->{<hkey>} = newSVsv(obj) */
-  element_hash = MUTABLE_HV(SvRV(element));
+  element_hash = (HV*)MUTABLE_HV(SvRV(element));
   ref = hv_fetch(element_hash, action_related_key, strlen(action_related_key), 0);
   if (ref == NULL) { warn("Warning: This shouldn't happen cv2\n"); return sv_2mortal(obj); }
   if (!SvOK(*ref)) { warn("Warning: This shouldn't happen cv3\n"); return sv_2mortal(obj); }
-  element_cbrelated_hash = MUTABLE_HV(SvRV(*ref));
+  element_cbrelated_hash = (HV*)MUTABLE_HV(SvRV(*ref));
   hv_store(element_cbrelated_hash, hkey, strlen(hkey), newSVsv(obj), 0); /* nonweaken */
 
   return sv_2mortal(obj);
@@ -107,7 +107,7 @@ int call_cb_func(SV* element, char *actionkey) {
   SV **ref;
 
   /* call_pv(element->{actionkey},G_ARRAY) */
-  hash = MUTABLE_HV(SvRV(element));
+  hash = (HV*)MUTABLE_HV(SvRV(element));
   ref = hv_fetch(hash, actionkey, strlen(actionkey), 0);
   if (ref != NULL)
     if (SvOK(*ref)) return call_sv(*ref,G_ARRAY); /*xxxCHECKLATER better would be to test blessed(*ref)*/
@@ -3426,14 +3426,14 @@ internal_cb_NODEREMOVED_CB_U (Ihandle* ih,void* userdata)
        /* converting userdata to  $self->{'!int!treedata'}->{$userdata_pointer} */
 	SV_userdata = newSViv(PTR2IV(userdata));
 	hkey_userdata = SvPV_nolen(SV_userdata); /*xxxCHECKLATER find more effective way*/
-	element_hash = MUTABLE_HV(SvRV(element));
+	element_hash = (HV*)MUTABLE_HV(SvRV(element));
 	SV_ref = hv_fetch(element_hash, "!int!treedata", 13, 0);
 	if ((SV_ref == NULL) || !SvOK(*SV_ref)) {
 	  warn("Warning: This shouldn't happen NODEREMOVED_CB/1\n"); 
 	  XPUSHs(&PL_sv_undef);
 	}
 	else {
-	  element_hash = MUTABLE_HV(SvRV(*SV_ref));
+	  element_hash = (HV*)MUTABLE_HV(SvRV(*SV_ref));
 	  SV_ref = hv_fetch(element_hash, hkey_userdata, strlen(hkey_userdata), 0);
 	  if ((SV_ref == NULL) || !SvOK(*SV_ref)) {
 	    warn("Warning: This shouldn't happen NODEREMOVED_CB/2\n"); 

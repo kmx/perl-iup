@@ -49,6 +49,10 @@ int AV2long(SV *av, long **data, int *n) {
   return 1;
 }
 
+int AV2long2D(SV *av, long **data, int *w, int *h) {
+  /* XXX-FIXME TODO */
+}
+
 typedef struct __IUPinternal_cdPalette {
   int n;
   long *palette;

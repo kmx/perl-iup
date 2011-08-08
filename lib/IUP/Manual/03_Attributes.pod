@@ -130,7 +130,7 @@ B<Affects:> All controls that have visual representation.
 
 =item B<BGCOLOR>
 
-ElementE<rsquo>s background color.
+Element's background color.
 
 B<Value:> The RGB components.
 
@@ -242,7 +242,7 @@ B<Affects:> All elements, except menus.
 
 =item B<FGCOLOR>
 
-ElementE<rsquo>s foreground color. Usually it is the color of the
+Element's foreground color. Usually it is the color of the
 associated text.
 
 B<Value:> The RGB components. Values should be between 0 and 255, separated by a
@@ -790,7 +790,7 @@ B<Affects:> All except label, menu item and submenu item.
 
 I<(non inheritable)>
 
-ElementE<rsquo>s title. It is often used to modify some static text of
+Element's title. It is often used to modify some static text of
 the element (which cannot be changed by the user).
 
 B<Value:> Text.
