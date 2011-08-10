@@ -30,6 +30,45 @@ cdCanvas* ref2cnv(SV* ref) {
   return NULL;
 }
 
+int AV2transmatrix(SV *A, double *buffer) {
+  AV *array;
+  int lastindex, i;  
+  if ((!SvROK(A)) || (SvTYPE(SvRV(A)) != SVt_PVAV)) return 0;
+  array = (AV *)SvRV(A);
+  lastindex = av_len(array);
+  if (lastindex<5) return 0;
+  for(i=0; i<6; i++) buffer[i] = (double)SvNV(*av_fetch(array,i,0)); 
+  return 1;
+}
+
+SV* transmatrix2AV(double *buffer) {
+  int i;
+  AV* array;
+  array = (AV *)sv_2mortal((SV *)newAV()); /* new array */
+  av_extend(array,6); /* not needed but faster */
+  for(i=0; i<6; i++) av_push(array,newSVnv(buffer[i]));
+  return newRV((SV*)array);
+}
+
+int AV2int(SV *A, int **data, int *n) {
+  int * buffer;
+  int lastindex, i;
+  AV *array;
+
+  if( (!SvROK(A)) || (SvTYPE(SvRV(A)) != SVt_PVAV) ) return 0;
+  
+  array = (AV *)SvRV(A);
+  lastindex = av_len(array);
+  
+  buffer = malloc(sizeof(int)*(lastindex+1));
+  if (!buffer) return 0;
+  
+  for(i=0; i<=lastindex; i++) buffer[i] = (int)SvIV(*av_fetch(array,i,0)); 
+  *data = buffer;
+  *n = lastindex+1;
+  return 1;
+}
+
 int AV2long(SV *A, long **data, int *n) {
   long * buffer;
   int lastindex, i;
@@ -160,7 +199,7 @@ __Stipple__new(CLASS,...)
         CODE:
                 if (items==2) {
                   if (!AV2uchar2D(ST(1), &data, &w, &h)) XSRETURN_UNDEF;
-                  /* XXX-TODO check for valid value 0 or 1 */
+                  /* XXX-CHECKLATER test for valid values 0 or 1 */
                 }
                 else {
                   w = SvIV(ST(1));
@@ -186,7 +225,7 @@ __Stipple__Pixel(self,x,y,...)
         CODE:
                 if ((x >= self->w) || (x < 0)) XSRETURN_UNDEF;
                 if ((y >= self->h) || (y < 0)) XSRETURN_UNDEF;
-                if (items>3) self->fgbg[x+y*self->w] = SvUV(ST(3)); /* XXX-TODO check for valid value 0 or 1 */
+                if (items>3) self->fgbg[x+y*self->w] = SvUV(ST(3)); /* XXX-CHECKLATER test for valid values 0 or 1 */
                 RETVAL = self->fgbg[x+y*self->w];
         OUTPUT:
                 RETVAL
@@ -273,7 +312,7 @@ __Palette__new(CLASS,...)
                 else {
                   n = SvIV(ST(1)); /* size */
                   c = SvIV(ST(2)); /* color */
-                  if (n<=0) XSRETURN_UNDEF; /* XXX-TODO maybe check also maximum size */
+                  if (n<=0) XSRETURN_UNDEF; /* XXX-CHECKLATER maybe test also maximum size */
                   data = malloc(sizeof(long)*n);
                   if (!data) XSRETURN_UNDEF;
                   for(i=0; i<n; i++) data[i] = c;
@@ -319,40 +358,83 @@ __Bitmap__new(CLASS,...)
                 char *CLASS
         INIT:
                 cdBitmap * b;
-                int w, h, type;
-                void * data;
+                int w, h, type, error;
+                int wr, hr, wg, hg, wb, hb, wa, ha, wi, hi, wc, hc;
+                unsigned char *data_r, *data_g, *data_b, *data_a;
+                unsigned char *index;
+                long *colors;
         CODE:
+                b = NULL;
                 if (items==2) {
-                  warn("XXX->new($file)");
+                  warn("IUP::Canvas::Bitmap->new($file) XXX-FIXME-XXX-NOT-IMPLEMENTED-YET-XXX");
                 }
-                else if (items==3) {
-                  warn("XXX->new($type,[...])");
-                  type = SvIV(ST(1));
-                  if (type==CD_RGB) {
-                    //data = AV2ulong(ST(2),&w,&h);                                        
-                    //b = cdInitBitmap(int w, int h, int type, ...);
+                else if (items==3 && !SvROK(ST(1)) && SvROK(ST(2)) && SvTYPE(SvRV(ST(2)))==SVt_PVAV) {
+                  warn("IUP::Canvas::Bitmap->new($type, $pixels) XXX-FIXME-XXX-NOT-IMPLEMENTED-YET-XXX");
+                  type = SvIV(ST(1));                  
+                  if (type!=CD_MAP && type!=CD_RGB && type!=CD_RGBA) XSRETURN_UNDEF;                  
+                  /* XXX-FIXME-TODO if (!AV2bitmap(ST(2),type,&data_r,&data_g,&data_b,&data_a,&index,&colors,&w,&h)) XSRETURN_UNDEF; */
+                  if (type==CD_MAP)       b = cdInitBitmap(w, h, type, index, colors);
+                  else if (type==CD_RGB)  b = cdInitBitmap(w, h, type, data_r, data_g, data_b);
+                  else if (type==CD_RGBA) b = cdInitBitmap(w, h, type, data_r, data_g, data_b, data_a);
+                }
+                else if (items==3 && SvROK(ST(1)) && SvTYPE(SvRV(ST(1)))==SVt_PVAV) { /*to be correct - we should test for ARRAYREF on ST(1|2)*/
+                  type=CD_MAP;
+                  /* cdInitBitmap(int w, int h, int type, unsigned char* index, long* colors) */
+                  if (!AV2uchar2D(ST(1),&index,&wi,&hi)) index = NULL;
+                  if (!AV2long2D(ST(2),&colors,&wc,&hc)) colors = NULL;
+                  if (!index || !colors || wi != wc || hi != hc) {
+                    if (!index) free(index);
+                    if (!colors) free(colors);
+                    XSRETURN_UNDEF;
                   }
-                  else if (type==CD_MAP) {
-                    //data = AV2uchar(ST(2),&w,&h);
-                    //b = cdInitBitmap(int w, int h, int type, ...);
+                  b = cdInitBitmap(w, h, type, index, colors);
+                }
+                else if (items==4 && SvROK(ST(1)) && SvTYPE(SvRV(ST(1)))==SVt_PVAV) { /*to be correct - we should test for ARRAYREF on ST(1|2|3)*/
+                  type=CD_RGB;
+                  /* cdInitBitmap(int w, int h, int type, unsigned char* red, unsigned char* green, unsigned char* blue) */
+                  if (!AV2uchar2D(ST(1),&data_r,&wr,&hr)) data_r = NULL;
+                  if (!AV2uchar2D(ST(2),&data_g,&wg,&hg)) data_g = NULL;
+                  if (!AV2uchar2D(ST(3),&data_b,&wb,&hb)) data_b = NULL;
+                  if (!data_r || !data_g || !data_r) error = 1;
+                  if (wr != wg || wr != wb) error = 1;
+                  if (hr != hg || hr != hb) error = 1;
+                  if (error) {
+                    if (!data_r) free(data_r);
+                    if (!data_g) free(data_g);
+                    if (!data_b) free(data_b);
+                    XSRETURN_UNDEF;
                   }
-                  else if (type==CD_RGBA) {
-                    //data = AV2ulong(ST(2),&w,&h);
-                    //b = cdInitBitmap(int w, int h, int type, ...);
+                  b = cdInitBitmap(wr, hr, type, data_r, data_g, data_b);
+                }
+                else if (items==5  && SvROK(ST(1)) && SvTYPE(SvRV(ST(1)))==SVt_PVAV) { /*to be correct - we should test for ARRAYREF on ST(1|2|3|4)*/
+                  type=CD_RGBA;
+                  /* cdInitBitmap(int w, int h, int type, unsigned char* red, unsigned char* green, unsigned char* blue, unsigned char* alpha) */
+                  if (!AV2uchar2D(ST(1),&data_r,&wr,&hr)) data_r = NULL;
+                  if (!AV2uchar2D(ST(2),&data_g,&wg,&hg)) data_g = NULL;
+                  if (!AV2uchar2D(ST(3),&data_b,&wb,&hb)) data_b = NULL;
+                  if (!AV2uchar2D(ST(4),&data_a,&wa,&ha)) data_a = NULL;
+                  if (!data_r || !data_g || !data_b || !data_a) error = 1;
+                  if (wr != wg || wr != wb || wr != wa) error = 1;
+                  if (hr != hg || hr != hb || hr != ha) error = 1;
+                  if (error) {
+                    if (!data_r) free(data_r);
+                    if (!data_g) free(data_g);
+                    if (!data_b) free(data_b);
+                    if (!data_a) free(data_a);
+                    XSRETURN_UNDEF;
                   }
+                  b = cdInitBitmap(wr, hr, type, data_r, data_g, data_b, data_a);
                 }
                 else if (items==4) {
-                  warn("XXX->new($w,$h,$type)");
-                  w = SvIV(ST(1));
-                  h = SvIV(ST(2));
-                  type = SvIV(ST(3));
-                  b = cdCreateBitmap(w, h, type);
-                }
-                else if (items==5) {
-                  warn("XXX->new($w,$h,$type,$rawbuffer)");
+                  type = SvIV(ST(1));
+                  w = SvIV(ST(2));
+                  h = SvIV(ST(3));                  
+                  if (w<=0 || h<=0) XSRETURN_UNDEF;
+                  b = cdCreateBitmap(w, h, type);                  
                 }
                 else {
-                  warn("Error: invalid param count xxx");
+                  warn("Error: invalid parameters for IUP::Canvas::Bitmap->new()");
+                  b = NULL;
                 }                
                 RETVAL = b;
         OUTPUT:
@@ -364,25 +446,21 @@ __Bitmap__DESTROY(self)
         CODE:
                 cdKillBitmap(self);
 
-int
-__Bitmap__test(self)
+void
+__Bitmap__Dump(self)
                 cdBitmap * self;
         CODE:
-		warn("XXX-DEBUG-XXX: w=%d h=%d type=%d\n",self->w, self->h, self->type);
-		RETVAL = 1;
-	OUTPUT:
-		RETVAL
+		warn("XXX-DEBUG: gonna Dump IUP::Canvas::Bitmap w=%d h=%d type=%d\n", self->w, self->h, self->type);
 
-MODULE = IUP::Canvas::Image	PACKAGE = IUP::Canvas::Image   PREFIX = __Image__
+MODULE = IUP::Canvas::InternalServerImage	PACKAGE = IUP::Canvas::InternalServerImage   PREFIX = __InternalServerImage__
 
-int
-__Image__test(a)
-		int a;
-	CODE:
-		warn("XXX-DEBUG: _Image_test '%d'\n",a);
-		RETVAL = a+1;
-	OUTPUT:
-		RETVAL
+#IMPORTANT: no need for IUP::Canvas::InternalServerImage->new() constructor as it can be created only via $canvas->cdGetImage($x,$y,$w,$h);
+
+void
+__InternalServerImage__DESTROY(self)
+                cdImage * self;
+        CODE:
+                cdKillImage(self);
 
 MODULE = IUP::Internal::Canvas	PACKAGE = IUP::Internal::Canvas
 
@@ -395,7 +473,7 @@ _cdCreateCanvas_CD_IUP(ih)
 #ifdef HAVELIB_IUPCD
 		RETVAL = cdCreateCanvas(CD_IUP, ih);
 #else
-		warn("cdCreateCanvas() not available");
+		warn("Warning: cdCreateCanvas() not available");
 		RETVAL = NULL;
 #endif
 	OUTPUT:
@@ -410,16 +488,35 @@ _cdCreateCanvas_FILE(format, params)
 		else if (strcmp(format,"PS" ) == 0) RETVAL = cdCreateCanvas(CD_PS, params);
 		else if (strcmp(format,"EMF") == 0) RETVAL = cdCreateCanvas(CD_EMF, params);
 		else if (strcmp(format,"DXF") == 0) RETVAL = cdCreateCanvas(CD_DXF, params);
-		/*xxxCHECKLATER add all file formats */
-		/* WMF */
-		/* DGN */
-		/* CGM */
-		/* METAFILE */
-		/* DEBUG */
-		/* PICTURE? */
-		/* PRINTER? */
-		/* CLIPBOARD? */
-		else RETVAL = NULL;
+                else RETVAL = NULL;
+		/* XXX-FIXME add all supported file formats */
+		/* 
+                 * CD_CAIRO_NATIVEWINDOW
+                 * CD_CAIRO_IMAGE
+                 * CD_CAIRO_DBUFFER
+                 * CD_CAIRO_PRINTER
+                 * CD_CAIRO_PS
+                 * CD_CAIRO_PDF
+                 * CD_CAIRO_SVG
+                 * CD_CAIRO_IMAGERGB
+                 * CD_CAIRO_EMF
+                 * CD_CGM
+                 * CD_CLIPBOARD
+                 * CD_DBUFFER
+                 * CD_DEBUG
+                 * CD_DGN
+                 * CD_GL
+                 * CD_IMAGE
+                 * CD_IMAGERGB
+                 * CD_DBUFFERRGB
+                 * CD_IUP
+                 * CD_METAFILE
+                 * CD_NATIVEWINDOW
+                 * CD_PDF
+                 * CD_PICTURE
+                 * CD_PRINTER
+                 * CD_WMF
+                 */		
 	OUTPUT:
 		RETVAL
 
@@ -457,6 +554,7 @@ cdVersionNumber(pkg)
 
 #### Original C function from <.../cd/include/cd.h>
 # cdCanvas* cdCreateCanvas(cdContext *context, void *data);
+#XXX-FIXME perhaps no need to call this from perl - consider removing
 cdCanvas*
 cdCreateCanvas(context,data)
 		cdContext* context;
@@ -468,6 +566,7 @@ cdCreateCanvas(context,data)
 
 #### Original C function from <.../cd/include/cd.h>
 # cdCanvas* cdCreateCanvasf(cdContext *context, const char* format, ...);
+#XXX-FIXME perhaps no need to call this from perl - consider removing
 cdCanvas*
 cdCreateCanvasf(context,format,...)
 		cdContext* context;
@@ -479,6 +578,7 @@ cdCreateCanvasf(context,format,...)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdKillCanvas(cdCanvas* canvas);
+#XXX-FIXME handle properly in IUP::Canvas DESTROY()
 void
 cdKillCanvas(canvas)
 		SV* canvas;
@@ -514,8 +614,8 @@ cdDeactivate(canvas)
 		cdCanvasDeactivate(ref2cnv(canvas));
 
 #### Original C function from <.../cd/include/cd.h>
-# int cdUseContextPlus(int use);
-#xxxTODO - support later, add some ifdefs
+#xxxTODO int cdUseContextPlus(int use);
+#xxxTODO support later, add some ifdefs
 #int
 #cdUseContextPlus(use)
 #		int use;
@@ -525,17 +625,17 @@ cdDeactivate(canvas)
 #		RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
-# void cdInitContextPlus(void); 
-#xxxTODO - support later, add some ifdefs
+#xxxTODO void cdInitContextPlus(void); 
+#xxxTODO support later, add some ifdefs
 #void
 #cdInitContextPlus()
 #	CODE:
 #		cdInitContextPlus();
 
 #### Original C function from <.../cd/include/cd.h>
-# int cdContextRegisterCallback(cdContext *context, int cb, cdCallback func);
-# cd.ContextRegisterCallback(ctx, cb: number, func: function) -> (status: number) [in Lua]
-#xxxTODO - cd callbacks? maybe later
+#xxxTODO int cdContextRegisterCallback(cdContext *context, int cb, cdCallback func);
+#xxxTODO cd.ContextRegisterCallback(ctx, cb: number, func: function) -> (status: number) [in Lua]
+#xxxTODO cd callbacks? maybe later
 #int
 #cdContextRegisterCallback(context,cb,func)
 #		cdContext* context;
@@ -660,7 +760,6 @@ cdPlay(canvas,context,xmin,xmax,ymin,ymax,data)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetSize(cdCanvas* canvas, int *width, int *height, double *width_mm, double *height_mm);
 # canvas:GetSize() -> (width, height, mm_width, mm_height: number) [in Lua]
-#xxx DONE
 void
 cdGetSize(canvas,width,height,width_mm,height_mm)
 		SV* canvas;
@@ -679,26 +778,26 @@ cdGetSize(canvas,width,height,width_mm,height_mm)
 #### Original C function from <.../cd/include/cd.h>
 # int cdCanvasUpdateYAxis(cdCanvas* canvas, int* y);
 # canvas:UpdateYAxis(yc: number) -> (yr: number) [in Lua]
-#xxx DONE - returns updated value (does not change param value)
 int
 cdUpdateYAxis(canvas,y)
 		SV* canvas;
 		int y;
 	CODE:
-		int tmpy = y;
+		int tmpy = y;                
+                #XXX-CHECKLATER returns updated value (does not change param value)
 		RETVAL = cdCanvasUpdateYAxis(ref2cnv(canvas),&tmpy);
 	OUTPUT:
 		RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
 # double cdfCanvasUpdateYAxis(cdCanvas* canvas, double* y);
-#xxx DONE (maybe not needed)
 double
 cdfUpdateYAxis(canvas,y)
 		SV* canvas;
 		double y;
 	CODE:
-		double tmpy;
+		double tmpy = y;
+                #XXX-CHECKLATER returns updated value (does not change param value)
 		RETVAL = cdfCanvasUpdateYAxis(ref2cnv(canvas),&tmpy);
 	OUTPUT:
 		RETVAL
@@ -739,7 +838,6 @@ cdfInvertYAxis(canvas,y)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasMM2Pixel(cdCanvas* canvas, double mm_dx, double mm_dy, int *dx, int *dy);
 # canvas:MM2Pixel(mm_dx, mm_dy: number) -> (dx, dy: number) [in Lua]
-#xxx DONE
 void
 cdMM2Pixel(canvas,mm_dx,mm_dy)
 		SV* canvas;
@@ -757,7 +855,6 @@ cdMM2Pixel(canvas,mm_dx,mm_dy)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPixel2MM(cdCanvas* canvas, int dx, int dy, double *mm_dx, double *mm_dy);
 # canvas:Pixel2MM(dx, dy: number) -> (mm_dx, mm_dy: number) [in Lua]
-#xxx DONE
 void
 cdPixel2MM(canvas,dx,dy)
 		SV* canvas;
@@ -775,7 +872,6 @@ cdPixel2MM(canvas,dx,dy)
 #### Original C function from <.../cd/include/cd.h>
 # void cdfCanvasMM2Pixel(cdCanvas* canvas, double mm_dx, double mm_dy, double *dx, double *dy);
 # canvas:fMM2Pixel(mm_dx, mm_dy: number) -> (dx, dy: number) [in Lua]
-#xxx DONE
 void
 cdfMM2Pixel(canvas,mm_dx,mm_dy)
 		SV* canvas;
@@ -792,7 +888,6 @@ cdfMM2Pixel(canvas,mm_dx,mm_dy)
 #### Original C function from <.../cd/include/cd.h>
 # void cdfCanvasPixel2MM(cdCanvas* canvas, double dx, double dy, double *mm_dx, double *mm_dy);
 # canvas:fPixel2MM(dx, dy: number) -> (mm_dx, mm_dy: number) [in Lua]
-#xxx DONE
 void
 cdfPixel2MM(canvas,dx,dy,mm_dx,mm_dy)
 		SV* canvas;
@@ -829,7 +924,6 @@ cdfOrigin(canvas,x,y)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetOrigin(cdCanvas* canvas, int *x, int *y);
 # canvas:GetOrigin() -> (x, y: number) [in Lua]
-#xxx DONE
 void
 cdGetOrigin(canvas)
 		SV* canvas;
@@ -844,7 +938,6 @@ cdGetOrigin(canvas)
 #### Original C function from <.../cd/include/cd.h>
 # void cdfCanvasGetOrigin(cdCanvas* canvas, double *x, double *y);
 # canvas:fGetOrigin() -> (x, y: number) [in Lua]
-#xxx DONE
 void
 cdfGetOrigin(canvas)
 		SV* canvas;
@@ -859,7 +952,6 @@ cdfGetOrigin(canvas)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasTransform(cdCanvas* canvas, const double* matrix);
 # canvas:Transform(matrix: table) [in Lua]
-#xxxTODO/important (matrix)
 void
 cdTransform(canvas,matrix)
 		SV* canvas;
@@ -867,28 +959,29 @@ cdTransform(canvas,matrix)
 	INIT:
 		double tmpmatrix[6];
 	CODE:
-		/* xxxTODO call:SV2transf_matrix(matrix,&tmpmatrix) */
-		/* xxxTODO matrix -> tmpmatrix (how will be 2x3 matrix represented?) */
-		cdCanvasTransform(ref2cnv(canvas),tmpmatrix);
+		if (AV2transmatrix(matrix,tmpmatrix))
+                    cdCanvasTransform(ref2cnv(canvas),tmpmatrix);
+                else
+                    warn("Warning: cdTransform() invalid 'matrix' parameter");
 
 #### Original C function from <.../cd/include/cd.h>
 # double* cdCanvasGetTransform(cdCanvas* canvas);
 # canvas:GetTransformation() -> (matrix: table) [in Lua]
-#xxxTODO/important (matrix)
-void
+SV*
 cdGetTransform(canvas)
 		SV* canvas;
 	INIT:
 		double *matrix;
-	PPCODE:
+	CODE:
 		matrix = cdCanvasGetTransform(ref2cnv(canvas));
-		/* xxxTODO matrix > retval array (how will be 2x3 matrix represented?) */
-		/* xxxTODO call:transf_matrix2SV(matrix) */
+                if (!matrix) XSRETURN_UNDEF;
+                RETVAL = transmatrix2AV(matrix);
+        OUTPUT:
+                RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasTransformMultiply(cdCanvas* canvas, const double* matrix);
 # canvas:TransformMultiply(matrix: table) [in Lua]
-#xxxTODO/important (matrix)
 void
 cdTransformMultiply(canvas,matrix)
 		SV* canvas;
@@ -896,9 +989,10 @@ cdTransformMultiply(canvas,matrix)
 	INIT:
 		double tmpmatrix[6];
 	CODE:
-		/* xxxTODO matrix -> tmpmatrix (how will be 2x3 matrix represented?) */
-		/* xxxTODO call:SV2transf_matrix(matrix,&tmpmatrix) */
-		cdCanvasTransformMultiply(ref2cnv(canvas),tmpmatrix);
+		if (AV2transmatrix(matrix,tmpmatrix))
+                    cdCanvasTransformMultiply(ref2cnv(canvas),tmpmatrix);
+                else
+                    warn("Warning: cdTransform() invalid 'matrix' parameter");
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasTransformRotate(cdCanvas* canvas, double angle);
@@ -932,7 +1026,6 @@ cdTransformTranslate(canvas,dx,dy)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasTransformPoint(cdCanvas* canvas, int x, int y, int *tx, int *ty);
 # canvas:TransformPoint(x, y: number) -> (tx, ty: number) [in Lua]
-#xxx DONE
 void
 cdTransformPoint(canvas,x,y)
 		SV* canvas;
@@ -949,7 +1042,6 @@ cdTransformPoint(canvas,x,y)
 #### Original C function from <.../cd/include/cd.h>
 # void cdfCanvasTransformPoint(cdCanvas* canvas, double x, double y, double *tx, double *ty);
 # canvas:fTransformPoint(x, y: number) -> (tx, ty: number) [in Lua]
-#xxx DONE
 void
 cdfTransformPoint(canvas,x,y)
 		SV* canvas;
@@ -989,7 +1081,6 @@ cdClipArea(canvas,xmin,xmax,ymin,ymax)
 #### Original C function from <.../cd/include/cd.h>
 # int cdCanvasGetClipArea(cdCanvas* canvas, int *xmin, int *xmax, int *ymin, int *ymax);
 # canvas:GetClipArea() -> (xmin, xmax, ymin, ymax, status: number) [in Lua]
-#xxx DONE
 void
 cdGetClipArea(canvas)
 		SV* canvas;
@@ -1022,7 +1113,6 @@ cdfClipArea(canvas,xmin,xmax,ymin,ymax)
 #### Original C function from <.../cd/include/cd.h>
 # int cdfCanvasGetClipArea(cdCanvas* canvas, double *xmin, double *xmax, double *ymin, double *ymax);
 # canvas:GetClipArea() -> (xmin, xmax, ymin, ymax, status: number) [in Lua]
-#xxx DONE
 void
 cdfGetClipArea(canvas)
 		SV* canvas;
@@ -1065,7 +1155,6 @@ cdOffsetRegion(canvas,x,y)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetRegionBox(cdCanvas* canvas, int *xmin, int *xmax, int *ymin, int *ymax);
 # canvas:GetRegionBox() -> (xmin, xmax, ymin, ymax, status: number) [in Lua]
-#xxx DONE
 void
 cdGetRegionBox(canvas)
 		SV* canvas;
@@ -1415,18 +1504,19 @@ cdLineStyle(canvas,style)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasLineStyleDashes(cdCanvas* canvas, const int* dashes, int count);
 # canvas:LineStyleDashes(dashes: table, count: number) -> (old_style: number) [in Lua]
-#xxxTODO/important (table)
 void
-cdLineStyleDashes(canvas,dashes,count)
+cdLineStyleDashes(canvas,dashes)
 		SV* canvas;
 		SV* dashes;
-		int count;
 	INIT:
-		int tmpdashes[4];
+		int *tmpdashes;
+                int count;
 	CODE:
-		/* xxxTODO dashes>tmpdashes */
-		/* xxxTODO call:SV2int_array(dashes,&tmpdashes,count) */
-		cdCanvasLineStyleDashes(ref2cnv(canvas),tmpdashes,count);
+                if (AV2int(dashes, &tmpdashes, &count))
+		    cdCanvasLineStyleDashes(ref2cnv(canvas),tmpdashes,count);
+                else
+                    warn("Warning: cdLineStyleDashes() invalid 'dashes' parameter");
+
 
 #### Original C function from <.../cd/include/cd.h>
 # int cdCanvasLineWidth(cdCanvas* canvas, int width);
@@ -1500,17 +1590,22 @@ cdGetStipple(canvas)
 		SV* canvas;
 	INIT:
 		int w, h;
-		unsigned char* data;
+		unsigned char *data;
                 IUPinternal_cdStipple *s;
-                char *CLASS = "IUP::Canvas::Stipple";  /* XXX-FIXME ugly hack to handle return value conversion */
+                char *CLASS = "IUP::Canvas::Stipple";  /* XXX-CHECKLATER ugly hack to handle return value conversion */
 	CODE:
 		data = cdCanvasGetStipple(ref2cnv(canvas),&w,&h);
-                if (!data) XSRETURN_UNDEF;
-                s = malloc(sizeof(IUPinternal_cdStipple));
+                if (!data || w<=0 || h<=0) XSRETURN_UNDEF;
+                s = malloc(sizeof(IUPinternal_cdStipple));                
                 if (!s) XSRETURN_UNDEF;
+                s->fgbg = malloc(sizeof(unsigned long)*w*h);
+                if (!s->fgbg) {
+                  free(s);
+                  XSRETURN_UNDEF;
+                }
                 s->w = w;
                 s->h = h;
-                s->fgbg = data; /* XXX-FIXME DESTROYing the returning object destroys the pattern !!! - XXX-NEEDS-TO-BE-FIXED-XXX maybe copy data? */
+                memcpy(s->fgbg, data, w*h*sizeof(unsigned char)); /* XXX-CHECKLATER we are returning a copy of the data */
 		RETVAL = s;
 	OUTPUT:
 		RETVAL
@@ -1535,15 +1630,20 @@ cdGetPattern(canvas)
 		int w, h;
 		long *data;
                 IUPinternal_cdPattern *p;
-                char *CLASS = "IUP::Canvas::Pattern";  /* XXX-FIXME ugly hack to handle return value conversion */
+                char *CLASS = "IUP::Canvas::Pattern";  /* XXX-CHECKLATER ugly hack to handle return value conversion */
 	CODE:
 		data = cdCanvasGetPattern(ref2cnv(canvas),&w,&h);
-                if (!data) XSRETURN_UNDEF;
+                if (!data || w<=0 || h<=0) XSRETURN_UNDEF;
                 p = malloc(sizeof(IUPinternal_cdPattern));
                 if (!p) XSRETURN_UNDEF;
+                p->pattern = malloc(sizeof(long)*w*h);
+                if (!p->pattern) {
+                  free(p);
+                  XSRETURN_UNDEF;
+                }
                 p->w = w;
                 p->h = h;
-                p->pattern = data; /* XXX-FIXME DESTROYing the returning object destroys the pattern !!! - XXX-NEEDS-TO-BE-FIXED-XXX maybe copy data? */
+                memcpy(p->pattern, data, w*h*sizeof(long)); /* XXX-CHECKLATER we are returning a copy of the data */
                 RETVAL = p;
         OUTPUT:
                 RETVAL
@@ -1575,12 +1675,11 @@ cdFont(canvas,type_face,style,size)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetFont(cdCanvas* canvas, char *type_face, int *style, int *size);
 # canvas:GetFont() -> (typeface: string, style, size: number) [in Lua]
-#xxx DONE (string conversion)
 void
 cdGetFont(canvas,type_face,style,size)
 		SV* canvas;
 	INIT:
-		char type_face[1024]; /* 1024 taken from cd_private.h */
+		char type_face[1024]; /* XXX-CHECKLATER (HARDCODED BUFFER SIZE) 1024 taken from cd_private.h */
 		int style;
 		int size;
 	PPCODE:
@@ -1692,20 +1791,22 @@ cdVectorTextDirection(canvas,x1,y1,x2,y2)
 #### Original C function from <.../cd/include/cd.h>
 # double* cdCanvasVectorTextTransform(cdCanvas* canvas, const double* matrix);
 # canvas:VectorTextTransform(matrix: table) -> (old_matrix: table) [in Lua] 
-#xxxTODO/important (matrix)
-void
+SV*
 cdVectorTextTransform(canvas,matrix)
 		SV* canvas;
 		SV* matrix;
 	INIT:
 		double tmpmatrix[6];
-		double *rv;
-	PPCODE:
-		/* xxx matrix array > tmpmatrix */
-		/* xxxTODO call:SV2transf_matrix(matrix,&tmpmatrix) */
-		rv = cdCanvasVectorTextTransform(ref2cnv(canvas),tmpmatrix);
-		/* xxxTODO call:transf_matrix2SV(rv) */
-		/* xxx rv > matrix array */
+		double *oldmatrix;
+	CODE:
+		if (!AV2transmatrix(matrix,tmpmatrix)) {
+                  warn("Warning: cdVectorTextTransform() invalid 'matrix' parameter");
+                  XSRETURN_UNDEF;
+                }  
+		oldmatrix = cdCanvasVectorTextTransform(ref2cnv(canvas),tmpmatrix);
+                RETVAL = transmatrix2AV(oldmatrix);
+        OUTPUT:
+                RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasVectorTextSize(cdCanvas* canvas, int size_x, int size_y, const char* s);
@@ -1742,7 +1843,6 @@ cdVectorFontSize(canvas,size_x,size_y)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetVectorFontSize(cdCanvas* canvas, double *size_x, double *size_y);
 # canvas:GetVectorFontSize() -> (size_x, size_y: number) [in Lua]
-#xxx DONE
 void
 cdGetVectorFontSize(canvas)
 		SV* canvas;
@@ -1757,7 +1857,6 @@ cdGetVectorFontSize(canvas)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetVectorTextSize(cdCanvas* canvas, const char* s, int *x, int *y);
 # canvas:GetVectorTextSize(text: string) -> (width, height: number) [in Lua]
-#xxx DONE
 void
 cdGetVectorTextSize(canvas,s)
 		SV* canvas;
@@ -1773,7 +1872,6 @@ cdGetVectorTextSize(canvas,s)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetVectorTextBounds(cdCanvas* canvas, const char* s, int x, int y, int *rect);
 # canvas:GetVectorTextBounds(text: string, x, y: number) -> (rect: table) [in Lua]
-#xxx DONE (table)
 void
 cdGetVectorTextBounds(canvas,s,x,y,rect)
 		SV* canvas;
@@ -1784,6 +1882,7 @@ cdGetVectorTextBounds(canvas,s,x,y,rect)
 		int rect[8];
 	PPCODE:
 		cdCanvasGetVectorTextBounds(ref2cnv(canvas),s,x,y,rect);
+                /* XXX-CHECKLATER maybe return an arrayref */
 		XPUSHs(sv_2mortal(newSViv(rect[0]))); /* x0 */
 		XPUSHs(sv_2mortal(newSViv(rect[1]))); /* y0 */
 		XPUSHs(sv_2mortal(newSViv(rect[2]))); /* x1 */
@@ -1796,7 +1895,6 @@ cdGetVectorTextBounds(canvas,s,x,y,rect)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetVectorTextBox(cdCanvas* canvas, int x, int y, const char *s, int *xmin, int *xmax, int *ymin, int *ymax);
 # canvas:GetVectorTextBox(x, y: number, text: string) -> (xmin, xmax, ymin, ymax: number) [in Lua]
-#xxx DONE
 void
 cdGetVectorTextBox(canvas,x,y,s)
 		SV* canvas;
@@ -1818,7 +1916,6 @@ cdGetVectorTextBox(canvas,x,y,s)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetFontDim(cdCanvas* canvas, int *max_width, int *height, int *ascent, int *descent);
 # canvas:GetFontDim() -> (max_width, height, ascent, descent: number) [in Lua]
-#xxx DONE
 void
 cdGetFontDim(canvas)
 		SV* canvas;
@@ -1837,7 +1934,6 @@ cdGetFontDim(canvas)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetTextSize(cdCanvas* canvas, const char* s, int *width, int *height);
 # canvas:GetTextSize(text: string) -> (width, heigth: number) [in Lua]
-#xxx DONE
 void
 cdGetTextSize(canvas,s)
 		SV* canvas;
@@ -1853,7 +1949,6 @@ cdGetTextSize(canvas,s)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetTextBox(cdCanvas* canvas, int x, int y, const char* s, int *xmin, int *xmax, int *ymin, int *ymax);
 # canvas:GetTextBox(x, y: number, text: string) -> (xmin, xmax, ymin, ymax: number) [in Lua]
-#xxx DONE
 void
 cdGetTextBox(canvas,x,y,s)
 		SV* canvas;
@@ -1875,7 +1970,6 @@ cdGetTextBox(canvas,x,y,s)
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetTextBounds(cdCanvas* canvas, int x, int y, const char* s, int *rect);
 # canvas:GetTextBounds(x, y: number, text: string) -> (rect: table) [in Lua]
-#xxx DONE (table)
 void
 cdGetTextBounds(canvas,x,y,s,rect)
 		SV* canvas;
@@ -1886,6 +1980,7 @@ cdGetTextBounds(canvas,x,y,s,rect)
 		int rect[8];
 	PPCODE:
 		cdCanvasGetTextBounds(ref2cnv(canvas),x,y,s,rect);
+                /* XXX-CHECKLATER maybe return an arrayref */
 		XPUSHs(sv_2mortal(newSViv(rect[0]))); /* x0 */
 		XPUSHs(sv_2mortal(newSViv(rect[1]))); /* y0 */
 		XPUSHs(sv_2mortal(newSViv(rect[2]))); /* x1 */
@@ -1920,121 +2015,24 @@ cdPalette(canvas,palette,mode)
 		cdCanvasPalette(ref2cnv(canvas),palette->n,palette->palette,mode);
 
 #### Original C function from <.../cd/include/cd.h>
-# void cdCanvasGetImageRGB(cdCanvas* canvas, unsigned char* r, unsigned char* g, unsigned char* b, int x, int y, int w, int h);
-# canvas:GetImageRGB(imagergb: cdImageRGB; x, y: number) [in Lua]
-#xxxTODO/important (cdImageRGB)
-void
-cdGetImageRGB(canvas,r,g,b,x,y,w,h)
-		SV* canvas;
-		unsigned char* r;
-		unsigned char* g;
-		unsigned char* b;
-		int x;
-		int y;
-		int w;
-		int h;
-	CODE:
-		cdCanvasGetImageRGB(ref2cnv(canvas),r,g,b,x,y,w,h);
-
-#### Original C function from <.../cd/include/cd.h>
-# void cdCanvasPutImageRectRGB(cdCanvas* canvas, int iw, int ih, const unsigned char* r, const unsigned char* g, const unsigned char* b, int x, int y, int w, int h, int xmin, int xmax, int ymin, int ymax);
-# canvas:PutImageRectRGB(imagergb: cdImageRGB; x, y, w, h, xmin, xmax, ymin, ymax: number) [in Lua]
-#xxxTODO/important (cdImageRGB)
-#void
-#cdPutImageRectRGB(canvas,iw,ih,r,g,b,x,y,w,h,xmin,xmax,ymin,ymax)
-#		SV* canvas;
-#		int iw;
-#		int ih;
-#		const unsigned char* r;
-#		const unsigned char* g;
-#		const unsigned char* b;
-#		int x;
-#		int y;
-#		int w;
-#		int h;
-#		int xmin;
-#		int xmax;
-#		int ymin;
-#		int ymax;
-#	CODE:
-#		cdCanvasPutImageRectRGB(ref2cnv(canvas),iw,ih,r,g,b,x,y,w,h,xmin,xmax,ymin,ymax);
-
-#### Original C function from <.../cd/include/cd.h>
-# void cdCanvasPutImageRectRGBA(cdCanvas* canvas, int iw, int ih, const unsigned char* r, const unsigned char* g, const unsigned char* b, const unsigned char* a, int x, int y, int w, int h, int xmin, int xmax, int ymin, int ymax);
-# canvas:PutImageRectRGBA(imagergba: cdImageRGBA; x, y, w, h, xmin, xmax, ymin, ymax: number) [in Lua]
-#xxxTODO/important (cdImageRGBA)
-#void
-#cdPutImageRectRGBA(canvas,iw,ih,r,g,b,a,x,y,w,h,xmin,xmax,ymin,ymax)
-#		SV* canvas;
-#		int iw;
-#		int ih;
-#		const unsigned char* r;
-#		const unsigned char* g;
-#		const unsigned char* b;
-#		const unsigned char* a;
-#		int x;
-#		int y;
-#		int w;
-#		int h;
-#		int xmin;
-#		int xmax;
-#		int ymin;
-#		int ymax;
-#	CODE:
-#		cdCanvasPutImageRectRGBA(ref2cnv(canvas),iw,ih,r,g,b,a,x,y,w,h,xmin,xmax,ymin,ymax);
-
-#### Original C function from <.../cd/include/cd.h>
-# void cdCanvasPutImageRectMap(cdCanvas* canvas, int iw, int ih, const unsigned char* index, const long* colors, int x, int y, int w, int h, int xmin, int xmax, int ymin, int ymax);
-# canvas:PutImageRectMap(imagemap: cdImageMap; palette: cdPalette; x, y, w, h, xmin, xmax, ymin, ymax: number) [in Lua]
-#xxxTODO/important (cdImageMap, cdPalette)
-#void
-#cdPutImageRectMap(canvas,iw,ih,index,colors,x,y,w,h,xmin,xmax,ymin,ymax)
-#		SV* canvas;
-#		int iw;
-#		int ih;
-#		const unsigned char* index;
-#		const long* colors;
-#		int x;
-#		int y;
-#		int w;
-#		int h;
-#		int xmin;
-#		int xmax;
-#		int ymin;
-#		int ymax;
-#	CODE:
-#		cdCanvasPutImageRectMap(ref2cnv(canvas),iw,ih,index,colors,x,y,w,h,xmin,xmax,ymin,ymax);
-
-#### Original C function from <.../cd/include/cd.h>
-# cdImage* cdCanvasCreateImage(cdCanvas* canvas, int w, int h);
-cdImage*
-cdCreateImage(canvas,w,h)
-		SV* canvas;
-		int w;
-		int h;
-	CODE:
-		RETVAL = cdCanvasCreateImage(ref2cnv(canvas),w,h);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <.../cd/include/cd.h>
-# void cdKillImage(cdImage* image);
-void
-cdKillImage(image)
-		cdImage* image;
-	CODE:
-		cdKillImage(image);
-
-#### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetImage(cdCanvas* canvas, cdImage* image, int x, int y);
-void
-cdGetImage(canvas,image,x,y)
-		SV* canvas;
-		cdImage* image;
+cdImage*
+cdGetImage(canvas,x,y,w,h)
+		SV* canvas;		
 		int x;
 		int y;
-	CODE:
-		cdCanvasGetImage(ref2cnv(canvas),image,x,y);
+		int w;
+		int h;
+	INIT:
+                cdImage* image;
+                char *CLASS = "IUP::Canvas::InternalServerImage";  /* XXX-CHECKLATER ugly hack to handle return value conversion */
+        CODE:
+		image = cdCanvasCreateImage(ref2cnv(canvas),w,h);
+                if (!image) XSRETURN_UNDEF;
+                cdCanvasGetImage(ref2cnv(canvas),image,x,y);
+                RETVAL = image;
+        OUTPUT:
+                RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPutImageRect(cdCanvas* canvas, cdImage* image, int x, int y, int xmin, int xmax, int ymin, int ymax);
@@ -2066,43 +2064,8 @@ cdScrollArea(canvas,xmin,xmax,ymin,ymax,dx,dy)
 		cdCanvasScrollArea(ref2cnv(canvas),xmin,xmax,ymin,ymax,dx,dy);
 
 #### Original C function from <.../cd/include/cd.h>
-# cdBitmap* cdCreateBitmap(int w, int h, int type);
-#xxxTODO/important (cdBitmap) - maybe OK (no need to be Canvas method)
-#cdBitmap*
-#cdCreateBitmap(w,h,type)
-#		int w;
-#		int h;
-#		int type;
-#	CODE:
-#		RETVAL = cdCreateBitmap(w,h,type);
-#	OUTPUT:
-#		RETVAL
-
-#### Original C function from <.../cd/include/cd.h>
-# cdBitmap* cdInitBitmap(int w, int h, int type, ...);
-#xxxTODO/important (cdBitmap) - variable arg list? (no need to be Canvas method) what is the diff cdCreateBitmap vs. cdInitBitmap?
-#cdBitmap*
-#cdInitBitmap(w,h,type,...)
-#		int w;
-#		int h;
-#		int type;
-#	CODE:
-#		RETVAL = cdInitBitmap(w,h,type);
-#	OUTPUT:
-#		RETVAL
-
-#### Original C function from <.../cd/include/cd.h>
-# void cdKillBitmap(cdBitmap* bitmap);
-#xxxTODO/important (cdBitmap) - maybe OK (no need to be Canvas method)
-#void
-#cdKillBitmap(bitmap)
-#		cdBitmap* bitmap;
-#	CODE:
-#		cdKillBitmap(bitmap);
-
-#### Original C function from <.../cd/include/cd.h>
-# unsigned char* cdBitmapGetData(cdBitmap* bitmap, int dataptr);
-#xxxTODO/important (cdBitmap / dataptr) (no need to be Canvas method)
+#xxxTODO/BitmapMethod unsigned char* cdBitmapGetData(cdBitmap* bitmap, int dataptr);
+#xxxTODO/BitmapMethod (cdBitmap / dataptr) (no need to be Canvas method)
 void
 cdBitmapGetData(bitmap,dataptr)
 		cdBitmap* bitmap;
@@ -2111,11 +2074,11 @@ cdBitmapGetData(bitmap,dataptr)
 		unsigned char* data;
 	PPCODE:
 		data = cdBitmapGetData(bitmap,dataptr);
-		/* xxx data > return array */
+		/* XXX-FIXME data > return array */
 
 #### Original C function from <.../cd/include/cd.h>
-# void cdBitmapSetRect(cdBitmap* bitmap, int xmin, int xmax, int ymin, int ymax);
-#xxxTODO/important (cdBitmap) - maybe OK (no need to be Canvas method) XXX-MAYBE-BITMAP-METHOD-XXX
+#xxxTODO/BitmapMethod void cdBitmapSetRect(cdBitmap* bitmap, int xmin, int xmax, int ymin, int ymax);
+#xxxTODO/BitmapMethod (cdBitmap) - maybe OK (no need to be Canvas method) XXX-MAYBE-BITMAP-METHOD-XXX
 void
 cdBitmapSetRect(bitmap,xmin,xmax,ymin,ymax)
 		cdBitmap* bitmap;
@@ -2150,17 +2113,17 @@ cdGetBitmap(canvas,x,y,w,h)
                 int h;
         INIT:
 		cdBitmap* bmp;
-                char *CLASS = "IUP::Canvas::Bitmap"; /* XXX-FIXME ugly hack to handle return value conversion */
+                char *CLASS = "IUP::Canvas::Bitmap"; /* XXX-CHECKLATER ugly hack to handle return value conversion */
 	CODE:
-                bmp = cdCreateBitmap(w, h, CD_RGB); /* XXX-FIXME not sure what is correct type XXX */
+                bmp = cdCreateBitmap(w, h, CD_RGB);
                 cdCanvasGetBitmap(ref2cnv(canvas),bmp,x,y);
 		RETVAL = bmp;
         OUTPUT:
 		RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
-# void cdBitmapRGB2Map(cdBitmap* bitmap_rgb, cdBitmap* bitmap_map);
-#xxxTODO/important (cdBitmap) (no need to be Canvas method) XXX-MAYBE-BITMAP-METHOD-XXX
+#xxxTODO/BitmapMethod void cdBitmapRGB2Map(cdBitmap* bitmap_rgb, cdBitmap* bitmap_map);
+#xxxTODO/BitmapMethod (cdBitmap) (no need to be Canvas method) XXX-MAYBE-BITMAP-METHOD-XXX
 void
 cdBitmapRGB2Map(bitmap_rgb,bitmap_map)
 		cdBitmap* bitmap_rgb;
@@ -2220,23 +2183,6 @@ cdEncodeAlpha(pkg,color,alpha)
 	OUTPUT:
 		RETVAL
 
-#### Original C function from <.../cd/include/cd.h>
-# void cdRGB2Map(int width, int height, const unsigned char* red, const unsigned char* green, const unsigned char* blue, unsigned char* index, int pal_size, long *color);
-# cd.RGB2Map(imagergb: cdImageRGB, imagemap: cdImageMap, palette: cdPalette) [in Lua]
-#xxxTODO/important (cdPalette - cdImageRGB related)
-#void
-#cdRGB2Map(width,height,red,green,blue,index,pal_size,color)
-#		int width;
-#		int height;
-#		const unsigned char* red;
-#		const unsigned char* green;
-#		const unsigned char* blue;
-#		unsigned char* index;
-#		int pal_size;
-#		long* color;
-#	CODE:
-#		cdRGB2Map(width,height,red,green,blue,index,pal_size,color);
-
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasWindow(cdCanvas* canvas, double xmin, double xmax, double ymin, double ymax);
 void
@@ -2252,7 +2198,6 @@ wdWindow(canvas,xmin,xmax,ymin,ymax)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasGetWindow(cdCanvas* canvas, double *xmin, double *xmax, double *ymin, double *ymax);
 # canvas:wGetWindow() -> (xmin, xmax, ymin, ymax: number) [in Lua]
-#xxx DONE
 void
 wdGetWindow(canvas)
 		SV* canvas;
@@ -2284,7 +2229,6 @@ wdViewport(canvas,xmin,xmax,ymin,ymax)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasGetViewport(cdCanvas* canvas, int *xmin, int *xmax, int *ymin, int *ymax);
 # canvas:wGetViewport() -> (xmin, xmax, ymin, ymax: number) [in Lua]
-#xxx DONE
 void
 wdGetViewport(canvas)
 		SV* canvas;
@@ -2303,7 +2247,6 @@ wdGetViewport(canvas)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasWorld2Canvas(cdCanvas* canvas, double xw, double yw, int *xv, int *yv);
 # canvas:wWorld2Canvas(xw, yw: number) -> (xv, yv: number) [in Lua]
-#xxx DONE
 void
 wdWorld2Canvas(canvas,xw,yw)
 		SV* canvas;
@@ -2320,7 +2263,6 @@ wdWorld2Canvas(canvas,xw,yw)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasWorld2CanvasSize(cdCanvas* canvas, double hw, double vw, int *hv, int *vv);
 # Lua ???
-#xxx DONE
 void
 wdWorld2CanvasSize(canvas,hw,vw)
 		SV* canvas;
@@ -2337,7 +2279,6 @@ wdWorld2CanvasSize(canvas,hw,vw)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasCanvas2World(cdCanvas* canvas, int xv, int yv, double *xw, double *yw);
 # canvas:wCanvas2World(xv, yv: number) -> (xw, yw: number) [in Lua]
-#xxx DONE
 void
 wdCanvas2World(canvas,xv,yv)
 		SV* canvas;
@@ -2366,7 +2307,7 @@ wdSetTransform(canvas,sx,sy,tx,ty)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasGetTransform(cdCanvas* canvas, double *sx, double *sy, double *tx, double *ty);
 # canvas:wGetTransform() -> (sx, sy, tx, ty: number) [in Lua]
-#xxx DONE
+
 void
 wdGetTransform(canvas)
 		SV* canvas;
@@ -2417,7 +2358,6 @@ wdClipArea(canvas,xmin,xmax,ymin,ymax)
 #### Original C function from <.../cd/include/wd.h>
 # int wdCanvasGetClipArea(cdCanvas* canvas, double *xmin, double *xmax, double *ymin, double *ymax);
 # canvas:wGetClipArea() -> (xmin, xmax, ymin, ymax, status: number) (WC) [in Lua]
-#xxx DONE
 void
 wdGetClipArea(canvas)
 		SV* canvas;
@@ -2460,7 +2400,6 @@ wdOffsetRegion(canvas,x,y)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasGetRegionBox(cdCanvas* canvas, double *xmin, double *xmax, double *ymin, double *ymax);
 # canvas:wGetRegionBox() -> (xmin, xmax, ymin, ymax, status: number) (WC) [in Lua]
-#xxx DONE
 void
 wdGetRegionBox(canvas,xmin,xmax,ymin,ymax)
 		SV* canvas;
@@ -2480,9 +2419,8 @@ wdGetRegionBox(canvas,xmin,xmax,ymin,ymax)
 
 
 #### Original C function from <.../cd/include/wd.h>
-# void wdCanvasHardcopy(cdCanvas* canvas, cdContext* ctx, void *data, void(*draw_func)(cdCanvas *canvas_copy));
-# canvas:wCanvasHardcopy(ctx: number, data: string or userdata, draw_func: function) [in Lua]
-#xxxTODO/important (cdContext)
+#xxxTODO void wdCanvasHardcopy(cdCanvas* canvas, cdContext* ctx, void *data, void(*draw_func)(cdCanvas *canvas_copy));
+#xxxTODO canvas:wCanvasHardcopy(ctx: number, data: string or userdata, draw_func: function) [in Lua]
 #void
 #wdHardcopy(canvas,ctx,data,draw_func)
 #		SV* canvas;
@@ -2628,73 +2566,6 @@ wdPutImageRect(canvas,image,x,y,xmin,xmax,ymin,ymax)
 		wdCanvasPutImageRect(ref2cnv(canvas),image,x,y,xmin,xmax,ymin,ymax);
 
 #### Original C function from <.../cd/include/wd.h>
-# void wdCanvasPutImageRectRGB(cdCanvas* canvas, int iw, int ih, const unsigned char* r, const unsigned char* g, const unsigned char* b, double x, double y, double w, double h, int xmin, int xmax, int ymin, int ymax);
-#xxxTODO/important params (cdImage... related)
-#void
-#wdPutImageRectRGB(canvas,iw,ih,r,g,b,x,y,w,h,xmin,xmax,ymin,ymax)
-#		SV* canvas;
-#		int iw;
-#		int ih;
-#		const unsigned char* r;
-#		const unsigned char* g;
-#		const unsigned char* b;
-#		double x;
-#		double y;
-#		double w;
-#		double h;
-#		int xmin;
-#		int xmax;
-#		int ymin;
-#		int ymax;
-#	CODE:
-#		wdCanvasPutImageRectRGB(ref2cnv(canvas),iw,ih,r,g,b,x,y,w,h,xmin,xmax,ymin,ymax);
-
-#### Original C function from <.../cd/include/wd.h>
-# void wdCanvasPutImageRectRGBA(cdCanvas* canvas, int iw, int ih, const unsigned char* r, const unsigned char* g, const unsigned char* b, const unsigned char* a, double x, double y, double w, double h, int xmin, int xmax, int ymin, int ymax);
-#xxxTODO/important params (cdImage... related)
-#void
-#wdPutImageRectRGBA(canvas,iw,ih,r,g,b,a,x,y,w,h,xmin,xmax,ymin,ymax)
-#		SV* canvas;
-#		int iw;
-#		int ih;
-#		const unsigned char* r;
-#		const unsigned char* g;
-#		const unsigned char* b;
-#		const unsigned char* a;
-#		double x;
-#		double y;
-#		double w;
-#		double h;
-#		int xmin;
-#		int xmax;
-#		int ymin;
-#		int ymax;
-#	CODE:
-#		wdCanvasPutImageRectRGBA(ref2cnv(canvas),iw,ih,r,g,b,a,x,y,w,h,xmin,xmax,ymin,ymax);
-
-#### Original C function from <.../cd/include/wd.h>
-# void wdCanvasPutImageRectMap(cdCanvas* canvas, int iw, int ih, const unsigned char* index, const long* colors, double x, double y, double w, double h, int xmin, int xmax, int ymin, int ymax);
-# canvas:wPutImageRectMap(imagemap: cdImageMap; palette: cdPalette; x, y, w, h, xmin, xmax, ymin, ymax: number) (WC) [in Lua]
-#xxxTODO/important (cdImageMap, cdPalette)
-#void
-#wdPutImageRectMap(canvas,iw,ih,index,colors,x,y,w,h,xmin,xmax,ymin,ymax)
-#		SV* canvas;
-#		int iw;
-#		int ih;
-#		const unsigned char* index;
-#		const long* colors;
-#		double x;
-#		double y;
-#		double w;
-#		double h;
-#		int xmin;
-#		int xmax;
-#		int ymin;
-#		int ymax;
-#	CODE:
-#		wdCanvasPutImageRectMap(ref2cnv(canvas),iw,ih,index,colors,x,y,w,h,xmin,xmax,ymin,ymax);
-
-#### Original C function from <.../cd/include/wd.h>
 # void wdCanvasPutBitmap(cdCanvas* canvas, cdBitmap* bitmap, double x, double y, double w, double h);
 void
 wdPutBitmap(canvas,bitmap,x,y,w,h)
@@ -2734,12 +2605,11 @@ wdFont(canvas,type_face,style,size)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasGetFont(cdCanvas* canvas, char *type_face, int *style, double *size);
 # canvas:wGetFont() -> (typeface: string, style, size: number) (WC) [in Lua]
-#xxx DONE (return string)
 void
 wdGetFont(canvas,type_face,style,size)
 		SV* canvas;
 	INIT:
-		char type_face[1024]; /* 1024 taken from cd_private.h */
+		char type_face[1024]; /* XXX-CHECKLATER (HARDCODED BUFFER SIZE) 1024 taken from cd_private.h */
 		int style;
 		double size;
 	PPCODE:
@@ -2762,7 +2632,6 @@ wdMarkSize(canvas,size)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasGetFontDim(cdCanvas* canvas, double *max_width, double *height, double *ascent, double *descent);
 # canvas:wGetFontDim() -> (max_width, height, ascent, descent: number) (WC) [in Lua]
-#xxx DONE
 void
 wdGetFontDim(canvas)
 		SV* canvas;
@@ -2781,7 +2650,6 @@ wdGetFontDim(canvas)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasGetTextSize(cdCanvas* canvas, const char* s, double *width, double *height);
 # canvas:wGetTextSize(text: string) -> (width, heigth: number) (WC) [in Lua]
-#xxx DONE
 void
 wdGetTextSize(canvas,s)
 		SV* canvas;
@@ -2797,7 +2665,6 @@ wdGetTextSize(canvas,s)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasGetTextBox(cdCanvas* canvas, double x, double y, const char* s, double *xmin, double *xmax, double *ymin, double *ymax);
 # canvas:wGetTextBox(x, y: number, text: string) -> (xmin, xmax, ymin, ymax: number) (WC) [in Lua]
-#xxx DONE
 void
 wdGetTextBox(canvas,x,y,s)
 		SV* canvas;
@@ -2819,7 +2686,6 @@ wdGetTextBox(canvas,x,y,s)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasGetTextBounds(cdCanvas* canvas, double x, double y, const char* s, double *rect);
 # canvas:wGetTextBounds(x, y: number, text: string) -> (rect: table) (WC) [in Lua]
-#xxx DONE (table)
 void
 wdGetTextBounds(canvas,x,y,s,rect)
 		SV* canvas;
@@ -2830,6 +2696,7 @@ wdGetTextBounds(canvas,x,y,s,rect)
 		double rect[8];
 	PPCODE:
 		wdCanvasGetTextBounds(ref2cnv(canvas),x,y,s,rect);
+                /* XXX-CHECKLATER maybe return an arrayref */
 		XPUSHs(sv_2mortal(newSVnv(rect[0]))); /* x0 */
 		XPUSHs(sv_2mortal(newSVnv(rect[1]))); /* y0 */
 		XPUSHs(sv_2mortal(newSVnv(rect[2]))); /* x1 */
@@ -2888,7 +2755,6 @@ wdVectorTextSize(canvas,size_x,size_y,s)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasGetVectorTextSize(cdCanvas* canvas, const char* s, double *x, double *y);
 # canvas:wGetVectorTextSize(text: string) -> (width, height: number) [in Lua]
-#xxx DONE
 void
 wdGetVectorTextSize(canvas,s)
 		SV* canvas;
@@ -2937,7 +2803,6 @@ wdMultiLineVectorText(canvas,x,y,s)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasGetVectorTextBounds(cdCanvas* canvas, const char* s, double x, double y, double *rect);
 # canvas:wGetVectorTextBounds(text: string, x, y: number) -> (rect: table) [in Lua] 
-#xxx DONE (table)
 void
 wdGetVectorTextBounds(canvas,s,x,y,rect)
 		SV* canvas;
@@ -2948,6 +2813,7 @@ wdGetVectorTextBounds(canvas,s,x,y,rect)
 		double rect[8];
 	PPCODE:
 		wdCanvasGetVectorTextBounds(ref2cnv(canvas),s,x,y,rect);
+                /* XXX-CHECKLATER maybe return an arrayref */
 		XPUSHs(sv_2mortal(newSVnv(rect[0]))); /* x0 */
 		XPUSHs(sv_2mortal(newSVnv(rect[1]))); /* y0 */
 		XPUSHs(sv_2mortal(newSVnv(rect[2]))); /* x1 */
@@ -2960,7 +2826,6 @@ wdGetVectorTextBounds(canvas,s,x,y,rect)
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasGetVectorTextBox(cdCanvas* canvas, double x, double y, const char *s, double *xmin, double *xmax, double *ymin, double *ymax);
 # canvas:wGetVectorTextBox(x, y: number, text: string) -> (xmin, xmax, ymin, ymax: number) [in Lua]
-#xxx DONE
 void
 wdGetVectorTextBox(canvas,x,y,s,xmin,xmax,ymin,ymax)
 		SV* canvas;

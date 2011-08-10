@@ -1,28 +1,33 @@
+###########################
 TYPEMAP
-#string
+
+#string (char*) with automatic NULL<->undef conversion on input/output
 char *			T_STR_OR_NULL
 const char *		T_STR_OR_NULL
-#pointer
+
+#pointer with automatic NULL<->undef conversion on input/output
 unsigned char *		T_PTR_OR_NULL
 Ihandle *		T_PTR_OR_NULL
 cdCanvas *		T_PTR_OR_NULL
+Icallback		T_PTR_OR_NULL
+void *			T_PTR_OR_NULL
+
+#structs with automatic conversion to perl classes
 cdBitmap *		O_OBJECT
+cdImage *		O_OBJECT
 IUPinternal_cdPalette * O_OBJECT
 IUPinternal_cdPattern * O_OBJECT
 IUPinternal_cdStipple * O_OBJECT
-cdPattern *		T_PTR_OR_NULL
-cdStipple *		T_PTR_OR_NULL
-Icallback		T_PTR_OR_NULL
-void *			T_PTR_OR_NULL
+
 #xxx todo: maybe remove in the end
 cdState *		T_PTR_OR_NULL
 cdContext *		T_PTR_OR_NULL
 cdImage *		T_PTR_OR_NULL
 
-### T_STR_OR_NULL ### string (char*) with automatic NULL<->undef conversion on input/output
-### T_PTR_OR_NULL ### pointer with automatic NULL<->undef conversion on input/output
 
+###########################
 INPUT
+
 T_PTR_OR_NULL
 	$var = (SvIOK($arg)) ? INT2PTR($type,SvIVX($arg)) : NULL;
 
@@ -39,7 +44,19 @@ T_PTROBJ
 			${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]},
 			\"$var\", \"$ntype\") 
 
+O_OBJECT
+	if( sv_isobject($arg) && (SvTYPE(SvRV($arg)) == SVt_PVMG) ) {
+           void** pointers = (void**)(SvIV((SV*)SvRV( $arg ))); 
+           $var = ($type)(pointers[0]);
+        } else if ($arg == 0) {
+           XSRETURN(0);
+        } else {
+           XSRETURN_UNDEF;
+        }
+
+###########################
 OUTPUT
+
 T_PTR_OR_NULL
 	if ($var==NULL) XSRETURN_UNDEF;
 	else sv_setiv($arg, PTR2IV($var));
@@ -51,11 +68,7 @@ T_STR_OR_NULL
 T_PTROBJ
         sv_setref_pv($arg, \"${ntype}\", (void*)$var);
         
-### common stuff
-
-# The Perl object is blessed into 'CLASS', which should be a
-# char* having the name of the package for the blessing.
-OUTPUT
+# The Perl object is blessed into 'CLASS', which should be a char* having the name of the package for the blessing.
 O_OBJECT
         if ($var) {
           void** pointers = malloc(2 * sizeof(void*));
@@ -64,15 +77,4 @@ O_OBJECT
   	  sv_setref_pv( $arg, CLASS, (void*)pointers );
         } else {
           XSRETURN_UNDEF;
-        }
-
-INPUT
-O_OBJECT
-	if( sv_isobject($arg) && (SvTYPE(SvRV($arg)) == SVt_PVMG) ) {
-           void** pointers = (void**)(SvIV((SV*)SvRV( $arg ))); 
-           $var = ($type)(pointers[0]);
-        } else if ($arg == 0) {
-           XSRETURN(0);
-        } else {
-           XSRETURN_UNDEF;
         }

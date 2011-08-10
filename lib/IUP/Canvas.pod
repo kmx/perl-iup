@@ -804,9 +804,9 @@ Transformation matrix is independent of the B<World Coordinate> and
 B<Origin> functions. And those are affected if a transformation is set,
 just like other regular primitives.
 
-=head3 cdGetTransformation()
+=head3 cdGetTransform()
  
- $matrix = $canvas->cdGetTransformation();
+ $matrix = $canvas->cdGetTransform();
 
 Returns the transformation matrix. If the identity is set, returns C<undef>.
 

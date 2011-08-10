@@ -1,7 +1,7 @@
 ################ the last time working on ################ 
 
+- hacking IUP::Canvas::Bitmap - still not finished
 - POD hacking - IUP::Manual::*
-- preparing for IUP::Canvas::Stipple & Co.
 
 ##########################################################
 
@@ -14,7 +14,7 @@
 
 ######## IMPORTANT: minor issues in element destruction
 - Element.pm (look for XXX-FIXME)
-- Canvas.pm (look for XXX-FIXME)
+- Canvas.pm / Canvas.xs (look for XXX-FIXME)
 
 ######## NICE-TO-HAVE: pre-built images
 - imglib - Other: B<NOTE:> NOT included in the pre-compiled library
@@ -59,8 +59,7 @@
   - pplot: note in doc that DS_ has to be set after ->PPlotEnd()
   - tree: note in doc that tree->SetAttribude has to go after dialog->Show
 
-######## IMPORTANT: IUP::Canvas (now works without Bitmap/Image/Palette/Pattern related functions)
-- fix missing/unfinished XS methods - see Canvas.xs (look for XXX)
+######## IMPORTANT: IUP::Canvas (not finished yet)
 
 1/ IUP::Canvas::Stipple - FINISHED!!!
 $sti= IUP::Canvas::Stipple->new( [ [...], [...], [...] ] );     #1 param
@@ -71,6 +70,8 @@ $canvas->cdStipple($sti);
 $canvas->wdStipple($sti, $w_mm, $h_mm);
 $cursti = $canvas->cdGetStipple();
 
+IDEA: $sti->W + $sti->H + $sti->Pixels
+
 2/ IUP::Canvas::Pattern - FINISHED!!!
 $pat = IUP::Canvas::Pattern->new( [ [...], [...] ] );   #1 param
 $pat = IUP::Canvas::Pattern->new( $w, $h );             #2 params
@@ -80,6 +81,8 @@ $canvas->cdPattern($pat);
 $canvas->wdPattern($pat, $w_mm, $h_mm);
 $curpat = $canvas->cdGetPattern();
 
+IDEA: $pat->W + $pat->H + $pat->Pixels
+
 3/ IUP::Canvas::Palette - FINISHED!!!
 $pal = IUP::Canvas::Palette->new( [$col0, $col1, $col2, ...] );
 $pal = IUP::Canvas::Palette->new( $n, $color );
@@ -87,7 +90,14 @@ $value = $pal->Color($n);
 $pal->Color($n, $color);
 $canvas->cdPalette($pal, $mode);
 
-4/ IUP::Canvas::Bitmap - new(), Handle(), Pixel(), Kill()
+IDEA: $pal->N, $pal->Colors
+
+4/ IUP::Canvas::InternalServerImage - FINISHED!!!
+$img = $canvas->cdGetImage($x, $y, $w, $h);
+$canvas->cdPutImage($img, $x, $y, $xmin, $xmax, $ymin, $ymax);
+$canvas->wdPutImage($img, $x, $y, $xmin, $xmax, $ymin, $ymax);
+
+5/ IUP::Canvas::Bitmap - XXX-NOT-IMPLEMENTED-YET-XXX
 Hint - GOOD EXAMPLES:
 http://www.lemoda.net/xs/xs-intro/set-bit.html
 http://www.gossamer-threads.com/lists/perl/porters/7696
@@ -115,82 +125,25 @@ image:cdInitBitmap() -> bitmap: cdBitmap
 + MAYBE: bitmap.r[n] = color
 
 Perl (idea):
-$bmp = IUP::Canvas::Bitmap->new(...);
-$bmp->DESTROY();
+$bmp = IUP::Canvas::Bitmap->new($filename);       #2 1x scalar value (string)
+$bmp = IUP::Canvas::Bitmap->new($w, $h, $type);   #4 3x scalar value (numbers)
+$bmp = IUP::Canvas::Bitmap->new($index, $colors); #3 2x arrayref
+$bmp = IUP::Canvas::Bitmap->new($r, $g, $b);      #4 3x arrayref
+$bmp = IUP::Canvas::Bitmap->new($r, $g, $b, $a);  #5 4x arrayref
+$bmp = IUP::Canvas::Bitmap->new($type, $pixels);  #3 1x scalar + 1x arrayref
+($r,$g,$b)    = $bmp->Pixel($x, $y);
+($r,$g,$b,$a) = $bmp->Pixel($x, $y);
+$n            = $bmp->Pixel($x, $y);
+$bmp->PixelRGBA($x,$y,$r,$g,$b,$a);
+$bmp->PixelRGB($x,$y,$r,$g,$b);
+$bmp->PixelMAP($x,$y,$n);
+$bmp->ColorMAP($n, XXX-???-XXX);
 
-($r,$g,$b)    = $bmp->Data($x, $y);
-($r,$g,$b,$a) = $bmp->Data($x, $y);
-$n            = $bmp->Data($x, $y);
+IDEA: $bmp->W + $bmp->H + $bmp->Type + $bmp->Pixels
 
-5/ IUP::Canvas::Image
-## image methods
-# cdImage* cdCanvasCreateImage(cdCanvas* canvas, int w, int h); [in C]
-# void cdKillImage(cdImage* image); [in C]
-## canvas methods:
-# void cdCanvasGetImage(cdCanvas* canvas, cdImage* image, int x, int y); [in C]
-# void cdCanvasPutImageRect(cdCanvas* canvas, cdImage* image, int x, int y, int xmin, int xmax, int ymin, int ymax); [in C]
-# void wdCanvasPutImageRect(cdCanvas* canvas, cdImage* image, double x, double y, int xmin, int xmax, int ymin, int ymax);
-
-LUA:
-canvas:CreateImage(w, h: number) -> (image: cdImage)
-canvas:GetImage(image: cdImage; x, y: number)
-canvas:PutImageRect(image: cdImage; x, y, xmin, xmax, ymin, ymax: number)
-canvas:wPutImageRect(image: cdImage; x, y, xmin, xmax, ymin, ymax: number)
-canvas:ScrollArea(xmin, xmax, ymin, ymax, dx, dy: number)
-image:KillImage()
-
-9/ unfinished functions
-
-#? void wdCanvasHardcopy(cdCanvas* canvas, cdContext* ctx, void *data, void(*draw_func)(cdCanvas *canvas_copy));
-#? void cdRGB2Map(int width, int height, const unsigned char* red, const unsigned char* green, const unsigned char* blue, unsigned char* index, int pal_size, long *color);
-
-# void cdCanvasTransform(cdCanvas* canvas, const double* matrix);
-# double* cdCanvasGetTransform(cdCanvas* canvas);
-# void cdCanvasTransformMultiply(cdCanvas* canvas, const double* matrix);
-# void cdCanvasLineStyleDashes(cdCanvas* canvas, const int* dashes, int count);
-# double* cdCanvasVectorTextTransform(cdCanvas* canvas, const double* matrix);
-    n_idata2SV(count,dataptr)
-    SV2n_idata(srcSV,&count,&dataptr)		do malloc!!!
-    r_c_cdata2SV(rows,cols,dataptr)
-    SV2r_c_cdata(srcSV,&rows,&cols,&dataptr)	do malloc!!!
-    r_c_ldata2SV(rows,cols,dataptr)
-    SV2r_c_ldata(srcSV,&rows,&cols,&dataptr)	do malloc!!!
-    transf_matrix2SV(matrix_2x3)
-    SV2transf_matrix(srcSV,&matrix_2x3)
-
-- fix: cdTransform cdGetTransform cdTransformMultiply cdLineStyleDashes cdVectorTextTransform
-- helpers: 
-  AV2int
-  AV2transmatrix  or AV2double2D
-  transmatrix2AV  or double2D2AV
-
-    
-sample XS code from FTDI::D2XX:
-
-FT_STATUS
-FT_Read( pHandle, Buffer, nBufferSize, lpBytesReturned)
-    FT_HANDLE * pHandle
-    SV * Buffer = NO_INIT
-    DWORD nBufferSize
-    DWORD lpBytesReturned = NO_INIT
-	PREINIT:
-		char* lpBuffer;
-		AV* array;
-		DWORD i;
-	CODE:		
-		lpBuffer = malloc(nBufferSize); // get mem
-		RETVAL = FT_Read(*pHandle, lpBuffer, nBufferSize, &lpBytesReturned);		
-		array = (AV *)sv_2mortal((SV *)newAV()); // new array		
-		av_extend(array,lpBytesReturned); // extend it ( not required but faster) 		
-		for( i = 0; i< lpBytesReturned; i++) { // copy to array
-		  av_push(array,newSVuv(lpBuffer[i]));
-		}		
-		free(lpBuffer); // give back mem		
-		Buffer = newRV((SV *) array); // return reference of the array
-	OUTPUT: 
-		Buffer
-		lpBytesReturned
-		RETVAL
+$canvas->cdPutBitmap($bmp,$x,$y,$w,$h);
+$canvas->wdPutBitmap($bmp,$x,$y,$w,$h);
+$bmp = $canvas->cdGetBitmap($x,$y,$w,$h);
 
 ######## IMPORTANT: add more tests
 - split tests: t\*.t + all GUI-related >>> t\gui\*.t
@@ -204,6 +157,12 @@ FT_Read( pHandle, Buffer, nBufferSize, lpBytesReturned)
 
 (cosmetics)######## IDEA: 
 use IUP qw/:basic iup_NO_INIT/; #generally iup_ANY_OTHER_FLAG
+
+(cosmetics)######## IUP::Canvas missing functions (not crutial for now)
+- void wdCanvasHardcopy(cdCanvas* canvas, cdContext* ctx, void *data, void(*draw_func)(cdCanvas *canvas_copy));
+- int cdContextRegisterCallback(cdContext *context, int cb, cdCallback func);
+- int cdUseContextPlus(int use);
+- void cdInitContextPlus(void);
 
 (cosmetics)######## GTK too noisy when no DISPLAY: asck scuri
 - GTK + no DISPLAY set - error during gtk_init_check (= during 'use IUP'):
