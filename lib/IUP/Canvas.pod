@@ -797,8 +797,7 @@ follows:
 But notice that the indices are different of the L<cdVectorTextTransform|/"cdVectorTextTransform">.
 
 Functions that retrieve images from the canvas are not affected by the
-transformation matrix, such as B<GetImage>, B<GetImageRGB> and
-B<ScrollArea>.
+transformation matrix, such as L<GetImage|/"GetImage()"> and L<ScrollArea|/"ScrollArea()">.
 
 Transformation matrix is independent of the B<World Coordinate> and
 B<Origin> functions. And those are affected if a transformation is set,
@@ -1973,12 +1972,52 @@ B<Original Simplex II>
 
 =head2 Methods - Primitives / Client Images
 
+XXX-TODO intro link to L<IUP::Canvas::Bitmap>
+
+=head3 cdPutBitmap()
+
+ $canvas->cdPutBitmap($bmp,$x,$y,$w,$h);
+
+XXX-TODO
+
+=head3 wdPutBitmap()
+
+ $canvas->wdPutBitmap($bmp,$x,$y,$w,$h);
+
+XXX-TODO
+
+=head3 cdGetBitmap()
+
+ $bmp = $canvas->cdGetBitmap($x,$y,$w,$h);
+
 XXX-TODO
 
 =head2 Methods - Primitives / Server Images
 
-XXX-TODO
+=head3 cdGetImage()
 
+ $img = $canvas->cdGetImage($x, $y, $w, $h);
+
+XXX-TODO B<IUP::Canvas::InternalServerImage>
+ 
+=head3 cdPutImage()
+
+ $canvas->cdPutImage($img, $x, $y, $xmin, $xmax, $ymin, $ymax);
+
+XXX-TODO
+ 
+=head3 wdPutImage
+
+ $canvas->wdPutImage($img, $x, $y, $xmin, $xmax, $ymin, $ymax);
+
+XXX-TODO
+ 
+=head3 cdCanvasScrollArea()
+
+ $canvas->cdCanvasScrollArea($xmin, $xmax, $ymin, $ymax, $dx, $dy);
+
+XXX-TODO
+ 
 =head2 Methods - Canvas Clipping
 
 The clipping area is an area that limits the available drawing area

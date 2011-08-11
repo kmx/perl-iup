@@ -1,0 +1,30 @@
+=pod
+
+=head1 NAME
+
+IUP::Canvas::Pattern - [special Canvas helper] Fill pattern for use with IUP::Canvas
+
+=head1 SYNOPSIS
+
+ $pat = IUP::Canvas::Pattern->new( [ [...], [...] ] );   #1 param
+ $pat = IUP::Canvas::Pattern->new( $w, $h );             #2 params
+ 
+ $value = $pat->Pixel($x, $y);
+ $pat->Pixel($x, $y, $value);
+ $pat->Width();
+ $pat->Height();
+ $pat->Data();
+ 
+ $canvas->cdPattern($pat);
+ $canvas->wdPattern($pat, $w_mm, $h_mm);
+ $curpat = $canvas->cdGetPattern();
+
+=head1 DESCRIPTION
+
+XXX-FIXME-TODO
+
+=head1 SEE ALSO
+
+L<IUP::Canvas>
+
+=cut

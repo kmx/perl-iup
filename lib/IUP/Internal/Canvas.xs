@@ -13,6 +13,8 @@
 #include <cdps.h>
 #include <cdemf.h>
 #include <cddxf.h>
+#include <cdirgb.h>
+#include <cdimage.h>
 
 #ifdef HAVELIB_IUPCD
 #include <cdiup.h>
@@ -596,6 +598,39 @@ __Bitmap__new(CLASS,...)
         OUTPUT:
                 RETVAL
 
+void
+__Bitmap__SetRect(self,xmin,xmax,ymin,ymax)
+		cdBitmap* self;
+		int xmin;
+		int xmax;
+		int ymin;
+		int ymax;
+	CODE:
+		cdBitmapSetRect(self,xmin,xmax,ymin,ymax);
+
+cdBitmap*
+__Bitmap__RGB2Map(self)
+		cdBitmap* self;
+        INIT:
+                cdBitmap* bitmap_map;
+                char *CLASS = "IUP::Canvas::Bitmap"; /* XXX-CHECKLATER ugly hack to handle return value conversion */
+                unsigned char* index;
+                long* colors;
+        CODE:
+		index = malloc(sizeof(unsigned char)*self->w*self->h);
+                colors = malloc(sizeof(long)*256);
+                if (!index || !colors) {
+                  if (index) free(index);
+                  if (colors) free(colors);
+                  XSRETURN_UNDEF;
+                }
+                bitmap_map = cdInitBitmap(self->w, self->h, CD_MAP, index, colors);
+                if (!bitmap_map) XSRETURN_UNDEF;
+                cdBitmapRGB2Map(self,bitmap_map);
+                RETVAL = bitmap_map;
+        OUTPUT:
+                RETVAL
+
 int
 __Bitmap__Width(self)
                 cdBitmap * self;
@@ -760,39 +795,6 @@ cdVersionNumber(pkg)
 		RETVAL = cdVersionNumber();
 	OUTPUT:
 		RETVAL
-
-#### Original C function from <.../cd/include/cd.h>
-# cdCanvas* cdCreateCanvas(cdContext *context, void *data);
-#XXX-FIXME perhaps no need to call this from perl - consider removing
-cdCanvas*
-cdCreateCanvas(context,data)
-		cdContext* context;
-		void* data;
-	CODE:
-		RETVAL = cdCreateCanvas(context,data);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <.../cd/include/cd.h>
-# cdCanvas* cdCreateCanvasf(cdContext *context, const char* format, ...);
-#XXX-FIXME perhaps no need to call this from perl - consider removing
-cdCanvas*
-cdCreateCanvasf(context,format,...)
-		cdContext* context;
-		const char* format;
-	CODE:
-		RETVAL = cdCreateCanvasf(context,format);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <.../cd/include/cd.h>
-# void cdKillCanvas(cdCanvas* canvas);
-#XXX-FIXME handle properly in IUP::Canvas DESTROY()
-void
-cdKillCanvas(canvas)
-		SV* canvas;
-	CODE:
-		cdKillCanvas(ref2cnv(canvas));
 
 #### Original C function from <.../cd/include/cd.h>
 # cdContext* cdCanvasGetContext(cdCanvas* canvas);
@@ -2273,32 +2275,6 @@ cdScrollArea(canvas,xmin,xmax,ymin,ymax,dx,dy)
 		cdCanvasScrollArea(ref2cnv(canvas),xmin,xmax,ymin,ymax,dx,dy);
 
 #### Original C function from <.../cd/include/cd.h>
-#xxxTODO/BitmapMethod unsigned char* cdBitmapGetData(cdBitmap* bitmap, int dataptr);
-#xxxTODO/BitmapMethod (cdBitmap / dataptr) (no need to be Canvas method)
-void
-cdBitmapGetData(bitmap,dataptr)
-		cdBitmap* bitmap;
-		int dataptr;
-	INIT:
-		unsigned char* data;
-	PPCODE:
-		data = cdBitmapGetData(bitmap,dataptr);
-		/* XXX-FIXME data > return array */
-
-#### Original C function from <.../cd/include/cd.h>
-#xxxTODO/BitmapMethod void cdBitmapSetRect(cdBitmap* bitmap, int xmin, int xmax, int ymin, int ymax);
-#xxxTODO/BitmapMethod (cdBitmap) - maybe OK (no need to be Canvas method) XXX-MAYBE-BITMAP-METHOD-XXX
-void
-cdBitmapSetRect(bitmap,xmin,xmax,ymin,ymax)
-		cdBitmap* bitmap;
-		int xmin;
-		int xmax;
-		int ymin;
-		int ymax;
-	CODE:
-		cdBitmapSetRect(bitmap,xmin,xmax,ymin,ymax);
-
-#### Original C function from <.../cd/include/cd.h>
 # void cdCanvasPutBitmap(cdCanvas* canvas, cdBitmap* bitmap, int x, int y, int w, int h);
 void
 cdPutBitmap(canvas,bitmap,x,y,w,h)
@@ -2329,16 +2305,6 @@ cdGetBitmap(canvas,x,y,w,h)
 		RETVAL = bmp;
         OUTPUT:
 		RETVAL
-
-#### Original C function from <.../cd/include/cd.h>
-#xxxTODO/BitmapMethod void cdBitmapRGB2Map(cdBitmap* bitmap_rgb, cdBitmap* bitmap_map);
-#xxxTODO/BitmapMethod (cdBitmap) (no need to be Canvas method) XXX-MAYBE-BITMAP-METHOD-XXX
-void
-cdBitmapRGB2Map(bitmap_rgb,bitmap_map)
-		cdBitmap* bitmap_rgb;
-		cdBitmap* bitmap_map;
-	CODE:
-		cdBitmapRGB2Map(bitmap_rgb,bitmap_map);
 
 #### Original C function from <.../cd/include/cd.h>
 # long cdEncodeColor(unsigned char red, unsigned char green, unsigned char blue);

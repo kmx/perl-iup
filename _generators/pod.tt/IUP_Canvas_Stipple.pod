@@ -1,0 +1,30 @@
+=pod
+
+[% h.name %]
+
+[% n.iupcanvastipple %]
+
+[% h.synopsis %]
+
+ $sti= IUP::Canvas::Stipple->new( [ [...], [...], [...] ] );     #1 param
+ $sti= IUP::Canvas::Stipple->new( $w, $h );                      #2 params
+ 
+ $value = $sti->Pixel($x, $y);
+ $sti->Pixel($x, $y, $value);
+ $sti->Width();
+ $sti->Height();
+ $sti->Data();
+ 
+ $canvas->cdStipple($sti);
+ $canvas->wdStipple($sti, $w_mm, $h_mm);
+ $cursti = $canvas->cdGetStipple();
+
+[% h.desc %]
+
+XXX-FIXME-TODO
+
+[% h.see %]
+
+L<IUP::Canvas>
+
+=cut

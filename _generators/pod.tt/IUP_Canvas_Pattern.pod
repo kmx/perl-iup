@@ -1,0 +1,30 @@
+=pod
+
+[% h.name %]
+
+[% n.iupcanvaspattern %]
+
+[% h.synopsis %]
+
+ $pat = IUP::Canvas::Pattern->new( [ [...], [...] ] );   #1 param
+ $pat = IUP::Canvas::Pattern->new( $w, $h );             #2 params
+ 
+ $value = $pat->Pixel($x, $y);
+ $pat->Pixel($x, $y, $value);
+ $pat->Width();
+ $pat->Height();
+ $pat->Data();
+ 
+ $canvas->cdPattern($pat);
+ $canvas->wdPattern($pat, $w_mm, $h_mm);
+ $curpat = $canvas->cdGetPattern();
+
+[% h.desc %]
+
+XXX-FIXME-TODO
+
+[% h.see %]
+
+L<IUP::Canvas>
+
+=cut

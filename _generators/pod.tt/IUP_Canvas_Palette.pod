@@ -1,0 +1,27 @@
+=pod
+
+[% h.name %]
+
+[% n.iupcanvaspalette %]
+
+[% h.synopsis %]
+
+ $pal = IUP::Canvas::Palette->new( [$col0, $col1, $col2, ...] );
+ $pal = IUP::Canvas::Palette->new($n);
+ 
+ $value = $pal->Color($n);
+ $pal->Color($n, $color);
+ $pal->Size;
+ $pal->Data;
+ 
+ $canvas->cdPalette($pal, $mode);
+
+[% h.desc %]
+
+XXX-FIXME-TODO
+
+[% h.see %]
+
+L<IUP::Canvas>
+
+=cut

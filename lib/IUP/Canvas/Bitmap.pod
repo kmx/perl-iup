@@ -1,0 +1,46 @@
+=pod
+
+=head1 NAME
+
+IUP::Canvas::Bitmap - [special Canvas helper] Bitmap for use with IUP::Canvas
+
+=head1 SYNOPSIS
+
+ $bmp = IUP::Canvas::Bitmap->new($filename);       #2 1x scalar value (string)
+ $bmp = IUP::Canvas::Bitmap->new($w, $h, $type);   #4 3x scalar value (numbers)
+ $bmp = IUP::Canvas::Bitmap->new($index, $colors); #3 2x arrayref
+ $bmp = IUP::Canvas::Bitmap->new($r, $g, $b);      #4 3x arrayref
+ $bmp = IUP::Canvas::Bitmap->new($r, $g, $b, $a);  #5 4x arrayref
+ $bmp = IUP::Canvas::Bitmap->new($type, $pixels);  #3 1x scalar + 1x arrayref
+ $bmp = IUP::Canvas::Bitmap->new($type, $pixels, $colors);  #3 1x scalar + 1x arrayref
+ 
+ $bmp->Data;
+ $bmp->Width;
+ $bmp->Height;
+ $bmp->Type;
+ $bmp->Pixel($x,$y,$r,$g,$b,$a);
+ $bmp->Pixel($x,$y,$r,$g,$b);
+ $bmp->Pixel($x,$y,$n);
+ ($r,$g,$b)    = $bmp->Pixel($x, $y);
+ ($r,$g,$b,$a) = $bmp->Pixel($x, $y);
+ $n            = $bmp->Pixel($x, $y);
+ $bmp->Palette($n, $color);
+ $bmp->Palette($n);
+ $bmp->Palette;
+ 
+ $map_bmp = $bmp->RGB2Map;
+ $bmp->SetRect($xmin, $xmax, $ymin, $ymax);
+ 
+ $canvas->cdPutBitmap($bmp,$x,$y,$w,$h);
+ $canvas->wdPutBitmap($bmp,$x,$y,$w,$h);
+ $bmp = $canvas->cdGetBitmap($x,$y,$w,$h);
+
+=head1 DESCRIPTION
+
+XXX-FIXME-TODO
+
+=head1 SEE ALSO
+
+L<IUP::Canvas>
+
+=cut
