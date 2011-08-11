@@ -5,6 +5,10 @@
 
 #include <iup.h>
 #include <cd.h>
+#include <im.h>
+#include <im_image.h>
+
+/* XXX-FIXME include all headers for all supported drivers */
 #include <cdsvg.h>
 #include <cdps.h>
 #include <cdemf.h>
@@ -86,6 +90,71 @@ int AV2long(SV *A, long **data, int *n) {
   *data = buffer;
   *n = lastindex+1;
   return 1;
+}
+
+SV* long2AV(long *data, int n) {
+  int i;
+  AV *array;
+  array = (AV *)sv_2mortal((SV *)newAV());
+  av_extend(array,n); /* not needed but faster */
+  for(i=0; i<n; i++) av_push(array,newSViv(data[i]));
+  return newRV((SV*)array);  
+}
+
+SV* Bitmap2AV(unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a, unsigned char *m, int w, int h) {
+  int i,j;
+  AV *array1, *array2;
+
+  int n = 0;
+  if (r) n++;
+  if (g) n++;
+  if (b) n++;
+  if (a) n++;
+  if (m) n++;
+  
+  array1 = (AV *)sv_2mortal((SV *)newAV());
+  av_extend(array1,h); /* not needed but faster */  
+  for(i=0; i<h; i++) {
+    array2 = (AV *)sv_2mortal((SV *)newAV()); /* new array */
+    av_extend(array2,w*n);
+    for(j=0; j<w; j++) {
+      if (r) av_push(array2,newSViv(r[i*w+j]));
+      if (g) av_push(array2,newSViv(g[i*w+j]));
+      if (b) av_push(array2,newSViv(b[i*w+j]));
+      if (a) av_push(array2,newSViv(a[i*w+j]));
+      if (m) av_push(array2,newSViv(m[i*w+j]));
+    }
+    av_push(array1,newRV((SV*)array2));
+  }
+  return newRV((SV*)array1);
+}
+
+SV* long2D2AV(long *data, int w, int h) {
+  int i,j;
+  AV *array1, *array2;
+  array1 = (AV *)sv_2mortal((SV *)newAV());
+  av_extend(array1,h); /* not needed but faster */
+  for(i=0; i<h; i++) {
+    array2 = (AV *)sv_2mortal((SV *)newAV()); /* new array */
+    av_extend(array2,w); /* not needed but faster */
+    for(j=0; j<w; j++) av_push(array2,newSViv(data[i*w+j]));
+    av_push(array1,newRV((SV*)array2));
+  }
+  return newRV((SV*)array1);
+}
+
+SV* uchar2D2AV(unsigned char *data, int w, int h) {
+  int i,j;
+  AV *array1, *array2;
+  array1 = (AV *)sv_2mortal((SV *)newAV());
+  av_extend(array1,h); /* not needed but faster */
+  for(i=0; i<h; i++) {
+    array2 = (AV *)sv_2mortal((SV *)newAV()); /* new array */
+    av_extend(array2,w); /* not needed but faster */
+    for(j=0; j<w; j++) av_push(array2,newSVuv(data[i*w+j]));
+    av_push(array1,newRV((SV*)array2));
+  }
+  return newRV((SV*)array1);  
 }
 
 int AV2long2D(SV *A1, long **data, int *w, int *h) {
@@ -187,6 +256,27 @@ typedef struct __IUPinternal_cdStipple {
   unsigned char *fgbg;
 } IUPinternal_cdStipple;
 
+cdBitmap* BitmapFromFile(char * file_name) {
+  imImage *image;
+  cdBitmap* bitmap;
+  int error;
+
+  image = imFileImageLoadBitmap(file_name, 0, &error);
+  if (error) return NULL;
+  if (!image) return NULL;    
+  if (!imImageIsBitmap(image)) return NULL;
+  if (image->color_space == IM_RGB)  {
+    if (image->has_alpha)
+      bitmap = cdInitBitmap(image->width, image->height, CD_RGBA, image->data[0], image->data[1], image->data[2], image->data[3]);
+    else
+      bitmap = cdInitBitmap(image->width, image->height, CD_RGB, image->data[0], image->data[1], image->data[2]);
+  }
+  else
+    bitmap = cdInitBitmap(image->width, image->height, CD_MAP, image->data[0], image->palette);
+
+  return(bitmap);
+}
+
 MODULE = IUP::Canvas::Stipple	PACKAGE = IUP::Canvas::Stipple   PREFIX = __Stipple__
 
 IUPinternal_cdStipple *
@@ -227,6 +317,30 @@ __Stipple__Pixel(self,x,y,...)
                 if ((y >= self->h) || (y < 0)) XSRETURN_UNDEF;
                 if (items>3) self->fgbg[x+y*self->w] = SvUV(ST(3)); /* XXX-CHECKLATER test for valid values 0 or 1 */
                 RETVAL = self->fgbg[x+y*self->w];
+        OUTPUT:
+                RETVAL
+
+int
+__Stipple__Width(self)
+                IUPinternal_cdStipple * self
+        CODE:
+                RETVAL = self->w;
+        OUTPUT:
+                RETVAL
+
+int
+__Stipple__Height(self)
+                IUPinternal_cdStipple * self
+        CODE:
+                RETVAL = self->h;
+        OUTPUT:
+                RETVAL
+
+SV*
+__Stipple__Data(self)
+                IUPinternal_cdStipple * self
+        CODE:
+                RETVAL = uchar2D2AV(self->fgbg, self->w, self->h);
         OUTPUT:
                 RETVAL
 
@@ -284,6 +398,30 @@ __Pattern__Pixel(self,x,y,...)
         OUTPUT:
                 RETVAL
 
+int
+__Pattern__Width(self)
+                IUPinternal_cdPattern * self
+        CODE:
+                RETVAL = self->w;
+        OUTPUT:
+                RETVAL
+
+int
+__Pattern__Height(self)
+                IUPinternal_cdPattern * self
+        CODE:
+                RETVAL = self->h;
+        OUTPUT:
+                RETVAL
+
+SV*
+__Pattern__Data(self)
+                IUPinternal_cdPattern * self
+        CODE:
+                RETVAL = long2D2AV(self->pattern, self->w, self->h);
+        OUTPUT:
+                RETVAL
+
 void
 __Pattern__Dump(self)
 		IUPinternal_cdPattern *self;
@@ -299,20 +437,22 @@ __Pattern__Dump(self)
 MODULE = IUP::Canvas::Palette	PACKAGE = IUP::Canvas::Palette   PREFIX = __Palette__
 
 IUPinternal_cdPalette *
-__Palette__new(CLASS,...)
+__Palette__new(CLASS,param)
                 char *CLASS
+                SV *param
         INIT:
                 IUPinternal_cdPalette * p;
                 int n, i;
                 long *data, c;
         CODE:
-                if (items==2) {
-                  if (!AV2long(ST(1), &data, &n)) XSRETURN_UNDEF;
+                if (items==2 && SvROK(param) && SvROK(param) && SvTYPE(SvRV(param))==SVt_PVAV) {
+                  if (!AV2long(param, &data, &n)) XSRETURN_UNDEF;
                 }
                 else {
-                  n = SvIV(ST(1)); /* size */
-                  c = SvIV(ST(2)); /* color */
-                  if (n<=0) XSRETURN_UNDEF; /* XXX-CHECKLATER maybe test also maximum size */
+                  n = SvIV(param); /* size */
+                  c = CD_BLACK; /* color */
+                  if (n<=0) XSRETURN_UNDEF;
+                  if (n>256) n=256;
                   data = malloc(sizeof(long)*n);
                   if (!data) XSRETURN_UNDEF;
                   for(i=0; i<n; i++) data[i] = c;
@@ -344,6 +484,22 @@ __Palette__Color(self,i,...)
         OUTPUT:
                 RETVAL
 
+int
+__Palette__Size(self)
+                IUPinternal_cdPalette * self
+        CODE:
+                RETVAL = self->n;
+        OUTPUT:
+                RETVAL
+
+SV*
+__Palette__Data(self)
+                IUPinternal_cdPalette * self
+        CODE:
+                RETVAL = long2AV(self->palette, self->n);
+        OUTPUT:
+                RETVAL
+
 void
 __Palette__Dump(self)
 		IUPinternal_cdPalette * self;
@@ -366,10 +522,11 @@ __Bitmap__new(CLASS,...)
         CODE:
                 b = NULL;
                 if (items==2) {
-                  warn("IUP::Canvas::Bitmap->new($file) XXX-FIXME-XXX-NOT-IMPLEMENTED-YET-XXX");
+                  /*warn("XXX-DEBUG: IUP::Canvas::Bitmap->new($file)");*/
+                  b = BitmapFromFile(SvPV_nolen(ST(1)));
                 }
                 else if (items==3 && !SvROK(ST(1)) && SvROK(ST(2)) && SvTYPE(SvRV(ST(2)))==SVt_PVAV) {
-                  warn("IUP::Canvas::Bitmap->new($type, $pixels) XXX-FIXME-XXX-NOT-IMPLEMENTED-YET-XXX");
+                  warn("XXX-DEBUG: IUP::Canvas::Bitmap->new($type, $pixels)");
                   type = SvIV(ST(1));                  
                   if (type!=CD_MAP && type!=CD_RGB && type!=CD_RGBA) XSRETURN_UNDEF;                  
                   /* XXX-FIXME-TODO if (!AV2bitmap(ST(2),type,&data_r,&data_g,&data_b,&data_a,&index,&colors,&w,&h)) XSRETURN_UNDEF; */
@@ -434,9 +591,61 @@ __Bitmap__new(CLASS,...)
                 }
                 else {
                   warn("Error: invalid parameters for IUP::Canvas::Bitmap->new()");
-                  b = NULL;
                 }                
                 RETVAL = b;
+        OUTPUT:
+                RETVAL
+
+int
+__Bitmap__Width(self)
+                cdBitmap * self;
+        CODE:
+                RETVAL = self->w;
+        OUTPUT:
+                RETVAL
+
+int
+__Bitmap__Height(self)
+                cdBitmap * self;
+        CODE:
+                RETVAL = self->h;
+        OUTPUT:
+                RETVAL
+
+int
+__Bitmap__Type(self)
+                cdBitmap * self;
+        CODE:
+                RETVAL = self->type;
+        OUTPUT:
+                RETVAL
+
+SV*
+__Bitmap__Data(self)
+                cdBitmap * self;
+        CODE:
+                unsigned char *r, *g, *b, *a, *m;
+                if (self->type == CD_RGBA) {
+                  r = cdBitmapGetData(self, CD_IRED);
+                  g = cdBitmapGetData(self, CD_IGREEN);
+                  b = cdBitmapGetData(self, CD_IBLUE);
+                  a = cdBitmapGetData(self, CD_IALPHA);
+                  if (!r || !g || !b || !a) XSRETURN_UNDEF;
+                  RETVAL = Bitmap2AV(r,g,b,a,NULL,self->w,self->h);
+                }
+                else if (self->type == CD_RGB) {
+                  r = cdBitmapGetData(self, CD_IRED);
+                  g = cdBitmapGetData(self, CD_IGREEN);
+                  b = cdBitmapGetData(self, CD_IBLUE);
+                  if (!r || !g || !b) XSRETURN_UNDEF;
+                  RETVAL = Bitmap2AV(r,g,b,NULL,NULL,self->w,self->h);
+                }
+                else if (self->type == CD_MAP) {
+                  m = cdBitmapGetData(self, CD_INDEX);
+                  if (!m) XSRETURN_UNDEF;
+                  RETVAL = Bitmap2AV(NULL,NULL,NULL,NULL,m,self->w,self->h);
+                }
+                else XSRETURN_UNDEF;
         OUTPUT:
                 RETVAL
 

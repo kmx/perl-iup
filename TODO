@@ -62,35 +62,10 @@
 ######## IMPORTANT: IUP::Canvas (not finished yet)
 
 1/ IUP::Canvas::Stipple - FINISHED!!!
-$sti= IUP::Canvas::Stipple->new( [ [...], [...], [...] ] );     #1 param
-$sti= IUP::Canvas::Stipple->new( $w, $h );                      #2 params
-$value = $sti->Pixel($x, $y);
-$sti->Pixel($x, $y, $value);
-$canvas->cdStipple($sti);
-$canvas->wdStipple($sti, $w_mm, $h_mm);
-$cursti = $canvas->cdGetStipple();
-
-IDEA: $sti->W + $sti->H + $sti->Pixels
 
 2/ IUP::Canvas::Pattern - FINISHED!!!
-$pat = IUP::Canvas::Pattern->new( [ [...], [...] ] );   #1 param
-$pat = IUP::Canvas::Pattern->new( $w, $h );             #2 params
-$value = $pat->Pixel($x, $y);
-$pat->Pixel($x, $y, $value);
-$canvas->cdPattern($pat);
-$canvas->wdPattern($pat, $w_mm, $h_mm);
-$curpat = $canvas->cdGetPattern();
-
-IDEA: $pat->W + $pat->H + $pat->Pixels
 
 3/ IUP::Canvas::Palette - FINISHED!!!
-$pal = IUP::Canvas::Palette->new( [$col0, $col1, $col2, ...] );
-$pal = IUP::Canvas::Palette->new( $n, $color );
-$value = $pal->Color($n);
-$pal->Color($n, $color);
-$canvas->cdPalette($pal, $mode);
-
-IDEA: $pal->N, $pal->Colors
 
 4/ IUP::Canvas::InternalServerImage - FINISHED!!!
 $img = $canvas->cdGetImage($x, $y, $w, $h);
@@ -131,15 +106,21 @@ $bmp = IUP::Canvas::Bitmap->new($index, $colors); #3 2x arrayref
 $bmp = IUP::Canvas::Bitmap->new($r, $g, $b);      #4 3x arrayref
 $bmp = IUP::Canvas::Bitmap->new($r, $g, $b, $a);  #5 4x arrayref
 $bmp = IUP::Canvas::Bitmap->new($type, $pixels);  #3 1x scalar + 1x arrayref
+$bmp = IUP::Canvas::Bitmap->new($type, $pixels, $colors);  #3 1x scalar + 1x arrayref
+$bmp->Data;
+$bmp->Width;
+$bmp->Height;
+$bmp->Type;
+$bmp->Pixel($x,$y,$r,$g,$b,$a);
+$bmp->Pixel($x,$y,$r,$g,$b);
+$bmp->Pixel($x,$y,$n);
 ($r,$g,$b)    = $bmp->Pixel($x, $y);
 ($r,$g,$b,$a) = $bmp->Pixel($x, $y);
 $n            = $bmp->Pixel($x, $y);
-$bmp->PixelRGBA($x,$y,$r,$g,$b,$a);
-$bmp->PixelRGB($x,$y,$r,$g,$b);
-$bmp->PixelMAP($x,$y,$n);
-$bmp->ColorMAP($n, XXX-???-XXX);
+$bmp->Palette($n, $color);
+$bmp->Palette($n);
+$bmp->Palette;
 
-IDEA: $bmp->W + $bmp->H + $bmp->Type + $bmp->Pixels
 
 $canvas->cdPutBitmap($bmp,$x,$y,$w,$h);
 $canvas->wdPutBitmap($bmp,$x,$y,$w,$h);

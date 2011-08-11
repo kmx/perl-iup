@@ -49,7 +49,7 @@ sub _create_element {
       my $error_shown;
       for (@$p) {
         if ($w_tmp != scalar @$_ && !$error_shown) {
-	  carp "Warning: 'pixels' parameter - invalid data (all lines be the same length)";
+	  carp "Warning: 'pixels' parameter - invalid data (all lines have to be the same length)";
 	  $error_shown++;
 	}
         $data .= pack('C*', @$_) if ref($_) eq 'ARRAY';
