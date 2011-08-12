@@ -1,15 +1,15 @@
 =head1 Revision history for IUP
 
-=head2 02/08/2011 - 0.002_*
+=head2 12/08/2011 - 0.002_*
 
- - added: IUP::Canvas::(Palette|Pattern|Stipple|Bitmap|InternalServerImage)
+ - added: IUP::Canvas::(Palette|Pattern|Stipple|Bitmap|InternalServerImage) - XXX-FIXME Bitmap unfinished
  - many fixes for IUP::Canvas methods
  - added: IUP::ConfigData
  - fix for callbacks: better handling of callbacks with no return value (fallback to IUP_DEFAULT) 
  - fix for callbacks: MULTITOUCH_CB, MULTISELECTION_CB, MULTIUNSELECTION_CB, NODEREMOVED_CB
  - removing debug stuff 'use Data::Dump(er)'
 
- =head2 29/07/2011 - 0.002
+=head2 29/07/2011 - 0.002
 
  - removing invalid accessors "0" and "1"
  - fix for "Can't locate IUP/OleControl.pm"
