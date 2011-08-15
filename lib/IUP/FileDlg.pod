@@ -299,7 +299,7 @@ The element B<IUP::FileDlg> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/filedlg.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_06/examples/0-basic/filedlg.pl> - IUP::FileDlg example
+=item * L<0-basic/filedlg.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_07/examples/0-basic/filedlg.pl> - IUP::FileDlg example
 
 =back 
 

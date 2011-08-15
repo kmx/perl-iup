@@ -26,7 +26,7 @@ sub _create_element {
 
 #Note: all canvas related methods are inherited from IUP::Internal::Canvas
 
-#FIXME-hack
+#XXX-CHECKLATER hack to make the following modules apper in META.json provide=>...
 package IUP::Canvas::Bitmap;
 package IUP::Canvas::Palette;
 package IUP::Canvas::Pattern;

@@ -47,11 +47,11 @@
   http://cpansearch.perl.org/src/KTHAKORE/SDL-2.533/lib/SDLx/Surface.pm
   http://cpansearch.perl.org/src/KTHAKORE/SDL-2.533/lib/SDLx/Surface/TiedMatrix.pm
   
-######## POD: mention in POD/DOC
+######## IMPORTANT - POD: mention in POD/DOC
 - mention PAR packing recommendation in DOC
 - beware: (IUP_DEFAULT related) sub returns value even without explicit return
 
-######## POD: finish doc - espec. IUP::Manual::*
+######## IMPORTANT - POD: finish doc - espec. IUP::Manual::*
 - finish Canvas.pod
 - Cleanup first (in this order):
   - I::M::Elements.pod
