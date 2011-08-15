@@ -8,13 +8,27 @@
 #include <im.h>
 #include <im_image.h>
 
-/* XXX-FIXME include all headers for all supported drivers */
-#include <cdsvg.h>
-#include <cdps.h>
-#include <cdemf.h>
-#include <cddxf.h>
-#include <cdirgb.h>
-#include <cdimage.h>
+/* XXX-CHECKLATER include all headers for all supported drivers */
+#include <cdcgm.h>       /* CD_CGM  */
+#include <cdclipbd.h>    /* CD_CLIPBOARD  */
+#include <cddebug.h>     /* CD_DEBUG  */
+#include <cddgn.h>       /* CD_DGN  */
+#include <cddxf.h>       /* CD_DXF  */
+#include <cdemf.h>       /* CD_EMF  */
+#include <cdmf.h>        /* CD_METAFILE  */
+#include <cdpicture.h>   /* CD_PICTURE  */
+#include <cdprint.h>     /* CD_PRINTER  */
+#include <cdps.h>        /* CD_PS  */
+#include <cdsvg.h>       /* CD_SVG  */
+#include <cdwmf.h>       /* CD_WMF  */
+#include <cdirgb.h>      /* CD_IMAGERGB CD_DBUFFERRGB  */
+
+/* #include <cddbuf.h>      / * CD_DBUFFER  */
+/* #include <cdimage.h>     / * CD_IMAGE  */
+/* #include <cdpdf.h>       / * CD_PDF  */
+/* #include <cdnative.h>    / * CD_NATIVEWINDOW  */
+/* #include <cdiup.h>       / * CD_IUP  */
+/* #include <cdgl.h>        / * CD_GL  */
 
 #ifdef HAVELIB_IUPCD
 #include <cdiup.h>
@@ -103,6 +117,73 @@ SV* long2AV(long *data, int n) {
   return newRV((SV*)array);  
 }
 
+int AV2bitmap(SV *A1, unsigned char **r, unsigned char **g, unsigned char **b, unsigned char **a, int *w, int *h) {
+  unsigned char *buffer_r, *buffer_g, *buffer_b, *buffer_a;
+  int lastindex1, lastindex2, i, j, error;
+  AV *array1, *array2;
+  SV *A2;
+  int n, width, height;
+
+  /* warn("XXX-DEBUG: r=%p g=%p b=%p a=%p\n",r,g,b,a); */
+  if (!r || !g || !b) return 0;
+  n = a ? 4 : 3;
+
+  /* warn("XXX-DEBUG: AV2bitmap n=%d\n",n); */
+  if( (!SvROK(A1)) || (SvTYPE(SvRV(A1)) != SVt_PVAV) ) return 0;
+  array1 = (AV *)SvRV(A1);
+  lastindex1 = av_len(array1);
+  
+  A2 = (SV*)(*av_fetch(array1,0,0));
+  if( (!SvROK(A2)) || (SvTYPE(SvRV(A2)) != SVt_PVAV) ) return 0;
+  array2 = (AV *)SvRV(A2);
+  lastindex2 = av_len(array2);
+  
+  /* warn("XXX-DEBUG: li1=%d li2=%d", lastindex1, lastindex2); */
+  if ((lastindex2+1)%n != 0) return 0;
+  error=0;
+  width = (lastindex2+1)/n;
+  height = (lastindex1+1);
+  buffer_r = malloc( sizeof(unsigned char) * width * height );
+  buffer_g = malloc( sizeof(unsigned char) * width * height );
+  buffer_b = malloc( sizeof(unsigned char) * width * height );
+  buffer_a = (n==4) ? malloc( sizeof(unsigned char) * width * height ) : NULL;
+  if (!buffer_r || !buffer_g || !buffer_b) error=1;
+  if (n==4 && !buffer_a) error=1;
+  
+  /* warn("XXX-DEBUG: before for\n"); */
+  for(i=0; (i<height && !error); i++) {
+    A2 = (SV*)(*av_fetch(array1,i,0));
+    array2 = (AV *)SvRV(A2);
+    if (lastindex2 != av_len(array2)) {
+      error=1;
+    }
+    else {
+      for(j=0; j<width; j++) {
+        buffer_r[i*width+j] = (unsigned char)SvUV(*av_fetch(array2,j*n,0));
+        buffer_g[i*width+j] = (unsigned char)SvUV(*av_fetch(array2,j*n+1,0));
+        buffer_b[i*width+j] = (unsigned char)SvUV(*av_fetch(array2,j*n+2,0));
+        if(n==4) buffer_a[i*width+j] = (unsigned char)SvUV(*av_fetch(array2,j*n+3,0));
+      }
+    }
+  }
+  /* warn("XXX-DEBUG: after for\n"); */
+  if (error) {
+    if (buffer_r) free(buffer_r);
+    if (buffer_g) free(buffer_g);
+    if (buffer_b) free(buffer_b);
+    if (buffer_a) free(buffer_a);
+    return 0;
+  }
+  if(r) *r = buffer_r;
+  if(g) *g = buffer_g;
+  if(b) *b = buffer_b;
+  if(a) *a = buffer_a;
+  *h = height;
+  *w = width;
+
+  return 1;
+}
+
 SV* Bitmap2AV(unsigned char *r, unsigned char *g, unsigned char *b, unsigned char *a, unsigned char *m, int w, int h) {
   int i,j;
   AV *array1, *array2;
@@ -114,6 +195,7 @@ SV* Bitmap2AV(unsigned char *r, unsigned char *g, unsigned char *b, unsigned cha
   if (a) n++;
   if (m) n++;
   
+  /* warn("XXX-DEBUG: Bitmap2AV n=%d r=%p g=%p b=%p a=%p m=%p w=%d h=%d\n", n,r,g,b,a,m,w,h); */
   array1 = (AV *)sv_2mortal((SV *)newAV());
   av_extend(array1,h); /* not needed but faster */  
   for(i=0; i<h; i++) {
@@ -174,7 +256,6 @@ int AV2long2D(SV *A1, long **data, int *w, int *h) {
   array2 = (AV *)SvRV(A2);
   lastindex2 = av_len(array2);
   
-  warn("li1=%d li2=%d", lastindex1, lastindex2);
   buffer = malloc( sizeof(long) * (lastindex2+1) * (lastindex1+1) );
   if (!buffer) return 0;
   
@@ -215,7 +296,6 @@ int AV2uchar2D(SV *A1, unsigned char **data, int *w, int *h) {
   array2 = (AV *)SvRV(A2);
   lastindex2 = av_len(array2);
   
-  warn("li1=%d li2=%d", lastindex1, lastindex2);
   buffer = malloc( sizeof(unsigned char) * (lastindex2+1) * (lastindex1+1) );
   if (!buffer) return 0;
   
@@ -264,17 +344,24 @@ cdBitmap* BitmapFromFile(char * file_name) {
   int error;
 
   image = imFileImageLoadBitmap(file_name, 0, &error);
+  /* warn("XXX-DEBUG: BitmapFromFile error=%d\n",error); */
   if (error) return NULL;
   if (!image) return NULL;    
   if (!imImageIsBitmap(image)) return NULL;
   if (image->color_space == IM_RGB)  {
-    if (image->has_alpha)
+    if (image->has_alpha) {
+      /* warn("XXX-DEBUG: RGBA 0=%p 1=%p 2=%p 3=%p\n", image->data[0], image->data[1], image->data[2], image->data[3]); */
       bitmap = cdInitBitmap(image->width, image->height, CD_RGBA, image->data[0], image->data[1], image->data[2], image->data[3]);
-    else
+    }
+    else {
+      /* warn("XXX-DEBUG: RGB\n"); */
       bitmap = cdInitBitmap(image->width, image->height, CD_RGB, image->data[0], image->data[1], image->data[2]);
+    }
   }
-  else
+  else {
+    /* warn("XXX-DEBUG: MAP\n"); */
     bitmap = cdInitBitmap(image->width, image->height, CD_MAP, image->data[0], image->palette);
+  }
 
   return(bitmap);
 }
@@ -346,18 +433,6 @@ __Stipple__Data(self)
         OUTPUT:
                 RETVAL
 
-void
-__Stipple__Dump(self)
-		IUPinternal_cdStipple *self;
-	CODE:
-		int i, j;
-                fprintf(stderr,"XXX-DEBUG: gonna Dump IUP::Canvas::Stipple [h=%d,w=%d]\n", self->h, self->w);
-                for(i=0; i<self->h; i++) {
-                  fprintf(stderr,"XXX-DEBUG:");
-                  for(j=0; j<self->w; j++) fprintf(stderr,"% 1d", self->fgbg[j+self->w*i]);
-                  fprintf(stderr,"\n");
-                }
-
 MODULE = IUP::Canvas::Pattern	PACKAGE = IUP::Canvas::Pattern   PREFIX = __Pattern__
 
 IUPinternal_cdPattern *
@@ -423,18 +498,6 @@ __Pattern__Data(self)
                 RETVAL = long2D2AV(self->pattern, self->w, self->h);
         OUTPUT:
                 RETVAL
-
-void
-__Pattern__Dump(self)
-		IUPinternal_cdPattern *self;
-	CODE:
-		int i, j;
-                fprintf(stderr,"XXX-DEBUG: gonna Dump IUP::Canvas::Palette [h=%d,w=%d]\n", self->h, self->w);
-                for(i=0; i<self->h; i++) {
-                  fprintf(stderr,"XXX-DEBUG:");
-                  for(j=0; j<self->w; j++) fprintf(stderr,"% 12d", self->pattern[j+self->w*i]);
-                  fprintf(stderr,"\n");
-                }
 
 MODULE = IUP::Canvas::Palette	PACKAGE = IUP::Canvas::Palette   PREFIX = __Palette__
 
@@ -502,13 +565,6 @@ __Palette__Data(self)
         OUTPUT:
                 RETVAL
 
-void
-__Palette__Dump(self)
-		IUPinternal_cdPalette * self;
-	CODE:
-		int i;
-                for(i=0; i<self->n; i++) warn("XXX-DEBUG: palette[%d] = %d\n", i, self->palette[i]);
-
 MODULE = IUP::Canvas::Bitmap	PACKAGE = IUP::Canvas::Bitmap   PREFIX = __Bitmap__
 
 cdBitmap *
@@ -518,73 +574,58 @@ __Bitmap__new(CLASS,...)
                 cdBitmap * b;
                 int w, h, type, error;
                 int wr, hr, wg, hg, wb, hb, wa, ha, wi, hi, wc, hc;
-                unsigned char *data_r, *data_g, *data_b, *data_a;
-                unsigned char *index;
-                long *colors;
+                unsigned char *data_r=NULL, *data_g=NULL, *data_b=NULL, *data_a=NULL;
+                unsigned char *index=NULL;
+                long *colors=NULL;
+                long *colors256=NULL;
+                int color_count;
         CODE:
                 b = NULL;
                 if (items==2) {
-                  /*warn("XXX-DEBUG: IUP::Canvas::Bitmap->new($file)");*/
-                  b = BitmapFromFile(SvPV_nolen(ST(1)));
+                  /* warn("XXX-DEBUG: IUP::Canvas::Bitmap->new($file)"); */
+                  b = BitmapFromFile(SvPV_nolen(ST(1)));                  
                 }
-                else if (items==3 && !SvROK(ST(1)) && SvROK(ST(2)) && SvTYPE(SvRV(ST(2)))==SVt_PVAV) {
-                  warn("XXX-DEBUG: IUP::Canvas::Bitmap->new($type, $pixels)");
+                else if (items==3 && !SvROK(ST(1))
+                                  && SvROK(ST(2)) && SvTYPE(SvRV(ST(2)))==SVt_PVAV) {
+                  /* warn("XXX-DEBUG: IUP::Canvas::Bitmap->new($type, $pixels)"); */
+                  type = SvIV(ST(1));
+                  if (type==CD_RGBA) {
+                    if (!AV2bitmap(ST(2),&data_r,&data_g,&data_b,&data_a,&w,&h)) XSRETURN_UNDEF;
+                    b = cdInitBitmap(w, h, type, data_r, data_g, data_b, data_a);
+                  }
+                  else if (type==CD_RGB) {
+                    if (!AV2bitmap(ST(2),&data_r,&data_g,&data_b,NULL,&w,&h)) XSRETURN_UNDEF;
+                    b = cdInitBitmap(w, h, type, data_r, data_g, data_b);
+                  }
+                  else {
+                    XSRETURN_UNDEF;
+                  }
+                }
+                else if (items==4 && SvROK(ST(2)) && SvTYPE(SvRV(ST(2)))==SVt_PVAV
+                                  && SvROK(ST(3)) && SvTYPE(SvRV(ST(3)))==SVt_PVAV) {
+                  /* warn("XXX-DEBUG: IUP::Canvas::Bitmap->new($type, $pixels, $palette)"); */
                   type = SvIV(ST(1));                  
-                  if (type!=CD_MAP && type!=CD_RGB && type!=CD_RGBA) XSRETURN_UNDEF;                  
-                  /* XXX-FIXME-TODO if (!AV2bitmap(ST(2),type,&data_r,&data_g,&data_b,&data_a,&index,&colors,&w,&h)) XSRETURN_UNDEF; */
-                  if (type==CD_MAP)       b = cdInitBitmap(w, h, type, index, colors);
-                  else if (type==CD_RGB)  b = cdInitBitmap(w, h, type, data_r, data_g, data_b);
-                  else if (type==CD_RGBA) b = cdInitBitmap(w, h, type, data_r, data_g, data_b, data_a);
-                }
-                else if (items==3 && SvROK(ST(1)) && SvTYPE(SvRV(ST(1)))==SVt_PVAV) { /*to be correct - we should test for ARRAYREF on ST(1|2)*/
-                  type=CD_MAP;
-                  /* cdInitBitmap(int w, int h, int type, unsigned char* index, long* colors) */
-                  if (!AV2uchar2D(ST(1),&index,&wi,&hi)) index = NULL;
-                  if (!AV2long2D(ST(2),&colors,&wc,&hc)) colors = NULL;
-                  if (!index || !colors || wi != wc || hi != hc) {
-                    if (!index) free(index);
-                    if (!colors) free(colors);
-                    XSRETURN_UNDEF;
-                  }
-                  b = cdInitBitmap(w, h, type, index, colors);
-                }
-                else if (items==4 && SvROK(ST(1)) && SvTYPE(SvRV(ST(1)))==SVt_PVAV) { /*to be correct - we should test for ARRAYREF on ST(1|2|3)*/
-                  type=CD_RGB;
-                  /* cdInitBitmap(int w, int h, int type, unsigned char* red, unsigned char* green, unsigned char* blue) */
-                  if (!AV2uchar2D(ST(1),&data_r,&wr,&hr)) data_r = NULL;
-                  if (!AV2uchar2D(ST(2),&data_g,&wg,&hg)) data_g = NULL;
-                  if (!AV2uchar2D(ST(3),&data_b,&wb,&hb)) data_b = NULL;
-                  if (!data_r || !data_g || !data_r) error = 1;
-                  if (wr != wg || wr != wb) error = 1;
-                  if (hr != hg || hr != hb) error = 1;
+                  if (type!=CD_MAP) XSRETURN_UNDEF;
+                  error = 0;
+                  colors256 = malloc(sizeof(long)*256);
+                  if (!colors256) error=1;
+                  if (!AV2uchar2D(ST(2),&index,&w,&h)) error=1;
+                  if (!AV2long(ST(3),&colors,&color_count)) error=1;
                   if (error) {
-                    if (!data_r) free(data_r);
-                    if (!data_g) free(data_g);
-                    if (!data_b) free(data_b);
+                    if (index) free(index);
+                    if (colors) free(colors);
+                    if (colors256) free(colors256);
                     XSRETURN_UNDEF;
                   }
-                  b = cdInitBitmap(wr, hr, type, data_r, data_g, data_b);
-                }
-                else if (items==5  && SvROK(ST(1)) && SvTYPE(SvRV(ST(1)))==SVt_PVAV) { /*to be correct - we should test for ARRAYREF on ST(1|2|3|4)*/
-                  type=CD_RGBA;
-                  /* cdInitBitmap(int w, int h, int type, unsigned char* red, unsigned char* green, unsigned char* blue, unsigned char* alpha) */
-                  if (!AV2uchar2D(ST(1),&data_r,&wr,&hr)) data_r = NULL;
-                  if (!AV2uchar2D(ST(2),&data_g,&wg,&hg)) data_g = NULL;
-                  if (!AV2uchar2D(ST(3),&data_b,&wb,&hb)) data_b = NULL;
-                  if (!AV2uchar2D(ST(4),&data_a,&wa,&ha)) data_a = NULL;
-                  if (!data_r || !data_g || !data_b || !data_a) error = 1;
-                  if (wr != wg || wr != wb || wr != wa) error = 1;
-                  if (hr != hg || hr != hb || hr != ha) error = 1;
-                  if (error) {
-                    if (!data_r) free(data_r);
-                    if (!data_g) free(data_g);
-                    if (!data_b) free(data_b);
-                    if (!data_a) free(data_a);
-                    XSRETURN_UNDEF;
-                  }
-                  b = cdInitBitmap(wr, hr, type, data_r, data_g, data_b, data_a);
+                  /* palette buffer passed to cdInitBitmap has to be 256 colors long */                  
+                  memset(colors256, 0, sizeof(long)*256);
+                  if (color_count>256) color_count = 256;
+                  memcpy(colors256, colors, sizeof(long)*color_count);
+                  free(colors);                  
+                  b = cdInitBitmap(w, h, type, index, colors256);
                 }
                 else if (items==4) {
+                  /* warn("XXX-DEBUG: IUP::Canvas::Bitmap->new($type, $width, $height)"); */
                   type = SvIV(ST(1));
                   w = SvIV(ST(2));
                   h = SvIV(ST(3));                  
@@ -593,8 +634,24 @@ __Bitmap__new(CLASS,...)
                 }
                 else {
                   warn("Error: invalid parameters for IUP::Canvas::Bitmap->new()");
-                }                
-                RETVAL = b;
+                }
+                /* check if we have consistent data */
+                RETVAL = NULL;
+                if (b) {
+                  data_r = cdBitmapGetData(b, CD_IRED);
+                  data_g = cdBitmapGetData(b, CD_IGREEN);
+                  data_b = cdBitmapGetData(b, CD_IBLUE);
+                  data_a = cdBitmapGetData(b, CD_IALPHA);
+                  index  = cdBitmapGetData(b, CD_INDEX);
+                  colors = (long*)cdBitmapGetData(b, CD_COLORS);
+                  if (b->type==CD_RGBA && data_r && data_g && data_b && data_a) RETVAL = b;
+                  if (b->type==CD_RGB && data_r && data_g && data_b) RETVAL = b;
+                  if (b->type==CD_MAP && index && colors) RETVAL = b;
+                  if (!RETVAL) {
+                    warn("Error: image data not loaded correctly");
+                    cdKillBitmap(b);
+                  }
+                }
         OUTPUT:
                 RETVAL
 
@@ -660,12 +717,16 @@ __Bitmap__Data(self)
                 cdBitmap * self;
         CODE:
                 unsigned char *r, *g, *b, *a, *m;
+                /* warn("XXX-DEBUG: Bitmap->Data type=%d, w=%d h=%d\n",self->type,self->w,self->h); */
                 if (self->type == CD_RGBA) {
+                  /* warn("XXX-DEBUG: Bitmap->Data RGBA 1\n"); */
                   r = cdBitmapGetData(self, CD_IRED);
                   g = cdBitmapGetData(self, CD_IGREEN);
                   b = cdBitmapGetData(self, CD_IBLUE);
                   a = cdBitmapGetData(self, CD_IALPHA);
+                  /* warn("XXX-DEBUG: Bitmap->Data RGBA 2 r=%p g=%p b=%p a=%p\n",r,g,b,a); */
                   if (!r || !g || !b || !a) XSRETURN_UNDEF;
+                  /* warn("XXX-DEBUG: Bitmap->Data RGBA 3\n"); */
                   RETVAL = Bitmap2AV(r,g,b,a,NULL,self->w,self->h);
                 }
                 else if (self->type == CD_RGB) {
@@ -684,17 +745,89 @@ __Bitmap__Data(self)
         OUTPUT:
                 RETVAL
 
+SV*
+__Bitmap__Palette(self)
+                cdBitmap * self;
+        CODE:
+                long *c;
+                unsigned char *m;
+                int max_index=0, i;
+                if (self->type != CD_MAP) XSRETURN_UNDEF;
+                c = (long*)cdBitmapGetData(self, CD_COLORS);
+                m = (unsigned char*)cdBitmapGetData(self, CD_INDEX);
+                if (!c || !m) XSRETURN_UNDEF;
+                for(i=0; i<self->w*self->h; i++) if(m[i]>max_index) max_index=m[i];                
+                if (max_index>255) max_index=255;
+                RETVAL = long2AV(c, max_index+1);
+        OUTPUT:
+                RETVAL
+
+int
+__Bitmap__SaveAs(self,filename,format,...)
+                cdBitmap * self;
+                char *filename;
+                char *format;
+	CODE:
+                unsigned char *data_buffer=NULL, *r=NULL, *g=NULL, *b=NULL, *a=NULL, *m=NULL;
+                long *c=NULL;
+                imImage *image;
+                int color_space, plane_size=0, plane_count=0, color_count=0;                                
+                
+                plane_size = sizeof(unsigned char)*self->w*self->h;
+                if (self->type==CD_RGBA) {
+                  plane_count = 4;
+                  color_space = (IM_RGB | IM_ALPHA);
+                  r = cdBitmapGetData(self, CD_IRED);
+                  g = cdBitmapGetData(self, CD_IGREEN);
+                  b = cdBitmapGetData(self, CD_IBLUE);
+                  a = cdBitmapGetData(self, CD_IALPHA);                                    
+                }
+                else if (self->type==CD_RGB) {
+                  plane_count = 3;
+                  color_space = IM_RGB;
+                  r = cdBitmapGetData(self, CD_IRED);
+                  g = cdBitmapGetData(self, CD_IGREEN);
+                  b = cdBitmapGetData(self, CD_IBLUE);
+                }
+                else if (self->type==CD_MAP) {
+                  plane_count = 1;
+                  color_space = IM_MAP;
+                  m = cdBitmapGetData(self, CD_INDEX);
+                  c = (long*)cdBitmapGetData(self, CD_COLORS);
+                  color_count = 256; /* XXX-CHECKLATER */
+                }
+                RETVAL = 999; /* means "error somewhere in perl XS code" */
+                if (plane_count>0)  {
+                  data_buffer = malloc(plane_size*plane_count);
+                  if (data_buffer) {                                        
+                    if (plane_count==1) memcpy(data_buffer,              m, plane_size);
+                    if (plane_count>=3) memcpy(data_buffer,              r, plane_size);
+                    if (plane_count>=3) memcpy(data_buffer+1*plane_size, g, plane_size);
+                    if (plane_count>=3) memcpy(data_buffer+2*plane_size, b, plane_size);
+                    if (plane_count==4) memcpy(data_buffer+3*plane_size, a, plane_size);
+                    image = imImageInit(self->w, self->h, color_space, IM_BYTE, data_buffer, c, color_count);                    
+                    if (image) {
+                      /* warn("XXX-DEBUG: imImageInit OK; items=%d; imFileImageSave(%s, %s, %p)\n", items, filename, format, image); */
+                      if (items>=4) {
+                        float res = (float)SvNV(ST(3));
+                        /* warn("XXX-DEBUG: setting resolution to '%f' DPI\n", res); */
+                        imImageSetAttribute(image, "XResolution", IM_FLOAT, 1, &res);
+                        imImageSetAttribute(image, "YResolution", IM_FLOAT, 1, &res);
+                        imImageSetAttribute(image, "ResolutionUnit", IM_BYTE, -1, "DPI"); /* "DPI" or "DPC" */
+                      }
+                      RETVAL = imFileImageSave(filename, format, image);  /* valid formats: TIFF JPEG PNG GIF BMP RAS ICO PNM KRN LED SGI PCX TGA */
+                      /* warn("XXX-DEBUG: imFileImageSave RETVAL=%d\n",RETVAL); */
+                    }
+                  }
+                }             
+	OUTPUT:
+		RETVAL
+
 void
 __Bitmap__DESTROY(self)
                 cdBitmap * self;
         CODE:
                 cdKillBitmap(self);
-
-void
-__Bitmap__Dump(self)
-                cdBitmap * self;
-        CODE:
-		warn("XXX-DEBUG: gonna Dump IUP::Canvas::Bitmap w=%d h=%d type=%d\n", self->w, self->h, self->type);
 
 MODULE = IUP::Canvas::InternalServerImage	PACKAGE = IUP::Canvas::InternalServerImage   PREFIX = __InternalServerImage__
 
@@ -724,45 +857,140 @@ _cdCreateCanvas_CD_IUP(ih)
 		RETVAL
 
 cdCanvas*
-_cdCreateCanvas_FILE(format, params)
+_cdCreateCanvas_BASIC(format, params)
 		char* format;
 		char* params;
 	CODE:
-		if      (strcmp(format,"SVG") == 0) RETVAL = cdCreateCanvas(CD_SVG, params);
-		else if (strcmp(format,"PS" ) == 0) RETVAL = cdCreateCanvas(CD_PS, params);
-		else if (strcmp(format,"EMF") == 0) RETVAL = cdCreateCanvas(CD_EMF, params);
-		else if (strcmp(format,"DXF") == 0) RETVAL = cdCreateCanvas(CD_DXF, params);
+		if (!format) RETVAL = NULL;
+                else if (strcmp(format,"CGM") == 0)        RETVAL = cdCreateCanvas(CD_CGM, params);
+                else if (strcmp(format,"CLIPBOARD") == 0)  RETVAL = cdCreateCanvas(CD_CLIPBOARD, params);
+                else if (strcmp(format,"DEBUG") == 0)      RETVAL = cdCreateCanvas(CD_DEBUG, params);
+                else if (strcmp(format,"DGN") == 0)        RETVAL = cdCreateCanvas(CD_DGN, params);
+                else if (strcmp(format,"DXF") == 0)        RETVAL = cdCreateCanvas(CD_DXF, params);
+                else if (strcmp(format,"EMF") == 0)        RETVAL = cdCreateCanvas(CD_EMF, params);
+                else if (strcmp(format,"METAFILE") == 0)   RETVAL = cdCreateCanvas(CD_METAFILE, params);
+                else if (strcmp(format,"PICTURE") == 0)    RETVAL = cdCreateCanvas(CD_PICTURE, params);
+                else if (strcmp(format,"PRINTER") == 0)    RETVAL = cdCreateCanvas(CD_PRINTER, params);
+                else if (strcmp(format,"PS") == 0)         RETVAL = cdCreateCanvas(CD_PS, params);
+                else if (strcmp(format,"SVG") == 0)        RETVAL = cdCreateCanvas(CD_SVG, params);
+                else if (strcmp(format,"WMF") == 0)        RETVAL = cdCreateCanvas(CD_WMF, params);
                 else RETVAL = NULL;
-		/* XXX-FIXME add all supported file formats */
-		/* 
-                 * CD_CAIRO_NATIVEWINDOW
-                 * CD_CAIRO_IMAGE
-                 * CD_CAIRO_DBUFFER
-                 * CD_CAIRO_PRINTER
-                 * CD_CAIRO_PS
-                 * CD_CAIRO_PDF
-                 * CD_CAIRO_SVG
-                 * CD_CAIRO_IMAGERGB
-                 * CD_CAIRO_EMF
-                 * CD_CGM
-                 * CD_CLIPBOARD
-                 * CD_DBUFFER
-                 * CD_DEBUG
-                 * CD_DGN
-                 * CD_GL
-                 * CD_IMAGE
-                 * CD_IMAGERGB
-                 * CD_DBUFFERRGB
-                 * CD_IUP
-                 * CD_METAFILE
-                 * CD_NATIVEWINDOW
-                 * CD_PDF
-                 * CD_PICTURE
-                 * CD_PRINTER
-                 * CD_WMF
-                 */		
 	OUTPUT:
 		RETVAL
+
+cdCanvas*
+_cdCreateCanvas_IMAGERGB_empty(width,height,has_alpha,resolution)
+		int width;
+                int height;
+                int has_alpha;
+		double resolution;
+        INIT:
+                char tmp[1024];
+                char res[1024];
+	CODE:
+                if (width>0 && height>0) {
+                  if (resolution>0.0001)
+                    snprintf(tmp,1000,"%dx%d -r%g",width,height,resolution);
+                  else 
+                    snprintf(tmp,1000,"%dx%d",width,height);
+                  if (has_alpha==1) strcat(tmp," -a");
+                  /*warn("XXX-DEBUG (_cdCreateCanvas_IMAGERGB_empty): param='%s'\n",tmp);*/
+                  RETVAL = cdCreateCanvas(CD_IMAGERGB, tmp);
+                }
+                else 
+                  RETVAL = NULL;
+	OUTPUT:
+		RETVAL
+
+cdCanvas*
+_cdCreateCanvas_IMAGERGB_from_bitmap(bitmap,resolution)
+		double resolution;
+                cdBitmap *bitmap;
+        INIT:
+                unsigned char* r;
+                unsigned char* g;
+                unsigned char* b;
+                unsigned char* a;
+		int width = 0;
+                int height = 0;
+                int has_alpha = 0;
+                int valid = 0;
+                char tmp[1024];
+                char res[512];
+	CODE:
+                if (bitmap) {
+                  width = bitmap->w;
+                  height = bitmap->h;
+                  if (bitmap->type == CD_RGB) {
+                    r = cdBitmapGetData(bitmap, CD_IRED);
+                    g = cdBitmapGetData(bitmap, CD_IGREEN);
+                    b = cdBitmapGetData(bitmap, CD_IBLUE);
+                    a = NULL;
+                    has_alpha = 0;
+                    valid = 1;
+                  }
+                  else if(bitmap->type == CD_RGBA) {
+                    r = cdBitmapGetData(bitmap, CD_IRED);
+                    g = cdBitmapGetData(bitmap, CD_IGREEN);
+                    b = cdBitmapGetData(bitmap, CD_IBLUE);
+                    a = cdBitmapGetData(bitmap, CD_IALPHA);
+                    has_alpha = 1;
+                    valid = 1;
+                  }
+                }
+                if (width>0 && height>0 && valid) {
+                  if (has_alpha)
+                    snprintf(tmp,500,"%dx%d %p %p %p %p -a",width,height,r,g,b,a);
+                  else
+                    snprintf(tmp,500,"%dx%d %p %p %p",width,height,r,g,b);
+                  if (resolution>0.0001) {
+                    snprintf(res,500," -r%g",resolution);
+                    strcat(tmp,res);
+                  }
+                  /*warn("XXX-DEBUG (_cdCreateCanvas_IMAGERGB_from_bitmap): param='%s'\n",tmp);*/
+                  RETVAL = cdCreateCanvas(CD_IMAGERGB, tmp);
+                }
+                else 
+                  RETVAL = NULL;
+	OUTPUT:
+		RETVAL
+
+int
+_cdSpecial_IMAGERGB_save(canvas,filename)
+                SV* canvas;
+                char *filename;
+        INIT:
+                unsigned char* data_buffer;
+                imImage *image;
+		int width = 0;
+                int height = 0;
+                int has_alpha = 0;
+                int color_space;
+                int plane_size;
+                int plane_count;
+	CODE:
+                warn("XXX-FIXME: _cdSpecial_IMAGERGB_save not implemented");
+//                width =
+//                height =
+//                has_alpha =                
+//                plane_size = sizeof(unsigned char)*width*height;
+//                plane_count = has_alpha ? 4 : 3;
+//                color_space = has_alpha ? (IM_RGB | IM_ALPHA) : IM_RGB;
+//                data_buffer = malloc(plane_size*plane_count);
+//                memcpy(data_buffer,              r, plane_size);
+//                memcpy(data_buffer+1*plane_size, g, plane_size);
+//                memcpy(data_buffer+2*plane_size, b, plane_size);
+//                if (has_alpha) memcpy(data_buffer+3*plane_size, a, plane_size);
+//                image* imImageInit(width, height, color_space, IM_BYTE, data_buffer, NULL, 0);
+                RETVAL = 0;
+	OUTPUT:
+		RETVAL
+
+void
+_cdKillCanvas(canvas)
+                SV* canvas;
+        CODE:
+                cdKillCanvas(ref2cnv(canvas));
 
 ### generated part - start ###
 
@@ -972,7 +1200,7 @@ cdPlay(canvas,context,xmin,xmax,ymin,ymax,data)
 # void cdCanvasGetSize(cdCanvas* canvas, int *width, int *height, double *width_mm, double *height_mm);
 # canvas:GetSize() -> (width, height, mm_width, mm_height: number) [in Lua]
 void
-cdGetSize(canvas,width,height,width_mm,height_mm)
+cdGetSize(canvas)
 		SV* canvas;
 	INIT:
 		int width;

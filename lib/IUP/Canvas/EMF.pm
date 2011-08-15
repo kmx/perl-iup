@@ -26,7 +26,7 @@ sub new {
     my $init = $filename;
     $init .= ' '.int($width).'x'.int($height) if defined $width && defined $height;
     #warn "DEBUG init='$init'\n";
-    $ch = $self->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_FILE("EMF", $init));
+    $ch = $self->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_BASIC("EMF", $init));
   }
   return $ch;
 }

@@ -1,19 +1,15 @@
 ################ the last time working on ################ 
 
-- hacking IUP::Canvas::Bitmap - still not finished
-- POD hacking - IUP::Canvas
+- hacking IUP::Canvas
 
 ##########################################################
 
-######## IMPORTANT: IUP::Canvas::Bitmap
-- unfinished constructor new() - now works just IUP::Canvas::Bitmap->new($filename)
-
-######## IMPORTANT: IUP::Canvas::PNG
+######## IMPORTANT: IUP::Canvas::FileBitmap
 - or other bitmap format (via CD_IMAGERGB canvas)
 - see http://www.tecgraf.puc-rio.br/im/en/samples.html
+- add SaveAs($filename, $format, [$resolution])
 - or IUP::Canvas::File::Vector + IUP::Canvas::File::Bitmap
 - or IUP::Canvas::FileVector + IUP::Canvas::FileBitmap
-  IUP::Canvas::FileBitmap->new( type=>"PNG", file=>"filename.png", options=>"...." );
 
 ######## IMPORTANT: minor issues in element destruction
 - Element.pm (look for XXX-FIXME)
@@ -22,6 +18,9 @@
 ######## NICE-TO-HAVE: pre-built images
 - imglib - Other: B<NOTE:> NOT included in the pre-compiled library
 - we need imglib built with -DIUP_IMGLIB_LARGE (mention this in pod - note that Alien::IUP ask about that)
+
+######## NICE-TO-HAVE: IUP::Canvas::Bitmap
+- IUP::Canvas::Bitmap - add Pixel + Color methods
 
 ######## NICE-TO-HAVE: consider IDEA
 - $element_reference = $radio->GetAttributeAsElement("VALUE");
@@ -52,10 +51,8 @@
 - mention PAR packing recommendation in DOC
 - beware: (IUP_DEFAULT related) sub returns value even without explicit return
 
-######## POD: finish Canvas.pod
-- look for XXX tags
-
 ######## POD: finish doc - espec. IUP::Manual::*
+- finish Canvas.pod
 - Cleanup first (in this order):
   - I::M::Elements.pod
   - I::M::Callbacks.pod

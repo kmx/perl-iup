@@ -550,7 +550,7 @@ sub NextField {
 
 sub DESTROY {
   #IMPORTANT: do not automatically destroy iup elements
-  #warn "***DEBUG*** DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";  
+  #warn "XXX-DEBUG: IUP::Internal::Element::DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";  
 }
 
 ###### INTERNAL HELPER FUNCTIONS

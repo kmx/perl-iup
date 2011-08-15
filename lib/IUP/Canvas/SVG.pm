@@ -33,7 +33,7 @@ sub new {
     $init .= sprintf ' %.3fx%.3f', $width, $height if defined $width && defined $height;
     $init .= sprintf ' %.3f', $resolution if defined $resolution;
     #warn "DEBUG init='$init'\n";
-    $ch = $self->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_FILE("SVG", $init));
+    $ch = $self->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_BASIC("SVG", $init));
   }
   return $ch;
 }

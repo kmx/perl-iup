@@ -24,9 +24,17 @@ sub new_from_cnvhandle {
   return $self;
 }
 
+sub cdKillCanvas {
+  my $self = shift;
+  $self->_cdKillCanvas();
+  $self->cnvhandle(undef)
+}
+
 sub DESTROY {
-  #xxxFIXME handle canvas destruction
-  #warn "***DEBUG*** DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";  
+  my $self = shift;
+  #xxxFIXME handle correctly canvas destruction
+  #$self->cdKillCanvas;  
+  #warn "XXX-DEBUG: IUP::Internal::Canvas::DESTROY(): " . ref($_[0]) . " [" . $_[0]->cnvhandle . "]\n";  
 }
 
 #Note: all canvas related methods implemented directly in XS
