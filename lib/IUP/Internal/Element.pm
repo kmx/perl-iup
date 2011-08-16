@@ -181,8 +181,20 @@ sub GetAttribute {
   #char *IupGetAttribute(Ihandle *ih, const char *name); [in C]
   #iup.GetAttribute(ih: ihandle, name: string) -> value: string [in Lua]
   my ($self, @names) = @_;
-  my @rv = ();  
+  my @rv = ();
   push(@rv, IUP::Internal::LibraryIup::_IupGetAttribute($self->ihandle, $_)) for (@names);    
+  return (scalar(@names) == 1) ? $rv[0] : @rv; #xxxCHECKLATER not sure if this is a good idea
+}
+
+sub GetAttributeAsElement {
+  #special perl method
+  #XXX-FIXME needs testin g
+  my ($self, @names) = @_;
+  my @rv = ();
+  for (@names) {
+    my $v = IUP::Internal::LibraryIup::_IupGetAttribute($self->ihandle, $_);
+    push(@rv, defined $v ? IUP->GetByName($v) : undef);    
+  }
   return (scalar(@names) == 1) ? $rv[0] : @rv; #xxxCHECKLATER not sure if this is a good idea
 }
 

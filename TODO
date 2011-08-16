@@ -4,29 +4,12 @@
 
 ##########################################################
 
-######## IMPORTANT: IUP::Canvas::FileBitmap
-- IUP::Canvas::FileBitmap does not work correctly with RGBA images (RGB is OK)
-
 ######## IMPORTANT: correct element destruction still needs some work
-- Element.pm (look for XXX-FIXME)
+- Internal/Element.pm (look for XXX-FIXME)
 
-######## IMPORTANT: Canvas example(s)
+######## NICE-TO-HAVE: Canvas example(s)
 - port original cd example into perl
-
-######## NICE-TO-HAVE: pre-built images
-- imglib - Other: B<NOTE:> NOT included in the pre-compiled library
-- we need imglib built with -DIUP_IMGLIB_LARGE (mention this in pod - note that Alien::IUP ask about that)
-
-######## NICE-TO-HAVE: IUP::Canvas::Bitmap
-- IUP::Canvas::Bitmap - add Pixel + Color methods
-
-######## NICE-TO-HAVE: consider IDEA
-- $element_reference = $radio->GetAttributeAsElement("VALUE");
-- handy for: Radio, Toggle
-- implementation:
-  => $elem_name = $radio->GetAttribute("VALUE");
-     $element = IUP->GetByName($elem_name);
-    
+   
 ######## MAYBE: access child=>[...] items like this
  $mybox = IUP::Hbox->new( child=>[ $bt1, $bt2, $bt3] );
  $mybox->[0]->FGCOLOR("255 0 0");   # changes bt1 foreground color
@@ -45,11 +28,13 @@
   http://cpansearch.perl.org/src/KTHAKORE/SDL-2.533/lib/SDLx/Surface.pm
   http://cpansearch.perl.org/src/KTHAKORE/SDL-2.533/lib/SDLx/Surface/TiedMatrix.pm
   
-######## IMPORTANT/POD: mention in POD/DOC
+######## POD/IMPORTANT: mention in POD/DOC
+- fix: imglib - Other: B<NOTE:> NOT included in the pre-compiled library
+- we need imglib built with -DIUP_IMGLIB_LARGE (mention this in pod - note that Alien::IUP ask about that)
 - mention PAR packing recommendation in DOC
 - beware: (IUP_DEFAULT related) sub returns value even without explicit return
 
-######## IMPORTANT/POD: finish doc - espec. IUP::Manual::*
+######## POD/IMPORTANT: finish doc - espec. IUP::Manual::*
 - finish pod for: IUP::Canvas::*
 - maybe add pod for: IUP::Canvas::InternalServerImage
 - Cleanup first (in this order):
@@ -61,7 +46,7 @@
   - pplot: note in doc that DS_ has to be set after ->PPlotEnd()
   - tree: note in doc that tree->SetAttribude has to go after dialog->Show
 
-######## IMPORTANT/TESTS: add more tests
+######## TESTS/IMPORTANT: add more tests
 - split tests: t\*.t + all GUI-related >>> t\gui\*.t
 - maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
 - skip example:

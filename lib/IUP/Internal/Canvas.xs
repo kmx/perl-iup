@@ -404,7 +404,10 @@ __Stipple__Pixel(self,x,y,...)
         CODE:
                 if ((x >= self->w) || (x < 0)) XSRETURN_UNDEF;
                 if ((y >= self->h) || (y < 0)) XSRETURN_UNDEF;
-                if (items>3) self->fgbg[x+y*self->w] = SvUV(ST(3)); /* XXX-CHECKLATER test for valid values 0 or 1 */
+                if (items>3) {
+                  self->fgbg[x+y*self->w] = SvUV(ST(3)); /* XXX-CHECKLATER test for valid values 0 or 1 */
+                  XSRETURN_UNDEF;
+                }
                 RETVAL = self->fgbg[x+y*self->w];
         OUTPUT:
                 RETVAL
@@ -470,7 +473,10 @@ __Pattern__Pixel(self,x,y,...)
         CODE:
                 if ((x >= self->w) || (x < 0)) XSRETURN_UNDEF;
                 if ((y >= self->h) || (y < 0)) XSRETURN_UNDEF;
-                if (items>3) self->pattern[x+y*self->w] = SvIV(ST(3));
+                if (items>3) {
+                  self->pattern[x+y*self->w] = SvIV(ST(3));
+                  XSRETURN_UNDEF;
+                }
                 RETVAL = self->pattern[x+y*self->w];
         OUTPUT:
                 RETVAL
@@ -544,7 +550,10 @@ __Palette__Color(self,i,...)
                 int i;
         CODE:
                 if ((i >= self->n) || (i < 0)) XSRETURN_UNDEF;
-                if (items>2) self->palette[i] = SvIV(ST(2));
+                if (items>2) {
+                  self->palette[i] = SvIV(ST(2));
+                  XSRETURN_UNDEF;
+                }
                 RETVAL = self->palette[i];
         OUTPUT:
                 RETVAL
@@ -761,6 +770,89 @@ __Bitmap__Palette(self)
                 RETVAL = long2AV(c, max_index+1);
         OUTPUT:
                 RETVAL
+
+long
+__Bitmap__Color(self,n,...)
+                cdBitmap * self;
+                int n;
+        CODE:
+                long *c;
+                if (self->type!=CD_MAP) XSRETURN_UNDEF;
+                if (n<0 || n>=256) XSRETURN_UNDEF;
+                c = (long*)cdBitmapGetData(self, CD_COLORS);
+                if (!c) XSRETURN_UNDEF;
+                if (items>2) {
+                  c[n] = SvIV(ST(2));
+                  XSRETURN_UNDEF;
+                }
+                RETVAL = c[n];
+        OUTPUT:
+                RETVAL
+
+void
+__Bitmap__Pixel(self,x,y,...)
+                cdBitmap * self;
+                int x;
+                int y;
+        PPCODE:
+                unsigned char *data_buffer=NULL, *r=NULL, *g=NULL, *b=NULL, *a=NULL, *m=NULL;
+                int color_space, plane_size=0, plane_count=0, color_count=0;
+                int width = self->w;
+                int height = self->h;
+                if (x<0 || x>=width || y<0 || y>=height ) {
+                  warn("Error: x or y out of range");
+                }
+                else if (self->type==CD_RGBA) {
+                  plane_count = 4;
+                  r = cdBitmapGetData(self, CD_IRED);
+                  g = cdBitmapGetData(self, CD_IGREEN);
+                  b = cdBitmapGetData(self, CD_IBLUE);
+                  a = cdBitmapGetData(self, CD_IALPHA);                               
+                  if (r && g && b && a) {
+                    if (items==3) {
+                      XPUSHs(sv_2mortal(newSVuv(r[width*y+x])));
+                      XPUSHs(sv_2mortal(newSVuv(g[width*y+x])));
+                      XPUSHs(sv_2mortal(newSVuv(b[width*y+x])));
+                      XPUSHs(sv_2mortal(newSVuv(a[width*y+x])));
+                    }
+                    else if (items>=7) {
+                      r[width*y+x] = SvUV(ST(3));
+                      g[width*y+x] = SvUV(ST(4)); 
+                      b[width*y+x] = SvUV(ST(5));
+                      a[width*y+x] = SvUV(ST(6));
+                    }
+                  }
+                }
+                else if (self->type==CD_RGB) {
+                  plane_count = 3;
+                  r = cdBitmapGetData(self, CD_IRED);
+                  g = cdBitmapGetData(self, CD_IGREEN);
+                  b = cdBitmapGetData(self, CD_IBLUE);
+                  if (r && g && b) {
+                    if (items==3) {
+                      XPUSHs(sv_2mortal(newSVuv(r[width*y+x])));
+                      XPUSHs(sv_2mortal(newSVuv(g[width*y+x])));
+                      XPUSHs(sv_2mortal(newSVuv(b[width*y+x])));
+                    }
+                    else if (items>=6) {
+                      r[width*y+x] = SvUV(ST(3));
+                      g[width*y+x] = SvUV(ST(4)); 
+                      b[width*y+x] = SvUV(ST(5));
+                    }
+                  }
+                }
+                else if (self->type==CD_MAP) {
+                  plane_count = 1;
+                  m = cdBitmapGetData(self, CD_INDEX);
+                  if (m) {
+                    if (items==3) {
+                      XPUSHs(sv_2mortal(newSVuv(m[width*y+x])));
+                    }
+                    else if (items==4) {
+                      m[width*y+x] = SvUV(ST(3));
+                    }
+                  }
+                }
 
 int
 __Bitmap__SaveAs(self,filename,format,...)
@@ -992,7 +1084,7 @@ cdDumpBitmap(canvas,filename,format)
                     memcpy(data_buffer,              cdRedImage(c),   plane_size);
                     memcpy(data_buffer+1*plane_size, cdGreenImage(c), plane_size);
                     memcpy(data_buffer+2*plane_size, cdBlueImage(c),  plane_size);
-                    if (has_alpha) memcpy(data_buffer+3*plane_size, cdAlphaImage(c), plane_size);
+                    if (type==CD_RGBA) memcpy(data_buffer+3*plane_size, cdAlphaImage(c), plane_size);
                     /* create image */
                     image = imImageInit(width, height, color_space, IM_BYTE, data_buffer, NULL, 0);
                     /* set resolution */
@@ -1005,7 +1097,7 @@ cdDumpBitmap(canvas,filename,format)
                     RETVAL = imFileImageSave(filename, format, image);  /* valid formats: TIFF JPEG PNG GIF BMP RAS ICO PNM KRN LED SGI PCX TGA */                    
                     /* destroy temporary image structure */
                     imImageDestroy(image);
-                    warn("XXX-DEBUG: imFileImageSave rv=%d\n",RETVAL);
+                    /*warn("XXX-DEBUG: imFileImageSave rv=%d\n",RETVAL);*/
                   }
                 }                
 	OUTPUT:

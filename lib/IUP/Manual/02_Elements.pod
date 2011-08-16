@@ -310,6 +310,28 @@ L<SetAttribute|/"SetAttribute()">.
 
 =back
 
+=head3 GetAttributeAsElement()
+
+=over
+
+Returns the referencename of an interface element attribute. XXX-TODO
+
+ my $elem = $element->GetAttribute($name);
+ #or
+ my @elems = $element->GetAttribute(@names);
+
+B<$ih:> Identifier of the interface element.
+If C<undef> will retrieve from the global environment. xxxcheckthis is it the same as getglobal?
+
+B<$name:> name of the attribute.
+
+B<$id:> used when the attribute has an additional id.
+
+B<Returns:> the attribute value or C<undef> if the attribute is
+not defined or does not exist.
+
+=back
+
 =head3 GetAttributeId()
 
 =over
