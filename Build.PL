@@ -64,7 +64,7 @@ my $builder = $class->new(
   },
   configure_requires   => { # need to have for running: perl Buil.PL
     'Module::Build'        => 0,
-    'Alien::IUP'           => 0,
+    'Alien::IUP'           => 0.303,
   },
   add_to_cleanup       => [ 'IUP-*' ],
   c_source             => 'src', # ppport.h
