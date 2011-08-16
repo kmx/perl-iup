@@ -19,6 +19,8 @@ sub cnvhandle {
 sub new_from_cnvhandle {
   my ($class, $ch) = @_;
   my $self = { class => $class };
+  
+  return undef unless($ch); #XXX-CHECKLATER
   bless($self, $class);
   $self->cnvhandle($ch);
   return $self;

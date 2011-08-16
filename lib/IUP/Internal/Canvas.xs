@@ -816,6 +816,7 @@ __Bitmap__SaveAs(self,filename,format,...)
                         imImageSetAttribute(image, "ResolutionUnit", IM_BYTE, -1, "DPI"); /* "DPI" or "DPC" */
                       }
                       RETVAL = imFileImageSave(filename, format, image);  /* valid formats: TIFF JPEG PNG GIF BMP RAS ICO PNM KRN LED SGI PCX TGA */
+                      imImageDestroy(image);
                       /* warn("XXX-DEBUG: imFileImageSave RETVAL=%d\n",RETVAL); */
                     }
                   }
@@ -937,7 +938,11 @@ _cdCreateCanvas_IMAGERGB_from_bitmap(bitmap,resolution)
                     has_alpha = 1;
                     valid = 1;
                   }
+                  else {
+                    warn("Error: bitmap type needs to be RGB or RGBA");
+                  }
                 }
+                RETVAL = NULL;
                 if (width>0 && height>0 && valid) {
                   if (has_alpha)
                     snprintf(tmp,500,"%dx%d %p %p %p %p -a",width,height,r,g,b,a);
@@ -949,40 +954,63 @@ _cdCreateCanvas_IMAGERGB_from_bitmap(bitmap,resolution)
                   }
                   /*warn("XXX-DEBUG (_cdCreateCanvas_IMAGERGB_from_bitmap): param='%s'\n",tmp);*/
                   RETVAL = cdCreateCanvas(CD_IMAGERGB, tmp);
-                }
-                else 
-                  RETVAL = NULL;
+                  /*warn("XXX-DEBUG: rv=%p",RETVAL);*/
+                  /*if (cdCanvasGetContext(RETVAL) != CD_IMAGERGB) warn("XXX-DEBUG: invalid canvas, must be CD_IMAGERGB");*/
+                }                
 	OUTPUT:
 		RETVAL
 
 int
-_cdSpecial_IMAGERGB_save(canvas,filename)
+cdDumpBitmap(canvas,filename,format)
                 SV* canvas;
                 char *filename;
+                char *format;
         INIT:
                 unsigned char* data_buffer;
                 imImage *image;
-		int width = 0;
-                int height = 0;
+		int width = 0, height = 0;
+                double width_mm = 0, height_mm = 0;
                 int has_alpha = 0;
-                int color_space;
-                int plane_size;
-                int plane_count;
-	CODE:
-                warn("XXX-FIXME: _cdSpecial_IMAGERGB_save not implemented");
-//                width =
-//                height =
-//                has_alpha =                
-//                plane_size = sizeof(unsigned char)*width*height;
-//                plane_count = has_alpha ? 4 : 3;
-//                color_space = has_alpha ? (IM_RGB | IM_ALPHA) : IM_RGB;
-//                data_buffer = malloc(plane_size*plane_count);
-//                memcpy(data_buffer,              r, plane_size);
-//                memcpy(data_buffer+1*plane_size, g, plane_size);
-//                memcpy(data_buffer+2*plane_size, b, plane_size);
-//                if (has_alpha) memcpy(data_buffer+3*plane_size, a, plane_size);
-//                image* imImageInit(width, height, color_space, IM_BYTE, data_buffer, NULL, 0);
-                RETVAL = 0;
+                int color_space, plane_size, plane_count, w, h, type;                
+                float res;
+	CODE:                                                
+                cdCanvas *c = ref2cnv(canvas);
+                RETVAL = 999; /* = error */
+                if (cdCanvasGetContext(c) != CD_IMAGERGB) {
+                  warn("Error: cdDumpBitmap() can be used only on 'IUP::Canvas::FileBitmap' canvas");
+                }
+                else {
+                  cdCanvasGetSize(c,&width, &height, &width_mm, &height_mm);
+                  plane_size = sizeof(unsigned char)*width*height;
+                  type = (cdAlphaImage(c)) ? CD_RGBA : CD_RGB;                                    
+                  plane_count = (type==CD_RGBA) ? 4 : 3;
+                  color_space = (type==CD_RGBA) ? (IM_RGB | IM_ALPHA) : IM_RGB;
+                  /*
+                   * warn("XXX-DEBUG: r=%p g=%p b=%p a=%p\n", cdRedImage(c), cdGreenImage(c), cdBlueImage(c), cdAlphaImage(c) );
+                   * warn("XXX-DEBUG: w=%d|%f h=%d|%f plane_size=%d plane_count=%d\n",width,width_mm,height,height_mm,plane_size,plane_count);
+                   * warn("XXX-DEBUG: xres=%f DPI, yres=%f DPI\n", 25.4*width/width_mm, 25.4*height/height_mm);
+                   */
+                  data_buffer = malloc(plane_size*plane_count);                  
+                  if(data_buffer) {
+                    memcpy(data_buffer,              cdRedImage(c),   plane_size);
+                    memcpy(data_buffer+1*plane_size, cdGreenImage(c), plane_size);
+                    memcpy(data_buffer+2*plane_size, cdBlueImage(c),  plane_size);
+                    if (has_alpha) memcpy(data_buffer+3*plane_size, cdAlphaImage(c), plane_size);
+                    /* create image */
+                    image = imImageInit(width, height, color_space, IM_BYTE, data_buffer, NULL, 0);
+                    /* set resolution */
+                    res = 25.4*width/width_mm;
+                    imImageSetAttribute(image, "XResolution", IM_FLOAT, 1, &res);
+                    res = 25.4*height/height_mm;
+                    imImageSetAttribute(image, "YResolution", IM_FLOAT, 1, &res);
+                    imImageSetAttribute(image, "ResolutionUnit", IM_BYTE, -1, "DPI");
+                    /* save image file */
+                    RETVAL = imFileImageSave(filename, format, image);  /* valid formats: TIFF JPEG PNG GIF BMP RAS ICO PNM KRN LED SGI PCX TGA */                    
+                    /* destroy temporary image structure */
+                    imImageDestroy(image);
+                    warn("XXX-DEBUG: imFileImageSave rv=%d\n",RETVAL);
+                  }
+                }                
 	OUTPUT:
 		RETVAL
 

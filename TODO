@@ -5,9 +5,7 @@
 ##########################################################
 
 ######## IMPORTANT: IUP::Canvas::FileBitmap
-- or other bitmap format (via CD_IMAGERGB canvas)
-- see http://www.tecgraf.puc-rio.br/im/en/samples.html
-- add SaveAs($filename, $format, [$resolution])
+- IUP::Canvas::FileBitmap does not work correctly with RGBA images (RGB is OK)
 - or IUP::Canvas::File::Vector + IUP::Canvas::File::Bitmap
 - or IUP::Canvas::FileVector + IUP::Canvas::FileBitmap
 
