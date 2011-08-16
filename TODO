@@ -14,6 +14,9 @@
 ######## IMPORTANT: correct element destruction still needs some work
 - Element.pm (look for XXX-FIXME)
 
+######## IMPORTANT: Canvas example(s)
+- port original cd example into perl
+
 ######## NICE-TO-HAVE: pre-built images
 - imglib - Other: B<NOTE:> NOT included in the pre-compiled library
 - we need imglib built with -DIUP_IMGLIB_LARGE (mention this in pod - note that Alien::IUP ask about that)
@@ -51,7 +54,8 @@
 - beware: (IUP_DEFAULT related) sub returns value even without explicit return
 
 ######## IMPORTANT/POD: finish doc - espec. IUP::Manual::*
-- finish Canvas.pod
+- finish pod for: IUP::Canvas::*
+- maybe add pod for: IUP::Canvas::InternalServerImage
 - Cleanup first (in this order):
   - I::M::Elements.pod
   - I::M::Callbacks.pod
