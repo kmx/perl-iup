@@ -232,14 +232,13 @@ sub bt1_cb {
   my $self = shift;
   my $filename = "testfile"; #BEWARE: no spaces
 
-  use IUP::Canvas::EMF;
-  use IUP::Canvas::SVG;
+  use IUP::Canvas::FileVector;
   
-  my $cnv1 = IUP::Canvas::SVG->new(filename=>"$filename.svg", width=>300, height=>210, resolution=>4);
+  my $cnv1 = IUP::Canvas::FileVector->new(format=>"SVG", filename=>"$filename.svg", width=>300, height=>210, resolution=>4);
   $mainplot->PlotPaintTo($cnv1);
   $cnv1->cdKillCanvas();
   
-  my $cnv2 = IUP::Canvas::EMF->new(filename=>"$filename.emf", width=>'800', height=>600);
+  my $cnv2 = IUP::Canvas::FileVector->new(format=>"EMF", filename=>"$filename.emf", width=>'800', height=>600);
   $mainplot->PlotPaintTo($cnv2);
   $cnv2->cdKillCanvas();
   

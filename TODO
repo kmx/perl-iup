@@ -4,10 +4,6 @@
 
 ##########################################################
 
-######## CRITICAL: IUP::Canvas::FileVector
-- DOES NOT WORK YET!!!
-- we are still keeping IUP::Canvas::EMF
-
 ######## IMPORTANT: IUP::Canvas::FileBitmap
 - IUP::Canvas::FileBitmap does not work correctly with RGBA images (RGB is OK)
 

@@ -530,16 +530,10 @@ sub bt1_cb {
   my $filename = "testfile"; #BEWARE: no spaces
   my $ii = tabs_get_index();
 
-  #xxxTODO - something like IUP::Canvas::EMF / SVG / DXF / ...
-  #xxx my $cnv IUP::Canvas::EMF->new( filename=>'x.emf', resolution=>4, ...);
-  
-  use IUP::Internal::Canvas;
-  #my $cnv = IUP::Internal::Canvas->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_FILE("SVG", "$filename.svg 300x200 4"));
-  #my $cnv = IUP::Internal::Canvas->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_FILE("PS", "$filename.ps"));
-  #my $cnv = IUP::Internal::Canvas->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_FILE("DXF", "$filename.dxf 300x200"));
-  my $cnv = IUP::Internal::Canvas->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_FILE("EMF", "$filename.emf 800x600"));
-  $plot[$ii]->PlotPaintTo($cnv);
-  $cnv->cdKillCanvas();
+  use IUP::Canvas::FileVector;
+  my $cnv2 = IUP::Canvas::FileVector->new(format=>"EMF", filename=>"$filename.emf", width=>'800', height=>600);
+  $plot[$ii]->PlotPaintTo($cnv2);
+  $cnv2->cdKillCanvas();
   
   IUP->Message("Warning", "Exported to '$filename.emf'!");
   return IUP_DEFAULT;
