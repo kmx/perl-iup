@@ -1,17 +1,18 @@
 ################ the last time working on ################ 
 
-- hacking IUP::Canvas
+- hacking IUP::Canvas::FileVector|FileBitmap
 
 ##########################################################
 
+######## CRITICAL: IUP::Canvas::FileVector
+- DOES NOT WORK YET!!!
+- we are still keeping IUP::Canvas::EMF
+
 ######## IMPORTANT: IUP::Canvas::FileBitmap
 - IUP::Canvas::FileBitmap does not work correctly with RGBA images (RGB is OK)
-- or IUP::Canvas::File::Vector + IUP::Canvas::File::Bitmap
-- or IUP::Canvas::FileVector + IUP::Canvas::FileBitmap
 
-######## IMPORTANT: minor issues in element destruction
+######## IMPORTANT: correct element destruction still needs some work
 - Element.pm (look for XXX-FIXME)
-- Canvas.pm / Canvas.xs (look for XXX-FIXME)
 
 ######## NICE-TO-HAVE: pre-built images
 - imglib - Other: B<NOTE:> NOT included in the pre-compiled library
@@ -45,11 +46,11 @@
   http://cpansearch.perl.org/src/KTHAKORE/SDL-2.533/lib/SDLx/Surface.pm
   http://cpansearch.perl.org/src/KTHAKORE/SDL-2.533/lib/SDLx/Surface/TiedMatrix.pm
   
-######## IMPORTANT - POD: mention in POD/DOC
+######## IMPORTANT/POD: mention in POD/DOC
 - mention PAR packing recommendation in DOC
 - beware: (IUP_DEFAULT related) sub returns value even without explicit return
 
-######## IMPORTANT - POD: finish doc - espec. IUP::Manual::*
+######## IMPORTANT/POD: finish doc - espec. IUP::Manual::*
 - finish Canvas.pod
 - Cleanup first (in this order):
   - I::M::Elements.pod
@@ -60,7 +61,7 @@
   - pplot: note in doc that DS_ has to be set after ->PPlotEnd()
   - tree: note in doc that tree->SetAttribude has to go after dialog->Show
 
-######## IMPORTANT: add more tests
+######## IMPORTANT/TESTS: add more tests
 - split tests: t\*.t + all GUI-related >>> t\gui\*.t
 - maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
 - skip example:

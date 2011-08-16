@@ -1,15 +1,15 @@
-=for comment based on iup-3.5
+=pod
 
 =head1 NAME
 
-IUP::Canvas::EMF - [special] 2D drawing canvas storing the result into EMF file
+IUP::Canvas::FileVector - [special] 2D drawing canvas storing the result into vector image file (SVG, EMF, ...)
 
 =head1 SYNOPSIS
 
  use IUP::Constants ':cd';
- use IUP::Canvas::EMF;
+ use IUP::Canvas::FileVector;
 
- my $cnv = IUP::Canvas::EMF->new(filename=>"tmp_test.emf", width=>400, height=>400);
+ my $cnv = IUP::Canvas::FileVector->new(format=>"SVG", filename=>"tmp_test.svg", width=>400, height=>400);
 
  $cnv->cdForeground(CD_RED);
  $cnv->cdBox(0, 200, 0, 400);
@@ -22,7 +22,7 @@ IUP::Canvas::EMF - [special] 2D drawing canvas storing the result into EMF file
 
 =head1 DESCRIPTION
 
-L<IUP::Canvas::EMF> is derived from L<IUP::Canvas> and offers all 2D drawing related methods:
+L<IUP::Canvas::FileVector> is derived from L<IUP::Canvas> and offers all 2D drawing related methods:
 
 =over
 
@@ -62,6 +62,6 @@ L<IUP::Canvas::EMF> is derived from L<IUP::Canvas> and offers all 2D drawing rel
 
 =head1 SEE ALSO
 
-L<IUP::Canvas>, L<IUP::Canvas::SVG>
+L<IUP::Canvas>, L<IUP::Canvas::FileBitmap>
 
 =cut

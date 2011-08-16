@@ -1,15 +1,15 @@
-=for comment based on iup-3.5
+=pod
 
 =head1 NAME
 
-IUP::Canvas::SVG - [special] 2D drawing canvas storing the result into SVG file
+IUP::Canvas::FileBitmap - [special] 2D drawing canvas storing the result into bitmap image file (PNG, JPG, GIF, ...)
 
 =head1 SYNOPSIS
 
  use IUP::Constants ':cd';
- use IUP::Canvas::SVG;
+ use IUP::Canvas::FileBitmap;
 
- my $cnv = IUP::Canvas::SVG->new(filename=>"tmp_test.svg", width=>400, height=>400);
+ my $cnv = IUP::Canvas::FileBitmap->new(width=>400, height=>400);
 
  $cnv->cdForeground(CD_RED);
  $cnv->cdBox(0, 200, 0, 400);
@@ -18,11 +18,23 @@ IUP::Canvas::SVG - [special] 2D drawing canvas storing the result into SVG file
  $cnv->cdLineStyle(CD_DOTTED);
  $cnv->cdArc(200,200,180,380,0,360);
 
+ # BEWARE: this is different from IUP::Canvas::FileVector
+ $cnv->cdDumpBitmap("output.png", "PNG");
+ $cnv->cdDumpBitmap("output.jpg", "JPG");
+
  $cnv->cdKillCanvas;
 
+Supported constructors: XXX-TODO add some description
+
+ IUP::Canvas::FileBitmap->new( bitmap=>'file.png' );
+ IUP::Canvas::FileBitmap->new( bitmap=>IUP::Canvas::Bitmap->new(type=>CD_RGB, pixels=>$pixels) ); 
+ IUP::Canvas::FileBitmap->new( bitmap=>$b, resolution=>$r );
+ IUP::Canvas::FileBitmap->new( width=>$w, height=>$h );
+ IUP::Canvas::FileBitmap->new( width=>$w, height=>$h, resolution=$r, has_alpha=$a ); 
+ 
 =head1 DESCRIPTION
 
-L<IUP::Canvas::SVG> is derived from L<IUP::Canvas> and offers all 2D drawing related methods:
+L<IUP::Canvas::FileVector> is derived from L<IUP::Canvas> and offers all 2D drawing related methods:
 
 =over
 
@@ -62,6 +74,6 @@ L<IUP::Canvas::SVG> is derived from L<IUP::Canvas> and offers all 2D drawing rel
 
 =head1 SEE ALSO
 
-L<IUP::Canvas>, L<IUP::Canvas::EMF>
+L<IUP::Canvas>, L<IUP::Canvas::FileVector>
 
 =cut

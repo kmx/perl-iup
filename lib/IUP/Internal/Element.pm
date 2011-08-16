@@ -149,7 +149,7 @@ sub SetAttribute {
       IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);      
       #assuming any element ref stored into iup attribute to be a child      
       unless($self->_get_child_ref($v)) {
-        #xxxFIXME - happens for: MENU, MDIMENU, IMAGE*, PARENTDIALOG (can cause memory leaks)
+        #XXX-FIXME - child element destruction: happens for: MENU, MDIMENU, IMAGE*, PARENTDIALOG (can cause memory leaks)
 	#during Destroy() we might destroy elements shared by more dialogs
         #warn "***DEBUG*** Unexpected situation elem='".ref($self)."' attr='$k'"; 
         $self->_store_child_ref($v); #xxx(ANTI)DESTROY-MAGIC

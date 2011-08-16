@@ -10,19 +10,19 @@
 
 /* XXX-CHECKLATER include all headers for all supported drivers */
 #include <cdcgm.h>       /* CD_CGM  */
-#include <cdclipbd.h>    /* CD_CLIPBOARD  */
 #include <cddebug.h>     /* CD_DEBUG  */
 #include <cddgn.h>       /* CD_DGN  */
 #include <cddxf.h>       /* CD_DXF  */
 #include <cdemf.h>       /* CD_EMF  */
 #include <cdmf.h>        /* CD_METAFILE  */
-#include <cdpicture.h>   /* CD_PICTURE  */
-#include <cdprint.h>     /* CD_PRINTER  */
 #include <cdps.h>        /* CD_PS  */
 #include <cdsvg.h>       /* CD_SVG  */
 #include <cdwmf.h>       /* CD_WMF  */
 #include <cdirgb.h>      /* CD_IMAGERGB CD_DBUFFERRGB  */
 
+/* #include <cdclipbd.h>    / * CD_CLIPBOARD  */
+/* #include <cdpicture.h>   / * CD_PICTURE  */
+/* #include <cdprint.h>     / * CD_PRINTER  */
 /* #include <cddbuf.h>      / * CD_DBUFFER  */
 /* #include <cdimage.h>     / * CD_IMAGE  */
 /* #include <cdpdf.h>       / * CD_PDF  */
@@ -864,14 +864,11 @@ _cdCreateCanvas_BASIC(format, params)
 	CODE:
 		if (!format) RETVAL = NULL;
                 else if (strcmp(format,"CGM") == 0)        RETVAL = cdCreateCanvas(CD_CGM, params);
-                else if (strcmp(format,"CLIPBOARD") == 0)  RETVAL = cdCreateCanvas(CD_CLIPBOARD, params);
                 else if (strcmp(format,"DEBUG") == 0)      RETVAL = cdCreateCanvas(CD_DEBUG, params);
                 else if (strcmp(format,"DGN") == 0)        RETVAL = cdCreateCanvas(CD_DGN, params);
                 else if (strcmp(format,"DXF") == 0)        RETVAL = cdCreateCanvas(CD_DXF, params);
                 else if (strcmp(format,"EMF") == 0)        RETVAL = cdCreateCanvas(CD_EMF, params);
                 else if (strcmp(format,"METAFILE") == 0)   RETVAL = cdCreateCanvas(CD_METAFILE, params);
-                else if (strcmp(format,"PICTURE") == 0)    RETVAL = cdCreateCanvas(CD_PICTURE, params);
-                else if (strcmp(format,"PRINTER") == 0)    RETVAL = cdCreateCanvas(CD_PRINTER, params);
                 else if (strcmp(format,"PS") == 0)         RETVAL = cdCreateCanvas(CD_PS, params);
                 else if (strcmp(format,"SVG") == 0)        RETVAL = cdCreateCanvas(CD_SVG, params);
                 else if (strcmp(format,"WMF") == 0)        RETVAL = cdCreateCanvas(CD_WMF, params);

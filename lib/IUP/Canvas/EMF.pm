@@ -5,6 +5,8 @@ use base qw(IUP::Internal::Canvas);
 use IUP::Internal::LibraryIup;
 use Carp;
 
+#XXX-FIXME IUP::Canvas::EMF will be replaced by IUP::Canvas::FileVector
+
 sub new {
   my ($self, %args) = @_;
   my $filename = $args{filename};
