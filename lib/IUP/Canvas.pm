@@ -32,5 +32,6 @@ package IUP::Canvas::Palette;
 package IUP::Canvas::Pattern;
 package IUP::Canvas::Stipple;
 package IUP::Canvas::InternalServerImage;
+package IUP::Canvas::InternalState;
 
 1;

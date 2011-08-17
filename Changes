@@ -3,7 +3,8 @@
 =head2 16/08/2011 - 0.002_*
 
  - many fixes for IUP::Canvas methods
- - added: IUP::Canvas::(Palette|Pattern|Stipple|Bitmap|InternalServerImage) - canvas helper modules
+ - added: IUP::Canvas::(Palette|Pattern|Stipple|Bitmap) - canvas helper modules
+ - added: IUP::Canvas::(InternalState|InternalServerImage) - canvas helper modules
  - added: IUP::Canvas::FileBitmap
  - added: IUP::Canvas::FileVector - replacement for IUP::Canvas::(SVG|EMF)
  - added: IUP::ConfigData

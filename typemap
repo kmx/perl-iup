@@ -15,15 +15,13 @@ void *			T_PTR_OR_NULL
 #structs with automatic conversion to perl classes
 cdBitmap *		O_OBJECT
 cdImage *		O_OBJECT
+cdState *		O_OBJECT
 IUPinternal_cdPalette * O_OBJECT
 IUPinternal_cdPattern * O_OBJECT
 IUPinternal_cdStipple * O_OBJECT
 
 #xxx todo: maybe remove in the end
-cdState *		T_PTR_OR_NULL
 cdContext *		T_PTR_OR_NULL
-cdImage *		T_PTR_OR_NULL
-
 
 ###########################
 INPUT

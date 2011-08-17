@@ -427,7 +427,8 @@ all cases, the current canvas attributes are preserved.
 
 =head3 cdSaveState()
      
- $state = $canvas->cdSaveState(); #XXX-NOT-IMPLEMENTED-YET
+ $state = $canvas->cdSaveState();
+ #NOTE: $state is a reference to IUP::Canvas::IUP::Canvas::InternalState object
 
 Saves the state of attributes of the active canvas. It does not save
 cdPlay callbacks, polygon creation states (begin/vertex/vertex/...),
@@ -435,7 +436,8 @@ the palette, complex clipping regions and driver internal attributes.
 
 =head3 cdRestoreState()
 
- $canvas->cdRestoreState($state); #XXX-NOT-IMPLEMENTED-YET
+ $canvas->cdRestoreState($state);
+ #NOTE: $state has to be a reference to IUP::Canvas::IUP::Canvas::InternalState object
 
 Restores the attribute state of the active canvas. It can be used
 between canvases of different contexts. It can be used several times
@@ -443,7 +445,8 @@ for the same state.
 
 =head3 cdReleaseState()
  
- IUP:Canvas->cdReleaseState($state); #XXX-NOT-IMPLEMENTED-YET
+ IUP:Canvas->cdReleaseState($state);
+ #NOTE: $state has to be a reference to IUP::Canvas::IUP::Canvas::InternalState object
 
 Releases the memory allocated by the L<cdSaveState|/"cdSaveState()"> function. If this
 function is not called in Lua, the garbage collector will call it.

@@ -64,10 +64,6 @@ use IUP qw/:basic iup_NO_INIT/; #generally iup_ANY_OTHER_FLAG
 - int cdContextRegisterCallback(cdContext *context, int cb, cdCallback func);
 - int cdUseContextPlus(int use);
 - void cdInitContextPlus(void);
-The following are easy to do:
-- cdState* cdCanvasSaveState(cdCanvas* canvas);
-- void cdCanvasRestoreState(cdCanvas* canvas, cdState* state);
-- void cdReleaseState(cdState* state);
 
 (cosmetics)######## GTK too noisy when no DISPLAY: asck scuri
 - GTK + no DISPLAY set - error during gtk_init_check (= during 'use IUP'):

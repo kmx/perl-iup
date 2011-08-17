@@ -1240,6 +1240,8 @@ cdClear(canvas)
 cdState*
 cdSaveState(canvas)
 		SV* canvas;
+	INIT:
+		char *CLASS = "IUP::Canvas::InternalState"; /* XXX-CHECKLATER ugly hack to handle return value conversion */
 	CODE:
 		RETVAL = cdCanvasSaveState(ref2cnv(canvas));
 	OUTPUT:
