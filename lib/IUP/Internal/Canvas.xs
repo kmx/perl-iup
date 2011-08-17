@@ -1333,22 +1333,9 @@ cdGetSize(canvas)
 
 #### Original C function from <.../cd/include/cd.h>
 # int cdCanvasUpdateYAxis(cdCanvas* canvas, int* y);
-# canvas:UpdateYAxis(yc: number) -> (yr: number) [in Lua]
-int
-cdUpdateYAxis(canvas,y)
-		SV* canvas;
-		int y;
-	CODE:
-		int tmpy = y;                
-                #XXX-CHECKLATER returns updated value (does not change param value)
-		RETVAL = cdCanvasUpdateYAxis(ref2cnv(canvas),&tmpy);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <.../cd/include/cd.h>
 # double cdfCanvasUpdateYAxis(cdCanvas* canvas, double* y);
 double
-cdfUpdateYAxis(canvas,y)
+cdUpdateYAxis(canvas,y)
 		SV* canvas;
 		double y;
 	CODE:
@@ -1371,19 +1358,9 @@ cdYAxisMode(canvas,invert)
 
 #### Original C function from <.../cd/include/cd.h>
 # int cdCanvasInvertYAxis(cdCanvas* canvas, int y);
-int
-cdInvertYAxis(canvas,y)
-		SV* canvas;
-		int y;
-	CODE:
-		RETVAL = cdCanvasInvertYAxis(ref2cnv(canvas),y);
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <.../cd/include/cd.h>
 # double cdfCanvasInvertYAxis(cdCanvas* canvas, double y);
 double
-cdfInvertYAxis(canvas,y)
+cdInvertYAxis(canvas,y)
 		SV* canvas;
 		double y;
 	CODE:

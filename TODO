@@ -35,8 +35,7 @@
 - beware: (IUP_DEFAULT related) sub returns value even without explicit return
 
 ######## POD/IMPORTANT: finish doc - espec. IUP::Manual::*
-- finish pod for: IUP::Canvas::*
-- maybe add pod for: IUP::Canvas::InternalServerImage
+- maybe add pod for: IUP::Canvas::Internal*
 - Cleanup first (in this order):
   - I::M::Elements.pod
   - I::M::Callbacks.pod

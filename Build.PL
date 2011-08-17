@@ -17,13 +17,14 @@ unless (Alien::IUP->havelib( qw/iup im cd/ )) {
   exit 0;
 }
 
-$cflags .= ' -DHAVELIB_IUPCD'       if Alien::IUP->havelib('iupcd');
-$cflags .= ' -DHAVELIB_IUPIM'       if Alien::IUP->havelib('iupim');
-$cflags .= ' -DHAVELIB_IUPGL'       if Alien::IUP->havelib('iupgl');
-$cflags .= ' -DHAVELIB_IUPOLE'      if Alien::IUP->havelib('iupole');
-$cflags .= ' -DHAVELIB_IUPCONTROLS' if Alien::IUP->havelib('iupcontrols');
-$cflags .= ' -DHAVELIB_IUP_PPLOT'   if Alien::IUP->havelib('iup_pplot');
-$cflags .= ' -DHAVELIB_IUPIMGLIB'   if Alien::IUP->havelib('iupimglib');
+$cflags .= ' -DHAVELIB_IUPCD'         if Alien::IUP->havelib('iupcd');
+$cflags .= ' -DHAVELIB_IUPIM'         if Alien::IUP->havelib('iupim');
+$cflags .= ' -DHAVELIB_IUPGL'         if Alien::IUP->havelib('iupgl');
+$cflags .= ' -DHAVELIB_IUPOLE'        if Alien::IUP->havelib('iupole');
+$cflags .= ' -DHAVELIB_IUPCONTROLS'   if Alien::IUP->havelib('iupcontrols');
+$cflags .= ' -DHAVELIB_IUP_PPLOT'     if Alien::IUP->havelib('iup_pplot');
+$cflags .= ' -DHAVELIB_IUPIMGLIB'     if Alien::IUP->havelib('iupimglib');
+$cflags .= ' -DHAVELIB_CDCONTEXTPLUS' if Alien::IUP->havelib('cdcontextplus');
 
 my $class = 'Module::Build';
 if (-d '.git') { #adding some custom actions relevant only for module development

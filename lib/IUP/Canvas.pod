@@ -459,7 +459,8 @@ all cases, the current canvas attributes are preserved.
 
 =head3 cdSaveState()
      
- $state = $canvas->cdSaveState(); #XXX-NOT-IMPLEMENTED-YET
+ $state = $canvas->cdSaveState();
+ #NOTE: $state is a reference to IUP::Canvas::IUP::Canvas::InternalState object
 
 Saves the state of attributes of the active canvas. It does not save
 cdPlay callbacks, polygon creation states (begin/vertex/vertex/...),
@@ -467,7 +468,8 @@ the palette, complex clipping regions and driver internal attributes.
 
 =head3 cdRestoreState()
 
- $canvas->cdRestoreState($state); #XXX-NOT-IMPLEMENTED-YET
+ $canvas->cdRestoreState($state);
+ #NOTE: $state has to be a reference to IUP::Canvas::IUP::Canvas::InternalState object
 
 Restores the attribute state of the active canvas. It can be used
 between canvases of different contexts. It can be used several times
@@ -475,7 +477,8 @@ for the same state.
 
 =head3 cdReleaseState()
  
- IUP:Canvas->cdReleaseState($state); #XXX-NOT-IMPLEMENTED-YET
+ IUP:Canvas->cdReleaseState($state);
+ #NOTE: $state has to be a reference to IUP::Canvas::IUP::Canvas::InternalState object
 
 Releases the memory allocated by the L<cdSaveState|/"cdSaveState()"> function. If this
 function is not called in Lua, the garbage collector will call it.
@@ -605,8 +608,8 @@ library. Can be used without an active canvas.
 
 Returns the given color coded with the alpha information. 
 
-B<ATENTION:> (XXX-CHECKTHIS) At the moment only the 
-B<Cairo>, L<GDI+>, L<XRender> and L<IMAGERGB> drivers support alpha components in color
+B<ATENTION:> At the moment only the B<Cairo>, B<GDI+>, B<XRender> and L<IMAGERGB> (= L<IUP::Canvas::FileBitmap>) 
+drivers support alpha components in color
 coding. The internal representation of the component is inverted,
 because the default value must be 0 and opaque for backward
 compatibility, so you should use the L<cdDecodeAlpha|/"cdDecodeAlpha()"> function or the
@@ -733,15 +736,16 @@ or 0 you can control if the Y axis should be inverted or not
 independent from the native orientation, with that you can in fact
 invert the orientation of the CD primitives.
 
+=head3 cdInvertYAxis()
+
+ $yr = $canvas->cdInvertYAxis($yc);
+
 =head3 cdUpdateYAxis()
  
  $yr = $canvas->cdUpdateYAxis($yc);
- $yr = $canvas->cdInvertYAxis($yc);
- #XXX-TODO cdfCanvasInvertYAxis
- #XXX-TODO cdfCanvasUpdateYAxis
 
 Converts the coordinate system of the CD library into the internal
-system of the active canvas' driver, and the other way round, if they
+system of the active canvas driver, and the other way round, if they
 are invert, or else do nothing. This is just "y = height-1 - y". It
 returns the changed value. The "Invert" will always invert the given
 value, the "Update" function will invert only if the canvas has the Y
@@ -840,7 +844,7 @@ oriented counter-clockwise from the horizontal axis.
 
 =head3 cdTransformPoint()
  
- ($tx, $ty) = $canvas->cdTransformPoint($x, $y); #returns integers
+ ($tx, $ty) = $canvas->cdTransformPoint($x, $y);  #returns integers
  ($tx, $ty) = $canvas->cdfTransformPoint($x, $y); #returns real numbers
 
 Applies a transformation to a given point.
@@ -870,9 +874,11 @@ All World Coordinate drawing in all drivers are simulated using other
 CD primitives and do NOT depend or use the L<cdTransform|/"cdTransform()">
 transformation matrix.
 
-XXX-TODO: add note on method naming convenction:
+IUP::Canvas funcrions use the following naming convention:
 
- $canvas->cdMethodName   vs.   $canvas->wdMethodName
+ $canvas->cdMethodName       vs.   $canvas->wdMethodName
+ # canvas coordinates              # world coordinates
+ # params integers (pixels)        # params real numbers (milimeters)
 
 =head3 wdWindow()
      
@@ -960,9 +966,9 @@ the current tx and ty values.
 Scales the transformation by a delta, by multiplying the given values
 by the current sx and sy values.
 
-=head3 wdCanvasHardcopy()
+=head3 wdCanvasHardcopy() #NOT-IMPLEMENTED
 
- $canvas->wdCanvasHardcopy($ctx, $data, $draw_func); #XXX-NOT-IMPLEMENTED
+ $canvas->wdCanvasHardcopy($ctx, $data, $draw_func);
 
 Creates a new canvas, prepares Window and Viewport according to the
 provided canvas, maintaining the aspect ratio and making the drawing
@@ -1089,16 +1095,16 @@ control vertices. A sequence of bezier lines can be defined using more
 3 vertices, two control points and an end point, the last point of the
 previous bezier will be used as the start point.
 
-See the documentation of XXX-polygon section-XXX
+See the documentation L<polygon section|/"Methods - Primitives / Polygons">
 L<cdBegin|/"cdBegin()">
 L<cdVertex|/"cdVertex()">
 L<cdEnd|/"cdEnd()">
 
 =head3 cdRect()
 
- $canvas->cdRect($xmin, $xmax, $ymin, $ymax);
- $canvas->cdfRect($xmin, $xmax, $ymin, $ymax); #XXX-TODO autodetect int vs. double
- $canvas->wdRect($xmin, $xmax, $ymin, $ymax);
+ $canvas->cdRect($xmin, $xmax, $ymin, $ymax);  #params are integers
+ $canvas->cdfRect($xmin, $xmax, $ymin, $ymax); #params are floating numbers
+ $canvas->wdRect($xmin, $xmax, $ymin, $ymax);  #params are floating numbers
 
 Draws a rectangle with no filling. All points in the limits of interval
 B<xmin> E<lt>= B<x> E<lt>= B<xmax>, B<y_min> E<lt>= B<y> E<lt>= B<ymax> will be painted. It
@@ -1949,57 +1955,105 @@ B<Original Simplex II>
 
 =head2 Methods - Primitives / Client Images
 
-XXX-TODO intro link to L<IUP::Canvas::Bitmap>
+Client Images are bitmaps (kept in memory - usually in L<IUP::Canvas::Bitmap> objects)
+that can be put (drawn) onto a canvas.
+
+Some bitmap manipulation functions (load, save, change colors/pixels) 
+are available via L<IUP::Canvas::Bitmap>.
 
 =head3 cdPutBitmap()
 
  $bmp = IUP::Canvas::Bitmap->new('file.png');
  $canvas->cdPutBitmap($bmp,$x,$y,$w,$h);
 
-XXX-TODO
-
 =head3 wdPutBitmap()
 
  $bmp = IUP::Canvas::Bitmap->new('file.png');
  $canvas->wdPutBitmap($bmp,$x,$y,$w,$h);
 
-XXX-TODO
+Draws the image in the position (x,y), changing the scale. It
+supports B<bmp> to be of type CD_RGB, CD_RGBZ or CD_MAP.
+The region of the image drawn depends on the rectangle defined 
+by L<IUP::Canvas::Bitmap> method L<SetRect|IUP::Canvas::Bitmap/"SetRect()">.
+If no rectangle was defined, then the whole image is used.
+
+The parameters B<w> and B<h> allow scaling the image, increasing or
+decreasing its dimensions when drawn. If B<w> and/or B<h> are 0, then
+no scale change is assumed.
 
 =head3 cdGetBitmap()
 
  $bmp = $canvas->cdGetBitmap($x,$y,$w,$h);
  #$bmp is a reference to IUP::Canvas::Bitmap object
 
-XXX-TODO
+Returns L<IUP::Canvas::Bitmap> object containing each pixel in a server 
+image given by area: [x,y,w,h].
 
 =head2 Methods - Primitives / Server Images
 
+B<Server Image> is a high performance image compatible with a specific canvas. 
+It is faster than B<Client Image> functions, but less flexible. It is commonly
+used for off-screen drawing in Window Systems.
+
+You can make gets and puts on several canvases but they must be created
+using the same driver. It is possible to specify a part of the image to
+be drawn, but it is not possible to zoom.
+
+It is called "server" images because the data is stored in a system
+private format, that the application (or the client) does not have
+access.
+
+To create a server image there must be an active canvas of a driver
+with server image support. Only the base drivers Win32, GDI+,
+X-Windows, XRender and Cairo, support server images.
+
+The server image can only be greated via L<cdGetImage|/"cdGetImage()">
+
+L<cdGetImage|/"cdGetImage()">, L<cdPutImage|/"cdPutImage()"> and
+L<wdPutImage|/"wdPutImage()"> are the only methods for manipulating Server Images.
+
+You cannot edit or even acces image content by any mean.
+
 =head3 cdGetImage()
 
- $img = $canvas->cdGetImage($x, $y, $w, $h);
- #NOTE: $img is a reference to IUP::Canvas::InternalServerImage object
+ $image = $canvas->cdGetImage($x, $y, $w, $h);
+ #NOTE: $image is a reference to IUP::Canvas::InternalServerImage object
 
-XXX-TODO B<IUP::Canvas::InternalServerImage>
+Copies a rectangular region from the current rectangular context to the
+memory - IUP::Canvas::InternalServerImage object (which can be later used
+via L<cdPutImage|/"cdPutImage()"> or L<wdPutImage|/"wdPutImage()">). 
+
+B<(x,y)> is the coordinate of the bottom left corner of the rectangular region. 
+The B<width> and B<length> of the rectangular region are defined in the
+image structure (when the image is created). 
  
 =head3 cdPutImage()
 
- #NOTE: $img has to be a reference to IUP::Canvas::InternalServerImage object
- $canvas->cdPutImage($img, $x, $y, $xmin, $xmax, $ymin, $ymax); 
+ #NOTE: $image has to be a reference to IUP::Canvas::InternalServerImage object
+ $canvas->cdPutImage($image, $x, $y, $xmin, $xmax, $ymin, $ymax); 
 
-XXX-TODO
- 
 =head3 wdPutImage
 
- #NOTE: $img has to be a reference to IUP::Canvas::InternalServerImage object
- $canvas->wdPutImage($img, $x, $y, $xmin, $xmax, $ymin, $ymax);
+ #NOTE: $imegg has to be a reference to IUP::Canvas::InternalServerImage object
+ $canvas->wdPutImage($image, $x, $y, $xmin, $xmax, $ymin, $ymax);
 
-XXX-TODO
+Copies an B<image> (stored via L<cdGetImage|/"cdGetImage()">)
+in a rectangular region of the canvas with the bottom
+left corner in B<(x,y)>. Allows specifying a rectangle inside the
+image to be drawn, if B<xmin, xmax, ymin> and B<ymax> are 0, then the
+whole image is assumed.
  
 =head3 cdCanvasScrollArea()
 
  $canvas->cdCanvasScrollArea($xmin, $xmax, $ymin, $ymax, $dx, $dy);
  
-XXX-TODO
+Copies the rectangle defined by the coordinates B<C<(xmin,ymin)>> and
+B<C<(xmax,ymax)>> to the rectangle defined by B<C<(xmin+dx,ymin+dy)>>
+and B<C<(xmax+dx,ymax+dy)>>. It has the same effect as B<cdGetImage>
+followed by B<cdPutImage>, but it should be faster and does not
+require the explicit creation of an image to be executed. Note that the
+region belonging to the first rectangle, but not to the second, remains
+unchanged (the function does not clean this region).
  
 =head2 Methods - Canvas Clipping
 
@@ -2044,9 +2098,9 @@ the current clipping region.
 
 =head3 cdClipArea()
  
- $canvas->cdClipArea($xmin, $xmax, $ymin, $ymax);
- $canvas->cdfClipArea($xmin, $xmax, $ymin, $ymax); #XXX-TODO not in Lua
- $canvas->wdClipArea($xmin, $xmax, $ymin, $ymax);
+ $canvas->cdClipArea($xmin, $xmax, $ymin, $ymax);  #params are integers
+ $canvas->cdfClipArea($xmin, $xmax, $ymin, $ymax); #params are floating numbers
+ $canvas->wdClipArea($xmin, $xmax, $ymin, $ymax);  #params are floating numbers
 
 Defines the current rectangle for clipping. Only the points in the
 interval C<< xmin <= x <= xmax >> and C<< ymin <= y <= ymax >>
@@ -2054,9 +2108,9 @@ will be printed. Default region: (0, w-1, 0, h-1).
 
 =head3 cdGetClipArea()
  
- ($xmin, $xmax, $ymin, $ymax, $status) = canvas->cdGetClipArea();
- ($xmin, $xmax, $ymin, $ymax, $status) = canvas->cdfGetClipArea(); #XXX-TODO not in Lua
- ($xmin, $xmax, $ymin, $ymax, $status) = canvas->wdGetClipArea();
+ ($xmin, $xmax, $ymin, $ymax, $status) = canvas->cdGetClipArea();  #params are integers
+ ($xmin, $xmax, $ymin, $ymax, $status) = canvas->cdfGetClipArea(); #params are floating numbers
+ ($xmin, $xmax, $ymin, $ymax, $status) = canvas->wdGetClipArea();  #params are floating numbers
 
 Returns the rectangle and the clipping status. It is not necessary to
 provide all return pointers, you can provide only the desired values
@@ -2143,7 +2197,157 @@ desired values and C<undef> for the others.
 
 =head2 Methods - Others
 
-XXX-TODO other.html + init.html 
+=head3 cdVersion()
+
+ $verstring = IUP::Canvas->cdVersion();
+
+Returns the current version number of the library. The string with the
+version number has a format "major.minor.build". For instance, the
+string "2.1.3" has number 2 as the main (major) version number, 1 as
+the secondary (minor) version number, and 3 as the build number. The
+major version number represents a change in the structure or behavior
+of functions; the minor version number represents one or more new
+drivers and functions added to the library; and the build version
+number represents one or more corrected bugs.
+ 
+=head3 cdVersionDate()
+
+ $verdate = IUP::Canvas->cdVersionDate();
+
+Returns the release date of the current version of the library - e.g. "2007/04/09"
+
+=head3 cdVersionNumber()
+
+ $vernumber = IUP::Canvas->cdVersionNumber();
+
+Returns the current version number of the library - e.g. 500000 (for version 5.0)
+
+=head3 cdPlay()
+
+ $status = $canvas->cdPlay($ctx, $xmin, $xmax, $ymin, $ymax, $data);
+ #NOTE: $ctx has to be a reference to IUP::Canvas::InternalContext object
+
+Interprets the graphical contents (primitives and attributes) in a
+given driver and calls equivalent functions of the CD library using the
+given canvas. The primitives are drawn inside the region defined by the
+given limits. If limits are 0 (xmin, xmax, ymin and ymax) the
+primitives will be drawn with their coordinates having the original
+values in the file.
+
+Only some drivers L<IUP::Canvas::FileVector> formats implement this function:
+
+=over
+
+=item * format: "WMF = Windows Metafile, data is a string with filename. Works only in the MS Windows system.
+
+=item * format: "EMF" = Windows Enhanced Metafile, data is a string with filename. Works only in the MS Windows system.
+
+=item * format: "CGM" = Computer Graphics Metafile ISO, data is a string with filename.
+
+=item * format: "METAFILE" = CD Metafile, data is a string with filename.
+
+=back
+
+=head3 cdContextRegisterCallback() #NOT_IMPLEMENTED
+
+=head3 cdActivate()
+
+ $status = $canvas->cdActivate();
+
+Activates a canvas for drawing. This is used only for a few drivers.
+Native Window and IUP drivers will update the canvas size if the window
+size has changed. Double Buffer driver will recreate the image buffer
+if the window canvas size has changed. In these cases the function MUST
+be called, for other drivers is useless. Returns CD_ERROR or CD_OK.
+
+=head3 cdDeactivate()
+
+ $canvas->cdDeactivate();
+
+Called when the application has finished drawing in the canvas. It is
+optional, but if used for the Native Window driver in Windows when the
+handle can not be retained, the drawing can only be done again after a
+B< cdCanvasActivate>. On some drivers will simply call
+L<cdFlush|/cdFlush()">.
+
+=head3 cdUseContextPlus()
+
+ $old_use = IUP::Canvas->cdUseContextPlus();
+
+NOTE: for advanced users
+
+Activates or deactivates the use of an external context for the next
+calls of IUP::Canvas->new(...)
+
+=head3 cdInitContextPlus() #NOT_IMPLEMENTED
+
+ IUP::Canvas->cdInitContextPlus();
+
+NOTE: for advanced users
+
+Initializes the context driver to use another context replacing the
+standard drivers. This functions is only available when a library
+containing a "ContextPlus" context driver is used. See the
+B<Cairo>, B<GDI+> and B<XRender> base drivers. Those libraries does not
+support XOR write mode, but has support for anti-aliasing and alpha for
+transparency.
+
+=head3 cdGetContext()
+
+ $context = $canvas->cdGetContext();
+
+Returns the context (= reference to IUP::Canvas::InternalContext object) of a given canvas.
+
+=head3 cdContextCaps()
+
+ $context = $canvas->cdGetContext();
+ #NOTE: $context param has to be a reference to IUP::Canvas::InternalContext
+ $caps = IUP::Canvas->cdContextCaps($context);
+
+Returns the resources available for that context. To verify if a given
+resource is available, perform a binary AND with the following values:
+
+ CD_CAP_FLUSH
+ CD_CAP_CLEAR
+ CD_CAP_PLAY
+ CD_CAP_YAXIS - The Y axis has the same orientation as the CD axis.
+ CD_CAP_CLIPAREA
+ CD_CAP_CLIPPOLY - Usually is not implemented.
+ CD_CAP_MARK - Marks are implemented directly in the driver (they are usually simulated).
+ CD_CAP_RECT - Rectangles are implemented directly in the driver (they are usually simulated).
+ CD_CAP_VECTORTEXT - Vector text is implemented directly in the driver (it is usually simulated).
+ CD_CAP_IMAGERGB
+ CD_CAP_IMAGERGBA - If this is not implemented, but cdGetImageRGB is, then it is simulated using cdGetImageRGB and cdPutImageRGB.
+ CD_CAP_IMAGEMAP
+ CD_CAP_GETIMAGERGB
+ CD_CAP_IMAGESRV - Usually is only implemented in contexts of window graphics systems (Native Window and IUP).
+ CD_CAP_BACKGROUND
+ CD_CAP_BACKOPACITY
+ CD_CAP_WRITEMODE
+ CD_CAP_LINESTYLE
+ CD_CAP_LINEWITH
+ CD_CAP_WD - Functions of world coordinates are implemented directly in the driver (they are usually simulated).
+ CD_CAP_HATCH
+ CD_CAP_STIPPLE
+ CD_CAP_PATTERN
+ CD_CAP_FONT
+ CD_CAP_FONTDIM - If not defined, the function is implemented using an internal heuristics of the library.
+ CD_CAP_TEXTSIZE - If not defined, the function is implemented using an internal heuristics of the library.
+ CD_CAP_TEXTORIENTATION - Usually is not implemented.
+ CD_CAP_PALETTE - Usually is only implemented in contexts of window graphics systems (Native Window and IUP).
+
+=head3 cdSimulate()
+
+ $old_mode = $canvas->cdSimulate($mode);
+
+Activates the simulation of one or more primitives. It is ignored for
+the canvas in the ImageRGB context, because in this case everything is
+already simulated. It also has no effect for primitives that are
+usually simulated. It returns the previous simulation, but does not
+include primitives that are usually simulated. The simulation can be
+activated at any moment. For instance, if a line simulation is required
+only for a situation, the simulation can be activated for the line to
+be drawn, and then deactivated.
 
 =head1 EXAMPLES
 
