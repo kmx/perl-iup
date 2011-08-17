@@ -1236,7 +1236,7 @@ cdClear(canvas)
 		cdCanvasClear(ref2cnv(canvas));
 
 #### Original C function from <.../cd/include/cd.h>
-# cdState* cdCanvasSaveState(cdCanvas* canvas);
+#XXX-TODO cdState* cdCanvasSaveState(cdCanvas* canvas);
 cdState*
 cdSaveState(canvas)
 		SV* canvas;
@@ -1246,7 +1246,7 @@ cdSaveState(canvas)
 		RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
-# void cdCanvasRestoreState(cdCanvas* canvas, cdState* state);
+#XXX-TODO void cdCanvasRestoreState(cdCanvas* canvas, cdState* state);
 void
 cdRestoreState(canvas,state__)
 		SV* canvas;
@@ -1255,7 +1255,7 @@ cdRestoreState(canvas,state__)
 		cdCanvasRestoreState(ref2cnv(canvas),state__);
 
 #### Original C function from <.../cd/include/cd.h>
-# void cdReleaseState(cdState* state);
+#XXX-TODO void cdReleaseState(cdState* state);
 void
 cdReleaseState(state)
 		cdState* state;

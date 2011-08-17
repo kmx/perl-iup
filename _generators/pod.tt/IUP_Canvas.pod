@@ -427,7 +427,7 @@ all cases, the current canvas attributes are preserved.
 
 =head3 cdSaveState()
      
- $state = $canvas->cdSaveState(); #XXX-TODO
+ $state = $canvas->cdSaveState(); #XXX-NOT-IMPLEMENTED-YET
 
 Saves the state of attributes of the active canvas. It does not save
 cdPlay callbacks, polygon creation states (begin/vertex/vertex/...),
@@ -435,7 +435,7 @@ the palette, complex clipping regions and driver internal attributes.
 
 =head3 cdRestoreState()
 
- $canvas->cdRestoreState($state); #XXX-TODO
+ $canvas->cdRestoreState($state); #XXX-NOT-IMPLEMENTED-YET
 
 Restores the attribute state of the active canvas. It can be used
 between canvases of different contexts. It can be used several times
@@ -443,7 +443,7 @@ for the same state.
 
 =head3 cdReleaseState()
  
- IUP:Canvas->cdReleaseState($state); #XXX-TODO
+ IUP:Canvas->cdReleaseState($state); #XXX-NOT-IMPLEMENTED-YET
 
 Releases the memory allocated by the L<cdSaveState|/"cdSaveState()"> function. If this
 function is not called in Lua, the garbage collector will call it.
@@ -469,7 +469,10 @@ driver does not have this attribute, it returns C<undef>.
 
 =head3 cdForeground()
 
- $old_color = $canvas->cdForeground($color); #XXX-TODO lightuserdata
+ $color = IUP::Canvas->cdEncodeColor($r, $g, $b);
+ 
+ $old_color = $canvas->cdForeground($color);
+ #or just
  $canvas->cdSetForeground($color);
 
 Configures a new current foreground color and returns the previous one.
@@ -544,9 +547,9 @@ There are some predefined colors - see L<IUP::Constants>:
 
 =head3 cdEncodeColor()
  
- $old_color = $canvas->cdEncodeColor($r, $g, $b);
+ $color = $canvas->cdEncodeColor($r, $g, $b);
  #or
- $old_color = IUP::Canvas->cdEncodeColor($r, $g, $b);
+ $color = IUP::Canvas->cdEncodeColor($r, $g, $b);
 
 Returns a codified triple (I<r,g,b>) in a long integer such as
 B<0x00RRGGBB>, where B<RR> are the red components, B<GG> are
@@ -568,14 +571,14 @@ library. Can be used without an active canvas.
  #or
  $color = IUP::Canvas->cdEncodeAlpha($color, $alpha);
 
-Returns the given color coded with the alpha information. ATENTION: At
-the moment only the L<Cairo|XXX>, L<GDI+|XXX>, L<XRender|XXX> and L<IMAGERGB|XXX>
-drivers support alpha components in color
+Returns the given color coded with the alpha information. 
+
+B<ATENTION:> (XXX-CHECKTHIS) At the moment only the 
+B<Cairo>, L<GDI+>, L<XRender> and L<IMAGERGB> drivers support alpha components in color
 coding. The internal representation of the component is inverted,
 because the default value must be 0 and opaque for backward
 compatibility, so you should use the L<cdDecodeAlpha|/"cdDecodeAlpha()"> function or the
-L<cdAlpha|/"cdAlpha()"> macro to retrieve the alpha component. 0 is transparent, 255
-is opaque.
+L<cdAlpha|/"cdAlpha()"> macro to retrieve the alpha component. 0 is transparent, 255 is opaque.
 
 =head3 cdDecodeAlpha()
  
@@ -588,7 +591,7 @@ without an active canvas. 0 is transparent, 255 is opaque.
 
 =head3 cdAlpha()
  
- $alpha = $canvas->cdAlpha($color); #XXX-TODO check this
+ $alpha = $canvas->cdAlpha($color);
  #or
  $alpha = IUP::Canvas->cdAlpha($color);
 
@@ -632,10 +635,11 @@ number of bits by pixel.
 
 =head3 cdPalette()
  
- $canvas->cdPalette($palette, $mode); #XXX-TODO
+ $palette = IUP::Canvas::Palette->new( [$col0, $col1, $col2, ...] );
+ $canvas->cdPalette($palette, $mode);
 
 In systems limited to 256 palette colors, this function aims at adding
-B<C<n>> colors to the system's palette. In such systems, the colors
+colors to the system's palette. In such systems, the colors
 demanded forward or backward which are not in the palette are
 approximated to the closest available color. The type can be
 B<CD_FORCE> or B<CD_POLITE>. B<CD_FORCE> ignores the system
@@ -926,7 +930,7 @@ by the current sx and sy values.
 
 =head3 wdCanvasHardcopy()
 
- $canvas->wdCanvasHardcopy($ctx, $data, $draw_func); #XXX-TODO
+ $canvas->wdCanvasHardcopy($ctx, $data, $draw_func); #XXX-NOT-IMPLEMENTED
 
 Creates a new canvas, prepares Window and Viewport according to the
 provided canvas, maintaining the aspect ratio and making the drawing
@@ -1488,18 +1492,17 @@ Hatch Styles
 
 =head3 cdStipple()
 
- $stipple = [ [1 0 1 0 1 0 1 1 0 1], 
-              [1 0 1 0 1 1 0 1 1 0],
-              [1 0 1 1 0 1 0 1 1 0],
-              [1 0 1 1 0 1 1 0 1 1] ]; #XXX-FIXME
+ $stipple = IUP::Canvas::Stipple->new( [[1 0 1 0 1 0 1 1 0 1], 
+							            [1 0 1 0 1 1 0 1 1 0],
+										[1 0 1 1 0 1 0 1 1 0],
+										[1 0 1 1 0 1 1 0 1 1]] );
  $canvas->cdStipple($stipple);
 
-Defines a matrix ((C<< $stipple->[$line]->[$column] >>)
-of zeros (0) and ones (1). The zeros are
+Defines a stipple (= matrix of zeros 0 and ones 1). The zeros are
 mapped to the background color or are transparent, according to the
 background opacity attribute. The ones are mapped to the foreground
 color. The function sets the interior style to B<CD_STIPPLE>. 
-The origin (C<< $stipple->[0]->[0] >>) is the left bottom corner of the
+The origin (0,0) is the left bottom corner of the
 image. It does not need to be stored by the application, as it is
 internally replicated by the library. In some drivers is always opaque.
 The foreground and background colors must be set before setting the
@@ -1524,9 +1527,9 @@ Returns C<undef> if no I<stipple> was defined.
 
  $color1 = $canvas->cdEncodeColor(0, 0, 220);
  $color2 = $canvas->cdEncodeColor(220, 0, 220); 
- $pattern = [ [$color1, $color2, $color1], 
-              [$color2, $color1, $color2],
-              [$color1, $color2, $color1] ];
+ $pattern = IUP::Canvas::Pattern->new( [[$color1, $color2, $color1], 
+									    [$color2, $color1, $color2],
+										[$color1, $color2, $color1]] );
  $canvas->cdPattern($pattern);
 
 Defines a new color matrix (C<< $pattern->[$line]->[$column] >>)
@@ -1546,34 +1549,8 @@ use of this function may produce very large or very small patterns.
 
  $pattern = $canvas->cdGetPattern();
 
-Returns the current I<pattern> as a reference to array of arrayrefs.
+Returns the current I<pattern> as a reference to IUP::Canvas::Pattern object.
 Returns C<undef> if no I<pattern> was defined.
-
-=head3 cdCreatePattern()
-
- XXXcdCreatePattern(width, height: number) -> (pattern: cdPattern)
-
-XXXCreates a pattern in Lua.
-
-=head3 cdKillPattern()
-
- XXXcdKillPattern(pattern: cdPattern)
-
-XXXDestroys the created pattern and liberates allocated memory. If this
-function is not called in Lua, the garbage collector will call it.
-
-=head3 cdCreateStipple()
-
- XXXcdCreateStipple(width, height: number) -> (stipple: cdStipple)
-
-XXXCreates a stipple in Lua.
-
-=head3 cdKillStipple()
-
- XXXcdKillStipple(stipple: cdStipple)
-
-XXXDestroys the created stipple and liberates allocated memory. If this
-function is not called in Lua, the garbage collector will call it.
 
 =head2 Methods - Primitives / Text
 
@@ -1944,12 +1921,14 @@ XXX-TODO intro link to L<IUP::Canvas::Bitmap>
 
 =head3 cdPutBitmap()
 
+ $bmp = IUP::Canvas::Bitmap->new('file.png');
  $canvas->cdPutBitmap($bmp,$x,$y,$w,$h);
 
 XXX-TODO
 
 =head3 wdPutBitmap()
 
+ $bmp = IUP::Canvas::Bitmap->new('file.png');
  $canvas->wdPutBitmap($bmp,$x,$y,$w,$h);
 
 XXX-TODO
@@ -1957,6 +1936,7 @@ XXX-TODO
 =head3 cdGetBitmap()
 
  $bmp = $canvas->cdGetBitmap($x,$y,$w,$h);
+ #$bmp is a reference to IUP::Canvas::Bitmap object
 
 XXX-TODO
 
@@ -1965,17 +1945,20 @@ XXX-TODO
 =head3 cdGetImage()
 
  $img = $canvas->cdGetImage($x, $y, $w, $h);
+ #NOTE: $img is a reference to IUP::Canvas::InternalServerImage object
 
 XXX-TODO B<IUP::Canvas::InternalServerImage>
  
 =head3 cdPutImage()
 
- $canvas->cdPutImage($img, $x, $y, $xmin, $xmax, $ymin, $ymax);
+ #NOTE: $img has to be a reference to IUP::Canvas::InternalServerImage object
+ $canvas->cdPutImage($img, $x, $y, $xmin, $xmax, $ymin, $ymax); 
 
 XXX-TODO
  
 =head3 wdPutImage
 
+ #NOTE: $img has to be a reference to IUP::Canvas::InternalServerImage object
  $canvas->wdPutImage($img, $x, $y, $xmin, $xmax, $ymin, $ymax);
 
 XXX-TODO
@@ -1983,7 +1966,7 @@ XXX-TODO
 =head3 cdCanvasScrollArea()
 
  $canvas->cdCanvasScrollArea($xmin, $xmax, $ymin, $ymax, $dx, $dy);
-
+ 
 XXX-TODO
  
 =head2 Methods - Canvas Clipping
