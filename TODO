@@ -62,8 +62,7 @@ use IUP qw/:basic iup_NO_INIT/; #generally iup_ANY_OTHER_FLAG
 (cosmetics)######## IUP::Canvas missing functions (not crutial for now)
 - void wdCanvasHardcopy(cdCanvas* canvas, cdContext* ctx, void *data, void(*draw_func)(cdCanvas *canvas_copy));
 - int cdContextRegisterCallback(cdContext *context, int cb, cdCallback func);
-- int cdUseContextPlus(int use);
-- void cdInitContextPlus(void);
+- void cdInitContextPlus(void); /* needs: GDI+, Cairo, XRender */
 
 (cosmetics)######## GTK too noisy when no DISPLAY: asck scuri
 - GTK + no DISPLAY set - error during gtk_init_check (= during 'use IUP'):

@@ -1168,15 +1168,14 @@ cdDeactivate(canvas)
 		cdCanvasDeactivate(ref2cnv(canvas));
 
 #### Original C function from <.../cd/include/cd.h>
-#xxxTODO int cdUseContextPlus(int use);
-#xxxTODO support later, add some ifdefs
-#int
-#cdUseContextPlus(use)
-#		int use;
-#	CODE:
-#		RETVAL = cdUseContextPlus(use);
-#	OUTPUT:
-#		RETVAL
+# int cdUseContextPlus(int use);
+int
+cdUseContextPlus(use)
+		int use;
+	CODE:
+		RETVAL = cdUseContextPlus(use);
+	OUTPUT:
+		RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
 #xxxTODO void cdInitContextPlus(void); 
