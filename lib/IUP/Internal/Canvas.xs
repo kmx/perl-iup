@@ -1142,6 +1142,8 @@ cdVersionNumber(pkg)
 cdContext*
 cdGetContext(canvas)
 		SV* canvas;
+	INIT:
+		char *CLASS = "IUP::Canvas::InternalContext"; /* XXX-CHECKLATER ugly hack to handle return value conversion */
 	CODE:
 		RETVAL = cdCanvasGetContext(ref2cnv(canvas));
 	OUTPUT:
@@ -1236,7 +1238,7 @@ cdClear(canvas)
 		cdCanvasClear(ref2cnv(canvas));
 
 #### Original C function from <.../cd/include/cd.h>
-#XXX-TODO cdState* cdCanvasSaveState(cdCanvas* canvas);
+# cdState* cdCanvasSaveState(cdCanvas* canvas);
 cdState*
 cdSaveState(canvas)
 		SV* canvas;
@@ -1248,7 +1250,7 @@ cdSaveState(canvas)
 		RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
-#XXX-TODO void cdCanvasRestoreState(cdCanvas* canvas, cdState* state);
+# void cdCanvasRestoreState(cdCanvas* canvas, cdState* state);
 void
 cdRestoreState(canvas,state__)
 		SV* canvas;
@@ -1257,7 +1259,7 @@ cdRestoreState(canvas,state__)
 		cdCanvasRestoreState(ref2cnv(canvas),state__);
 
 #### Original C function from <.../cd/include/cd.h>
-#XXX-TODO void cdReleaseState(cdState* state);
+# void cdReleaseState(cdState* state);
 void
 cdReleaseState(state)
 		cdState* state;
@@ -1297,6 +1299,7 @@ cdGetAttribute(canvas,name)
 
 #### Original C function from <.../cd/include/cd.h>
 # int cdCanvasPlay(cdCanvas* canvas, cdContext *context, int xmin, int xmax, int ymin, int ymax, void *data);
+#XXX-CHECKLATER: void *data vs. char *data
 int
 cdPlay(canvas,context,xmin,xmax,ymin,ymax,data)
 		SV* canvas;
@@ -1305,9 +1308,9 @@ cdPlay(canvas,context,xmin,xmax,ymin,ymax,data)
 		int xmax;
 		int ymin;
 		int ymax;
-		void* data;
+		char *data;
 	CODE:
-		RETVAL = cdCanvasPlay(ref2cnv(canvas),context,xmin,xmax,ymin,ymax,data);
+		RETVAL = cdCanvasPlay(ref2cnv(canvas),context,xmin,xmax,ymin,ymax,(void*)data);
 	OUTPUT:
 		RETVAL
 
