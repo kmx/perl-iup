@@ -1,8 +1,16 @@
 ################ the last time working on ################ 
 
-- hacking IUP::Canvas::FileVector|FileBitmap
+- hacking IUP::Canvas::* pod
 
 ##########################################################
+
+######## POD/IMPORTANT: 
+- finish pod for IUP::Canvas::(Palette|Pattern|Stipple|Bitmap)
+- finish pod for IUP::Manual::*
+  - I::M::Elements.pod
+  - I::M::Callbacks.pod
+  - I::M::Attributes.pod
+  - I::M::Introduction.pod
 
 ######## IMPORTANT: correct element destruction still needs some work
 - Internal/Element.pm (look for XXX-FIXME)
@@ -33,17 +41,8 @@
 - we need imglib built with -DIUP_IMGLIB_LARGE (mention this in pod - note that Alien::IUP ask about that)
 - mention PAR packing recommendation in DOC
 - beware: (IUP_DEFAULT related) sub returns value even without explicit return
-
-######## POD/IMPORTANT: finish doc - espec. IUP::Manual::*
-- maybe add pod for: IUP::Canvas::Internal*
-- Cleanup first (in this order):
-  - I::M::Elements.pod
-  - I::M::Callbacks.pod
-  - I::M::Attributes.pod
-  - I::M::Introduction.pod
-- Notes:
-  - pplot: note in doc that DS_ has to be set after ->PPlotEnd()
-  - tree: note in doc that tree->SetAttribude has to go after dialog->Show
+- pplot: note in doc that DS_ has to be set after ->PPlotEnd()
+- tree: note in doc that tree->SetAttribude has to go after dialog->Show
 
 ######## TESTS/IMPORTANT: add more tests
 - split tests: t\*.t + all GUI-related >>> t\gui\*.t
