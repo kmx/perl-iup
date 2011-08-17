@@ -60,6 +60,55 @@ L<IUP::Canvas::FileVector> is derived from L<IUP::Canvas> and offers all 2D draw
 
 =back
 
+=head1 SUPPORTED FORMATS
+
+XXX-TODO more description
+
+ format 'PS'
+     # http://www.tecgraf.puc-rio.br/cd/en/drv/ps.html
+     # "filename -p[paper] -w[width] -h[height] -l[left] -r[right] -b[bottom] -t[top] -s[resolution] [-e] [-g] [-o] [-1] -d[margin]"
+     # "%s -p%d -w%g -h%g -l%g -r%g -b%g -t%g -s%d -e -o -1 -g -d%g"
+     
+ format 'SVG'
+     # http://www.tecgraf.puc-rio.br/cd/en/drv/svg.html
+     # "filename [widthxheight] [resolution]"
+     # "%s %gx%g %g"
+     
+ format 'CGM'
+     # http://www.tecgraf.puc-rio.br/cd/en/drv/cgm.html
+     # "filename [widthxheight] [resolution] [-t] -p[precision]"
+     # "%s %gx%g %g %s"
+     
+ format 'DEBUG'
+     # http://www.tecgraf.puc-rio.br/cd/en/drv/debug.html
+     # "filename [widthxheight] [resolution]"
+     # "%s %gx%g %g"
+     
+ format 'DGN'
+     # http://www.tecgraf.puc-rio.br/cd/en/drv/dgn.html
+     # "filename [widthxheight] [resolution] [-f] [-sseedfile]"
+     # "%s %gx%g %g %s"
+     
+ format 'DXF'
+     # http://www.tecgraf.puc-rio.br/cd/en/drv/dxf.html
+     # "filename [widthxheight] [resolution]"
+     # "%s %gx%g %g"
+     
+ format 'EMF'
+     # http://www.tecgraf.puc-rio.br/cd/en/drv/emf.html
+     # "filename widthxheight"
+     # "%s %dx%d"
+     
+ format 'METAFILE'
+     # http://www.tecgraf.puc-rio.br/cd/en/drv/mf.html
+     # "filename [widthxheight] [resolution]"
+     # "%s %gx%g %g"
+     
+ format 'WMF'
+     # http://www.tecgraf.puc-rio.br/cd/en/drv/wmf.html
+     # "filename widthxheight [resolution]"
+     # "%s %dx%d %g"
+
 =head1 SEE ALSO
 
 L<IUP::Canvas>, L<IUP::Canvas::FileBitmap>

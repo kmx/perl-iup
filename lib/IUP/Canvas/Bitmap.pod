@@ -6,8 +6,8 @@ IUP::Canvas::Bitmap - [special Canvas helper] Bitmap for use with IUP::Canvas
 
 =head1 SYNOPSIS
 
- $bmp = IUP::Canvas::Bitmap->new($filename);       #2 1x scalar value (string)
- $bmp = IUP::Canvas::Bitmap->new($w, $h, $type);   #4 3x scalar value (numbers)
+ $bmp = IUP::Canvas::Bitmap->new($filename);              #2 1x scalar value (string)
+ $bmp = IUP::Canvas::Bitmap->new($type, $width, $height); #4 3x scalar value (numbers)
  
  $bmp = IUP::Canvas::Bitmap->new($type, $pixels);
  #for $type == CD_RGB

@@ -65,10 +65,9 @@ at the clipboard. (GTK 2.6)
 
 =item * B<NATIVEIMAGE>
 
-XXX-FIXME-not-implemented-in-perl-bindings
+Native handle of an image to copy or paste, to or from the clipboard.
 
-native handle of an image to copy or paste, to or from
-the clipboard.
+B<BEWARE:> technically it is a pointer, be carefull when using from perl.
 
 In Win32 is a B<HANDLE> of a DIB. 
 

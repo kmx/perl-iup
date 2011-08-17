@@ -633,12 +633,14 @@ __Bitmap__new(CLASS,...)
                   b = cdInitBitmap(w, h, type, index, colors256);
                 }
                 else if (items==4) {
-                  /* warn("XXX-DEBUG: IUP::Canvas::Bitmap->new($type, $width, $height)"); */
+                  /*warn("XXX-DEBUG: IUP::Canvas::Bitmap->new($type, $width, $height)");*/
                   type = SvIV(ST(1));
                   w = SvIV(ST(2));
                   h = SvIV(ST(3));                  
                   if (w<=0 || h<=0) XSRETURN_UNDEF;
-                  b = cdCreateBitmap(w, h, type);                  
+                  /*warn("XXX-DEBUG: w=%d h=%d type=%d b=%p\n",w,h,type,b);*/
+                  b = cdCreateBitmap(w, h, type);
+                  /*warn("XXX-DEBUG: w=%d h=%d type=%d b=%p\n",w,h,type,b);*/
                 }
                 else {
                   warn("Error: invalid parameters for IUP::Canvas::Bitmap->new()");
@@ -1068,22 +1070,19 @@ cdDumpBitmap(canvas,filename,format)
                 }
                 else {
                   cdCanvasGetSize(c,&width, &height, &width_mm, &height_mm);
-                                  resx = 25.4*width/width_mm;
+                  resx = 25.4*width/width_mm;
                   resy = 25.4*height/height_mm;
                   plane_size = sizeof(unsigned char)*width*height;
                   type = (cdAlphaImage(c)) ? CD_RGBA : CD_RGB;                                    
                   plane_count = (type==CD_RGBA) ? 4 : 3;
                   color_space = (type==CD_RGBA) ? (IM_RGB | IM_ALPHA) : IM_RGB;
-                                  /* alternative approach: data = cdCanvasGetAttribute(canvas, "REDIMAGE"); */
-                                  data = cdRedImage(c); // Also a pointer to the full buffer
+                  data = cdCanvasGetAttribute(c, "REDIMAGE"); /*also a pointer to the full buffer*/
                   /*
-                                   * warn("XXX-DEBUG: data=%p\n", data);
-                                   * warn("XXX-DEBUG: r=%p g=%p b=%p a=%p\n", cdRedImage(c), cdGreenImage(c), cdBlueImage(c), cdAlphaImage(c) );
                    * warn("XXX-DEBUG: w=%d|%f h=%d|%f plane_size=%d plane_count=%d\n",width,width_mm,height,height_mm,plane_size,plane_count);
                    * warn("XXX-DEBUG: xres=%f DPI, yres=%f DPI\n", xres, yres);
                    */
-                                  if(data) {
-                                    image = imImageInit(width, height, color_space, IM_BYTE, data, NULL, 0);
+                  if(data) {
+                    image = imImageInit(width, height, color_space, IM_BYTE, data, NULL, 0);
                     /* set resolution */
                     imImageSetAttribute(image, "XResolution", IM_FLOAT, 1, &resx);
                     imImageSetAttribute(image, "YResolution", IM_FLOAT, 1, &resy);
@@ -1094,7 +1093,7 @@ cdDumpBitmap(canvas,filename,format)
                                         image->data[0] = NULL; /* to avoid duplicate memory release */
                     imImageDestroy(image);
                     /*warn("XXX-DEBUG: imFileImageSave rv=%d\n",RETVAL);*/
-                                  }
+                  }
                 }                
         OUTPUT:
                 RETVAL

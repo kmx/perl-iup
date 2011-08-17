@@ -472,7 +472,8 @@ that can be used in Labels, usually inside dialogs.
 
 =head2 Other
 
-B<NOTE:> NOT included in the pre-compiled library XXX-FIXME
+B<NOTE:> used imglib has to be built with -DIUP_IMGLIB_LARGE (which is disabled by default) to include these images. 
+L<Alien::IUP> asks dusing build process for enabling 48x48 images.
 
 Here are other images available in the IUP stock library, commonly used
 by the respective systems. All images are 48x48 pixels size and 32bpp.

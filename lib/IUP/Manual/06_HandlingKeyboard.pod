@@ -26,9 +26,7 @@ IUP::Manual::06_HandlingKeyboard - Handling keyboard in IUP applications
 
 =head1 INTRODUCTION
 
-B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
-
-xxxTODO text text
+This manual deals with keyboard handling in IUP based applications.
 
 =head1 Keyboard
 
@@ -39,7 +37,7 @@ KILLFOCUS_CB.
 
 Keyboard navigation in the dialog uses the "Tab" and "Shilf+Tab" keys
 to change the keyboard focus from one control to another. The exception
-is when the focus is at an L<IUP::Multiline|IUP::Multiline> control, to change focus the
+is when the focus is at a multiline L<IUP::Text> control, to change focus the
 combination "Ctrl+Tab" must be used, because "Tab" is a valid input for
 the text. All IUP interactive controls have Tab stops, but the
 navigation order is related to the order the controls are placed in the
@@ -98,20 +96,17 @@ restricted by the system.
 
 =over
 
-=item * C<IUP-E<gt>isprint($key)> function informs if a key can be directly used as
-a printable character
+=item * C<IUP-E<gt>isprint($key)> function informs if a key can be directly used as a printable character
 
-=item * C<IUP-E<gt>isXkey($key)> function informs if a given
-key is an extended code
+=item * C<IUP-E<gt>isXkey($key)> function informs if a given key is an extended code
 
-=item * C<IUP-E<gt>isShiftXkey($key)> function informs if a
-given key is an extended code using the Shift modifier
+=item * C<IUP-E<gt>isShiftXkey($key)> function informs if a given key is an extended code using the Shift modifier
 
 =item * C<IUP-E<gt>isCtrlXkey($key)> function for the Ctrl modifier
 
 =item * C<IUP-E<gt>isAltXkey($key)> function for the Alt modifier
 
-=item * C<IUP-E<gt>isSysXkey($key)> function for the Sys modifier xxxTODO globally replace 'macro' > 'function'
+=item * C<IUP-E<gt>isSysXkey($key)> function for the Sys modifier
 
 =back
 
@@ -240,8 +235,8 @@ K_Print and the K_Pause keys (up to GTK version 2.8.18).
  Pause		K_PAUSE
  Print Screen	K_Print
  Context Menu	K_Menu
- XXX		K_acute    xxxencoding broken
- XXX		K_ccedilla xxxencoding broken
+ acute		K_acute
+ cedilla        K_ccedilla
  F1		K_F1
  F2		K_F2
  F3		K_F3

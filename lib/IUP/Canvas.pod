@@ -460,7 +460,7 @@ all cases, the current canvas attributes are preserved.
 =head3 cdSaveState()
      
  $state = $canvas->cdSaveState();
- #NOTE: $state is a reference to IUP::Canvas::IUP::Canvas::InternalState object
+ #NOTE: $state is a reference to 'internal-state' object
 
 Saves the state of attributes of the active canvas. It does not save
 cdPlay callbacks, polygon creation states (begin/vertex/vertex/...),
@@ -468,17 +468,19 @@ the palette, complex clipping regions and driver internal attributes.
 
 =head3 cdRestoreState()
 
- $canvas->cdRestoreState($state);
- #NOTE: $state has to be a reference to IUP::Canvas::IUP::Canvas::InternalState object
-
+ $state = $canvas1->cdSaveState();
+ #NOTE: $state param has to be a reference to 'internal-state'
+ $canvas2->cdRestoreState($state);
+ 
 Restores the attribute state of the active canvas. It can be used
 between canvases of different contexts. It can be used several times
 for the same state.
 
 =head3 cdReleaseState()
  
+ $state = $canvas->cdSaveState();
+ #NOTE: $state param has to be a reference to 'internal-state'
  IUP:Canvas->cdReleaseState($state);
- #NOTE: $state has to be a reference to IUP::Canvas::IUP::Canvas::InternalState object
 
 Releases the memory allocated by the L<cdSaveState|/"cdSaveState()"> function. If this
 function is not called in Lua, the garbage collector will call it.
@@ -2017,10 +2019,10 @@ You cannot edit or even acces image content by any mean.
 =head3 cdGetImage()
 
  $image = $canvas->cdGetImage($x, $y, $w, $h);
- #NOTE: $image is a reference to IUP::Canvas::InternalServerImage object
+ #NOTE: $image is a reference to 'internal-ServerImage' object
 
 Copies a rectangular region from the current rectangular context to the
-memory - IUP::Canvas::InternalServerImage object (which can be later used
+memory - 'internal-ServerImage' object (which can be later used
 via L<cdPutImage|/"cdPutImage()"> or L<wdPutImage|/"wdPutImage()">). 
 
 B<(x,y)> is the coordinate of the bottom left corner of the rectangular region. 
@@ -2029,12 +2031,14 @@ image structure (when the image is created).
  
 =head3 cdPutImage()
 
- #NOTE: $image has to be a reference to IUP::Canvas::InternalServerImage object
+ $image = $canvas->cdGetImage($x, $y, $w, $h);
+ #NOTE: $image has to be a reference to 'internal-ServerImage' object
  $canvas->cdPutImage($image, $x, $y, $xmin, $xmax, $ymin, $ymax); 
 
 =head3 wdPutImage
 
- #NOTE: $imegg has to be a reference to IUP::Canvas::InternalServerImage object
+ $image = $canvas->cdGetImage($x, $y, $w, $h);
+ #NOTE: $image has to be a reference to 'internal-ServerImage' object
  $canvas->wdPutImage($image, $x, $y, $xmin, $xmax, $ymin, $ymax);
 
 Copies an B<image> (stored via L<cdGetImage|/"cdGetImage()">)
@@ -2224,8 +2228,9 @@ Returns the current version number of the library - e.g. 500000 (for version 5.0
 
 =head3 cdPlay()
 
- $status = $canvas->cdPlay($ctx, $xmin, $xmax, $ymin, $ymax, $data);
- #NOTE: $ctx has to be a reference to IUP::Canvas::InternalContext object
+ $ctx = $canvas1->cdGetContext();
+ #NOTE: $ctx param has to be a reference to 'internal-context'
+ $status = $canvas2->cdPlay($ctx, $xmin, $xmax, $ymin, $ymax, $data); 
 
 Interprets the graphical contents (primitives and attributes) in a
 given driver and calls equivalent functions of the CD library using the
@@ -2296,12 +2301,12 @@ transparency.
 
  $context = $canvas->cdGetContext();
 
-Returns the context (= reference to IUP::Canvas::InternalContext object) of a given canvas.
+Returns the reference to 'internal-context' object of a given canvas.
 
 =head3 cdContextCaps()
 
  $context = $canvas->cdGetContext();
- #NOTE: $context param has to be a reference to IUP::Canvas::InternalContext
+ #NOTE: $context param has to be a reference to 'internal-context'
  $caps = IUP::Canvas->cdContextCaps($context);
 
 Returns the resources available for that context. To verify if a given

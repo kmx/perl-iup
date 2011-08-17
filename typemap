@@ -10,16 +10,17 @@ unsigned char *		T_PTR_OR_NULL
 Ihandle *		T_PTR_OR_NULL
 cdCanvas *		T_PTR_OR_NULL
 #xxxIcallback		T_PTR_OR_NULL
-#xxxvoid *			T_PTR_OR_NULL
+#xxxvoid *		T_PTR_OR_NULL
 
 #structs with automatic conversion to perl classes
 cdBitmap *		O_OBJECT
-cdImage *		O_OBJECT
-cdState *		O_OBJECT
-cdContext *		O_OBJECT
 IUPinternal_cdPalette * O_OBJECT
 IUPinternal_cdPattern * O_OBJECT
 IUPinternal_cdStipple * O_OBJECT
+
+cdImage *		O_OBJECT
+cdState *		O_OBJECT
+cdContext *		O_OBJECT
 
 ###########################
 INPUT

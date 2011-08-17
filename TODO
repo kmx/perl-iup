@@ -1,10 +1,10 @@
 ################ the last time working on ################ 
 
-- hacking IUP::Canvas::* pod
+- hacking pod: IUP::Manual::* + IUP::Canvas::*
 
 ##########################################################
 
-######## POD/IMPORTANT: 
+######## !!!BEFORE 0.003!!! POD/IMPORTANT: 
 - finish pod for IUP::Canvas::(Palette|Pattern|Stipple|Bitmap)
 - finish pod for IUP::Manual::*
   - I::M::Elements.pod
@@ -12,12 +12,20 @@
   - I::M::Attributes.pod
   - I::M::Introduction.pod
 
+######## !!!BEFORE 0.003!!! NICE-TO-HAVE: Canvas example(s)
+- port original cd example into perl
+
+##########################################################
+
 ######## IMPORTANT: correct element destruction still needs some work
 - Internal/Element.pm (look for XXX-FIXME)
-
-######## NICE-TO-HAVE: Canvas example(s)
-- port original cd example into perl
    
+######## POD/COSMETICS: mention in POD/DOC
+- mention IUP::Manual::10_FAQ::PARPacking recommendation in DOC
+- beware: (IUP_DEFAULT related) sub returns value even without explicit return
+- pplot: note in doc that DS_ has to be set after ->PPlotEnd()
+- tree: note in doc that tree->SetAttribute has to go after dialog->Show
+
 ######## MAYBE: access child=>[...] items like this
  $mybox = IUP::Hbox->new( child=>[ $bt1, $bt2, $bt3] );
  $mybox->[0]->FGCOLOR("255 0 0");   # changes bt1 foreground color
@@ -36,14 +44,6 @@
   http://cpansearch.perl.org/src/KTHAKORE/SDL-2.533/lib/SDLx/Surface.pm
   http://cpansearch.perl.org/src/KTHAKORE/SDL-2.533/lib/SDLx/Surface/TiedMatrix.pm
   
-######## POD/IMPORTANT: mention in POD/DOC
-- fix: imglib - Other: B<NOTE:> NOT included in the pre-compiled library
-- we need imglib built with -DIUP_IMGLIB_LARGE (mention this in pod - note that Alien::IUP ask about that)
-- mention PAR packing recommendation in DOC
-- beware: (IUP_DEFAULT related) sub returns value even without explicit return
-- pplot: note in doc that DS_ has to be set after ->PPlotEnd()
-- tree: note in doc that tree->SetAttribude has to go after dialog->Show
-
 ######## TESTS/IMPORTANT: add more tests
 - split tests: t\*.t + all GUI-related >>> t\gui\*.t
 - maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
@@ -87,9 +87,6 @@ bool XDisplayExists() {
   most likely the X server was shut down or you killed/destroyed
   the application.
 
-(cosmetics)######## IUP::Canvas
-- XS autodetection cdCanvasLine vs. cdfCanvasLine
-
 (cosmetics)######## global
 - icon - see y:\IUP3.3\fltk\FLTK-0.532007\inc\MBX\FLTK.pm  (ACTION_code)
 
@@ -100,9 +97,6 @@ bool XDisplayExists() {
   SUGGESTION: always call: return IUP::Internal::LibraryIup::_func; (even for void functions)
 - http://stackoverflow.com/questions/3435122/whats-the-difference-between-return-and-return-undef-in-perl
 - "Perl Best Practices" (and Perl::Critic) suggest not using return undef
-
-(cosmetics)######## global
-- cleanup unused funcs from LibraryIup.XS - cross-check-xs-func.pl
 
 (cosmetics)######## IUP (main module)
 - ??? better detection of initialized gui than (IUP->Open == IUP_OPENED)?
@@ -166,17 +160,7 @@ http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-
 (not now, maybe later)######## Ideas from lua bindings:
 - global registers _IUPLUA_WIDGET_TABLE_REF
 
-(not now, maybe later)######## Ideas from ruby bindings:
-- iup.* namespace
-- cd.* namespace (constants cd::BLUE, ...)
-- just one iup.image (RGB, RGBA - ??? perhaps not supported)
-- cdcanvas = Cd.ActiveCanvas()
-- iupim just: IupLoadImage, IupSaveImage
-- GLCanvasOpen, GL... (global function, not methods of glcanvas class)
-
 (not now, maybe later)######## Linux - platform specific issues
-- (<unknown>:4352): Pango-WARNING **: Error loading GSUB table 85
-  before MainLoop
 - GTK: 'Quit' in main menu requires double click
 
 (not now, maybe later)######## Packaging (not a priority)
@@ -198,21 +182,25 @@ http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-
 
 ### REJECTED FOR NOW ################################################################################################
 
-#IUP - consider adding iupKeyCodeToName
-#IUP - consider adding iupKeyNameToCode
-#IUP - Idle? #xxxsomething causes progressbar3.pl to hangup/crash (after pressing accel/decel) - cannot reproduce
-#IUP - is GetIhClassName() func name OK - yes for now
-#IUP - IUP->GetIdle? or IUP->CheckIdle? #xxx how to check existing idle handler? - not for now
+#IUP
+- consider adding iupKeyCodeToName
+- consider adding iupKeyNameToCode
+- Idle? #xxxsomething causes progressbar3.pl to hangup/crash (after pressing accel/decel) - cannot reproduce
+- is GetIhClassName() func name OK - yes for now
+- IUP->GetIdle? or IUP->CheckIdle? #xxx how to check existing idle handler? - not for now
 
-#IUP::Internal::Element - list2.pl: original examples uses inheritable IUP attribute _LABEL for storing pointers for iup elements (do we want to support this in perl?)
-#IUP::Internal::Element - passing undef to child=> ... - maybe later
+#IUP::Internal::Element
+ - passing undef to child=> ... - maybe later
   Can't call method "ihandle" on an undefined value at
   Y:\@repos\perl-iup\blib\lib/IUP/Internal/Element.pm line 574. (better error message)
-#IUP::Internal::Element - consider checking arg count SetAttributeId($$$) SetAttributeId2($$$$) - not now
+- consider checking arg count SetAttributeId($$$) SetAttributeId2($$$$) - not now
 
-#IUP::List - IUP::List->new() items 0-based or 1-based index? (item[0] >> attribute 1)
+#IUP::List
+- IUP::List->new() items 0-based or 1-based index? (item[0] >> attribute 1)
 
-#IUP::Frame - missing accessor $frame->MARGIN("10x10"); - MARGIN not in official doc for IupFrame
+#IUP::Frame
+- missing accessor $frame->MARGIN("10x10"); - MARGIN not in official doc for IupFrame
 
-#IUP::PPlot - maybe add AxsBounds() to IUP::PPlot # see examples\0-basic\pplot4.pl - not now
-#IUP::PPlot - maybe add AxsBoundsAuto() - not now
+#IUP::PPlot
+- maybe add AxsBounds() to IUP::PPlot # see examples\0-basic\pplot4.pl - not now
+- maybe add AxsBoundsAuto() - not now
