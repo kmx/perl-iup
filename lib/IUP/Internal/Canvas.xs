@@ -143,12 +143,11 @@ int AV2bitmap(SV *A1, unsigned char **r, unsigned char **g, unsigned char **b, u
   error=0;
   width = (lastindex2+1)/n;
   height = (lastindex1+1);
-  buffer_r = malloc( sizeof(unsigned char) * width * height );
-  buffer_g = malloc( sizeof(unsigned char) * width * height );
-  buffer_b = malloc( sizeof(unsigned char) * width * height );
-  buffer_a = (n==4) ? malloc( sizeof(unsigned char) * width * height ) : NULL;
-  if (!buffer_r || !buffer_g || !buffer_b) error=1;
-  if (n==4 && !buffer_a) error=1;
+  buffer_r = malloc( sizeof(unsigned char) * width * height * n );
+  buffer_g = buffer_r + width * height;
+  buffer_b = buffer_g + width * height;
+  buffer_a = (n==4) ? buffer_b + width * height : NULL;
+  if (!buffer_r) error=1;
   
   /* warn("XXX-DEBUG: before for\n"); */
   for(i=0; (i<height && !error); i++) {
@@ -730,7 +729,7 @@ __Bitmap__Data(self)
                 if (self->type == CD_RGBA) {
                   /* warn("XXX-DEBUG: Bitmap->Data RGBA 1\n"); */
                   r = cdBitmapGetData(self, CD_IRED);
-                  g = cdBitmapGetData(self, CD_IGREEN);
+				  g = cdBitmapGetData(self, CD_IGREEN);
                   b = cdBitmapGetData(self, CD_IBLUE);
                   a = cdBitmapGetData(self, CD_IALPHA);
                   /* warn("XXX-DEBUG: Bitmap->Data RGBA 2 r=%p g=%p b=%p a=%p\n",r,g,b,a); */
@@ -799,6 +798,8 @@ __Bitmap__Pixel(self,x,y,...)
                 int color_space, plane_size=0, plane_count=0, color_count=0;
                 int width = self->w;
                 int height = self->h;
+				/* warn("XXX-DEBUG: bitmap.pixel x=%d y=%d items=%d w=%d h=%d\n",x,y,items,width,height); */
+				/* warn("XXX-DEBUG: rgb=%d rgba=%d\n", (self->type==CD_RGB), (self->type==CD_RGBA)); */
                 if (x<0 || x>=width || y<0 || y>=height ) {
                   warn("Error: x or y out of range");
                 }
@@ -807,7 +808,7 @@ __Bitmap__Pixel(self,x,y,...)
                   r = cdBitmapGetData(self, CD_IRED);
                   g = cdBitmapGetData(self, CD_IGREEN);
                   b = cdBitmapGetData(self, CD_IBLUE);
-                  a = cdBitmapGetData(self, CD_IALPHA);                               
+                  a = cdBitmapGetData(self, CD_IALPHA);
                   if (r && g && b && a) {
                     if (items==3) {
                       XPUSHs(sv_2mortal(newSVuv(r[width*y+x])));
@@ -815,7 +816,10 @@ __Bitmap__Pixel(self,x,y,...)
                       XPUSHs(sv_2mortal(newSVuv(b[width*y+x])));
                       XPUSHs(sv_2mortal(newSVuv(a[width*y+x])));
                     }
-                    else if (items>=7) {
+					else if (items>3 && items<7) {
+					  warn("Error: not enough parameters, expected: Pixel(x,y,r,g,b,a)");
+					}
+                    else {
                       r[width*y+x] = SvUV(ST(3));
                       g[width*y+x] = SvUV(ST(4)); 
                       b[width*y+x] = SvUV(ST(5));
@@ -834,7 +838,10 @@ __Bitmap__Pixel(self,x,y,...)
                       XPUSHs(sv_2mortal(newSVuv(g[width*y+x])));
                       XPUSHs(sv_2mortal(newSVuv(b[width*y+x])));
                     }
-                    else if (items>=6) {
+					else if (items>3 && items<6) {
+					  warn("Error: not enough parameters, expected: Pixel(x,y,r,g,b)");
+					}
+                    else {
                       r[width*y+x] = SvUV(ST(3));
                       g[width*y+x] = SvUV(ST(4)); 
                       b[width*y+x] = SvUV(ST(5));
@@ -861,6 +868,7 @@ __Bitmap__SaveAs(self,filename,format,...)
                 char *format;
 	CODE:
                 unsigned char *data_buffer=NULL, *r=NULL, *g=NULL, *b=NULL, *a=NULL, *m=NULL;
+				unsigned char *data;
                 long *c=NULL;
                 imImage *image;
                 int color_space, plane_size=0, plane_count=0, color_count=0;                                
@@ -869,37 +877,25 @@ __Bitmap__SaveAs(self,filename,format,...)
                 if (self->type==CD_RGBA) {
                   plane_count = 4;
                   color_space = (IM_RGB | IM_ALPHA);
-                  r = cdBitmapGetData(self, CD_IRED);
-                  g = cdBitmapGetData(self, CD_IGREEN);
-                  b = cdBitmapGetData(self, CD_IBLUE);
-                  a = cdBitmapGetData(self, CD_IALPHA);                                    
+				  data = cdBitmapGetData(self, CD_IRED); /* full image buffer */
                 }
                 else if (self->type==CD_RGB) {
                   plane_count = 3;
                   color_space = IM_RGB;
-                  r = cdBitmapGetData(self, CD_IRED);
-                  g = cdBitmapGetData(self, CD_IGREEN);
-                  b = cdBitmapGetData(self, CD_IBLUE);
+				  data = cdBitmapGetData(self, CD_IRED); /* full image buffer */
                 }
                 else if (self->type==CD_MAP) {
                   plane_count = 1;
                   color_space = IM_MAP;
-                  m = cdBitmapGetData(self, CD_INDEX);
+				  data = cdBitmapGetData(self, CD_INDEX);
                   c = (long*)cdBitmapGetData(self, CD_COLORS);
                   color_count = 256; /* XXX-CHECKLATER */
                 }
                 RETVAL = 999; /* means "error somewhere in perl XS code" */
                 if (plane_count>0)  {
-                  data_buffer = malloc(plane_size*plane_count);
-                  if (data_buffer) {                                        
-                    if (plane_count==1) memcpy(data_buffer,              m, plane_size);
-                    if (plane_count>=3) memcpy(data_buffer,              r, plane_size);
-                    if (plane_count>=3) memcpy(data_buffer+1*plane_size, g, plane_size);
-                    if (plane_count>=3) memcpy(data_buffer+2*plane_size, b, plane_size);
-                    if (plane_count==4) memcpy(data_buffer+3*plane_size, a, plane_size);
-                    image = imImageInit(self->w, self->h, color_space, IM_BYTE, data_buffer, c, color_count);                    
+                  if (data) {                                        
+					image = imImageInit(self->w, self->h, color_space, IM_BYTE, data, c, color_count);                    
                     if (image) {
-                      /* warn("XXX-DEBUG: imImageInit OK; items=%d; imFileImageSave(%s, %s, %p)\n", items, filename, format, image); */
                       if (items>=4) {
                         float res = (float)SvNV(ST(3));
                         /* warn("XXX-DEBUG: setting resolution to '%f' DPI\n", res); */
@@ -908,6 +904,7 @@ __Bitmap__SaveAs(self,filename,format,...)
                         imImageSetAttribute(image, "ResolutionUnit", IM_BYTE, -1, "DPI"); /* "DPI" or "DPC" */
                       }
                       RETVAL = imFileImageSave(filename, format, image);  /* valid formats: TIFF JPEG PNG GIF BMP RAS ICO PNM KRN LED SGI PCX TGA */
+					  image->data[0] = NULL; /* to avoid duplicate memory release */
                       imImageDestroy(image);
                       /* warn("XXX-DEBUG: imFileImageSave RETVAL=%d\n",RETVAL); */
                     }
@@ -1055,13 +1052,14 @@ cdDumpBitmap(canvas,filename,format)
                 char *filename;
                 char *format;
         INIT:
-                unsigned char* data_buffer;
+                unsigned char* data_buffer = NULL;
+				unsigned char* data = NULL;
                 imImage *image;
-		int width = 0, height = 0;
+				int width = 0, height = 0;
                 double width_mm = 0, height_mm = 0;
                 int has_alpha = 0;
                 int color_space, plane_size, plane_count, w, h, type;                
-                float res;
+                float resx, resy;
 	CODE:                                                
                 cdCanvas *c = ref2cnv(canvas);
                 RETVAL = 999; /* = error */
@@ -1070,35 +1068,33 @@ cdDumpBitmap(canvas,filename,format)
                 }
                 else {
                   cdCanvasGetSize(c,&width, &height, &width_mm, &height_mm);
+				  resx = 25.4*width/width_mm;
+                  resy = 25.4*height/height_mm;
                   plane_size = sizeof(unsigned char)*width*height;
                   type = (cdAlphaImage(c)) ? CD_RGBA : CD_RGB;                                    
                   plane_count = (type==CD_RGBA) ? 4 : 3;
                   color_space = (type==CD_RGBA) ? (IM_RGB | IM_ALPHA) : IM_RGB;
+				  /* alternative approach: data = cdCanvasGetAttribute(canvas, "REDIMAGE"); */
+				  data = cdRedImage(c); // Also a pointer to the full buffer
                   /*
-                   * warn("XXX-DEBUG: r=%p g=%p b=%p a=%p\n", cdRedImage(c), cdGreenImage(c), cdBlueImage(c), cdAlphaImage(c) );
+				   * warn("XXX-DEBUG: data=%p\n", data);
+				   * warn("XXX-DEBUG: r=%p g=%p b=%p a=%p\n", cdRedImage(c), cdGreenImage(c), cdBlueImage(c), cdAlphaImage(c) );
                    * warn("XXX-DEBUG: w=%d|%f h=%d|%f plane_size=%d plane_count=%d\n",width,width_mm,height,height_mm,plane_size,plane_count);
-                   * warn("XXX-DEBUG: xres=%f DPI, yres=%f DPI\n", 25.4*width/width_mm, 25.4*height/height_mm);
+                   * warn("XXX-DEBUG: xres=%f DPI, yres=%f DPI\n", xres, yres);
                    */
-                  data_buffer = malloc(plane_size*plane_count);                  
-                  if(data_buffer) {
-                    memcpy(data_buffer,              cdRedImage(c),   plane_size);
-                    memcpy(data_buffer+1*plane_size, cdGreenImage(c), plane_size);
-                    memcpy(data_buffer+2*plane_size, cdBlueImage(c),  plane_size);
-                    if (type==CD_RGBA) memcpy(data_buffer+3*plane_size, cdAlphaImage(c), plane_size);
-                    /* create image */
-                    image = imImageInit(width, height, color_space, IM_BYTE, data_buffer, NULL, 0);
+				  if(data) {
+				    image = imImageInit(width, height, color_space, IM_BYTE, data, NULL, 0);
                     /* set resolution */
-                    res = 25.4*width/width_mm;
-                    imImageSetAttribute(image, "XResolution", IM_FLOAT, 1, &res);
-                    res = 25.4*height/height_mm;
-                    imImageSetAttribute(image, "YResolution", IM_FLOAT, 1, &res);
+                    imImageSetAttribute(image, "XResolution", IM_FLOAT, 1, &resx);
+                    imImageSetAttribute(image, "YResolution", IM_FLOAT, 1, &resy);
                     imImageSetAttribute(image, "ResolutionUnit", IM_BYTE, -1, "DPI");
                     /* save image file */
-                    RETVAL = imFileImageSave(filename, format, image);  /* valid formats: TIFF JPEG PNG GIF BMP RAS ICO PNM KRN LED SGI PCX TGA */                    
+                    RETVAL = imFileImageSave(filename, format, image);
                     /* destroy temporary image structure */
+					image->data[0] = NULL; /* to avoid duplicate memory release */
                     imImageDestroy(image);
                     /*warn("XXX-DEBUG: imFileImageSave rv=%d\n",RETVAL);*/
-                  }
+				  }
                 }                
 	OUTPUT:
 		RETVAL
