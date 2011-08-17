@@ -708,145 +708,145 @@ The element B<IUP::Dialog> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/button.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/button.pl> - IUP::Button example
+=item * L<0-basic/button.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/button.pl> - IUP::Button example
 
-=item * L<0-basic/canvas1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/canvas1.pl> - IUP::Canvas example
+=item * L<0-basic/canvas1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/canvas1.pl> - IUP::Canvas example
 
-=item * L<0-basic/canvas2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/canvas2.pl> - IUP::Canvas example
+=item * L<0-basic/canvas2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/canvas2.pl> - IUP::Canvas example
 
-=item * L<0-basic/canvas3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/canvas3.pl> - IUP::Canvas example
+=item * L<0-basic/canvas3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/canvas3.pl> - IUP::Canvas example
 
-=item * L<0-basic/cbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=item * L<0-basic/cells_checkboard.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/cells_checkboard.pl> - IUP::Cells example
+=item * L<0-basic/cells_checkboard.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/cells_checkboard.pl> - IUP::Cells example
 
-=item * L<0-basic/cells_degrade.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/cells_degrade.pl> - IUP::Cells example
+=item * L<0-basic/cells_degrade.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/cells_degrade.pl> - IUP::Cells example
 
-=item * L<0-basic/cells_numbering.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/cells_numbering.pl> - IUP::Cells example
+=item * L<0-basic/cells_numbering.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/cells_numbering.pl> - IUP::Cells example
 
-=item * L<0-basic/colorbar.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/colorbar.pl> - IUP::ColorBar example
+=item * L<0-basic/colorbar.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/colorbar.pl> - IUP::ColorBar example
 
-=item * L<0-basic/colorbrowser.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/colorbrowser.pl> - IUP::ColorBrowser example
+=item * L<0-basic/colorbrowser.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/colorbrowser.pl> - IUP::ColorBrowser example
 
-=item * L<0-basic/dial.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/dial.pl> - IUP::Dial example
+=item * L<0-basic/dial.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/dial.pl> - IUP::Dial example
 
-=item * L<0-basic/dialog1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/dialog1.pl> - IUP::Dialog example
+=item * L<0-basic/dialog1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/dialog1.pl> - IUP::Dialog example
 
-=item * L<0-basic/dialog2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/dialog2.pl> - IUP::Dialog example
+=item * L<0-basic/dialog2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/dialog2.pl> - IUP::Dialog example
 
-=item * L<0-basic/fill.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/fill.pl> - IUP::Fill Example
+=item * L<0-basic/fill.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/fill.pl> - IUP::Fill Example
 
-=item * L<0-basic/frame1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/frame1.pl> - IUP::Frame Example
+=item * L<0-basic/frame1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/frame1.pl> - IUP::Frame Example
 
-=item * L<0-basic/frame2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/frame2.pl> - IUP::Image example
+=item * L<0-basic/frame2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/frame2.pl> - IUP::Image example
 
-=item * L<0-basic/glcanvas1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/glcanvas1.pl> - IUP::CanvasGL example
+=item * L<0-basic/glcanvas1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/glcanvas1.pl> - IUP::CanvasGL example
 
-=item * L<0-basic/glcanvas2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/glcanvas2.pl> - IUP::CanvasGL example
+=item * L<0-basic/glcanvas2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/glcanvas2.pl> - IUP::CanvasGL example
 
-=item * L<0-basic/hbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/hbox.pl> - IUP::Hbox example
+=item * L<0-basic/hbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/hbox.pl> - IUP::Hbox example
 
-=item * L<0-basic/idle.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/idle.pl> - IUP->SetIdle Example
+=item * L<0-basic/idle.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/idle.pl> - IUP->SetIdle Example
 
-=item * L<0-basic/image.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/image.pl> - IUP::Image example
+=item * L<0-basic/image.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/image.pl> - IUP::Image example
 
-=item * L<0-basic/item.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/item.pl> - IUP::Item Example
+=item * L<0-basic/item.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/item.pl> - IUP::Item Example
 
-=item * L<0-basic/label.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/label.pl> - IUP::Label example
+=item * L<0-basic/label.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/label.pl> - IUP::Label example
 
-=item * L<0-basic/layoutdialog.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/list1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/list1.pl> - IUP::List example
+=item * L<0-basic/list1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/list1.pl> - IUP::List example
 
-=item * L<0-basic/list2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/list2.pl> - IUP::List example
+=item * L<0-basic/list2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/list2.pl> - IUP::List example
 
-=item * L<0-basic/mask_matrix.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/mask_matrix.pl> - IUP::Matrix + MASK example
+=item * L<0-basic/mask_matrix.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/mask_matrix.pl> - IUP::Matrix + MASK example
 
-=item * L<0-basic/mask_simple.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/mask_simple.pl> - IUP::Text + MASK example
+=item * L<0-basic/mask_simple.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/mask_simple.pl> - IUP::Text + MASK example
 
-=item * L<0-basic/matrix_basic.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/matrix_basic.pl> - IUP::Matrix example
+=item * L<0-basic/matrix_basic.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/matrix_basic.pl> - IUP::Matrix example
 
-=item * L<0-basic/matrix_cbmode.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/matrix_cbmode.pl> - IUP::Matrix (callback mode) example
+=item * L<0-basic/matrix_cbmode.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/matrix_cbmode.pl> - IUP::Matrix (callback mode) example
 
-=item * L<0-basic/menu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/menu.pl> - IUP::Menu example
+=item * L<0-basic/menu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/menu.pl> - IUP::Menu example
 
-=item * L<0-basic/message_clone.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/message_clone.pl>
+=item * L<0-basic/message_clone.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/message_clone.pl>
 
-=item * L<0-basic/plot1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/plot1.pl> - IUP::PPlot example
+=item * L<0-basic/plot1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/plot1.pl> - IUP::PPlot example
 
-=item * L<0-basic/plot2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/plot2.pl> - IUP::PPlot example
+=item * L<0-basic/plot2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/plot2.pl> - IUP::PPlot example
 
-=item * L<0-basic/plot3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/plot3.pl> - IUP::PPlot example
+=item * L<0-basic/plot3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/plot3.pl> - IUP::PPlot example
 
-=item * L<0-basic/plot4.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/plot4.pl> - IUP::PPlot example
+=item * L<0-basic/plot4.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/plot4.pl> - IUP::PPlot example
 
-=item * L<0-basic/plot5.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/plot5.pl> - IUP::PPlot example
+=item * L<0-basic/plot5.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/plot5.pl> - IUP::PPlot example
 
-=item * L<0-basic/plot_advanced.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/plot_advanced.pl> - Plot controls
+=item * L<0-basic/plot_advanced.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/plot_advanced.pl> - Plot controls
 
-=item * L<0-basic/progressbar1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/progressbar1.pl> - IUP::Progressbar example
+=item * L<0-basic/progressbar1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/progressbar1.pl> - IUP::Progressbar example
 
-=item * L<0-basic/progressbar2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
+=item * L<0-basic/progressbar2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
 
-=item * L<0-basic/progressbar3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/progressbar3.pl> - IUP::ProgressBar example
+=item * L<0-basic/progressbar3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/progressbar3.pl> - IUP::ProgressBar example
 
-=item * L<0-basic/radio.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/radio.pl> - IUP::Radio example
+=item * L<0-basic/radio.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/radio.pl> - IUP::Radio example
 
-=item * L<0-basic/sbox1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/sbox1.pl> - IUP::Sbox example
+=item * L<0-basic/sbox1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/sbox1.pl> - IUP::Sbox example
 
-=item * L<0-basic/sbox2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/sbox2.pl> - IUP::Sbox example
+=item * L<0-basic/sbox2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/sbox2.pl> - IUP::Sbox example
 
-=item * L<0-basic/scrollbar.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/scrollbar.pl> - IUP::Canvas (with scrollbar) example
+=item * L<0-basic/scrollbar.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/scrollbar.pl> - IUP::Canvas (with scrollbar) example
 
-=item * L<0-basic/separator.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/separator.pl> - IUP::Separator example
+=item * L<0-basic/separator.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/separator.pl> - IUP::Separator example
 
-=item * L<0-basic/submenu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/submenu.pl> - IUP::Submenu example
+=item * L<0-basic/submenu.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/submenu.pl> - IUP::Submenu example
 
-=item * L<0-basic/tabs1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/tabs1.pl> - IUP::Tabs example 
+=item * L<0-basic/tabs1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/tabs1.pl> - IUP::Tabs example 
 
-=item * L<0-basic/tabs2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/tabs2.pl> - IUP::Tabs example
+=item * L<0-basic/tabs2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/tabs2.pl> - IUP::Tabs example
 
-=item * L<0-basic/tabs3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/tabs3.pl> - IUP::Tabs example 
+=item * L<0-basic/tabs3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/tabs3.pl> - IUP::Tabs example 
 
-=item * L<0-basic/text1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/text1.pl> - IUP::Text (single line) example
+=item * L<0-basic/text1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/text1.pl> - IUP::Text (single line) example
 
-=item * L<0-basic/text2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/text2.pl> - IUP::Text example
+=item * L<0-basic/text2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/text2.pl> - IUP::Text example
 
-=item * L<0-basic/text_font.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/text_font.pl> - IUP::Text (font) example
+=item * L<0-basic/text_font.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/text_font.pl> - IUP::Text (font) example
 
-=item * L<0-basic/text_format.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/text_format.pl> - IUP::Text (formating) example
+=item * L<0-basic/text_format.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/text_format.pl> - IUP::Text (formating) example
 
-=item * L<0-basic/text_multiline.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/text_multiline.pl> - IUP::Text (multiline) example
+=item * L<0-basic/text_multiline.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/text_multiline.pl> - IUP::Text (multiline) example
 
-=item * L<0-basic/timer.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/timer.pl> - IUP::Timer example
+=item * L<0-basic/timer.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/timer.pl> - IUP::Timer example
 
-=item * L<0-basic/toggle.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/toggle.pl> - IUP::Toggle example
+=item * L<0-basic/toggle.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/toggle.pl> - IUP::Toggle example
 
-=item * L<0-basic/tray.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/tray.pl> - IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
+=item * L<0-basic/tray.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/tray.pl> - IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
 
-=item * L<0-basic/tree1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/tree1.pl> - IUP::Tree example (animals) - using helper methods e.g. TreeAddNodes()
+=item * L<0-basic/tree1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/tree1.pl> - IUP::Tree example (animals) - using helper methods e.g. TreeAddNodes()
 
-=item * L<0-basic/tree2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/tree2.pl> - IUP::Tree example (figures) - using attribute only interface
+=item * L<0-basic/tree2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/tree2.pl> - IUP::Tree example (figures) - using attribute only interface
 
-=item * L<0-basic/tree3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/tree3.pl> - IUP::Tree example (figures) - using attribute only interface
+=item * L<0-basic/tree3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/tree3.pl> - IUP::Tree example (figures) - using attribute only interface
 
-=item * L<0-basic/tree_set_attrs.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/tree_set_attrs.pl> - IUP::Tree example (attributes)
+=item * L<0-basic/tree_set_attrs.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/tree_set_attrs.pl> - IUP::Tree example (attributes)
 
-=item * L<0-basic/val.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/val.pl> - IUP::Val example
+=item * L<0-basic/val.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/val.pl> - IUP::Val example
 
-=item * L<0-basic/vbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/vbox.pl> - IUP::Vbox example
+=item * L<0-basic/vbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/vbox.pl> - IUP::Vbox example
 
-=item * L<0-basic/zbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/0-basic/zbox.pl> - IUP::Zbox example
+=item * L<0-basic/zbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/0-basic/zbox.pl> - IUP::Zbox example
 
-=item * L<1-apps/app-mdi.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/1-apps/app-mdi.pl> - IUP app example
+=item * L<1-apps/app-mdi.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-plot-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/1-apps/app-plot-demo.pl> - dials for zooming
+=item * L<1-apps/app-plot-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
-=item * L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-=item * L<1-apps/app-sample2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
-=item * L<1-apps/app-simple-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_11/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-simple-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
 =back 
 
