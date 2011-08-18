@@ -2,6 +2,7 @@
 
 =head2 18/08/2011 - 0.002_*
 
+ - much better documentation
  - many fixes for IUP::Canvas methods
  - added: IUP::Canvas::(Palette|Pattern|Stipple|Bitmap) - canvas helper modules
  - added: IUP::Canvas::(InternalState|InternalServerImage|InternalContext) - canvas helper modules (hidden)

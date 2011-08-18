@@ -26,8 +26,6 @@ IUP::Manual::04_Callbacks - Callbacks concept, using callbacks, common + global 
 
 =head1 INTRODUCTION
 
-B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
-
 This document is intended as a reference list for common callbacks used by several
 or all GUI elements + global B<IDLE_ACTION> callback.
 
@@ -372,7 +370,7 @@ the user to click on a cancel button for instance, because the user
 interface message loop will be processed.
 
 =item * split the operation in several parts that are processed by the
-L<IUP-E<gt>Idle|IUP/Idle> XXX-checkthis
+L<IUP-E<gt>Idle|IUP/Idle> XXX-CHECKTHIS
 function when no messages are left to be processed for the
 user interface message loop. This will make a heavy use of the CPU,
 even if the callback is doing nothing.
@@ -576,10 +574,10 @@ B<Callback handler prototype:>
 B<$self:> reference to the element that activated the event.
 
 B<$width:> the width of the internal element size in pixels not
-considering the decorations (client size) XXX-link-to-"client size" description in layout.pod
+considering the decorations (client size) XXX-ADD-LINK description in layout.pod
 
 B<$height:> the height of the internal element size in pixels not
-considering the decorations (client size) XXX-link-to-"client size" description in layout.pod
+considering the decorations (client size) XXX-ADD-LINK description in layout.pod
 
 B<Notes:>
 

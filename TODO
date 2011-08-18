@@ -6,11 +6,7 @@
 
 ######## !!!BEFORE 0.003!!! POD/IMPORTANT: 
 - finish pod for IUP::Canvas::(Palette|Pattern|Stipple|Bitmap)
-- finish pod for IUP::Manual::*
-  - I::M::Elements.pod
-  - I::M::Callbacks.pod
-  - I::M::Attributes.pod
-  - I::M::Introduction.pod
+- finish pod for IUP::Manual::* (CB/AT accessors)
 
 ##########################################################
 

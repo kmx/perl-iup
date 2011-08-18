@@ -26,14 +26,6 @@ IUP::Manual::05_DialogLayout - Dialog layout composition
 
 =head1 INTRODUCTION
 
-B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
-
-xxxhave a look at: http://www.tecgraf.puc-rio.br/iup/download/spe95.pdf
-
-xxx IUP::Dialog the main container
-
-xxx talking about "custom dialogs"
-
 =head1 LAYOUT COMPOSITION
 
 =head2 Abstract Layout
@@ -70,28 +62,24 @@ Moreover, this IUP dialog has an indirect advantage: if the user
 changes its size, the elements (due to being positioned on an abstract
 layout) are automatically re-positioned horizontally.
 
-The composition elements includes vertical boxes (B<vbox>), horizontal
-boxes (B<hbox>) and filling (B<fill>). There is also a depth box
-(B<zbox>) in which layers of elements can be created for the same
+The composition elements includes vertical boxes (L<IUP::Vbox>), horizontal
+boxes (L<IUP::Hbox>) and filling (L<IUP::Fill>). There is also a depth box
+(L<IUP::Zbox>) in which layers of elements can be created for the same
 dialog, and the elements in each layer are only visible when that given
 layer is active.
 
- dialog = iup.dialog
- {
-   iup.hbox
-   {
-     iup.fill{},
-     iup.button{title="Ok",size="40"}, 
-     iup.button{title="Cancel",size="40"},
-     iup.fill{}
-     ;margin="15x15", gap="10"
-   }
-   ;title="Title"
- }
+ $dialog = IUP::Dialog->new( TITLE=>'Title',child=>
+               IUP::Hbox->new( MARGIN=>"15x15", GAP=>10, child=>[
+                   IUP::Fill->new(),
+                   IUP::Button->new(TITLE=>"Ok", SIZE=>"40"),
+                   IUP::Button->new(TITLE=>"Cancel", SIZE=>"40"),
+                   IUP::Fill->new(),
+               ])
+           );
 
 Following, the abstract layout representation of this dialog:
 
-Layout Hierarchy
+B<Layout Hierarchy:>
 
  IUP::Dialog
  |
@@ -105,18 +93,13 @@ Layout Hierarchy
      |
      +->IUP::Fill
 
-Layout Visualization
+B<Layout Visualization:>
 
 =begin html
 
 <p><img src="http://kmx.github.com/perl-iup/img-3.5/images/dlg_led.png"></p>
 
 =end html
-
-=head2 xxx hbox, vbox & co.
-
-xxxTODO text text text text text text text text text text text text
-text text text text text text text text text text text text text
 
 =head1 LAYOUT GUIDE
 
@@ -179,17 +162,16 @@ large enough to display their respective text. If the dialog size is
 increased or reduced by the size handlers in the dialog borders the
 buttons do not move or change their sizes.
 
- dlg = iup.dialog
- {
-   iup.vbox
-   {
-     iup.button{title="Button Very Long Text"},
-     iup.button{title="short"},
-     iup.button{title="Mid Button"}
-   }
-   ;title="IUP::Dialog", font="Helvetica, Bold 14" 
- }
- dlg:show()
+ use IUP ':all';
+ my $dialog = IUP::Dialog->new( TITLE=>"IupDialog", FONT=>"Helvetica, Bold 14" ,child=>
+                IUP::Vbox->new( child=>[
+                  IUP::Button->new(TITLE=>"Button Very Long Text"),
+                  IUP::Button->new(TITLE=>"short"),
+                  IUP::Button->new(TITLE=>"Mid Button"),
+                ])
+              );
+ $dialog->Show();
+ IUP->MainLoop;
 
 =begin html
 
@@ -225,17 +207,16 @@ Defining the SIZE attribute of the buttons in the example we can make
 all have the same size. (In the following example the dialog size was
 changed after it was displayed on screen)
 
- dlg = iup.dialog
- {
-   iup.vbox
-   {
-     iup.button{title="Button Very Long Text", size="50x"},
-     iup.button{title="short", size="50x"},
-     iup.button{title="Mid Button", size="50x"}
-   }
-   ;title="IUP::Dialog", font="Helvetica, Bold 14" 
- }
- dlg:show()
+ use IUP ':all';
+ my $dialog = IUP::Dialog->new( TITLE=>"IupDialog", FONT=>"Helvetica, Bold 14" ,child=>
+                IUP::Vbox->new( child=>[
+                  IUP::Button->new(TITLE=>"Button Very Long Text", SIZE=>"50x"),
+                  IUP::Button->new(TITLE=>"short", SIZE=>"50x"),
+                  IUP::Button->new(TITLE=>"Mid Button", SIZE=>"50x"),
+                ])
+              );
+ $dialog->Show();
+ IUP->MainLoop;
 
 =begin html
  
@@ -262,17 +243,16 @@ The default is EXPAND=NO, but for containers is EXPAND=YES.
 
 Using EXPAND in the example, we obtain the following result:
 
- dlg = iup.dialog
- {
-   iup.vbox
-   {
-     iup.button{title="Button Very Long Text"},
-     iup.button{title="short", expand="HORIZONTAL"},
-     iup.button{title="Mid Button", expand="HORIZONTAL"}
-   }
-   ;title="IUP::Dialog", font="Helvetica, Bold 14" 
- }
- dlg:show()
+ use IUP ':all';
+ my $dialog = IUP::Dialog->new( TITLE=>"IupDialog", FONT=>"Helvetica, Bold 14" ,child=>
+                IUP::Vbox->new( child=>[
+                  IUP::Button->new(TITLE=>"Button Very Long Text"),
+                  IUP::Button->new(TITLE=>"short", EXPAND=>"HORIZONTAL"),
+                  IUP::Button->new(TITLE=>"Mid Button", EXPAND=>"HORIZONTAL"),
+                ])
+              );
+ $dialog->Show();
+ IUP->MainLoop;
 
 =begin html
  
@@ -317,17 +297,16 @@ it is not defined. The picture shown was captured after manually
 resizing the dialog. So when using SHRINK usually you will also need to
 set the dialog initial size.
 
- dlg = iup.dialog
- {
-   iup.vbox
-   {
-     iup.button{title="Button Very Long Text"},
-     iup.button{title="short", expand="HORIZONTAL"},
-     iup.button{title="Mid Button", expand="HORIZONTAL"}
-   }
-   ;title="IUP::Dialog", shrink="yes", font="Helvetica, Bold 14" 
- }
- dlg:show()
+ use IUP ':all';
+ my $dialog = IUP::Dialog->new( TITLE=>"IupDialog", FONT=>"Helvetica, Bold 14", SHRINK=>"YES" ,child=>
+                IUP::Vbox->new( child=>[
+                  IUP::Button->new(TITLE=>"Button Very Long Text"),
+                  IUP::Button->new(TITLE=>"short", EXPAND=>"HORIZONTAL"),
+                  IUP::Button->new(TITLE=>"Mid Button", EXPAND=>"HORIZONTAL"),
+                ])
+              );
+ $dialog->Show();
+ IUP->MainLoop;
 
 =begin html
  
@@ -366,8 +345,8 @@ automatically B<unmapped> if necessary. When you B<destroy> an element
 it will be automatically B<detached> if necessary. So explicity or
 implicity there will be a call to:
 
- IUP::Create  -> IUP::Append -> IUP::Map
- IUP::Destroy <- IUP::Detach <- IUP::Unmap
+ $elem->Create  ->>> $elem->Append ->>> $elem->Map
+ $elem->Destroy <<<- $elem->Detach <<<- $elem->Unmap
 
 A more simple and fast way to move an element from one position in the
 hierarchy to another is using L<Reparent|IUP::Manual::02_Elements/"Reparent()">.
@@ -382,19 +361,17 @@ control with the same parent use
 L<GetBrother|IUP::Manual::02_Elements/"GetBrother()">. To get the parent of a
 control call L<GetParent|IUP::Manual::02_Elements/"GetParent()">.
 
-In Lua, if the element was created in Lua, you can access any child of
-the element using the notation "elem[n][n]....", where n is the index
+You can access any child of the element using the notation "$elem->[n]->[n]....", where n is the index
 of the child. For example:
 
- dlg = iup.dialog
- {
-   iup.hbox
-   {
-     iup.button{title="Ok"}, 
-     iup.button{title="Cancel"},
-   }
- }
- cancel_button = dlg[1][2]
+ XXX-FIXME-NOT-IMLEMENTED-YET
+ my $dialog = IUP::Dialog->new(child=>
+                  IUP::Hbox->new(child=>[
+                      IUP::Button->new(TITLE=>"OK"),
+                      IUP::Button->new(TITLE=>"Cancel"),
+                  ])
+              );
+ my $cancel_button = $dialog->[1]->[2];
 
 =head2 Layout Display
 

@@ -26,14 +26,10 @@ IUP::Manual::02_Elements - GUI elements guide, methods common for all IUP elemen
 
 =head1 INTRODUCTION
 
-B<BEWARE: XXX-UNFINISHED-WORK-IN-PROGRESS>
-
 This document is intended as a reference list for common methods used by all IUP elements.
 
 For more information about using elemets see L<Elements Concept|IUP::Manual::01_Introduction/"Elements Concept">
 in L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>.
-
-xxxTODO GUI vs. non-GUI
 
 Currently available interface elements can be categorized as follows:
 
@@ -62,34 +58,42 @@ message, alarm, data input, list selection>.
 
 =head1 CREATING ELEMENTS
 
-xxxTODO new() and its params (ATTRIB=>'val', param=>'val')
+=head3 new()
 
-=head1 CONSTRUCTORS
+Basic method for creating new element (constructor):
 
- new
- new_no_ihandle
- new_from_ihandle
+ $elem = IUP::Button->new();
+ 
+ #or you can specify also some attribute values:
+ $elem = IUP::Button->new( TITLE=>"b1", SIZE=>"30x30");
 
-=head1 ACCESSORS
+ #or you can specify also some callback handlers:
+ $elem = IUP::Button->new( TITLE=>"b1", SIZE=>"30x30",
+                           ACTION=>\&func1, BUTTON_CB=>\&func2 );
 
- ihandle
- name
+ #some elements accept 'child' (lowercase!!) parameter
+ $elem = IUP::Vbox->new( MARGIN=>10, child=>[$elem1, $elem2] );
+
+ #you can also assign a name (alias) to created element via 'name' parameter
+ $elem = IUP::Button->new( TITLE=>"b1", name=>"mybutton");
+ #...later in your code
+ $button = IUP->GetByName("mybutton");
+
+=head3 new_no_ihandle()
+
+ $elem = IUP::Button->new_no_ihandle();
+ 
+BEWARE: just for experts, you very likely do not need this at all!
+
+=head3 new_from_ihandle()
+
+ $elem = IUP::Button->new_from_ihandle($ihandle);
+ 
+BEWARE: just for experts, you very likely do not need this at all!
 
 =head1 COMMON METHODS
 
 =head2 Element constructors
-
-=head3 new()
-
-xxxtodo
-
-=head3 new_from_ihandle()
-
-xxxtodo
-
-=head3 new_no_ihandle()
-
-xxxtodo
 
 =head2 Methods available in all IUP elements
 
@@ -182,8 +186,6 @@ B<detached> controls can also be destroyed.
 
  $element->Destroy();
 
-B<$ih:> Identifier of the interface element to be destroyed.
-
 B<Notes:>
 
 It will automatically B<unmap> and B<detach> the element if necessary,
@@ -219,8 +221,6 @@ L<Create|/"Create()">.
 B<Detaches> an interface element from its parent.
 
  $element->Detach();
-
-B<$child:> Identifier of the interface element to be detached.
 
 B<Notes:>
 
@@ -259,15 +259,9 @@ its internal hash table only.
  #or
  my @attr_names2 = $element->GetAllAttributes($max_n);
 
-B<$ih:> identifier of the interface element.
+B<$max_n:> maximum number of names the table can receive. Can be omitted.
 
-names: table receiving the names. Only the list of names need to be
-allocated. Each name will point to an internal string.xxxTODOxxx
-
-B<$max_n:> maximum number of names the table can receive. Can be omitted. xxxtodo reuse txt
-
-B<Returns:> the actual number of names loaded to the table. If $names
-is C<undef> or $max_n is 0 then returns the maximum number of names.
+B<Returns:> reference to array with names. If $max_n is C<undef> or $max_n is 0 then returns all names.
 
 B<See Also:>
 L<GetAttribute|/"GetAttribute()">,
@@ -279,15 +273,11 @@ L<SetAttribute|/"SetAttribute()">.
 
 =over
 
-Returns the name of an interface element attribute. See also the
-L<Attributes Guide|xxx.html> section.
+Returns the value of an interface element attribute.
 
  my $val = $element->GetAttribute($name);
  #or
  my @values = $element->GetAttribute(@names);
-
-B<$ih:> Identifier of the interface element.
-If C<undef> will retrieve from the global environment. xxxcheckthis is it the same as getglobal?
 
 B<$name:> name of the attribute.
 
@@ -297,8 +287,6 @@ B<Returns:> the attribute value or C<undef> if the attribute is
 not defined or does not exist.
 
 B<Notes:>
-
-See the L<Attributes Guide|xxx.html> for more details.
 
 B<Examples:>
 
@@ -314,21 +302,15 @@ L<SetAttribute|/"SetAttribute()">.
 
 =over
 
-Returns the referencename of an interface element attribute. XXX-TODO
+Returns the reference to IUP element stored into an attribute of given name.
 
  my $elem = $element->GetAttribute($name);
  #or
  my @elems = $element->GetAttribute(@names);
 
-B<$ih:> Identifier of the interface element.
-If C<undef> will retrieve from the global environment. xxxcheckthis is it the same as getglobal?
-
 B<$name:> name of the attribute.
 
-B<$id:> used when the attribute has an additional id.
-
-B<Returns:> the attribute value or C<undef> if the attribute is
-not defined or does not exist.
+B<Returns:> reference to iup element
 
 =back
 
@@ -336,10 +318,11 @@ not defined or does not exist.
 
 =over
 
-xxxTODOxxx
-
  my $val = $element->GetAttributeId($name, $id);
+ 
+Equivalent (just little bit faster) to:
 
+  my $val = $element->GetAttribute("$name$id");
 
 =back
 
@@ -347,10 +330,11 @@ xxxTODOxxx
 
 =over
 
-xxxTODOxxx
-
  my $val = $element->GetAttributeId2($name, $lin, $col);
 
+Equivalent (just little bit faster) to:
+
+ my $val = $element->GetAttribute("$name$lin$col");
 
 =back
 
@@ -376,8 +360,6 @@ This function should be avoided. Use L<GetAllAttributes|/"GetAllAttributes()"> i
  print "Title=", $attr->{TITLE}, "\n";
  print "Color=", $attr->{FGCOLOR}, "\n";
 
-B<$ih:> Identifier of the interface element.
-
 B<Returns:> a hash of C<< ATTRIBUTE => VALUE >> pairs for all attributes of given element.
 
 B<See Also:>
@@ -395,9 +377,7 @@ Returns the brother of a control or C<undef> if there is none.
 
  my $brother_elem = $element->GetBrother();
 
-B<$ih:> identifier of the interface element.
-
-B<Returns:> xxxtodo
+B<Returns:> reference to iup element
 
 B<See Also:>
 L<GetChild|/"GetChild()">,
@@ -413,8 +393,6 @@ L<GetParent|/"GetParent()">.
 Returns the a child of the given control given its position.
 
  my $child_elem = $element->GetChild($position);
-
-B<$ih:> identifier of the interface element.
 
 B<$position:> position of the desire child.
 
@@ -439,8 +417,6 @@ Returns the number of children of the given control.
 
  my $count = $element->GetChildCount();
 
-B<$ih:> identifier of the interface element.
-
 B<See Also:>
 L<GetChildPos|/"GetChildPos()">,
 L<GetChild|/"GetChild()">,
@@ -458,9 +434,7 @@ Returns the position of a child of the given control.
 
  my $position = $elmenet->GetChildPos($child_element);
 
-B<$ih:> identifier of the interface element.
-
-B<$child_element:> xxxTODOxxx
+B<$child_element:> reference to child element
 
 B<Returns:> position of the desire child or -1 if child not found.
 
@@ -485,8 +459,6 @@ L<GetParent|/"GetParent()">.
 Returns the name of the class of an interface element.
 
  my $name = $element->GetClassName();
-
-B<$ih:> Identifier of the interface element.
 
 B<Notes:>
 
@@ -542,8 +514,6 @@ Returns the name of the native type of an interface element.
 
  my $type = $element->GetClassType();
 
-B<$ih:> Identifier of the interface element.
-
 B<Notes:>
 
 There are only a few pre-defined class types:
@@ -591,7 +561,7 @@ hierarchy.
 
 B<$name:> name of the control to be found
 
-B<Returns:> xxxtodo C<undef> if not found.
+B<Returns:> reference to iup element, C<undef> if not found
 
 B<Notes:>
 
@@ -616,8 +586,6 @@ L<SetName|/"SetName()"> or by C<< name=>'ElemName' >> named parameter of L<new()
 
  my $name = $element->GetName();
 
-B<$ih:> Identifier of the interface element.
-
 B<Returns:> the name.
 
 B<See Also:>
@@ -634,9 +602,6 @@ L<GetAllNames|IUP/"GetAllNames()"> (global function).
 Returns the a child of the given control given its brother.
 
  my $child_elem = $element->GetNextChild($child);
-
-B<$ih:> identifier of the interface element. 
-Can be C<undef> if child not C<undef>. xxxcheckthis
 
 B<$child:> Identifier of the child brother to be used as reference. To
 get the first child use C<undef>.
@@ -678,7 +643,7 @@ L<GetChild|/"GetChild()">.
 
 =over
 
-xxxcheckthisxxx To retrieve a parameter of IUP->GetParam dialog 
+To retrieve a parameter of IUP->GetParam dialog 
 you must use the following function:
 
  my $element = $dialog->GetParamParam($param_index);
@@ -697,9 +662,13 @@ you must use the following function:
 
 =over
 
-xxx hack related to GetParamParam, nicer way for getting item values than calling GetParamParam()
+Helper method related to GetParamParam, nicer way for getting item values than calling GetParamParam()
 
-xxx GetParamValue is also a setter - $self->GetParamValue($index, $value)
+  $value = $self->GetParamValue($index)
+
+GetParamValue can be also used as a setter:
+
+  $self->GetParamValue($index, $value)
 
 =back
 
@@ -710,8 +679,6 @@ xxx GetParamValue is also a setter - $self->GetParamValue($index, $value)
 Returns the parent of a control.
 
  my $parent_elem = $element->GetParent();
-
-B<$ih:> identifier of the interface element.
 
 B<Returns:> the handle of the parent or C<undef> if does not have a parent.
 
@@ -726,9 +693,11 @@ L<GetBrother|/"GetBrother()">.
 
 =over
 
-xxxspecial perl specific hack
+ $element->HasValidClassName()
 
-xxxmaybe make it an internal method
+Checks whether internal iup classname of given element is consistent with perl class name - e.g. C<button> vs. C<IUP::Button>
+
+B<Returns:> 1 (if element internal iup classname corresponds to perl class), 0 otherwise
 
 =back
 
@@ -790,8 +759,14 @@ L<Refresh|/"Refresh()">.
 
 =over
 
-xxxhack - perl specific
+Checks whether callback_name is valid for given element.
 
+ $element->IsValidCallbackName($callback_name);
+
+B<$callback_name:> call back name - e.g. "ACTION"
+ 
+B<Returns:> 1 (valid) or 0 (invalid)
+ 
 =back
 
 =head3 Map()
@@ -807,8 +782,6 @@ element's tree.
 The element must be already B<attached> to a container if not a dialog.
 
  my $retval = $element->Map();
-
-B<$ih:> Identifier of an interface element.
 
 B<Returns:> IUP_NOERROR if successful. If the element was already mapped
 returns IUP_NOERROR. If the native creation failed returns IUP_ERROR.
@@ -871,8 +844,6 @@ dependent on the native system.
 
  my $next_elem = $element->NextField();
 
-B<$ih:> identifier of the interface element.
-
 B<Returns:> the element that received the focus or C<undef> if not found.
 
 B<See Also:>
@@ -890,8 +861,6 @@ currently with the focus.
 
  my $prev_elem = $element->PreviousField();
 
-B<$ih:> identifier of the interface element.
-
 B<Returns:> the element that received the focus or C<undef> if not found.
 
 B<See Also:>
@@ -908,9 +877,7 @@ Force the element and its children to be redraw immediately.
 
  $element->Redraw($children);
 
-B<$ih:> identifier of the interface element.
-
-B<$children:> flag to update its children. xxxcheckthis vales 0 or 1 
+B<$children:> flag to update its children (0 or 1)
 
 =back
 
@@ -924,8 +891,6 @@ will be updated. It can change the layout of all the controls inside
 the dialog because of the dynamic layout positioning.
 
  $element->Refresh();
-
-B<$ih:> identifier of the interface element.
 
 B<Notes:>
 
@@ -974,8 +939,6 @@ updated. It can change the layout of all the controls inside the given
 element because of the dynamic layout positioning.
 
  $element->RefreshChildren();
-
-B<$ih:> identifier of the interface element.
 
 B<Notes:>
 
@@ -1056,9 +1019,6 @@ state of inheritable attributes in a tree of elements.
 
  $element->ResetAttribute($name);
 
-B<$ih:> Identifier of the interface element. 
-If C<undef> will set in the global environment. xxxcheckthis
-
 B<$name:> name of the attribute.
 
 B<See Also:>
@@ -1074,8 +1034,6 @@ L<SetAttribute|/"SetAttribute()">.
 Saves all registered attributes on the internal hash table.
 
  $element->SaveClassAttributes();
-
-B<$ih:> identifier of the interface element.
 
 B<Notes:>
 
@@ -1111,30 +1069,9 @@ L<Attributes Guide|../attrib_guide.html> section.
  my %attr_values = ( $name1=>$value1, $name2=>$value2, $name3=>$value3 );
  $element->SetAttribute( %attr_values );
 
-B<$ih:> Identifier of the interface element.
-If C<undef> will set in the global environment. xxxcheckthis
-
 B<$name:> name of the attribute.
 
-B<$id:> used when the attribute has an additional id.
-
 B<$value:> value of the attribute. If C<undef>, the default value will be used.
-
-B<Notes:>
-
-See the L<Attributes Guide|../attrib_guide.html> for more details.
-
-xxxcheckthisxxx The value stored in the attribute is not duplicated. Therefore, you can
-store your private attributes, such as a structure with data to be used
-in a callback. When you want IUP to store an attribute by duplicating a
-string passed as a value, use function
-L<StoreAttribute|/"StoreAttribute()xxxremove">.
-
- struct myData* mydata = malloc(sizeof(struct myData));IUP::SetAttribute(dlg, "MYDATA", (char*)mydata)     // correct  (unknown attributes will be stored as pointers)
-
-B<See Also:>
-L<GetAttribute|/"GetAttribute()">,
-L<GetAttributes|/"GetAttributes()">.
 
 =back
 
@@ -1142,9 +1079,11 @@ L<GetAttributes|/"GetAttributes()">.
 
 =over
 
-xxxTODO
-
  $element->SetAttributeId($name, $id, $value);
+ 
+Equivalent (just little bit faster) to:
+
+ $element->GetAttribute("$name$id", $value);
 
 =back
 
@@ -1152,9 +1091,11 @@ xxxTODO
 
 =over
 
-xxxTODO
-
  $element->SetAttributeId2($name, $lin, $col, $value);
+
+Equivalent (just little bit faster) to:
+
+ $element->GetAttribute("$name$lin$col", $value);
 
 =back
 
@@ -1178,16 +1119,9 @@ B<Callback handler prototype:>
  $element->SetCallback( %callbacks );
  
 
-B<$ih:> identifier of the interface element.
+B<$cb_name:> attribute name of the callback.
 
-B<$cb_name:> attribute name of the callback. xxxsee
-
-B<$cb_handler:> xxxTODO func refxxx. If C<undef> removes the association.
-
-B<Returns:> the address of the previous function associated to the action xxxTODO ???.
-
-B<See Also:>
-L<Callback Concept|IUP::Manual::01_Introduction/"xxxCallback Conceptxxx">.
+B<$cb_handler:> reference to perl function. If C<undef> removes the association.
 
 =back
 
@@ -1201,12 +1135,11 @@ processed only after the con
 
  my $focused_elem = $element->SetFocus();
 
-B<$ih:> identifier of the interface element that will receive the
+B<$element:> identifier of the interface element that will receive the
 keyboard focus. Only elements that can have the keyboard focus, are
 mapped, active and visible can be used, other elements are ignored.
 
-B<Returns:> the identifier of the interface element that previously had
-the keyboard focus.
+B<Returns:> reference to iup element that previously had the keyboard focus.
 
 B<Notes:>
 
@@ -1230,13 +1163,9 @@ element lookup via global function L<GetByName|IUP/"GetByName()">.
 
  $element->SetName($name);
 
-B<$ih:> identifier of the interface element.
-Use NULL to remove the association. xxxcheckthis
-
 B<$name:> name of the interface element.
 
-B<Returns:> the identifier of the interface element previously associated
-to the parameter B<$name>.
+B<Returns:> reference to iup element previously associated to the parameter B<$name>.
 
 B<Notes:>
 
@@ -1290,8 +1219,6 @@ Mark the element to be redraw when the control returns to the system.
 
  $element->Update;
 
-B<$element:> identifier of the interface element. 
-
 =back
 
 =head3 UpdateChildren()
@@ -1303,13 +1230,9 @@ to the system.
 
  $element->UpdateChildren;
 
-B<$element:> identifier of the interface element. 
-
 =back
 
-=head1 Methods common for all Dialog-like elements
-
-xxx IUP::Dialog, IUP::ColorDlg etc
+=head1 Methods common for showing/hidding dialogs/elements
 
 =head3 Hide()
 
@@ -1320,9 +1243,6 @@ attributing value "NO" to the interface element's VISIBLE
 attribute.
 
  $element->Hide();
- #xxxcheckthis ?is it dialog only? - $dialog->Hide();
-
-B<$ih:> Identifier of the interface element.
 
 B<Returns:> IUP_NOERROR always.
 
@@ -1424,8 +1344,7 @@ B<Notes:>
 
 Will call L<Map|/"Map()"> for the element.
 
-See the L<PLACEMENT|xxx../dlg/iupdialog.html#PLACEMENT> attribute for
-other position and show options.
+See the L<PLACEMENT|IUP::Manual::03_Attributes/PLACEMENT> attribute for other position and show options.
 
 When IUP_CENTERPARENT is used but PARENTDIALOG is not defined then it
 is replaced by IUP_CENTER.
@@ -1472,10 +1391,7 @@ VISIBLE=YES.
 
  $dialog->Show();
 
-B<$ih:> identifier of the interface element.
-
-B<Returns:> IUP_NOERROR if sucessful. If there was an error returns
-IUP_ERROR.
+B<Returns:> IUP_NOERROR if sucessful. If there was an error returns IUP_ERROR.
 
 B<Notes:>
 
@@ -1484,8 +1400,7 @@ IUP_CENTER if not mapped).
 
 Will call L<Map|/"Map()"> for the element.
 
-See the L<PLACEMENT|xxx../dlg/iupdialog.html#PLACEMENT> attribute for
-other position and show options.
+See the L<PLACEMENT|IUP::Manual::03_Attributes/PLACEMENT> attribute for other position and show options.
 
 This function can be executed more than once for the same dialog. This
 will make the dialog be placed above all other dialogs in the
@@ -1567,8 +1482,7 @@ B<Notes:>
 
 Will call L<Map|/"Map()"> for the element.
 
-See the L<PLACEMENT|xxx../dlg/iupdialog.html#PLACEMENT> attribute for
-other position and show options.
+See the L<PLACEMENT|IUP::Manual::03_Attributes/PLACEMENT> attribute for other position and show options.
 
 When IUP_CENTERPARENT is used but PARENTDIALOG is not defined then it
 is replaced by IUP_CENTER.
