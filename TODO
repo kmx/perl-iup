@@ -1,30 +1,30 @@
 ################ the last time working on ################ 
 
-- hacking pod: IUP::Manual::* + IUP::Canvas::*
+- hacking pod: IUP::Manual::*
 
 ##########################################################
 
-######## !!!BEFORE 0.003!!! POD/IMPORTANT: 
+######## POD/IMPORTANT: 
 - finish pod for IUP::Canvas::(Palette|Pattern|Stipple|Bitmap)
 - finish pod for IUP::Manual::* (CB/AT accessors)
+- overall "doc polish" needed
 
-##########################################################
-
-######## NICE-TO-HAVE: IUP::Canvas::FileBitmap
-- IUP::Canvas::FileBitmap->new($filename) - should automatically set resolution based on DPI stored in image file
-
-######## IMPORTANT: correct element destruction still needs some work
-- Internal/Element.pm (look for XXX-FIXME)
+######## CODE/IMPORTANT: correct element destruction still needs some work
+- Internal/Element.pm (look for XXX-FIXME + XXX-CHECKLATER)
    
+######## TESTS/IMPORTANT: add more tests
+- split tests: t\*.t + all GUI-related >>> t\gui\*.t
+- maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
+- how to skip - example:
+  plan skip_all => "\$ENV{RELEASE_TESTING} required fot testing", unless $ENV{RELEASE_TESTING};
+  eval "use Win32::Job ()";
+  plan skip_all => "Can't interrupt hung processes without Win32::Job" if $@;  
+
 ######## POD/COSMETICS: mention in POD/DOC
 - mention IUP::Manual::10_FAQ::PARPacking recommendation in DOC
 - beware: (IUP_DEFAULT related) sub returns value even without explicit return
 - pplot: note in doc that DS_ has to be set after ->PPlotEnd()
 - tree: note in doc that tree->SetAttribute has to go after dialog->Show
-
-######## COSMETICS: cdKillCanvas
-- see examples/2-canvas/simpledraw.pl
-- why we need 'undef $canvas' and '$canvas->cdKillCanvas()' is not enough?
 
 ######## MAYBE: access child=>[...] items like this
  $mybox = IUP::Hbox->new( child=>[ $bt1, $bt2, $bt3] );
@@ -34,28 +34,18 @@
 - from perl doc:
   $a = $array[5]; 	$obj->FETCH(5);
   $array[5] = "aa" 	$obj->STORE(5, "aa");
-
-######## MAYBE: IUP::Matrix
-- try to implement:
-  my $m = IUP::Matrix->new(...);
-  $m->[12][44] = 'value';
-  $val = $m->[12][44];
 - see implementation of SDLx::Surface + SDLx::Surface::TiedMatrix
   http://cpansearch.perl.org/src/KTHAKORE/SDL-2.533/lib/SDLx/Surface.pm
   http://cpansearch.perl.org/src/KTHAKORE/SDL-2.533/lib/SDLx/Surface/TiedMatrix.pm
-  
-######## TESTS/IMPORTANT: add more tests
-- split tests: t\*.t + all GUI-related >>> t\gui\*.t
-- maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
-- skip example:
-  plan skip_all => "\$ENV{RELEASE_TESTING} required fot testing", unless $ENV{RELEASE_TESTING};
-  eval "use Win32::Job ()";
-  plan skip_all => "Can't interrupt hung processes without Win32::Job" if $@;  
 
-######## NICE-TO-HAVE: more Canvas examples
-- port more lua examples into perl
-  
 ### COSMETICS ################################################################################################
+
+(cosmetics)######## NICE-TO-HAVE: cdKillCanvas
+- see examples/2-canvas/simpledraw.pl
+- why we need 'undef $canvas' and '$canvas->cdKillCanvas()' is not enough?
+
+(cosmetics)######## NICE-TO-HAVE: more Canvas examples
+- port more lua examples into perl
 
 (cosmetics)######## IDEA: 
 use IUP qw/:basic iup_NO_INIT/; #generally iup_ANY_OTHER_FLAG
@@ -185,25 +175,25 @@ http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-
 
 ### REJECTED FOR NOW ################################################################################################
 
-#IUP
+(rejected)#######IUP
 - consider adding iupKeyCodeToName
 - consider adding iupKeyNameToCode
 - Idle? #xxxsomething causes progressbar3.pl to hangup/crash (after pressing accel/decel) - cannot reproduce
 - is GetIhClassName() func name OK - yes for now
 - IUP->GetIdle? or IUP->CheckIdle? #xxx how to check existing idle handler? - not for now
 
-#IUP::Internal::Element
+(rejected)#######IUP::Internal::Element
  - passing undef to child=> ... - maybe later
   Can't call method "ihandle" on an undefined value at
   Y:\@repos\perl-iup\blib\lib/IUP/Internal/Element.pm line 574. (better error message)
 - consider checking arg count SetAttributeId($$$) SetAttributeId2($$$$) - not now
 
-#IUP::List
+(rejected)#######IUP::List
 - IUP::List->new() items 0-based or 1-based index? (item[0] >> attribute 1)
 
-#IUP::Frame
+(rejected)#######IUP::Frame
 - missing accessor $frame->MARGIN("10x10"); - MARGIN not in official doc for IupFrame
 
-#IUP::PPlot
+(rejected)#######IUP::PPlot
 - maybe add AxsBounds() to IUP::PPlot # see examples\0-basic\pplot4.pl - not now
 - maybe add AxsBoundsAuto() - not now

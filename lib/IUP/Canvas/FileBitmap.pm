@@ -33,9 +33,25 @@ sub new {
       $res = $dpi/25.4;
     }
     elsif (!defined $res) {
-      $res = 0;
+      $res = -1;
     }
-    my $bmp = ref($bitmap) eq 'IUP::Canvas::Bitmap' ? $bitmap : IUP::Canvas::Bitmap->new($bitmap);
+    my $bmp;
+    if (ref($bitmap) eq 'IUP::Canvas::Bitmap') {
+      $bmp = $bitmap;
+    }
+    else {
+      if (defined $bitmap && !ref($bitmap) && -f $bitmap) {
+        if ($res <= 0) {
+          my $dpi = IUP::Internal::Canvas::_cdCreateCanvas_IMAGERGB_dpi_helper($bitmap);
+          # warn("XXX_DEBUG: dpi=$dpi\n");
+          $res = $dpi if $dpi > 0;
+        }        
+        $bmp = IUP::Canvas::Bitmap->new($bitmap);                
+      }
+      else {
+        carp "Error: file '$bitmap' does not exist";
+      }
+    }
     $ch = $self->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_IMAGERGB_from_bitmap($bmp,$res)) if $bmp;
   }
   elsif (defined $width && defined $height) {
@@ -46,7 +62,7 @@ sub new {
       $res = 0;
     }
     $has_alpha = 0 unless defined $has_alpha;
-    $ch = $self->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_IMAGERGB_empty($width,$height,$has_alpha,$res));
+    $ch = $self->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_IMAGERGB_empty($width,$height,$has_alpha,$res));    
   }
   else {
     carp "Error: invalid parameters for ".__PACKAGE__."->new()";

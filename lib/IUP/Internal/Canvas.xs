@@ -991,6 +991,24 @@ _cdCreateCanvas_IMAGERGB_empty(width,height,has_alpha,resolution)
         OUTPUT:
                 RETVAL
 
+float
+_cdCreateCanvas_IMAGERGB_dpi_helper(file_name)
+                char *file_name;
+        CODE:
+                int error;
+                imImage *image = imFileImageLoadBitmap(file_name, 0, &error);
+                RETVAL = -1; /* = error */
+                if (!error && image) {
+                  float *resx = (float*)imImageGetAttribute(image, "XResolution", NULL, NULL);
+                  char *unit = (char*)imImageGetAttribute(image, "ResolutionUnit", NULL, NULL);
+                  if (strcmp(unit,"DPI")==0)          
+                    RETVAL = *resx;
+                  else if (strcmp(unit,"DPC")==0)                            
+                    RETVAL = (*resx)*(2.54);
+                }
+        OUTPUT:
+                RETVAL
+
 cdCanvas*
 _cdCreateCanvas_IMAGERGB_from_bitmap(bitmap,resolution)
                 double resolution;

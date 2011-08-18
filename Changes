@@ -1,6 +1,6 @@
 =head1 Revision history for IUP
 
-=head2 18/08/2011 - 0.002_*
+=head2 18/08/2011 - 0.003
 
  - much better documentation
  - many fixes for IUP::Canvas methods
