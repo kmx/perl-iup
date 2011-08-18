@@ -12,10 +12,10 @@
   - I::M::Attributes.pod
   - I::M::Introduction.pod
 
-######## !!!BEFORE 0.003!!! NICE-TO-HAVE: Canvas example(s)
-- port original cd example into perl
-
 ##########################################################
+
+######## NICE-TO-HAVE: IUP::Canvas::FileBitmap
+- IUP::Canvas::FileBitmap->new($filename) - should automatically set resolution based on DPI stored in image file
 
 ######## IMPORTANT: correct element destruction still needs some work
 - Internal/Element.pm (look for XXX-FIXME)
@@ -56,6 +56,9 @@
   eval "use Win32::Job ()";
   plan skip_all => "Can't interrupt hung processes without Win32::Job" if $@;  
 
+######## NICE-TO-HAVE: more Canvas examples
+- port more lua examples into perl
+  
 ### COSMETICS ################################################################################################
 
 (cosmetics)######## IDEA: 

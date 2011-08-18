@@ -5,6 +5,7 @@ use warnings;
 
 use IUP ':all';
 use IUP::Canvas::FileVector;
+use IUP::Canvas::FileBitmap;
 
 ###global variables
 
@@ -324,15 +325,21 @@ my $canvas;
 InitGlobals();
 
 warn "Saving ...\n";
-$canvas = IUP::Canvas::FileVector->new( format=>"SVG", filename=>"tmp-testoutput.svg", width=>270.933, height=>198.543, resolution=>4.72441 );
+$canvas = IUP::Canvas::FileVector->new( format=>"SVG", filename=>"tmp-testoutput.svg", width=>270.933, height=>198.543, dpi=>120 );
 SimpleDraw($canvas);
 #$canvas->cdKillCanvas(); 
 #$canvas->DESTROY(); 
 undef $canvas; #XXX-FIXME why we need 'undef $canvas' and '$canvas->cdKillCanvas()' is not enough?
 
 warn "Saving ...\n";
-$canvas = IUP::Canvas::FileVector->new( format=>"EMF", filename=>"tmp-testoutput.emf", width=>1280, height=>938, resolution=>3.72441 );
+$canvas = IUP::Canvas::FileVector->new( format=>"EMF", filename=>"tmp-testoutput.emf", width=>1280, height=>938 );
 SimpleDraw($canvas);
+undef $canvas;
+
+warn "Saving ...\n";
+$canvas = IUP::Canvas::FileBitmap->new( width=>1280, height=>938, dpi=>120 );
+SimpleDraw($canvas);
+$canvas->cdDumpBitmap("tmp-testoutput.png", "PNG");
 undef $canvas;
 
 warn "Done!\n";
