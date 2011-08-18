@@ -147,7 +147,7 @@ my $ttdata = {
   },
   txt => {
     new_attr  => "NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\\&func> pairs relevant\n" .
-                 "to this element - see L<[%m.elem%]|[%m.elem%]>.",
+                 "to this element - see L<[%m.elem%]|[%m.elem%]/\"new()\">.",
     new_ret   => "The reference to the created element, or C<undef> if an error occurs.",
     at_intro  => "For more info about concept of attributes (setting/getting values etc.)\n" .
                  "see L<[%m.at%]|[%m.at%]>. Attributes specific to this element:",

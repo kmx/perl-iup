@@ -20,7 +20,7 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
-to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements/"new()">.
 
 =head2 CALLBACKS
 

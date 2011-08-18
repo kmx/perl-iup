@@ -41,7 +41,7 @@ B<Returns:> The reference to the created element, or C<udnef> if an error
 occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
-to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements>.
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements/"new()">.
 
 NOTE: IUP::Cbox can be created with no elements (no child params passed to C<new()> constructor)
 and be dynamic filled later using

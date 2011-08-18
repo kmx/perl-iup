@@ -93,10 +93,6 @@ BEWARE: just for experts, you very likely do not need this at all!
 
 =head1 COMMON METHODS
 
-=head2 Element constructors
-
-=head2 Methods available in all IUP elements
-
 =head3 Append()
 
 =over
@@ -1232,8 +1228,6 @@ to the system.
 
 =back
 
-=head1 Methods common for showing/hidding dialogs/elements
-
 =head3 Hide()
 
 =over
@@ -1508,40 +1502,3 @@ L<Map|/"Map()">.
 
 =back
 
-=head1 Methods common for all elements
-
-L<Append|/"Append()">,
-L<ConvertXYToPos|/"ConvertXYToPos()">,
-L<Destroy|/"Destroy()">,
-L<Detach|/"Detach()">,
-L<GetAllAttributes|/"GetAllAttributes()">,
-L<GetAttribute|/"GetAttribute()">,
-L<GetAttributes|/"GetAttributes()">,
-L<GetBrother|/"GetBrother()">,
-L<GetChild|/"GetChild()">,
-L<GetChildCount|/"GetChildCount()">,
-L<GetChildPos|/"GetChildPos()">,
-L<GetClassName|/"GetClassName()">,
-L<GetClassType|/"GetClassType()">,
-L<GetDialog|/"GetDialog()">,
-L<GetDialogChild|/"GetDialogChild()">,
-L<GetNextChild|/"GetNextChild()">,
-L<GetParent|/"GetParent()">,
-L<HasValidClassName|/"HasValidClassName()">,
-L<Insert|/"Insert()">,
-L<IsValidCallbackName|/"IsValidCallbackName()">,
-L<Map|/"Map()">,
-L<NextField|/"NextField()">,
-L<PreviousField|/"PreviousField()">,
-L<Redraw|/"Redraw()">,
-L<Refresh|/"Refresh()">,
-L<RefreshChildren|/"RefreshChildren()">,
-L<Reparent|/"Reparent()">,
-L<ResetAttribute|/"ResetAttribute()">,
-L<SaveClassAttributes|/"SaveClassAttributes()">,
-L<SetAttribute|/"SetAttribute()">,
-L<SetCallback|/"SetCallback()">,
-L<SetFocus|/"SetFocus()">,
-L<Unmap|/"Unmap()">,
-L<Update|/"Update()">,
-L<UpdateChildren|/"UpdateChildren()">.
