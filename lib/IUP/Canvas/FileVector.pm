@@ -6,7 +6,7 @@ use IUP::Internal::LibraryIup;
 use Carp;
 
 sub new {
-  my ($self, %args) = @_;
+  my ($class, %args) = @_;
   my $format = $args{format};
   my $filename = $args{filename};
   my $width = $args{width};
@@ -124,7 +124,7 @@ sub new {
       if ($init ne '') {
         $init .= " $args{raw}"  if defined $args{raw};
         #warn "XXX-DEBUG: type='$format' init='$init'\n";
-        $ch = $self->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_BASIC($format, $init));
+        $ch = $class->new_from_cnvhandle(IUP::Internal::Canvas::_cdCreateCanvas_BASIC($format, $init));
       }
     }
     else {

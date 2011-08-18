@@ -19,7 +19,7 @@ sub cnvhandle {
 sub new_from_cnvhandle {
   my ($class, $ch) = @_;
   my $self = { class => $class };
-  
+  #warn "XXX-DEBUG: IUP::Internal::Canvas::new_from_cnvhandle(): class=$class [" . ref($self) . "]\n";
   return undef unless($ch); #XXX-CHECKLATER
   bless($self, $class);
   $self->cnvhandle($ch);
@@ -28,15 +28,18 @@ sub new_from_cnvhandle {
 
 sub cdKillCanvas {
   my $self = shift;
+  #warn "XXX-DEBUG: IUP::Internal::Canvas::cdKillCanvas(): " . ref($self) . " [" . $self->cnvhandle . "]\n";  
   $self->_cdKillCanvas();
-  $self->cnvhandle(undef)
+  $self->cnvhandle(undef);
+  #warn "XXX-DEBUG: IUP::Internal::Canvas::cdKillCanvas(): done\n";  
 }
 
 sub DESTROY {
   my $self = shift;
   #XXX-CHECKLATER not sure if we handle correctly canvas destruction
-  $self->cdKillCanvas;  
-  #warn "XXX-DEBUG: IUP::Internal::Canvas::DESTROY(): " . ref($_[0]) . " [" . $_[0]->cnvhandle . "]\n";  
+  #warn "XXX-DEBUG: IUP::Internal::Canvas::DESTROY(): " . ref($self) . " [" . $self->cnvhandle . "]\n";  
+  $self->cdKillCanvas;    
+  #warn "XXX-DEBUG: IUP::Internal::Canvas::DESTROY(): done\n";  
 }
 
 #Note: all canvas related methods implemented directly in XS

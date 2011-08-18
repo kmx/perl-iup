@@ -1088,9 +1088,8 @@ cdDumpBitmap(canvas,filename,format)
                     imImageSetAttribute(image, "YResolution", IM_FLOAT, 1, &resy);
                     imImageSetAttribute(image, "ResolutionUnit", IM_BYTE, -1, "DPI");
                     /* save image file */
-                    RETVAL = imFileImageSave(filename, format, image);
-                    /* destroy temporary image structure */
-                                        image->data[0] = NULL; /* to avoid duplicate memory release */
+                    RETVAL = imFileImageSave(filename, format, image);                    
+                    image->data[0] = NULL; /* to avoid duplicate memory release */
                     imImageDestroy(image);
                     /*warn("XXX-DEBUG: imFileImageSave rv=%d\n",RETVAL);*/
                   }
@@ -2405,7 +2404,7 @@ cdGetVectorTextSize(canvas,s)
 # void cdCanvasGetVectorTextBounds(cdCanvas* canvas, const char* s, int x, int y, int *rect);
 # canvas:GetVectorTextBounds(text: string, x, y: number) -> (rect: table) [in Lua]
 void
-cdGetVectorTextBounds(canvas,s,x,y,rect)
+cdGetVectorTextBounds(canvas,s,x,y)
                 SV* canvas;
                 const char* s;
                 int x;
@@ -2503,7 +2502,7 @@ cdGetTextBox(canvas,x,y,s)
 # void cdCanvasGetTextBounds(cdCanvas* canvas, int x, int y, const char* s, int *rect);
 # canvas:GetTextBounds(x, y: number, text: string) -> (rect: table) [in Lua]
 void
-cdGetTextBounds(canvas,x,y,s,rect)
+cdGetTextBounds(canvas,x,y,s)
                 SV* canvas;
                 int x;
                 int y;
@@ -3183,7 +3182,7 @@ wdGetTextBox(canvas,x,y,s)
 # void wdCanvasGetTextBounds(cdCanvas* canvas, double x, double y, const char* s, double *rect);
 # canvas:wGetTextBounds(x, y: number, text: string) -> (rect: table) (WC) [in Lua]
 void
-wdGetTextBounds(canvas,x,y,s,rect)
+wdGetTextBounds(canvas,x,y,s)
                 SV* canvas;
                 double x;
                 double y;
@@ -3300,7 +3299,7 @@ wdMultiLineVectorText(canvas,x,y,s)
 # void wdCanvasGetVectorTextBounds(cdCanvas* canvas, const char* s, double x, double y, double *rect);
 # canvas:wGetVectorTextBounds(text: string, x, y: number) -> (rect: table) [in Lua] 
 void
-wdGetVectorTextBounds(canvas,s,x,y,rect)
+wdGetVectorTextBounds(canvas,s,x,y)
                 SV* canvas;
                 const char* s;
                 double x;

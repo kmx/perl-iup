@@ -26,6 +26,10 @@
 - pplot: note in doc that DS_ has to be set after ->PPlotEnd()
 - tree: note in doc that tree->SetAttribute has to go after dialog->Show
 
+######## COSMETICS: cdKillCanvas
+- see examples/2-canvas/simpledraw.pl
+- why we need 'undef $canvas' and '$canvas->cdKillCanvas()' is not enough?
+
 ######## MAYBE: access child=>[...] items like this
  $mybox = IUP::Hbox->new( child=>[ $bt1, $bt2, $bt3] );
  $mybox->[0]->FGCOLOR("255 0 0");   # changes bt1 foreground color
