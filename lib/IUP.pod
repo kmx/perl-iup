@@ -42,7 +42,7 @@ On all platform it uses native GUI widgets.
 
 =end html
 
-B<Source code:> see L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples//1-apps/app-sample1.pl>
+B<Source code:> see L<1-apps/app-sample1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.002_13/examples//1-apps/app-sample1.pl>
 
 =head2 IUP's Strengths
 
@@ -99,7 +99,7 @@ they are handled by separate L<Alien::IUP|Alien::IUP> module.
 
 At this point we show just basic ideas behind IUP based GUI applications.
 For more details see L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>.
-Or if you wanna skip the theory you can go directly to L<examples|http://cpansearch.perl.org/src/KMX/IUP-0.002_12/examples/>
+Or if you wanna skip the theory you can go directly to L<examples|http://cpansearch.perl.org/src/KMX/IUP-0.002_13/examples/>
 directory of IUP distribution.
 
 =head2 Simple GUI Dialogs
