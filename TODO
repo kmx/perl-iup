@@ -11,7 +11,23 @@
 
 ######## CODE/IMPORTANT: correct element destruction still needs some work
 - Internal/Element.pm (look for XXX-FIXME + XXX-CHECKLATER)
-   
+
+######## CODE/IMPORTANT: check typemap - maybe better alternative:
+>INPUT
+>O_OBJECT
+>	if( sv_isobject($arg) && (SvTYPE(SvRV($arg)) == SVt_PVMG) )
+>		$var = INT2PTR($type, SvIV((SV*)SvRV( $arg )));
+>	else{
+>		warn( \"${Package}::$func_name() -- $var is not a blessed SV reference\" );
+>		XSRETURN_UNDEF;
+>	}
+>
+>OUTPUT
+>O_OBJECT
+>	sv_setref_pv( $arg, CLASS, (void*)$var );
+Where is "the correct" typemap file available?
+Is T_PTROBJ ~ O_OBJECT?
+
 ######## TESTS/IMPORTANT: add more tests
 - split tests: t\*.t + all GUI-related >>> t\gui\*.t
 - maybe close after timeout (IUP::Timer -> return IUP_CLOSE)
