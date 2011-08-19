@@ -53,19 +53,22 @@ my $builder = $class->new(
   dist_author          => 'KMX <kmx@cpan.org>',
   dist_version_from    => 'lib/IUP.pm',
   requires             => {
+    'perl'                 => 5.008008,
     'Carp'                 => 0,
     'constant'             => 0,
   },
   build_requires       => { # need to have for running: ./Build (install|test)
-    'Module::Build'        => 0,
-    'Alien::IUP'           => 0.303,
+    'perl'                 => 5.008008,
+    'Module::Build'        => 0.36,
+    'Alien::IUP'           => 0.304,
     'Test::More'           => 0,
     'Carp'                 => 0,
     'constant'             => 0,
   },
   configure_requires   => { # need to have for running: perl Buil.PL
-    'Module::Build'        => 0,
-    'Alien::IUP'           => 0.303,
+    'perl'                 => 5.008008,
+    'Module::Build'        => 0.36,
+    'Alien::IUP'           => 0.304,
   },
   add_to_cleanup       => [ 'IUP-*' ],
   c_source             => 'src', # ppport.h
