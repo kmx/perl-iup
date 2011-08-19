@@ -43,7 +43,7 @@ T_PTROBJ
 
 O_OBJECT
 	if( sv_isobject($arg) && (SvTYPE(SvRV($arg)) == SVt_PVMG) ) {
-           void** pointers = (void**)(SvIV((SV*)SvRV( $arg ))); 
+           void** pointers = INT2PTR(void**, SvIV((SV*)SvRV( $arg ))); 
            $var = ($type)(pointers[0]);
         } else if ($arg == 0) {
            XSRETURN(0);

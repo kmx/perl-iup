@@ -1,5 +1,10 @@
 =head1 Revision history for IUP
 
+=head2 19/08/2011 - 0.004
+
+ - forcing newer Alien::IUP (to make IUP install smoothly on cygwin)
+ - fixing cygwin build failures
+
 =head2 18/08/2011 - 0.003
 
  - much better documentation
