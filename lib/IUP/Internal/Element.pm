@@ -5,10 +5,33 @@ use warnings;
 
 use IUP::Internal::LibraryIup;
 use IUP::Internal::Callback;
-use IUP::Internal::Attribute;
 use IUP::Constants qw(IUP_CURRENT);
 use Carp;
 use Scalar::Util qw(blessed looks_like_number);
+
+sub import {
+  my $p = shift;
+  #warn "### IUP::Internal::Element->import($p) called";
+
+  # callback accessors
+  if (my $c = IUP::Internal::Callback::_get_cb_eval_code($p)) {
+    eval($c);
+    die "###ERROR### import failed(cb) '$p': " . $@ if $@;
+  }
+}
+
+sub AUTOLOAD {
+  (my $name = our $AUTOLOAD) =~ s{.*::}{}mxs;
+  #return (scalar(@_)>1) ? $_[0]->SetAttribute($name, $_[1]) : $_[0]->GetAttribute($name);
+  die "FATAL: unknown method '$name'" unless $name =~ /^[A-Z0-9_]+$/;
+  splice(@_, 1, 0, $name);
+  goto &SetAttribute if scalar(@_)>2;
+  goto &GetAttribute;
+}
+
+sub test {
+warn "TEST\n";
+}
 
 sub BEGIN {
   #warn "***DEBUG*** IUP::Internal::Element::BEGIN() started\n";
@@ -95,24 +118,6 @@ sub ihandle {
   else {
     return $_[0]->{'!int!ihandle'};
   }
-}
-
-sub import {
-  my $p = shift;
-  #warn "### IUP::Internal::Element->import($p) called";
-
-  # callback accessors
-  if (my $c = IUP::Internal::Callback::_get_cb_eval_code($p)) {
-    eval($c);
-    die "###ERROR### import failed(cb) '$p': " . $@ if $@;
-  }
-  
-  # attribute accessors
-  if (my $a = IUP::Internal::Attribute::_get_attr_eval_code($p)) {
-    eval($a);
-    die "###ERROR### import failed(attr) '$p': " . $@ if $@;
-  }
-  
 }
 
 sub GetName {
@@ -674,7 +679,7 @@ sub _proc_child_param_single {
 
 1;
 
-__END__
+=pod
 
 =head1 NAME
 
