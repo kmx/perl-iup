@@ -4,6 +4,16 @@
 
 ##########################################################
 
+UTF8
+#ifdef sv_utf8_decode
+        sv_utf8_decode(sv);
+#else
+        SvUTF8_on(sv);
+#endif
+
+######## IDEA:
+- add: provide: Alien::IUP::ConfigData to Build.PL
+
 ######## POD/IMPORTANT: 
 - finish pod for IUP::Canvas::(Palette|Pattern|Stipple|Bitmap)
 - finish pod for IUP::Manual::* (CB/AT accessors)
