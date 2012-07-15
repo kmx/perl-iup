@@ -2,76 +2,39 @@
 TYPEMAP
 
 #string (char*) with automatic NULL<->undef conversion on input/output
-char *			T_STR_OR_NULL
-const char *		T_STR_OR_NULL
+char *                  T_STR_OR_NULL
+const char *            T_STR_OR_NULL
 
 #pointer with automatic NULL<->undef conversion on input/output
-unsigned char *		T_PTR_OR_NULL
-Ihandle *		T_PTR_OR_NULL
-cdCanvas *		T_PTR_OR_NULL
-#xxxIcallback		T_PTR_OR_NULL
-#xxxvoid *		T_PTR_OR_NULL
+unsigned char *         T_PTR_OR_NULL
+Ihandle *               T_PTR_OR_NULL
+cdCanvas *              T_PTR_OR_NULL
 
 #structs with automatic conversion to perl classes
-cdBitmap *		O_OBJECT
-IUPinternal_cdPalette * O_OBJECT
-IUPinternal_cdPattern * O_OBJECT
-IUPinternal_cdStipple * O_OBJECT
-
-cdImage *		O_OBJECT
-cdState *		O_OBJECT
-cdContext *		O_OBJECT
+IUP::Canvas::Bitmap     T_PTROBJ
+IUP::Canvas::Palette    T_PTROBJ
+IUP::Canvas::Pattern    T_PTROBJ
+IUP::Canvas::Stipple    T_PTROBJ
+IUP::Canvas::InternalServerImage  T_PTROBJ
+IUP::Canvas::InternalState        T_PTROBJ
+IUP::Canvas::InternalContext      T_PTROBJ
 
 ###########################
 INPUT
 
 T_PTR_OR_NULL
-	$var = (SvIOK($arg)) ? INT2PTR($type,SvIVX($arg)) : NULL;
+        $var = (SvIOK($arg)) ? INT2PTR($type,SvIVX($arg)) : NULL;
 
 T_STR_OR_NULL
-	$var = (SvOK($arg)) ? SvPV_nolen($arg) : NULL;
-
-T_PTROBJ
-	if (SvROK($arg) && sv_derived_from($arg, \"${ntype}\")) {
-	    IV tmp = SvIV((SV*)SvRV($arg));
-	    $var = INT2PTR($type,tmp);
-	}
-	else
-	    Perl_croak(aTHX_ \"%s: %s is not of type %s\",
-			${$ALIAS?\q[GvNAME(CvGV(cv))]:\qq[\"$pname\"]},
-			\"$var\", \"$ntype\") 
-
-O_OBJECT
-	if( sv_isobject($arg) && (SvTYPE(SvRV($arg)) == SVt_PVMG) ) {
-           void** pointers = INT2PTR(void**, SvIV((SV*)SvRV( $arg ))); 
-           $var = ($type)(pointers[0]);
-        } else if ($arg == 0) {
-           XSRETURN(0);
-        } else {
-           XSRETURN_UNDEF;
-        }
+        $var = (SvOK($arg)) ? SvPV_nolen($arg) : NULL;
 
 ###########################
 OUTPUT
 
 T_PTR_OR_NULL
-	if ($var==NULL) XSRETURN_UNDEF;
-	else sv_setiv($arg, PTR2IV($var));
+        if ($var==NULL) XSRETURN_UNDEF;
+        else sv_setiv($arg, PTR2IV($var));
 
 T_STR_OR_NULL
-	if ($var==NULL) XSRETURN_UNDEF;
-	else sv_setpv($arg, $var);
-
-T_PTROBJ
-        sv_setref_pv($arg, \"${ntype}\", (void*)$var);
-        
-# The Perl object is blessed into 'CLASS', which should be a char* having the name of the package for the blessing.
-O_OBJECT
-        if ($var) {
-          void** pointers = malloc(2 * sizeof(void*));
-          pointers[0] = (void*)$var;
-          pointers[1] = (void*)PERL_GET_CONTEXT;
-  	  sv_setref_pv( $arg, CLASS, (void*)pointers );
-        } else {
-          XSRETURN_UNDEF;
-        }
+        if ($var==NULL) XSRETURN_UNDEF;
+        else sv_setpv($arg, $var);

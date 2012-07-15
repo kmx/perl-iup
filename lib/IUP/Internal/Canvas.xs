@@ -323,19 +323,24 @@ int AV2uchar2D(SV *A1, unsigned char **data, int *w, int *h) {
 typedef struct __IUPinternal_cdPalette {
   int n;
   long *palette;
-} IUPinternal_cdPalette;
+} *IUP__Canvas__Palette;
 
 typedef struct __IUPinternal_cdPattern {
   int w;
   int h;
   long *pattern;
-} IUPinternal_cdPattern;
+} *IUP__Canvas__Pattern;
 
 typedef struct __IUPinternal_cdStipple {
   int w;
   int h;
   unsigned char *fgbg;
-} IUPinternal_cdStipple;
+} *IUP__Canvas__Stipple;
+
+typedef cdImage *IUP__Canvas__InternalServerImage;
+typedef cdState *IUP__Canvas__InternalState;
+typedef cdContext *IUP__Canvas__InternalContext;
+typedef cdBitmap *IUP__Canvas__Bitmap;
 
 cdBitmap* BitmapFromFile(char * file_name) {
   imImage *image;
@@ -367,11 +372,10 @@ cdBitmap* BitmapFromFile(char * file_name) {
 
 MODULE = IUP::Canvas::Stipple        PACKAGE = IUP::Canvas::Stipple   PREFIX = __Stipple__
 
-IUPinternal_cdStipple *
+IUP::Canvas::Stipple
 __Stipple__new(CLASS,...)
                 char *CLASS
         INIT:
-                IUPinternal_cdStipple *p;
                 int w, h, i;
                 unsigned char *data;
         CODE:
@@ -383,21 +387,20 @@ __Stipple__new(CLASS,...)
                   w = SvIV(ST(1));
                   h = SvIV(ST(2));
                   if (w<=0 || h<=0) XSRETURN_UNDEF;
-                  data = malloc(sizeof(long)*w*h);
+                  data = malloc(sizeof(long)*w*h);                  
                   if (!data) XSRETURN_UNDEF;
                   for(i=0; i<w*h; i++) data[i] = 0;
                 }
-                p = malloc(sizeof(IUPinternal_cdStipple));                
-                p->w = w;
-                p->h = h;
-                p->fgbg = data;
-                RETVAL = p;
+                Newz(0, RETVAL, 1, struct __IUPinternal_cdStipple);
+                RETVAL->w = w;
+                RETVAL->h = h;
+                RETVAL->fgbg = data;
         OUTPUT:
                 RETVAL
 
 unsigned char
 __Stipple__Pixel(self,x,y,...)
-                IUPinternal_cdStipple *self;
+                IUP::Canvas::Stipple self;
                 int x;
                 int y;
         CODE:
@@ -413,7 +416,7 @@ __Stipple__Pixel(self,x,y,...)
 
 int
 __Stipple__Width(self)
-                IUPinternal_cdStipple * self
+                IUP::Canvas::Stipple self;
         CODE:
                 RETVAL = self->w;
         OUTPUT:
@@ -421,7 +424,7 @@ __Stipple__Width(self)
 
 int
 __Stipple__Height(self)
-                IUPinternal_cdStipple * self
+                IUP::Canvas::Stipple self
         CODE:
                 RETVAL = self->h;
         OUTPUT:
@@ -429,7 +432,7 @@ __Stipple__Height(self)
 
 SV*
 __Stipple__Data(self)
-                IUPinternal_cdStipple * self
+                IUP::Canvas::Stipple self
         CODE:
                 RETVAL = uchar2D2AV(self->fgbg, self->w, self->h);
         OUTPUT:
@@ -437,11 +440,10 @@ __Stipple__Data(self)
 
 MODULE = IUP::Canvas::Pattern        PACKAGE = IUP::Canvas::Pattern   PREFIX = __Pattern__
 
-IUPinternal_cdPattern *
+IUP::Canvas::Pattern
 __Pattern__new(CLASS,...)
                 char *CLASS
         INIT:
-                IUPinternal_cdPattern *p;
                 int w, h, i;
                 long *data;
         CODE:
@@ -456,17 +458,16 @@ __Pattern__new(CLASS,...)
                   if (!data) XSRETURN_UNDEF;
                   for(i=0; i<w*h; i++) data[i] = 0;
                 }
-                p = malloc(sizeof(IUPinternal_cdPattern));                
-                p->w = w;
-                p->h = h;
-                p->pattern = data;
-                RETVAL = p;
+                Newz(0, RETVAL, 1, struct __IUPinternal_cdPattern);
+                RETVAL->w = w;
+                RETVAL->h = h;
+                RETVAL->pattern = data;
         OUTPUT:
                 RETVAL
 
 long
 __Pattern__Pixel(self,x,y,...)
-                IUPinternal_cdPattern *self;
+                IUP::Canvas::Pattern self;
                 int x;
                 int y;
         CODE:
@@ -482,7 +483,7 @@ __Pattern__Pixel(self,x,y,...)
 
 int
 __Pattern__Width(self)
-                IUPinternal_cdPattern * self
+                IUP::Canvas::Pattern self
         CODE:
                 RETVAL = self->w;
         OUTPUT:
@@ -490,7 +491,7 @@ __Pattern__Width(self)
 
 int
 __Pattern__Height(self)
-                IUPinternal_cdPattern * self
+                IUP::Canvas::Pattern self
         CODE:
                 RETVAL = self->h;
         OUTPUT:
@@ -498,7 +499,7 @@ __Pattern__Height(self)
 
 SV*
 __Pattern__Data(self)
-                IUPinternal_cdPattern * self
+                IUP::Canvas::Pattern self
         CODE:
                 RETVAL = long2D2AV(self->pattern, self->w, self->h);
         OUTPUT:
@@ -506,12 +507,11 @@ __Pattern__Data(self)
 
 MODULE = IUP::Canvas::Palette        PACKAGE = IUP::Canvas::Palette   PREFIX = __Palette__
 
-IUPinternal_cdPalette *
+IUP::Canvas::Palette
 __Palette__new(CLASS,param)
                 char *CLASS
                 SV *param
         INIT:
-                IUPinternal_cdPalette * p;
                 int n, i;
                 long *data, c;
         CODE:
@@ -527,16 +527,15 @@ __Palette__new(CLASS,param)
                   if (!data) XSRETURN_UNDEF;
                   for(i=0; i<n; i++) data[i] = c;
                 }
-                p = malloc(sizeof(IUPinternal_cdPalette));
-                p->n = n;
-                p->palette = data;
-                RETVAL = p;
+                Newz(0, RETVAL, 1, struct __IUPinternal_cdPalette);
+                RETVAL->n = n;
+                RETVAL->palette = data;
         OUTPUT:
                 RETVAL
 
 void
 __Palette__DESTROY(self)
-                IUPinternal_cdPalette * self;
+                IUP::Canvas::Palette self;
         CODE:
                 if (self) {
                   if (self->palette) free(self->palette);
@@ -545,7 +544,7 @@ __Palette__DESTROY(self)
 
 long
 __Palette__Color(self,i,...)
-                IUPinternal_cdPalette * self;
+                IUP::Canvas::Palette self;
                 int i;
         CODE:
                 if ((i >= self->n) || (i < 0)) XSRETURN_UNDEF;
@@ -559,7 +558,7 @@ __Palette__Color(self,i,...)
 
 int
 __Palette__Size(self)
-                IUPinternal_cdPalette * self
+                IUP::Canvas::Palette self
         CODE:
                 RETVAL = self->n;
         OUTPUT:
@@ -567,7 +566,7 @@ __Palette__Size(self)
 
 SV*
 __Palette__Data(self)
-                IUPinternal_cdPalette * self
+                IUP::Canvas::Palette self
         CODE:
                 RETVAL = long2AV(self->palette, self->n);
         OUTPUT:
@@ -575,7 +574,7 @@ __Palette__Data(self)
 
 MODULE = IUP::Canvas::Bitmap        PACKAGE = IUP::Canvas::Bitmap   PREFIX = __Bitmap__
 
-cdBitmap *
+IUP::Canvas::Bitmap
 __Bitmap__new(CLASS,...)
                 char *CLASS
         INIT:
@@ -667,7 +666,7 @@ __Bitmap__new(CLASS,...)
 
 void
 __Bitmap__SetRect(self,xmin,xmax,ymin,ymax)
-                cdBitmap* self;
+                IUP::Canvas::Bitmap self;
                 int xmin;
                 int xmax;
                 int ymin;
@@ -675,12 +674,11 @@ __Bitmap__SetRect(self,xmin,xmax,ymin,ymax)
         CODE:
                 cdBitmapSetRect(self,xmin,xmax,ymin,ymax);
 
-cdBitmap*
+IUP::Canvas::Bitmap
 __Bitmap__RGB2Map(self)
-                cdBitmap* self;
+                IUP::Canvas::Bitmap self;
         INIT:
-                cdBitmap* bitmap_map;
-                char *CLASS = "IUP::Canvas::Bitmap"; /* XXX-CHECKLATER ugly hack to handle return value conversion */
+                //char *CLASS = "IUP::Canvas::Bitmap"; /* XXX-CHECKLATER ugly hack to handle return value conversion */
                 unsigned char* index;
                 long* colors;
         CODE:
@@ -691,16 +689,15 @@ __Bitmap__RGB2Map(self)
                   if (colors) free(colors);
                   XSRETURN_UNDEF;
                 }
-                bitmap_map = cdInitBitmap(self->w, self->h, CD_MAP, index, colors);
-                if (!bitmap_map) XSRETURN_UNDEF;
-                cdBitmapRGB2Map(self,bitmap_map);
-                RETVAL = bitmap_map;
+                RETVAL = cdInitBitmap(self->w, self->h, CD_MAP, index, colors);
+                if (!RETVAL) XSRETURN_UNDEF;
+                cdBitmapRGB2Map(self,RETVAL);
         OUTPUT:
                 RETVAL
 
 int
 __Bitmap__Width(self)
-                cdBitmap * self;
+                IUP::Canvas::Bitmap self;
         CODE:
                 RETVAL = self->w;
         OUTPUT:
@@ -708,7 +705,7 @@ __Bitmap__Width(self)
 
 int
 __Bitmap__Height(self)
-                cdBitmap * self;
+                IUP::Canvas::Bitmap self;
         CODE:
                 RETVAL = self->h;
         OUTPUT:
@@ -716,7 +713,7 @@ __Bitmap__Height(self)
 
 int
 __Bitmap__Type(self)
-                cdBitmap * self;
+                IUP::Canvas::Bitmap self;
         CODE:
                 RETVAL = self->type;
         OUTPUT:
@@ -724,7 +721,7 @@ __Bitmap__Type(self)
 
 SV*
 __Bitmap__Data(self)
-                cdBitmap * self;
+                IUP::Canvas::Bitmap self;
         CODE:
                 unsigned char *r, *g, *b, *a, *m;
                 /* warn("XXX-DEBUG: Bitmap->Data type=%d, w=%d h=%d\n",self->type,self->w,self->h); */
@@ -757,7 +754,7 @@ __Bitmap__Data(self)
 
 SV*
 __Bitmap__Palette(self)
-                cdBitmap * self;
+                IUP::Canvas::Bitmap self;
         CODE:
                 long *c;
                 unsigned char *m;
@@ -774,7 +771,7 @@ __Bitmap__Palette(self)
 
 long
 __Bitmap__Color(self,n,...)
-                cdBitmap * self;
+                IUP::Canvas::Bitmap self;
                 int n;
         CODE:
                 long *c;
@@ -792,7 +789,7 @@ __Bitmap__Color(self,n,...)
 
 void
 __Bitmap__Pixel(self,x,y,...)
-                cdBitmap * self;
+                IUP::Canvas::Bitmap self;
                 int x;
                 int y;
         PPCODE:
@@ -865,7 +862,7 @@ __Bitmap__Pixel(self,x,y,...)
 
 int
 __Bitmap__SaveAs(self,filename,format,...)
-                cdBitmap * self;
+                IUP::Canvas::Bitmap self;
                 char *filename;
                 char *format;
         CODE:
@@ -917,7 +914,7 @@ __Bitmap__SaveAs(self,filename,format,...)
 
 void
 __Bitmap__DESTROY(self)
-                cdBitmap * self;
+                IUP::Canvas::Bitmap self;
         CODE:
                 cdKillBitmap(self);
 
@@ -927,7 +924,7 @@ MODULE = IUP::Canvas::InternalServerImage        PACKAGE = IUP::Canvas::Internal
 
 void
 __InternalServerImage__DESTROY(self)
-                cdImage * self;
+                IUP::Canvas::InternalServerImage self;
         CODE:
                 cdKillImage(self);
 
@@ -1011,8 +1008,8 @@ _cdCreateCanvas_IMAGERGB_dpi_helper(file_name)
 
 cdCanvas*
 _cdCreateCanvas_IMAGERGB_from_bitmap(bitmap,resolution)
+                IUP::Canvas::Bitmap bitmap;
                 double resolution;
-                cdBitmap *bitmap;
         INIT:
                 unsigned char* r;
                 unsigned char* g;
@@ -1155,7 +1152,7 @@ cdVersionNumber(pkg)
 
 #### Original C function from <.../cd/include/cd.h>
 # cdContext* cdCanvasGetContext(cdCanvas* canvas);
-cdContext*
+IUP::Canvas::InternalContext
 cdGetContext(canvas)
                 SV* canvas;
         INIT:
@@ -1219,7 +1216,7 @@ cdUseContextPlus(use)
 # unsigned long cdContextCaps(cdContext *context);
 unsigned long
 cdContextCaps(context)
-                cdContext* context;
+                IUP::Canvas::InternalContext context;
         CODE:
                 RETVAL = cdContextCaps(context);
         OUTPUT:
@@ -1254,11 +1251,11 @@ cdClear(canvas)
 
 #### Original C function from <.../cd/include/cd.h>
 # cdState* cdCanvasSaveState(cdCanvas* canvas);
-cdState*
+IUP::Canvas::InternalState
 cdSaveState(canvas)
                 SV* canvas;
         INIT:
-                char *CLASS = "IUP::Canvas::InternalState"; /* XXX-CHECKLATER ugly hack to handle return value conversion */
+                //char *CLASS = "IUP::Canvas::InternalState"; /* XXX-CHECKLATER ugly hack to handle return value conversion */
         CODE:
                 RETVAL = cdCanvasSaveState(ref2cnv(canvas));
         OUTPUT:
@@ -1269,7 +1266,7 @@ cdSaveState(canvas)
 void
 cdRestoreState(canvas,state__)
                 SV* canvas;
-                cdState* state__;
+                IUP::Canvas::InternalState state__;
         CODE:
                 cdCanvasRestoreState(ref2cnv(canvas),state__);
 
@@ -1277,7 +1274,7 @@ cdRestoreState(canvas,state__)
 # void cdReleaseState(cdState* state);
 void
 cdReleaseState(state)
-                cdState* state;
+                IUP::Canvas::InternalState state;
         CODE:
                 cdReleaseState(state);
 
@@ -1318,7 +1315,7 @@ cdGetAttribute(canvas,name)
 int
 cdPlay(canvas,context,xmin,xmax,ymin,ymax,data)
                 SV* canvas;
-                cdContext* context;
+                IUP::Canvas::InternalContext context;
                 int xmin;
                 int xmax;
                 int ymin;
@@ -2127,35 +2124,33 @@ cdHatch(canvas,style)
 void
 cdStipple(canvas,stipple)
                 SV* canvas;
-                IUPinternal_cdStipple *stipple;
+                IUP::Canvas::Stipple stipple;
         CODE:
                 cdCanvasStipple(ref2cnv(canvas),stipple->w,stipple->h,stipple->fgbg);
 
 #### Original C function from <.../cd/include/cd.h>
 # unsigned char* cdCanvasGetStipple(cdCanvas* canvas, int *n, int *m);
 # canvas:GetStipple() - > (stipple: cdStipple) [in Lua]
-IUPinternal_cdStipple *
+IUP::Canvas::Stipple
 cdGetStipple(canvas)
                 SV* canvas;
         INIT:
                 int w, h;
                 unsigned char *data;
-                IUPinternal_cdStipple *s;
                 char *CLASS = "IUP::Canvas::Stipple";  /* XXX-CHECKLATER ugly hack to handle return value conversion */
         CODE:
                 data = cdCanvasGetStipple(ref2cnv(canvas),&w,&h);
                 if (!data || w<=0 || h<=0) XSRETURN_UNDEF;
-                s = malloc(sizeof(IUPinternal_cdStipple));                
-                if (!s) XSRETURN_UNDEF;
-                s->fgbg = malloc(sizeof(unsigned long)*w*h);
-                if (!s->fgbg) {
-                  free(s);
+                Newz(0, RETVAL, 1, struct __IUPinternal_cdStipple);
+                if (!RETVAL) XSRETURN_UNDEF;
+                RETVAL->fgbg = malloc(sizeof(unsigned long)*w*h);
+                if (!RETVAL->fgbg) {
+                  free(RETVAL);
                   XSRETURN_UNDEF;
                 }
-                s->w = w;
-                s->h = h;
-                memcpy(s->fgbg, data, w*h*sizeof(unsigned char)); /* XXX-CHECKLATER we are returning a copy of the data */
-                RETVAL = s;
+                RETVAL->w = w;
+                RETVAL->h = h;
+                memcpy(RETVAL->fgbg, data, w*h*sizeof(unsigned char)); /* XXX-CHECKLATER we are returning a copy of the data */
         OUTPUT:
                 RETVAL
 
@@ -2165,35 +2160,33 @@ cdGetStipple(canvas)
 void
 cdPattern(canvas,pattern)
                 SV* canvas;
-                IUPinternal_cdPattern *pattern;
+                IUP::Canvas::Pattern pattern;
         CODE:
                 cdCanvasPattern(ref2cnv(canvas),pattern->w,pattern->h,pattern->pattern);
 
 #### Original C function from <.../cd/include/cd.h>
 # long* cdCanvasGetPattern(cdCanvas* canvas, int* w, int* h);
 # canvas:GetPattern() - > (pattern: cdPattern) [in Lua]
-IUPinternal_cdPattern *
+IUP::Canvas::Pattern
 cdGetPattern(canvas)
                 SV* canvas;                
         INIT:
                 int w, h;
                 long *data;
-                IUPinternal_cdPattern *p;
                 char *CLASS = "IUP::Canvas::Pattern";  /* XXX-CHECKLATER ugly hack to handle return value conversion */
         CODE:
                 data = cdCanvasGetPattern(ref2cnv(canvas),&w,&h);
                 if (!data || w<=0 || h<=0) XSRETURN_UNDEF;
-                p = malloc(sizeof(IUPinternal_cdPattern));
-                if (!p) XSRETURN_UNDEF;
-                p->pattern = malloc(sizeof(long)*w*h);
-                if (!p->pattern) {
-                  free(p);
+                Newz(0, RETVAL, 1, struct __IUPinternal_cdPattern);
+                if (!RETVAL) XSRETURN_UNDEF;
+                RETVAL->pattern = malloc(sizeof(long)*w*h);
+                if (!RETVAL->pattern) {
+                  free(RETVAL);
                   XSRETURN_UNDEF;
                 }
-                p->w = w;
-                p->h = h;
-                memcpy(p->pattern, data, w*h*sizeof(long)); /* XXX-CHECKLATER we are returning a copy of the data */
-                RETVAL = p;
+                RETVAL->w = w;
+                RETVAL->h = h;
+                memcpy(RETVAL->pattern, data, w*h*sizeof(long)); /* XXX-CHECKLATER we are returning a copy of the data */
         OUTPUT:
                 RETVAL
 
@@ -2555,7 +2548,7 @@ cdGetColorPlanes(canvas)
 void
 cdPalette(canvas,palette,mode)
                 SV *canvas;
-                IUPinternal_cdPalette *palette;
+                IUP::Canvas::Palette palette;
                 int mode;
         INIT:
                 int n;
@@ -2565,7 +2558,7 @@ cdPalette(canvas,palette,mode)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetImage(cdCanvas* canvas, cdImage* image, int x, int y);
-cdImage*
+IUP::Canvas::InternalServerImage
 cdGetImage(canvas,x,y,w,h)
                 SV* canvas;                
                 int x;
@@ -2573,13 +2566,11 @@ cdGetImage(canvas,x,y,w,h)
                 int w;
                 int h;
         INIT:
-                cdImage* image;
-                char *CLASS = "IUP::Canvas::InternalServerImage";  /* XXX-CHECKLATER ugly hack to handle return value conversion */
+                //char *CLASS = "IUP::Canvas::InternalServerImage";  /* XXX-CHECKLATER ugly hack to handle return value conversion */
         CODE:
-                image = cdCanvasCreateImage(ref2cnv(canvas),w,h);
-                if (!image) XSRETURN_UNDEF;
-                cdCanvasGetImage(ref2cnv(canvas),image,x,y);
-                RETVAL = image;
+                RETVAL = cdCanvasCreateImage(ref2cnv(canvas),w,h);
+                if (!RETVAL) XSRETURN_UNDEF;
+                cdCanvasGetImage(ref2cnv(canvas),RETVAL,x,y);
         OUTPUT:
                 RETVAL
 
@@ -2588,7 +2579,7 @@ cdGetImage(canvas,x,y,w,h)
 void
 cdPutImageRect(canvas,image,x,y,xmin,xmax,ymin,ymax)
                 SV* canvas;
-                cdImage* image;
+                IUP::Canvas::InternalServerImage image;
                 int x;
                 int y;
                 int xmin;
@@ -2617,7 +2608,7 @@ cdScrollArea(canvas,xmin,xmax,ymin,ymax,dx,dy)
 void
 cdPutBitmap(canvas,bitmap,x,y,w,h)
                 SV* canvas;
-                cdBitmap* bitmap;
+                IUP::Canvas::Bitmap bitmap;
                 int x;
                 int y;
                 int w;
@@ -2627,7 +2618,7 @@ cdPutBitmap(canvas,bitmap,x,y,w,h)
 
 #### Original C function from <.../cd/include/cd.h>
 # void cdCanvasGetBitmap(cdCanvas* canvas, cdBitmap* bitmap, int x, int y);
-cdBitmap*
+IUP::Canvas::Bitmap
 cdGetBitmap(canvas,x,y,w,h)
                 SV* canvas;
                 int x;
@@ -3068,7 +3059,7 @@ wdText(canvas,x,y,s)
 void
 wdPutImageRect(canvas,image,x,y,xmin,xmax,ymin,ymax)
                 SV* canvas;
-                cdImage* image;
+                IUP::Canvas::InternalServerImage image;
                 double x;
                 double y;
                 int xmin;
@@ -3083,7 +3074,7 @@ wdPutImageRect(canvas,image,x,y,xmin,xmax,ymin,ymax)
 void
 wdPutBitmap(canvas,bitmap,x,y,w,h)
                 SV* canvas;
-                cdBitmap* bitmap;
+                IUP::Canvas::Bitmap bitmap;
                 double x;
                 double y;
                 double w;
@@ -3224,7 +3215,7 @@ wdGetTextBounds(canvas,x,y,s)
 void
 wdStipple(canvas,stipple,w_mm,h_mm)
                 SV* canvas;
-                IUPinternal_cdStipple *stipple;
+                IUP::Canvas::Stipple stipple;
                 double w_mm;
                 double h_mm;
         CODE:
@@ -3236,7 +3227,7 @@ wdStipple(canvas,stipple,w_mm,h_mm)
 void
 wdPattern(canvas,pattern,w_mm,h_mm)
                 SV* canvas;
-                IUPinternal_cdPattern *pattern;
+                IUP::Canvas::Pattern pattern;
                 double w_mm;
                 double h_mm;
         CODE:
