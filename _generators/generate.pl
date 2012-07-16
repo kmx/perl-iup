@@ -18,7 +18,6 @@ my $getopt_rv = GetOptions(
 pod2usage(-exitstatus=>0, -verbose=>2) if $g_help || !$getopt_rv;
 
 my $cb_csv = $FindBin::Bin.'/Callback.csv';
-my $at_csv = $FindBin::Bin.'/Attribute.csv';
 my $ky_csv = $FindBin::Bin.'/Key.csv';
 
 my $pfunc_default = '_execute_cb';
@@ -69,7 +68,7 @@ sub cb_generate1 {
       if ($h->{$m}->{$a}->{c_params} =~ /count/) {
         warn "[info] before: $h->{$m}->{$a}->{c_params}\n";
         $h->{$m}->{$a}->{c_params} =~ s/([\s,])count([\s,])/$1count_$2/;
-	warn "[info] after : $h->{$m}->{$a}->{c_params}\n";
+        warn "[info] after : $h->{$m}->{$a}->{c_params}\n";
       }
       
       $h->{$m}->{$a}->{xs_internal_cb_params} = "($h->{$m}->{$a}->{c_params})";
@@ -80,34 +79,34 @@ sub cb_generate1 {
       if ($c_retval eq 'int') {
         $h->{$m}->{$a}->{xs_declare_sv_rv} = 'SV * SV_rv';
         $h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPi';
-	$h->{$m}->{$a}->{xs_internal_default_rv} = 'IUP_DEFAULT';
-	push @l_rvname, '$rv_num';
+        $h->{$m}->{$a}->{xs_internal_default_rv} = 'IUP_DEFAULT';
+        push @l_rvname, '$rv_num';
       }
       elsif ($c_retval eq 'char*') {
         $h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPpx';
-	$h->{$m}->{$a}->{xs_internal_default_rv} = 'NULL';
-	push @l_rvname, '$rv_string';
+        $h->{$m}->{$a}->{xs_internal_default_rv} = 'NULL';
+        push @l_rvname, '$rv_string';
       }
       else {
         warn "###WARNING### This should not happen m=$m a=$a c_retval=$c_retval (assuming retval='int')";
-	$c_retval = 'int';
+        $c_retval = 'int';
         $h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPi';
-	$h->{$m}->{$a}->{xs_internal_default_rv} = '0';
-	push @l_rvname, '$rv_num';
+        $h->{$m}->{$a}->{xs_internal_default_rv} = '0';
+        push @l_rvname, '$rv_num';
       }      
 
       if ($h->{$m}->{$a}->{c_params} eq '#') {
         warn "###WARNING### This should not happen m=$m a=$a c_params=#";
-	my $t = $h->{$m}->{$a}->{type};
-	my $p = 'Ihandle* ih';
-	if (defined $type2params{$t}) {
-	  $p .= ",$type2params{$t}";
-	}
-	else {
-	  warn "###WARNING### No hint in type2params for '$t'" unless $type2params{$t};	  
-	}
-	$h->{$m}->{$a}->{c_params} = $p;
-	warn "###WARNING### assuming params='$p'";	
+        my $t = $h->{$m}->{$a}->{type};
+        my $p = 'Ihandle* ih';
+        if (defined $type2params{$t}) {
+          $p .= ",$type2params{$t}";
+        }
+        else {
+          warn "###WARNING### No hint in type2params for '$t'" unless $type2params{$t};          
+        }
+        $h->{$m}->{$a}->{c_params} = $p;
+        warn "###WARNING### assuming params='$p'";        
       }
       
       my $pf = "_init_cb_$a\_$h->{$m}->{$a}->{type}";      
@@ -127,54 +126,54 @@ sub cb_generate1 {
       my @tp = split('', $tp_all_in_one);
       unless (scalar(@tp)+1==scalar(@fp)) {
         warn "###WARNING### [$m|$a] mismatch: '$h->{$m}->{$a}->{type}' vs. '$h->{$m}->{$a}->{c_params}'";
-	warn "###WARNING### tp=", Dumper(\@tp);
-	warn "###WARNING### fp=", Dumper(\@fp);
+        warn "###WARNING### tp=", Dumper(\@tp);
+        warn "###WARNING### fp=", Dumper(\@fp);
       }
       my $MULTITOUCH_CB_marker;
       for(my $i=1; $i<scalar(@fp); $i++) {
         my $n = 'xxx';
         if ($fp[$i] =~ /^.*?([^ ]*)$/) {
-	  $n = $1;	  
+          $n = $1;          
         }
-	else {
-	  die "this should not happen";
-	}	
+        else {
+          die "this should not happen";
+        }        
         if ($tp[$i-1] =~ /^(i|c)$/) {
-	  push @l_name, "\$$n";
-	  push @l_xspush, "XPUSHs(sv_2mortal(newSViv($n)));";
-	}
-	elsif ($tp[$i-1] =~ /^(n)$/) {
-	  push @l_name, "\$$n";
-	  push @l_xspush, "XPUSHs(ihandle2SV($n, element, \"!int!cb!$a!related\"));";
-	}
-	elsif ($tp[$i-1] =~ /^(v)$/) {
-	  push @l_name, "\$$n";
-	  push @l_xspush, "XPUSHs(canvas2SV($n, element, \"!int!cb!$a!related\"));";
-	}
-	elsif ($tp[$i-1] =~ /^(I)$/) {
-	  push @l_xspop, "*$n = POPi;"; # xxxTODO needs testing + pod update
-	  $rv_count++;
-	  push @l_rvname, "\$$n";
-	}
-	elsif ($tp[$i-1] =~ /^(F)$/) {
-	  push @l_xspop, "*$n = POPn;"; # xxxTODO needs testing + pod update
-	  $rv_count++;
-	  push @l_rvname, "\$$n";
-	}
-	elsif ($tp[$i-1] =~ /^(A)$/ && $tp_all_in_one eq 'Ai') {
+          push @l_name, "\$$n";
+          push @l_xspush, "XPUSHs(sv_2mortal(newSViv($n)));";
+        }
+        elsif ($tp[$i-1] =~ /^(n)$/) {
+          push @l_name, "\$$n";
+          push @l_xspush, "XPUSHs(ihandle2SV($n, element, \"!int!cb!$a!related\"));";
+        }
+        elsif ($tp[$i-1] =~ /^(v)$/) {
+          push @l_name, "\$$n";
+          push @l_xspush, "XPUSHs(canvas2SV($n, element, \"!int!cb!$a!related\"));";
+        }
+        elsif ($tp[$i-1] =~ /^(I)$/) {
+          push @l_xspop, "*$n = POPi;"; # xxxTODO needs testing + pod update
+          $rv_count++;
+          push @l_rvname, "\$$n";
+        }
+        elsif ($tp[$i-1] =~ /^(F)$/) {
+          push @l_xspop, "*$n = POPn;"; # xxxTODO needs testing + pod update
+          $rv_count++;
+          push @l_rvname, "\$$n";
+        }
+        elsif ($tp[$i-1] =~ /^(A)$/ && $tp_all_in_one eq 'Ai') {
           # hack for MULTISELECTION_CB MULTIUNSELECTION_CB
-	  push @l_name, "\@$n\_list";	  
+          push @l_name, "\@$n\_list";          
           push @l_xslocvar, "int loc_i;";
           push @l_xslocvar, "AV * r_$n;";
           push @l_xspush, "r_$n = newAV();";
           push @l_xspush, "for(loc_i=0; loc_i<n; loc_i++) av_push(r_$n, newSViv($n\[loc_i]));";
           push @l_xspush, "XPUSHs(sv_2mortal(newRV_noinc((SV *)r_$n)));"; #XXX-CHECKLATER-not-sure-about-this
-	}
+        }
         elsif ($tp[$i-1] =~ /^(A)$/ && $tp_all_in_one eq 'iAAAA') {
           # hack for MULTITOUCH_CB
           push @l_name, "\@$n\_list";
           push @l_xslocvar, "int loc_i;" unless $MULTITOUCH_CB_marker;
-	  push @l_xslocvar, "AV * r_$n;";
+          push @l_xslocvar, "AV * r_$n;";
           push @l_xspush, "r_$n = newAV();";
           push @l_xspush, "r_$n = (AV *)sv_2mortal((SV *)newAV());";
           push @l_xspush, "for(loc_i=0; loc_i<count_; loc_i++) av_push(r_$n, newSViv($n\[loc_i]));";
@@ -189,25 +188,25 @@ sub cb_generate1 {
           $h->{$m}->{$a}->{xs_spec_NODEREMOVED_CB} = 1;
           last;
         }
-	elsif ($tp[$i-1] =~ /^(f|d)$/) {
-	  push @l_name, "\$$n";
-	  push @l_xspush, "XPUSHs(sv_2mortal(newSVnv($n)));";
-	}
-	elsif ($tp[$i-1] =~ /^(s)$/) {
-	  push @l_name, "\$$n";
-	  push @l_xspush, "XPUSHs(sv_2mortal(newSVpv($n, 0)));";
-	}
-	elsif ($tp[$i-1] =~ /^(S)$/) {
+        elsif ($tp[$i-1] =~ /^(f|d)$/) {
+          push @l_name, "\$$n";
+          push @l_xspush, "XPUSHs(sv_2mortal(newSVnv($n)));";
+        }
+        elsif ($tp[$i-1] =~ /^(s)$/) {
+          push @l_name, "\$$n";
+          push @l_xspush, "XPUSHs(sv_2mortal(newSVpv($n, 0)));";
+        }
+        elsif ($tp[$i-1] =~ /^(S)$/) {
           warn "###ERROR THIS-IS-BROKEN\n";
           push @l_xslocvar, "SV * SV_$n;";
           push @l_xspop, "*$n = (SvOK(SV_$n)) ? SvPV_nolen(SV_$n) : NULL; /* XXX-not-sure-about-NULL */;";
-      	  push @l_xspop, "*SV_$n = POPs;";
-	  $rv_count++;
-	  push @l_rvname, "\$$n";
-	}
-	else {
-	  warn "###WARNING### [$m|$a] mismatch: '$h->{$m}->{$a}->{type}' vs. '$h->{$m}->{$a}->{c_params}'";
-	}
+                push @l_xspop, "*SV_$n = POPs;";
+          $rv_count++;
+          push @l_rvname, "\$$n";
+        }
+        else {
+          warn "###WARNING### [$m|$a] mismatch: '$h->{$m}->{$a}->{type}' vs. '$h->{$m}->{$a}->{c_params}'";
+        }
       }
       
       #die Dumper(\@l);
@@ -265,35 +264,14 @@ sub cb_hash2pmitems {
   return \@rv;
 }
 
-sub at_hash2list {
-  my $h = shift;
-  my @rv;
-  foreach my $m (sort keys %$h) {
-    my @a;
-    for my $a (sort keys %{$h->{$m}}) {  
-      push(@a, { name=>$a, flags=>$h->{$m}->{$a}->{flags}, valid=>1,
-                 c1=>$h->{$m}->{$a}->{c1}, c2=>$h->{$m}->{$a}->{c2},
-		 spaces=>' 'x(50-length($h->{$m}->{$a}->{flags})-length($a)),
-	       }
-      ) if $h->{$m}->{$a}->{valid};
-    }
-#warn ">>>processing $m $a ".Dumper(\@a);
-    push @rv, { module=>$m, attributes=>\@a };
-  }
-  return \@rv;
-}
-
 warn ">>>>[$0] Started!\n";
 
 my $tt = Template->new(ABSOLUTE=>1);
 my $cb_h = file2hash($cb_csv);
-my $at_h = file2hash($at_csv);
 
 # remove unsopported items
 delete $cb_h->{'IUP::WebBrowser'};
-delete $at_h->{'IUP::WebBrowser'};
 delete $cb_h->{'IUP::TuioClient'};
-delete $at_h->{'IUP::TuioClient'};
 
 #### CALLBACKS
 cb_generate1($cb_h);
@@ -304,13 +282,6 @@ my $cb_data1 = {
 #die Dumper($cb_data1);
 $tt->process($FindBin::Bin.'/Callback_xs.tt', $cb_data1, $g_dst.'/Callback.xs') || die $tt->error();
 $tt->process($FindBin::Bin.'/Callback_pm.tt', $cb_data1, $g_dst.'/Callback.pm') || die $tt->error();
-
-#### ATTRIBUTES
-my $at_data1 = {
-  alist => at_hash2list($at_h),
-};
-#die Dumper($at_data1);
-$tt->process($FindBin::Bin.'/Attribute_pm.tt', $at_data1, $g_dst.'/Attribute.pm') || die $tt->error();
 
 warn ">>>>[$0] Finished!\n";
 
@@ -328,4 +299,3 @@ generate.pl [options]
 
  Creates: Callback.pm  from Callback_pm.tt
           Callback.xs  from Callback_xs.tt
-          Attribute.pm from Attribute_pm.tt 
