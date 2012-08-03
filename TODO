@@ -11,9 +11,6 @@ UTF8
         SvUTF8_on(sv);
 #endif
 
-######## IDEA:
-- add: provide: Alien::IUP::ConfigData to Build.PL
-
 ######## POD/IMPORTANT: 
 - finish pod for IUP::Canvas::(Palette|Pattern|Stipple|Bitmap)
 - finish pod for IUP::Manual::* (CB/AT accessors)
@@ -21,22 +18,6 @@ UTF8
 
 ######## CODE/IMPORTANT: correct element destruction still needs some work
 - Internal/Element.pm (look for XXX-FIXME + XXX-CHECKLATER)
-
-######## CODE/IMPORTANT: check typemap - maybe better alternative:
->INPUT
->O_OBJECT
->	if( sv_isobject($arg) && (SvTYPE(SvRV($arg)) == SVt_PVMG) )
->		$var = INT2PTR($type, SvIV((SV*)SvRV( $arg )));
->	else{
->		warn( \"${Package}::$func_name() -- $var is not a blessed SV reference\" );
->		XSRETURN_UNDEF;
->	}
->
->OUTPUT
->O_OBJECT
->	sv_setref_pv( $arg, CLASS, (void*)$var );
-Where is "the correct" typemap file available?
-Is T_PTROBJ ~ O_OBJECT?
 
 ######## TESTS/IMPORTANT: add more tests
 - split tests: t\*.t + all GUI-related >>> t\gui\*.t
@@ -181,23 +162,6 @@ http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-
 
 (not now, maybe later)######## Linux - platform specific issues
 - GTK: 'Quit' in main menu requires double click
-
-(not now, maybe later)######## Packaging (not a priority)
-- RHEL 5 + FC 13,12,11
-  - http://search.cpan.org/dist/cpan2rpm/
-  - http://search.cpan.org/dist/Ovid/
-- Db 4,5 (Ubuntu?)
-  - http://search.cpan.org/dist/Debian-Apt-PM/
-  - http://www.debian-administration.org/articles/78
-    http://www.opensourcery.com/blog/hans-dieter-pearcey/packaging-cpan-modules-debian
-- Linux distro info
-  - http://distrowatch.com/table.php?distribution=ubuntu (10.04/LTS,9.10,8.04/LTS)
-  - http://distrowatch.com/table.php?distribution=debian (5,4)
-  - http://distrowatch.com/table.php?distribution=fedora (13,12,11)
-  - http://distrowatch.com/table.php?distribution=redhat (5,4)
-- vmware images: 
-  - http://chrysaor.info/?page=images&filter=Ubuntu
-  - http://www.thoughtpolice.co.uk/vmware/
 
 ### REJECTED FOR NOW ################################################################################################
 
