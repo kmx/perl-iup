@@ -25,8 +25,8 @@ focus when clicked. Default: YES. (since 3.0)
 B<COUNT> (read only) (non inheritable): returns the total number of
 nodes in the tree. (since 3.0)
 
-B<DRAGDROP> [Windows and GTK Only] (non inheritable): Enable or disable
-the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
+B<DROPFILESTARGET> [Windows and GTK Only] (non inheritable): Enable or
+disable the drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled. This
 is NOT related to the drag&drop of nodes inside the tree. (since 3.0)
 
@@ -59,9 +59,15 @@ L<RASTERSIZE|../attrib/iup_rastersize.html> (non inheritable): the
 initial size is "400x200". Set to NULL to allow the automatic layout
 use smaller values.
 
-B<SHOWDRAGDROP> (creation only) (non inheritable): Enables the drag and
-drop of nodes, and enables the B<DRAGDROP_CB> callback. Default: "NO".
-Works only if MARKMODE=SINGLE.
+B<SHOWDRAGDROP> (creation only) (non inheritable): Enables the internal
+drag and drop of nodes, and enables the B<DRAGDROP_CB> callback.
+Default: "NO". Works only if MARKMODE=SINGLE.
+
+B<SHOWTOGGLE >(creation only) (non inheritable): enables the use of
+toggles for all nodes of the tree. Can be "YES", "3STATE" or NO".
+Default: "NO". In Motif Versions 2.1.x and 2.2.x, the images are
+disabled (toggle and text only are drawn in nodes of the tree). (since
+3.6)
 
 B<SPACING>: vertical internal padding for each node. Notice that the
 distance between each node will be actually 2x the spacing. (since 3.0)
@@ -92,10 +98,13 @@ compatibility code. Old applications must change the use of the old
 NAME attribute to TITLE, so the new NAME common attribute can be
 enabled in future versions.
 
+L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes are
+supported, but SHOWDRAGDROP must be set no No.
+
 =head2 X<nodes>Nodes (non inheritable)
 
-For these attributes "id" is the specified branch identifier. If id is
-empty, then the focus node is used as the specified node.
+For these attributes "id" is the specified node identifier. If "id" is
+empty or invalid, then the focus node is used as the specified node.
 
 B<CHILDCOUNTid> (read only): returns the immediate children count of
 the specified branch. It does not count children of child that are
@@ -157,8 +166,7 @@ B<USERDATAid>: the user data associated with the specified node. (since
 =head2 X<images>Images (non inheritable)
 
 B<IMAGEid>: image name to be used in the specified node, where id is
-the specified node identifier. If id is empty, then the focus node is
-used as the specified node. Use
+the specified node identifier. Use
 L<IupSetHandle|../func/iupsethandle.html> or
 L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
 associate an image to a name. See also L<IupImage|iupimage.html>. In
@@ -186,8 +194,8 @@ B<VALUE> (non inheritable): The focus node identifier. When retrieved
 but there isn't a node with focus it returns 0 if there are any nodes,
 and returns -1 if there are no nodes. When changed and MARKMODE=SINGLE
 the node is also selected. The tree is always scrolled so the node
-becomes visible. In Motif the tree will also receive the focus.
-Additionally accepts the values:
+becomes visible. In Motif the tree will also receive the
+focus.Additionally accepts the values:
 
 =over
 
@@ -218,8 +226,8 @@ accepts the values:
 =over
 
 "INVERTid": Inverts the specified node mark state, where id is the
-specified node identifier. If id is empty, then the focus node is used
-as reference node.
+specified node identifier. If id is empty or invalid, then the focus
+node is used as reference node.
 
 "BLOCK": Marks all nodes between the focus node and the initial
 block-marking node defined by MARKSTART
@@ -233,9 +241,9 @@ block-marking node defined by MARKSTART
 =back
 
 B<MARKEDid> (non inheritable): The selection state of the specified
-node, where id is the specified node identifier. If id is empty, then
-the focus node is used as reference node. Can be: YES or NO. Default:
-NO
+node, where id is the specified node identifier. If id is empty or
+invalid, then the focus node is used as reference node. Can be: YES or
+NO. Default: NO
 
 B<MARKEDNODES> (non inheritable): The selection state of all nodes when
 MARKMODE=MULTIPLE. It is/accepts a sequence of '+' and '-' symbols
@@ -251,12 +259,18 @@ B<MARKSTART> (non inheritable): Defines the initial node for the block
 marking, used when MARK=BLOCK. The value must be the node identifier.
 Default: 0 (first node).
 
+B<TOGGLEVALUEid> (non inheritable): defines the toggle's state. Values
+can be "ON" or "OFF". If SHOW3STATE=YES then can also be "NOTDEF".
+Default: "OFF".
+
 =head2 X<tree>Hierarchy (non inheritable)
 
+For these attributes "id" is the specified node identifier. If "id" is
+empty or invalid, then the focus node is used as the specified node.
+
 B<ADDLEAF>B<id> (write only): Adds a new leaf after the reference
-node, where id is the reference node identifier. If id is empty, then
-the focus node is used as reference node. Use id=-1 to add the first
-node in an empty tree. The value is used as the text label of the new
+node, where id is the reference node identifier. Use id=-1 to add
+before the first node. The value is used as the text label of the new
 node. The id of the new node will be the id of the reference node + 1.
 The attribute B<LASTADDNODE> is set to the new id. The reference node
 is marked and all others unmarked. The reference node position remains
@@ -272,8 +286,7 @@ can be created expanded or collapsed depending on B<ADDEXPANDED>.
 Ignored if set before map.
 
 B<COPYNODEid >(write only): Copies a node and its children, where id is
-the specified node identifier. If id is empty, then the focus node is
-used as the specified node. The value is the destination node
+the specified node identifier. The value is the destination node
 identifier. If the destination node is a branch and it is expanded,
 then the specified node is inserted as the first child of the
 destination node. If the branch is not expanded or the destination node
@@ -282,8 +295,7 @@ specified node is not changed. All node attributes are copied, except
 user data. Ignored if set before map. (since 3.0)
 
 B<DELNODEid >(write only): Removes a node and/or its children, where id
-is the specified node identifier. If id is empty, then the focus node
-is used as the specified node. Ignored if set before map. Possible
+is the specified node identifier. Ignored if set before map. Possible
 values:
 
 =over
@@ -315,8 +327,7 @@ node + 1 + the total number of child nodes of the reference node.
 (since 3.0)
 
 B<MOVENODEid >(write only): Moves a node and its children, where id is
-the specified node identifier. If id is empty, then the focus node is
-used as the specified node. The value is the destination node
+the specified node identifier. The value is the destination node
 identifier. If the destination node is a branch and it is expanded,
 then the specified node is inserted as the first child of the
 destination node. If the branch is not expanded or the destination node

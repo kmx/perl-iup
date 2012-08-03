@@ -2,7 +2,8 @@
 
 B<SELECTION_CB>: Action generated when a node is selected or
 deselected. This action occurs when the user clicks with the mouse or
-uses the keyboard with the appropriate combination of keys.
+uses the keyboard with the appropriate combination of keys. It may be
+called more than once for the same node with the same status.
 
  int function(Ihandle *ih, int id, int status) [in C]
  elem:selection_cb(id, status: number) -> (ret: number) [in Lua]
@@ -127,8 +128,8 @@ editing stops always.
 
 ----
 
-B<DRAGDROP_CB>: Action generated when a drag & drop is executed. Only
-active if B<SHOWDRAGDROP=YES.>
+B<DRAGDROP_CB>: Action generated when an internal drag & drop is
+executed. Only active if B<SHOWDRAGDROP=YES.>
 
  int function(Ihandle *ih, int drag_id, int drop_id, int isshift, int iscontrol); [in C] 
  elem:dragdrop_cb(drag_id, drop_id, isshift, iscontrol: number) -> (ret: number) [in Lua]
@@ -177,6 +178,20 @@ B<id>: node identifier.
 
 ----
 
+B<TOGGLEVALUE_CB>: Action generated when the toggle's state was
+changed. The callback also receives the new toggle's state. (since 3.6)
+
+ int function(Ihandle *ih, int state); [in C]
+ elem:togglevalue_cb(id: number: string) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<state>: 1 if the toggle's state was shifted to ON; 0 if it was
+shifted to OFF. If SHOW3STATE=YES, E<minus>1 if it was shifted to
+NOTDEF.
+
+----
+
 L<BUTTON_CB|../call/iup_button_cb.html>: Action generated when any
 mouse button is pressed or released inside the element. Use
 L<IupConvertXYToPos|../func/iupconvertxytopos.html> to convert (x,y)
@@ -207,5 +222,8 @@ receive the focus. The KILLFOCUS_CB callback is called only when the
 focus is at the first node. Also in Motif some LEAVEWINDOW_CB events
 are delayed to when the user enter again, firing a leave and enter
 events at enter time.
+
+L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> callbacks are
+supported, but SHOWDRAGDROP must be set no No.
 
 =cut

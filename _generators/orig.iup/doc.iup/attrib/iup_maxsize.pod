@@ -17,10 +17,7 @@ the other value to 0. For example: "x40" (height only = "0x40") or
 
 =head2 Affects
 
-All, except menus and the dialog.
-
-The B<IupDialog> has the same attribute but within a different behavior
-although with a very similar objective.
+All, except menus.
 
 =head2 Notes
 
@@ -29,6 +26,9 @@ Natural size and the Current size.
 
 If the element can be expanded, then its empty space will NOT be
 occupied by other controls although its size will be limited.
+
+In the B<IupDialog> will also limit the interactive resize of the
+dialog.
 
 See the L<Layout Guide|../layout_guide.html> for mode details on sizes.
 

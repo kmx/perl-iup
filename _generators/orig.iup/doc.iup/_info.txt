@@ -1,1 +1,1 @@
-original cd doc converted from HTML to POD
+original doc converted from HTML to POD

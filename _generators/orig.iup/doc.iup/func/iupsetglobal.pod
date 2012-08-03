@@ -1,7 +1,7 @@
 =head1 IupSetGlobal
 
-Defines an attribute for the global environment. If the driver process
-the attribute then it will not be stored internally.
+Sets an attribute in the global environment. If the driver process the
+attribute then it will not be stored internally.
 
 =head2 Parameters/Return
 
@@ -22,8 +22,8 @@ in a callback.
 When you want IUP to store the attribute's value by duplicating the
 string, use function B<IupStoreGlobal>.
 
-IupSetAttribute can also be used to set global attributes, just set the
-element to NULL.
+B<IupSetAttribute> can also be used to set global attributes, just set
+the element to NULL.
 
 =head2 See Also
 

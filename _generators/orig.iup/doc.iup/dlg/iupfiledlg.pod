@@ -187,9 +187,15 @@ is the one selected. (Since 3.0)
 =item * "OK" - the user pressed the OK button. If returns IUP_IGNORE
 the action is refused and the dialog is not closed.
 
-=item * "PAINT" - the preview area must be redrawn. Used only when
-SHOWPREVIEW=YES. If an invalid file or a directory is selected,
-file_name is NULL.
+=item * "PAINT" - the preview area must be redrawn.
+
+Used only when SHOWPREVIEW=YES. If an invalid file or a directory is
+selected, file_name is NULL.
+
+=item * "FILTER" - when a filter is changed. (Windows Only) (since 3.6)
+
+FILTERUSED attribute will be updated to reflect the change. FILE
+attribute can be used to change the current filename.
 
 =back
 

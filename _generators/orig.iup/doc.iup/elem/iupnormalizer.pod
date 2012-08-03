@@ -24,10 +24,6 @@ B<NORMALIZE> (non inheritable): normalization direction. Can be
 HORIZONTAL, VERTICAL or BOTH. These are the same values of the
 NORMALIZESIZE attribute. Default: HORIZONTAL.
 
-B<NORMALIZERGROUP> (non inheritable) B<(for contained controls use)>:
-name of a normalizer to automatically add the control. If a normalizer
-with that name does not exists then one is created.
-
 B<ADDCONTROL> (non inheritable): Adds a control to the normalizer. The
 value passed must be the name of an element. Use
 L<IupSetHandle|../func/iupsethandle.html> or
@@ -37,6 +33,13 @@ reference directly.
 
 B<ADDCONTROL_HANDLE> (non inheritable): Adds a control to the
 normalizer. The value passed must be a handle of an element.
+
+=head2 Attributes (at Children)
+
+B<NORMALIZERGROUP> (non inheritable) B<(at children only)>: name of a
+normalizer element to automatically add the control. If an element with
+that name does not exists then one is created. In Lua you can also use
+the element reference directly.
 
 =head2 Notes
 
@@ -53,6 +56,10 @@ dialog.
 
 The elements are NOT children of the normalizer. To remove or add other
 elements, the normalizer must be destroyed and created a new one.
+
+Notice that the NORMALIZERGROUP attribute can simplify a lot the
+process of creating a normalizer, so you do not need to list several
+elements from different parts of the dialog.
 
 Has the same effect of the NORMALIZESIZE attribute of the B<IupVbox>
 and B<IupHbox> controls, but it can be used for elements with different

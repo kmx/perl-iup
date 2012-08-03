@@ -4,6 +4,198 @@ Check the L<Migration Guide|migration_guide.html> for a summary of the
 important changes and how to proceed when migrating from version 2.x to
 version 3.x.
 
+=head2 L<Version 3.6|http://sourceforge.net/projects/iup/files/3.6/>
+(23/June/2012)
+
+=over
+
+=item * New: L<DragE<amp>Drop|attrib/iup_dragdrop.html> attributes and
+callbacks for B<IupDialog>, B<IupCanvas>, B<IupText>, B<IupList>, and
+B<IupTree>. Old DRAGDROP attribute renamed to DROPFILESTARGET, old
+still works for compatibility.
+
+=item * New: CELLBGCOLORL:C and CELLFGCOLORL:C attributes for
+B<IupMatrix>.
+
+=item * New: MAXSTR attribute for a string parameter in B<IupGetParam>.
+Titles can now contain the '%' character by using two characters "%%".
+New definitions for the callback parameters when index is negative.
+
+=item * New: SHOWTOGGLE attribute and TOGGLEVALUE_CB callback for
+B<IupTree>.
+
+=item * New: DS_COUNT attribute in B< IupPPlot>.
+
+=item * New: B<IupMglPlot> element using almost the same interface
+(attributes and callbacks) as B<IupPPlot> but with support for 3D
+coordinates and many other plot options.
+
+=item * New: NATURALSIZE attribute for all elements.
+
+=item * New: support for images in B<IupList> items using the SHOWIMAGE
+and IMAGEid attributes.
+
+=item * New: ARBCONTEXT, CONTEXTVERSION, CONTEXTFLAGS and
+CONTEXTPROFILE attributes for B<IupGLCanvas>.
+
+=item * New: B<ScriptBasic> Binding by John Spikowski at the SB
+L<Forum|http://www.scriptbasic.org/forum/index.php/board,48.0.html>.
+
+=item * New: FILTER status in FILE_CB callback for B<IupFileDlg> on
+Windows.
+
+=item * New: TOUCH attribute for B<IupDialog> on Windows.
+
+=item * New: LASTERROR global attribute on Windows.
+
+=item * New: parameter in LEDC "-s" to declare image data as static.
+
+=item * New: TRAYTIPBALLOON, TRAYTIPBALLOONDELAY, TRAYTIPBALLOONTITLE
+and TRAYTIPBALLOONTITLEICON B<IupDialog> attributes on Windows. And
+TRAYTIPMARKUP on GTK.
+
+=item * New: global attribute IUPLUA_THREADED so IUP can be used inside
+coroutines in Lua.
+
+=item * New: callback MENUDROP_CB for B< IupMatrix> to show a popup
+menu instead of a dropdown list.
+
+=item * New: support for AZERTY keyboards on Windows.
+
+=item * New: CLEARVALUE and CLEARATTRIB attributes for B< IupMatrix>.
+
+=item * New: NONE option for the EDITNEXT attribute in IupMatrix.
+
+=item * Changed: optimized B<IupImage> internal cache.
+
+=item * Changed: removed Lua bytecode usage in pre-compiled binaries.
+Now IUP pre-compiled binaries are compatible with LuaJIT.
+
+=item * B<Changed:> the MINSIZE and MAXSIZE attributes for B<IupDialog>
+now also behaves as the other elements.
+
+=item * B<Changed:> added internal string limitations for
+B<IupGetParam>, B< IupGetFile> and B<IupGetText>.
+
+=item * B<Changed:> B<ADDLEAF>idB< and ADDBRANCHid attributes in >B<
+IupTree>B< now accepts -1 to insert a node before the root node.>
+
+=item * B<Changed:> improved performance of APPENDITEM and INSERTITEM
+in B<IupList> on Windows.
+
+=item * B<Changed:> improved mouse edition interaction in B<IupMatrix>.
+Now the edition is started only when left button is released after a
+double click. Also if DROPCHECK_CB is defined and return IUP_DEFAULT
+for a cell, to show the dropdown list or the new popup menu the user
+can simply do a single click in the drop feedback area of that cell.
+
+=item * B<Changed:> REDRAW attribute interval in B<IupMatrix> now uses
+"-" for separator as other attributes. Old separator is still accepted.
+
+=item * B<Changed:> if TEXT or IMAGE attributes set to NULL in
+B<IupClipboard> clears the clipboard data.
+
+=item * B<Changed:> horizontal alignment for text with multiple lines
+in B<IupButton> now will also align each line in Windows.
+
+=item * B<Undo:> removed "P" from B<IupPPlot> additional API functions,
+because they will be used also for other plot controls. Old names still
+exists for compatibility. The new functions need more flexibility and
+they must co-exist.
+
+=item * Fixed: NUMCOL_NOSCROLL and NUMLIN_NOSCROLL attributes for the
+B<IupMatrix> when scrolling with the scrollbar arrows up to the top or
+to the left.
+
+=item * Fixed: B<IupMatrix> MASKL:C attribute when set at some cells
+and not set at others, after editing the cell where it is set affected
+the other cells.
+
+=item * Fixed: iup.B<tabs> and iup.B<cbox> were not allowing the
+creation of a control with no children in Lua.
+
+=item * Fixed: secondary dialog for overwrite confirmation in
+B<IupFileDlg> on Motif.
+
+=item * Fixed: iup.B<normalizer> when constructor receive children as
+parameters in Lua.
+
+=item * Fixed: DIALOGFRAME attribute in B< IupDialog> was handled only
+at map, affecting RESIZE processing before mapping.
+
+=item * Fixed: SCROLLTO and SCROLLTOPOS in B<IupText> on Windows.
+
+=item * Fixed: ORIENTATION attribute in B< IupSplit> were case
+sensitive.
+
+=item * Fixed: DIRECTION attribute in B< IupSbox> were case sensitive.
+
+=item * Fixed: Enter key processing in B< IupText> on Windows when
+MULTILINE=NO.
+
+=item * Fixed: 'u' option processing (button names) of B<IupGetParam>
+in Lua.
+
+=item * Fixed: TIP attribute in B< IupProgressBar> on Motif.
+
+=item * Fixed: TIP attribute in B< IupVal> on Windows.
+
+=item * Fixed: TABTYPE was setting MULTILINE=NO when TOP or BOTTOM
+where set on Windows.
+
+=item * Fixed: implemented missing iup.B<GetChild> in Lua.
+
+=item * Fixed: some images from B< IupImageLibOpen> when using GTK.
+
+=item * Fixed: invalid memory access in CURSOR attribute when name is
+too large.
+
+=item * Fixed: BGCOLOR_CB and FGCOLOR_CB callbacks in Lua, where not
+properly cleaning the stack. Thanks to zcs.
+
+=item * Fixed: missing ih:B<destroy>() method in Lua for some elements.
+
+=item * Fixed: invalid memory access in X and Y attributes in
+B<IupDialog> on the GTK driver when the dialog in hidden.
+
+=item * Fixed: CARET attribute in B<IupText> on Windows when the caret
+is located outside the visible area.
+
+=item * Fixed: native destruction of B< IupMenu> when inside a submenu
+on Windows.
+
+=item * Fixed: image data end value in LEDC.
+
+=item * Fixed: B<IupNormalizer> parameter checking in LEDC.
+
+=item * Fixed: invalid ampersand ('&') processing in TIPS on Windows.
+Improved ampersand processing in GTK.
+
+=item * Fixed: VALUE=OFF display update in B<IupToggle> on GTK when
+using an image in the toggle.
+
+=item * Fixed: dialog layout now considers the global menu usage on the
+new Ubuntu Unity desktop.
+
+=item * Fixed: SELECTION_CB in B<IupTree> not being called for the last
+unselected node in a multi-selection tree, when that node is
+re-selected. In Windows that node was also not being selected.
+
+=item * Fixed: In GTK changing focus was also changing the selection in
+a multiple selection B<IupTree>.
+
+=item * Fixed: invalid initialization of B< IupList> when GTK version
+is older than 2.12.
+
+=item * Fixed: redraw when FGCOLOR is set in B<IupText> on Windows.
+
+=item * Fixed: improved memory usage in variable parameter attribute
+functions.
+
+=item * Fixed: MDI dialogs and menu behavior in Windows.
+
+=back
+
 =head2 L<Version 3.5|http://sourceforge.net/projects/iup/files/3.5/>
 (26/Apr/2011)
 

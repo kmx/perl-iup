@@ -12,6 +12,7 @@ The element must be already B<attached> to a container if not a dialog.
 
  int IupMap(Ihandle* ih); [in C]
  iup.Map(ih: ihandle) -> ret: number [in Lua]
+ or ih:map() [in Lua]
 
 B<ih>: Identifier of an interface element.
 

@@ -1,7 +1,7 @@
 =head1 IupSetAttribute
 
-Defines an attribute for an interface element. See also the
-L<Attributes Guide|../attrib_guide.html> section.
+Sets an interface element attribute. See also the L<Attributes
+Guide|../attrib_guide.html> section.
 
 =head2 Parameters/Return
 

@@ -2,12 +2,9 @@
 
 =head2 Roadmap for the Next Versions
 
-B<Working now> on IupPPlot, studding possible use of
-L<PLplot|http://plplot.sourceforge.net/> as a replacement.
-
 =over
 
-=item * IupTree, IupList and IupMatrix improvements
+=item * IupMatrix improvements
 
 =item * New controls: ScrollBox, GridBox
 
@@ -25,26 +22,26 @@ L<PLplot|http://plplot.sourceforge.net/> as a replacement.
 
 =over
 
-=item * B<Priority:> Images in B< IupList>.
+=item * B<Priority:> better focus control when changing the current tab
+in B<IupTabs>.
 
 =item * B<Priority:> RPM, Debian and LuaRocks distribution packages.
 
 =item * B<Priority:> Unicode Support (UTF-8) in Windows and Motif.
 
-=item * B<Priority:> Drag&Drop between controls.
-
 =item * B<Priority:> A tutorial section in the documentation. One big
 Controls Demo just like GTK, wxWidgets and Qt have.
 
 =item * B<Priority:> Customization of B<IupGetParam> to add other
-applications controled elements.
+applications controlled elements.
 
 =item * B<Priority:> detection of the minimum size of a child inside
 B<IupSplit>.
 
-=item * A MacOS X native driver using Carbon or Cocoa.
+=item * B<Priority:> IupGLCanvas in MACOS X using native OpenGL
+support.
 
-=item * B<IupGLCanvas> for MacOSX.
+=item * A MacOS X native driver using Carbon or Cocoa.
 
 =item * The actual model for control data structure in the internal SDK
 is restricted for derived classes.
@@ -79,9 +76,6 @@ the B<IupDialog> is not working as expected. There is still flicker
 when the dialog is resized. B<IupTabs> in Windows Vista when
 COMPOSITE=YES works only if MULTILINE=YES. (since 3.0)
 
-=item * Known Issue: the MDI Window menu is not properly updated when
-the child mdi is closed. (since 3.0)
-
 =item * Known Issue: in Windows when CANFOCUS=NO only the Tab key
 navigation is not done, when clicked the control will still get the
 focus. The only exceptions are button and canvas.
@@ -95,6 +89,17 @@ IUP library the problem solves. We tried to track down this error but
 it does not occurs with debug information and our attempts without
 debug does not gives any results. So the IUP main library for Watcom is
 now distributed with debug information. (since 3.0)
+
+=back
+
+=head2 GTK
+
+=over
+
+=item * Known Issue: in Ubuntu 11.10 the canvas scrollbar is not
+notifying IUP that the user dragged the control. To solve the problem
+remove the overlay-scrollbar, this is the package that makes the
+scrollbar invisible until the mouse is near it.
 
 =back
 
@@ -124,8 +129,6 @@ only. This seems to be a bug or limitation in Motif.
 =head2 IupTree
 
 =over
-
-=item * B<Priority:> check mark for nodes.
 
 =item * Known Issue: the rubber band gets lost depending on what you do
 inside the SELECTION_CB callback in GTK. To avoid that set
@@ -194,6 +197,15 @@ grid.
 
 =item * -----------------------------
 
+=item * B<Table> - similar to IupMatrix but using native controls
+
+=item * B<UrlButton> - Button that activates a URL (looks like a flat
+label, but gives visual feedback when mouse is hover)
+
+=item * B<FrameEx> - Expandable/Closeable Frames
+
+=item * -----------------------------
+
 =item * B<DropDownButton> - Mix between a drop down list and a button
 
 =item * B<CanvasCD> - an IupCanvas with a CD canvas associated.
@@ -201,13 +213,6 @@ grid.
 =item * B<Scrollbar> - just the scrollbar as a control.
 
 =item * B<Toobar -> button/toggle/list, detachable
-
-=item * B<Table> - similar to IupMatrix but using native controls
-
-=item * B<UrlButton> - Button that activates a URL (looks like a flat
-label, but gives visual feedback when mouse is hover)
-
-=item * B<FrameEx> - Expandable/Closeable Frames
 
 =item * B<PropertyGrid> - a 2 column matrix with expandable/closeable
 items

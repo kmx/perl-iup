@@ -21,7 +21,8 @@ accepted in GTK. So the font family can be reduced to font face.
 The supported font style is a combination of: B<Bold>, B<Italic>, B<
 Underline> and B<Strikeout>. The Pango format include many other
 definitions not supported by the common format, they are supported only
-by the GTK driver. Unsupported values are simply ignored.
+by the GTK driver. Unsupported values are simply ignored. The names
+must be in the same case describe here.
 
 Font size is in points (1/72 inch) or in pixels (using negative
 values).
@@ -154,7 +155,8 @@ Pango additional styles will also be removed.
 
 =head2 FONTSTYLE (non inheritable)
 
-Replaces or returns the style of the current FONT attribute.
+Replaces or returns the style of the current FONT attribute. Since font
+styles are case sensitive, this attribute is also case sensitive.
 
 =head2 FONTSIZE (non inheritable)
 

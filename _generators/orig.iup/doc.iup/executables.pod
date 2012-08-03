@@ -26,8 +26,8 @@ The packages are almost ready to be run, but it needs the Visual C++
 or L<
 x64|http://www.microsoft.com/downloads/details.aspx?familyid=90548130-4468-4BBC-9673-D6ACABD5D13B&displaylang=en>)
 installed on the system in Windows, and in UNIX it needs that the
-LD_LIBRARY_PATH environment variable contains the executable folder,
-for example:
+LD_LIBRARY_PATH (DYLD_LIBRARY_PATH in MacOSX) environment variable
+contains the executable folder, for example:
 
  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/tecgraf/iup3/bin/$TEC_UNAME
 

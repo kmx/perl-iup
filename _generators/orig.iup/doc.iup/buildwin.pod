@@ -1,0 +1,241 @@
+=head1 Building Lua, IM, CD and IUP in Windows
+
+This is a guide to build all the Lua, IM, CD and IUP libraries in
+Windows. Notice that you may not use all the libraries, although this
+guide will show you how to build all of them. You may then choose to
+build specific libraries.
+
+=head2 System Configuration
+
+The Tecmake configuration files are for the GNU B<make> tool. So first
+the GNU B<make> must be installed, and it must be in the PATH before
+other makes. L<MingW|http://www.mingw.org/>,
+L<Cygwin|http://www.cygwin.com/> and
+L<GnuWin32|http://gnuwin32.sourceforge.net/> distributions have GNU
+B<make> binaries ready for download. Some utilities are also necessary,
+specially to build the dependencies file: B<mkdir>, B<rm >(both in
+CoreUtils)B< [>, B<which, sed> and B<g++]>. If you don't need the
+dependencies or some other options just ignore them. Also some features
+will work best if B<bash> is installed.
+
+When installing B<Cygwin> unmark all pre-selected items. This is easier
+to do in "Partial" mode view. Then select only "B<make>", it will
+automatically select other packages that "B<make>" depends on. And
+select the B<mkdir>, B<rm>, B<which, sed> and B<g++> packages. Change
+PATH in "Control Panel/System/Advanced/Environment Variables" and add
+"L<c:\cygwin\bin;|file:///c:/cygwin/bin;>".
+
+When installing B<MingW> mark C Compiler, C++ Compiler, MSYS Basic
+System, and MinGW Developer Toolkit. Change PATH in "Control
+Panel/System/Advanced/Environment Variables" and add
+"L<C:\mingw4\msys\1.0\bin;C:\mingw4\bin;|file:///C:/mingw4/msys/1.0/bin;C:/mingw4/bin;>".
+
+For B<GnuWin32> it is faster to manually download and install the
+selected tools packages. But it does not include a compiler and does
+not include bash.
+
+L<Win-Bash|http://win-bash.sourceforge.net/> contains a
+"L<Shell-Complete|http://sourceforge.net/projects/win-bash/files/shell-complete/latest/shell.w32-ix86.zip/download>"
+distribution and can also be used. It contains all the tools and bash.
+It does not include a compiler.
+
+Then install the compiler of your choice, among the following supported
+compilers:
+
+=over
+
+=item * L<Visual C++|http://www.microsoft.com/express/vc/> or just the
+L<Windows
+SDK|http://www.microsoft.com/download/en/details.aspx?id=8279>.
+
+=item * Gnu gcc (L<MingW|http://www.mingw.org/> or
+L<Cygwin|http://www.cygwin.com/>)
+
+=item * L<Open Watcom C++|http://www.openwatcom.org/>
+
+=item * L<Embarcadero C++
+(ex-Borland)|https://downloads.embarcadero.com/free/c_builder>
+
+=back
+
+=head2 Tecmake Configuration
+
+Since the compilers in Windows are not in the path, you must set a few
+environment variables to configure their location. For example:
+
+ VC10=c:/progra~2/micros~1/vc               (C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC)
+ VC10SDK=c:/progra~1/micros~1/Windows\v7.1  (C:\Program Files\Microsoft SDKs\Windows\v7.1)
+                                   (if you only installed the Windows SDK with its own compiler set, 
+                                    then set both variables to the same location)
+                                   (VC9,VC9SDK,VC8 and PLATSDK can also be set)
+ MINGW4=c:/mingw
+ GCC4=c:/cygwin
+ OWC1=d:/lng/owc1
+ BC6=d:/lng/bc6
+
+If you installed the Visual Studio compiler set, then to use it in the
+command line run the "Visual Studio Command Prompt" item in the
+"Microsoft Visual Studio 2010\Visual Studio Tools" start menu.
+
+In Windows, there are several compilers that build for the same
+platform. So when using the Makefiles included in the distributions of
+those libraries you must first specify which compiler you want to use.
+To do that set the TEC_UNAME environment variable. This variable will
+also define if you are going to build static or dynamic (DLL)
+libraries, and if building 32 or 64 bits binaries. For example:
+
+ TEC_UNAME=vc10      (Visual C++ 10, static library, 32bits)
+ TEC_UNAME=dll10     (Visual C++ 10, dynamic library, 32bits) 
+ TEC_UNAME=vc10_64   (Visual C++ 10, static library, 64bits)
+ TEC_UNAME=dll10_64  (Visual C++ 10, dynamic library, 64bits) 
+ TEC_UNAME=mingw4    (MingW gcc 4, static library, 32bits)
+ TEC_UNAME=dllw4     (MingW gcc 4, dynamic library, 32bits)
+ TEC_UNAME=gcc4      (Cygwin Win32 gcc 4, static library, 32bits)
+ TEC_UNAME=cygw17    (Cygwin Posix gcc 4, both static and dynamic libraries, 32bits)
+ TEC_UNAME=owc1      (Open Watcom C++ 1, static library, 32bits)
+ TEC_UNAME=bc6       (Embarcadero C++ 6, static library, 32bits) 
+
+Here is an example for MingW:
+
+ Download MingW installation tool:
+   http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/
+ Install MingW:
+   Select C and C++ Compiles, MSYS Basic System, and MinGW Developer Toolkit.
+ Configure Environment (Minimum):
+   set path=C:\mingw4\msys\1.0\bin;C:\mingw4\bin;C:\Windows\system32;C:\Windows;
+   set MINGW4=c:/mingw4
+   set TEC_UNAME=mingw4
+ Start Building:
+   make
+
+=head2 Source Download
+
+Download the "xxx-X.X_Sources.tar.gz" package from the "B<Docs and
+Sources>" directory for the version you want to build. Here are links
+for the B<Files> section in B<Source Forge>:
+
+Lua - L<
+http:E<47>E<47>sourceforge.netE<47>projectsE<47>luabinariesE<47>filesE<47>|http://sourceforge.net/projects/luabinaries/files/>
+
+IM - L<
+http:E<47>E<47>sourceforge.netE<47>projectsE<47>imtoolkitE<47>filesE<47>|http://sourceforge.net/projects/imtoolkit/files/>
+
+CD - L<
+http:E<47>E<47>sourceforge.netE<47>projectsE<47>canvasdrawE<47>filesE<47>|http://sourceforge.net/projects/canvasdraw/files/>
+
+IUP - L<
+http:E<47>E<47>sourceforge.netE<47>projectsE<47>iupE<47>filesE<47>|http://sourceforge.net/projects/iup/files/>
+
+=head2 Unpacking
+
+To extract the files use the tar command at a common directory, for
+example:
+
+ mkdir -p xxxx
+ cd xxxx
+ 
+ [copy the downloaded files, to the xxxx directory]
+ 
+ tar -xpvzf lua5_1_4_Sources.tar.gz    [optional, see note below]
+ tar -xpvzf im-3.6.2_Sources.tar.gz
+ tar -xpvzf cd-5.4_Sources.tar.gz
+ tar -xpvzf iup-3.2_Sources.tar.gz
+
+If you are going to build all the libraries, the makefiles and projects
+expect the following directory tree:
+
+ /xxxx/
+       lua5.1/
+       im/
+       cd/
+       iup/
+
+If you unpack all the source packages in the same directory, that
+structure will be automatically created.
+
+=head2 Building
+
+As a general rule (excluding system dependencies): IUP depends on CD
+and IM, and CD depends on IM. So start by build IM, then CD, then IUP.
+
+To start building go the the "B<src>" directory and type "B<make>". In
+IUP there are many "srcxxx" folders, so go to the up directory "iup"
+and type "B<make>" that all the sub folders will be built. For example:
+
+ cd im/src
+ make
+ cd ../..
+ 
+ cd cd/src
+ make
+ cd ../..
+ 
+ cd iup
+ make
+ cd ..
+
+B<TIP>: Instead of building all the libraries, try building only the
+libraries you are going to use. The provided makefiles will build all
+the libraries, but take a look inside them and you will figure out how
+to build just one library.
+
+=head2 Pre-compiled Binaries
+
+Instead of building from sources you can try to use the pre-compiled
+binaries. Usually they were build in the latest Windows versions for 32
+and 64 bits. The packages are located in the "B<Windows Libraries>"
+directory under the B<Files> section in B<Source Forge>, with
+B<"xxx-X.X_Win32_xx_lib>.B<tar.gz"> and
+B<"xxx-X.X_Win64_xx_lib.tar.gz"> names.
+
+Do not extract different pre-compiled binaries in the same directory,
+create a subdirectory for each one, for example:
+
+ mkdir im
+ cd im
+ tar -xpvzf ../im-3.6.2_Win32_vc10_lib.tar.gz
+ cd ..
+ 
+ mkdir cd
+ cd cd
+ tar -xpvzf ../cd-5.4_Win32_vc10_lib.tar.gz
+ cd ..
+ 
+ mkdir iup
+ cd iup
+ tar -xpvzf ../iup-3.2_Win32_vc10_lib.tar.gz
+ cd ..
+
+=head2 X<usage>Usage
+
+For makefiles use:
+
+ 1) "-I/xxxx/iup/include" to find include files
+ 2) "-L/xxxx/iup/lib/vc10" to find library files
+ 3) "-liup" to specify the library files
+
+For IDEs the configuration involves the same 3 steps above, but each
+IDE has a different dialog. The IUP toolkit has a Guide for some IDEs:
+
+B<Borland C++ BuilderX> -
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>cppbx.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/cppbx.html>
+
+B<Code Blocks> -
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>codeblocks.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/codeblocks.html>
+
+B<Dev-C++> -
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>dev-cpp.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/dev-cpp.html>
+
+B<Eclipse for C++> - L<
+http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>eclipse.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/eclipse.html>
+
+B<Microsoft Visual C++> (Visual Studio 2003) -
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>msvc.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/msvc.html>
+
+B<Microsoft Visual C++> (Visual Studio 2005) -
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>msvc8.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/msvc8.html>
+
+B<Open Watcom> -
+L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iupE<47>enE<47>ide_guideE<47>owc.html|http://www.tecgraf.puc-rio.br/iup/en/ide_guide/owc.html>
+
+=cut

@@ -77,8 +77,8 @@ when there is no text at the control. It works as a textual cue, or tip
 to prompt the user for input. Valid only for MULTILINE=NO, and it is
 not available for Windows 2000. (since 3.0)
 
-B<DRAGDROP> [Windows and GTK Only] (non inheritable): Enable or disable
-the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
+B<DROPFILESTARGET> [Windows and GTK Only] (non inheritable): Enable or
+disable the drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
 (since 3.0)
 
@@ -109,7 +109,8 @@ will filter interactive text input.
 
 B<MULTILINE> (creation only) (non inheritable): allows the edition of
 multiple lines. In single line mode some characters are invalid, like
-"\t", "\r" and "\n". Default: NO.
+"\t", "\r" and "\n". Default: NO. When set to Yes will also reset the
+SCROLLBAR attribute to Yes.
 
 B<NC>: Maximum number of characters allowed for keyboard input, larger
 text can still be set using attributes. The maximum value is the limit
@@ -143,11 +144,13 @@ supported. In Motif AUTOHIDE is not supported.
 
 B<SCROLLTO> (non inheritable, write only): Scroll the text to make the
 given position visible. It uses the same format and reference of the
-CARET attribute ("lin:col" or "col" starting at 1). (since 3.0)
+CARET attribute ("lin:col" or "col" starting at 1). In Windows, when
+FORMATTING=Yes "col" is ignored. (since 3.0)
 
 B<SCROLLTOPOS> (non inheritable, write only): Scroll the text to make
 the given position visible. It uses the same format and reference of
-the CARETPOS attribute ("pos" starting at 0).
+the CARETPOS attribute ("pos" starting at 0). In Windows, when
+FORMATTING=Yes "col" is ignored. (since 3.0)
 
 B<SELECTEDTEXT> (non inheritable): Selection text. Returns NULL if
 there is no selection. When changed replaces the current selection.
@@ -261,6 +264,9 @@ L<RASTERSIZE|../attrib/iup_rastersize.html>,
 L<ZORDER|../attrib/iup_zorder.html>,
 L<VISIBLE|../attrib/iup_visible.html>: also accepted.
 
+L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes are
+supported. See Notes bellow.
+
 =head2 Callbacks
 
 L<ACTION|../call/iup_action.html>: Action generated when the text is
@@ -339,6 +345,9 @@ L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
 L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>:
 All common callbacks are supported.
 
+L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> callbacks are
+supported. See Notes bellow.
+
 =head2 Auxiliary Functions
 
  void IupTextConvertLinColToPos(Ihandle* ih, int lin, int col, int *pos); [in C]iup.TextConvertLinColToPos(ih: ihandle, lin, col: number) -> pos: number [in Lua]
@@ -367,6 +376,12 @@ indexed by characters, NOT by byte index, because some characters in
 UTF-8 can use more than one byte. This also applies to Windows if
 FORMATTING=YES depending on the Windows codepage (for example East
 Asian codepage where some characters take two bytes).
+
+Internal Drag&Drop support is enabled by default. But in Windows the
+internal Drag&Drop is enabled only if FORMATTING=YES. In GTK the
+internal Drag&Drop can NOT be disabled, so it will conflict with the
+L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes and
+callbacks.
 
 =head2 Navigation, Selection and Clipboard Keys
 

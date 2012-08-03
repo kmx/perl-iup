@@ -25,10 +25,6 @@ occurs.
 
 =head2 Attributes
 
-B<CX, CY> (non inheritable) B<(at children only)>: Position in pixels
-of the child relative to the top-left corner of the box. Must be set
-for each child inside the box.
-
 L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
 value is "YES".
 
@@ -51,6 +47,12 @@ L<CLIENTOFFSET|../attrib/iup_clientoffset.html>,
 L<POSITION|../attrib/iup_position.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
+
+=head2 Attributes (at Children)
+
+B<CX, CY> (non inheritable) B<(at children only)>: Position in pixels
+of the child relative to the top-left corner of the box. Must be set
+for each child inside the box.
 
 =head2 Notes
 

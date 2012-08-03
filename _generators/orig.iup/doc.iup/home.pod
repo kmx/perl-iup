@@ -8,11 +8,10 @@ Version 3
 
 ----
 
-B<IUP> is a portable toolkit for building graphical user interfaces. It
-offers a configuration API in three basic languages: C, Lua and LED.
-B<IUP>'s purpose is to allow a program to be executed in different
-systems without any modification, therefore it is highly portable. Its
-main advantages are:
+B<IUP> is a multi-platform toolkit for building graphical user
+interfaces. It offers a simple API in three basic languages: C, Lua and
+LED. B<IUP>'s purpose is to allow a program source code to be compiled
+in different systems without any modification. Its main advantages are:
 
 =over
 
@@ -35,5 +34,8 @@ Tecgraf - Computer Graphics Technology Group, PUC-Rio, Brazil
 L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iup|http://www.tecgraf.puc-rio.br/iup>
 
 L<SourceForge.net Logo|http://sourceforge.net>
+
+Veja esta pgina em L<
+Portugus|http://www.google.com/translate?sl=en&tl=pt&u=http%3A%2F%2Fwww.tecgraf.puc-rio.br%2Fiup%2F>.
 
 =cut

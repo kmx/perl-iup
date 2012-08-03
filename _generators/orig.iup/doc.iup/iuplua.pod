@@ -46,7 +46,7 @@ much more.E<gt>
 
 The distribution files include an executable called B<iuplua51>, that
 you can use to test your Lua code. It has support for all the
-addicional controls, for IM, CD and OpenGL calls. It is available at
+additional controls, for IM, CD and OpenGL calls. It is available at
 the L<Download|download.html>.
 
 =head2 X<iupluainit>IupLua Initialization
@@ -94,6 +94,9 @@ B<IupControlsOpen> and others, are not necessary. The initialization is
 automatically done inside the respective B<IupLua> initialization
 function.
 
+To use IUP inside coroutines, define the global attribute
+"IUPLUA_THREADED".
+
 =head2 Embedding Lua files in the Application Executable
 
 The Lua files are dynamically loaded and must be sent together with the
@@ -101,16 +104,25 @@ applications executable. However, this often becomes an inconvenience.
 To deal with it, there is the B<LuaC> compiler that creates a C module
 from the Lua contents. For example:
 
- luac5.1 -o myfile.lo myfile.lua
- bin2c5.1 myfile.lo > myfile.loh
+ luac -o myfile.lo myfile.lua
+ lua bin2c.lua myfile.lo > myfile.loh
 
-In C, you can used a define to interchanged the use of .LOH files:
+In C, you can use a define to interchanged the use of .LOH files:
 
  #ifdef _DEBUG
    ret_val = iuplua_dofile("myfile.lua");
  #else
  #include "myfile.loh"
  #endif
+
+This does not work when using LuaJIT. To be able to do that, use Lua
+files directly as strings:
+
+ lua bin2c.lua myfile.lua > myfile.lh
+
+In C, simply include the .LH files:
+
+ #include "myfile.lh"
 
 =head2 More Information
 

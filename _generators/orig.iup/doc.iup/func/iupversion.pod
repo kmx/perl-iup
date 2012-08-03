@@ -16,18 +16,18 @@ includes the major and minor numbers. For example: "2.7.1".
 
  [in C]
  IUP_NAME            "IUP - Portable User Interface"
- IUP_COPYRIGHT       "Copyright (C) 1994-2007 Tecgraf/PUC-Rio and PETROBRAS S/A"
- IUP_DESCRIPTION     "Portable toolkit for building graphical user interfaces."
- IUP_VERSION         "2.7"
- IUP_VERSION_DATE    "2008/10/14"
- IUP_VERSION_NUMBER  207000
+ IUP_COPYRIGHT       "Copyright (C) 1994-2011 Tecgraf, PUC-Rio."
+ IUP_DESCRIPTION     "Multi-platform toolkit for building graphical user interfaces."
+ IUP_VERSION         "3.5"
+ IUP_VERSION_NUMBER  305000
+ IUP_VERSION_DATE    "2011/04/26"
  
  [in Lua]
  iup._NAME
  iup._DESCRIPTION
  iup._COPYRIGHT
  iup._VERSION
- iup._VERSION_DATE
  iup._VERSION_NUMBER
+ iup._VERSION_DATE
 
 =cut

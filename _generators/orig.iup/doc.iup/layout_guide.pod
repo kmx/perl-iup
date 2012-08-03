@@ -48,6 +48,9 @@ But notice that some controls do not have contents that can provide a
 B< Natural> size. In this case they usually have SIZE or RASTERSIZE
 pre-set.
 
+To obtain the last computed B<Natural> size of the control in pixels,
+use the read-only attribute B<NATURALSIZE>.
+
  dlg = iup.dialog
  {
    iup.vbox

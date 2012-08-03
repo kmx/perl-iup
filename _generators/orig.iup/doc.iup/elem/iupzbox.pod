@@ -47,10 +47,6 @@ Default: "NW".
 L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
 value is "YES".
 
-L<FLOATING|../attrib/iup_floating.html> (non inheritable) B<(at
-children only)>: If a child has FLOATING=YES then its size and position
-will be ignored by the layout processing. Default: "NO". (since 3.0)
-
 B<VALUE> (non inheritable): The visible child accessed by its name. The
 value passed must be the name of one of the children contained in the
 zbox. Use L<IupSetHandle|../func/iupsethandle.html> or
@@ -90,6 +86,12 @@ L<CLIENTOFFSET|../attrib/iup_clientoffset.html>,
 L<POSITION|../attrib/iup_position.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
+
+=head2 Attributes (at Children)
+
+L<FLOATING|../attrib/iup_floating.html> (non inheritable) B<(at
+children only)>: If a child has FLOATING=YES then its size and position
+will be ignored by the layout processing. Default: "NO". (since 3.0)
 
 =head2 Notes
 

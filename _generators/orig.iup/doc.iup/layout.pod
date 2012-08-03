@@ -97,7 +97,7 @@ in C
      IupSetAttributes(IupButton("Cancel", NULL), "SIZE=40"),
      IupFill(),
      NULL
-   ), "MARGIN=15x15, GAP=10"),
+   ), "MARGIN=15x15, GAP=10")),
  ), "TITLE=Title")
 
 Following, the abstract layout representation of this dialog:

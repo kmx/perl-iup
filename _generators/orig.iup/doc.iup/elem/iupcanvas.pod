@@ -42,8 +42,8 @@ for the canvas.
 L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
 value is "YES". The natural size is the size of 1 character.
 
-B<DRAGDROP> [Windows and GTK Only] (non inheritable): Enable or disable
-the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
+B<DROPFILESTARGET> [Windows and GTK Only] (non inheritable): Enable or
+disable the drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
 
 B<DRAWSIZE >(non inheritable): The size of the drawing area in pixels.
@@ -126,6 +126,9 @@ L<TIP|../attrib/iup_tip.html>, L<SIZE|../attrib/iup_size.html>,
 L<RASTERSIZE|../attrib/iup_rastersize.html>,
 L<ZORDER|../attrib/iup_zorder.html>,
 L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes and
+callbacks are supported.
 
 =head2 Callbacks
 
@@ -239,6 +242,9 @@ L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
 L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
 L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>:
 All common callbacks are supported.
+
+L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes and
+callbacks are supported.
 
 =head2 Notes
 

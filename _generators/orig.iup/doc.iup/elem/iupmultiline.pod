@@ -1,5 +1,4 @@
-=head1 IupMultiLine (deprecated since 3.0, use IupText with
-MULTILINE=YES)
+=head1 IupMultiLine (same as IupText with MULTILINE=YES since IUP 3.0)
 
 Creates an editable field with one or more lines.
 

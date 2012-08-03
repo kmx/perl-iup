@@ -32,14 +32,6 @@ horizontally. Default: "NO". This has the same effect as setting
 EXPAND=HORIZONTAL on each child, but their vertical expansion will be
 preserved. (since 3.0)
 
-B<EXPANDWEIGHT> (non inheritable) B<(at children only)>: If a child
-defines the expand weight, then it is used to multiply the free space
-used for expansion. (since 3.1)
-
-L<FLOATING|../attrib/iup_floating.html> (non inheritable) B<(at
-children only)>: If a child has FLOATING=YES then its size and position
-will be ignored by the layout processing. Default: "NO". (since 3.0)
-
 B<GAP, CGAP>: Defines a vertical space in pixels between the children,
 B<CGAP> is in the same units of the B<SIZE> attribute for the height.
 Default: "0". (CGAP since 3.0)
@@ -88,6 +80,16 @@ L<CLIENTOFFSET|../attrib/iup_clientoffset.html>,
 L<POSITION|../attrib/iup_position.html>,
 L<MINSIZE|../attrib/iup_minsize.html>,
 L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
+
+=head2 Attributes (at Children)
+
+B<EXPANDWEIGHT> (non inheritable) B<(at children only)>: If a child
+defines the expand weight, then it is used to multiply the free space
+used for expansion. (since 3.1)
+
+L<FLOATING|../attrib/iup_floating.html> (non inheritable) B<(at
+children only)>: If a child has FLOATING=YES then its size and position
+will be ignored by the layout processing. Default: "NO". (since 3.0)
 
 =head2 Notes
 

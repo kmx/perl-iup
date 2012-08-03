@@ -52,6 +52,9 @@ B<SIZE> is set, then B<RASTERSIZE> is also updated.
 The average character size of the current B<FONT> can be obtained from
 the L<CHARSIZE|iup_font3.html#CHARSIZE> attribute.
 
+To obtain the last computed B<Natural> size of the control in pixels,
+use the read-only attribute B<NATURALSIZE>. (Since 3.6)
+
 ----
 
 A B<User> size of "0x0" can be set, it can also be set using NULL.

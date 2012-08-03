@@ -58,8 +58,10 @@ before setting the image. (since 3.0)
 
 B<TABORIENTATION >(non inheritable): Indicates the orientation of tab
 text, which can be "HORIZONTAL" or "VERTICAL". Default is "HORIZONTAL".
-VERTICAL is supported only in GTK and in Windows. In Windows, VERTICAL
-is only supported when TABTYPE=LEFT or TABTYPE=RIGHT. (GTK 2.6)
+VERTICAL is supported only in GTK and in Windows. In Windows, it can
+NOT be set, it is dependent on the TABTYPE attribute, if TABTYPE=LEFT
+or TABTYPE=RIGHT then TABORIENTATION=VERTICAL, if TABTYPE=TOP or
+TABTYPE=BOTTOM then TABORIENTATION=HORIZONTAL. (GTK 2.6)
 
 B<TABTITLEn >(non inheritable): Contains the text to be shown in the
 respective tab title. n starts at 0. If this value is NULL, it will
@@ -69,14 +71,11 @@ instead on defining a mnemonic. The button can be activated from any
 control in the dialog using the "Alt+key" combination. (mnemonic
 support since 3.3) (since 3.0)
 
-B<TABTITLE >(non inheritable) B<(at children)>: Same as B<TABTITLEn>
-but set in each child. Works only before the child is added to the
-tabs. Deprecated, use B< TABTITLEn>.
-
 B<TABTYPE >(non inheritable) (creation only in Windows): Indicates the
 type of tab, which can be "TOP", "BOTTOM", "LEFT" or "RIGHT". Default
-is "TOP". In Windows, if LEFT or RIGHT, then MULTILINE=YES and
-TABORIENTATIONB<=>VERTICAL always. In Windows, when not TOP, then
+is "TOP". In Windows, if LEFT or RIGHT then MULTILINE=YES and
+TABORIENTATIONB<=>VERTICAL are set, if TOP or BOTTOM then
+TABORIENTATIONB<=>HORIZONTAL is set. In Windows, when not TOP, then
 visual style is removed from tabs.
 
 B<VALUE >(non inheritable): Changes the active tab by its name. The
@@ -113,6 +112,12 @@ L<TIP|../attrib/iup_tip.html>,
 L<RASTERSIZE|../attrib/iup_rastersize.html>,
 L<ZORDER|../attrib/iup_zorder.html>,
 L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+=head2 Attributes (at Children)
+
+B<TABTITLE >(non inheritable) B<(at children only)>: Same as
+B<TABTITLEn> but set in each child. Works only before the child is
+added to the tabs.
 
 =head2 Callbacks
 

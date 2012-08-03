@@ -21,16 +21,18 @@ B<EMFAVAILABLE> (read-only) [Windows Only]: informs if there is a
 Windows Enhanced Metafile available at the clipboard. (Since 3.2)
 
 B<IMAGE> (write-only): name of an image to copy (set) or paste (get),
-to or from the clipboard. (GTK 2.6)
+to or from the clipboard. If set to NULL clears the clipboard data.
+(GTK 2.6)
 
 B<IMAGEAVAILABLE> (read-only): informs if there is an image available
 at the clipboard. (GTK 2.6)
 
 B<NATIVEIMAGE>: native handle of an image to copy or paste, to or from
 the clipboard. In Win32 is a B<HANDLE> of a DIB. In GTK is a
-B<GdkPixbuf*>. In Motif is a B<Pixmap>. The returned handle in a paste
-must be released after used (GlobalFree(handle), g_object_unref(pixbuf)
-or XFreePixmap(display, pixmap)). After copy, do NOT release the given
+B<GdkPixbuf*>. In Motif is a B<Pixmap>. If set to NULL clears the
+clipboard data. The returned handle in a paste must be released after
+used (GlobalFree(handle), g_object_unref(pixbuf) or
+XFreePixmap(display, pixmap)). After copy, do NOT release the given
 handle. See L< IUP-IM Functions|../iupim.html> for utility functions on
 image native handles. (GTK 2.6)
 
@@ -40,7 +42,8 @@ clipboard to the given filename. (Since 3.2)
 B<SAVEWMF> (write-only) [Windows Only]: saves the WMF from the
 clipboard to the given filename. (Since 3.2)
 
-B<TEXT>: copy or paste text to or from the clipboard.
+B<TEXT>: copy or paste text to or from the clipboard. If set to NULL
+clears the clipboard data.
 
 B<TEXTAVAILABLE> (read-only): informs if there is a text available at
 the clipboard.

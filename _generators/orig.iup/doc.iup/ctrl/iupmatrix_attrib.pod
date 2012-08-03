@@ -26,6 +26,8 @@ at the same column;
 COLCR - go to the next column, if at last column then go to the next
 line at the first column;
 
+NONE - stay in the same cell. (since 3.6)
+
 B<X<FOCUS_CELL>FOCUS_CELL>: Defines the current cell. Two numbers in
 the "B<I<L>>:B<I<C>>" format, (B<I<L>>E<gt>0 and B<I<C>>E<gt>0, a title
 cell can NOT be the current cell). Default: "1:1".
@@ -39,7 +41,8 @@ added at the crop point to indicate that there is more text not
 visible. Default: NO. (since 3.1)
 
 B<LIMITEXPAND>: limit expansion to the maximum size that shows all
-cells. (since 3.5)
+cells. This will set the MAXSIZE attribute to match the natural size of
+the matrix. (since 3.5)
 
 B<X<ORIGIN>ORIGIN>: Scroll the visible area to the given cell. Returns
 the cell at the upper left corner. To scroll to a line or a column, use
@@ -172,6 +175,14 @@ value that will be updated in the cell.
 
 ----
 
+B<X<CELLBGCOLOR>CELLBGCOLORI<L>:I<C>> (read-only): Returns the actual
+cell BGCOLOR. Returns NULL if the cell does not exists, or it is not
+visible, or the element is not mapped. (since 3.6)
+
+B<X<CELLFGCOLOR>CELLFGCOLORI<L>:I<C>> (read-only): Returns the actual
+cell FGCOLOR. Returns NULL if the cell does not exists, or it is not
+visible, or the element is not mapped. (since 3.6)
+
 B<X<CELLOFFSET>CELLOFFSETI<L>:I<C>> (read-only): Returns the cell
 computed offset in pixels from the top-left corner of the matrix, in
 the format "XxY" or "%dx%d" in C. Returns NULL if the cell does not
@@ -189,16 +200,17 @@ include the decorations. (since 3.5)
 
 =head2 Column Attributes (no redraw)
 
-X<ALIGNMENTn>B<ALIGNMENT>I<B<C>>: Alignment of the cells in column C (C
-E<gt>= 0). Possible values: "ALEFT", "ACENTER" or "ARIGHT". Default:
+X<ALIGNMENTn>B<ALIGNMENT>I<B<C>> : Alignment of the cells in column C
+(C E<gt>= 0). Possible values: "ALEFT", "ACENTER" or "ARIGHT". Default:
 "ALEFT" for n=0 and "ACENTER" for nE<gt>0. Not used for the column
 title. The 0:0 corner is always ACENTER, and the other column titles
 are also centered but if they do not fit in the cell then the alignment
 is changed to ALEFT. Before checking the default value it will check
 the "B<ALIGNMENT>" attribute value.
 
-X<SORTSIGNn>B<SORTSIGNn>: Shows a sort sign (up or down arrow) in the
-column n title. Possible values: "UP", "DOWN" and "NO". Default: NO.
+X<SORTSIGNn>B<SORTSIGN>X<ALIGNMENTn0>I<B<C>> : Shows a sort sign (up or
+down arrow) in the column C (C E<gt>= 0) title. Possible values: "UP",
+"DOWN" and "NO". Default: NO.
 
 =head2 Column Size Attributes
 
@@ -347,7 +359,7 @@ lines, columns, (lines or columns), and cells. Possible values: "NO",
 "LIN", "COL", "LINCOL" or "CELL". Default: "NO" (no mark).
 
 B<X<MARK>MARKI<L:C>>: marks a cell, a line or a column depending on
-MARKMODE, and returns cell, line or column mark state according to
+MARKMODE, and returns cell, line or column mark state also according to
 MARKMODE. Can be "1" or "0". If MARKMODE=LIN,COL,LINCOL use 0 to mark
 only the other element (ex: "0:3" set/get for column 3). Even when
 MARKMODE=LIN,COL,LINCOL you can specify a single cell address. (since
@@ -376,7 +388,50 @@ by MARKMODE can be B<interactively> marked. Possible values: "YES" or
 
 =head2 Action Attributes
 
-X<FITTOSIZE>B<FITTOSIZE> (write-only): force lines and/or columns sizes
+B<CLEARATTRIB> (write-only): Clear all cell attributes if ALL, and all
+attributes except titles if CONTENTS. When ALL is specified, all lines
+and column attributes are also cleared. (since 3.6)
+
+B<X<CLEARVALUE>CLEARVALUE>B<I<L>:I<C>> (write-only): Clear all cell
+attributes in an interval starting at the specified cell. Its value
+defines the end cell in the "L:C" format, the default is the last cell.
+(since 3.6)
+
+B<CLEARATTRIBI<L>:*> (write-only): the cell attributes in line L. Its
+value defines a column inclusive interval in the "C1-C2" format. The
+default is 0 and the last column. When a full line is specified, all
+line attributes are also cleared. (since 3.6)
+
+B<CLEARATTRIB*:I<C >>I<(write-only)>: the cell attributes in column C.
+Its value defines a line inclusive interval in the "L1-L2" format. The
+default is 0 and the last line. When a full column is specified, all
+column attributes are also cleared, including ALIGNMENT and SORTSIGN.
+(since 3.6)
+
+In all cases, attributes are set to NULL. Only the attributes FONT*,
+BGCOLOR*, FGCOLOR*, FRAMEHORIZCOLOR*, FRAMEHORIZCOLOR*, ALIGNMENT* and
+SORTSIGN* are affected. Action only works if the matrix is mapped and
+NOT in callback mode.
+
+B<CLEARVALUE> (write-only): Clear all values if ALL, and all values
+except titles if CONTENTS. (since 3.6)
+
+B<X<CLEARVALUE>CLEARVALUE>B<I<L>:I<C>> (write-only): Clear all values
+in an interval starting at the specified cell. Its value defines the
+end cell in the "L:C" format, the default is the last cell. (since 3.6)
+
+B<CLEARVALUEI<L>:*> (write-only): the values in line L. Its value
+defines a column inclusive interval in the "C1-C2" format. The default
+is 0 and the last column. (since 3.6)
+
+B<CLEARVALUE*:I<C >>I<(write-only)>: the values in column C. Its value
+defines a line inclusive interval in the "L1-L2" format. The default is
+0 and the last line. (since 3.6)
+
+In all cases, values are set to NULL. Action only works if the matrix
+is mapped and NOT in callback mode.
+
+X<FITTOSIZE>B<FITTOSIZE> (write-only): Force lines and/or columns sizes
 so the matrix visible size fit in its current size. NUMCOL_VISIBLE and
 NUMLIN_VISIBLE are considered when fitting and they are not changed,
 only the RASTERWIDTHn and RASTERHEIGHTn attributes are changed. But if
@@ -386,7 +441,7 @@ set again to obtain the same result, but before doing that set to NULL
 all the RASTERWIDTHn and RASTERHEIGHTn attributes that you want to be
 changed. Can be LINES, COLUMNS or YES (meaning both). (since 3.3)
 
-X<FITTOTEXT>B<FITTOTEXT> (write-only): set the RASTERWIDTHn or the
+X<FITTOTEXT>B<FITTOTEXT> (write-only): Fet the RASTERWIDTHn or the
 RASTERHEIGHTn attribute for the given column or line, so that it will
 fit the largest text in the column or the highest text in the line. The
 number of the column or line must be preceded by a character
@@ -407,16 +462,16 @@ the data has changed, and it must be redrawn. Values:
 
 "L%d": Redraws the given line (e. g.: "L3" redraws line 3)
 
-"L%d:%d": Redraws the lines in the given region (e.g.: "L2:4" redraws
+"L%d-%d": Redraws the lines in the given region (e.g.: "L2-4" redraws
 lines 2, 3 and 4)
 
 "C%d": Redraws the given column (e.g.: "C3" redraws column 3)
 
-"C%d:%d": Redraws the columns in the given region (e.g: "C2:4" redraws
+"C%d-%d": Redraws the columns in the given region (e.g: "C2-4" redraws
 columns 2, 3 and 4)
 
 No redraw is done when the application sets the attributes: L:C,
-ALIGNMENTn, BGCOLOR*, FGCOLOR*, FONT*, VALUE, FRAME*COLOR. Global and
+ALIGNMENTc, BGCOLOR*, FGCOLOR*, FONT*, VALUE, FRAME*COLOR. Global and
 size attributes always automatically redraw the matrix.
 
 =head2 Text Editing Attributes
@@ -426,7 +481,8 @@ the text box in edition mode.
 
 B<X<MASKL:C>MASKI<L:C>>: Defines a mask that will filter text input.
 The L<MASK|../attrib/iup_mask.html> auxiliary attributes are also
-available adding the line and column at the end of the attribute name.
+available by adding the line and column at the end of the attribute
+name.
 
 B<X<MULTILINE>MULTILINE>: allows the edition of multiple lines. Use
 Shift+Enter to add lines. Enter will end the editing.

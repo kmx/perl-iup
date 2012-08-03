@@ -1,6 +1,6 @@
 =head1 IupSetLanguage
 
-Defines the language used by some pre-defined dialogs. This is an old
+Sets the language used by some pre-defined dialogs. This is an old
 function, it just sets the global attribute LANGUAGE.
 
 =head2 Parameters/Return
@@ -22,7 +22,7 @@ default: "ENGLISH".
 
 =head2 Affects
 
-All elements that have predefined texts.
+All elements that have pre-defined texts.
 
 =head2 Examples
 

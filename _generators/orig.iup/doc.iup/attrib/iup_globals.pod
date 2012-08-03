@@ -1,5 +1,18 @@
 =head1 Global Attributes
 
+Global attributes are not associated with any particular element. They
+represent and affect the global behavior of the toolkit.
+
+To access global attributes use the
+L<IupGetGlobal|../func/iupgetglobal.html>,
+L<IupStoreGlobal|../func/iupstoreglobal.html> and
+L<IupSetGlobal|../func/iupsetglobal.html> functions. In Lua global
+attributes can only be accessed trough those functions. In C, the
+functions L<IupGetAttribute|../func/iupgetattribute.html>,
+L<IupStoreAttribute|../func/iupstoreattribute.html>,
+L<IupSetAttribute|../func/iupsetattribute.html> and others can also be
+used if you set the element handle to NULL.
+
 ----
 
 =head2 X<General>General
@@ -24,6 +37,15 @@ referring to corrections only. Ex.: "1.7.2".
 Returns the IUP's copyright.
 
 Ex: "Copyright (C) 1994-2004 Tecgraf/PUC-Rio and PETROBRAS S/A".
+
+=head2 LASTERROR [Windows Only] (since 3.6)
+
+If an error is found, returns a string with the system error
+description.
+
+=head2 IUPLUA_THREADED (since 3.6)
+
+If defined allow IUP to be used inside coroutines in Lua.
 
 =head2 X<driver>B<DRIVER> (read-only)
 
@@ -51,6 +73,11 @@ the string uses the ISO8859-1 charset.
 =head2 SHOWMENUIMAGES [GTK Only] (since 3.5)
 
 Force the display of images in menus. Default: Yes
+
+=head2 GLOBALMENU [GTK Only] (since 3.6)
+
+Flag indicating that GTK is using a global menu instead of a per window
+menu. This was introduced in the new Ubuntu Unity desktop.
 
 =head2 B<SINGLEINSTANCE> [Windows Only] (since 3.2)
 
@@ -255,6 +282,10 @@ String in the "I<width>xI<height>" format.
 =head2 B<SCREENDEPTH> (read-only)
 
 Returns the screen depth in bits per pixel.
+
+=head2 B<SCREENDPI> (read-only)
+
+Returns the screen resolution in dots or pixels per inch (DPI).
 
 =head2 X<TRUECOLORCANVAS>B<TRUECOLORCANVAS> (read-only)
 

@@ -12,7 +12,7 @@ These attributes affect the TIP display.
 
 B<TIPBALLOON> [Windows Only]: The tip window will have the appearance
 of a cartoon "balloon" with rounded corners and a stem pointing to the
-item.. Default: NO.
+item. Default: NO.
 
 B<TIPBALLOONTITLE> [Windows Only]: When using the balloon format, the
 tip can also has a title in a separate area.
@@ -21,7 +21,7 @@ B<TIPBALLOONTITLEICON> [Windows Only]: When using the balloon format,
 the tip can also has a pre-defined icon in the title area. Values can
 be:
 
-"0" - No icon
+"0" - No icon (default)
 
 "1" - Info icon
 
@@ -46,7 +46,7 @@ the default system font for the tip will be used.
 B<TIPICON> [GTK only]: name of an image to be displayed in the TIP. See
 L<IupImage|../elem/iupimage.html>. (GTK 2.12)
 
-B<TIPMARKUP> [GTK only]: allows the tip string to contains pango markup
+B<TIPMARKUP> [GTK only]: allows the tip string to contains Pango markup
 commands. Can be "YES" or "NO". Default: "NO". Must be set before
 setting the TIP attribute. (GTK 2.12)
 

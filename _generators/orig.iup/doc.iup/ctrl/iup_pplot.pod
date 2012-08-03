@@ -7,11 +7,10 @@ PPlot is a library for creating plots that is system independent. It is
 maintained by Pier Philipsen (pierphil@xs4all.nl) and available at
 SourceForge
 L<http:E<47>E<47>pplot.sourceforge.netE<47>|http://pplot.sourceforge.net/>
-with a very flexible license (L<BSD
-License|http://sourceforge.net/softwaremap/trove_list.php?form_cat=187>).
-IupPPlot library includes the PPlot source code so no external
-references are needed. Also the standard PPlot distribution source code
-was changed to improve features and visual appearance.
+with a very flexible BSD License). IupPPlot library includes the PPlot
+source code so no external references are needed. Also the standard
+PPlot distribution source code was changed to improve features and
+visual appearance.
 
 IupPPlot first implementation was written by Marian Trifon
 (mtrif@katamail.com), then completed and documented by the IUP team.
@@ -35,8 +34,8 @@ Each plot can contain 2 B<axis> (X and Y), a B<title>, a B< legend>
 B<box>, a B<grid>, a B<dataset> B<area> and as many B<datasets> you
 want.
 
-Each data set is added using the B<IupPlotAdd >function. All other plot
-parameters are configured by attributes.
+Each data set is added using the B<IupPPlotAdd >function. All other
+plot parameters are configured by attributes.
 
 If no attribute is set, the default values were selected to best
 display the plot.
@@ -123,75 +122,75 @@ error occurs.
 
 =head2 Auxiliary Functions
 
- void IupPlotBegin(Ihandle* ih, int strXdata); [in C]
- iup.PlotBegin(ih: ihandle, strXdata: number) [in Lua]
+ void IupPPlotBegin(Ihandle* ih, int strXdata); [in C]
+ iup.PPlotBegin(ih: ihandle, strXdata: number) [in Lua]
 
 Prepares a dataset to receive samples. If strXdata is 1 then the X axis
 value is a string.
 
 ----
 
- void IupPlotAdd(Ihandle* ih, float x, float y); [in C]
- iup.PlotAdd(ih: ihandle, x, y: number) [in Lua]
+ void IupPPlotAdd(Ihandle* ih, float x, float y); [in C]
+ iup.PPlotAdd(ih: ihandle, x, y: number) [in Lua]
 
-Adds a sample to the dataset. Can only be called if B<IupPlotBegin> was
-called with strXdata=0.
-
-----
-
- void IupPlotAddStr(Ihandle* ih, const char* x, float y); [in C]
- iup.PlotAddStr(ih: ihandle, x: string, y: number) [in Lua]
-
-Same as B<IupPlotAdd>, but allows to use a string as the X axis value.
-Can only be called if B<IupPlotBegin> was called with strXdata=1.
+Adds a sample to the dataset. Can only be called if B<IupPPlotBegin>
+was called with strXdata=0.
 
 ----
 
- int IupPlotEnd(Ihandle* ih); [in C]
- iup.PlotEnd(ih: ihandle) -> (index: number) [in Lua]
+ void IupPPlotAddStr(Ihandle* ih, const char* x, float y); [in C]
+ iup.PPlotAddStr(ih: ihandle, x: string, y: number) [in Lua]
+
+Same as B<IupPPlotAdd>, but allows to use a string as the X axis value.
+Can only be called if B<IupPPlotBegin> was called with strXdata=1.
+
+----
+
+ int IupPPlotEnd(Ihandle* ih); [in C]
+ iup.PPlotEnd(ih: ihandle) -> (index: number) [in Lua]
 
 Adds a 2D dataset to the plot and returns the dataset B<index>. The
 data set can be empty. Redraw is NOT done until the REDRAW attribute is
 set. Also it will change the current dataset index to the return value.
 You can only set attributes of a dataset AFTER you added the dataset.
-Can only be called if B<IupPlotBegin> was called. Whenever you create a
-dataset all its "DS_*" attributes will be set to the default values.
+Can only be called if B<IupPPlotBegin> was called. Whenever you create
+a dataset all its "DS_*" attributes will be set to the default values.
 Notice that DS_MODE must be set before other "DS_*" attributes.
 
 ----
 
- void IupPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y); [in C]
- void IupPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
- iup.IupPlotInsert(ih: ihandle, index, sample_index, x, y: number) [in Lua]
- iup.IupPlotInsertStr(ih: ihandle, index, sample_index, x, y: number)
+ void IupPPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y); [in C]
+ void IupPPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
+ iup.IupPPlotInsert(ih: ihandle, index, sample_index, x, y: number) [in Lua]
+ iup.IupPPlotInsertStr(ih: ihandle, index, sample_index, x, y: number)
 
 Inserts a sample in a dataset at the given B<sample_index>. Can be used
 only after the dataset is added to the plot.
 
 ----
 
- void IupPlotInsertPoints(Ihandle *ih, int index, int sample_index, float* x, float* y, int count); [in C]
- void IupPlotInsertStrPoints(Ihandle *ih, int index, int sample_index, const char** x, float* y, int count);
- iup.IupPlotInsertPoints(ih: ihandle, index, sample_index, x, y: table of number) [in Lua]
- iup.IupPlotInsertStrPoints(ih: ihandle, index, sample_index, x, y: table of number)
+ void IupPPlotInsertPoints(Ihandle *ih, int index, int sample_index, float* x, float* y, int count); [in C]
+ void IupPPlotInsertStrPoints(Ihandle *ih, int index, int sample_index, const char** x, float* y, int count);
+ iup.IupPPlotInsertPoints(ih: ihandle, index, sample_index, x, y: table of number) [in Lua]
+ iup.IupPPlotInsertStrPoints(ih: ihandle, index, sample_index, x, y: table of number)
 
 Inserts an array of samples in a dataset at the given B<sample_index>.
 Can be used only after the dataset is added to the plot. (Since 3.4)
 
 ----
 
- void IupPlotAddPoints(Ihandle *ih, int index, float* x, float* y, int count); [in C]
- void IupPlotAddStrPoints(Ihandle *ih, int index, const char** x, float* y, int count);
- iup.IupPlotAddPoints(ih: ihandle, index, x, y: table of number) [in Lua]
- iup.IupPlotAddStrPoints(ih: ihandle, index, x, y: table of number)
+ void IupPPlotAddPoints(Ihandle *ih, int index, float* x, float* y, int count); [in C]
+ void IupPPlotAddStrPoints(Ihandle *ih, int index, const char** x, float* y, int count);
+ iup.IupPPlotAddPoints(ih: ihandle, index, x, y: table of number) [in Lua]
+ iup.IupPPlotAddStrPoints(ih: ihandle, index, x, y: table of number)
 
 Adds an array of samples in a dataset at the end. Can be used only
 after the dataset is added to the plot. (Since 3.4)
 
 ----
 
- void IupPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy); [in C]
- iup.PlotTransform(ih: ihandle, x, y: number) -> (ix, iy: number) [in Lua]
+ void IupPPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy); [in C]
+ iup.PPlotTransform(ih: ihandle, x, y: number) -> (ix, iy: number) [in Lua]
 
 Converts coordinates in plot units to pixels. It should be used in
 PREDRAW_CB and POSTDRAW_CB callbacks only. Output variables can be NULL
@@ -200,8 +199,8 @@ the drawing after a resize is done.
 
 ----
 
- void IupPlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C]
- iup.PlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
+ void IupPPlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C]
+ iup.PPlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
 
 Plots to the given CD canvas instead of the display canvas.
 
@@ -221,11 +220,18 @@ buffer will use GDI+ (YES) for drawing or standard GDI (NO). Default:
 NO. The GDI+ driver has anti-aliasing which can improve the line
 drawing.
 
-B<L<FONT|../attrib/iup_font.html>>: the font used in all text elements
-of the plot: title, legend and labels.
+B<L<FONT|../attrib/iup_font.html>>: the default font used in all text
+elements of the plot: title, legend and labels.
 
 B<L<BGCOLOR|../attrib/iup_bgcolor.html>>: the background color. The
 default value is white "255 255 255".
+
+B<MARGINLEFT, MARGINRIGHT, MARGINTOP, MARGINBOTTOM >(non inheritable):
+margin of the dataset area. PPlot implementation demands that margins
+must be set so the plot is not cropped. Default: "15", "15", "30",
+"15".
+
+=head2 Title Configuration (non inheritable)
 
 B<L<FGCOLOR|../attrib/iup_fgcolor.html>>: the title color. The default
 value is black "0 0 0".
@@ -237,11 +243,6 @@ B<TITLEFONTSIZE, TITLEFONTSTYLE >(non inheritable): the title font size
 and style. The default values depends on the FONT attribute and the
 returned value is NULL. Set to NULL, to use the FONT attribute values.
 Style can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC".
-
-B<MARGINLEFT, MARGINRIGHT, MARGINTOP, MARGINBOTTOM >(non inheritable):
-margin of the dataset area. PPlot implementation demands that margins
-must be set so the plot is not cropped. Default: "15", "15", "30",
-"15".
 
 =head2 Legend Configuration (non inheritable)
 
@@ -256,16 +257,16 @@ style.
 
 =head2 Grid Configuration (non inheritable)
 
+B<GRID>: shows or hides the grid in both or a specific axis. Can be:
+YES (both), HORIZONTAL, VERTICAL or NO. Default: NO.
+
 B<GRIDLINESTYLE>: line style of the grid. Can be: "CONTINUOUS",
 "DASHED", "DOTTED", "DASH_DOT", "DASH_DOT_DOT". Default is
 "CONTINUOUS".
 
 B<GRIDCOLOR>: grid color. Default: "200 200 200".
 
-B<GRID>: shows or hides the grid in both or a specific axis. Can be:
-YES (both), HORIZONTAL, VERTICAL or NO. Default: NO.
-
-=head2 Dataset Management (non inheritable)
+=head2 Dataset List Management (non inheritable)
 
 B<REMOVE> (write-only): removes a dataset given its index.
 
@@ -277,6 +278,8 @@ B<CURRENT>: current dataset index. Default is -1. When a dataset is
 added it becomes the current dataset. The index starts at 0. All "DS_*"
 attributes are dependent on this value.
 
+=head2 Dataset Configuration (non inheritable)
+
 B<DS_LEGEND>: legend text of the current dataset. Default is
 dynamically generated: "plot 0", "plot 1", "plot 2", ...
 
@@ -284,6 +287,9 @@ B<DS_COLOR>: color of the current dataset and it legend text. Default
 is dynamically generated for the 6 first datasets, others are default
 to black "0 0 0". The first 6 are: 0="255 0 0", 1="0 0 255", 2="0 255
 0", 3="0 255 255", 4="255 0 255", 5="255 255 0".
+
+B<DS_COUNT>: returns the number of samples of the current dataset.
+(since 3.6)
 
 B<DS_MODE>: drawing mode of the current dataset. Can be: "LINE", "BAR",
 "MARK" or "MARKLINE". Default: "LINE". This must be set before other
@@ -307,8 +313,8 @@ sample. Can be YES or NO. Default: NO.
 B<DS_REMOVE> (write-only): removes a sample from the current dataset
 given its index.
 
-B<DS_EDIT>: enable or disable the current dataset selection and
-editing. Can be YES or NO. Default: NO.
+B<DS_EDIT>: enable or disable the current dataset interactive selection
+and editing. Can be YES or NO. Default: NO.
 
 =head2 Axis Configuration (non inheritable)
 
@@ -343,6 +349,8 @@ Default: LIN.
 B<AXS_XFONTSIZE, AXS_YFONTSIZE, AXS_XFONTSTYLE, AXS_YFONTSTYLE>: axis
 label text font size and style. See TITLEFONTSIZE and TITLEFONTSTYLE.
 
+=head2 Axis Ticks Configuration (non inheritable)
+
 B<AXS_XTICK, AXS_YTICK>: enable or disable the axis tick display. Can
 be YES or NO. Default: YES.
 
@@ -359,14 +367,15 @@ spacing. Can be YES or NO. Default: YES.
 B<AXS_XTICKMAJORSPAN>, B<AXS_YTICKMAJORSPAN>: The spacing between major
 ticks. Default is 1 when AUTOTICK is disabled.
 
-B<AXS_XTICKDIVISION>, B<AXS_YTICKDIVISION>: number of ticks between
-each major tick. Default is 5 when AUTOTICK is disabled.
+B<AXS_XTICKDIVISION>, B<AXS_YTICKDIVISION>: number of minor ticks
+intervals between each major tick. Default is 5 when AUTOTICK is
+disabled.
 
 B<AXS_XAUTOTICKSIZE, AXS_YAUTOTICKSIZE>: configures the automatic tick
 size. Can be YES or NO. Default: YES.
 
-B<AXS_XTICKSIZE, AXS_YTICKSIZE>: size of ticks in pixels. Default is 5
-when AUTOTICKSIZE is disabled.
+B<AXS_XTICKSIZE, AXS_YTICKSIZE>: size of minor ticks in pixels. Default
+is 5 when AUTOTICKSIZE is disabled.
 
 B<AXS_XTICKMAJORSIZE, AXS_YTICKMAJORSIZE>: size of major ticks in
 pixels. Default is 8 when AUTOTICKSIZE is disabled.
@@ -529,6 +538,6 @@ L<Browse for Example Files|../../examples/>
 
 =head2 X<SeeAlso>See Also
 
-L<IupCanvas|../elem/iupcanvas.html>
+L<IupCanvas|../elem/iupcanvas.html>, L< IupMglPlot|iup_mglplot.html>
 
 =cut

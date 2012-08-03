@@ -1,11 +1,11 @@
 =head1 DROPFILES_CB
 
-Action called when a file is "dragged" to the application. When several
-files are dragged, the callback is called several times, once for each
-file.
+Action called when a file is "dropped" into the control. When several
+files are dropped at once, the callback is called several times, once
+for each file.
 
-If defined after the element is mapped then the attribute DRAGDROP must
-be set to YES.
+If defined after the element is mapped then the attribute
+DROPFILESTARGET must be set to YES.
 
 [Windows and GTK Only] (GTK 2.6)
 
@@ -16,10 +16,10 @@ be set to YES.
 
 B<ih>: identifier of the element that activated the event.
 
-B<filename>: Name of the dragged file.
+B<filename>: Name of the dropped file.
 
-B<num>: Number of the dragged file. If several files are dragged, num
-counts the number of dragged files starting from "total-1" to "0".
+B<num>: Number index of the dropped file. If several files are dropped,
+B<num> is the index of the dropped file starting from "total-1" to "0".
 
 B<x>: X coordinate of the point where the user released the mouse
 button.
@@ -28,7 +28,7 @@ B<y>: Y coordinate of the point where the user released the mouse
 button.
 
 Returns: If IUP_IGNORE is returned the callback will NOT be called for
-the next dropped files, and processing of dropped files will be
+the next dropped files, and the processing of dropped files will be
 interrupted.
 
 =head2 Affects

@@ -47,32 +47,36 @@ and change its contents to:
 
  gtk-theme-name = "MS-Windows"
 
-=head2 MacOSX
+=head2 MacOSX-Quartz
 
 The GTK driver also compiles in MacOSX with the new GTK port available
 at
-L<http:E<47>E<47>gtk-osx.sourceforge.netE<47>|http://gtk-osx.sourceforge.net/>.
-But the B<IupGLCanvas> is not available yet. You must use the GDK base
-driver of the CD library. Some elements like B<IupTree> are not 100%
-functional because of the gtk-osx implementation. The installation of
-gtk-osx is quite complex because there are no pre-compiled binaries.
-Also if the MacOSX theme is used, several controls have problems. We
-hope that this will improve in the future. Must define GTK_MAC in the
-config.mak makefile to enable this build.
+L<http:E<47>E<47>gtk-osx.sourceforge.netE<47>|http://gtk-osx.sourceforge.net/>
+using Quartz. But the B<IupGLCanvas> is not available yet. You must use
+the GDK base driver of the CD library. Some elements like B<IupTree>
+are not 100% functional because of the gtk-osx implementation. The
+installation of gtk-osx is quite complex because there are no
+pre-compiled binaries. Also if the MacOSX theme is used, several
+controls have problems. We hope that this will improve in the future.
+Must define GTK_MAC before compiling to enable this build.
+
+=head2 MacOSX-X11
 
 So for now we are distributing binaries that use the X11 version of GTK
 2.16. They were installed using L<Fink|http://www.finkproject.org/>.
 Here is a simple guide to install fink so the pre-compiled binaries
 will work (tested in 10.5 and 10.6):
 
- Download latest fink source: fink-0.29.10
- tar -xvzf fink-0.29.10.tar.gz 
- cd fink-0.29.10
+ Download latest fink source: fink-0.29.21
+ tar -xvzf fink-0.29.21.tar.gz 
+ cd fink-0.29.21
  ./bootstrap
  	Use all default answers, except for the second question about 64bits:
  	(10.5) => (1) Default (mostly 32bit)  [because gcc use 32bit as default]
  	(10.6) => (2) 64bit-only              [because gcc use 64bit as default]
  /sw/bin/pathsetup.sh
+ fink selfupdate-rsync
+ fink index -f
  fink install gtk+2 gtk+2-dev
 
 It will take some time to download and install everything, so have
@@ -90,5 +94,22 @@ After that you should get something like this:
     i   gtk+2            2.16.6-3     The Gimp Toolkit
     i   gtk+2-dev        2.16.6-3     The Gimp Toolkit
     i   gtk+2-shlibs     2.16.6-3     The Gimp Toolkit
+
+You can use L<MacPorts|http://www.macports.org/> instead of Fink. The
+installation is very similar, but it seems simpler. Although we did not
+have the opportunity to test it, some users report that this work ok.
+
+MacPorts have two GTK installations, one for X11 and one for Quartz.
+This is a lot simpler than trying to install the gtk-osx distribution.
+Just keep in mind that if using Quartz, OpenGL with IUP will not be
+available.
+
+When building IUP or CD in MacOSX, define the following variables in
+the system before typing "make":
+
+ export USE_MACOS_OPENGL=Yes      # To use the OpenGL framework
+ export GTK_BASE=/sw              # For Fink
+ export GTK_BASE=/opt/local       # For MacPorts
+ export GTK_MAC=Yes               # For Quartz instead of X11
 
 =cut

@@ -355,7 +355,7 @@ Several Submenus:
 
 [IMAGE]
 
-=head2 L<IupImage|elem/iupmenu.html>
+=head2 L<IupImage|elem/iupimage.html>
 
 See also the L<IupImgLib|iupimglib.html>, a library of pre-defined
 images.

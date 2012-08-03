@@ -69,7 +69,7 @@ will replace MASK.
 
 =head2 MASKFLOAT (non inheritable) (write only)
 
-Defines a floating point mask with limits. Format: "%f:%f" ("min:max").
+Defines a floating point mask with limits. Format: "%g:%g" ("min:max").
 It will replace MASK.
 
 =head2 Pattern Specification

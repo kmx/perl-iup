@@ -24,6 +24,7 @@ B<user_data>: user pointer passed to the user callback.
 B<format>: string describing the parameter
 
 ...: list of variables address with initial values for the parameters.
+The maximum number of parameters is 50.
 
 Returns: a B<status> code 1 if the OK button is pressed, 0 if the user
 canceled or if an error occurred.
@@ -49,13 +50,15 @@ B<dialog>: dialog handle
 B<param_index>: current parameter being changed. Can have negative
 values to indicate specific situations:
 
--1 = if the user pressed the B<OK> button;
+IUP_GETPARAM_OK (-1) = if the user pressed the B<OK> button;
 
--2 = after the dialog is B<mapped> and just before it is shown;
+IUP_GETPARAM_INIT (-2) = after the dialog is B<mapped> and just before
+it is shown;
 
--3 = if the user pressed the B<Cancel> button;
+IUP_GETPARAM_CANCEL (-3) = if the user pressed the B<Cancel> button;
 
--4 = if the user pressed the B<Help> button, if any;
+IUP_GETPARAM_HELP (-4) = if the user pressed the B<Help> button, if
+any;
 
 B<user_data>: a user pointer that is passed in the function call.
 
@@ -142,7 +145,9 @@ the end
 "B<I<text>>%B<I<x>[I<extra>]{tip}>\n", where:
 
 B<I<text>> is a descriptive text, to be placed to the left of the entry
-field in a label.
+field in a label. It can contains any string, but to contain a '%' must
+use two characters "%%" to avoid conflict with the type separator
+(since 3.6).
 
 B<I<x>> is the type of the parameter. The valid options are:
 
@@ -198,8 +203,8 @@ after the toggle. The strings can not have commas 'B<,>', nor brackets
 
 mask is an optional mask for the string and multiline types. The dialog
 uses the L<MASK|../attrib/iup_mask.html> attribute internally. In this
-case we do no use the brackets 'B<[>' and 'B<]>' to avoid confusion
-with the specified mask.
+case we do no use the brackets 'B<[>' and 'B<]>' to avoid conflict with
+the specified mask.
 
 B<|item0|item1|item2,...|> are the items of the list. At least one item
 must exist. Again the brackets are not used to increase the
@@ -208,20 +213,16 @@ are zero based start.
 
 B<[dialogtype|filter|directory|nochangedir|nooverwriteprompt]> are the
 respective attribute values passed to the L<
-IupFileDlg|iupfiledlg.html> control when activated. All commas must
+IupFileDlg|iupfiledlg.html> control when activated. All 'B<|>' must
 exist, but you can let empty values to use the default values. No mask
 can be set.
 
 B<tip> is a string that is displayed in a TIP for the main control of
 the parameter. (since 3.0)
 
-There is no extra parameters for the color string. The mask is
-automatically set to capture 3 or 4 unsigned integers from 0 to 255 (R
-G B) or (R G B A) (alpha is optional).
-
 The number of lines in the format string (number of '\n') will
 determine the number of required parameters. But separators will not
-count as parameters.
+count as parameters. The maximum number of parameters is 50.
 
 A integer parameter always has a spin attached to the text to increment
 and decrement the value. A real parameter only has a spin in a full
@@ -229,6 +230,18 @@ interval is defined (min and max), in this case the default step is
 (max-min)/20. When the callback is called because a spin was activated
 then the attribute SPINNING of the dialog will be defined to a non NULL
 and non zero value.
+
+The function does not allocate memory space to store the text entered
+by the user. Therefore, the string parameter must be large enough to
+contain the user input. If you want to set a maximum size for the
+string you can set the MAXSTR attribute for a parameter Ihandle, inside
+the callback when param_index=IUP_GETPARAM_INIT (since 3.6). Its
+default value is 10240 for multiline strings, 4096 for file names, and
+512 for other strings.
+
+There is no extra parameters for the color string. The mask is
+automatically set to capture 3 or 4 unsigned integers from 0 to 255 (R
+G B) or (R G B A) (alpha is optional).
 
 The dialog is resizable if it contains a string, a multiline string or
 a number with a valuator. All the multiline strings will increase size

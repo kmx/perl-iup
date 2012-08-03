@@ -1,6 +1,6 @@
 =head1 IupSetfAttribute
 
-Defines an attribute for an interface element.
+Sets an interface element attribute.
 
 =head2 Parameters/Return
 

@@ -1,7 +1,7 @@
 =head1 IupGetAttributes
 
-Returns all attributes of a given element that are in the internal hash
-table. The known attributes that are pointers (not strings) are
+Returns all attributes of a given element that are set in the internal
+hash table. The known attributes that are pointers (not strings) are
 returned as integers.
 
 The internal attributes are not returned (attributes prefixed with

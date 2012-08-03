@@ -38,6 +38,7 @@ To build IUP you will need:
  libgtk2.0-dev (for the GTK driver) [already installed for CD]
    libmotif-dev and x11proto-print-dev (for the Motif driver, OPTIONAL)
  libgl1-mesa-dev and libglu1-mesa-dev (for the IupGLCanvas)
+ libwebkitgtk-dev (for the IupWebBrowser)
 
 To install them you can use the Synaptic Package Manager and select the
 packages, or can use the command line and type:
@@ -215,7 +216,8 @@ necessary.
 
 If you B<don't> want to copy the run time libraries to your system
 directory, you can use them from build directory. You will need to add
-the run time libraries folders to the LD_LIBRARY_PATH, for example:
+the run time libraries folders to the LD_LIBRARY_PATH
+(DYLD_LIBRARY_PATH in MacOSX), for example:
 
  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/xxxx/im/lib/Linux26g4:/xxxx/cd/lib/Linux26g4:/xxxx/iup/lib/Linux26g4
 

@@ -25,7 +25,7 @@ B<"3">: Third item in the list.
 
 B<...>
 
-B<"n">: nth item in the list.
+B<"id">: idth item in the list.
 
 (non inheritable) The values can be any text. Items before "1" are
 ignored. Before map the first item with a NULL is considered the end of
@@ -36,15 +36,15 @@ rules:
 
 =item * if "1" is set to NULL, all items are removed.
 
-=item * if "n" is set to NULL, all items after n are removed.
+=item * if "id" is set to NULL, all items after id are removed.
 
-=item * if "n" is between the first and the last item, the current nth
-item is replaced. The effect is the same as removing the old item and
-inserting a new one at the old position.
+=item * if "id" is between the first and the last item, the current
+idth item is replaced. The effect is the same as removing the old item
+and inserting a new one at the old position.
 
-=item * if "n+1" is set then it is appended after the last item.
+=item * if "id+1" is set then it is appended after the last item.
 
-=item * Items after "n+1" are ignored. (since 3.0)
+=item * Items after "id+1" are ignored. (since 3.0)
 
 =back
 
@@ -70,8 +70,8 @@ B<COUNT> (read-only) (non inheritable): returns the number of items.
 Before mapping it counts the number of non NULL items before the first
 NULL item. (since 3.0)
 
-B<DRAGDROP> [Windows and GTK Only] (non inheritable): Enable or disable
-the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
+B<DROPFILESTARGET> [Windows and GTK Only] (non inheritable): Enable or
+disable the drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
 (since 3.0)
 
@@ -91,8 +91,17 @@ or "NO". Default "NO".
 L<FGCOLOR|../attrib/iup_fgcolor.html>: Text color. Default: the global
 attribute TXTFGCOLOR.
 
-B<INSERTITEMn> (write-only): inserts an item before the given n
-position. n starts at 1. If n=COUNT+1 then it will append after the
+B<IMAGEid> (non inheritable): image name to be used in the specified
+item, where id is the specified item starting at 1. The item must
+already exist. Use L<IupSetHandle|../func/iupsethandle.html> or
+L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
+associate an image to a name. See also L<IupImage|iupimage.html>. The
+image is always displayed at the left of the text and only when
+SHOWIMAGE=Yes. When EDITBOX=Yes the image is not display at the edit
+box. Images don't need to have the same size. (since 3.6)
+
+B<INSERTITEMid> (write-only): inserts an item before the given id
+position. id starts at 1. If id=COUNT+1 then it will append after the
 last item. Ignored if out of bounds. Ignored if set before map. (since
 3.0)
 
@@ -101,8 +110,8 @@ simultaneously (multiple list). Default: "NO". Only valid when
 EDITBOX=NO and DROPDOWN=NO.
 
 B<REMOVEITEM> (write-only): removes the given value. value starts at 1.
-If value is NULL removes all the items. Ignored if set before map.
-(since 3.0)
+If value is NULL or "ALL" removes all the items. Ignored if set before
+map. (since 3.0)
 
 B<SCROLLBAR> (creation only): Associates automatic scrollbars to the
 list when DROPDOWN=NO. Can be: "YES" or "NO" (none). Default: "YES".
@@ -121,6 +130,9 @@ never shown.
 
 B<SHOWDROPDOWN> (write-only): opens or closes the dropdown list. Can be
 "YES" or "NO". Valid only when DROPDOWN=YES. Ignored if set before map.
+
+B<SHOWIMAGE> (creation only): enables the use of an image for each
+item. Can be "YES" or "NO". Ignored if set before map. (since 3.6)
 
 L<SIZE|../attrib/iup_size.html>: Size of the list. The B<Natural>
 B<Size> is defined by the number of elements in the list and the with
@@ -169,7 +181,8 @@ B<VISIBLECOLUMNS>: Defines the number of visible columns for the
 B<Natural> B<Size>, this means that will act also as minimum number of
 visible columns. It uses a wider character size then the one used for
 the SIZE attribute so strings will fit better without the need of extra
-columns. (since 3.0)
+columns. Set this attribute to speed B<Natural> B<Size> computation for
+very large lists. (since 3.0)
 
 B<VISIBLELINES>: When DROPDOWN=NO defines the number of visible lines
 for the B<Natural> B<Size>, this means that will act also as minimum
@@ -203,6 +216,9 @@ L<TIP|../attrib/iup_tip.html>,
 L<RASTERSIZE|../attrib/iup_rastersize.html>,
 L<ZORDER|../attrib/iup_zorder.html>,
 L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes and
+callbacks are supported.
 
 =head2 Callbacks
 
@@ -339,6 +355,9 @@ L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
 L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
 L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>:
 All common callbacks are supported.
+
+L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes and
+callbacks are supported.
 
 =head2 Notes
 

@@ -14,10 +14,14 @@ Shows a modal dialog to edit a multiline text.
 B<text>: It contains the initial value of the text and the returned
 text. It must have room for the edited string.
 
-Returns: a non zero value if successfull. In Lua returns the text or
-nil if an error occured.
+Returns: a non zero value if successful. In Lua returns the text or nil
+if an error occurred.
 
 =head2 Notes
+
+The function does not allocate memory space to store the text entered
+by the user. Therefore, the text parameter must be large enough to
+contain the user input. The string is limited to 10240 characters.
 
 The dialog uses a global attribute called "PARENTDIALOG" as the parent
 dialog if it is defined. It also uses a global attribute called "ICON"

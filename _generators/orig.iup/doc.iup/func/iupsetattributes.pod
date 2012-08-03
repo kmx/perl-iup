@@ -1,6 +1,6 @@
 =head1 IupSetAttributes
 
-Defines a set of attributes for an interface element.
+Sets several attributes of an interface element.
 
 =head2 Parameters/Return
 

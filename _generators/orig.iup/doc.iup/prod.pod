@@ -1,8 +1,8 @@
 =head1 X<visao_geral>Overview
 
-IUP is a portable toolkit for building graphical user interfaces. It
-offers APIs in three basic languages: C, L<Lua|http://www.lua.org> and
-LED.
+IUP is a multi-platform toolkit for building graphical user interfaces.
+It offers APIs in three basic languages: C, L<Lua|http://www.lua.org>
+and LED.
 
 Its library contains about 100 functions for creating and manipulating
 dialogs.
@@ -134,8 +134,7 @@ The CVS can be browsed at: L<
 http:E<47>E<47>iup.cvs.sourceforge.netE<47>iupE<47>|http://iup.cvs.sourceforge.net/iup/>.
 
 If you want us to develop a specific feature for the toolkit, Tecgraf
-is available for partnerships and cooperation. Please contact
-B<tcg@tecgraf.puc-rio.br>.
+is available for partnerships and cooperation.
 
 Lua documentation and resources can be found at
 L<http:E<47>E<47>www.lua.orgE<47>|http://www.lua.org/>.
@@ -166,17 +165,17 @@ Thanks to the people that worked and contributed to the library:
 
 =over
 
-=item * Andr Carregal
+=item * AndrE<eacute> Carregal
 
-=item * Andr Clinio
+=item * AndrE<eacute> Clinio
 
-=item * Andr Costa
+=item * AndrE<eacute> Costa
 
-=item * Andr Derraik
+=item * AndrE<eacute> Derraik
 
 =item * Carlos Augusto Mendes
 
-=item * Carlos Jos Pereira de Lucena
+=item * Carlos JosE<eacute> Pereira de Lucena
 
 =item * Claudio Coutinho de Biasi
 
@@ -194,7 +193,7 @@ Thanks to the people that worked and contributed to the library:
 
 =item * Leonardo Constantino Oliveira
 
-=item * Luiz Cristvo Gomes Coelho
+=item * Luiz CristE<oacute>vE<atilde>o Gomes Coelho
 
 =item * Luiz Martins
 
@@ -239,7 +238,7 @@ Brazil (INPI) under the number 07569-0, and so it is protected against
 illegal use. See the L<Tecgraf Library License|copyright.html> for
 further usage information and Copyright.
 
-=head1 X<Sobre>Documentation
+=head1 X<sobre>Documentation
 
 This toolkit is available at
 L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>iup|http://www.tecgraf.puc-rio.br/iup>.
@@ -251,6 +250,19 @@ Acrobat and Windows HTML Help formats.
 The HTML navigation uses the WebBook tool, available at
 L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>webbook|http://www.tecgraf.puc-rio.br/webbook>.
 
+There are also a few presentations:
+
+=over
+
+=item * Lua Workshop 2009 - IUP, CD and IM in Lua
+(L<http:E<47>E<47>www.lua.orgE<47>wshop09.html#Scuri|http://www.lua.org/wshop09.html#Scuri>)
+[L<iupcdim_wlua2009.pdf|../download/iupcdim_wlua2009.pdf>]
+
+=item * PUCRS 2010 - IUP, CD and IM
+[L<iupcdim_facin2010.pdf|../download/iupcdim_facin2010.pdf>]
+
+=back
+
 =head1 X<publicacoes>Publications
 
 This product stimulated the following scientific publications:
@@ -258,9 +270,7 @@ This product stimulated the following scientific publications:
 =over
 
 =item * Scuri, A. "IUP - Portable User Interface". Software Developer's
-Journal. Dec/2005.
-[L<http:E<47>E<47>en.sdjournal.orgE<47>productsE<47>articleInfoE<47>2|http://en.sdjournal.org/products/articleInfo/2>]
-[L<iup_sdj2005.pdf|../download/iup_sdj2005.pdf>]
+Journal. Dec/2005. [L<iup_sdj2005.pdf|../download/iup_sdj2005.pdf>]
 
 =item * Levy, C. H.; Figueiredo, L. H.; Gattass, M.; Lucena, C.; and
 Cowan, D. "IUP/LED: A Portable User Interface Development Tool".
@@ -268,23 +278,36 @@ I<Software: Practice & Experience>, 26 #7 (1996) 737-762.
 [L<spe95.pdf|../download/spe95.pdf>]
 
 =item * Oliveira Prates, R.; Figueiredo, L. H.; and Gattass, M.
-"Especificao de Layout Abstrato por Manipulo Direta". Proceedings of
-VII SIBGRAPI (1994), 165-172. [L<sib94.pdf|../download/sib94.pdf> in
-Portuguese]
+"EspecificaE<ccedil>E<atilde>o de Layout Abstrato por
+ManipulE<ccedil>E<atilde>o Direta". Proceedings of VII SIBGRAPI (1994),
+165-172. [L<sib94.pdf|../download/sib94.pdf> in Portuguese]
 
 =item * Oliveira Prates, R.; Gattass, M. ;and Figueiredo, L. H. "Visual
-LED: uma ferramenta interativa para gerao de interfaces grficas". M.Sc.
-dissertation, Computer Science Department, PUC-Rio, 1994.
-[L<prates94.pdf|../download/prates94.pdf> in Portuguese]
-
-=item * Levy, C. H. "IUP/LED: Uma Ferramenta Porttil de Interface com
-Usurio". M.Sc. dissertation, Computer Science Department, PUC-Rio,
-1993.[L<levy93.pdf|../download/levy93.pdf> in Portuguese]
-
-=item * Figueiredo, L. H.;Gattass, M.; and Levy, C.H. "Uma Estratgia de
-Portabilidade para Aplicaes Grficas Interativas". Proceedings of VI
-SIBGRAPI (1993), 203-211. [L<sib93.pdf|../download/sib93.pdf> in
+LED: uma ferramenta interativa para geraE<ccedil>E<atilde>o de
+interfaces grE<aacute>ficas". M.Sc. dissertation, Computer Science
+Department, PUC-Rio, 1994. [L<prates94.pdf|../download/prates94.pdf> in
 Portuguese]
+
+=item * Levy, C. H. "IUP/LED: Uma Ferramenta PortE<aacute>til de
+Interface com UsuE<aacute>rio". M.Sc. dissertation, Computer Science
+Department, PUC-Rio, 1993.[L<levy93.pdf|../download/levy93.pdf> in
+Portuguese]
+
+=item * Figueiredo, L. H.;Gattass, M.; and Levy, C.H. "Uma
+EstratE<eacute>gia de Portabilidade para AplicaE<ccedil>E<otilde>es
+GrE<aacute>ficas Interativas". Proceedings of VI SIBGRAPI (1993),
+203-211. [L<sib93.pdf|../download/sib93.pdf> in Portuguese]
+
+=back
+
+Interview at the L<FLOSS|http://twit.tv/show/floss-weekly> weekly show
+about Free Libre Open Source Software, hosted by L<Randal
+Schwartz|http://www.stonehenge.com/merlyn/>:
+
+=over
+
+=item * L<
+http:E<47>E<47>twit.tvE<47>showE<47>floss-weeklyE<47>190|http://twit.tv/show/floss-weekly/190>
 
 =back
 

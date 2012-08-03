@@ -48,6 +48,8 @@ RASTERSIZE
 
 SHOWDRAGDROP
 
+SHOWTOGGLE
+
 SPACING
 
 TOPITEM
@@ -98,6 +100,8 @@ MARKEDMODE
 
 MARKSTART
 
+TOGGLEVALUE
+
 =head2 L<Hierarchy|iuptree_attrib.html#tree>
 
 ADDLEAF
@@ -144,12 +148,19 @@ B<SHOWRENAME_CB>: Action generated before a node is renamed.
 
 B<RENAME_CB>: Action generated after a node is renamed.
 
-B<DRAGDROP_CB>: Action generated when a drag & drop is executed.
+B<DRAGDROP_CB>: Action generated when an internal drag & drop is
+executed.
 
 B<NODEREMOVED_CB>: Action generated when a node is about to be removed.
 
 B<RIGHTCLICK_CB>: Action generated when the right mouse button is
 pressed over a node.
+
+B<TOGGLEVALUE_CB>: Action generated when the toggle's state was
+changed. The callback also receives the new toggle's state.
+
+L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes and
+callbacks are supported, but SHOWDRAGDROP must be set no No.
 
 =head2 Notes
 
@@ -169,7 +180,7 @@ B<Tree nodes and Ids>
 Since you have to add each node the creation of this tree can be done
 in several ways because the action attributes ADD* and INSERT* use an
 existent node to position the new node. The following pseudo code
-initializes the tree from top to bottom sequencially:
+initializes the tree from top to bottom sequentially:
 
  TITLE0 = "Figures"
    ADDLEAF0 = "Other"    // Use the previous node as reference
@@ -200,12 +211,14 @@ sequentially (except for branches), and also uses the focus node:
  ADDLEAF = "Other"
 
 Notice that in both cases the initialization of the tree is highly
-dependent on the order of the operations. Currently we can NOT garantie
-the order before mapping to the native system, so the initialization
-must be performed after the tree is mapped.
+dependent on the order of the operations. Currently we can NOT
+guarantee the order before mapping to the native system, so the
+initialization must be performed after the tree is mapped.
 
 Scrollbars are automatically displayed if the tree is greater than its
 display area.
+
+The first node added to an empty tree will always be the focus node.
 
 Branches may be added in IupLua using a Lua Table, see
 L<iup.TreeAddNodes|#TreeAddNodes>.
@@ -417,7 +430,8 @@ B<tree>: table of nodes.
 B<id>: optional existing node. The default is the first (0).
 
 Initializes the tree using the given Lua table as values for the tree
-nodes using ADDBRANCH and ADDLEAF. For example:
+nodes using L<ADDBRANCH|iuptree_attrib.html#tree> and ADDLEAF (so it
+also must be done after map). For example:
 
  tree_nodes = 
  {
@@ -515,7 +529,7 @@ does not need to concatenate the attribute name with the id.
 
 See also the L<IupTreeUtil|../guide.html#IupTreeUtil> contributed by
 Sergio Maffra and Frederico Abraham. It is an utility wrapper in C++
-for the IupTree with some limitations.
+for the B<IupTree> with some limitations.
 
 =head2 Examples
 

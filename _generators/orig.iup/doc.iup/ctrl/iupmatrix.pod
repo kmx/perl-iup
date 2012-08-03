@@ -72,6 +72,10 @@ L<FRAMECOLOR|iupmatrix_attrib.html#FRAMECOLOR>
 
 L<VALUE|iupmatrix_attrib.html#VALUE>
 
+L<CELLBGCOLOR|iupmatrix_attrib.html#CELLBGCOLOR>
+
+L<CELLFGCOLOR|iupmatrix_attrib.html#CELLFGCOLOR>
+
 L<CELLOFFSET|iupmatrix_attrib.html#CELLOFFSET>
 
 L<CELLSIZE|iupmatrix_attrib.html#CELLSIZE>

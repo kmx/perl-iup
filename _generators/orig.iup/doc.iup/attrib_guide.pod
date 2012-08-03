@@ -219,4 +219,9 @@ This policy is very useful for associating two interface elements,
 because you can abstract the fact that IUP uses a string to make
 associations and imagine the interface element itself is being used.
 
+For attributes that contains two values combined the use of Lua can
+help splitting those values, for example:
+
+ w,h = string.match(ih.rastersize,"(%d*):(%d*)")
+
 =cut

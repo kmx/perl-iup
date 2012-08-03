@@ -2,7 +2,9 @@
 
 (Click on the picture to enlarge image.)
 
-B<IMLAB> - Image Processing Laboratory
+=head2 B<IMLAB>
+
+Image Processing Laboratory
 
 L<http:E<47>E<47>imlab.sourceforge.netE<47>|http://imlab.sourceforge.net/>
 
@@ -10,27 +12,59 @@ L<[IMAGE]|screenshots/imlab.png>
 
 L<[IMAGE]|screenshots/imlab_analyze.png>
 
-B<FTOOL> - Two Dimensional Frame Analysis Tool
+=head2 B<FTOOL>
+
+Two Dimensional Frame Analysis Tool
 
 L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>ftool|http://www.tecgraf.puc-rio.br/ftool>
 
 L<[IMAGE]|screenshots/ftool.png>
 
+=head2 Nokia N800
+
 IUP running on a Nokia N800 Internet Tablet using the GTK driver
-(contribution by Otfried Cheong):
+(contribution by Otfried Cheong).
 
 L<[IMAGE]|screenshots/n800_photo.jpg>
 
 L<[IMAGE]|screenshots/n800_screenshot.png>
 
-IUP running on a Irex Iliad Book Reader using the GTK driver
-(contribution by Hans Elbers):
+=head2 iRex Iliad Book Reader
+
+IUP running on a iRex Iliad Book Reader using the GTK driver
+(contribution by Hans Elbers).
 
 L<[IMAGE]|screenshots/irex_iliad_photo.jpg>
 
 L<[IMAGE]|screenshots/irex_iliad_screenshot.png>
 
-Older Tecgraf Applications
+=head2 Tecgraf Applications
+
+These are internal Tecgraf applications, developed across our
+partnerships. Their use is exclusive to the partner. The models seen in
+the screenshots are fake models used for this purpose alone.
+
+L<[IMAGE]|screenshots/tecgraf/anflex.png>
+
+L<[IMAGE]|screenshots/tecgraf/geresim.png>
+
+L<[IMAGE]|screenshots/tecgraf/mg.png>
+
+L<[IMAGE]|screenshots/tecgraf/recon.png>
+
+L<[IMAGE]|screenshots/tecgraf/sstab1.png>
+
+L<[IMAGE]|screenshots/tecgraf/sstab2.png>
+
+L<[IMAGE]|screenshots/tecgraf/pretpn1.png>
+
+L<[IMAGE]|screenshots/tecgraf/pretpn2.png>
+
+L<[IMAGE]|screenshots/tecgraf/sjd.png>
+
+L<[IMAGE]|screenshots/tecgraf/sigma3d.jpg>
+
+=head2 Older Tecgraf Applications
 
 L<[IMAGE]|screenshots/tecgraf/mec_mtool.png>
 
@@ -38,17 +72,11 @@ L<[IMAGE]|screenshots/tecgraf/mec_mview.png>
 
 L<[IMAGE]|screenshots/tecgraf/mec_pos3d.png>
 
-L<[IMAGE]|screenshots/tecgraf/naval_mg.png>
+L<[IMAGE]|screenshots/tecgraf/naval_predyna.png>
 
 L<[IMAGE]|screenshots/tecgraf/naval_prea3d_sea_bottom.png>
 
 L<[IMAGE]|screenshots/tecgraf/naval_prea3d_sea_bottom_fendp.png>
-
-L<[IMAGE]|screenshots/tecgraf/naval_predyna.png>
-
-L<[IMAGE]|screenshots/tecgraf/naval_sstab.png>
-
-L<[IMAGE]|screenshots/tecgraf/reserv_recon.png>
 
 L<[IMAGE]|screenshots/tecgraf/superv_seguro.png>
 

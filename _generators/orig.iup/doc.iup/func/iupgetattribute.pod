@@ -16,7 +16,7 @@ B<name>: name of the attribute.
 B<id>: used when the attribute has an additional id.
 
 Returns: the attribute value or NULL (nil in Lua) if the attribute is
-not defined or does not exist.
+not set or does not exist.
 
 =head2 Notes
 

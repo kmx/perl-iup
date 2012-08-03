@@ -37,8 +37,8 @@ these are defined there will be always some border.
 L<CURSOR|../attrib/iup_cursor.html> (non inheritable): Defines a cursor
 for the dialog.
 
-B<DRAGDROP> [Windows and GTK Only] (non inheritable): Enable or disable
-the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
+B<DROPFILESTARGET> [Windows and GTK Only] (non inheritable): Enable or
+disable the drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
 
 L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
@@ -112,6 +112,9 @@ L<RASTERSIZE|../attrib/iup_rastersize.html>,
 L<ZORDER|../attrib/iup_zorder.html>: also accepted. Note that ACTIVE,
 BGCOLOR and FONT will also affect all the controls inside the dialog.
 
+L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes and
+callbacks are supported.
+
 =head2 Exclusive
 
 B<DEFAULTENTER>: Name of the button activated when the user press Enter
@@ -175,9 +178,9 @@ will be just disabled.
 
 B<MINSIZE>: Minimum size for the dialog in raster units (pixels). The
 windowing system will not be able to change the size beyond this limit.
-Default: 1x1. Some systems define a very minimum size greatter than
-this. Typically Windows has an horizontal minimum size that includes
-the window decoration buttons. (since 3.0)
+Default: 1x1. Some systems define a very minimum size greater than
+this, for instance in Windows the horizontal minimum size includes the
+window decoration buttons. (since 3.0)
 
 B<MODAL> (read-only): Returns the popup state. It is "YES" if the
 dialog was shown using B<IupPopup>. It is "NO" if B<IupShow> was used
@@ -231,6 +234,16 @@ B<ACTIVEWINDOW> [Windows and GTK Only] (read-only): informs if the
 dialog is the active window (the window with focus). Can be Yes or No.
 (since 3.4)
 
+B<OPACITY> [Windows and GTK Only]: sets the dialog transparency alpha
+value. Valid values range from 0 (completely transparent) to 255
+(opaque). In Windows set to NULL to remove the LAYERED style bit. (GTK
+2.12)
+
+B<TOPMOST> [Windows and GTK Only]: puts the dialog always in front of
+all other dialogs in all applications. Default: NO.
+
+=head2 Exclusive Taskbar and Tray/Status Area [Windows and GTK Only]
+
 B<HIDETASKBAR> [Windows and GTK Only] (write-only): Action attribute
 that when set to "YES", hides the dialog, but does not decrement the
 visible dialog count, does not call SHOW_CB and does not mark the
@@ -240,21 +253,45 @@ same effect as setting LOCKLOOP=Yes and normally hiding the dialog.
 IMPORTANT: when you hide using HIDETASKBAR, you must show using
 HIDETASKBAR also. Possible values: YES, NO.
 
-B<OPACITY> [Windows and GTK Only]: sets the dialog transparency alpha
-value. Valid values range from 0 (completely transparent) to 255
-(opaque). In Windows set to NULL to remove the LAYERED style bit. (GTK
-2.12)
-
-B<TOPMOST> [Windows and GTK Only]: puts the dialog always in front of
-all other dialogs in all applications. Default: NO.
-
 B<TRAY> [Windows and GTK Only]: When set to "YES", displays an icon on
 the system tray. (GTK 2.10)
 
 B<TRAYIMAGE> [Windows and GTK Only]: Name of a IUP image to be used as
 the tray icon. (GTK 2.10)
 
-B<TRAYTIP> [Windows and GTK Only] :Tray icon's tooltip text. (GTK 2.10)
+B<TRAYTIP> [Windows and GTK Only]: Tray icon's tooltip text. (GTK 2.10)
+
+B<TRAYTIPMARKUP> [GTK Only]: allows the tip string to contains Pango
+markup commands. Can be "YES" or "NO". Default: "NO". Must be set
+before setting the TRAYTIP attribute. (GTK 2.16) (since 3.6)
+
+B<B<TRAY>TIPBALLOON> [Windows Only]: The tip window will have the
+appearance of a cartoon "balloon" with rounded corners and a stem
+pointing to the item. Default: NO. Must be set before setting the
+TRAYTIP attribute. (since 3.6)
+
+B<B<TRAY>TIPBALLOONDELAY >[Windows Only]: Time the tip will remain
+visible. Default is system dependent. The minimum and maximum values
+are 10000 and 30000 milliseconds. Must be set before setting the
+TRAYTIP attribute. (since 3.6)
+
+B<B<TRAY>TIPBALLOONTITLE> [Windows Only]: When using the balloon
+format, the tip can also has a title in a separate area. Must be set
+before setting the TRAYTIP attribute. (since 3.6)
+
+B<B<TRAY>TIPBALLOONTITLEICON> [Windows Only]: When using the balloon
+format, the tip can also has a pre-defined icon in the title area. Must
+be set before setting the TRAYTIP attribute. (since 3.6)
+
+Values can be:
+
+"0" - No icon (default)
+
+"1" - Info icon
+
+"2" - Warning icon
+
+"3" - Error Icon
 
 =head2 Exclusive [GTK Only]
 
@@ -421,6 +458,9 @@ L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
 L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
 L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>:
 All common callbacks are supported.
+
+L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes and
+callbacks are supported.
 
 =head2 Notes
 
