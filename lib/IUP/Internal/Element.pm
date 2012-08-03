@@ -21,16 +21,11 @@ sub import {
 }
 
 sub AUTOLOAD {
-  (my $name = our $AUTOLOAD) =~ s{.*::}{}mxs;
-  #return (scalar(@_)>1) ? $_[0]->SetAttribute($name, $_[1]) : $_[0]->GetAttribute($name);
+  my ($name) = our $AUTOLOAD =~ /::(\w+)$/;
   die "FATAL: unknown method '$name'" unless $name =~ /^[A-Z0-9_]+$/;
   splice(@_, 1, 0, $name);
   goto &SetAttribute if scalar(@_)>2;
   goto &GetAttribute;
-}
-
-sub test {
-warn "TEST\n";
 }
 
 sub BEGIN {

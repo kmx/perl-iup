@@ -1911,16 +1911,48 @@ _IupMatGetAttribute(ih,name,lin,col)
 	OUTPUT:
 		RETVAL
 
-################################################################################ iup_pplot.h
+################################################################################ iup_mglplot.h
 
-#### Original C function from <iup_pplot.h>
-# void IupPPlotOpen(void);
-void
-_IupPPlotOpen()
+#### Original C function from <iup_mglplot.h>
+# Ihandle* IupMglPlot(void);
+Ihandle*
+_IupMglPlot()
 	CODE:
-#ifdef HAVELIB_IUP_PPLOT
-		IupPPlotOpen();
+#ifdef HAVELIB_IUP_MGLPLOT
+		RETVAL = IupMglPlot();
+#else
+		warn("Error: IUP was built without IupMglPlot() support");
+		RETVAL = NULL;
 #endif
+	OUTPUT:
+		RETVAL
+
+### XXX-FIXME-INCOMPLETE
+#void IupMglPlotOpen(void);
+#void IupMglPlotBegin(Ihandle *ih, int dim);
+#void IupMglPlotAdd1D(Ihandle *ih, const char* name, float y);
+#void IupMglPlotAdd2D(Ihandle *ih, float x, float y);
+#void IupMglPlotAdd3D(Ihandle *ih, float x, float y, float z);
+#int IupMglPlotEnd(Ihandle *ih);
+#int IupMglPlotNewDataSet(Ihandle *ih, int dim);
+#void IupMglPlotInsert1D(Ihandle* ih, int ds_index, int sample_index, const char** names, const float* y, int count);
+#void IupMglPlotInsert2D(Ihandle* ih, int ds_index, int sample_index, const float* x, const float* y, int count);
+#void IupMglPlotInsert3D(Ihandle* ih, int ds_index, int sample_index, const float* x, const float* y, const float* z, int count);
+#void IupMglPlotSet1D(Ihandle* ih, int ds_index, const char** names, const float* y, int count);
+#void IupMglPlotSet2D(Ihandle* ih, int ds_index, const float* x, const float* y, int count);
+#void IupMglPlotSet3D(Ihandle* ih, int ds_index, const float* x, const float* y, const float* z, int count);
+#void IupMglPlotSetFormula(Ihandle* ih, int ds_index, const char* formulaX, const char* formulaY, const char* formulaZ, int count);
+#void IupMglPlotSetData(Ihandle* ih, int ds_index, const float* data, int count_x, int count_y, int count_z);
+#void IupMglPlotLoadData(Ihandle* ih, int ds_index, const char* filename, int count_x, int count_y, int count_z);
+#void IupMglPlotSetFromFormula(Ihandle* ih, int ds_index, const char* formula, int count_x, int count_y, int count_z);
+#void IupMglPlotTransform(Ihandle* ih, float x, float y, float z, int *ix, int *iy);
+#void IupMglPlotTransformXYZ(Ihandle* ih, int ix, int iy, float *x, float *y, float *z);
+#void IupMglPlotDrawMark(Ihandle* ih, float x, float y, float z);
+#void IupMglPlotDrawLine(Ihandle* ih, float x1, float y1, float z1, float x2, float y2, float z2);
+#void IupMglPlotDrawText(Ihandle* ih, const char* text, float x, float y, float z);
+#void IupMglPlotPaintTo(Ihandle *ih, const char* format, int w, int h, float dpi, void *data);
+
+################################################################################ iup_pplot.h
 
 #### Original C function from <iup_pplot.h>
 # Ihandle* IupPPlot(void);
@@ -1935,6 +1967,15 @@ _IupPPlot()
 #endif
 	OUTPUT:
 		RETVAL
+
+#### Original C function from <iup_pplot.h>
+# void IupPPlotOpen(void);
+void
+_IupPPlotOpen()
+	CODE:
+#ifdef HAVELIB_IUP_PPLOT
+		IupPPlotOpen();
+#endif
 
 #### Original C function from <iup_pplot.h>
 # void IupPPlotBegin(Ihandle *ih, int strXdata);
