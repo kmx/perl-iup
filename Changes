@@ -1,5 +1,11 @@
 =head1 Revision history for IUP
 
+=head2 04/08/2012 - 0.005_1
+
+ - attribute accesors now handled via AUTOLOAD
+ - Callback.xs incorporated into IupLibrary.xs
+ - preparing for iup-3.6
+
 =head2 19/08/2011 - 0.004
 
  - forcing newer Alien::IUP (to make IUP install smoothly on cygwin)
