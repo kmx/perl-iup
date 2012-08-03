@@ -23,27 +23,27 @@ $cflags .= ' -DHAVELIB_IUPGL'         if Alien::IUP->havelib('iupgl');
 $cflags .= ' -DHAVELIB_IUPOLE'        if Alien::IUP->havelib('iupole');
 $cflags .= ' -DHAVELIB_IUPCONTROLS'   if Alien::IUP->havelib('iupcontrols');
 $cflags .= ' -DHAVELIB_IUP_PPLOT'     if Alien::IUP->havelib('iup_pplot');
+$cflags .= ' -DHAVELIB_IUP_MGLPLOT'   if Alien::IUP->havelib('iup_mglplot');
 $cflags .= ' -DHAVELIB_IUPIMGLIB'     if Alien::IUP->havelib('iupimglib');
 $cflags .= ' -DHAVELIB_CDCONTEXTPLUS' if Alien::IUP->havelib('cdcontextplus');
 
 my $class = 'Module::Build';
 if (-d '.git') { #adding some custom actions relevant only for module development
-  $class = Module::Build->subclass( class => "Module::Build::Custom", code => <<'SUBCLASS', );
-
+  $class = Module::Build->subclass( class => "Module::Build::Custom", code => <<'CODE' );
   sub ACTION_xt {
     system(qw[prove -bl xt/*.t]);
+    return;
   }
-
-  sub ACTION_gen {
+  sub ACTION_gencode {
     system($^X, qw[_generators/generate.pl -dst lib/IUP/Internal]);
+    return;
   }
-
-  sub ACTION_doc {
+  sub ACTION_gendoc {
     system($^X, qw[_generators/proc-pod.tt2pod.pl -podtt _generators/pod.tt -pod lib]);
     system($^X, qw[_generators/proc-pod2cpan.html.pl -html tmp.cpan-like.html -pod lib]);
+    return;
   }
-
-SUBCLASS
+CODE
 }
 
 my $builder = $class->new(
@@ -86,6 +86,7 @@ my $builder = $class->new(
 #set features for later use vie IUP::ConfigData->feature('name');
 $builder->feature('CanvasGL', 1)   if Alien::IUP->havelib('iupgl');
 $builder->feature('PPlot', 1)      if Alien::IUP->havelib('iup_pplot');
+$builder->feature('MGLPlot', 1)    if Alien::IUP->havelib('iup_mglplot');
 $builder->feature('OLE', 1)        if Alien::IUP->havelib('iupole');
 $builder->feature('ImgLib', 1)     if Alien::IUP->havelib('iupimglib');
 $builder->feature('Controls', 1)   if Alien::IUP->havelib('iupcontrols');

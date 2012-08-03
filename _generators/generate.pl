@@ -280,7 +280,9 @@ my $cb_data1 = {
   pmitems => cb_hash2pmitems($cb_h),
 };
 #die Dumper($cb_data1);
-$tt->process($FindBin::Bin.'/Callback_xs.tt', $cb_data1, $g_dst.'/Callback.xs') || die $tt->error();
+#$tt->process($FindBin::Bin.'/Callback_xs.tt', $cb_data1, $g_dst.'/Callback.xs') || die $tt->error();
+$tt->process($FindBin::Bin.'/Callback_xs_inc.tt', $cb_data1, $g_dst.'/Callback.xs.inc') || die $tt->error();
+$tt->process($FindBin::Bin.'/Callback_c_inc.tt', $cb_data1, $g_dst.'/Callback.c.inc') || die $tt->error();
 $tt->process($FindBin::Bin.'/Callback_pm.tt', $cb_data1, $g_dst.'/Callback.pm') || die $tt->error();
 
 warn ">>>>[$0] Finished!\n";

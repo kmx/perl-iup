@@ -5,12 +5,20 @@
 
 #include <iup.h>
 
+#ifdef HAVELIB_IUPCD
+#include <cd.h>
+#endif
+
 #ifdef HAVELIB_IUPCONTROLS
 #include <iupcontrols.h>
 #endif
 
 #ifdef HAVELIB_IUP_PPLOT
 #include <iup_pplot.h>
+#endif
+
+#ifdef HAVELIB_IUP_MGLPLOT
+#include <iup_mglplot.h>
 #endif
 
 #ifdef HAVELIB_IUPGL
@@ -119,6 +127,15 @@ static int cb_idle_action() {
 
   return ret;
 }
+
+#include "Callback.c.inc"
+/* XXX-MAYBE-LATER #include "Canvas.c.inc" */
+
+MODULE = IUP::Internal::Callback	PACKAGE = IUP::Internal::Callback
+
+INCLUDE: Callback.xs.inc
+
+# XXX-MAYBE-LATER INCLUDE: Canvas.xs.inc
 
 MODULE = IUP::Internal::LibraryIup	PACKAGE = IUP::Internal::LibraryIup
 

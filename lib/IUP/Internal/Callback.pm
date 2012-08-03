@@ -4,12 +4,8 @@ package IUP::Internal::Callback;
 
 use strict;
 use warnings;
-require DynaLoader;
-our @ISA = qw/ DynaLoader /;
 
-bootstrap IUP::Internal::Callback;
-
-use IUP::Internal::LibraryIup;
+use IUP::Internal::LibraryIup; #loads also XS part
 
 my $cb_table = {
   'IUP::Button' => {
