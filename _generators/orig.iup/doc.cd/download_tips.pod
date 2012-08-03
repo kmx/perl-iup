@@ -99,6 +99,7 @@ structure that separates each library or toolkit. For example:
          cd\
          im\
          lua5.1\
+         lua52\
 
 This structure will also made the process of building from sources more
 simple, since the projects and makefiles will assume this structure .
@@ -155,52 +156,29 @@ B<IRIX6465>
 
 SGI IRIX 6.5 (mips) / gcc 3.3 / Motif 1.2
 
-B<Linux24>
-
-Red Hat 7.3 (x86) / Kernel 2.4 / gcc 2.95 / L<Open Motif
-2.1|http://www.ist-inc.com/DOWNLOADS/motif_download.html> / GTK 2.0
-
-B<Linux24g3>
-
-CentOS 3.9 (x86) / Kernel 2.4 / gcc 3.2 / Open Motif 2.2 3 / GTK 2.2
-
-B<Linux24g3_64>
-
-Red Hat E.L. WS 3 (x64) / Kernel 2.4 / gcc 3.2 / Open Motif 2.2 3 / GTK
-2.2
-
-B<Linux26>
-
-CentOS 4.6 (x86) / Kernel 2.6 / gcc 3.4 / Open Motif 2.2 3 / GTK 2.4
-
-B<Linux26_64>
-
-CentOS 4.6 (x64) / Kernel 2.6 / gcc 3.4 / Open Motif 2.2 3 / GTK 2.4
-
 B<Linux26g4>
 
-CentOS 5.3 (x86) / Kernel 2.6 / gcc 4.1 / Open Motif 2.2 3 / GTK 2.12
+Ubuntu 10.4 (x86) / Kernel 2.6 / gcc 4.4 / Open Motif 2.2 3 / GTK 2.20
 
 B<Linux26g4_64>
 
-CentOS 5.2 (x64) / Kernel 2.6 / gcc 4.1 / OpenMotif 2.2 3 / GTK 2.10
+Ubuntu 10.4 (x64) / Kernel 2.6 / gcc 4.4 / Open Motif 2.2 3 / GTK 2.20
 
-B<Linux26g4ppc>
+B<Linux30>
 
-Ubuntu 7.10 (ppc) / Kernel 2.6 / gcc 4.1 / Open Motif 2.2 3 / GTK 2.?
+Ubuntu 11.10 (x86) / Kernel 3.0 / gcc 4.6 / Open Motif 2.2 3 / GTK 2.24
 
-B<Linux26_ia64>
+B<Linux30_64>
 
-Red Hat E.L. AS 4 (ia64) / Kernel 2.6 / gcc 3.4 / Open Motif 2.2 3 /
-GTK 2.4
+Ubuntu 11.10 (x64) / Kernel 3.0 / gcc 4.6 / Open Motif 2.2 3 / GTK 2.24
 
-B<SunOS57>
+B<Linux32>
 
-Sun Solaris 7 (sparc) / gcc 2.95 / Motif 2.1
+Ubuntu 12.04 (x86) / Kernel 3.2 / gcc 4.6 / Open Motif 2.3 3 / GTK 2.24
 
-B<SunOS58>
+B<Linux32_64>
 
-Sun Solaris 8 (sparc) / gcc 3.4 / Motif 2.1
+Ubuntu 12.04 (x64) / Kernel 3.2 / gcc 4.6 / Open Motif 2.3 3 / GTK 2.24
 
 B<SunOS510>
 
@@ -208,7 +186,7 @@ Sun Solaris 10 (sparc) / gcc 3.4 / Motif 2.1
 
 B<SunOS510x86>
 
-Sun Solaris 10 (x86) / gcc 3.3 / Motif 2.1
+Sun Solaris 10 (x86) / gcc 3.4 / Motif 2.1
 
 B<FreeBSD54>
 
@@ -230,17 +208,9 @@ B<MacOS106>
 
 Mac OS X 10.6 (x64) [Snow Leopard] / Darwin Kernel 10 / gcc 4.2
 
-B<Win32_vc6>
+B<MacOS107>
 
-Static library built with Microsoft Visual C++ 6 (static RTL/single
-thread)
-
-B<Win32_vc7>
-
-Static library built with Microsoft Visual C++ 7.1 (.NET 2003) (static
-RTL/single thread)
-
-Also compatible with Microsoft Visual C++ Toolkit 2003
+Mac OS X 10.7 (x64) [Lion] / Darwin Kernel 10 / gcc 4.2
 
 B<Win32_vc8>
 
@@ -265,16 +235,6 @@ Also compatible with Microsoft Visual C++ 2010 Express Edition -
 
 L<http:E<47>E<47>www.microsoft.comE<47>expressE<47>vcE<47>|http://www.microsoft.com/express/vc/>
 E<sup1>
-
-B<Win32_dll6>
-
-DLL and import library built with vc6, creates dependency with
-MSVCRT.DLL
-
-B<Win32_dll7>
-
-DLL and import library built with vc7, creates dependency with
-MSVCR71.DLL
 
 B<Win32_dll8>
 
@@ -315,19 +275,10 @@ B<Win64_dll10>
 
 Same as B<Win32_dll10> but for 64-bits systems using the x64 standard.
 
-B<Win32_gcc3>
-
-Static library built with Cygwin gcc 3.4 (Depends on Cygwin DLL 1.5)
-
 B<Win32_gcc4>
 
 Static library built with Cygwin gcc 4.3 (Depends on Cygwin DLL 1.7) -
 L<http:E<47>E<47>www.cygwin.comE<47>|http://www.cygwin.com/> E<sup1>
-
-B<Win32_cygw15>
-
-Same as B<Win32_gcc3>, but using the Cygwin Posix system and also with
-a DLL and import library
 
 B<Win32_cygw17>
 
@@ -338,13 +289,9 @@ B<Win32_dllg4>
 
 DLL and import library built with Cygwin gcc 4.3 (See B<Win32_gcc4>)
 
-B<Win32_mingw3>
-
-Static library built with MingW gcc 3.4
-
 B<Win32_mingw4>
 
-Static library built with MingW gcc 4.3 -
+Static library built with MingW gcc 4.6 -
 L<http:E<47>E<47>www.mingw.orgE<47>|http://www.mingw.org/> E<sup1>
 
 Also compatible with Dev-C++ -
@@ -356,7 +303,25 @@ E<sup1>
 
 B<Win32_dllw4>
 
-DLL and import library built with MingW gcc 4.3 (See B<Win32_mingw4>)
+DLL and import library built with MingW gcc 4.6 (See B<Win32_mingw4>)
+
+B<Win64_mingw4>
+
+Static library built with MingW gcc 4.5 -
+L<http:E<47>E<47>mingw-w64.sourceforge.netE<47>|http://mingw-w64.sourceforge.net/>
+E<sup1>
+
+Tool chains targeting Win64 / Personal Builds / "sezero"
+
+for 64-bits systems using the x64 standard.
+
+B<Win64_dllw4>
+
+DLL and import library built with MingW gcc 4.5,
+
+for 64-bits systems using the x64 standard.
+
+creates dependency with MSVCRT.DLL
 
 B<Win32_owc1>
 
@@ -369,14 +334,6 @@ Static library built with Borland C++ 5.5 Compiler -
 
 L<https:E<47>E<47>downloads.embarcadero.comE<47>freeE<47>c_builder|https://downloads.embarcadero.com/free/c_builder>
 E<sup1>
-
-B<Win32_bc56>
-
-Static library built with Borland C++ BuilderX 1.0 / Borland C++ 5.6
-Compiler E<sup1>,E<sup2>
-
-(the C++ BuilderX IDE can also be configured to use mingw3 or gcc3
-versions.)
 
 B<Win32_bc6>
 
@@ -395,11 +352,6 @@ B<Win64_bin>
 
 Same as B<Win32_bin> but for 64-bits systems using the x64 standard
 
-B<Win32_cygw15_bin>
-
-Executables only for Windows NT/2000/XP, but using the Cygwin Posix
-system (See B<Win32_cygw15>)
-
 B<Win32_cygw17_bin>
 
 Executables only for Windows NT/2000/XP, but using the Cygwin Posix
@@ -412,6 +364,6 @@ E<sup2> - Recently Borland removed the C++ Builder X from download. But
 if you bought a book that has the CD of the compiler, then it is still
 free to use.
 
-3 - OpenMotif 2.2 is classified as 'experimental' by the Open Group.
+3 - Open Motif 2.2 is classified as 'experimental' by the Open Group.
 
 =cut

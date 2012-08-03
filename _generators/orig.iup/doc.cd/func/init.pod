@@ -175,70 +175,55 @@ Returns the resources available for that context. To verify if a given
 resource is available, perform a binary AND ('&.html with the following
 values:
 
-CD_CAP_FLUSH
+ CD_CAP_FLUSH
+ CD_CAP_CLEAR 
+ CD_CAP_PLAY 
+ CD_CAP_YAXIS - The native Y axis orientation is bottom-up.
+ CD_CAP_CLIPAREA 
+ CD_CAP_CLIPPOLY - Usually is not implemented.
+ CD_CAP_REGION - Usually is not implemented. 
+ CD_CAP_RECT - Rectangles are implemented directly in the driver (they are usually simulated).
+ CD_CAP_CHORD
+ CD_CAP_IMAGERGB 
+ CD_CAP_IMAGERGBA - If this is not implemented, but cdGetImageRGB is, then it is simulated using cdGetImageRGB and cdPutImageRGB.
+ CD_CAP_IMAGEMAP 
+ CD_CAP_GETIMAGERGB 
+ CD_CAP_IMAGESRV - Usually is only implemented in contexts of window graphics systems (Native Window and IUP).
+ CD_CAP_BACKGROUND 
+ CD_CAP_BACKOPACITY 
+ CD_CAP_WRITEMODE 
+ CD_CAP_LINESTYLE 
+ CD_CAP_LINEWITH 
+ CD_CAP_FPRIMTIVES - Primitives using floatig point coordinates are implemented directly in the driver (they are usually simulated).
+ CD_CAP_HATCH 
+ CD_CAP_STIPPLE 
+ CD_CAP_PATTERN 
+ CD_CAP_FONT 
+ CD_CAP_FONTDIM - If not defined, the function is implemented using an internal heuristics of the library.
+ CD_CAP_TEXTSIZE - If not defined, the function is implemented using an internal heuristics of the library.
+ CD_CAP_TEXTORIENTATION - Usually is not implemented.
+ CD_CAP_PALETTE - Usually is only implemented in contexts of window graphics systems (Native Window and IUP).
+ CD_CAP_LINECAP   
+ CD_CAP_LINEJOIN
+ CD_CAP_PATH  
+ CD_CAP_BEZIER
 
-CD_CAP_CLEAR
+ int cdContextType(cdContext* ctx); [in C]
+ 
+ cd.ContextType(ctx: number) -> (type: number) [in Lua]
 
-CD_CAP_PLAY
+Returns the type of the context:
 
-CD_CAP_YAXIS - The Y axis has the same orientation as the CD axis.
+ CD_CTX_WINDOW - GUI window based
+ CD_CTX_DEVICE - device based (clipboard, printer, picture)
+ CD_CTX_IMAGE - server or client image based, including double buffer based
+ CD_CTX_FILE - metafile based
 
-CD_CAP_CLIPAREA
+ int cdContextIsPlus(cdContext* ctx); [in C]
+ 
+ cd.ContextIsPlus(ctx: number) -> (plus: boolean) [in Lua]
 
-CD_CAP_CLIPPOLY - Usually is not implemented.
-
-CD_CAP_MARK - Marks are implemented directly in the driver (they are
-usually simulated).
-
-CD_CAP_RECT - Rectangles are implemented directly in the driver (they
-are usually simulated).
-
-CD_CAP_VECTORTEXT - Vector text is implemented directly in the driver
-(it is usually simulated).
-
-CD_CAP_IMAGERGB
-
-CD_CAP_IMAGERGBA - If this is not implemented, but cdGetImageRGB is,
-then it is simulated using cdGetImageRGB and cdPutImageRGB.
-
-CD_CAP_IMAGEMAP
-
-CD_CAP_GETIMAGERGB
-
-CD_CAP_IMAGESRV - Usually is only implemented in contexts of window
-graphics systems (Native Window and IUP).
-
-CD_CAP_BACKGROUND
-
-CD_CAP_BACKOPACITY
-
-CD_CAP_WRITEMODE
-
-CD_CAP_LINESTYLE
-
-CD_CAP_LINEWITH
-
-CD_CAP_WD - Functions of world coordinates are implemented directly in
-the driver (they are usually simulated).
-
-CD_CAP_HATCH
-
-CD_CAP_STIPPLE
-
-CD_CAP_PATTERN
-
-CD_CAP_FONT
-
-CD_CAP_FONTDIM - If not defined, the function is implemented using an
-internal heuristics of the library.
-
-CD_CAP_TEXTSIZE - If not defined, the function is implemented using an
-internal heuristics of the library.
-
-CD_CAP_TEXTORIENTATION - Usually is not implemented.
-
-CD_CAP_PALETTE - Usually is only implemented in contexts of window
-graphics systems (Native Window and IUP).
+Returns if it is a context plus.
 
  int cdCanvasSimulate(cdCanvas* canvas, int mode); [in C]
  
@@ -263,33 +248,19 @@ To activate a given simulation, perform a binary OR ('|.html using one
 or more of the following values (in Lua, the values must be added
 '+.html:
 
-CD_SIM_NONE - Deactivates all kinds of simulation.
-
-CD_SIM_LINE
-
-CD_SIM_RECT
-
-CD_SIM_BOX
-
-CD_SIM_ARC
-
-CD_SIM_SECTOR
-
-CD_SIM_CHORD
-
-CD_SIM_POLYLINE
-
-CD_SIM_POLYGON
-
-CD_SIM_TEXT
-
-CD_SIM_ALL - Activates all simulation options.
-
-CD_SIM_LINES - Combination of CD_SIM_LINE, CD_SIM_RECT, CD_SIM_ARC and
-CD_SIM_POLYLINE.
-
-CD_SIM_FILLS - Combination of CD_SIM_BOX, CD_SIM_SECTOR, CD_SIM_CHORD
-and CD_SIM_POLYGON.
+ CD_SIM_NONE - Deactivates all kinds of simulation.
+ CD_SIM_LINE 
+ CD_SIM_RECT 
+ CD_SIM_BOX 
+ CD_SIM_ARC 
+ CD_SIM_SECTOR 
+ CD_SIM_CHORD 
+ CD_SIM_POLYLINE 
+ CD_SIM_POLYGON 
+ CD_SIM_TEXT 
+ CD_SIM_ALL - Activates all simulation options. 
+ CD_SIM_LINES - Combination of CD_SIM_LINE, CD_SIM_RECT, CD_SIM_ARC and CD_SIM_POLYLINE.
+ CD_SIM_FILLS - Combination of CD_SIM_BOX, CD_SIM_SECTOR, CD_SIM_CHORD and CD_SIM_POLYGON.
 
 =head2 Extras
 

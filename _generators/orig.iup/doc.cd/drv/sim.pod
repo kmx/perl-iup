@@ -42,23 +42,30 @@ is supported.
 =item * B<L< LineStyle|../func/lines.html#cdLineStyle>>: If line width
 is greater than 1, the style is always continuous.
 
-=item * L<B<Font>|../func/text.html#cdFont>: Selects a True Type font
+=item * L<B<Font>|../func/text.html#cdFont>: Selects a Truetype font
 file for the L<FreeType|http://www.freetype.org/> library to render the
-text. Notice that TTF fonts have different files for different font
-styles, like bold and italic. Font files can be in the current
-directory, in the directory pointed by the CDDIR environment variable,
-in Windows in the system defined Font directory, or using the full path
-of the file.
+text. The typeface parameter is used to find the appropriate file.
 
-Old name "System" is mapped to "Courier". For the know font names
-"Courier" (cour), "Times" (times) and "Helvetica" (arial), the styles
-are added to the font file name as a suffix: "bd", "i" and "bi" are
-used for bold, italic and bold-italic. For other fonts, it will first
-check for a font map added using the attribute B<ADDFONTMAP>, if failed
-it will try to load the type_face name without any change, if fail it
-will add the style suffix to the type_face and try to load again. The
-".ttf" file extension is always automatically added to the end of the
-file name.
+The typeface parameter can be the name of a font or the name of a font
+file (not including path, nor the extension ".ttf"). If a name is
+specified some pre-defined correspondents are tried, for instance the
+know font names "Courier", "Times" and "Helvetica" are mapped to
+"cour", "times", and "arial", their styles are added to the font file
+name as a suffix: "bd", "i" and "bi", to match bold, italic and
+bold-italic. Those files are also available in the "cd/etc" folder of
+the CD distribution packages. If the pre-defined names are not used,
+the typeface parameter is used as the file name. It can also use a
+manual font map added using the attribute B<ADDFONTMAP> (see bellow).
+
+Font files can be located in the current directory, in the directory
+pointed by the CDDIR environment variable, in the native system font
+directory, or by using the full path of the file in the typeface
+parameter. The ".ttf" file extension is always automatically added to
+the end of the file name. In Linux font files are searched using
+L<FontConfig|http://www.freedesktop.org/wiki/Software/fontconfig>.
+
+The search order is: ADDFONTMAP, pre-defined names, native system, and
+full path.
 
 =back
 

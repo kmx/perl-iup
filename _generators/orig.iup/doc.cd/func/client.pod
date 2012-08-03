@@ -141,9 +141,9 @@ will store the image. From this structure, the following fields are
 officially defined:
 
  cdBitmap:
-   int w      /* image width */
-   int h      /* image heigth */
-   int type   /* image type: CD_RGBA, CD_RGB or CD_MAP */
+   int w      -image width                              bitmap:Width() -> w: number   [in Lua]
+   int h      -image heigth                             bitmap:Height() -> h: number   [in Lua]
+   int type   -image type: CD_RGBA, CD_RGB or CD_MAP    bitmap:Type() -> type: number   [in Lua]
 
  cdBitmap* cdCreateBitmap(int w, int h, int type); [in C]
  

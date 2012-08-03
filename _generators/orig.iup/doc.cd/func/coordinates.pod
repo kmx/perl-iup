@@ -7,32 +7,22 @@
 Returns the canvas size in pixels and in millimeters. You can provide
 only the desired values and NULL for the others.
 
- int cdCanvasYAxisMode(cdCanvas* canvas, int invert); [in C]
- 
- canvas:YAxisMode(invert: number) -> (old_invert: number) [in Lua]
-
-Controls the orientation of the Y axis. Internally in some drivers the
-native axis orientation is top-bottom, so the CD primitives must invert
-the Y axis since the CD orientation is bottom-top. Using CD_QUERY will
-return the current Y axis mode, if needs to be invert or not. Using 1
-or 0 you can control if the Y axis should be inverted or not
-independent from the native orientation, with that you can in fact
-invert the orientation of the CD primitives.
-
  int cdCanvasUpdateYAxis(cdCanvas* canvas, int *y); [in C]
  double cdfCanvasUpdateYAxis(cdCanvas* canvas, double *y); [in C]
+ 
+ canvas:UpdateYAxis(yc: number) -> (yr: number) [in Lua]
+
+Invert the given Y coordinate if the native Y axis orientation is
+different from the CD axis orientation. The CD axis orientation is
+always bottom-top. It also returns the changed value.
+
  int cdCanvasInvertYAxis(cdCanvas* canvas, int y); [in C]
  double cdfCanvasInvertYAxis(cdCanvas* canvas, double y); [in C]
  
- canvas:UpdateYAxis(yc: number) -> (yr: number) [in Lua]
  canvas:InvertYAxis(yc: number) -> (yr: number) [in Lua]
 
-Converts the coordinate system of the CD library into the internal
-system of the active canvas' driver, and the other way round, if they
-are invert, or else do nothing. This is just "y = height-1 - y". It
-returns the changed value. The "Invert" will always invert the given
-value, the "Update" function will invert only if the canvas has the Y
-axis inverted.
+Invert the given Y coordinate independent of the driver Y axis
+orientation. It returns the changed value.
 
  void cdCanvasMM2Pixel(cdCanvas* canvas, double mm_dx, double mm_dy, int *dx, int *dy); [in C]
  void cdfCanvasMM2Pixel(cdCanvas* canvas, double mm_dx, double mm_dy, double *dx, double *dy); [in C]
@@ -84,12 +74,21 @@ Returns the origin.
 Defines a transformation matrix with 6 elements. If the matrix is NULL,
 the transformation is reset to the identity. Default value: NULL.
 
-The matrix contains scale, rotation and translation elements as
-follows:
+The matrix contains scale (sx,sy), rotation (angle) and translation
+(dx,dy) elements as follows:
 
  |x'|   |sx*cos(angle)    -sin(angle)  dx|   |x|                     |0   2   4| 
  |y'| = |   sin(angle)  sy*cos(angle)  dy| * |y|      with indices   |1   3   5|
                                              |1|
+
+In other words:
+
+ matrix[0] = sx*cos(angle)           // Horizontal Scale and Rotation component
+ matrix[1] =    sin(angle)           // Rotation component (can also contain an horizontal shear component)
+ matrix[2] =   -sin(angle)           // Rotation component (can also contain a vertical shear component)
+ matrix[3] = sy*cos(angle)           // Vertical Scale and Rotation component
+ matrix[4] = dx                      // Horizontal Translation component
+ matrix[5] = dy                      // Vertical Translation component
 
 But notice that the indices are different of the B<
 cdCanvasVectorTextTransform>.
@@ -101,6 +100,13 @@ B<ScrollArea>.
 Transformation matrix is independent of the B<World Coordinate> and
 B<Origin> functions. And those are affected if a transformation is set,
 just like other regular primitives.
+
+The transformation matrix and world coordinates perform similar
+functions. World coordinates were developed before the transformation
+matrix support. The transformation matrix operates at a lower level
+than world coordinates, and, as such, might be faster, but might behave
+differently on different platforms. World coordinates behave
+consistently across platforms.
 
  double* cdCanvasGetTransform(cdCanvas* canvas); [in C]
  

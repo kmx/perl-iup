@@ -16,10 +16,9 @@ The CD_PDF driver works with both versions.
 
 By default the pre-compiled library in the distribution uses the PDF
 Lite version code. The configuration of the PDF Lite code included does
-not supports image file formats. The current PDF Lite version is
-7.0.4p4.
+not supports image file formats. The current PDF Lite version is 7.0.5.
 
-PDFlib Copyright (c) 1997-2009 Thomas Merz and PDFlib GmbH. All rights
+PDFlib Copyright (c) 1997-2010 Thomas Merz and PDFlib GmbH. All rights
 reserved. Applications that use this driver are subject to the L<PDFlib
 GmbH License Agreement|../../download/PDFlib-Lite-license.pdf>.
 

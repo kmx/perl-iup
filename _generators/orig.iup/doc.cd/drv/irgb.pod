@@ -93,6 +93,9 @@ nothing. The axis orientation is the same as the CD library's.
 transparency is used in colors or images, then XOR or NOT_XOR behave as
 REPLACE.
 
+=item * L< B<Font>|../func/text.html#cdFont>: check the
+L<Simulation|sim.html> driver documentation.
+
 =back
 
 =head2 Colors

@@ -56,7 +56,8 @@ X-Win base driver can be used.
 
 =head2 Extra Drivers (cdcairo.h)
 
-Only available in Lua when B<require"cdluacairo"> is used.
+These are not ContextPlus drivers. In Lua, they are available only when
+B<require"cdluacairo"> is used.
 
 =head2 CD_CAIRO_PS - PostScript Driver
 

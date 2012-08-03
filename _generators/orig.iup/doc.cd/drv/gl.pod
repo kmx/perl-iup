@@ -9,8 +9,8 @@ Type|http://www.freetype.org/> library.
 
 The driver is not dependent of system functions. It uses only the
 OpenGL portable functions. So if the window canvas changes its size the
-attribute "SIZE" must be set with the new size or cdCanvasGetSize will
-return an incorrect value.
+attribute "SIZE" must be set with the new size or B<cdCanvasGetSize>
+will return an incorrect value.
 
 =head2 Use
 
@@ -27,7 +27,8 @@ resolution is optional, its default value is "3.78 pixels/mm" (96 DPI).
 
 To use this driver, the application must be linked with the "B<cdgl>",
 the ftgl library and the OpenGL library. The FTGL library is dependent
-also on the GLU library. In UNIX B<cdgl> is also dependent on B<iconv>.
+also on the GLU library. In UNIX B<cdgl> is also dependent on B<iconv>
+and B<fontconfig>.
 
 In Lua, it is necessary to call function B<cdluagl_open() > after a
 call to function B<cdlua_open()>, apart from linking with the
@@ -97,14 +98,9 @@ There is no support for patterns more than 16 bits.
 =item * L< B<NativeFont>|../func/text.html#cdNativeFont>: also accepts
 the X-Windows font string format.
 
-=item * L< B<Font>|../func/text.html#cdFont>: In Windows, "Courier" is
-mapped to "Courier New", "Helvetica" is mapped to "Arial", and "Times"
-is mapped to "Times New Roman". In UNIX, "Courier" is mapped to
-"freemono", "Helvetica" is mapped to "freesans", and "Times" is mapped
-to "freeserif". Underline and Strikeout are NOT supported. If not found
-then the font file is searched using the same logic of the
-L<Simulation|sim.html> driver, but B<ADDFONTMAP> is not supported. If
-still is not found then the typeface is used as file name for the font.
+=item * L< B<Font>|../func/text.html#cdFont>: Uses the same logic of
+the L<Simulation|sim.html> driver to find a Truetype font file, but
+B<ADDFONTMAP> is not supported.
 
 =back
 

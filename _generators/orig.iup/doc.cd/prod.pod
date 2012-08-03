@@ -82,8 +82,7 @@ The CVS can be browsed at: L<
 http:E<47>E<47>canvasdraw.cvs.sourceforge.netE<47>canvasdrawE<47>|http://canvasdraw.cvs.sourceforge.net/canvasdraw/>.
 
 If you want us to develop a specific feature for the library, Tecgraf
-is available for partnerships and cooperation. Please contact
-B<tcg@tecgraf.puc-rio.br>.
+is available for partnerships and cooperation.
 
 Lua documentation and resources can be found at
 L<http:E<47>E<47>www.lua.orgE<47>|http://www.lua.org/>.

@@ -4,7 +4,7 @@ CD
 
 Canvas Draw, A 2D Graphics Library
 
-Version 5.4
+Version 5.5
 
 ----
 
@@ -29,5 +29,8 @@ Tecgraf - Computer Graphics Technology Group, PUC-Rio, Brazil
 L<http:E<47>E<47>www.tecgraf.puc-rio.brE<47>cd|http://www.tecgraf.puc-rio.br/cd>
 
 L<SourceForge.net Logo|http://sourceforge.net>
+
+Veja esta pgina em
+L<Portugus|http://www.google.com/translate?sl=en&tl=pt&u=http%3A%2F%2Fwww.tecgraf.puc-rio.br%2Fcd%2F>.
 
 =cut

@@ -22,9 +22,31 @@ To draw in a RGB image, use:
  cdCanvas* canvas = cdCreateCanvasf(CD_IMAGERGB, "%dx%d", width, height);
  cdCanvasLineStyle(canvas, CD_DASHED); 
  cdCanvasLine(canvas, 10, 10, 50, 50); 
- unsigned char* red = cdCanvasGetAttribute(canvas, "REDIMAGE");
- // do something with the raw image data
  cdKillCanvas(canvas); 
+
+To save the contents of the CD_IMAGERGB canvas in a file using IM,
+after drawing and before destroying the canvas do:
+
+ unsigned char* data = cdCanvasGetAttribute(canvas, "REDIMAGE"); // Also a pointer to the full buffer
+ imImage* image = imImageInit(width, height, IM_RGB, IM_BYTE, data, NULL, 0); 
+ // Can use also IM_RGB|IM_ALPHA is canvas has support for alpha
+ imFileImageSave(file_name, "PNG", image);
+ image->data[0] = NULL; // to avoid duplicate memory release
+ imImageDestroy(image);
+
+Or using another approach:
+
+ imImage* image = imImageCreate(width, height, IM_RGB, IM_BYTE);
+ // Can also call imImageAddAlpha if alpha support is wanted
+ 
+ cdCanvas* canvas = cdCreateCanvasf(CD_IMAGERGB, "%dx%d %p %p %p", width, height, 
+                                    image->data[0], image->data[1], image->data[2]);
+ cdCanvasLineStyle(canvas, CD_DASHED); 
+ cdCanvasLine(canvas, 10, 10, 50, 50); 
+ cdKillCanvas(canvas);
+ 
+ imFileImageSave(file_name, "PNG", image);
+ imImageDestroy(image);
 
 =head2 Lua Samples
 

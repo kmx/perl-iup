@@ -38,9 +38,9 @@ L<[IMAGE]|../screenshots/cd_nativewindow_x11.png>
 
 L<[IMAGE]|../screenshots/cd_nativewindow_xrender.png>
 
-L<GDK|drv/gdiplus.html>
+L<GDK|drv/gdk.html>
 
-L<Cairo|drv/xrender.html>
+L<Cairo|drv/cairo.html>
 
 L<[IMAGE]|../screenshots/cd_nativewindow_gdk.png>
 

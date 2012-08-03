@@ -46,7 +46,9 @@ does nothing.
 
 =head2 Coordinate System and Clipping
 
-L<B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: does nothing.
+L<B<UpdateYAxis>|../func/coordinates.html#cdUpdateYAxis>: the
+orientation of axis Y is the opposite to its orientation in the CD
+library.
 
 B<Complex Regions>: not supported.
 

@@ -88,8 +88,7 @@ B<C<CD_PATH>> are simulated with lines.
 
 =item * Floating point primitives are supported.
 
-=item * Solid filled primitives are supported only for polygons and
-rectangles.
+=item * filled primitives are NOT supported.
 
 =back
 
