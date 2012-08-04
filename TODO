@@ -1,6 +1,6 @@
 ################ the last time working on ################ 
 
-- hacking pod: IUP::Manual::*
+- AUTOLOAD (Element)
 
 ##########################################################
 
@@ -102,10 +102,6 @@ bool XDisplayExists() {
 - ??? better detection of initialized gui than (IUP->Open == IUP_OPENED)?
 - ??? detection of codepage used in GUI
 
-(cosmetics)######## LibraryIUP.xs + Canvas.xs
-- consider IUP::Internal::AllInOneLib.xs
-- should save 2-3MB
-
 (cosmetics)######## IUP::Submenu
 - consider using $firstonly param of new()
 
@@ -157,9 +153,6 @@ http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-
 - no example for: ColorDlg.pm ?
 - no example for: FontDlg.pm ?
 
-(not now, maybe later)######## Ideas from lua bindings:
-- global registers _IUPLUA_WIDGET_TABLE_REF
-
 (not now, maybe later)######## Linux - platform specific issues
 - GTK: 'Quit' in main menu requires double click
 
@@ -180,10 +173,3 @@ http://www.i-programmer.info/programming/other-languages/1973-unicode-issues-in-
 
 (rejected)#######IUP::List
 - IUP::List->new() items 0-based or 1-based index? (item[0] >> attribute 1)
-
-(rejected)#######IUP::Frame
-- missing accessor $frame->MARGIN("10x10"); - MARGIN not in official doc for IupFrame
-
-(rejected)#######IUP::PPlot
-- maybe add AxsBounds() to IUP::PPlot # see examples\0-basic\pplot4.pl - not now
-- maybe add AxsBoundsAuto() - not now

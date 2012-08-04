@@ -4,6 +4,7 @@
 
  - attribute accesors now handled via AUTOLOAD
  - Callback.xs+Canvas.xs incorporated into IupLibrary.xs
+ - improved thread awareness of Idle callback
  - preparing for iup-3.6
 
 =head2 19/08/2011 - 0.004
