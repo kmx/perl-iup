@@ -7,6 +7,13 @@
 
 #ifdef HAVELIB_IUPCD
 #include <cd.h>
+#include <cdiup.h>
+#endif
+
+#ifdef HAVELIB_IUPIM
+#include <iupim.h>
+#include <im.h>
+#include <im_image.h>
 #endif
 
 #ifdef HAVELIB_IUPCONTROLS
@@ -23,10 +30,6 @@
 
 #ifdef HAVELIB_IUPGL
 #include <iupgl.h>
-#endif
-
-#ifdef HAVELIB_IUPIM
-#include <iupim.h>
 #endif
 
 #ifdef HAVELIB_IUPOLE
@@ -129,13 +132,19 @@ static int cb_idle_action() {
 }
 
 #include "Callback.c.inc"
-/* XXX-MAYBE-LATER #include "Canvas.c.inc" */
+#include "Canvas.c.inc"
 
-MODULE = IUP::Internal::Callback	PACKAGE = IUP::Internal::Callback
+MODULE = IUP	PACKAGE = IUP
+
+#XXX-TODO move some functions from IUP.pm here
 
 INCLUDE: Callback.xs.inc
-
-# XXX-MAYBE-LATER INCLUDE: Canvas.xs.inc
+INCLUDE: Canvas.xs.inc
+INCLUDE: Canvas_Bitmap.xs.inc
+INCLUDE: Canvas_Palette.xs.inc
+INCLUDE: Canvas_Pattern.xs.inc
+INCLUDE: Canvas_Stipple.xs.inc 
+INCLUDE: Canvas_InternalServerImage.xs.inc
 
 MODULE = IUP::Internal::LibraryIup	PACKAGE = IUP::Internal::LibraryIup
 
