@@ -23,9 +23,13 @@ sub import {
 sub AUTOLOAD {
   my ($name) = our $AUTOLOAD =~ /::(\w+)$/;
   die "FATAL: unknown method '$name'" unless $name =~ /^[A-Z0-9_]+$/;
-  splice(@_, 1, 0, $name);
-  goto &SetAttribute if scalar(@_)>2;
-  goto &GetAttribute;
+  my $method = sub {
+        return $_[0]->GetAttribute($name) if scalar(@_) == 1; 
+        return $_[0]->SetAttribute($name, $_[1]) if scalar(@_) > 1;
+  };
+  no strict 'refs';
+  *{$AUTOLOAD} = $method;
+  goto &$method;
 }
 
 sub BEGIN {
