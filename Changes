@@ -1,6 +1,6 @@
 =head1 Revision history for IUP
 
-=head2 04/08/2012 - 0.005_2
+=head2 12/08/2012 - 0.006
 
  - attribute accesors now handled via AUTOLOAD
  - Callback.xs+Canvas.xs incorporated into IupLibrary.xs
