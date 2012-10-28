@@ -615,7 +615,7 @@ B<Examples:>
  my $bt = IUP::Button->new( TITLE=>"Button" );
  my $lb = IUP::Label->new( TITLE=>"Label" );
  my $vbox = IUP::Vbox->new( child=>[$bt, $lb] );
- my $dialog = IUP::Dialog( child=>$vbox );
+ my $dialog = IUP::Dialog->new( child=>$vbox );
  
  $dialog->Show();
  
