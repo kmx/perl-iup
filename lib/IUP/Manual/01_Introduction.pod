@@ -27,7 +27,7 @@ IUP::Manual::01_Introduction - Basic introduction to IUP concept
 =head1 INTRODUCTION
 
 IUP uses an abstract layout model based on the boxes-and-glue paradigm
-from the TEX text editor. This model makes the dialog creation
+from the TeX typesetting system. This model makes the dialog creation
 task more flexible and independent from the graphics system's
 resolution.
 
@@ -199,13 +199,13 @@ B<The ways of setting an attribute value:>
  $element->SetAttribute( ATTRNAME1=>"VALUE1", ATTRNAME2=>"VALUE2" );
  
  #via accessor
- $element->TITLE("VALUE");
+ $element->TITLE("Text");
  
  #setting attributes during element creation
- $element->IUP::Label->new( TITLE=>"Text", ATTRNAME1=>"VALUE1", ATTRNAME2=>"VALUE2" );
+ $element = IUP::Label->new( TITLE=>"Text", ATTRNAME1=>"VALUE1", ATTRNAME2=>"VALUE2" );
  
  #which is equivalent to
- $element->IUP::Label->new();
+ $element = IUP::Label->new();
  $element->SetAttribute("TITLE", "Text");
  $element->SetAttribute("ATTRNAME1", "VALUE1");
  $element->SetAttribute("ATTRNAME2", "VALUE2");
@@ -273,7 +273,17 @@ different behavior.
 
 =head2 Attribute accessors
 
-XXX-FIXME-ADD ACCESSOR TABLE
+Attribute accessors are build at run-time via perl's AUTOLOAD feature.
+
+It means that:
+
+ $val = $element->ANY_UPPERCASE_ATTR_NAME;
+ $element->ANY_OTHER_UPPERCASE_ATTR_NAME(123);
+
+is automatically turned into:
+
+ $val = $element->GetAttribute('ANY_UPPERCASE_ATTR_NAME');
+ $element->SetAttribute('ANY_OTHER_UPPERCASE_ATTR_NAME', 123);
 
 =head2 Inheritance
 
@@ -446,10 +456,10 @@ B<The ways of setting callback:>
  $element->ACTION(\&cb_handler2);
 
  #setting attributes during element creation
- $element->IUP::Button->new( TITLE=>"Text", ACTION=>\&cb_handler1, K_ANY=>\&cb_handler2 );
+ $element = IUP::Button->new( TITLE=>"Text", ACTION=>\&cb_handler1, K_ANY=>\&cb_handler2 );
  
  #which is equivalent to
- $element->IUP::Button->new();
+ $element = IUP::Button->new();
  $element->SetAttribute( TITLE=>"Text" );
  $element->SetCallback( ACTION=>\&cb_handler1 );
  $element->SetCallback( K_ANY=>\&cb_handler2 );
