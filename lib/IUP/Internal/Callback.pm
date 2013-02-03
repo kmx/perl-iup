@@ -53,15 +53,14 @@ my $cb_table = {
   },
   'IUP::Label' => {
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
-    DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
   },
   'IUP::List' => {
     ACTION => \&_init_cb_ACTION_sii,
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
     CARET_CB => \&_init_cb_CARET_CB_iii,
     DBLCLICK_CB => \&_init_cb_DBLCLICK_CB_is,
+    DRAGDROP_CB => \&_init_cb_DRAGDROP_CB_iiii,
     DROPDOWN_CB => \&_init_cb_DROPDOWN_CB_i,
-    DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
     EDIT_CB => \&_init_cb_EDIT_CB_is,
     MOTION_CB => \&_init_cb_MOTION_CB_iis,
     MULTISELECT_CB => \&_init_cb_MULTISELECT_CB_s,
@@ -82,6 +81,7 @@ my $cb_table = {
     LEAVEITEM_CB => \&_init_cb_LEAVEITEM_CB_ii,
     MARKEDIT_CB => \&_init_cb_MARKEDIT_CB_iii,
     MARK_CB => \&_init_cb_MARK_CB_ii,
+    MENUDROP_CB => \&_init_cb_MENUDROP_CB_nii,
     MOUSEMOVE_CB => \&_init_cb_MOUSEMOVE_CB_ii,
     RELEASE_CB => \&_init_cb_RELEASE_CB_iis,
     SCROLLTOP_CB => \&_init_cb_SCROLLTOP_CB_ii,
@@ -89,8 +89,23 @@ my $cb_table = {
     VALUE_EDIT_CB => \&_init_cb_VALUE_EDIT_CB_iis,
   },
   'IUP::Menu' => {
+    ACTION => \&_init_cb_ACTION_,
+    HIGHLIGHT_CB => \&_init_cb_HIGHLIGHT_CB_,
     MENUCLOSE_CB => \&_init_cb_MENUCLOSE_CB_,
     OPEN_CB => \&_init_cb_OPEN_CB_,
+  },
+  'IUP::MglPlot' => {
+    DELETEBEGIN_CB => \&_init_cb_DELETEBEGIN_CB_,
+    DELETEEND_CB => \&_init_cb_DELETEEND_CB_,
+    DELETE_CB => \&_init_cb_DELETE_CB_iiff,
+    EDITBEGIN_CB => \&_init_cb_EDITBEGIN_CB_,
+    EDITEND_CB => \&_init_cb_EDITEND_CB_,
+    EDIT_CB => \&_init_cb_EDIT_CB_iiffFF,
+    POSTDRAW_CB => \&_init_cb_POSTDRAW_CB_v,
+    PREDRAW_CB => \&_init_cb_PREDRAW_CB_v,
+    SELECTBEGIN_CB => \&_init_cb_SELECTBEGIN_CB_,
+    SELECTEND_CB => \&_init_cb_SELECTEND_CB_,
+    SELECT_CB => \&_init_cb_SELECT_CB_iiffi,
   },
   'IUP::PPlot' => {
     DELETEBEGIN_CB => \&_init_cb_DELETEBEGIN_CB_,
@@ -122,7 +137,6 @@ my $cb_table = {
     ACTION => \&_init_cb_ACTION_is,
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
     CARET_CB => \&_init_cb_CARET_CB_iii,
-    DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
     MOTION_CB => \&_init_cb_MOTION_CB_iis,
     SPIN_CB => \&_init_cb_SPIN_CB_i,
     VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
@@ -139,7 +153,6 @@ my $cb_table = {
     BRANCHOPEN_CB => \&_init_cb_BRANCHOPEN_CB_i,
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
     DRAGDROP_CB => \&_init_cb_DRAGDROP_CB_iiii,
-    DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
     EXECUTELEAF_CB => \&_init_cb_EXECUTELEAF_CB_i,
     MOTION_CB => \&_init_cb_MOTION_CB_iis,
     MULTISELECTION_CB => \&_init_cb_MULTISELECTION_CB_Ai,
@@ -149,6 +162,7 @@ my $cb_table = {
     RIGHTCLICK_CB => \&_init_cb_RIGHTCLICK_CB_i,
     SELECTION_CB => \&_init_cb_SELECTION_CB_ii,
     SHOWRENAME_CB => \&_init_cb_SHOWRENAME_CB_i,
+    TOGGLEVALUE_CB => \&_init_cb_TOGGLEVALUE_CB_ii,
   },
   'IUP::Val' => {
     VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
@@ -161,12 +175,12 @@ my $cb_table = {
     K_ANY => \&_init_cb_K_ANY_i,
     LEAVEWINDOW_CB => \&_init_cb_LEAVEWINDOW_CB_,
     MAP_CB => \&_init_cb_MAP_CB_,
+    TIPS_CB => \&_init_cb_TIPS_CB_ii,
     UNMAP_CB => \&_init_cb_UNMAP_CB_,
   },
   '_canvas' => {
     ACTION => \&_init_cb_ACTION_ff,
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
-    DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
     FOCUS_CB => \&_init_cb_FOCUS_CB_i,
     KEYPRESS_CB => \&_init_cb_KEYPRESS_CB_ii,
     MOTION_CB => \&_init_cb_MOTION_CB_iis,
@@ -180,12 +194,18 @@ my $cb_table = {
   '_dialog' => {
     CLOSE_CB => \&_init_cb_CLOSE_CB_,
     COPYDATA_CB => \&_init_cb_COPYDATA_CB_si,
-    DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
     MDIACTIVATE_CB => \&_init_cb_MDIACTIVATE_CB_,
     MOVE_CB => \&_init_cb_MOVE_CB_ii,
     RESIZE_CB => \&_init_cb_RESIZE_CB_ii,
     SHOW_CB => \&_init_cb_SHOW_CB_i,
     TRAYCLICK_CB => \&_init_cb_TRAYCLICK_CB_iii,
+  },
+  '_dragdrop' => {
+    DRAGBEGIN_CB => \&_init_cb_DRAGBEGIN_CB_ii,
+    DRAGDATASIZE_CB => \&_init_cb_DRAGDATASIZE_CB_s,
+    DRAGEND_CB => \&_init_cb_DRAGEND_CB_i,
+    DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
+    DROPMOTION_CB => \&_init_cb_DROPMOTION_CB_iis,
   },
 };
 
@@ -208,8 +228,9 @@ sub _get_cb_list {
   my $pkg = shift;
   my @list;
   push @list, keys(%{$cb_table->{$pkg}});
-  push @list, keys(%{$cb_table->{_dialog}}) if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/;
-  push @list, keys(%{$cb_table->{_canvas}}) if $pkg =~ /^IUP::(Canvas|CanvasGL)$/;
+  push @list, keys(%{$cb_table->{_dialog}})   if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/;
+  push @list, keys(%{$cb_table->{_dragdrop}}) if $pkg =~ /^IUP::(Label|Text|List|Tree|Canvas|Dialog)$/;
+  push @list, keys(%{$cb_table->{_canvas}})   if $pkg =~ /^IUP::(Canvas|CanvasGL)$/;
   push @list, keys(%{$cb_table->{_base}});
   return keys %{{ map { $_ => 1 } @list }}; #return just uniq items
 }

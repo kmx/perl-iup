@@ -1,6 +1,13 @@
 ################ the last time working on ################ 
 
-- AUTOLOAD (Element)
+- new callbacks
+
+XXX-FIXME:
+*/ CB: we need special handling for _dragdrop|DROPDATA_CB + DRAGDATA_CB (see NODEREMOVED_CB)
+*/ IupMglPlot* - we need to add wrapper functions in LibraryIup.xs 
+*/ cb_table->{_dragdrop} what about CanvasGL, PPlot, MglPlot
+*/ cb_table->{_canvas}   what about PPlot, MglPlot
+*/ global callbacks
 
 ##########################################################
 

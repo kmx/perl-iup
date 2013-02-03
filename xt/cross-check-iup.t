@@ -30,7 +30,7 @@ $data->{$_}->{g0mod}  = 1 for (@global_pm);
 $data->{$_}->{e0doc}  = 1 for (@elemall_pod);
 $data->{$_}->{e0mod}  = 1 for (@elemall_pm);
 
-delete $data->{$_} for (qw/BEGIN() DESTROY() END() import()/);
+delete $data->{$_} for (qw/BEGIN() DESTROY() END() AUTOLOAD() import()/);
 
 diag ">>>>> METHODS - cross-check";
 my $result = 'OK';

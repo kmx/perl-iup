@@ -161,12 +161,6 @@ _init_cb_HIGHLIGHT_CB_(ih)
 		IupSetCallback(ih, "HIGHLIGHT_CB", (Icallback)internal_cb_HIGHLIGHT_CB_);
 
 void
-_init_cb_DROPFILES_CB_siii(ih)
-		Ihandle* ih;
-	CODE:
-		IupSetCallback(ih, "DROPFILES_CB", (Icallback)internal_cb_DROPFILES_CB_siii);
-
-void
 _init_cb_ACTION_sii(ih)
 		Ihandle* ih;
 	CODE:
@@ -183,6 +177,12 @@ _init_cb_DBLCLICK_CB_is(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "DBLCLICK_CB", (Icallback)internal_cb_DBLCLICK_CB_is);
+
+void
+_init_cb_DRAGDROP_CB_iiii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "DRAGDROP_CB", (Icallback)internal_cb_DRAGDROP_CB_iiii);
 
 void
 _init_cb_DROPDOWN_CB_i(ih)
@@ -285,6 +285,12 @@ _init_cb_MARK_CB_ii(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "MARK_CB", (Icallback)internal_cb_MARK_CB_ii);
+
+void
+_init_cb_MENUDROP_CB_nii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "MENUDROP_CB", (Icallback)internal_cb_MENUDROP_CB_nii);
 
 void
 _init_cb_MOUSEMOVE_CB_ii(ih)
@@ -443,12 +449,6 @@ _init_cb_BRANCHOPEN_CB_i(ih)
 		IupSetCallback(ih, "BRANCHOPEN_CB", (Icallback)internal_cb_BRANCHOPEN_CB_i);
 
 void
-_init_cb_DRAGDROP_CB_iiii(ih)
-		Ihandle* ih;
-	CODE:
-		IupSetCallback(ih, "DRAGDROP_CB", (Icallback)internal_cb_DRAGDROP_CB_iiii);
-
-void
 _init_cb_EXECUTELEAF_CB_i(ih)
 		Ihandle* ih;
 	CODE:
@@ -497,6 +497,12 @@ _init_cb_SHOWRENAME_CB_i(ih)
 		IupSetCallback(ih, "SHOWRENAME_CB", (Icallback)internal_cb_SHOWRENAME_CB_i);
 
 void
+_init_cb_TOGGLEVALUE_CB_ii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "TOGGLEVALUE_CB", (Icallback)internal_cb_TOGGLEVALUE_CB_ii);
+
+void
 _init_cb_ENTERWINDOW_CB_(ih)
 		Ihandle* ih;
 	CODE:
@@ -537,6 +543,12 @@ _init_cb_MAP_CB_(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "MAP_CB", (Icallback)internal_cb_MAP_CB_);
+
+void
+_init_cb_TIPS_CB_ii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "TIPS_CB", (Icallback)internal_cb_TIPS_CB_ii);
 
 void
 _init_cb_UNMAP_CB_(ih)
@@ -627,4 +639,34 @@ _init_cb_TRAYCLICK_CB_iii(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "TRAYCLICK_CB", (Icallback)internal_cb_TRAYCLICK_CB_iii);
+
+void
+_init_cb_DRAGBEGIN_CB_ii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "DRAGBEGIN_CB", (Icallback)internal_cb_DRAGBEGIN_CB_ii);
+
+void
+_init_cb_DRAGDATASIZE_CB_s(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "DRAGDATASIZE_CB", (Icallback)internal_cb_DRAGDATASIZE_CB_s);
+
+void
+_init_cb_DRAGEND_CB_i(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "DRAGEND_CB", (Icallback)internal_cb_DRAGEND_CB_i);
+
+void
+_init_cb_DROPFILES_CB_siii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "DROPFILES_CB", (Icallback)internal_cb_DROPFILES_CB_siii);
+
+void
+_init_cb_DROPMOTION_CB_iis(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "DROPMOTION_CB", (Icallback)internal_cb_DROPMOTION_CB_iis);
 

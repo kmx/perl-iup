@@ -1,5 +1,9 @@
 =head1 Revision history for IUP
 
+=head2 03/02/2013 - 0.007_1
+
+ - updating callbacks newly added in iup 3.6/3.7
+
 =head2 12/08/2012 - 0.006
 
  - attribute accesors now handled via AUTOLOAD

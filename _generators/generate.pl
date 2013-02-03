@@ -42,6 +42,7 @@ sub file2hash {
   s/^#//g for (@cols);
   for (@lines) {
     next if /^#/;
+    next if /^[\t\s]*$/;
     my @items = split(';', $_);
     $rv->{$items[0]}->{$items[1]}->{valid} = 1;
     for(my $i=2; $i < scalar(@cols); $i++) {

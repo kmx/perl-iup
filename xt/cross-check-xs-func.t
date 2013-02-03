@@ -48,7 +48,7 @@ diag ">>>>> XS-FUNCS - cross-check";
 my $result = 'OK';
 for my $i (sort keys %{$data}) {
   next if $data->{$i} == 2;
-  if (!$pm->{$i} && $i =~ /^_Iup(GetAttributeHandle|OleControl|OleControlOpen)$/) {
+  if (!$pm->{$i} && $i =~ /^_Iup(GetAttributeHandle|OleControl|OleControlOpen|MglPlot)$/) {
     diag "intentionally missing in pm: $i";
     next;
   }

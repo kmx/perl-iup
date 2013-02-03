@@ -3,7 +3,7 @@ use warnings;
 use Data::Dumper;
 use Template;
 
-my $srcroot = 'y:/IUP3.3';
+my $srcroot = 'y:\IUP.build\iup';
 
 sub proc_headers {
   my ($headers, $template, $outxs) = @_; 
