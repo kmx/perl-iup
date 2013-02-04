@@ -149,8 +149,7 @@ sub SetAttribute {
       IUP::Internal::LibraryIup::_IupStoreAttribute($self->ihandle, $k, $v);
     }
     elsif (blessed($v) && $v->can('ihandle')) {
-warn "XXX: setting handle to attr '$k' for ", ref($v), "\n";
-    #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
+      #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
       IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);      
       #assuming any element ref stored into iup attribute to be a child      
       unless($self->_get_child_ref($v)) {
