@@ -9,6 +9,7 @@
 ^blib
 ^xt
 tmp
+testfile*
 pm_to_blib*
 ^deps
 ^build_

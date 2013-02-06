@@ -1,8 +1,9 @@
 =head1 Revision history for IUP
 
-=head2 03/02/2013 - 0.007_1
+=head2 06/02/2013 - 0.100
 
  - updating callbacks newly added in iup 3.6/3.7
+ - starting new version line
 
 =head2 12/08/2012 - 0.006
 

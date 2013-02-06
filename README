@@ -16,13 +16,6 @@ separate Alien::IUP module - http://search.cpan.org/dist/Alien-IUP/
 
 See 'examples' folder to see how the perl programs using IUP module look like.
 
-BEWARE
-
-The module is still under development:
- * the API was not fixed yet and is still slightly changing
- * incomplete documentation
- * incomplete test suite
-
 CPAN RELEASE
 
  The official releases of IUP 

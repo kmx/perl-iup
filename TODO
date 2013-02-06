@@ -1,6 +1,8 @@
 ################ the last time working on ################ 
 
-- new callbacks
+- new callbacks (iup-3.7)
+- drag&drop
+- IupMglPlot
 
 XXX-FIXME:
 */ CB: we need special handling for _dragdrop|DROPDATA_CB + DRAGDATA_CB (see NODEREMOVED_CB)
