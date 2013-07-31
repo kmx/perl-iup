@@ -1,5 +1,9 @@
 =head1 Revision history for IUP
 
+=head2 31/07/2013 - 0.100
+
+ - fixing broken links to examples
+
 =head2 06/02/2013 - 0.100
 
  - updating callbacks newly added in iup 3.6/3.7

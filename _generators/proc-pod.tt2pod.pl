@@ -26,7 +26,8 @@ my $g_pod      = "$FindBin::Bin/tmp.pod";
 #kind of a hack
 use Module::Extract::VERSION;
 my $iupver = Module::Extract::VERSION->parse_version_safely("$FindBin::Bin/../lib/IUP.pm");
-my $g_disturlroot = "http://cpansearch.perl.org/src/KMX/IUP-$iupver/";
+#my $g_disturlroot = "http://cpansearch.perl.org/src/KMX/IUP-$iupver/";
+my $g_disturlroot = "https://metacpan.org/source/KMX/IUP-$iupver/";
 
 my $getopt_rv = GetOptions(
   'help|?' => \$g_help,

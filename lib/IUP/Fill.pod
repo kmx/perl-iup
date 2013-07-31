@@ -73,37 +73,37 @@ The element B<IUP::Fill> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/button.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/button.pl> - IUP::Button example
+=item * L<0-basic/button.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/button.pl> - IUP::Button example
 
-=item * L<0-basic/canvas2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/canvas2.pl> - IUP::Canvas example
+=item * L<0-basic/canvas2.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/canvas2.pl> - IUP::Canvas example
 
-=item * L<0-basic/colorbrowser.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/colorbrowser.pl> - IUP::ColorBrowser example
+=item * L<0-basic/colorbrowser.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/colorbrowser.pl> - IUP::ColorBrowser example
 
-=item * L<0-basic/fill.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/fill.pl> - IUP::Fill Example
+=item * L<0-basic/fill.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/fill.pl> - IUP::Fill Example
 
-=item * L<0-basic/frame1.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/frame1.pl> - IUP::Frame Example
+=item * L<0-basic/frame1.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/frame1.pl> - IUP::Frame Example
 
-=item * L<0-basic/hbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/hbox.pl> - IUP::Hbox example
+=item * L<0-basic/hbox.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/hbox.pl> - IUP::Hbox example
 
-=item * L<0-basic/image.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/image.pl> - IUP::Image example
+=item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/image.pl> - IUP::Image example
 
-=item * L<0-basic/plot_advanced.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/plot_advanced.pl> - Plot controls
+=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/plot_advanced.pl> - Plot controls
 
-=item * L<0-basic/progressbar2.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
+=item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
 
-=item * L<0-basic/progressbar3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/progressbar3.pl> - IUP::ProgressBar example
+=item * L<0-basic/progressbar3.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/progressbar3.pl> - IUP::ProgressBar example
 
-=item * L<0-basic/radio.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/radio.pl> - IUP::Radio example
+=item * L<0-basic/radio.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/radio.pl> - IUP::Radio example
 
-=item * L<0-basic/tabs3.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/tabs3.pl> - IUP::Tabs example 
+=item * L<0-basic/tabs3.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/tabs3.pl> - IUP::Tabs example 
 
-=item * L<0-basic/tree_set_attrs.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/tree_set_attrs.pl> - IUP::Tree example (attributes)
+=item * L<0-basic/tree_set_attrs.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/tree_set_attrs.pl> - IUP::Tree example (attributes)
 
-=item * L<0-basic/vbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/vbox.pl> - IUP::Vbox example
+=item * L<0-basic/vbox.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/vbox.pl> - IUP::Vbox example
 
-=item * L<0-basic/zbox.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/0-basic/zbox.pl> - IUP::Zbox example
+=item * L<0-basic/zbox.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/0-basic/zbox.pl> - IUP::Zbox example
 
-=item * L<1-apps/app-plot-demo.pl|http://cpansearch.perl.org/src/KMX/IUP-0.007_1/examples/1-apps/app-plot-demo.pl> - dials for zooming
+=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.101/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
 =back 
 
