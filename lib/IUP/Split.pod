@@ -24,8 +24,8 @@ L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
 		<th>After Moving the Split Bar</th>
 	</tr>
 	<tr>
-		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsplit1.png"></td>
-		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsplit2.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupsplit1.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupsplit2.png"></td>
 	</tr>
     </tbody>
   </table>

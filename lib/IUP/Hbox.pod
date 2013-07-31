@@ -13,7 +13,7 @@ It does not have a native representation.
 
 =begin HTML
 
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuphbox_align.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuphbox_align.png"></p>
 <p>
   <table border="1">
     <col style="background-color: rgb(240, 240, 240);">
@@ -26,9 +26,9 @@ It does not have a native representation.
 		<th>EXPANDCHILDREN=YES</th>
 	</tr>
 	<tr>
-		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuphbox.png"></td>
-		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuphbox_homogeneous.png"></td>
-		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuphbox_expandchildren.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuphbox.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuphbox_homogeneous.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuphbox_expandchildren.png"></td>
 	</tr>
     </tbody>
   </table>

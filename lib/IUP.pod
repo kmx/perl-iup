@@ -20,8 +20,8 @@ On all platform it uses native GUI widgets.
         <th>Windows Vista</th>
       </tr>
       <tr>      
-        <td><img src="http://kmx.github.com/perl-iup/spec/sample_gtk_small.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/spec/sample_vista_small.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/sample_gtk_small.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/sample_vista_small.png"></td>
       </tr>
     </tbody>
   </table>
@@ -33,8 +33,8 @@ On all platform it uses native GUI widgets.
 	<th>Windows Classic</th>
       </tr>
       <tr>      
-	<td><img src="http://kmx.github.com/perl-iup/spec/sample_mot_small.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/spec/sample_win2k_small.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/spec/sample_mot_small.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/spec/sample_win2k_small.png"></td>
       </tr>
     </tbody>
   </table>
@@ -140,8 +140,8 @@ directory of IUP distribution.
         <th>After "OK"</th>
       </tr>
       <tr>      
-        <td><img src="http://kmx.github.com/perl-iup/spec/app_simple1.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/spec/app_simple2.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/app_simple1.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/spec/app_simple2.png"></td>
       </tr>
     </tbody>
   </table>
@@ -180,8 +180,8 @@ L<Message|Message> - see L<simple GUI dialogs|/"Simple GUI dialogs"> section.
         <th>After "OK"</th>
       </tr>
       <tr>      
-        <td><img src="http://kmx.github.com/perl-iup/spec/app_predefined1.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/spec/app_predefined2.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/app_predefined1.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/spec/app_predefined2.png"></td>
       </tr>
     </tbody>
   </table>
@@ -268,8 +268,8 @@ L<IUP::MessageDlg|IUP::MessageDlg>.
         <th>After clicking "Test Me"</th>
       </tr>
       <tr>      
-        <td><img src="http://kmx.github.com/perl-iup/spec/app_custom1.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/spec/app_custom2.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/app_custom1.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/spec/app_custom2.png"></td>
       </tr>
     </tbody>
   </table>
@@ -807,7 +807,7 @@ Shows a modal dialog containing a message and up to three buttons.
 
 =begin html
 
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/alarm.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/alarm.png"></p>
 
 =end html
 
@@ -868,11 +868,11 @@ pre-defined dialog L<IUP::ColorDlg|IUP::ColorDlg>.
     <tbody align="left">
       <tr>
         <th>MS&nbsp;Windows</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/colordlg_cb.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/colordlg_cb.png"></td>
       </tr>
       <tr>
         <th>GTK</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/colordlg_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/colordlg_gtk.png"></td>
       </tr>
     </tbody>
   </table>
@@ -920,15 +920,15 @@ filename. Uses pre-defined dialog L<IUP::FileDlg|IUP::FileDlg>.
     <tbody align="left">
       <tr>
         <th>MS&nbsp;Windows</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_win.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/filedlg_win.png"></td>
       </tr>
       <tr>
         <th>GTK</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/filedlg_gtk.png"></td>
       </tr>
       <tr>
         <th>Motif</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/filedlg_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/filedlg_mot.png"></td>
       </tr>
     </tbody>
   </table>
@@ -981,7 +981,7 @@ of controls.
 
 =begin html
 
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/getparam.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/getparam.png"></p>
 
 =end html
 
@@ -1200,7 +1200,7 @@ Shows a modal dialog to edit a multiline text.
 
 =begin html
 
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/gettext.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/gettext.png"></p>
 
 =end html
 
@@ -1233,7 +1233,7 @@ selection list.
 
 =begin html
 
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/listdialog.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/listdialog.png"></p>
 
 =end html
 
@@ -1291,15 +1291,15 @@ a L<IUP::MessageDlg|IUP::MessageDlg>.
     <tbody align="left">
       <tr>
         <th>MS&nbsp;Windows</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_win.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/messagedlg_win.png"></td>
       </tr>
       <tr>
         <th>GTK</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/messagedlg_gtk.png"></td>
       </tr>
       <tr>
         <th>Motif</th>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/messagedlg_mot.png"></td>
       </tr>
     </tbody>
   </table>

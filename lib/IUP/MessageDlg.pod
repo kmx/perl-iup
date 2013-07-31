@@ -21,9 +21,9 @@ function only.
         <th>Windows</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_gtk.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_mot.png"></td>
-	<td><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/messagedlg_win.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/messagedlg_gtk.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/messagedlg_mot.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/messagedlg_win.png"></td>
       </tr>
     </tbody>
   </table>

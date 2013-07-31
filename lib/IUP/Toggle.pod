@@ -27,28 +27,28 @@ text or an image.
         <th>Windows<br>XP Style</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_gtk_3state.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_mot_3state.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_win2k_3state.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_winxp_3state.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_gtk_3state.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_mot_3state.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_win2k_3state.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_winxp_3state.png"></td>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_gtk_image.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_mot_image.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_win2k_image.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_winxp_image.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_gtk_image.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_mot_image.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_win2k_image.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_winxp_image.png"></td>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_gtk_radio.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_mot_radio.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_win2k_radio.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_winxp_radio.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_gtk_radio.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_mot_radio.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_win2k_radio.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_winxp_radio.png"></td>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_gtk_text.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_mot_text.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_win2k_text.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptoggle_winxp_text.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_gtk_text.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_mot_text.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_win2k_text.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptoggle_winxp_text.png"></td>
       </tr>
     </tbody>
   </table>

@@ -11,7 +11,7 @@ or an image.
 
 =begin HTML
 
-<p><img src="http://kmx.github.com/perl-iup/spec/iuplabel1.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/spec/iuplabel1.png"></p>
 
 =end HTML
 

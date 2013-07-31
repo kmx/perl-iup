@@ -27,18 +27,18 @@ known as Scale or Trackbar in native systems.
         <th>GTK</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_mot_horiz.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_win2k_horiz.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_winxp_horiz.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_vista_horiz.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_gtk_horiz.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_mot_horiz.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_win2k_horiz.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_winxp_horiz.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_vista_horiz.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_gtk_horiz.png"></td>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_mot_vert.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_win2k_vert.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_winxp_vert.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_vista_vert.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupval_gtk_vert.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_mot_vert.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_win2k_vert.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_winxp_vert.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_vista_vert.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_gtk_vert.png"></td>
       </tr>
       <tr>
     </tbody>

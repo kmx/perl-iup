@@ -24,19 +24,19 @@ Creates an editable text field.
         <th>Windows<br>w/ Style</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_gtk.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_mot.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_win2k.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_winxp.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptext_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptext_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptext_win2k.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptext_winxp.png"></td>
       </tr>
       <tr>
         <th colspan="4" style="text-align: center;">When SPIN=YES</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_gtk_spin.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_mot_spin.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_win2k_spin.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_winxp_spin.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptext_gtk_spin.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptext_mot_spin.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptext_win2k_spin.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptext_winxp_spin.png"></td>
       </tr>
     </tbody>
   </table>
@@ -70,7 +70,7 @@ $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
     SELECTION=>"2,1:2,12",
 ));
 </pre>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptext_formatting.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptext_formatting.png"></td>
       </tr>
     </tbody>
   </table>

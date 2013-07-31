@@ -24,10 +24,10 @@ L<IUP::Canvas> to implement the bar handler.
 	  <th>After Expanding the Sbox</th>
 	</tr>
 	<tr>
-	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox1.png"></td>
-	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox2.png"></td>
-	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox3.png"></td>
-	  <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsbox4.png"></td>
+	  <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupsbox1.png"></td>
+	  <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupsbox2.png"></td>
+	  <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupsbox3.png"></td>
+	  <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupsbox4.png"></td>
 	</tr>
     </tbody>
   </table>

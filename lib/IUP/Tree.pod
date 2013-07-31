@@ -34,9 +34,9 @@ their background inverted.
         <th>Windows</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptree_gtk.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptree_mot.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuptree_win.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptree_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptree_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptree_win.png"></td>
       </tr>
     </tbody>
   </table>
@@ -68,7 +68,7 @@ B<Tree nodes and Ids:>
 
 =begin HTML
 
-<p><img src="http://kmx.github.com/perl-iup/spec/iuptree1.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/spec/iuptree1.png"></p>
 
 =end HTML
 
@@ -651,8 +651,8 @@ collapsed depending on B<ADDEXPANDED>. Ignored if set before map.
         <th>After calling: <pre>$tree->SetAttribute(ADDBRANCH9, "new branch");</pre></th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/spec/iuptree1.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/spec/iuptree2_addbranch9.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/iuptree1.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/iuptree2_addbranch9.png"></td>
       </tr>
     </tbody>
   </table>
@@ -713,8 +713,8 @@ node + 1 + the total number of child nodes of the reference node.
         <th>After calling: <pre>$tree->SetAttribute(INSERTBRANCH9, "new branch");</pre></th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/spec/iuptree1.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/spec/iuptree3_insertbranch9.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/iuptree1.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/iuptree3_insertbranch9.png"></td>
       </tr>
     </tbody>
   </table>
@@ -1200,8 +1200,8 @@ Example:
         <th>After calling: <pre>$tree->TreeAddNodes( {TITLE=>"subtree", child=>["item1","item2"]}, 9);</pre></th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/spec/iuptree1.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/spec/iuptree4_TreeAddNodes9.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/iuptree1.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/iuptree4_TreeAddNodes9.png"></td>
       </tr>
     </tbody>
   </table>
@@ -1231,8 +1231,8 @@ node + 1 + the total number of child nodes of the reference node.
         <th>After calling: <pre>$tree->TreeInsertNodes( {TITLE=>"subtree", child=>["item1","item2"]}, 9);</pre></th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/spec/iuptree1.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/spec/iuptree5_TreeInsertNodes9.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/iuptree1.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/iuptree5_TreeInsertNodes9.png"></td>
       </tr>
     </tbody>
   </table>

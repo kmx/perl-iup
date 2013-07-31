@@ -22,7 +22,7 @@ their dialogs in other ways.
 
 =begin HTML
 
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/layoutdlg1.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/layoutdlg1.png"></p>
 
 =end HTML
 

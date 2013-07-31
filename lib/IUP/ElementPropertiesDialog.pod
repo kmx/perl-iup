@@ -13,7 +13,7 @@ of the show functions L<Show|IUP::Manual::02_Elements/"Show()">, L<ShowXY|IUP::M
 
 =begin HTML
 
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/dlg/layoutdlg2.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/layoutdlg2.png"></p>
 
 =end HTML
 

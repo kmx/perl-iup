@@ -21,8 +21,8 @@ application.
         <th style="text-align: center;">Motif</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupcanvas_gtk.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupcanvas_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupcanvas_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupcanvas_mot.png"></td>
       </tr>
     </tbody>
   </table>
@@ -35,8 +35,8 @@ application.
         <th style="text-align: center;">Windows XP Style</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupcanvas_win2k.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupcanvas_winxp.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupcanvas_win2k.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupcanvas_winxp.png"></td>
       </tr>
     </tbody>
   </table>
@@ -862,7 +862,7 @@ canvas. The image below shows the relation between Window and Viewport.
 
 Window x Viewport
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/wc-dc.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/wc-dc.gif"></p>
 
 If you want to map coordinates from one system to another, use the
 B<wdWorld2Canvas> e B<wdCanvas2World> functions.
@@ -1037,7 +1037,7 @@ current value.
 
 Mark Types:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/marks.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/marks.gif"></p>
  
 =head3 cdMarkSize()
 
@@ -1147,7 +1147,7 @@ to CD.
 
 Arc Parameters:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/arc.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/arc.gif"></p>
 
 =head3 cdLineStyle()
 
@@ -1164,7 +1164,7 @@ unchanged. See L<BackOpacity|filled.html#cdBackOpacity>.
 
 Line Styles:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/lines.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/lines.gif"></p>
 
 =head3 cdLineStyleDashes()
 
@@ -1196,7 +1196,7 @@ Value B<CD_QUERY> simply returns the current value.
 
 Line Joins:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/linejoin.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/linejoin.gif"></p>
 
 =head3 cdLineCap()
 
@@ -1208,7 +1208,7 @@ B<CD_CAPFLAT>. Value B<CD_QUERY> simply returns the current value.
 
 Line Caps:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/linecap.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/linecap.gif"></p>
 
 =head2 Methods - Primitives / Polygons
 
@@ -1266,11 +1266,11 @@ L<cdCanvasVertex|/"cdCanvasVertex()">.
 
 Open, Closed and Filled Polygons:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/polygon.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/polygon.gif"></p>
 
 Bezier Lines:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/bezier.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/bezier.gif"></p>
 
 =head3 cdVertex()
  
@@ -1446,7 +1446,7 @@ center.
 
 Sector Parameters:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/sector.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/sector.gif"></p>
 
 =head3 cdChord()
  
@@ -1464,7 +1464,7 @@ end points.
 
 Chord Parameters:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/chord.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/chord.gif"></p>
 
 =head3 cdBackOpacity()
 
@@ -1481,7 +1481,7 @@ simply returns the current value. In some drivers is always opaque.
 
 Back Opacity Attribute:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/opacity.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/opacity.gif"></p>
 
 =head3 cdFillMode()
 
@@ -1493,7 +1493,7 @@ Value B<CD_QUERY> simply returns the current value.
 
 Fill Modes:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/fillmode.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/fillmode.gif"></p>
 
 =head3 cdInteriorStyle()
 
@@ -1528,7 +1528,7 @@ the style. In some drivers is always opaque.
 
 Hatch Styles
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/hatch.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/hatch.gif"></p>
 
 =head3 cdStipple()
 
@@ -1665,8 +1665,8 @@ in the driver.
         <th>Font Styles</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/fonts.gif"></td>
-	<td><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/font_style.gif"></td>
+        <td><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/fonts.gif"></td>
+	<td><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/font_style.gif"></td>
       </tr>
     </tbody>
   </table>
@@ -1732,7 +1732,7 @@ Value C<CD_QUERY> simply returns the current value.
 
 Text Alignment:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/align.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/align.gif"></p>
 
 =head3 cdTextOrientation()
 
@@ -1758,7 +1758,7 @@ the others.
 
 Font Dimension Attributes:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/font_dim.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/font_dim.gif"></p>
 
 =head3 cdGetTextSize()
  
@@ -1800,7 +1800,7 @@ to right.
 
 Vector Text Parameters:
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/vector_text.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/vector_text.gif"></p>
 
 All vector text drawing in all drivers are simulated with other CD
 primitives using polygons only.
@@ -1943,7 +1943,7 @@ Bellow is the character code table of the default font.
 
 B<Default Font>
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/vectorfont_default.png"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/vectorfont_default.png"></p>
 
 The original Simplex II font is available in the file
 "cd/etc/vectorfont00.txt". Bellow is the character code table of the
@@ -1952,7 +1952,7 @@ from ANSI to ASCII):
 
 B<Original Simplex II>
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/vectorfont_simplex2.png"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/vectorfont_simplex2.png"></p>
 
 =head2 Methods - Primitives / Client Images
 
@@ -2163,7 +2163,7 @@ status. Default value: B<C<CD_UNION>>.
 
 Combine Modes
 
-=for html <p><img src="http://kmx.github.com/perl-iup/imgcd-5.4.1/regions.gif"></p>
+=for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/regions.gif"></p>
 
 =head3 cdIsPointInRegion()
  

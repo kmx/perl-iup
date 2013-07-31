@@ -10,7 +10,7 @@ Creates a menu item that, when selected, opens another menu.
 
 =begin HTML
 
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupsubmenu.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupsubmenu.png"></p>
 
 =end HTML
 

@@ -15,7 +15,7 @@ secondary colors.
 
 =begin HTML
 
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupcolorbar.gif"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.5/ctrl/iupcolorbar.gif"></p>
 
 =end HTML
 

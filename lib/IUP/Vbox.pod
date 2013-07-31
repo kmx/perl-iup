@@ -13,7 +13,7 @@ It does not have a native representation.
 
 =begin HTML
 
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupvbox_align.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupvbox_align.png"></p>
 <p>
   <table border="1">
     <col style="vertical-align:top;background-color: rgb(236, 233, 216);">
@@ -26,9 +26,9 @@ It does not have a native representation.
 		<th>EXPANDCHILDREN=YES</th>
 	</tr>
 	<tr>
-		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupvbox.png"></td>
-		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupvbox_homogeneous.png"></td>
-		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupvbox_expandchildren.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupvbox.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupvbox_homogeneous.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupvbox_expandchildren.png"></td>
 	</tr>
         <tr>
 		<th>default layout</th>
@@ -36,9 +36,9 @@ It does not have a native representation.
 		<th>child "2": VISIBLE=NO, FLOATING=YES</th>
 	</tr>
 	<tr>
-		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupvbox.png"></td>
-		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupvbox_visible.png"></td>
-		<td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupvbox_floating.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupvbox.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupvbox_visible.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupvbox_floating.png"></td>
 	</tr>
     </tbody>
   </table>

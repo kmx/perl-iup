@@ -23,8 +23,8 @@ down case is called Combo Box.
         <th>Motif</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_gtk.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuplist_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuplist_mot.png"></td>
       </tr>
     </tbody>
   </table>
@@ -38,8 +38,8 @@ down case is called Combo Box.
         <th>Windows XP Style</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_win2k.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iuplist_winxp.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuplist_win2k.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuplist_winxp.png"></td>
       </tr>
     </tbody>
   </table>

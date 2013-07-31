@@ -10,7 +10,7 @@ Creates an OpenGL canvas (drawing area for OpenGL).
 
 =begin HTML
 
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/ctrl/iupglcanvas.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.5/ctrl/iupglcanvas.png"></p>
 
 =end HTML
 

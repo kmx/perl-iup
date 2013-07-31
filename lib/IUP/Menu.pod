@@ -22,10 +22,10 @@ a menu will be an error.
         <th>Windows w/ Style</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_gtk.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_mot.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_win2k.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_winxp.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_win2k.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_winxp.png"></td>
       </tr>
       <tr>
         <th>RADIO=YES</th>
@@ -34,15 +34,15 @@ a menu will be an error.
         <th>RADIO=YES</th>
       </tr>      
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_gtk_radio.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_mot_radio.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_win2k_radio.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_winxp_radio.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_gtk_radio.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_mot_radio.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_win2k_radio.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_winxp_radio.png"></td>
       </tr>
     </tbody>
   </table>
 </p>
-<p><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupmenu_fromsyntax.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_fromsyntax.png"></p>
 
 =end HTML
 

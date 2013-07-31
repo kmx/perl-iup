@@ -21,8 +21,8 @@ around an interface element.
         <th style="text-align: center;">Motif</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupframe_gtk.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupframe_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupframe_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupframe_mot.png"></td>
       </tr>
     </tbody>
   </table>
@@ -36,8 +36,8 @@ around an interface element.
         <th style="text-align: center;">Windows XP Style</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupframe_win2k.png"></td>
-        <td><img src="http://kmx.github.com/perl-iup/img-3.5/elem/iupframe_winxp.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupframe_win2k.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupframe_winxp.png"></td>
       </tr>
     </tbody>
   </table>
