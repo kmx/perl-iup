@@ -618,7 +618,7 @@ _IupGetAttribute(ih,name)
 		const char* name;
 	CODE:
 		char *v = IupGetAttribute(ih,name);
-		RETVAL = newSVpvn_utf8(v, strlen(v), 1);
+		RETVAL = (v==NULL) ? newSVpvn(NULL, 0) : newSVpvn_utf8(v, strlen(v), 1);
 	OUTPUT:
 		RETVAL
 
@@ -640,7 +640,7 @@ _IupGetAttributeId(ih,name,id)
 		int id;
 	CODE:
 		char *v = IupGetAttributeId(ih,name,id);
-		RETVAL = newSVpvn_utf8(v, strlen(v), 1);
+		RETVAL = (v==NULL) ? newSVpvn(NULL, 0) : newSVpvn_utf8(v, strlen(v), 1);
 	OUTPUT:
 		RETVAL
 
@@ -654,7 +654,7 @@ _IupGetAttributeId2(ih,name,lin,col)
 		int col;
 	CODE:
 		char *v = IupGetAttributeId2(ih,name,lin,col);
-		RETVAL = newSVpvn_utf8(v, strlen(v), 1);
+		RETVAL = (v==NULL) ? newSVpvn(NULL, 0) : newSVpvn_utf8(v, strlen(v), 1);
 	OUTPUT:
 		RETVAL
 
@@ -1937,7 +1937,7 @@ _IupMatGetAttribute(ih,name,lin,col)
 	CODE:
 #ifdef HAVELIB_IUPCONTROLS
 		char *v = (char*)IupMatGetAttribute(ih,name,lin,col);
-		RETVAL = newSVpvn_utf8(v, strlen(v), 1);
+		RETVAL = (v==NULL) ? newSVpvn(NULL, 0) : newSVpvn_utf8(v, strlen(v), 1);
 #else
 		RETVAL = newSVpvn(NULL, 0); /* undef */
 #endif
