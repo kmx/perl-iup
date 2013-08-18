@@ -9,7 +9,7 @@ use IUP::Internal::LibraryIup;
 use IUP::Constants;
 
 # following recommendation from http://www.dagolden.com/index.php/369/version-numbers-should-be-boring/
-our $VERSION = "0.102";
+our $VERSION = "0.200_1";
 $VERSION = eval $VERSION;
 
 sub BEGIN {
@@ -428,12 +428,6 @@ sub isCtrlXkey  { shift; return IUP::Internal::LibraryIup::_isCtrlXkey(@_); };
 sub isAltXkey   { shift; return IUP::Internal::LibraryIup::_isAltXkey(@_); };
 sub isSysXkey   { shift; return IUP::Internal::LibraryIup::_isSysXkey(@_); };
 sub isPrintable { shift; return IUP::Internal::LibraryIup::_isPrintable(@_); };
-#xxxCHECKLATER
-#sub xCODE       { shift; return IUP::Internal::LibraryIup::_xCODE(@_); };
-#sub sxCODE      { shift; return IUP::Internal::LibraryIup::_sxCODE(@_); };
-#sub cxCODE      { shift; return IUP::Internal::LibraryIup::_cxCODE(@_); };
-#sub mxCODE      { shift; return IUP::Internal::LibraryIup::_mxCODE(@_); };
-#sub yxCODE      { shift; return IUP::Internal::LibraryIup::_yxCODE(@_); };
 
 #### mouse related macros
 sub isShift     { shift; return IUP::Internal::LibraryIup::_isShift(@_); };

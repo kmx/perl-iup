@@ -43,6 +43,15 @@ if (-d '.git') { #adding some custom actions relevant only for module developmen
     system($^X, qw[_generators/proc-pod2cpan.html.pl -html tmp.cpan-like.html -pod lib]);
     return;
   }
+  sub ACTION_touch {
+    my $self = shift;
+    system($^X, qw[-MFile::Touch -e touch('lib/IUP/Internal/LibraryIup.xs')]);
+    return;
+  }
+  sub ACTION_xs {
+    my $self = shift;
+    $self->depends_on(qw[touch build]);
+  }
 CODE
 }
 
@@ -60,7 +69,7 @@ my $builder = $class->new(
   build_requires       => { # need to have for running: ./Build (install|test)
     'perl'                 => 5.008008,
     'Module::Build'        => 0.36,
-    'Alien::IUP'           => 0.304,
+    'Alien::IUP'           => 0.600,
     'Test::More'           => 0,
     'Carp'                 => 0,
     'constant'             => 0,
@@ -68,7 +77,7 @@ my $builder = $class->new(
   configure_requires   => { # need to have for running: perl Buil.PL
     'perl'                 => 5.008008,
     'Module::Build'        => 0.36,
-    'Alien::IUP'           => 0.304,
+    'Alien::IUP'           => 0.600,
   },
   add_to_cleanup       => [ 'IUP-*' ],
   c_source             => 'src', # ppport.h

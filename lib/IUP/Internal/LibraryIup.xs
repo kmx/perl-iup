@@ -201,6 +201,7 @@ int
 _IupOpen()
 	CODE:
 		RETVAL = IupOpen(NULL,NULL);
+		IupSetGlobal("UTF8MODE", "YES");
 	OUTPUT:
 		RETVAL
 
@@ -584,7 +585,7 @@ _IupStoreAttribute(ih,name,value)
 		const char* name;
 		const char* value;
 	CODE:
-		IupStoreAttribute(ih,name,value);
+		IupStoreAttribute(ih,name,value); /* XXX-HANDLE-UTF8 */
 
 #### Original C function from <iup.h>
 # void IupStoreAttributeId(Ihandle *ih, const char *name, int id, const char *value);
@@ -595,7 +596,7 @@ _IupStoreAttributeId(ih,name,id,value)
 		int id;
 		const char* value;
 	CODE:
-		IupStoreAttributeId(ih,name,id,value);
+		IupStoreAttributeId(ih,name,id,value); /* XXX-HANDLE-UTF8 */
 
 #### Original C function from <iup.h>
 # void  IupStoreAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* value);
@@ -607,19 +608,20 @@ _IupStoreAttributeId2(ih,name,lin,col,value)
 		int col;
 		const char* value;
 	CODE:
-		IupStoreAttributeId2(ih,name,lin,col,value);
+		IupStoreAttributeId2(ih,name,lin,col,value); /* XXX-HANDLE-UTF8 */
 
 #### Original C function from <iup.h>
 # char* IupGetAttribute (Ihandle* ih, const char* name);
-char*
+SV*
 _IupGetAttribute(ih,name)
 		Ihandle* ih;
 		const char* name;
 	CODE:
-		RETVAL = IupGetAttribute(ih,name);
+		char *v = IupGetAttribute(ih,name);
+		RETVAL = newSVpvn_utf8(v, strlen(v), 1);
 	OUTPUT:
 		RETVAL
-		
+
 Ihandle*
 _IupGetAttributeIH(ih,name)
 		Ihandle* ih;
@@ -631,26 +633,28 @@ _IupGetAttributeIH(ih,name)
 
 #### Original C function from <iup.h>
 # char *IupGetAttributeId(Ihandle *ih, const char *name, int id);
-char*
+SV*
 _IupGetAttributeId(ih,name,id)
 		Ihandle* ih;
 		const char* name;
 		int id;
 	CODE:
-		RETVAL = IupGetAttributeId(ih,name,id);
+		char *v = IupGetAttributeId(ih,name,id);
+		RETVAL = newSVpvn_utf8(v, strlen(v), 1);
 	OUTPUT:
 		RETVAL
 
 #### Original C function from <iup.h>
 # char* IupGetAttributeId2(Ihandle* ih, const char* name, int lin, int col);
-char*
+SV*
 _IupGetAttributeId2(ih,name,lin,col)
 		Ihandle* ih;
 		const char* name;
 		int lin;
 		int col;
 	CODE:
-		RETVAL = IupGetAttributeId2(ih,name,lin,col);
+		char *v = IupGetAttributeId2(ih,name,lin,col);
+		RETVAL = newSVpvn_utf8(v, strlen(v), 1);
 	OUTPUT:
 		RETVAL
 
@@ -1919,12 +1923,12 @@ _IupMatStoreAttribute(ih,name,lin,col,value)
 		char* value;
 	CODE:
 #ifdef HAVELIB_IUPCONTROLS
-		IupMatStoreAttribute(ih,name,lin,col,value);
+		IupMatStoreAttribute(ih,name,lin,col,value); /* XXX-HANDLE-UTF8 */
 #endif
 
 #### Original C function from <iupcontrols.h>
 # char* IupMatGetAttribute (Ihandle* ih, const char* name, int lin, int col);
-char*
+SV*
 _IupMatGetAttribute(ih,name,lin,col)
 		Ihandle* ih;
 		const char* name;
@@ -1932,9 +1936,10 @@ _IupMatGetAttribute(ih,name,lin,col)
 		int col;
 	CODE:
 #ifdef HAVELIB_IUPCONTROLS
-		RETVAL = (char*)IupMatGetAttribute(ih,name,lin,col);
+		char *v = (char*)IupMatGetAttribute(ih,name,lin,col);
+		RETVAL = newSVpvn_utf8(v, strlen(v), 1);
 #else
-		RETVAL = NULL;
+		RETVAL = newSVpvn(NULL, 0); /* undef */
 #endif
 	OUTPUT:
 		RETVAL
@@ -2397,46 +2402,6 @@ _isPrintable(c)
 		int c;
 	CODE:
 		RETVAL = iup_isprint(c);
-	OUTPUT:
-		RETVAL
-
-int
-_xCODE(c)
-		int c;
-	CODE:
-		RETVAL = IUPxCODE(c); /* Normal (must be above 128) */
-	OUTPUT:
-		RETVAL
-
-int
-_sxCODE(c)
-		int c;
-	CODE:
-		RETVAL = IUPsxCODE(c); /* Shift  */
-	OUTPUT:
-		RETVAL
-
-int
-_cxCODE(c)
-		int c;
-	CODE:
-		RETVAL = IUPcxCODE(c); /* Ctrl   */
-	OUTPUT:
-		RETVAL
-
-int
-_mxCODE(c)
-		int c;
-	CODE:
-		RETVAL = IUPmxCODE(c); /* Alt    */
-	OUTPUT:
-		RETVAL
-
-int
-_yxCODE(c)
-		int c;
-	CODE:
-		RETVAL = IUPyxCODE(c); /* Sys (Win or Apple) */
 	OUTPUT:
 		RETVAL
 
