@@ -8,6 +8,7 @@ _cdCreateCanvas_CD_IUP(ih)
         CODE:
 #ifdef HAVELIB_IUPCD
                 RETVAL = cdCreateCanvas(CD_IUP, ih);
+                if (RETVAL) cdCanvasSetAttribute(RETVAL, "UTF8MODE", "1");
 #else
                 warn("Warning: cdCreateCanvas() not available");
                 RETVAL = NULL;
@@ -31,6 +32,7 @@ _cdCreateCanvas_BASIC(format, params)
                 else if (strcmp(format,"SVG") == 0)        RETVAL = cdCreateCanvas(CD_SVG, params);
                 else if (strcmp(format,"WMF") == 0)        RETVAL = cdCreateCanvas(CD_WMF, params);
                 else RETVAL = NULL;
+                if (RETVAL) cdCanvasSetAttribute(RETVAL, "UTF8MODE", "1");
         OUTPUT:
                 RETVAL
 
@@ -52,6 +54,7 @@ _cdCreateCanvas_IMAGERGB_empty(width,height,has_alpha,resolution)
                   if (has_alpha==1) strcat(tmp," -a");
                   /*warn("XXX-DEBUG (_cdCreateCanvas_IMAGERGB_empty): param='%s'\n",tmp);*/
                   RETVAL = cdCreateCanvas(CD_IMAGERGB, tmp);
+                  if (RETVAL) cdCanvasSetAttribute(RETVAL, "UTF8MODE", "1");
                 }
                 else 
                   RETVAL = NULL;
@@ -127,6 +130,7 @@ _cdCreateCanvas_IMAGERGB_from_bitmap(bitmap,resolution)
                   }
                   /*warn("XXX-DEBUG (_cdCreateCanvas_IMAGERGB_from_bitmap): param='%s'\n",tmp);*/
                   RETVAL = cdCreateCanvas(CD_IMAGERGB, tmp);
+                  if (RETVAL) cdCanvasSetAttribute(RETVAL, "UTF8MODE", "1");
                   /*warn("XXX-DEBUG: rv=%p",RETVAL);*/
                   /*if (cdCanvasGetContext(RETVAL) != CD_IMAGERGB) warn("XXX-DEBUG: invalid canvas, must be CD_IMAGERGB");*/
                 }                
