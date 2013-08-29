@@ -1,0 +1,139 @@
+=for comment XXX-TODO
+
+=head1 NAME
+
+IUP::PPlot - [GUI element] canvas-like element for creating 2D plots
+
+=head1 DESCRIPTION
+
+Creates a MathGLPlot-based plot. MathGLPlot is a library for creating plots that is system independent. 
+
+=begin HTML
+
+
+
+=end HTML
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ $plot = IUP::MglPlot->new( TITLE=>"Simple Data", GRID=>"YES" );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements/"new()">.
+
+=head2 Auxiliary Functions
+
+=head3 PlotBegin()
+
+ $plot->PlotBegin($dim);
+ # $dim = 1 (for 1D) or 2 (for 2D) or 3 (for 3D)
+
+=head3 PlotEnd()
+
+ $index = $plot->PlotEnd();
+
+=head3 PlotNewDataSet()
+
+  $plot->PlotNewDataSet($dim);
+  # $dim = 1 (for 1D) or 2 (for 2D) or 3 (for 3D)
+  
+=head3 PlotAdd1D()
+
+ $plot->PlotAdd1D($name, $y);
+ #or
+ $plot->PlotAdd1D(\@name, \@y);
+ #or
+ $plot->PlotAdd1D($y);
+ #or
+ $plot->PlotAdd1D(\@y);
+
+=head3 PlotAdd2D()
+
+ $plot->PlotAdd2D($x, $y);
+ #or
+ $plot->PlotAdd2D(\@x, \@y);
+
+=head3 PlotAdd3D()
+
+ $plot->PlotAdd3D($x, $y, $z);
+ #or
+ $plot->PlotAdd3D(\@x, \@y, \@z);
+
+=head3 PlotInsert1D()
+
+ $plot->PlotInsert1D($index, $sample_index, \@name, \@y);
+ #or
+ $plot->PlotInsert1D($index, $sample_index, \@y);
+
+=head3 PlotInsert2D()
+
+ $plot->PlotInsert2D($index, $sample_index, \@x, \@y);
+
+=head3 PlotInsert3D()
+
+ $plot->PlotInsert3D($index, $sample_index, \@x, \@y, \@z);
+
+=head3 PlotAppend1D()
+
+ $plot->PlotAppend1D($index, \@name, \@y);
+ #or
+ $plot->PlotAppend1D($index, \@y);
+
+=head3 PlotAppend2D()
+
+ $plot->PlotAppend2D($index, \@x, \@y);
+
+=head3 PlotAppend3D()
+
+ $plot->PlotAppend3D($index, \@x, \@y, \@z);
+
+=head3 PlotSet1D()
+
+ $plot->PlotSet1D($index, \@name, \@y);
+
+=head3 PlotSet2D()
+
+ $plot->PlotSet2D($index, \@x, \@y);
+
+=head3 PlotSet3D()
+
+ $plot->PlotSet3D($index, \@x, \@y, \@z);
+
+=head3 PlotTransform()
+
+ ($ix, $iy) = $plot->PlotTransform($x, $y, $z);
+
+=head3 PlotTransformXYZ()
+
+ ($x, $y, $z) = $plot->PlotTransformXYZ($ix, $iy);
+
+=head3 PlotPaintTo()
+
+ $plot->PlotPaintTo($filename);
+ #or
+ $plot->PlotPaintTo($w, $h, $dpi, $filename);
+ 
+Note: only *.svg and *.eps formats are supported
+
+=head2 ATTRIBUTES
+
+XXX-TODO
+
+=head1 EXAMPLES
+
+
+Unfortunately there are no sample scripts using this element.
+
+
+=head1 SEE ALSO
+
+L<IUP::PPlot|IUP::PPlot>
+
+The original doc: L<iup_mglplot.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_mglplot.html>
+
+
+=cut
