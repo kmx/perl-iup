@@ -15,10 +15,10 @@ my $plot = IUP::PPlot->new(
   LEGENDPOS=>"TOPLEFT",  
 );
 
-$plot->PlotBegin(0);
-$plot->PlotAdd(0, 0);
-$plot->PlotAdd(1, 0.4);
-$plot->PlotAdd(2, 2);
+$plot->PlotBegin(2);
+$plot->PlotAdd2D(0, 0);
+$plot->PlotAdd2D(1, 0.4);
+$plot->PlotAdd2D(2, 2);
 $plot->PlotEnd();
 
 # note: DS_nnn attributes have to be set after PlotEnd()

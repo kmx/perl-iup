@@ -1385,19 +1385,19 @@ _IupGetFile(arq)
 		char* arq;
 	INIT:
 		int rv;
-		char tmp[MAXPATHLEN];		
-		/* somehow handle the situation when arq is longer then MAXPATHLEN-1 */		
+		char tmp[MAXPATHLEN];
+		/* somehow handle the situation when arq is longer then MAXPATHLEN-1 */
 		tmp[MAXPATHLEN-1] = 0;
 		if (arq) strncpy(tmp,arq,MAXPATHLEN-1);
 	PPCODE:
 		rv = IupGetFile(tmp);
-		warn("rv=%d a=%s", rv, tmp);
+		/*warn("rv=%d a=%s", rv, tmp);*/
 		/* gonna return array: (retval, filename) */
 		XPUSHs(sv_2mortal(newSViv(rv)));
 		if (rv == -1)
 		  XPUSHs(sv_2mortal(newSVpv(NULL,0))); /* undef */
 		else
-		  XPUSHs(sv_2mortal(newSVpv(tmp,0)));
+		  XPUSHs(sv_2mortal(newSVpvn_utf8(tmp, strlen(tmp), 1)));  /* XPUSHs(sv_2mortal(newSVpv(tmp,0))); */
 
 #### Original C function from <iup.h>
 # void IupMessage(const char *title, const char *msg);
@@ -1436,7 +1436,7 @@ _IupGetText(title,text)
 		newtext[999] = 0;
 		rv = IupGetText(title,newtext);
 		/* gonna return text or undef */
-		XPUSHs(sv_2mortal(newSVpv(newtext,0)));
+		XPUSHs(sv_2mortal(newSVpvn_utf8(newtext, strlen(newtext), 1))); /* XPUSHs(sv_2mortal(newSVpv(newtext,0))); */
 
 #### Original C function from <iup.h>
 # int IupGetColor(int x, int y, unsigned char* r, unsigned char* g, unsigned char* b);
@@ -1575,7 +1575,7 @@ _IupGetParam(title,action,action_data,format,...)
 		    case 'c':
 		    case 's':
 		    case 'm':
-		      XPUSHs(sv_2mortal(newSVpv( param_data[i], 0 )));
+		      XPUSHs(sv_2mortal(newSVpvn_utf8(param_data[i], strlen(param_data[i]), 1)));  /* XPUSHs(sv_2mortal(newSVpv( param_data[i], 0 ))); */
 		      break;
 		  }
 		}
@@ -1944,254 +1944,9 @@ _IupMatGetAttribute(ih,name,lin,col)
 	OUTPUT:
 		RETVAL
 
-################################################################################ iup_mglplot.h
-
-#### Original C function from <iup_mglplot.h>
-# Ihandle* IupMglPlot(void);
-Ihandle*
-_IupMglPlot()
-	CODE:
-#ifdef HAVELIB_IUP_MGLPLOT
-		RETVAL = IupMglPlot();
-#else
-		warn("Error: IUP was built without IupMglPlot() support");
-		RETVAL = NULL;
-#endif
-	OUTPUT:
-		RETVAL
-
-### XXX-FIXME-INCOMPLETE
-#void IupMglPlotOpen(void);
-#void IupMglPlotBegin(Ihandle *ih, int dim);
-#void IupMglPlotAdd1D(Ihandle *ih, const char* name, float y);
-#void IupMglPlotAdd2D(Ihandle *ih, float x, float y);
-#void IupMglPlotAdd3D(Ihandle *ih, float x, float y, float z);
-#int IupMglPlotEnd(Ihandle *ih);
-#int IupMglPlotNewDataSet(Ihandle *ih, int dim);
-#void IupMglPlotInsert1D(Ihandle* ih, int ds_index, int sample_index, const char** names, const float* y, int count);
-#void IupMglPlotInsert2D(Ihandle* ih, int ds_index, int sample_index, const float* x, const float* y, int count);
-#void IupMglPlotInsert3D(Ihandle* ih, int ds_index, int sample_index, const float* x, const float* y, const float* z, int count);
-#void IupMglPlotSet1D(Ihandle* ih, int ds_index, const char** names, const float* y, int count);
-#void IupMglPlotSet2D(Ihandle* ih, int ds_index, const float* x, const float* y, int count);
-#void IupMglPlotSet3D(Ihandle* ih, int ds_index, const float* x, const float* y, const float* z, int count);
-#void IupMglPlotSetFormula(Ihandle* ih, int ds_index, const char* formulaX, const char* formulaY, const char* formulaZ, int count);
-#void IupMglPlotSetData(Ihandle* ih, int ds_index, const float* data, int count_x, int count_y, int count_z);
-#void IupMglPlotLoadData(Ihandle* ih, int ds_index, const char* filename, int count_x, int count_y, int count_z);
-#void IupMglPlotSetFromFormula(Ihandle* ih, int ds_index, const char* formula, int count_x, int count_y, int count_z);
-#void IupMglPlotTransform(Ihandle* ih, float x, float y, float z, int *ix, int *iy);
-#void IupMglPlotTransformXYZ(Ihandle* ih, int ix, int iy, float *x, float *y, float *z);
-#void IupMglPlotDrawMark(Ihandle* ih, float x, float y, float z);
-#void IupMglPlotDrawLine(Ihandle* ih, float x1, float y1, float z1, float x2, float y2, float z2);
-#void IupMglPlotDrawText(Ihandle* ih, const char* text, float x, float y, float z);
-#void IupMglPlotPaintTo(Ihandle *ih, const char* format, int w, int h, float dpi, void *data);
-
-################################################################################ iup_pplot.h
-
-#### Original C function from <iup_pplot.h>
-# Ihandle* IupPPlot(void);
-Ihandle*
-_IupPPlot()
-	CODE:
-#ifdef HAVELIB_IUP_PPLOT
-		RETVAL = IupPPlot();
-#else
-		warn("Error: IUP was built without IupPPlot() support");
-		RETVAL = NULL;
-#endif
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup_pplot.h>
-# void IupPPlotOpen(void);
-void
-_IupPPlotOpen()
-	CODE:
-#ifdef HAVELIB_IUP_PPLOT
-		IupPPlotOpen();
-#endif
-
-#### Original C function from <iup_pplot.h>
-# void IupPPlotBegin(Ihandle *ih, int strXdata);
-void
-_IupPPlotBegin(ih,strXdata)
-		Ihandle* ih;
-		int strXdata;
-	CODE:
-#ifdef HAVELIB_IUP_PPLOT
-		IupPPlotBegin(ih,strXdata);
-#endif
-
-#### Original C function from <iup_pplot.h>
-# int IupPPlotEnd(Ihandle *ih);
-int
-_IupPPlotEnd(ih)
-		Ihandle* ih;
-	CODE:
-#ifdef HAVELIB_IUP_PPLOT
-		RETVAL=IupPPlotEnd(ih);		
-#else
-		RETVAL=0;
-#endif
-	OUTPUT:
-		RETVAL
-
-#### Original C function from <iup_pplot.h>
-# void IupPPlotAdd(Ihandle *ih, float x, float y);
-# void IupPPlotAddStr(Ihandle *ih, const char* x, float y);
-void
-_IupPPlotAdd(ih,xaxis,...)
-		Ihandle* ih;
-		int xaxis;
-	INIT:
-		float y;
-		int pcount, i;
-	CODE:
-#ifdef HAVELIB_IUP_PPLOT		
-		pcount = (items-2)/2;		
-		for(i=0; i<pcount; i++) {
-		  y = myST2FLT(2+2*i+1);
-		  if (xaxis==0)
-  		    IupPPlotAdd(ih,myST2FLT(2+2*i),y);
-		  else
-  		    IupPPlotAddStr(ih,myST2STR(2+2*i),y);
-		}		
-#endif
-
-#### Original C function from <iup_pplot.h>
-# void IupPPlotAddPoints(Ihandle* ih, int index, float *x, float *y, int count);
-# void IupPPlotAddStrPoints(Ihandle* ih, int index, const char** x, float* y, int count);
-void
-_IupPPlotAddPoints(ih,xaxis,index,xylist)
-		Ihandle* ih;
-		int xaxis;
-		int index;
-		SV* xylist;
-	INIT:
-		int pcount, i;
-		float * fxpointers;
-		const char ** sxpointers;
-		float * ypointers;
-		SV *tmp;
-	CODE:
-#ifdef HAVELIB_IUP_PPLOT
-		pcount = (1+av_len((AV *)SvRV(xylist)))/2;
-		ypointers = malloc( pcount*sizeof(float) );
-		if(xaxis==0) fxpointers = malloc( pcount*sizeof(float) );
-		else         sxpointers = malloc( pcount*sizeof(char*) );		
-		for(i=0; i<pcount; i++) { 
-		  ypointers[i]  = mySV2FLT(*av_fetch((AV *)SvRV(xylist), 2*i+1, 0));
-		  if(xaxis==0) {
-		    fxpointers[i] = mySV2FLT(*av_fetch((AV *)SvRV(xylist), 2*i, 0));
-		  }
-		  else {
-		    sxpointers[i] = mySV2STR(*av_fetch((AV *)SvRV(xylist), 2*i, 0));
-		  }
-		}
-		if(xaxis==0) {
-		  IupPPlotAddPoints(ih,index,fxpointers,ypointers,pcount);
-		  free(fxpointers);
-		}
-		else {
-		  IupPPlotAddStrPoints(ih,index,sxpointers,ypointers,pcount);
-		  free(sxpointers);
-		}
-		free(ypointers);
-#endif
-
-#### Original C function from <iup_pplot.h>
-# void IupPPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
-# void IupPPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y);
-void
-_IupPPlotInsert(ih,xaxis,index,sample_index,...)
-		Ihandle* ih;
-		int xaxis;
-		int index;
-		int sample_index;
-	INIT:
-		float fx;
-		const char *sx;
-		float y;
-		int pcount, i;
-	CODE:
-#ifdef HAVELIB_IUP_PPLOT
-		pcount = (items-4)/2;		
-		for(i=0; i<pcount; i++) {
-		  y = myST2FLT(4+2*i+1);
-		  if (xaxis==0)
-  		    IupPPlotInsert(ih,index,sample_index,myST2FLT(4+2*i),y);
-		  else
-  		    IupPPlotInsertStr(ih,index,sample_index,myST2STR(4+2*i),y);
-		}
-#endif
-
-#### Original C function from <iup_pplot.h>
-# void IupPPlotInsertStrPoints(Ihandle* ih, int index, int sample_index, const char** x, float* y, int count);
-# void IupPPlotInsertPoints(Ihandle* ih, int index, int sample_index, float *x, float *y, int count);
-void
-_IupPPlotInsertPoints(ih,xaxis,index,sample_index,xylist)
-		Ihandle* ih;
-		int xaxis;
-		int index;
-		int sample_index;
-		SV* xylist;
-	INIT:
-		int pcount, i;
-		float * fxpointers;
-		const char ** sxpointers;
-		float * ypointers;
-	CODE:
-#ifdef HAVELIB_IUP_PPLOT
-		pcount = (1+av_len((AV *)SvRV(xylist)))/2;
-		ypointers = malloc( pcount*sizeof(float) );
-		if(xaxis==0) fxpointers = malloc( pcount*sizeof(float) );
-		else         sxpointers = malloc( pcount*sizeof(char*) );		
-		for(i=0; i<pcount; i++) { 
-		  ypointers[i]  = mySV2FLT(*av_fetch((AV *)SvRV(xylist), 2*i+1, 0));
-		  if(xaxis==0) {
-		    fxpointers[i] = mySV2FLT(*av_fetch((AV *)SvRV(xylist), 2*i, 0));
-		  }
-		  else {
-		    sxpointers[i] = mySV2STR(*av_fetch((AV *)SvRV(xylist), 2*i, 0));
-		  }
-		}
-		if(xaxis==0) {
-		  IupPPlotInsertPoints(ih,index,sample_index,fxpointers,ypointers,pcount);
-		  free(fxpointers);
-		}
-		else {
-		  IupPPlotInsertStrPoints(ih,index,sample_index,sxpointers,ypointers,pcount);
-		  free(sxpointers);
-		}
-		free(ypointers);
-#endif
-
-#### Original C function from <iup_pplot.h>
-# void IupPPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy);
-void
-_IupPPlotTransform(ih,x,y);
-		Ihandle* ih;
-		float x;
-		float y
-	INIT:
-		int ix;
-		int iy;
-	PPCODE:
-#ifdef HAVELIB_IUP_PPLOT
-		IupPPlotTransform(ih,x,y,&ix,&iy);
-		XPUSHs(sv_2mortal(newSViv(ix)));
-		XPUSHs(sv_2mortal(newSViv(iy)));
-#endif
-
-#### Original C function from <iup_pplot.h>
-# void IupPPlotPaintTo(Ihandle *ih, void *cnv);
-void
-_IupPPlotPaintTo(ih,cnv)
-		Ihandle *ih;
-		void *cnv;
-	CODE:
-#ifdef HAVELIB_IUP_PPLOT
-		IupPPlotPaintTo(ih,cnv);
-#endif
+################################################################################ plots
+INCLUDE: MGLPlot.xs.inc
+INCLUDE: PPlot.xs.inc
 
 ################################################################################ iupole.h 
 

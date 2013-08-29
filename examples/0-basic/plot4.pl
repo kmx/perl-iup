@@ -31,9 +31,16 @@ sub AxsBounds {
 sub AddSeries {
   my ($plot, @values) = @_;
   # are we given strings for the x values?
-  $plot->PlotBegin(looks_like_number($values[0]->[0]) ? 0 : 1);
-  $plot->PlotAdd($values[$_]->[0],$values[$_]->[1]) for (0..scalar(@values)-1);
-  $plot->PlotEnd();
+  if (looks_like_number($values[0]->[0])) {
+    $plot->PlotBegin(2);
+    $plot->PlotAdd2D($values[$_]->[0],$values[$_]->[1]) for (0..scalar(@values)-1);
+    $plot->PlotEnd();
+  }
+  else {
+    $plot->PlotBegin(1);
+    $plot->PlotAdd1D($values[$_]->[0],$values[$_]->[1]) for (0..scalar(@values)-1);
+    $plot->PlotEnd();
+  }
 }
 
 

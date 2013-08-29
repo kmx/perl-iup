@@ -31,9 +31,16 @@ sub AxsBounds {
 sub add_series {
   my ($plot, $xvalues, $yvalues, $options) = @_;
   # are we given strings for the x values?
-  $plot->PlotBegin(looks_like_number($xvalues->[1]) ? 0 : 1);
-  $plot->PlotAdd($xvalues->[$_],$yvalues->[$_]) for (0..scalar(@$xvalues)-1);
-  $plot->PlotEnd();
+  if (looks_like_number($xvalues->[0])) {
+    $plot->PlotBegin(2);
+    $plot->PlotAdd2D($xvalues->[$_],$yvalues->[$_]) for (0..scalar(@$xvalues)-1);
+    $plot->PlotEnd();
+  }
+  else {
+    $plot->PlotBegin(1);
+    $plot->PlotAdd1D($xvalues->[$_],$yvalues->[$_]) for (0..scalar(@$xvalues)-1);
+    $plot->PlotEnd();
+  }
   # set any series-specific plot attributes
   if ($options) {
     # mode must be set before any other attributes!

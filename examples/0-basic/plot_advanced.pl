@@ -72,31 +72,31 @@ sub InitPlots {
 #  IupSetAttribute(plot[0], "USE_GDI+", "YES");
 
   $theFac = 1.0/(100*100*100);
-  $plot[0]->PlotBegin(0);
+  $plot[0]->PlotBegin(2);
   for (my $theI=-100; $theI<=100; $theI++) {
     my $x = $theI+50;
     my $y = $theFac*$theI*$theI*$theI;
-    $plot[0]->PlotAdd($x, $y);
+    $plot[0]->PlotAdd2D($x, $y);
   }
   $plot[0]->PlotEnd();
   $plot[0]->SetAttribute("DS_LINEWIDTH", "3");
   $plot[0]->SetAttribute("DS_LEGEND", "Line");
 
   $theFac = 2.0/100;
-  $plot[0]->PlotBegin(0);
+  $plot[0]->PlotBegin(2);
   for (my $theI=-100; $theI<=100; $theI++) {
     my $x = $theI;
     my $y = -$theFac*$theI;
-    $plot[0]->PlotAdd($x, $y);
+    $plot[0]->PlotAdd2D($x, $y);
   }
   $plot[0]->PlotEnd();
   $plot[0]->SetAttribute("DS_LEGEND", "Curve 1");
 
-  $plot[0]->PlotBegin(0);
+  $plot[0]->PlotBegin(2);
   for (my $theI=-100; $theI<=100; $theI++)  {
     my $x = (0.01*$theI*$theI-30);
     my $y = 0.01*$theI;
-    $plot[0]->PlotAdd($x, $y);
+    $plot[0]->PlotAdd2D($x, $y);
   }
   $plot[0]->PlotEnd();
   $plot[0]->SetAttribute("DS_LEGEND", "Curve 2");
@@ -129,20 +129,20 @@ sub InitPlots {
   $plot[1]->SetAttribute("LEGENDSHOW", "YES");
 
   $theFac = 1.0/(100*100*100);
-  $plot[1]->PlotBegin(0);
+  $plot[1]->PlotBegin(2);
   for (my $theI=0; $theI<=100; $theI++) {
     my $x = $theI;
     my $y = $theFac*$theI*$theI*$theI;
-    $plot[1]->PlotAdd($x, $y);
+    $plot[1]->PlotAdd2D($x, $y);
   }
   $plot[1]->PlotEnd();
 
   $theFac = 2.0/100;
-  $plot[1]->PlotBegin(0);
+  $plot[1]->PlotBegin(2);
   for (my $theI=0; $theI<=100; $theI++) {
     my $x = $theI;
     my $y = -$theFac*$theI;
-    $plot[1]->PlotAdd($x, $y);
+    $plot[1]->PlotAdd2D($x, $y);
   }
   $plot[1]->PlotEnd();
 
@@ -161,11 +161,11 @@ sub InitPlots {
   $plot[2]->SetAttribute("AXS_YFONTSTYLE", "BOLD");
 
   $theFac = 100.0/(100*100*100);
-  $plot[2]->PlotBegin(0);
+  $plot[2]->PlotBegin(2);
   for (my $theI=0; $theI<=100; $theI++) {
     my $x = (0.0001+$theI*0.001);
     my $y = (0.01+$theFac*$theI*$theI*$theI);
-    $plot[2]->PlotAdd($x, $y);
+    $plot[2]->PlotAdd2D($x, $y);
   }
   $plot[2]->PlotEnd();
   $plot[2]->SetAttribute("DS_COLOR", "100 100 200");
@@ -181,7 +181,7 @@ sub InitPlots {
 
   $plot[3]->PlotBegin(1);
   for (my $theI=0; $theI<12; $theI++) { 
-    $plot[3]->PlotAdd($kLables[$theI], $kData[$theI]);
+    $plot[3]->PlotAdd1D($kLables[$theI], $kData[$theI]);
   }
   $plot[3]->PlotEnd();
   $plot[3]->SetAttribute("DS_COLOR", "100 100 200");
@@ -208,21 +208,21 @@ sub InitPlots {
   $plot[4]->SetAttribute("LEGENDPOS", "BOTTOMRIGHT");
 
   $theFac = 100.0/(100*100*100);
-  $plot[4]->PlotBegin(0);
+  $plot[4]->PlotBegin(2);
   for (my $theI=0; $theI<=10; $theI++) {
     my $x = (0.0001+$theI*0.001);
     my $y = (0.01+$theFac*$theI*$theI);
-    $plot[4]->PlotAdd($x, $y);
+    $plot[4]->PlotAdd2D($x, $y);
   }
   $plot[4]->PlotEnd();
   $plot[4]->SetAttribute("DS_MODE", "MARKLINE");
   $plot[4]->SetAttribute("DS_SHOWVALUES", "YES");
 
-  $plot[4]->PlotBegin(0);
+  $plot[4]->PlotBegin(2);
   for (my $theI=0; $theI<=10; $theI++) {
     my $x = (0.0001+$theI*0.001);
     my $y = (0.2-$theFac*$theI*$theI);
-    $plot[4]->PlotAdd($x, $y);
+    $plot[4]->PlotAdd2D($x, $y);
   }
   $plot[4]->PlotEnd();
   $plot[4]->SetAttribute("DS_MODE", "MARK");
@@ -234,11 +234,11 @@ sub InitPlots {
   $plot[5]->SetAttribute("MARGINTOP", "40");
 
   $theFac = 100.0/(100*100*100);
-  $plot[5]->PlotBegin(0);
+  $plot[5]->PlotBegin(2);
   for (my $theI=-10; $theI<=10; $theI++) {
     my $x = (0.001*$theI);
     my $y = (0.01+$theFac*$theI*$theI*$theI);
-    $plot[5]->PlotAdd($x, $y);
+    $plot[5]->PlotAdd2D($x, $y);
   }
   $plot[5]->PlotEnd();
   $plot[5]->SetAttribute("DS_COLOR", "100 100 200");

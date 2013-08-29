@@ -19,9 +19,10 @@ sub _create_element {
 sub PlotBegin {
   #void IupPlotBegin(Ihandle* ih, int strXdata); [in C]
   #iup.PlotBegin(ih: ihandle, strXdata: number) [in Lua]
-  my ($self, $strXdata) = @_;
-  $self->{'!int!last_begin_param'} = $strXdata;
-  return IUP::Internal::LibraryIup::_IupPPlotBegin($self->ihandle, $strXdata);
+  my ($self, $dim) = @_;
+  my $strXdata = ($dim && $dim == 1) ? 1 : 0;
+  IUP::Internal::LibraryIup::_IupPPlotBegin($self->ihandle, $strXdata);
+  return $self;
 }
 
 sub PlotEnd {
@@ -31,51 +32,89 @@ sub PlotEnd {
   return IUP::Internal::LibraryIup::_IupPPlotEnd($self->ihandle);
 }
 
-sub PlotAdd {
-  # params: ($x, $y)
+sub PlotNewDataSet {
+  my ($self, $dim) = @_;
+  return $self->PlotBegin($dim)->PlotEnd();
+}
+
+sub PlotAdd1D {
+  # params: ($x, $y) or (\@x, \@y)
   my $self = shift;
-  my $c = scalar @_;
-  if ( $c>=2 && ($c%2)==0 ) {
-    return IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $self->{'!int!last_begin_param'}, @_);
+  IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, @_);
+  return $self;
+}
+
+sub PlotAdd2D {
+  # params: ($x, $y) or (\@x, \@y)
+  my $self = shift;
+  IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, @_);
+  return $self;
+}
+
+sub PlotAppend1D {
+  # params: ($ds_index, \@x, \@y)
+  my $self = shift;
+  IUP::Internal::LibraryIup::_IupPPlotAddStrPoints($self->ihandle, @_);
+  return $self;
+}
+
+sub PlotAppend2D {
+  # params: ($ds_index, \@x, \@y)
+  my $self = shift;
+  IUP::Internal::LibraryIup::_IupPPlotAddPoints($self->ihandle, @_);
+  return $self;
+}
+
+sub PlotSet1D {
+  # params: ($ds_index, $x, $y) or ($ds_index, \@x, \@y)
+  my ($self, $ds_index) = (shift, shift);
+  $self->CURRENT($ds_index);
+  my $i = $self->DS_COUNT;
+  for my $j (0..$i-1) { $self->DS_REMOVE($j) }
+  $self->PlotInsert1D($ds_index, 0, @_);
+  return $self;
+}
+
+sub PlotSet2D {
+  # params: ($ds_index, $x, $y) or ($ds_index, \@x, \@y)
+  my ($self, $ds_index) = (shift, shift);
+  $self->CURRENT($ds_index);
+  my $i = $self->DS_COUNT;
+  for my $j (0..$i-1) { $self->DS_REMOVE($j) }
+  $self->PlotInsert2D($ds_index, 0, @_);
+  return $self;
+}
+
+sub PlotInsert1D {
+  # params: ($ds_index, $sample_index, $x, $y) or ($ds_index, $sample_index, \@x, \@y)
+  my $self = shift;
+  if (ref($_[0]) eq 'ARRAY') {
+    IUP::Internal::LibraryIup::_IupPPlotInsertStr($self->ihandle, @_);
   }
   else {
-    carp "Warning: wrong number of parameters";
+    IUP::Internal::LibraryIup::_IupPPlotInsertStrPoints($self->ihandle, @_);
   }
+  return $self;
 }
 
-sub PlotAddPoints {
-  # params: ($index, \@xylist)
+sub PlotInsert2D {
+  # params: ($ds_index, $sample_index, $x, $y) or ($ds_index, $sample_index, \@x, \@y)
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupPPlotAddPoints($self->ihandle, $self->{'!int!last_begin_param'}, @_);
-}
-
-sub PlotInsert {
-  # params: ($index, $sample_index, $x, $y)
-  my $self = shift;
-  my $index = shift;
-  my $sample_index = shift;
-  my $c = scalar @_;
-  if ( $c>=2 && ($c%2)==0 ) {
-    return IUP::Internal::LibraryIup::_IupPPlotInsert($self->ihandle, $self->{'!int!last_begin_param'},
-                                                      $index, $sample_index, @_);
+  if (ref($_[0]) eq 'ARRAY') {
+    IUP::Internal::LibraryIup::_IupPPlotInsert($self->ihandle, @_);
   }
   else {
-    carp "Warning: wrong number of parameters";
-  }  
-}
-
-sub PlotInsertPoints {
-  # params: ($index, $sample_index, \@xylist)
-  my $self = shift;
-  return IUP::Internal::LibraryIup::_IupPPlotInsertPoints($self->ihandle, $self->{'!int!last_begin_param'}, @_);
+    IUP::Internal::LibraryIup::_IupPPlotInsertPoints($self->ihandle, @_);
+  }
+  return $self;
 }
 
 sub PlotTransform {
   #void IupPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy); [in C]
   #iup.PlotTransform(ih: ihandle, x, y: number) -> (ix, iy: number) [in Lua]
   my ($self, $x, $y) = @_;
-  my ($new_x, $new_y) = return IUP::Internal::LibraryIup::_IupPPlotTransform($self->ihandle, $x, $y);
-  return ($new_x, $new_y);
+  my ($ix, $iy) = IUP::Internal::LibraryIup::_IupPPlotTransform($self->ihandle, $x, $y);
+  return ($ix, $iy);
 }
 
 sub PlotPaintTo {

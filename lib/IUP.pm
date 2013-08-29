@@ -33,7 +33,7 @@ sub import {
      ':basic' => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg Dial Dialog FileDlg Fill FontDlg Frame
                      Hbox Image Item Label List Menu MessageDlg Normalizer ProgressBar Radio 
                      Sbox Separator Spin SpinBox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox/], 
-     ':extended' => [qw/Matrix Cells Canvas CanvasGL PPlot LayoutDialog ElementPropertiesDialog/],
+     ':extended' => [qw/Matrix Cells Canvas CanvasGL PPlot MglPlot LayoutDialog ElementPropertiesDialog/],
      ':all' => [],
   );  
   @{$tags{':all'}} = ( @{$tags{':basic'}}, @{$tags{':extended'}} );

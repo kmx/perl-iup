@@ -18,15 +18,15 @@ my $plot = IUP::PPlot->new(
 	     AXS_YAUTOMAX => "NO",
 );
 
-$plot->PlotBegin(0);
+$plot->PlotBegin(2);
 for (my $x=-2; $x<=2; $x+=0.01) {
-  $plot->PlotAdd($x, sin($x))
+  $plot->PlotAdd2D($x, sin($x))
 }
 $plot->PlotEnd();
 
-$plot->PlotBegin(0);
+$plot->PlotBegin(2);
 for (my $x=-2; $x<=2; $x+=0.01) {
-  $plot->PlotAdd($x, cos($x))
+  $plot->PlotAdd2D($x, cos($x))
 }
 $plot->PlotEnd();
 

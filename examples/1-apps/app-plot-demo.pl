@@ -47,19 +47,23 @@ sub predraw_cb {
 
 sub InitPlot {
   my $theFac;  
-  $mainplot->SetAttribute("TITLE", "Sample Plot");
-  $mainplot->TITLEFONTSIZE(12);
-  $mainplot->TITLEFONTSTYLE('BOLD');
-  $mainplot->SetAttribute("MARGINTOP", "40");
+  $mainplot->SetAttribute(
+    TITLE => "Sample Plot",
+    AXS_XORIGIN=>0,
+    AXS_YORIGIN=>0,
+    #TITLEFONTSIZE => 1.2,
+    TITLEFONTSTYLE => 'BOLD',
+    MARGINTOP => "40",
+    OPENGL=>"YES",
+  );
 
   $theFac = 100.0/(100*100*100);
-  $mainplot->PlotBegin(0);
+  my (@x, @y);
   for (my $theI=-10; $theI<=10; $theI++) {
-    my $x = (0.001*$theI);
-    my $y = (0.01+$theFac*$theI*$theI*$theI);
-    $mainplot->PlotAdd($x, $y);
+    push @x, (0.001*$theI);
+    push @y, (0.01+$theFac*$theI*$theI*$theI);
   }
-  $mainplot->PlotEnd();
+  $mainplot->PlotBegin(2)->PlotAdd2D(\@x, \@y)->PlotEnd();
   #$mainplot->SetAttribute("DS_COLOR", "100 100 200");
   #$mainplot->SetAttribute("DS_EDIT", "YES");
   $mainplot->SetCallback("DELETE_CB", \&delete_cb);
@@ -257,7 +261,8 @@ sub bt2_cb {
 sub bt3_cb {
   my $self = shift;
   warn "Draw '", $mainfunc->VALUE, "'\n";
-  my @values;  
+  my @xvalues;  
+  my @yvalues;  
   my $y;
   for (my $x=-10; $x<=10; $x+=0.1) {    
     $y = eval $mainfunc->VALUE;
@@ -267,14 +272,12 @@ sub bt3_cb {
       IUP->Message("ERROR", $msg);
       last;
     }
-    push @values, $x, $y;
+    push @xvalues, $x;
+    push @yvalues, $y;
   }
 
   $mainplot->CLEAR(1);
-  $mainplot->PlotBegin(0);
-  my $index = $mainplot->PlotEnd();
-  $mainplot->PlotAddPoints($index, \@values);  
-  
+  $mainplot->PlotSet2D($mainplot->PlotNewDataSet(2), \@xvalues, \@yvalues);  
   $mainplot->SetAttribute("TITLE", 'func: $y='.$mainfunc->VALUE);
   $mainplot->SetAttribute("AXS_XAUTOMIN", "YES");
   $mainplot->SetAttribute("AXS_XAUTOMAX", "YES");
@@ -331,6 +334,7 @@ my $vboxl = IUP::Vbox->new( child=>[$f1, $f2, $lbl1, $tgg3, $tgg4, $lbl2, $tgg5,
 
 ### right panel: plot control
 $mainplot = IUP::PPlot->new();
+#$mainplot = IUP::MglPlot->new();
 $mainfunc = IUP::Text->new( VALUE=>'sin($x)', VISIBLECOLUMNS=>50, VISIBLELINES=>3, MULTILINE=>'YES', EXPAND=>'YES');
 
 ### the main dialog
