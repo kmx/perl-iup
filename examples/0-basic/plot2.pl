@@ -20,22 +20,15 @@ sub add_series {
   my ($plot, $xvalues, $yvalues, $options) = @_;
   # are we given strings for the x values?
   if (looks_like_number($xvalues->[1])) {
-    $plot->PlotBegin(2);
-    $plot->PlotAdd2D($xvalues->[$_],$yvalues->[$_]) for (0..scalar(@$xvalues)-1);
-    $plot->PlotEnd();
+    $plot->PlotAdd2D($xvalues,$yvalues);
   }
   else {
-    $plot->PlotBegin(1);
-    $plot->PlotAdd1D($xvalues->[$_],$yvalues->[$_]) for (0..scalar(@$xvalues)-1);
-    $plot->PlotEnd();
+    $plot->PlotAdd1D($xvalues,$yvalues);
   }
   # set any series-specific plot attributes
   if ($options) {
     # mode must be set before any other attributes!
-    if ($options->{DS_MODE}) {
-      $plot->DS_MODE($options->{DS_MODE});
-      delete $options->{DS_MODE};
-    }
+    $plot->DS_MODE(delete $options->{DS_MODE}) if $options->{DS_MODE};
     $plot->SetAttribute(%$options);
   }
 }
