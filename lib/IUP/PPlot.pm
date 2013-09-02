@@ -39,16 +39,39 @@ sub PlotNewDataSet {
 
 sub PlotAdd1D {
   # params: ($x, $y) or (\@x, \@y)
-  my $self = shift;
-  IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, @_);
-  return $self;
+  my ($self, $x, $y) = @_;
+  if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
+    $self->PlotBegin(1);
+    IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, $x, $y);
+    return $self->PlotEnd();
+  }
+  elsif (ref $x eq 'ARRAY' && !defined $y) {
+    $self->PlotBegin(1);
+    IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, undef, $x);
+    return $self->PlotEnd();
+  }
+  elsif (defined $x && !ref $x && !defined $y) {
+    IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, undef, $x);
+    return $self;
+  }
+  else {
+    IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, $x, $y);
+    return $self;
+  }
 }
 
 sub PlotAdd2D {
   # params: ($x, $y) or (\@x, \@y)
-  my $self = shift;
-  IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, @_);
-  return $self;
+  my ($self, $x, $y) = @_;
+  if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
+    $self->PlotBegin(2);
+    IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $x, $y);
+    return $self->PlotEnd();
+  }
+  else {
+    IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $x, $y);
+    return $self;
+  }
 }
 
 sub PlotAppend1D {

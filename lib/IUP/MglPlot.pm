@@ -37,12 +37,26 @@ sub PlotNewDataSet {
 ### 1D
 
 sub PlotAdd1D {
-  # params: ($x, $y) or (\@x, \@y) or ($y) or (\@y)
-  # returns: $self
-  my $self = shift;
-  unshift(@_, undef) if @_ <= 1;
-  IUP::Internal::LibraryIup::_IupMglPlotAdd1D($self->ihandle, @_);
-  return $self;
+  # params: ($x, $y) or (\@x, \@y)
+  my ($self, $x, $y) = @_;
+  if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
+    $self->PlotBegin(1);
+    IUP::Internal::LibraryIup::_IupMglPlotAdd1D($self->ihandle, $x, $y);
+    return $self->PlotEnd();
+  }
+  elsif (ref $x eq 'ARRAY' && !defined $y) {
+    $self->PlotBegin(1);
+    IUP::Internal::LibraryIup::_IupMglPlotAdd1D($self->ihandle, undef, $x);
+    return $self->PlotEnd();
+  }
+  elsif (defined $x && !ref $x && !defined $y) {
+    IUP::Internal::LibraryIup::_IupMglPlotAdd1D($self->ihandle, undef, $x);
+    return $self;
+  }
+  else {
+    IUP::Internal::LibraryIup::_IupMglPlotAdd1D($self->ihandle, $x, $y);
+    return $self;
+  }
 }
 
 sub PlotSet1D {
@@ -73,10 +87,16 @@ sub PlotAppend1D {
 
 sub PlotAdd2D {
   # params: ($x, $y) or (\@x, \@y)
-  # returns: $self
-  my $self = shift;
-  IUP::Internal::LibraryIup::_IupMglPlotAdd2D($self->ihandle, @_);
-  return $self;
+  my ($self, $x, $y) = @_;
+  if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
+    $self->PlotBegin(2);
+    IUP::Internal::LibraryIup::_IupMglPlotAdd2D($self->ihandle, $x, $y);
+    return $self->PlotEnd();
+  }
+  else {
+    IUP::Internal::LibraryIup::_IupMglPlotAdd2D($self->ihandle, $x, $y);
+    return $self;
+  }
 }
 
 sub PlotSet2D {
@@ -105,10 +125,16 @@ sub PlotAppend2D {
 
 sub PlotAdd3D {
   # params: ($x, $y, $z) or (\@x, \@y, \@z)
-  # returns: $self
-  my $self = shift;
-  IUP::Internal::LibraryIup::_IupMglPlotAdd3D($self->ihandle, @_);
-  return $self;
+  my ($self, $x, $y, $z) = @_;
+  if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY' && ref $z eq 'ARRAY') {
+    $self->PlotBegin(2);
+    IUP::Internal::LibraryIup::_IupMglPlotAdd3D($self->ihandle, $x, $y, $z);
+    return $self->PlotEnd();
+  }
+  else {
+    IUP::Internal::LibraryIup::_IupMglPlotAdd3D($self->ihandle, $x, $y, $z);
+    return $self;
+  }
 }
 
 sub PlotSet3D {
