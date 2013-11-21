@@ -175,8 +175,7 @@ sub PlotTransformXYZ {
 
 sub PlotPaintTo {
   my $self = shift;
-  my $filename = pop // '';
-  my ($w, $h, $dpi) = @_;
+  my ($filename, $w, $h, $dpi) = @_;
   my $format;
   $format = "SVG" if $filename =~ /\.svg$/i;
   $format = "EPS" if $filename =~ /\.eps$/i;

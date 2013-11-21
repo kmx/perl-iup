@@ -1,4 +1,4 @@
-#!perl -T
+#!perl
 
 BEGIN {
   if (!$ENV{DISPLAY} && $^O ne 'MSWin32' && $^O ne 'cygwin') {

@@ -47,11 +47,11 @@ sub PlotAdd1D {
   }
   elsif (ref $x eq 'ARRAY' && !defined $y) {
     $self->PlotBegin(1);
-    IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, undef, $x);
+    IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, [(0..scalar(@$x)-1)], $x);
     return $self->PlotEnd();
   }
   elsif (defined $x && !ref $x && !defined $y) {
-    IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, undef, $x);
+    IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, '', $x);
     return $self;
   }
   else {
