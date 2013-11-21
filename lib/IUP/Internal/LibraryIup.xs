@@ -1945,7 +1945,7 @@ _IupMatGetAttribute(ih,name,lin,col)
 		RETVAL
 
 ################################################################################ plots
-INCLUDE: MGLPlot.xs.inc
+INCLUDE: MglPlot.xs.inc
 INCLUDE: PPlot.xs.inc
 
 ################################################################################ iupole.h 
