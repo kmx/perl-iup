@@ -3,7 +3,7 @@ package IUP::Internal::Canvas;
 @ISA = qw/ DynaLoader /;
 require DynaLoader;
 
-bootstrap IUP::Internal::LibraryIup; # load XS part
+bootstrap IUP::Internal::Canvas; # load XS part
 
 # accessor
 sub cnvhandle {
