@@ -79,7 +79,6 @@ my $builder = $class->new(
     'Module::Build'        => 0.36,
     'Alien::IUP'           => 0.600,
   },
-  add_to_cleanup       => [ 'IUP-*' ],
   c_source             => 'src', # ppport.h
   extra_linker_flags   => $lflags,
   extra_compiler_flags => $cflags,  

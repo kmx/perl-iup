@@ -1,28 +1,28 @@
 Revision history for perl module IUP
 
+0.201 2013-XX-XX
+    - UTF-8 support
+    - INCOMPATIBLE CHANGE: IUP::PPlot completely new interface
+    - NEW: IUP::MglPlot
+    
 0.101 2013-07-31
-
     - fixing broken links to examples
 
 0.100 2013-02-06
-
     - updating callbacks newly added in iup 3.6/3.7
     - starting new version line
 
 0.006 2012-08-12
-
     - attribute accesors now handled via AUTOLOAD
     - Callback.xs+Canvas.xs incorporated into IupLibrary.xs
     - improved thread awareness of Idle callback
     - preparing for iup-3.6
 
 0.004 2011-08-19
-
     - forcing newer Alien::IUP (to make IUP install smoothly on cygwin)
     - fixing cygwin build failures
 
 0.003 2011-08-18
-
     - much better documentation
     - many fixes for IUP::Canvas methods
     - added: IUP::Canvas::(Palette|Pattern|Stipple|Bitmap) -
@@ -39,13 +39,11 @@ Revision history for perl module IUP
     - removing debug stuff 'use Data::Dump(er)'
 
 0.002 2011-07-29
-
     - removing invalid accessors "0" and "1"
     - fix for "Can't locate IUP/OleControl.pm"
     - fixing documentation
 
 0.001_01 2011-07-19
-
     - the first CPAN release
     - initial proof-of-concept (0.000) version uploaded to github 2010-09-15
       https://github.com/kmx/perl-iup/commit/e8cb0bb10e4ce6e7a342f65a6b933bbd90c1fb6d
