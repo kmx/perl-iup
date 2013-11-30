@@ -265,7 +265,8 @@ sub Append {
   #Ihandle* IupAppend(Ihandle* ih, Ihandle* new_child); [in C]
   #iup.Append(ih, new_child: ihandle) -> (parent: ihandle) [in Lua]
   my ($self, $new_child) = @_;
-  my $ih = IUP::Internal::LibraryIup::_IupAppend($self->ihandle, $new_child);
+  return unless ref $new_child;
+  my $ih = IUP::Internal::LibraryIup::_IupAppend($self->ihandle, $new_child->ihandle);
   return IUP->GetByIhandle($ih);
 }
 
@@ -553,7 +554,8 @@ sub Insert {
   #Ihandle* IupInsert(Ihandle* ih, Ihandle* ref_child, Ihandle* new_child); [in C]
   #iup.Append(ih, ref_child, new_child: ihandle) -> (parent: ihandle) [in Lua]
   my ($self, $ref_child, $new_child) = @_;
-  my $ih = IUP::Internal::LibraryIup::_IupInsert($self->ihandle, $ref_child, $new_child);
+  return unless ref $ref_child && ref $new_child;
+  my $ih = IUP::Internal::LibraryIup::_IupInsert($self->ihandle, $ref_child->ihandle, $new_child->ihandle);
   return IUP->GetByIhandle($ih);
 }
 
