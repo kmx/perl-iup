@@ -23,8 +23,8 @@ value in pixels is INT_MAX for both dimensions. Resolution is the
 number of pixels per millimeter; its default value is "3.78 pixels/mm"
 (96 DPI). Width, height and resolution are real values. Parameter -f
 modifies the polygon filling's behavior. Just as in MicroStation, you
-can specify a seed file using parameter -s. Width, height and
-resolution are used only by L<
+can specify a seed file using parameter -s, it must be the last
+parameter. Width, height and resolution are used only by L<
 B<cdCanvasGetSize>|../func/coordinates.html#cdGetCanvasSize> and in
 pixel-millimeter conversion.
 
@@ -46,9 +46,9 @@ vertices; if the value is larger, the polygon style changes to closed
 lines.
 
 B<Seed> - In the seed file, several DGN parameters can be defined to be
-used in the drawing. The library offers a default seed file, called
-"SEED2D.DGN". The file's location depends on the environment variable
-B<CDDIR>.
+used in the drawing. The library offers a seed file called
+"seed2d.dgn", located on the folder pointed by the environment variable
+B<CDDIR> (usually "cd/etc").
 
 =head2 Behavior of Functions
 

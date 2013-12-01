@@ -59,6 +59,8 @@ given limits. If limits are 0 (xmin, xmax, ymin and ymax) the
 primitives will be drawn with their coordinates having the original
 values in the file.
 
+Returns CD_OK or CD_ERROR.
+
 Only some drivers implement this function:
 
 =over
@@ -107,7 +109,8 @@ B<CD_SIZECB>. Its definition is:
 
 It returns the size of the image in the file before any function in the
 CD library is called, so that you can call the cdPlay function without
-an active canvas and create the canvas inside the callback. It works as
-a B< cdCanvasGetSize> function.
+an active canvas and create the canvas inside the callback. Its values
+are the same as returned by the B<
+L<cdCanvasGetSize|coordinates.html#cdGetCanvasSize>> function.
 
 =cut

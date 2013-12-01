@@ -4,7 +4,7 @@ CD
 
 Canvas Draw, A 2D Graphics Library
 
-Version 5.5
+Version 5.7
 
 ----
 

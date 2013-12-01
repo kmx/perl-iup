@@ -1,6 +1,98 @@
 =head1 History of Changes
 
 =head2 L<Version
+5.7|http://sourceforge.net/projects/canvasdraw/files/5.7/>
+(22/Nov/2013)
+
+=over
+
+=item * New: support for UTF-8 strings in B< cdCanvasText> using the
+canvas attribute UTF8MODE for the GL, Win32, GDI+, GDK and Cairo
+drivers.
+
+=item * Fixed: invalid memory release at B< cdReleaseState>.
+
+=item * Fixed: implemented missing SIZE_CB callback for the CD_PICTURE
+driver in Lua.
+
+=item * Fixed: B<cdCanvasPlay> parameter parsing for CD_PICTURE driver
+in Lua.
+
+=item * Fixed: clipping rectangle size in Cairo and GDK drivers.
+
+=back
+
+=head2 L<Version
+5.6.1|http://sourceforge.net/projects/canvasdraw/files/5.6.1/>
+(08/May/2013)
+
+=over
+
+=item * Changed: CD_DXF now supports solid filled primitives if
+parameter "-ac2000" is specified at B<cdCreateCanvas>. Improved support
+for floating point coordinates.
+
+=item * Fixed: path creation with arcs (CD_PATH_ARC ) when
+B<cdCanvasOrigin> was set.
+
+=item * Fixed: missing support for floating point (cdf* functions) in
+VectorText primitives.
+
+=item * Fixed: B<cdCanvasPlay> for CD_CGM when the file contains a
+background color code, the canvas was cleared with the background color
+instead to simply set the background color.
+
+=back
+
+=head2 L<Version
+5.6|http://sourceforge.net/projects/canvasdraw/files/5.6/>
+(28/Nov/2012)
+
+=over
+
+=item * New: support for B<cdCanvasChord> and
+B<cdCanvasTextOrientation> in CD_CGM driver.
+
+=item * New: creation parameter for CD_CGM to specify a description
+string.
+
+=item * New: support for GTK 3.
+
+=item * New: TEXTANTIALIAS attribute for the CD_IMAGERGB driver, the
+CD_GL driver, the GDI+ based drivers, and the Cairo based drivers. The
+ANTIALIAS attribute now controls only the antialiasing for line
+primitives.
+
+=item * Changed: rewitten B<cdCanvasPlay> for the CGM driver.
+
+=item * Changed: removed automatic VDC Extension computation when size
+is not specified in CD_CGM driver. Now the default value is used just
+like the other drivers. Extended creation parameter "-p" to include
+float and double options.
+
+=item * Changed: improvements in size parsing for CD_CGM, CD_DNG,
+CD_DXF and CD_SVG at B<cdCreateCanvas>.
+
+=item * Fixed: some CD_CGM inconsistencies that stopped new versions of
+Corel Draw to load CD generated CGM files.
+
+=item * Fixed: floating point support in CD_CGM. New "-pF" and "-pD"
+creation parameters.
+
+=item * Fixed: improved B<cdCanvasPlay> resize behavior in all drivers
+that support it.
+
+=item * Fixed: improved Cairo rendering of 1 pixel vertical and
+horizontal lines.
+
+=item * Fixed: polygon fill in CD_IMAGERGB driver.
+
+=item * Fixed: parsing of B<cdCreateCanvas> parameter for the
+CD_NATIVEWINDOW driver in Lua.
+
+=back
+
+=head2 L<Version
 5.5.1|http://sourceforge.net/projects/canvasdraw/files/5.5.1/>
 (24/May/2012)
 

@@ -199,6 +199,14 @@ image zoom and line drawing primitives. Assumes values "1" (active) and
 
 =over
 
+=item * "B<TEXTANTIALIAS>": controls the use of anti-aliasing for text
+primitives. Assumes values "1" (active) and "0" (inactive). Default
+value: "1". (since 5.6)
+
+=back
+
+=over
+
 =item * "B<GRADIENTCOLOR>": necessary for the creation of the gradient
 fill defined by a polygon (see details in the function B<cdBegin>
 above). Defines the color of each vertex and the center (%d %d %d" = r
@@ -274,10 +282,17 @@ color), and another one for the end point (using the background color).
 
 =over
 
-=item * B<"LINECAP": >defines addicional line cap styles. It can have
+=item * B<"LINECAP": >defines additional line cap styles. It can have
 the following values: "Triangle", "NoAnchor", "SquareAnchor",
 "RoundAnchor", "DiamondAnchor", or "ArrowAnchor". It can not be
 retrieved (set only).
+
+=back
+
+=over
+
+=item * B<"UTF8MODE": >enables the usage of the UTF-8 encoding for
+strings. It can have the following values: "1" or "0". Default is "0".
 
 =back
 

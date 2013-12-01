@@ -15,23 +15,32 @@ L<GnuWin32|http://gnuwin32.sourceforge.net/> distributions have GNU
 B<make> binaries ready for download. Some utilities are also necessary,
 specially to build the dependencies file: B<mkdir>, B<rm >(both in
 CoreUtils)B< [>, B<which, sed> and B<g++]>. If you don't need the
-dependencies or some other options just ignore them.
+dependencies or some other options just ignore them. Also some features
+will work best if B<bash> is installed.
 
 When installing B<Cygwin> unmark all pre-selected items. This is easier
 to do in "Partial" mode view. Then select only "B<make>", it will
 automatically select other packages that "B<make>" depends on. And
 select the B<mkdir>, B<rm>, B<which, sed> and B<g++> packages. Change
-PATH in Control Panel/System/Advanced/Environment Variables, and add
-"c:\cygwin\bin;".
+PATH in "Control Panel/System/Advanced/Environment Variables" and add
+"L<c:\cygwin\bin;|file:///c:/cygwin/bin;>".
 
-B<MingW> does not have the additional utilities, so you will need to
-download them from GnuWin32, for instance.
+When installing B<MingW> mark C Compiler, C++ Compiler, MSYS Basic
+System, and MinGW Developer Toolkit. Change PATH in "Control
+Panel/System/Advanced/Environment Variables" and add
+"L<C:\mingw4\msys\1.0\bin;C:\mingw4\bin;|file:///C:/mingw4/msys/1.0/bin;C:/mingw4/bin;>".
 
 For B<GnuWin32> it is faster to manually download and install the
-selected tools packages. But GnuWin32 does not includes a compiler.
+selected tools packages. But it does not include a compiler and does
+not include bash.
 
-Then install the compiler of your choice, among the following supported
-compilers:
+L<Win-Bash|http://win-bash.sourceforge.net/> contains a
+"L<Shell-Complete|http://sourceforge.net/projects/win-bash/files/shell-complete/latest/shell.w32-ix86.zip/download>"
+distribution and can also be used. It contains all the tools and bash.
+It does not include a compiler.
+
+Finally install the compiler of your choice, among the following
+supported compilers:
 
 =over
 
@@ -64,6 +73,12 @@ environment variables to configure their location. For example:
  OWC1=d:/lng/owc1
  BC6=d:/lng/bc6
 
+Noticed that the path used can not have spaces because of the GNU make
+internal processing. So you should install or copy the compiler files
+to a path with no spaces, or you can use the short path name instead as
+in the example above. To obtain the short path name you can use the
+"shortpath.exe" Tecmake utility or use the CMD command dir /X.
+
 If you installed the Visual Studio compiler set, then to use it in the
 command line run the "Visual Studio Command Prompt" item in the
 "Microsoft Visual Studio 2010\Visual Studio Tools" start menu.
@@ -85,6 +100,44 @@ libraries, and if building 32 or 64 bits binaries. For example:
  TEC_UNAME=cygw17    (Cygwin Posix gcc 4, both static and dynamic libraries, 32bits)
  TEC_UNAME=owc1      (Open Watcom C++ 1, static library, 32bits)
  TEC_UNAME=bc6       (Embarcadero C++ 6, static library, 32bits) 
+
+Here is an example for MingW:
+
+ Download MingW installation tool:
+   http://sourceforge.net/projects/mingw/files/Installer/mingw-get-inst/
+ Install MingW:
+   Select C and C++ Compiles, MSYS Basic System, and MinGW Developer Toolkit.
+ Configure Environment (Minimum):
+   set PATH=C:\mingw4\msys\1.0\bin;C:\mingw4\bin;%PATH%
+   set MINGW4=c:/mingw4
+   set TEC_UNAME=mingw4
+ Start Building:
+   make
+
+Here is an example for Visual C++:
+
+ Download Visual C++ Express edition:
+   http://www.microsoft.com/visualstudio/eng/products/visual-studio-express-for-windows-desktop
+ Install Visual C++ and the Windows SDK (also called Platform SDK)
+ Download Cygwin:
+   http://www.cygwin.com/
+ Install Cygwin:
+   Unselect all option, and select only "make"  
+ Configure Environment (Minimum):
+   set PATH=C:\cygwin\bin;%PATH%
+   set VC9=C:/PROGRA~1/MICROS~1.0/VC
+   set VC9SDK=C:/PROGRA~1/MICROS~2/Windows/v6.0A 
+ Run the "CMD Shell" or "Build Environment" item in the Start Menu. 
+   or manually run the vcvars32.bat or vcvars64.bat script
+   just once, before building any of the targets.
+
+If not using the vcvars*.bat configuration scripts, then you must also
+set PATH:
+
+ REM The first two are just auxiliary variables.
+ set VS9=C:\Program Files (x86)\Microsoft Visual Studio 9.0
+ set VS9SDK=C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin
+ set PATH=%VS9%\Common7\IDE;%VS9%\VC\BIN;%VS9%\Common7\Tools;%VS9%\Common7\Tools\bin;%VS9%\VC\VCPackages;%VS9SDK%\bin;%PATH%
 
 =head2 Source Download
 

@@ -1,8 +1,8 @@
 =head1 CD_CGM - I<Computer Graphics Metafile Driver >(cdcgm.h)
 
-This driver allows generating a Computer Graphics Metafile, which is an
-ANSI standard for the persistent storage of graphics primitives. The
-file usually has an extension .CGM.
+This driver allows generating a Computer Graphics Metafile version 1,
+which is an ANSI standard for the persistent storage of graphics
+primitives. The file usually has an extension .CGM.
 
 =head2 Use
 
@@ -12,19 +12,19 @@ which B<opens> the file and writes its header. Then, other functions in
 the CD library can be called as usual. The Data parameter string has
 the following format:
 
- "filename [widthxheight] [resolution] [-t] -p[precision]" or in C style "%s %gx%g %g %s"
+ "filename [widthxheight] [resolution] [-t] [-pprec] -d[description]" or in C style "%s %gx%g %g %s"
 
 Only the parameter filename is required. The filename must be inside
 double quotes (") if it has spaces. Width and height are provided in
 millimeters (note the lowercase "x" between them), and their default
-value in pixels is INT_MAX for both dimensions. When the canvas' size
-is not specified, the VDC Extension saved to the file is the image's
-bounding rectangle. The resolution is the number of pixels per
-millimeter; its default value is "3.78 pixels/mm" (96 DPI). Width,
-height and resolution are real values. Width, height and resolution are
-used only by B<cdGetCanvasSize >and in pixel-millimeter conversion.
-Parameter -t modifies the codification. Parameter -p specifies the
-precision of integers, which can be 16 (default) or 32.
+value in pixels is INT_MAX for both dimensions. The resolution is the
+number of pixels per millimeter; its default value is "3.78 pixels/mm"
+(96 DPI). Width, height and resolution are real values. Width, height
+and resolution are used only by B<cdGetCanvasSize >and in
+pixel-millimeter conversion. Parameter -t modifies the codification.
+Parameter -p specifies the precision which can be "16" bits interger
+(default), "32" bits (integer), "F" (float) or "D" (double). Parameter
+-d specifies a description, must be the last parameter (since 5.6).
 
 Any amount of such canvases may exist simultaneously. It is important
 to note that a call to function L<B<
@@ -36,8 +36,8 @@ not sure what to do, use binary coding, which is the default. Should
 you prefer text coding, add a "-t" string to the Data parameter.
 
 B<Precision of Coordinates -> The primitives can use coordinates in
-real numbers. However, for compatibility reasons, we use coordinates in
-integers.
+real numbers. But to be effective the parameters "-pF" or "-pD" must be
+used when creating the canvas (since 5.6).
 
 =head2 Behavior of Functions
 
@@ -47,9 +47,8 @@ integers.
 
 =item * L<B<Clear>|../func/control.html#cdClear>: does nothing.
 
-=item * L<B<Flush>|../func/control.html#cdFlush>: creates a new image,
-preserving the previous one. The CGM format supports multiple images in
-a file.
+=item * L<B<Flush>|../func/control.html#cdFlush>: creates a new
+picture. The CGM format supports multiple picture in the file.
 
 =item * L<B<Play>|../func/other.html#cdPlay>: works with files created
 with text or binary coding. There are several callbacks for this
@@ -57,32 +56,38 @@ driver. If one of the callbacks returns a value different from zero,
 cdPlay's processing is interrupted. The driver implements the callback
 C<B<CD_SIZECB >>and other callbacks associated to CGM:
 
-C<B<CD_COUNTERCB> - int(*cdcgmcountercb)(cdContext *driver, double
-percent) - >Executed for each header of CGM commands; returns the
-percentage (0-100%) of headers read.
+=over
 
-C<B<CD_SCLMDECB>>C< - int(*cdcgmsclmdecb)(cdContext *driver, short
-scl_mde, short *drw_mode, double *factor)> - Executed for the command
-CGM SCALE MODE. Returns the current CGM scale mode and allows the
-callback to modify the scale mode used by the cdPlay function
-(ABSTRACT=0, METRIC=1). Should you choose the METRIC or ABSTRACT scale
-mode but the original scale mode is METRIC, you must provide the
-conversion factor in mm per pixel.
+=item * C<B<CD_COUNTERCB> - int(*cdcgmcountercb)(cdContext *driver,
+double percent) - >Executed for each header of CGM commands; returns
+the percentage (0-100%) of headers read.
 
-C<B<CD_VDCEXTCB>>C< - int(*cdcgmvdcextcb)(cdContext *driver, short
-type, void *xmn, void *ymn, void *xmx, void *ymx)> - Executed for the
-CGM command CGM VDC EXTENT, returns the VDC SPACE.
+=item * C<B< CD_SCLMDECB>>C< - int(*cdcgmsclmdecb)(cdContext *driver,
+short scl_mde, short *drw_mode, double *factor)> - Executed for the
+command CGM SCALE MODE. Returns the current CGM scale mode and allows
+the callback to modify the scale mode used internally (ABSTRACT=0,
+METRIC=1). You can choose the METRIC or ABSTRACT scale mode, but if the
+original scale mode is METRIC, then you must provide the conversion
+factor in mm per pixel.
 
-C<B<CD_BEGPICTCB>>C< - int(*cdcgmbegpictcb)(cdContext *driver, char
-*pict)> - Executed for the command BEGIN PICTURE, returns the string
-that describes the image.
+=item * C<B< CD_VDCEXTCB>>C< - int(*cdcgmvdcextcb)(cdContext *driver,
+short type, double *first_x, double *first_y, double *second_x, double
+*second_y)> - Executed for the CGM command CGM VDC EXTENT, returns the
+VDC SPACE. Currently type is always 1.
 
-C<B<CD_BEGPICTBCB>>C< - int(*cdcgmbegpictbcb)(cdContext *driver)> -
-Executed for the command BEGIN PICTURE BODY.
+=item * C<B< CD_BEGPICTCB>>C< - int(*cdcgmbegpictcb)(cdContext *driver,
+char *pict)> - Executed for the command BEGIN PICTURE, returns the
+string that describes the image.
 
-C<B<CD_CGMBEGMTFCB>> - C< int (*cdcgmbegmtfcb)(cdContext *driver, int
-*xmin, int *ymin, int *xmax, int *ymax)> - Executed for the command
-BEGIN METAFILE, provides the drawing limits of the image in the file.
+=item * C<B< CD_BEGPICTBCB>>C< - int(*cdcgmbegpictbcb)(cdContext
+*driver)> - Executed for the command BEGIN PICTURE BODY.
+
+=item * C<B< CD_CGMBEGMTFCB>> - C<int (*cdcgmbegmtfcb)(cdContext
+*driver, int *xmin, int *ymin, int *xmax, int *ymax)> - Executed for
+the command BEGIN METAFILE, provides the drawing limits of the image in
+the file. These are the same parameters passed to B<cdCanvasPlay>.
+
+=back
 
 =back
 
@@ -110,9 +115,8 @@ B<C<CD_PATH>> are simulated with lines.
 =item * B<L<Pixel|../func/marks.html#cdPixel>>: does not exist in CGM,
 is simulated using a mark with size 1.
 
-=item * B<L<Chord|../func/filled.html#cdChord>>: does nothing.
-
-=item * Floating point primitives are supported.
+=item * Floating point primitives are supported. But to be effective
+the parameters "-pF" or "-pD" must be used when creating the canvas.
 
 =back
 
@@ -132,9 +136,6 @@ nothing, returns CD_REPLACE.
 =item * L<B< LineJoin>|../func/filled.html#cdLineJoin>: does nothing.
 
 =item * L<B< TextSize>|../func/text.html#cdTextSize>: is simulated.
-
-=item * L< B< TextOrientation>|../func/text.html#cdTextOrientation>:
-does nothing.
 
 =item * L<B<Font>|../func/text.html#cdFont>: see the table bellow for
 the generated font names. No other fonts are supported.

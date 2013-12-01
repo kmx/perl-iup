@@ -133,6 +133,14 @@ value: "1".
 
 =over
 
+=item * "B<TEXTANTIALIAS>": controls the use of anti-aliasing for text
+primitives. Assumes values "1" (active) and "0" (inactive). Default
+value: "1". (since 5.6)
+
+=back
+
+=over
+
 =item * "B<ROTATE>": allows the usage of 1 angle and 1 coordinate (x,
 y), that define a global rotation transformation centered in the
 specified coordinate. Use 1 real and 2 integer values inside a string

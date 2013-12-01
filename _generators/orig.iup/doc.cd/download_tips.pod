@@ -231,7 +231,21 @@ B<Win32_vc10>
 Static library built with Microsoft Visual C++ 10.0 (2010) (static
 RTL/multithread)
 
-Also compatible with Microsoft Visual C++ 2010 Express Edition -
+Also compatible with Microsoft Visual C++ 2010 Express Edition
+
+B<Win32_vc11>
+
+Static library built with Microsoft Visual C++ 11.0 (2012) (static
+RTL/multithread)
+
+Also compatible with Microsoft Visual C++ 2012 Express Edition
+
+B<Win32_vc12>
+
+Static library built with Microsoft Visual C++ 12.0 (2013) (static
+RTL/multithread)
+
+Also compatible with Microsoft Visual C++ 2013 Express Edition -
 
 L<http:E<47>E<47>www.microsoft.comE<47>expressE<47>vcE<47>|http://www.microsoft.com/express/vc/>
 E<sup1>
@@ -251,6 +265,16 @@ B<Win32_dll10>
 DLL and import library built with vc10, creates dependency with
 MSVCR100.DLL
 
+B<Win32_dll11>
+
+DLL and import library built with vc11, creates dependency with
+MSVCR110.DLL
+
+B<Win32_dll12>
+
+DLL and import library built with vc12, creates dependency with
+MSVCR120.DLL
+
 B<Win64_vc8>
 
 Same as B<Win32_vc8> but for 64-bits systems using the x64 standard.
@@ -263,6 +287,14 @@ B<Win64_vc10>
 
 Same as B<Win32_vc10> but for 64-bits systems using the x64 standard.
 
+B<Win64_vc11>
+
+Same as B<Win32_vc11> but for 64-bits systems using the x64 standard.
+
+B<Win64_vc12>
+
+Same as B<Win32_vc12> but for 64-bits systems using the x64 standard.
+
 B<Win64_dll8>
 
 Same as B<Win32_dll8> but for 64-bits systems using the x64 standard.
@@ -274,6 +306,14 @@ Same as B<Win32_dll9> but for 64-bits systems using the x64 standard.
 B<Win64_dll10>
 
 Same as B<Win32_dll10> but for 64-bits systems using the x64 standard.
+
+B<Win64_dll11>
+
+Same as B<Win32_dll11> but for 64-bits systems using the x64 standard.
+
+B<Win64_dll12>
+
+Same as B<Win32_dll12> but for 64-bits systems using the x64 standard.
 
 B<Win32_gcc4>
 

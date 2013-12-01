@@ -11,6 +11,12 @@ were implemented.
 It can be used as the context plus driver of the GDI, GDK and X-Win
 based drivers. But its primary focus is the GDK base driver.
 
+IMPORTANT: when using GTK 3.x the Cairo driver became the main driver
+(not a context plus driver anymore), because there is no support for
+drawing primitives in GDK since GTK 3.0. To build the driver with GTK
+3.x support define USE_GTK3=Yes before calling make in the "iup/src"
+folder. Just the main library must be rebuilt.
+
 The main motivation for the use of Cairo was transparency for all the
 primitives. Beyond that we got other features like anti-aliasing,
 gradient filling, transformations and other back-ends (support to
@@ -160,6 +166,14 @@ Default value: "1".
 
 =over
 
+=item * "B<TEXTANTIALIAS>": controls the use of anti-aliasing for text
+primitives. Assumes values "1" (active) and "0" (inactive). Default
+value: "1". (since 5.6)
+
+=back
+
+=over
+
 =item * "B<CAIRODC>": returns the Cairo drawing context (get only). In
 Lua is returned as a user data.
 
@@ -238,6 +252,13 @@ y), that define a global rotation transformation centered in the
 specified coordinate. Use 1 real and 2 integer values inside a string
 ("%g %d %d" = angle x y). Can not be set if a transformation is already
 set.
+
+=back
+
+=over
+
+=item * B<"UTF8MODE": >enables the usage of the UTF-8 encoding for
+strings. It can have the following values: "1" or "0". Default is "0".
 
 =back
 

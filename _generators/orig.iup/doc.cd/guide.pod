@@ -106,8 +106,8 @@ the folder were the IM and Lua libraries are installed.
  cd -> FreeType (included as separate library)
     cdwin* -> gdi32 user32 comdlg32 (system - Windows)
     cdx11* -> X11 (system - UNIX)
-    cdgdk+cdcairo* -> gdk-win32-2.0 pangowin32-1.0(system - Windows)
-           -> gdk-x11-2.0 pangox-1.0 (system - UNIX)
+    cdgdk+cdcairo* -> gdk-win32-2.0/gdk-3 pangowin32-1.0(system - Windows)
+           -> gdk-x11-2.0/gdk-3 pangox-1.0 (system - UNIX)
            -> cairo gdk_pixbuf-2.0 pango-1.0 gobject-2.0 gmodule-2.0 glib-2.0 (system - Windows/UNIX)
  cdgdiplus* -> cd
            -> gdiplus (system - Windows)
@@ -144,6 +144,10 @@ distribution. So if you are going to build from source, then use the
 B<LuaBinaries> source package also, not the B<Lua.org> original source
 package. If you like to use another location for the Lua files define
 LUA_SUFFIX, LUA_INC, LUA_LIB and LUA_BIN before using Tecmake.
+
+To build the driver with GTK 3.x support define USE_GTK3=Yes before
+calling make in the "cd/src" folder. Just the main library must be
+rebuilt.
 
 In Ubuntu you will need to install the following packages:
 

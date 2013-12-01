@@ -2,8 +2,8 @@
 
 This driver allows generating an AutoCAD image exchange file. The file
 name usually has an extension .DXF. This driver supports only AutoCAD
-version 10.0 or later. The format's copyrights are property of
-L<Autodesk|http://www.autodesk.com>.
+Release 10 (AC1006) or AutoCAD 2000 (AC1015). The format's copyrights
+are property of L<Autodesk|http://www.autodesk.com>.
 
 =head2 Use
 
@@ -14,7 +14,7 @@ opens the file and writes its header. Then, other functions in the CD
 library can be called as usual. The Data parameter string has the
 following format:
 
- "filename [widthxheight] [resolution]"    or in C "%s %gx%g %g"
+ "filename [widthxheight] [resolution] [-ac2000] [-limits xmin ymin xmax ymax]"    or in C "%s %gx%g %g %s %s %g %g %g %g"
 
 Only the parameter filename is required. The filename must be inside
 double quotes (") if it has spaces. Width and height are provided in
@@ -37,6 +37,14 @@ fixed colors).
 
 B<Precision of Coordinates -> The primitives use coordinates in real
 numbers.
+
+B<Fill Area> - Only with AutoCAD 2000 version. This adds support for
+filled primitives (solid and hatch style only). To use that support
+specify the "-ac2000" parameter. (since 5.7)
+
+B<Limits> - the default limits are 0, 0, width, height, but a custom
+limits can be specified using the "-limits" parameter followed by the
+limits coordinates. (since 5.7)
 
 B<Layers -> The format can work with several layers. It is necessary to
 draw the primitives of layer '0' first, then layer '1' and so on. Use
@@ -77,18 +85,16 @@ nothing. Axis orientation is the same as in the CD library.
 
 =over
 
-=item * L<B<Sector>|../func/filled.html#cdSector>: draws a "hollow"
-sector, that is, only its borders.
-
 =item * L<B<Begin>|../func/lines.html#cdBegin>: if parameter
 B<C<CD_CLIP>> is specified, does nothing. B<C< CD_BEZIER>> and
 B<C<CD_PATH>> are simulated with lines.
 
-=item * B<L<Chord|../func/filled.html#cdChord>>: does nothing.
-
 =item * Floating point primitives are supported.
 
-=item * filled primitives are NOT supported.
+=item * All primitives are saved as polylines.
+
+=item * Filled primitives are supported only if parameter "-ac2000" is
+used.
 
 =back
 
@@ -102,7 +108,8 @@ nothing, returns CD_TRANSPARENT.
 =item * L< B< WriteMode>|../func/attributes.html#cdWriteMode>: does
 nothing, returns CD_REPLACE.
 
-=item * L<B<Hatch>|../func/filled.html#cdHatch>: does nothing.
+=item * L<B<Hatch>|../func/filled.html#cdHatch>: supported only if
+parameter "-ac2000" is used
 
 =item * L<B< FillMode>|../func/filled.html#cdFillMode>: does nothing.
 

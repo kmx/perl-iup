@@ -21,7 +21,7 @@ entire screen use a NULL data.
 B<X-Windows>: is a string in the format "display window" or, in C,
 "C<%p %lu>" (uses the default screen).
 
-B<GDK and Cairo>: is a GdkDrawable* handle.
+B<GDK and Cairo>: is a GdkDrawable* or GdkWindow* handle.
 
 The given parameters must exists until B<cdKillCanvas> is called. In
 Windows, the HDC is released only if created inside B<cdCreateCanvas>

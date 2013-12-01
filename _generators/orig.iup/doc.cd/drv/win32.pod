@@ -141,7 +141,7 @@ server images if IMAGEFORMAT=32. The attribute format is a pointer to
 the transparency values in a sequence of chars in the same format of
 alpha for client images. The attribute is used only in the B<
 cdCreateImage> and for every B< cdPutImageRect>, the pointer must
-exists while the image exists. The alpha values are transfered to the
+exists while the image exists. The alpha values are transferred to the
 image only in B<cdPutImageRect>, so they can be freely changed any
 time. It will use the B<AlphaBlend> GDI function. The data is not
 duplicated, only the pointer is stored. The size of the data must be
@@ -163,7 +163,7 @@ the B<MaskBlt> GDI function.
 
 =over
 
-=item * "B<IMAGEPOINTS>": define 3 coordinates of a paralelogram that
+=item * "B<IMAGEPOINTS>": define 3 coordinates of a parallelogram that
 will be used to warp server images. Use 6 integer values inside a
 string ("%d %d %d %d %d %d" = x1 y1 x2 y2 x3 y3). Use NULL to remove
 the attribute. The respective specified points are the upper-left
@@ -180,6 +180,13 @@ y), that define a global rotation transformation centered in the
 specified coordinate. Use 1 real and 2 integer values inside a string
 ("%g %d %d" = angle x y). Can not be set if a transformation is already
 set.
+
+=back
+
+=over
+
+=item * B<"UTF8MODE": >enables the usage of the UTF-8 encoding for
+strings. It can have the following values: "1" or "0". Default is "0".
 
 =back
 

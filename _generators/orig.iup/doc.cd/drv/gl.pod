@@ -134,6 +134,14 @@ shapes. Assumes values "1" (active) and "0" (inactive). Default value:
 
 =over
 
+=item * "B<TEXTANTIALIAS>": controls the use of anti-aliasing for text
+primitives. Assumes values "1" (active) and "0" (inactive). Default
+value: "1". (since 5.6)
+
+=back
+
+=over
+
 =item * B<"GLVERSION": >returns a string with the OpenGL version or
 release number. It is empty if the OpenGL is not available.
 
@@ -154,6 +162,13 @@ specified coordinate. Use 1 real and 2 integer values inside a string
 is resized. The format is the same of the data parameter in
 cdCreateCanvas, I<"widthB<x>height [resolution]"> or in C "I<B<C<%dx%d
 %g".>>>
+
+=back
+
+=over
+
+=item * B<"UTF8MODE": >enables the usage of the UTF-8 encoding for
+strings. It can have the following values: "1" or "0". Default is "0".
 
 =back
 
