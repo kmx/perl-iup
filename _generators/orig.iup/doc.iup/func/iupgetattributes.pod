@@ -8,8 +8,8 @@ The internal attributes are not returned (attributes prefixed with
 "_IUP").
 
 Before calling this function the application must ensure that there is
-no pointer attributes set for that element, although some known
-pointers are handled.
+no pointer attributes set for that element, although all known pointers
+attributes are handled.
 
 This function should be avoided. Use B<IupGetAllAttributes> instead.
 
@@ -28,7 +28,6 @@ NAME="VALUE", ...".
 L<IupGetAttribute|iupgetattribute.html>,
 L<IupGetAllAttributes|iupgetallattributes.html>,
 L<IupSetAttribute|iupsetattribute.html>,
-L<IupSetAttributes|iupsetattributes.html>,
-L<IupStoreAttribute|iupstoreattribute.html>
+L<IupSetAttributes|iupsetattributes.html>
 
 =cut

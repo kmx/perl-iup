@@ -2,46 +2,60 @@
 
 =head2 Roadmap for the Next Versions
 
+=head2 For Next Version (3.10 - January 2014)
+
 =over
 
-=item * IupMatrix improvements
+=item * Processing feedback in the taskbar on Window 7
 
-=item * New controls: ScrollBox, GridBox
+=item * DND simple support for B<IupList> and B<IupTree> to allow DND
+from list to list, and tree to tree.
 
-=item * UTF-8 in all drivers and in text callbacks
+=item * Improvements in B<IupWebBrowser>
 
-=item * New dialogs: Scripter
+=item * Close button for a tab in B<IupTabs>
 
-=item * RPM, Debian and LuaRocks packages
+=item * A detachable box
+
+=item * Support for image and text simultaneously on B<IupLabel>
 
 =back
 
-[Suggestions?]
+=head2 Other Priorities
+
+=over
+
+=item * OpenGL sub-canvas controls
+
+=item * Consolidate a plot control
+
+=item * Interactive Dialog Editor / Tools to improve productivity
+
+=item * Tutorial section and code snippets collection
+
+=back
 
 =head2 General
 
 =over
 
-=item * B<Priority:> better focus control when changing the current tab
-in B<IupTabs>.
+=item * B<Priority:> remove DEPRECATED functions and headers in IUP 4.0
 
-=item * B<Priority:> RPM, Debian and LuaRocks distribution packages.
-
-=item * B<Priority:> Unicode Support (UTF-8) in Windows and Motif.
+=item * B<Priority:> Interactive Dialog Editor
 
 =item * B<Priority:> A tutorial section in the documentation. One big
-Controls Demo just like GTK, wxWidgets and Qt have.
+Controls Demo just like GTK, wxWidgets and Qt have. Code snippets
+collection.
 
-=item * B<Priority:> Customization of B<IupGetParam> to add other
-applications controlled elements.
+=item * B<Priority:> support for image and text at the same time in
+B<IupLabel>.
 
-=item * B<Priority:> detection of the minimum size of a child inside
-B<IupSplit>.
+=item * B<Important:> RPM, Debian and LuaRocks distribution packages.
 
-=item * B<Priority:> IupGLCanvas in MACOS X using native OpenGL
+=item * B<Important: IupGLCanvas> in MACOS X using native OpenGL
 support.
 
-=item * A MacOS X native driver using Carbon or Cocoa.
+=item * B<Important: > A MacOS X native driver using Carbon or Cocoa.
 
 =item * The actual model for control data structure in the internal SDK
 is restricted for derived classes.
@@ -61,6 +75,9 @@ cascading B< IupPopup> for menus.
 =head2 Windows
 
 =over
+
+=item * Known Issue: when in Windows 8 the B< IupFontDlg> dialog does
+not supports the TITLE attribute nor can be positioned.
 
 =item * Known Issue: when an B<IupVal> is inside an B<IupTabs>, the
 tabs disappear when the mouse moves over it after being used in the
@@ -96,6 +113,10 @@ now distributed with debug information. (since 3.0)
 
 =over
 
+=item * Known Issue: can not set focus to a child inside TABCHANGE_CB
+or TABCHANGEPOS_CB in B<IupTabs>, because internally GTK will always
+set the focus to the first child.
+
 =item * Known Issue: in Ubuntu 11.10 the canvas scrollbar is not
 notifying IUP that the user dragged the control. To solve the problem
 remove the overlay-scrollbar, this is the package that makes the
@@ -112,17 +133,22 @@ the list has items with the same string, the ACTION callback will
 return the index of the item with the first instance of the string
 only. This seems to be a bug or limitation in Motif.
 
+=item * Known Issue: an element when inside an B<IupScrollBox> is not
+being displayed until the box is scrolled if its size alone is greater
+than the scrollbox visible size.
+
+=item * Known Issue: B<IupMatrix> crash the application during its
+creation on OpenMotif 2.3.3. inside the creation of the internal
+B<IupList>.
+
 =back
 
 =head2 IupMatrix
 
 =over
 
-=item * B<Priority: >image, check mark and gauge for cells.
-
-=item * Mark using the keyboard.
-
-=item * Drag&drop of columns position.
+=item * Drag&drop of columns, i.e. interactive change of column
+position.
 
 =back
 
@@ -182,49 +208,52 @@ major ticks.
 
 =back
 
-=head2 New Controls
+=head2 IupMglPlot
 
 =over
 
-=item * B<Priority: Scripter - >Project Manager/Dialog
-Editor/Integrated Debugger for IupLua
+=item * Upgrade to the MathGL version 2.
 
-=item * B<Priority: ScrollBox> - a box that can scroll the elements
-inside
+=back
 
-=item * B<Priority: GridBox >- container to distribute elements in a
-grid.
+=head2 Possible New Controls
 
-=item * -----------------------------
-
-=item * B<Table> - similar to IupMatrix but using native controls
-
-=item * B<UrlButton> - Button that activates a URL (looks like a flat
-label, but gives visual feedback when mouse is hover)
-
-=item * B<FrameEx> - Expandable/Closeable Frames
-
-=item * -----------------------------
+=over
 
 =item * B<DropDownButton> - Mix between a drop down list and a button
+
+=item * B<Table> - similar to IupMatrix but using native controls
+(Windows,GTK,Motif)
+
+=item * B<Scripter - >Project Manager/Dialog Editor/Integrated Debugger
+for IupLua
 
 =item * B<CanvasCD> - an IupCanvas with a CD canvas associated.
 
 =item * B<Scrollbar> - just the scrollbar as a control.
-
-=item * B<Toobar -> button/toggle/list, detachable
-
-=item * B<PropertyGrid> - a 2 column matrix with expandable/closeable
-items
+(Windows,GTK,Motif)
 
 =item * -----------------------------
+
+=item * Toobar - button/toggle/list, detachable
+
+=item * PropertyGrid - a 2 column matrix with expandable/closeable
+items
 
 =item * Lookup Table, maps a set of values in another set using a
 curve.
 
-=item * Statusbar
+=item * Progress Indicator - a simpler version of the IupProgressBar
 
-=item * Calendar
+=item * Horizontal List
+
+=item * Statusbar (Windows,GTK)
+
+=item * Spinner (GTK)
+
+=item * Calendar (Windows)
+
+=item * IP Address (Windows)
 
 =back
 

@@ -9,7 +9,7 @@ Returns the a child of the control given its position.
 
 B<ih>: identifier of the interface element.
 
-B<pos>: position of the desire child.
+B<pos>: position of the desire child starting at 0.
 
 Returns: the child or NULL if there is none.
 
@@ -20,7 +20,7 @@ order in which they were assigned.
 
 =head2 See Also
 
-L<IupGetChildPos|iupgetnextchildpos.html>,
+L<IupGetChildPos|iupgetchildpos.html>,
 L<IupGetNextChild|iupgetnextchild.html>,
 L<IupGetBrother|iupgetbrother.html>, L<IupGetParent|iupgetparent.html>
 

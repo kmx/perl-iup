@@ -2,9 +2,9 @@
 
 Creates an element that allows access to the clipboard. Each clipboard
 should be destroyed using L<IupDestroy|../func/iupdestroy.html>, but
-you can use only one for entire application because it does not store
-any data inside. Or you can simply create and destroy everytime you
-need to copy or paste.
+you can use only one for the entire application because it does not
+store any data inside. Or you can simply create and destroy every time
+you need to copy or paste.
 
 =head2 Creation
 
@@ -17,8 +17,29 @@ occurs.
 
 =head2 Attributes
 
+B<ADDFORMAT> (write-only): register a custom format for clipboard data
+given its name. The registration remains valid even after the element
+is destroyed. (since 3.7)
+
 B<EMFAVAILABLE> (read-only) [Windows Only]: informs if there is a
 Windows Enhanced Metafile available at the clipboard. (Since 3.2)
+
+B<FORMAT>: set the current format to be used by the FORMATAVAILABLE and
+FORMATDATA attributes. (since 3.7)
+
+B<FORMATAVAILABLE> (read-only): informs if there is a data in the
+FORMAT available at the clipboard. If FORMAT is not set returns NULL.
+(since 3.7)
+
+B<FORMATDATA>: sets or retrieves the data from the clipboard in the
+format defined by the FORMAT attribute. If FORMAT is not set returns
+NULL. If set to NULL clears the clipboard data. When set the
+FORMATDATASIZE attribute must be set before with the data size. When
+retrieved FORMATDATASIZE will be set and available after data is
+retrieved. (since 3.7)
+
+B<FORMATDATASIZE>: size of the data on the clipboard. Used by the
+FORMATDATA attribute processing. (since 3.7)
 
 B<IMAGE> (write-only): name of an image to copy (set) or paste (get),
 to or from the clipboard. If set to NULL clears the clipboard data.
@@ -51,13 +72,23 @@ the clipboard.
 B<WMFAVAILABLE> (read-only) [Windows Only]: informs if there is a
 Windows Metafile available at the clipboard. (Since 3.2)
 
+=head2 Notes
+
+In Windows when "TEXT" format data is copied to the clipboard, the
+system will automatically store other text formats too if those formats
+are not already stored. This means that when copying "TEXT" Windows
+will also store "Unicode Text" and "OEM Text", but only if those format
+were not copied before. So to make sure the system will copy all the
+other text formats clear the clipboard before copying you own data (you
+can simply set TEXT=NULL before setting the actual value).
+
 =head2 Examples
 
  Ihandle* clipboard = IupClipboard();
- IupStoreAttribute(clipboard, "TEXT", IupGetAttribute(text, "VALUE"));
+ IupSetAttribute(clipboard, "TEXT", IupGetAttribute(text, "VALUE"));
  IupDestroy(clipboard);
  Ihandle* clipboard = IupClipboard();
- IupStoreAttribute(text, "VALUE", IupGetAttribute(clipboard, "TEXT"));
+ IupSetAttribute(text, "VALUE", IupGetAttribute(clipboard, "TEXT"));
  IupDestroy(clipboard);
 
 =cut

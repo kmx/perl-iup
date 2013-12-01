@@ -1,9 +1,11 @@
 =head1 IupNormalizer (since 3.0)
 
-Normalizes all controls from a list so their natural size to be the
+It is a void container that does not affects the dialog layout. It act
+by normalizing all child controls so their natural size to be the
 biggest natural size among them. All natural width will be set to the
 biggest width, and all natural height will be set to the biggest height
-according to is value.
+according to is value. The child controls must be inside a valid
+container in the dialog.
 
 =head2 Creation
 
@@ -44,7 +46,7 @@ the element reference directly.
 =head2 Notes
 
 It is NOT necessary to add the normalizer to a dialog hierarchy. Every
-time the NORMALIZE attribute is set a normalization occurs. If the
+time the NORMALIZE attribute is set, a normalization occurs. If the
 normalizer is added to a dialog hierarchy, then whenever the B<Natural>
 size is calculated a normalization occurs, so add it to the hierarchy
 before the elements you want to normalize or its normalization will be
@@ -91,6 +93,7 @@ The following case use the internal normalizer in an Hbox:
 
 =head2 See Also
 
-L<IupHbox|../elem/iuphbox.html>, L< IupVbox|../elem/iupvbox.html>
+L<IupHbox|../elem/iuphbox.html>, L< IupVbox|../elem/iupvbox.html>,
+L<IupGridBox|../elem/iupgridbox.html>
 
 =cut

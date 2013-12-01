@@ -5,8 +5,8 @@ is at B<SourceForge>:
 
 L<http:E<47>E<47>sourceforge.netE<47>projectsE<47>iupE<47>filesE<47>|http://sourceforge.net/projects/iup/files/>
 
-Use this link for the latest version: L<
-http:E<47>E<47>sourceforge.netE<47>projectsE<47>iupE<47>filesE<47>3.6E<47>|http://sourceforge.net/projects/iup/files/3.6/>
+Use this link for the latest version:
+L<http:E<47>E<47>sourceforge.netE<47>projectsE<47>iupE<47>filesE<47>3.9E<47>|http://sourceforge.net/projects/iup/files/3.9/>
 
 Before downloading any precompiled binaries, you should read before the
 L<Tecgraf Library Download Tips|download_tips.html>.

@@ -97,8 +97,9 @@ B<DEPTH_SIZE>: Indicates the number of bits for representing the I<z>
 coordinate in the z-buffer. Value 0 means the z-buffer is not
 necessary.
 
-B<ERROR> (read-only): If an error is found, returns a string containing
-a description of the error in English.
+B<ERROR> (read-only): If an error is found during B<IupMap> and
+B<IupGLMakeCurrent>, returns a string containing a description of the
+error in English. See notes bellow.
 
 B<LASTERROR> (read-only) [Windows Only]: If an error is found, returns
 a string with the system error description. (Since 3.6)
@@ -109,7 +110,7 @@ system default is usually 8 for each component (True Color support).
 
 B<REFRESHCONTEXT> (write-only) [Windows Only]: action attribute to
 refresh the internal device context when it is not owned by the window
-class. The IupCanvas of the Win32 driver will always create a window
+class. The B<IupCanvas> of the Win32 driver will always create a window
 with an owned DC, but GTK in Windows will not. (since 3.0)
 
 B<STENCIL_SIZE>: Indicates the number of bits in the stencil buffer.
@@ -117,8 +118,11 @@ Value 0 means the stencil buffer is not necessary. Default is 0.
 
 B<STEREO>: Creates a stereo GL canvas (special glasses are required to
 visualize it correctly). Possible values: "YES" or "NO". Default: "NO".
+When this flag is set to Yes but the OpenGL driver does not support it,
+the map will be successful and STEREO will be set to NO and ERROR will
+not be set (since 3.9).
 
-B<SHAREDCONTEXT>: name of another IupGLCanvas that will share its
+B<SHAREDCONTEXT>: name of another B<IupGLCanvas> that will share its
 display lists and textures. That canvas must be mapped before this
 canvas.
 
@@ -130,7 +134,7 @@ Win32.
 The B<IupGLCanvas> element understands all callbacks defined for a
 conventional canvas, see L<IupCanvas|../elem/iupcanvas.html>.
 
-Addicionally:
+Additionally:
 
 L<RESIZE_CB|../call/iup_resize_cb.html>: By default the resize callback
 sets:
@@ -140,7 +144,9 @@ sets:
 =head2 Auxiliary Functions
 
 These are auxiliary functions based on the WGL and XGL extensions.
-Check the respective documentations for more information.
+Check the respective documentations for more information. ERROR
+attribute will be set to "Failed to set new current context." if the
+call failed. It will reset ERROR to NULL if successful.
 
  void IupGLMakeCurrent(Ihandle* ih); [in C]
  iup.GLMakeCurrent(ih: ihandle) [in Lua]
@@ -189,6 +195,13 @@ UNIX (X-Windows).
 
 Not available in SunOS510x86 just because we were not able to compile
 OpenGL code in our installation.
+
+Possible ERROR strings during B<IupMap>:
+
+ "X server has no OpenGL GLX extension." - OpenGL not supported (UNIX Only)
+ "No appropriate visual." - Failed to choose a Visual (UNIX Only) 
+ "No appropriate pixel format." - Failed to choose a Pixel Format (Windows Only)
+ "Could not create a rendering context." - Failed to create the OpenGL context. (Windows and UNIX)
 
 =head2 Examples
 

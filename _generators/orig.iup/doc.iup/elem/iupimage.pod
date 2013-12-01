@@ -195,10 +195,11 @@ i=16 up to i=100 must be defined even if some indices are not used.
 
 You can obtain several images from the L<
 IupImageLib|../iupimglib.html>, a library of pre-defined images. To
-view the images you can use the B<IupView> in the applications included
-in the distribution, available at the L<Download|../download.html>. B<
-IupView> is also capable of converting several image formats into an
-IupImage, and save IUP images as LED, Lua or ICO.
+view the images you can use the L<IupView|../executables.html> in the
+applications included in the distribution, available at the
+L<Download|../download.html>. L<IupView|../executables.html> is also
+capable of converting several image formats into an B<IupImage>, and
+save IUP images as LED, Lua or ICO.
 
 The L<EdPatt|http://www.tecgraf.puc-rio.br/edpatt> and the
 L<IMLAB|http://www.tecgraf.puc-rio.br/~scuri/imlab> applications can

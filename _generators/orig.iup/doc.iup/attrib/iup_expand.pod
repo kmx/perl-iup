@@ -12,6 +12,11 @@ value if not defined at the child itself.
 The expansion is done equally for all expandable elements in the same
 container.
 
+For a container, the actual EXPAND value will be always a combination
+of its own value and the value of its children. In the sense that a
+container can only expand if its children can expand too in the same
+direction.
+
 See the L<Layout Guide|../layout_guide.html> for more details on sizes.
 
 =head2 Value

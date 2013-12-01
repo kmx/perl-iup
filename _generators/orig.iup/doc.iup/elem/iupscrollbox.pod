@@ -1,0 +1,65 @@
+=head1 IupScrollBox (since 3.7)
+
+Creates a native container that allows its child to be scrolled. It
+inherits from L<IupCanvas|../elem/iupcanvas.html>.
+
+=head2 Creation
+
+ Ihandle* IupScrollBox(Ihandle* child); [in C]
+ iup.scrollbox{child: ihandle} -> (elem: ihandle) [in Lua]
+ scrollbox(child) [in LED]
+
+B<child>: Identifier of an interface element which will receive the
+box. It can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+Inherits all attributes and callbacks of the
+L<IupCanvas|../elem/iupcanvas.html>, but redefines a few attributes.
+
+L<BGCOLOR|../attrib/iup_bgcolor.html>: will use the background color of
+the native parent by default.
+
+B<BORDER >(creation only): the default value is "NO".
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): the default
+value is "YES".
+
+L<SCROLLBAR|../attrib/iup_scrollbar.html> (creation only): the default
+value is "YES".
+
+=over
+
+----
+
+=back
+
+L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>: also accepted.
+
+=head2 Notes
+
+The box allows the application to create a virtual space for the dialog
+that is actually larger than the visible area. The current size of the
+box defines the visible area. The natural size of the child (and its
+children) defines the virtual space size. So the B<IupScrollBox> does
+not depend on its child size or expansion, and its natural size is
+always 0x0.
+
+The user can move the box contents by dragging the background. Also the
+mouse wheel scrolls the contents vertically.
+
+The box can be created with no elements and be dynamic filled using
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+=cut

@@ -72,6 +72,10 @@ TITLE
 
 TITLEFONT
 
+TOGGLEVALUE
+
+TOGGLEVISIBLE
+
 USERDATA
 
 =head2 L<Images|iuptree_attrib.html#images>
@@ -94,13 +98,13 @@ B<VALUE>
 
 MARK
 
-MARKED
+MARKEDid
 
-MARKEDMODE
+MARKEDNODES
+
+MARKMODE
 
 MARKSTART
-
-TOGGLEVALUE
 
 =head2 L<Hierarchy|iuptree_attrib.html#tree>
 
@@ -160,7 +164,7 @@ B<TOGGLEVALUE_CB>: Action generated when the toggle's state was
 changed. The callback also receives the new toggle's state.
 
 L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes and
-callbacks are supported, but SHOWDRAGDROP must be set no No.
+callbacks are supported, but SHOWDRAGDROP must be set to NO.
 
 =head2 Notes
 
@@ -274,7 +278,7 @@ only one node can be selected.
 IupTree allows marking several nodes simultaneously using the Shift and
 Control keys. To use multiple marking set MARKMODE=MULTIPLE. In GTK and
 Motif multiple nodes can also be selected using a rubber band if
-SHOW_DRAGDROP=NO.
+SHOWDRAGDROP=NO.
 
 When a user keeps the Control key pressed, the individual marking mode
 is used. This way, the focus node can be modified without changing the
@@ -509,11 +513,12 @@ node (not including the node).
 These functions can be used to set and get attributes from the element:
 
  void  IupSetAttributeId(Ihandle *ih, const char* name, int id, const char* value);
- void  IupStoreAttributeId(Ihandle *ih, const char* name, int id, const char* value);
  char* IupGetAttributeId(Ihandle *ih, const char* name, int id);
  int   IupGetIntId(Ihandle *ih, const char* name, int id);
  float IupGetFloatId(Ihandle *ih, const char* name, int id);
  void  IupSetfAttributeId(Ihandle *ih, const char* name, int id, const char* format, ...);
+ void  IupSetIntId(Ihandle* ih, const char* name, int id, int value);
+ void  IupSetFloatId(Ihandle* ih, const char* name, int id, float value);
 
 They work just like the respective traditional set and get functions.
 But the attribute string is complemented with the id value. For ex:

@@ -1,9 +1,10 @@
 =head1 IupTabs (since 3.0)
 
-Creates a Tabs element. Allows a single dialog to have several screens,
-grouping options. The grouping is done in a single line of tabs
-arranged according to the tab type. Also known as Notebook in native
-systems.
+Creates a native container for composing elements in hidden layers with
+only one layer visible (just like B<L<IupZbox|iupzbox.html>>), but its
+visibility can be interactively controled. The interaction is done in a
+line of tabs with titles and arranged according to the tab type. Also
+known as Notebook in native systems.
 
 =head2 Creation
 
@@ -62,6 +63,10 @@ VERTICAL is supported only in GTK and in Windows. In Windows, it can
 NOT be set, it is dependent on the TABTYPE attribute, if TABTYPE=LEFT
 or TABTYPE=RIGHT then TABORIENTATION=VERTICAL, if TABTYPE=TOP or
 TABTYPE=BOTTOM then TABORIENTATION=HORIZONTAL. (GTK 2.6)
+
+B<TABVISIBLEn >(non inheritable): Allows to hide a tab. n starts at 0.
+When a tab is hidden the tabs indices are not changed. Can be Yes or
+No. Default: Yes. (since 3.8)
 
 B<TABTITLEn >(non inheritable): Contains the text to be shown in the
 respective tab title. n starts at 0. If this value is NULL, it will
@@ -167,28 +172,35 @@ L<IupAppend|../func/iupappend.html>.
 The ENTERWINDOW_CB and LEAVEWINDOW_CB callbacks are called only when
 the mouse enter or leaves the tabs buttons area.
 
-The Tabs children, differently from a B<IupZbox>, automatically
-receives a name if does not already have one when it is appended to the
-tabs in the native system. Also B<IupTabs> does NOT depends on the
-VISIBLE attribute.
+The Tabs children, differently from a B<L<IupZbox|iupzbox.html>>,
+automatically receives a name if does not already have one when it is
+appended to the tabs in the native system. Also B<IupTabs> does NOT
+depends on the VISIBLE attribute.
 
 In GTK, when the tabs buttons are scrolled, the active tab is also
 changed.
 
 When you change the active tab the focus is usually not changed. If you
 want to control the focus behavior call B<IupSetFocus> in the
-TABCHANGE_CB callback.
+TABCHANGE_CB callback. Unfortunately this does not works in GTK and in
+Motif, because in both systems the focus will be set by the system
+after the callback is called.
+
+Notice that there is no attribute to disable a single tab. This is a
+design decision of all native toolkits, not a IUP decision. It is so
+because a disabled tab is a confusing interface situation.
 
 =head2 Utility Functions
 
 These functions can be used to set and get attributes from the element:
 
  void  IupSetAttributeId(Ihandle *ih, const char* name, int id, const char* value);
- void  IupStoreAttributeId(Ihandle *ih, const char* name, int id, const char* value);
  char* IupGetAttributeId(Ihandle *ih, const char* name, int id);
  int   IupGetIntId(Ihandle *ih, const char* name, int id);
  float IupGetFloatId(Ihandle *ih, const char* name, int id);
  void  IupSetfAttributeId(Ihandle *ih, const char* name, int id, const char* format, ...);
+ void  IupSetIntId(Ihandle* ih, const char* name, int id, int value);
+ void  IupSetFloatId(Ihandle* ih, const char* name, int id, float value);
 
 They work just like the respective traditional set and get functions.
 But the attribute string is complemented with the id value. For ex:

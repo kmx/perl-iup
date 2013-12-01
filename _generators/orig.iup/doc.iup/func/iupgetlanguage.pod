@@ -1,6 +1,7 @@
 =head1 IupGetLanguage
 
-Returns the global attribute LANGUAGE.
+Returns the language used by some pre-defined dialogs. Returns the same
+value as the LANGUAGE global attribute.
 
 =head2 Parameters/Return
 

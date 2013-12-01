@@ -5,58 +5,93 @@ Guide|../attrib_guide.html> section.
 
 =head2 Parameters/Return
 
- void IupSetAttribute(Ihandle *ih, const char *name, const char *value); [in C]iup.SetAttribute(ih: ihandle, name: string, value: string) [in Lua] 
- void IupSetAttributeId(Ihandle *ih, const char *name, int id, const char *value); [in C]iup.SetAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua] 
+ void IupSetAttribute(Ihandle *ih, const char *name, const char *value); [in C]
+ void IupSetStrAttribute(Ihandle *ih, const char *name, const char *value); [in C]iup.SetAttribute(ih: ihandle, name: string, value: string) [in Lua] 
+ 
+ void IupSetAttributeId(Ihandle *ih, const char *name, int id, const char *value); [in C]
+ void IupSetStrAttributeId(Ihandle *ih, const char *name, int id, const char *value); [in C]iup.SetAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua] 
+ 
+ void IupSetAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* value); [in C]
+ void IupSetStrAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* value); [in C]
+ iup.SetAttributeId2(ih: ihandle, name: string, lin, col: number, value: string) [in Lua]
 
 B<ih>: Identifier of the interface element. If NULL will set in the
 global environment.
 
 B<name>: name of the attribute.
 
-B<id>: used when the attribute has an additional id.
+B<id, lin, col>: used when the attribute has additional ids.
 
 B<value>: value of the attribute. If NULL (nil in Lua), the default
 value will be used.
+
+=head2 Utility Functions
+
+These functions can also be used to set attributes from the element:
+
+ void IupSetStrf  (Ihandle* ih, const char* name, const char* format, ...);
+ void IupSetInt   (Ihandle* ih, const char* name, int value);
+ void IupSetIntInt(Ihandle *ih, const char* name, int value1, char sep, int value2);
+ void IupSetFloat (Ihandle* ih, const char* name, float value);
+ void IupSetRGB   (Ihandle *ih, const char* name, unsigned char r, unsigned char g, unsigned char b);
+ 
+ void IupSetStrfId (Ihandle *ih, const char* name, int id, const char* format, ...);
+ void IupSetIntId  (Ihandle* ih, const char* name, int id, int value);
+ void IupSetFloatId(Ihandle* ih, const char* name, int id, float value);
+ void IupSetRGBId  (Ihandle *ih, const char* name, int id, unsigned char r, unsigned char g, unsigned char b);
+ 
+ void IupSetStrfId2 (Ihandle* ih, const char* name, int lin, int col, const char* format, ...);
+ void IupSetIntId2  (Ihandle* ih, const char* name, int lin, int col, int value);
+ void IupSetFloatId2(Ihandle* ih, const char* name, int lin, int col, float value);
+ void IupSetRGBId2  (Ihandle *ih, const char* name, int lin, int col, unsigned char r, unsigned char g, unsigned char b);
+ 
+ [There is no equivalent in Lua]
+
+B<IupSetStrf>* functions (old B<IupSetfAttribute>) uses the same format
+specification as the B<sprintf> function in C. This function is very
+useful when several values must be combined into one string. When
+passing float values, use the format "%.9f" to maximize precision.
+
+All the utility functions use the B<IupSetStrAttribute>* functions
+internally.
 
 =head2 Notes
 
 See the L<Attributes Guide|../attrib_guide.html> for more details.
 
-=head2 User Data
+B<IupSetAttribute> can store only constant strings (like "Title", "30",
+etc) or application pointers. The given value is not duplicated as a
+string, only a reference is stored. Therefore, you can store
+application custom attributes, such as a context structure to be used
+in a callback.
 
-The value stored in the attribute is not duplicated. Therefore, you can
-store your private attributes, such as a structure with data to be used
-in a callback. When you want IUP to store an attribute by duplicating a
-string passed as a value, use function
-L<IupStoreAttribute|iupstoreattribute.html>.
-
- struct myData* mydata = malloc(sizeof(struct myData));IupSetAttribute(dlg, "MYDATA", (char*)mydata)     // correct  (unknown attributes will be stored as pointers)
+B<IupSetStrAttribute> (old B<IupStoreAttribute>) can only store
+strings. The given string value will be duplicated internally.
 
 =head2 Examples
 
 A very common mistake when using B<IupSetAttribute> is to use local
 string arrays to set attributes. For ex:
 
- {  char value[30];  sprintf(value, "%d", i);  IupSetAttribute(dlg, "BADEXAMPLE", value)   // WRONG  (value pointer will be internally stored, }                                             //         but its memory will be released at the end of this scope)                                              // Use IupStoreAttribute in this case
- {  char *value = malloc(30);  sprintf(value, "%d", i);  IupSetAttribute(dlg, "EXAMPLE", value)     // correct  (but to avoid memory leaks you should free the pointer}                                                         after the dialog has been destroyed)
- IupSetAttribute(dlg, "VISIBLE", "YES")       // correct (static values still exists after this scope)
- char attrib[30];sprintf(attrib, "ITEM%d", i);IupSetAttribute(dlg, attrib, "Test")         // correct (attribute names are always internally duplicated)
+  char value[30];sprintf(value, "CODE - %d", i);IupSetAttribute(dlg, "BADEXAMPLE", value)  // WRONG  (value pointer will be internally stored,                                            //         but its memory will be released at the end of this scope)
+                                            // a common bad practice is to declare value as static                                           // Use IupSetStrAttribute in this case
+  char *value = malloc(30);sprintf(value, "%d", i);IupSetAttribute(dlg, "EXAMPLE", value)     // correct  (but to avoid memory leaks you should free the pointer                                                        after the dialog has been destroyed)
+ IupSetAttribute(dlg, "VISIBLE", "YES")     // correct (constant values still exists after this scope)
+ IupSetAttribute(text, "VALUE", "Hello!");
+ IupSetAttribute(indicator, "VALUE", "ON");
+ char attrib[30];sprintf(attrib, "MY ITEM (%d)", i);IupSetAttribute(dlg, attrib, "Test")       // correct (attribute names are always internally duplicated)
+  struct{  int x;  int y;} myData;IupSetAttribute(text, "myData", (char*)&myData);  // WRONG, will work only if myData is a global variable.
+ struct myData* mydata = malloc(sizeof(struct myData));IupSetAttribute(dlg, "MYDATA", (char*)mydata);    // correct (unknown attributes will be stored as pointers)
 
-Defines a radioE<rsquo>s initial value.
+Defines a radioE<rsquo>s initial value:
 
  Ihandle *portrait = IupToggle("Portrait" , NULL);Ihandle *landscape = IupToggle("landscape" , NULL);Ihandle *box = IupVbox(portrait, IupFill(),landscape, NULL);Ihandle *mode = IupRadio(box);IupSetHandle("landscape", landscape); /* associates a name to initialize the radio */IupSetAttribute(mode, "VALUE", "landscape"); /* defines the radio’s initial value */
-
-Other usages:
-
-  1. IupSetAttribute(text, "VALUE", "Hello!");
-  2. IupSetAttribute(indicator, "VALUE", "ON");
-  3. struct     {       int x;       int y;     } myData;     IupSetAttribute(text, "myData", (char*)&myData);  // correct, BUT myData should be a global variable. 
 
 =head2 See Also
 
 L<IupGetAttribute|iupgetattribute.html>,
 L<IupSetAttributes|iupsetattributes.html>,
 L<IupGetAttributes|iupgetattributes.html>,
-L<IupStoreAttribute|iupstoreattribute.html>
+L<IupSetGlobal|iupsetglobal.html>, L< IupGetGlobal|iupgetglobal.html>
 
 =cut

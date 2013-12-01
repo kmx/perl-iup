@@ -1,14 +1,15 @@
 =head1 IupSetLanguage
 
-Sets the language used by some pre-defined dialogs. This is an old
-function, it just sets the global attribute LANGUAGE.
+Sets the language name used by some pre-defined dialogs. Can also be
+changed using the global attribute LANGUAGE.
 
 =head2 Parameters/Return
 
- void IupSetLanguage(const char *lng); [in C] 
- iup.SetLanguage(lng: string) [in Lua]
+ void IupSetLanguage(const char *name); [in C] 
+ iup.SetLanguage(name: string) [in Lua]
 
-B<lng>: Language to be used. Can have one of the following values:
+B<name>: Language name to be used. Can have one of the following
+values:
 
 =over
 
@@ -22,7 +23,34 @@ default: "ENGLISH".
 
 =head2 Affects
 
-All elements that have pre-defined texts.
+All elements that have pre-defined texts. The pre-defined texts will be
+stored using L<IupSetLanguageString|iupsetlanguage.html>.
+
+The native dialogs like B<IupFileDlg> will always be displayed in the
+system language.
+
+Even if the language is not supported (meaning its pack of pre-defined
+strings are not defined) the new language name will be successfully
+stored so you can set your own strings and return a coherent value, and
+the current defined string will not be changed.
+
+Here is a list of the pre-defined string names:
+
+ IUP_ERROR               IUP_HELP
+ IUP_YES                 IUP_RED
+ IUP_NO                  IUP_GREEN
+ IUP_INVALIDDIR          IUP_BLUE
+ IUP_FILEISDIR           IUP_HUE
+ IUP_FILENOTEXIST        IUP_SATURATION
+ IUP_FILEOVERWRITE       IUP_INTENSITY
+ IUP_CREATEFOLDER        IUP_OPACITY
+ IUP_NAMENEWFOLDER       IUP_PALETTE
+ IUP_SAVEAS              IUP_TRUE
+ IUP_OPEN                IUP_FALSE
+ IUP_SELECTDIR           IUP_FAMILY
+ IUP_OK                  IUP_STYLE
+ IUP_CANCEL              IUP_SIZE
+ IUP_GETCOLOR            IUP_SAMPLE
 
 =head2 Examples
 
@@ -39,6 +67,7 @@ All elements that have pre-defined texts.
 =head2 See Also
 
 L<IupGetLanguage|iupgetlanguage.html>,
+L<IupSetLanguageString|iupsetlanguagestring.html>,
 L<LANGUAGE|../attrib/iup_globals.html#LANGUAGE>
 
 =cut

@@ -3,7 +3,8 @@
 Shows a modal dialog for capturing values with a format similar to the
 scanf function in the C stdio library.
 
-B<Deprecated>: Use L<IupGetParam|iupgetparam.html> instead.
+It is recommended that new applications use the
+L<IupGetParam|iupgetparam.html> dialog instead.
 
 =head2 Creation and Show
 

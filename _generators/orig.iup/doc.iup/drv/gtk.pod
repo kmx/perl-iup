@@ -1,7 +1,7 @@
 =head1 GTK System Driver (since 3.0)
 
-This driver was designed for the GTK+ version 2. It can be compiled in
-Windows or UNIX.
+This driver was designed for the GTK+ version 2 and 3. It can be
+compiled in Windows or UNIX.
 
 Although GTK has layout elements they are not used. IUP fill, vbox,
 hbox and zbox containers are implemented independent from the native
@@ -16,6 +16,25 @@ available for SunOS10 and it is not available for Linux24.
 
 =head2 Tips
 
+=head2 GTK 3.x (since 3.7)
+
+GTK 3.x is supported. But the pre-compiled binaries are still build
+with GTK 2.x. This is because GTK 3 implies in a big change for drawing
+applications, and most Tecgraf applications are heavily graphics
+dependent. The main change is that GDK does not have drawing primitives
+anymore, and all drawing is performed by Cairo. Cairo does not have
+support for XOR used by many drawing applications to perform a
+selection rubber band. Also Cairo could have a different behavior for
+some primitives. So while the applications are adapted to the new
+situation the pre-compiled files will remain with GTK 2.x
+
+To build the driver with GTK 3.x support define USE_GTK3=Yes before
+calling make in the "iup/src" folder. Just the main library must be
+rebuilt. Also, if CD is used, the CD main library must be rebuilt with
+the same parameter.
+
+IUP with GTK 3 is not fully working in Windows.
+
 =head2 Dependencies
 
 GTK is in fact composed of several libraries. The GTK package contains
@@ -26,8 +45,8 @@ libraries.
 
 GTK uses UTF-8 as its charset for all displayed text, so IUP will
 automatically convert all strings to (SetAttribute) and from
-(GetAttribute) UTF-8. To use UTF-8 strings set the global attribute
-UTF8AUTOCONVERT to NO.
+(GetAttribute) UTF-8. But the default is still to use the current
+locale. To use UTF-8 strings set the global attribute UTF8MODE to YES.
 
 =head2 Windows
 
@@ -46,6 +65,27 @@ theme to the "MS-Windows" theme. Edit the "gtk\etc\gtk-2.0\gtkrc" file
 and change its contents to:
 
  gtk-theme-name = "MS-Windows"
+
+=head2 Ubuntu Unity
+
+Since Ubuntu version 11 there is a new desktop called Unity. This
+desktop introduces some changes that affect all applications. Two of
+these changes directly affect IUP applications.
+
+First the global menu forces all dialog menus to be displayed in the
+top of the desktop, like in MacOSX. This affected the size of the IUP
+dialog. It is fixed since IUP version 3.6. If you don't like the global
+menu you can remove it using:
+
+ sudo apt-get remove appmenu-gtk3 appmenu-gtk appmenu-qt
+
+Second, the scrollbars are reduced to a very tiny line and handlers are
+displayed only when the mouse moves over the right or bottom side of
+the element. All the controls, except the B<IupCanvas>, will work with
+the new scrollbar. If you need IupCanvas or B<IupCanvas> based controls
+like B<IupMatrix> you can remove the new scrollbar at the B<Synaptic
+Package Manager> or at the B<Ubuntu Software Center> searching for
+"liboverlay-scrollbar" and removing the installed packages.
 
 =head2 MacOSX-Quartz
 

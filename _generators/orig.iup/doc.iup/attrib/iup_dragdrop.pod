@@ -60,9 +60,10 @@ set too. DROPMOTION_CB is the only optional drop callback.
 
 =head2 Affects
 
-L<IupText|../elem/iuptext.html>, L<IupList|../elem/iuplist.html>,
-L<IupTree|../elem/iuptree.html>, L<IupCanvas|../elem/iupcanvas.html>
-and L<IupDialog|../dlg/iupdialog.html>.
+L<IupLabel|../elem/iuplabel.html>, L<IupText|../elem/iuptext.html>,
+L<IupList|../elem/iuplist.html>, L<IupTree|../elem/iuptree.html>,
+L<IupCanvas|../elem/iupcanvas.html> and
+L<IupDialog|../dlg/iupdialog.html>.
 
 =head2 Attributes at Drag Source
 
@@ -190,8 +191,8 @@ Here are some common Drag&Drop types defined by existing applications:
 
 =over
 
-=item * "TEXT" used for regular ANSI text without formatting.
-Automatically translated to CF_TEXT in Windows.
+=item * "TEXT" used for regular text without formatting. Automatically
+translated to CF_TEXT in Windows.
 
 =item * content MIME types, like "text/uri-list", "text/html",
 "image/png", "image/jpeg", "image/bmp" and "image/gif".

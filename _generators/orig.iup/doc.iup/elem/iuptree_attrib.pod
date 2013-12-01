@@ -157,6 +157,13 @@ B<TITLEid>: the text label of the specified node.
 B<TITLEFONTid>: the text font of the specified node. The format is the
 same as the L<FONT|../attrib/iup_font.html> attribute. (since 3.0)
 
+B<TOGGLEVALUEid> (non inheritable): defines the toggle state. Values
+can be "ON" or "OFF". If SHOW3STATE=YES then can also be "NOTDEF".
+Default: "OFF". (Since 3.6)
+
+B<TOGGLEVISIBLEid> (non inheritable): defines the toggle visible state.
+Values can be "Yes" or "No". Default: "Yes". (Since 3.8)
+
 B<TOTALCHILDCOUNTid> (read only): returns the total children count of
 the specified branch. It counts all grandchildren. (since 3.0)
 
@@ -165,16 +172,16 @@ B<USERDATAid>: the user data associated with the specified node. (since
 
 =head2 X<images>Images (non inheritable)
 
-B<IMAGEid>: image name to be used in the specified node, where id is
-the specified node identifier. Use
+B<IMAGEid> (write only): image name to be used in the specified node,
+where id is the specified node identifier. Use
 L<IupSetHandle|../func/iupsethandle.html> or
 L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
 associate an image to a name. See also L<IupImage|iupimage.html>. In
 Windows and Motif set the BGCOLOR attribute before setting the image.
 If node is a branch it is used when collapsed.
 
-B<IMAGEEXPANDEDid>: same as the IMAGE attribute but used for expanded
-branches.
+B<IMAGEEXPANDEDid> (write only): same as the IMAGE attribute but used
+for expanded branches.
 
 B<IMAGELEAF>: the image name that will be shown for all leaves.
 Default: "IMGLEAF". Internal values "IMGBLANK" and "IMGPAPER" are also
@@ -217,7 +224,7 @@ at the first does nothing
 
 =back
 
-=head2 X<marks0>Marks
+=head2 X<marks>Marks
 
 B<MARK> (write only) (non inheritable): Selects a range of nodes in the
 format "start-end" (%d-%d). Allowed only when MARKMODE=MULTIPLE. Also
@@ -258,10 +265,6 @@ MULTIPLE. Default: SINGLE.
 B<MARKSTART> (non inheritable): Defines the initial node for the block
 marking, used when MARK=BLOCK. The value must be the node identifier.
 Default: 0 (first node).
-
-B<TOGGLEVALUEid> (non inheritable): defines the toggle's state. Values
-can be "ON" or "OFF". If SHOW3STATE=YES then can also be "NOTDEF".
-Default: "OFF".
 
 =head2 X<tree>Hierarchy (non inheritable)
 

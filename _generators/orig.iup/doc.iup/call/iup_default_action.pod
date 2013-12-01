@@ -1,4 +1,4 @@
-=head1 DEFAULT_ACTION
+=head1 DEFAULT_ACTION (Deprecated since 3.0)
 
 Predefined IUP action, generated every time an action has no associated
 function (except for the IDLE_ACTION).

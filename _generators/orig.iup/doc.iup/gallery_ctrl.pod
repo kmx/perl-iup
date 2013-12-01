@@ -32,4 +32,8 @@
 
 [IMAGE]
 
+=head2 L<IupWebBrowser|ctrl/iupweb.html>
+
+[IMAGE]
+
 =cut

@@ -21,7 +21,6 @@ are not inheritable.
 L<IupSetAttributeHandle|iupsetattributehandle.html>,
 L<IupSetAttribute|iupsetattribute.html>,
 L<IupSetAttributes|iupsetattributes.html>,
-L<IupStoreAttribute|iupstoreattribute.html>,
 L<IupSetHandle|iupsethandle.html>
 
 =cut

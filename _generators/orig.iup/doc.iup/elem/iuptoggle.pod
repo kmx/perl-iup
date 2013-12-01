@@ -80,10 +80,11 @@ NULL. (since 3.0)
 B<RIGHTBUTTON> (Windows Only) (creation only): place the check button
 at the right of the text. Can be "YES" or "NO". Default: "NO".
 
-B<VALUE> (non inheritable): Toggle's state. Values can be "ON" or
-"OFF". If 3STATE=YES then can also be "NOTDEF". Default: "OFF". In GTK
-if you change the state of a radio, the unchecked toggle will receive
-an ACTION callback notification.
+B<VALUE> (non inheritable): Toggle's state. Values can be "ON", "OFF"
+or "TOGGLE". If 3STATE=YES then can also be "NOTDEF". Default: "OFF".
+The TOGGLE option will invert the current state (since 3.7). In GTK if
+you change the state of a radio, the unchecked toggle will receive an
+ACTION callback notification.
 
 L<TITLE|../attrib/iup_title.html> (non inheritable): Toggle's text. If
 IMAGE is not defined before map, then the default behavior is to

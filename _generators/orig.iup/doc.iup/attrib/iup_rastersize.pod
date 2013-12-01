@@ -30,7 +30,8 @@ attribute. So changes to the L<FONT|iup_font.html> attribute will not
 affect the B<User> size of the element.
 
 To obtain the last computed B<Natural> size of the control in pixels,
-use the read-only attribute B<NATURALSIZE>. (Since 3.6)
+use the read-only attribute L<NATURALSIZE|iup_naturalsize.html>. (Since
+3.6)
 
 ----
 

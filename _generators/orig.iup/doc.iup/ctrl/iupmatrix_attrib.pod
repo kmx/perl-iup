@@ -42,7 +42,9 @@ visible. Default: NO. (since 3.1)
 
 B<LIMITEXPAND>: limit expansion to the maximum size that shows all
 cells. This will set the MAXSIZE attribute to match the natural size of
-the matrix. (since 3.5)
+the matrix when all cells are visible. When the scrollbars have
+*AUTOHIDE=Yes, the maximum size will not include the scrollbars (since
+3.9). (since 3.5)
 
 B<X<ORIGIN>ORIGIN>: Scroll the visible area to the given cell. Returns
 the cell at the upper left corner. To scroll to a line or a column, use
@@ -51,8 +53,8 @@ B<I<C>>E<gt>0). L and C can not be a non scrollable cell either.
 
 B<X<ORIGINOFFSET>ORIGINOFFSET>: complements the ORIGIN attribute by
 specifying the drag offset of the top left cell. Returns the current
-value. Has the format "XxY" or "%dx%d" in C. Used only the ORIGIN is
-set. (since 3.5)
+value. Has the format "X:Y" or "%d:%d" in C. When changing this
+attribute must change also ORIGIN right after. (since 3.5)
 
 B<X<READONLY>READONLY>: disables the editing of all cells. EDITION_CB
 and VALUE_EDIT_CB will not be called anymore. The L:C attribute will
@@ -63,6 +65,9 @@ interactively changed. When this is possible, the user can change the
 size of a column by dragging the column title right border. Possible
 values: "YES" or "NO". Default: "NO" (does not allow interactive width
 change).
+
+B<SHOWFILLVALUE>: enable the display of the numeric percentage in the
+cell when TYPE* is FILL. Default: NO. (since 3.9)
 
 B<X<USETITLESIZE>USETITLESIZE:> Use the title size to define the cell
 size if necessary. See WIDTHn and HEIGHTn. Default: NO. (since 3.0)
@@ -99,6 +104,23 @@ B<0:I<C>>: Title of column C.
 B<0:0>: Title of the area between the line and column titles.
 
 These are valid only in normal mode.
+
+B<TYPEI<L>:I<C>>: Type of the cell value in line L and column C. (Since
+3.9)
+
+B<TYPE*:I<C>>: Type of column C. (Since 3.9)
+
+B<TYPEI<L>:*>: Type of line L. (Since 3.9)
+
+Can be TEXT, COLOR, FILL, or IMAGE. When type is COLOR the cell value
+is interpreted as a color and a rectangle with the color is drawn
+inside the cell instead of the text (the FGCOLOR of the cell is
+ignored). When type is FILL the cell value is interpreted as percentage
+and a rectangle showing the percentage in the FGCOLOR is drawn like in
+B<IupGauge> and B< IupProgressBar>. When type is IMAGE the cell value
+is interpreted as an image name, and if an image exist with that name
+is drawn (the name can NOT be of a Windows resource or GTK stock
+image). Default: TEXT. (Since 3.9)
 
 B<X<BGCOLOR>BGCOLOR>: Background color of the matrix. (inheritable)
 
@@ -150,38 +172,53 @@ always calculated from the base FONT attribute.
 B<X<FRAMECOLOR>FRAMECOLOR>: Sets the color to be used in the frame
 lines. (inheritable)
 
-B<FRAMEVERTCOLORI<L:C>>: Color of the vertical right frame of the cell.
-When not defined the FRAMECOLOR is used. For a title cell defines right
-and left frames. If value is "BGCOLOR" the frame line is not drawn.
+B<FRAMEVERTCOLORI<L:C>>: Color of the vertical right frame line of the
+cell. When not defined the FRAMECOLOR is used. For a title column cell
+(col=0) defines right and left frames. If value is "BGCOLOR" the frame
+line is not drawn.
 
 B<FRAMEVERTCOLORI<*:C>>: same as FRAMEVERTCOLORI<L:C> but for all the
 cells of the column C. (since 3.5)
 
-B<FRAMEHORIZCOLORI<L:C>>: Color of the horizontal bottom frame of the
-cell. When not defined the FRAMECOLOR is used. For a title cell defines
-bottom and top frames. If value is "BGCOLOR" the frame line is not
-drawn.
+B<FRAMEHORIZCOLORI<L:C>>: Color of the horizontal bottom frame line of
+the cell. When not defined the FRAMECOLOR is used. For a title line
+cell (lin=0) defines bottom and top frames. If value is "BGCOLOR" the
+frame line is not drawn.
 
 B<FRAMEHORIZCOLORI<L:*>>:same as FRAMEHORIZCOLORI<L:C > but for all the
 cells of the line L. (since 3.5)
 
+B<FRAMETITLEHIGHLIGHT>: by default the title cells will have a bright
+line at left and top to configure a raise appearance. Can be Yes or No.
+Default: Yes. (since 3.9)
+
+B<RESIZEMATRIXCOLOR>: color used by the column resize feedback.
+Default: "102 102 102". (Since 3.9)
+
+B<TOGGLEVALUEI<L>:I<C> >: value of the toggle inside the cell. The
+toggle is shown only if the DROPCHECK_CB returns IUP_CONTINUE for the
+cell. When the toggle is interactively change the TOGGLEVALUE_CB
+callback is called. (Since 3.9)
+
 B<X<VALUE>VALUE>: Allows setting or verifying the value of the current
-cell. Is the same as obtaining the current cell from FOCUS_CELL value
-and using it as the attribute name for "L:C". But when updated or
-retrieved during cell editing, the edit control will be updated or
-consulted instead of the matrix cell. When retrieved inside the
-EDITION_CB callback when mode is 0, then the return value is the new
-value that will be updated in the cell.
+cell. Is the same as obtaining the current cell line and column from
+FOCUS_CELL attribute, and then using them to access the "L:C"
+attribute. But when updated or retrieved during cell editing, the edit
+control will be updated or consulted instead of the matrix cell. When
+retrieved inside the EDITION_CB callback when mode is 0, then the
+return value is the new value that will be updated in the cell.
 
 ----
 
 B<X<CELLBGCOLOR>CELLBGCOLORI<L>:I<C>> (read-only): Returns the actual
-cell BGCOLOR. Returns NULL if the cell does not exists, or it is not
-visible, or the element is not mapped. (since 3.6)
+cell background color, including mark and active state modifications.
+Returns NULL if the cell does not exists, or it is not visible, or the
+element is not mapped. (since 3.6)
 
 B<X<CELLFGCOLOR>CELLFGCOLORI<L>:I<C>> (read-only): Returns the actual
-cell FGCOLOR. Returns NULL if the cell does not exists, or it is not
-visible, or the element is not mapped. (since 3.6)
+cell foreground color, including mark state modifications. Returns NULL
+if the cell does not exists, or it is not visible, or the element is
+not mapped. (since 3.6)
 
 B<X<CELLOFFSET>CELLOFFSETI<L>:I<C>> (read-only): Returns the cell
 computed offset in pixels from the top-left corner of the matrix, in
@@ -202,11 +239,11 @@ include the decorations. (since 3.5)
 
 X<ALIGNMENTn>B<ALIGNMENT>I<B<C>> : Alignment of the cells in column C
 (C E<gt>= 0). Possible values: "ALEFT", "ACENTER" or "ARIGHT". Default:
-"ALEFT" for n=0 and "ACENTER" for nE<gt>0. Not used for the column
-title. The 0:0 corner is always ACENTER, and the other column titles
-are also centered but if they do not fit in the cell then the alignment
-is changed to ALEFT. Before checking the default value it will check
-the "B<ALIGNMENT>" attribute value.
+"ALEFT" for n=0 and "ACENTER" for nE<gt>0 for lines that greater than
+0. Before checking the default value it will check the "B<ALIGNMENT>"
+attribute value. If the text do not fit in the cell then the alignment
+is changed to ALEFT. The default for line 0 is "ACENTER" but this can
+be controlled with the "B<ALIGNMENTLIN0>" attribute (since 3.9).
 
 X<SORTSIGNn>B<SORTSIGN>X<ALIGNMENTn0>I<B<C>> : Shows a sort sign (up or
 down arrow) in the column C (C E<gt>= 0) title. Possible values: "UP",
@@ -229,12 +266,13 @@ is not true or the width of the title of the column is 0, then the
 default value WIDTHDEF is used.
 
 B<X<RASTERWIDTHn>RASTERWIDTHn>: Same as WIDTHn but in pixels. Has lower
-priority than WIDTHn.
+priority than WIDTHn. The returned value is the actual computed size.
 
 B<X<WIDTHn>WIDTHn>: Width of column n in SIZE units, where n is the
 number of the column (nE<gt>=0). If the width value is 0, the column
 will not be shown on the screen. It does not includes the decoration
-size occupied by the frame lines.
+size occupied by the frame lines. The returned value is the actual
+computed size.
 
 B<X<WIDTHDEF>WIDTHDEF>: Default column width in SIZE units. Not used
 for the title column. Default: 80 (width corresponding to 20
@@ -259,45 +297,54 @@ default value HEIGHTDEF is used.
 B<X<HEIGHTn>HEIGHTn>: Height of line n in SIZE units, where n is the
 number of the line (nE<gt>=0). If the height value is 0, the line will
 not be shown on the screen. It does not includes the decoration size
-occupied by the frame lines.
+occupied by the frame lines. The returned value is the actual computed
+size.
 
 B<X<HEIGHTDEF>HEIGHTDEF>: Default line height in SIZE units. Not used
 for the title line. Default: 8 (height corresponding to 1 line).
 
 B<X<RASTERHEIGHTn>RASTERHEIGHTn>: Same as HEIGHTn but in pixels. Has
-lower priority than HEIGHTn.
+lower priority than HEIGHTn. The returned value is the actual computed
+size.
 
 =head2 Number of Cells Attributes
+
+When lines or columns are added or removed the existing cell, line and
+column attributes are preserved, except custom application attributes.
 
 B<X<ADDCOL>ADDCOL> (write-only): Adds a new column to the matrix after
 the specified column. To insert a column at the top of the spreadsheet,
 value 0 must be used. To add more than one column, use format
 "B<I<C-C>>", where the first number corresponds to the base column and
 the second number corresponds to the number of columns to be added. It
-is valid only in normal operation mode. Can NOT add a title column.
-Ignored if set before map.
+can be used in normal operation mode or in callback mode, but in
+callback mode will not update cell values this must be done by the
+application. Can NOT add a title column. Ignored if set before map.
 
 B<X<ADDLIN>ADDLIN> (write-only): Adds a new line to the matrix after
 the specified line. To insert a line at the top of the spreadsheet,
 value 0 must be used. To add more than one line, use format
 "B<I<L-L>>", where the first number corresponds to the base line and
-the second number corresponds to the number of lines to be added. It is
-valid only in normal operation mode. Can NOT add a title line. Ignored
-if set before map.
+the second number corresponds to the number of lines to be added. It
+can be used in normal operation mode or in callback mode, but in
+callback mode will not update cell values this must be done by the
+application. Can NOT add a title line. Ignored if set before map.
 
 B<X<DELCOL>DELCOL> (write-only): Removes the given column from the
 matrix. To remove more than one column, use format "B<I<C-C>>", where
 the first number corresponds to the base column and the second number
-corresponds to the number of columns to be removed. It is valid only in
-normal operation mode. Can NOT remove a title column, B<I<C>>E<gt>0.
-Ignored if set before map.
+corresponds to the number of columns to be removed. It can be used in
+normal operation mode or in callback mode, but in callback mode will
+not update cell values this must be done by the application. Can NOT
+remove a title column, B<I<C>>E<gt>0. Ignored if set before map.
 
 B<X<DELLIN>DELLIN> (write-only): Removes the given line from the
 matrix. To remove more than one line, use format "B<I<L-L>>", where the
 first number corresponds to the base line and the second number
-corresponds to the number of lines to be removed. It is valid only in
-normal operation mode. Can NOT remove a title line, B<I<L>>E<gt>0.
-Ignored if set before map.
+corresponds to the number of lines to be removed. It can be used in
+normal operation mode or in callback mode, but in callback mode will
+not update cell values this must be done by the application. Can NOT
+remove a title line, B<I<L>>E<gt>0. Ignored if set before map.
 
 B<X<NUMCOL>NUMCOL>: Defines the number of columns in the matrix. Must
 be an integer number. Default: "0". It does not include the title
@@ -358,12 +405,12 @@ B<X<MARKMODE>MARKMODE>: Defines the entity that can be marked: none,
 lines, columns, (lines or columns), and cells. Possible values: "NO",
 "LIN", "COL", "LINCOL" or "CELL". Default: "NO" (no mark).
 
-B<X<MARK>MARKI<L:C>>: marks a cell, a line or a column depending on
-MARKMODE, and returns cell, line or column mark state also according to
-MARKMODE. Can be "1" or "0". If MARKMODE=LIN,COL,LINCOL use 0 to mark
-only the other element (ex: "0:3" set/get for column 3). Even when
-MARKMODE=LIN,COL,LINCOL you can specify a single cell address. (since
-3.0)
+B<X<MARK>MARKI<L:C>> (no redraw): marks a cell, a line or a column
+depending on MARKMODE, and returns cell, line or column mark state also
+according to MARKMODE. Can be "1" or "0". If MARKMODE=LIN,COL,LINCOL
+use 0 to mark only the other element (ex: "0:3" set/get for column 3).
+Even when MARKMODE=LIN,COL,LINCOL you can specify a single cell
+address. (since 3.0)
 
 B<X<MARKED>MARKED>: String of '0' or '1' characters, informing which
 cells are marked (indicated by value '1'). Use NULL to clear all marks,
@@ -388,11 +435,12 @@ by MARKMODE can be B<interactively> marked. Possible values: "YES" or
 
 =head2 Action Attributes
 
-B<CLEARATTRIB> (write-only): Clear all cell attributes if ALL, and all
-attributes except titles if CONTENTS. When ALL is specified, all lines
-and column attributes are also cleared. (since 3.6)
+B<CLEARATTRIB> (write-only): Clear all cell attributes if ALL, all
+attributes except titles if CONTENTS, and all selected cell attributes
+if MARKED. When ALL is specified, all lines and column attributes are
+also cleared. (since 3.6)
 
-B<X<CLEARVALUE>CLEARVALUE>B<I<L>:I<C>> (write-only): Clear all cell
+B<X<CLEARATTRIB>CLEARATTRIB>B<I<L>:I<C>> (write-only): Clear all cell
 attributes in an interval starting at the specified cell. Its value
 defines the end cell in the "L:C" format, the default is the last cell.
 (since 3.6)
@@ -410,11 +458,11 @@ column attributes are also cleared, including ALIGNMENT and SORTSIGN.
 
 In all cases, attributes are set to NULL. Only the attributes FONT*,
 BGCOLOR*, FGCOLOR*, FRAMEHORIZCOLOR*, FRAMEHORIZCOLOR*, ALIGNMENT* and
-SORTSIGN* are affected. Action only works if the matrix is mapped and
-NOT in callback mode.
+SORTSIGN* are affected. In callback mode will not call the user
+callbacks.
 
-B<CLEARVALUE> (write-only): Clear all values if ALL, and all values
-except titles if CONTENTS. (since 3.6)
+B<CLEARVALUE> (write-only): Clear all values if ALL, all values except
+titles if CONTENTS, and all selected cell values if MARKED. (since 3.6)
 
 B<X<CLEARVALUE>CLEARVALUE>B<I<L>:I<C>> (write-only): Clear all values
 in an interval starting at the specified cell. Its value defines the
@@ -424,12 +472,17 @@ B<CLEARVALUEI<L>:*> (write-only): the values in line L. Its value
 defines a column inclusive interval in the "C1-C2" format. The default
 is 0 and the last column. (since 3.6)
 
-B<CLEARVALUE*:I<C >>I<(write-only)>: the values in column C. Its value
+B<CLEARVALUE*:I<C >>(write-only): the values in column C. Its value
 defines a line inclusive interval in the "L1-L2" format. The default is
 0 and the last line. (since 3.6)
 
-In all cases, values are set to NULL. Action only works if the matrix
-is mapped and NOT in callback mode.
+In all cases, values are set to NULL. Works also in callback mode.
+
+B<COPYCOLI<C >>(write-only): copy the values and attributes from column
+C to the given column (value is the number of a column). (Since 3.9)
+
+B<COPYLINI<L >>(write-only): copy the values and attributes from line L
+to the given line (value is the number of a line). (Since 3.9)
 
 X<FITTOSIZE>B<FITTOSIZE> (write-only): Force lines and/or columns sizes
 so the matrix visible size fit in its current size. NUMCOL_VISIBLE and
@@ -441,7 +494,7 @@ set again to obtain the same result, but before doing that set to NULL
 all the RASTERWIDTHn and RASTERHEIGHTn attributes that you want to be
 changed. Can be LINES, COLUMNS or YES (meaning both). (since 3.3)
 
-X<FITTOTEXT>B<FITTOTEXT> (write-only): Fet the RASTERWIDTHn or the
+X<FITTOTEXT>B<FITTOTEXT> (write-only): Fit the RASTERWIDTHn or the
 RASTERHEIGHTn attribute for the given column or line, so that it will
 fit the largest text in the column or the highest text in the line. The
 number of the column or line must be preceded by a character
@@ -450,10 +503,19 @@ identifying its type, "C" for columns and "L" for lines. For example
 for the column or line they are used as maximum limit for the size.
 (since 3.4)
 
-B<X<SHOW>SHOW> (write-only): If necessary scroll the visible area to
-make the given cell visible. To scroll to a line or a column, use a
-value such as "B<I<L>>:*" or "*:B<I<C>>" (where I<B<L>>E<gt>0 and
-B<I<C>>E<gt>0). (since 3.0)
+B<MOVECOLI<C >>(write-only): move the values and attributes from column
+C to the given column (value is the number of a column). Internally
+will use ADDCOL+COPYCOL+DELCOL to perform the move so it is limited to
+those attributes restrictions. It can be used in normal operation mode
+or in callback mode, but in callback mode will not update cell values,
+this must be done by the application. (Since 3.9)
+
+B<MOVELINI<L >>(write-only): move the values and attributes from line L
+to the given line (value is the number of a line). Internally will use
+ADDLIN+COPYLIN+DELLIN to perform the move so it is limited to those
+attributes restrictions. It can be used in normal operation mode or in
+callback mode, but in callback mode will not update cell values, this
+must be done by the application. (Since 3.9)
 
 B<X<REDRAW>REDRAW> (write-only): The user can inform the matrix that
 the data has changed, and it must be redrawn. Values:
@@ -471,8 +533,13 @@ lines 2, 3 and 4)
 columns 2, 3 and 4)
 
 No redraw is done when the application sets the attributes: L:C,
-ALIGNMENTc, BGCOLOR*, FGCOLOR*, FONT*, VALUE, FRAME*COLOR. Global and
-size attributes always automatically redraw the matrix.
+ALIGNMENTc, BGCOLOR*, FGCOLOR*, FONT*, VALUE, FRAME*COLOR, MARKL:C.
+Global and size attributes always automatically redraw the matrix.
+
+B<X<SHOW>SHOW> (write-only): If necessary scroll the visible area to
+make the given cell visible. To scroll to a line or a column, use a
+value such as "B<I<L>>:*" or "*:B<I<C>>" (where I<B<L>>E<gt>0 and
+B<I<C>>E<gt>0). (since 3.0)
 
 =head2 Text Editing Attributes
 

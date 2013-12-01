@@ -255,6 +255,32 @@ L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
 L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>:
 All common callbacks are supported.
 
+=head2 Utility Functions
+
+These functions can be used to help set and get attributes from the
+control:
+
+ void  IupSetAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* value);
+ char* IupGetAttributeId2(Ihandle* ih, const char* name, int lin, int col);
+ int   IupGetIntId2(Ihandle* ih, const char* name, int lin, int col);
+ float IupGetFloatId2(Ihandle* ih, const char* name, int lin, int col);
+ void  IupSetfAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* format, ...);
+ void  IupSetIntId2(Ihandle* ih, const char* name, int lin, int col, int value);
+ void  IupSetFloatId2(Ihandle* ih, const char* name, int lin, int col, float value);
+
+ IupSetAttribute(ih, "30:10", value)        => IupSetAttributeId2(ih, "", 30, 10, value)
+ IupSetAttribute(ih, "BGCOLOR30:10", value) => IupSetAttributeId2(ih, "BGCOLOR", 30, 10, value)
+ IupSetAttribute(ih, "ALIGNMENT10", value)  => IupSetAttributeId(ih, "ALIGNMENT", 10, value)
+
+When one of the indices is the asterisk, use IUP_INVALID_ID as the
+parameter. For ex:
+
+ IupSetAttribute(ih, "BGCOLOR30:*", value) => IupSetAttributeId2(ih, "BGCOLOR", 30, IUP_INVALID_ID, value)
+
+These functions are faster than the traditional functions because they
+do not need to parse the attribute name string and the application does
+not need to concatenate the attribute name with the id.
+
 =head2 Examples
 
 L<Browse for Example Files|../../examples/>

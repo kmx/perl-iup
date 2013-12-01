@@ -1,0 +1,1327 @@
+=head1 IupMatrixEx (since 3.9)
+
+B<IupMatrix> expansion library.
+
+This library adds new features to the B<IupMatrix> in order to expand
+the current features to wider the B<IupMatrix> applications.
+
+The expansion can be used in two different ways: using a new control
+called B<IupMatrixEx>, or by calling B<IupMatrixExInit> for an existing
+B<IupMatrix> control.
+
+The matrix can be used in callback mode or in standard more.
+
+Based on the DMatrix library created by Bruno Kassar and Luiz Cristvo
+Gomez Coelho.
+
+=head2 Initialization and Usage
+
+The B<IupMatrixExOpen> function must be called after a B<IupOpen>, so
+that the control can be used. The "iupmatrixex.h" file must also be
+included in the source code. The program must be linked to the controls
+library (iupmatrixex), and it depends on the L<Controls
+Library|../iupcontrols.html>.
+
+To make the control available in Lua use require"iupluamatrixex" or
+manually call the initialization function in C, B<iupmatrixexlua_open>,
+after calling B<iuplua_open>. When manually calling the function the
+iupluamatrixex.h file must also be included in the source code and the
+program must be linked to the Lua control library (iupluamatrixex).
+
+=head2 Creation
+
+ Ihandle* IupMatrixEx(void); [in C]iup.matrixex{} -> (elem: ihandle) [in Lua]matrixex(action) [in LED]
+
+This function returns the identifier of the created editing component,
+or NULL if an error occurs.
+
+=head2 Attributes
+
+The B<IupMatrixEx> element handle all attributes defined for a
+L<IupMatrix|iupmatrix_attrib.html> control.
+
+=over
+
+----
+
+=back
+
+B<BUSY>: returns Yes if the library is changing the matrix contents
+internally as a result of an operation such as paste or duplicate. Can
+be canceled setting to No. See the BUSY_CB callback for more
+information.
+
+B<BUSYPROGRESS>: flag to display a progress dialog while data is being
+changed. Can be Yes or No. Default: No.
+
+B<COPY> (write-only): copies the selected cells to the clipboard in
+TEXT format. If value is ALL then all cells are copied regardless if
+there is a selection. If value is MARKED then the
+L<MARKED|iupmatrix_attrib.html#MARKED> attribute is used to define the
+selection. Value can also be a range of cells in the format
+"L1:C1-L2:C2". Title cells are not copied, even when a line or column
+is fully selected. Cells are separated with tabs ('\t') and lines are
+separated with line feeds ('\n'). If the column or line is invisible
+(its size=0) it is not copied.
+
+When MARKMODE=CELLS and sparse cells are selected there are two options
+for copy according to the B<COPYKEEPSTRUCT> attribute, if "Yes" the
+copied data will fit a rectangular region that contains all the
+selected cells and the non selected cells inside the region will be
+copied as empty spaces (' '), if "No" only the selected cells will be
+copied but they must contain a matrix consistent structure, in other
+words the selected column pattern must be consistent along lines.
+
+LASTERROR can be set to "NOMARKED" (no selected cells) or
+"MARKEDCONSISTENCY" (when COPYKEEPSTRUCT=NO and inconsistent
+selection).
+
+B<COPYDATA>: Use the same parameters of the COPY attributes but will
+copy to an internal buffer. To retrieve the buffer get the attribute
+value after setting it. To clear the internal buffer set it to NULL.
+
+B<COPYFILE> (write-only): copies all visible cells to a given file.
+Value is the file name to be saved. LASTERROR can also be set to
+"INVALIDFILENAME" (failed to open). Data will be in plain text format,
+but the file format will be defined by the B<TEXTFORMAT> attribute, can
+be "TXT" (default), "HTML" or "LaTeX". The B<COPYCAPTION> attribute can
+be used to define a caption that will be added to the file before the
+data, depending on the file format.
+
+When using TXT format, the B<TEXTSEPARATOR> attribute can used to
+define a column separator (default is tab '\t') and line separator will
+be line feeds ('\n').
+
+When using LaTeX format, the B<LATEXLABEL> attribute can used to define
+a label for the table.
+
+When using HTML format, the attributes "HTMLE<lt>TABLEE<gt>",
+"HTMLE<lt>TRE<gt>", "HTMLE<lt>THE<gt>", "HTMLE<lt>TDE<gt>",
+"HTMLE<lt>CAPTIONE<gt>" can use used to define a complement to be
+inserted in the respective tag definition, so a " style=.." or a "
+class=.." complements can be added. The B<HTMLADDFORMAT> can be used to
+add the attributes ALIGNMENT?, BGCOLOR?:?, FGCOLOR?:? and FONT?:? to
+the "style" complement of the "TD" tag.
+
+B<COPYCOLTOI<L:C>> (write-only): copies the value of the given cell to
+a specified range of cells in the same column. Value can be "ALL" (for
+all lines), TOP (for all lines before the given line), BOTTOM (for all
+lines after the given line), MARKED (for all lines where the cell is
+marked), or a series of intervals in the format
+"L1-L2,L3-L4,L5,L6-L7,...". BUSY will be set to Yes during the
+operation. Only visible cells will receive data.
+
+B<FIND>: searches for the given text in the matrix cells. The search
+will start at the FOCUS_CELL cell, if found the FOCUS_CELL will be
+changed to the cell where the text were found and the cell will also be
+marked. If not visible the cell will the scrolled to the visible area.
+Returns the last text searched.
+
+B<FINDDIRECTION>: direction of the find. Default RIGHTBOTTOM.
+
+if RIGHTBOTTOM will search from left to B<right>, then top to
+B<bottom>; (search for columns then change line)
+
+if LEFTTOP will search from right to B<left>, then bottom to B<top>;
+
+if BOTTOMRIGHT will search from top to B<bottom>, then left to
+B<right>; (search for lines then change column)
+
+if TOPLEFT will search from bottom to B<top>, then right to B<left>;
+
+B<FINDMATCHCASE>: defines if the text comparison is case sensitive when
+using FIND. Can be Yes or No. Default: Yes.
+
+B<FINDMATCHWHOLECELL>: defines if the whole cell will be used for
+comparison or it will search for the first occurrence of the text
+inside the cell. Can be Yes or No. Default: Yes.
+
+B<FINDMATCHSELECTION>: defines if the whole matrix will be searched or
+just the selected cells. Can be Yes or No. Default: No.
+
+B<FREEZE:> freezes the scroll of columns and lines up to the given
+cell. Can be: "Yes" - uses the value of the FOCUS_CELL attribute,
+"I<L>:I<C>" where L and C are the line and column, or "No" clear the
+freeze state. Internally will set the NUMLIN_NOSCROLL and
+NUMCOL_NOSCROLL, and change the FRAMEHORIZCOLOR of the line and the
+FRAMEVERTCOLOR of the column to the color defined by FREEZEBGCOLOR.
+
+B<FREEZEBGCOLOR>: color used for the freeze lines. Default: "0 0 255".
+Used only by the FREEZE attribute.
+
+B<LASTERROR> (read-only): set when an error occurred during an
+operation. It is reset to NULL at the start of every operation that
+sets its value.
+
+B<NUMERICFORMATI<id>>: format to convert the numeric data into strings
+at the given column (id). If not defined the NUMERICFORMATDEF attribute
+will be used. Uses the same format specification of the B< sprintf>
+function in C, but only one value will be processed, can not contain
+other strings. (no redraw)
+
+B<NUMERICFORMATPRECISIONI<id>>: will set the B< sprintf> "precision"
+field in the B<NUMERICFORMATI<id>> attribute string if the format
+"%.E<lt>precisionE<gt>lf" . If the B<NUMERICFORMATI<id>> attribute is
+not defined returns NULL. It is just a simple form to set the format
+attribute. (no redraw)
+
+B<NUMERICFORMATDEF>: default value used when NUMERICFORMATid is not
+specified. Default: "%.2lf".
+
+B<NUMERICFORMATTITLEI<id>>: format of the title at the given column
+(id). Uses the same format specification of the B<sprintf> function in
+C. It can contain other strings, and will receive two parameters the
+current column title string ("0:C") and the current column unit shown.
+If the current title is NULL, then only the unit parameter is passed.
+If not specified then only the title string ("0:C") is used. (no
+redraw)
+
+B<NUMERICQUANTITYI<id>>: Quantity used to define units for the numeric
+data at the given column (id). Must set this attribute for the other
+NUMERIC* attributes to work. For the available option see L< Available
+Quantity and Units|#UNITS> table bellow. To improve the precision
+consider using the L<NUMERICGETVALUE_CB|#NUMERICGETVALUE_CB> and
+L<NUMERICSETVALUE_CB|#NUMERICSETVALUE_CB> callbacks. The returned value
+is always the name of the quantity in the table, regardless the value
+that was set. To use the numeric attributes and callbacks without using
+units, simply set quantity to "None". To disable all numeric support
+set quantity to NULL. (no redraw)
+
+B<NUMERICUNITCOUNTI<id>> (read-only): Returns the number of units for
+the current quantity at the given column (id).
+
+B<NUMERICUNITI<id>>: Unit of the numbers set into the matrix at the
+given column (id) using the unit name as value. Must be in the same
+category of the NUMERICFORMAT attribute. For the available options see
+L< Available Quantity and Units|#UNITS> table bellow. The application
+must process numbers for the column only in this unit, when getting or
+setting attributes. But the values passed to the
+L<DROP_CB|iupmatrix_cb.html#DROP_CB> and
+L<MENUDROP_CB|iupmatrix_cb.html#MENUDROP_CB> callbacks will not be
+processed because they can contain strings. The returned value is
+always the name of the unit in the table, regardless the value that was
+set. Default value is the first unit on the table bellow. (no redraw)
+
+B<NUMERICUNITSHOWNI<id>>: Unit to be displayed at the given column
+(id). Must be in the same category of the NUMERICFORMAT attribute. The
+library will automatically convert the numeric data to and from the
+shown and data units when the data is displayed or modified. The
+returned value is always the name of the unit in the table, regardless
+the value that was set. Default value is the first unit on the table.
+(no redraw)
+
+B<NUMERICUNITSYMBOLI<id>> and B<NUMERICUNITSYMBOLSHOWNI<id>>: same as
+NUMERICUNITB<*> but using the units symbol as value. (no redraw)
+
+B<NUMERICUNITSEARCH> (write-only): Searches for a unit name. Set the
+result in the NUMERICFOUNDQUANTITY, NUMERICFOUNDUNIT and
+NUMERICFOUNDUNITSYMBOL attributes. For the available options see L<
+Available Quantity and Units|#UNITS> table bellow.
+
+B<NUMERICUNITSYMBOLSEARCH> (write-only): same as NUMERICUNITSEARCHB<,
+>but searches for a unit symbol.
+
+B<NUMERICFOUNDQUANTITY> (read-only): Returns the quantity found after a
+NUMERICUNITSEARCH* set. Returns NULL if not found.
+
+B<NUMERICFOUNDUNIT> (read-only): Returns the unit name found after a
+NUMERICUNITSEARCH* set. Returns NULL if not found.
+
+B<NUMERICFOUNDUNITSYMBOL> (read-only): Returns the unit symbol found
+after a NUMERICUNITSEARCH* set. Returns NULL if not found.
+
+B<PASTE> (write-only): paste data from the clipboard. Data is obtained
+from the clipboard in TEXT format. Value is the insert position, it can
+be "FOCUS" to use the L<FOCUS_CELL|iupmatrix_attrib.html#FOCUS_CELL>
+attribute, can be "MARKED" to use the start of the selected groups of
+cells (top-left selected cell), or can be a cell address "L:C".
+
+Data must be in plain text format. Lines can be separated in DOS, UNIX
+or MAC format. Columns can be separated with tabs ('\t'), with
+semicolon (';') or a custom value defined by the TEXTSEPARATOR
+attribute. Data must contain an exact matrix organization. Use the
+attribute TEXTSKIPLINES to skip a number of lines in the beginning of
+the data. If data at the insert position will have more lines or
+columns than the current matrix, then the L<PASTESIZE_CB|#PASTESIZE_CB>
+callback is called. If defined the L<
+EDITION_CB|iupmatrix_cb.html#EDITION_CB> callback will be called before
+the cell value is set. LASTERROR can be set to "NOTEXT" (data is empty
+or NULL), "INVALIDMATRIX" (not a matrix data). BUSY will be set to Yes
+during the operation. Only visible cells will receive data.
+
+B<PASTEDATA> (write-only): paste data from a memory buffer. Value is
+the data. Insert position is obtained from the
+L<FOCUS_CELL|iupmatrix_attrib.html#FOCUS_CELL> attribute. See PASTE for
+more details.
+
+B<PASTEFILE> (write-only): paste data from a file. Value is the file
+name to be loaded. Insert position is always "0:0". See PASTE for more
+details. LASTERROR can also be set to "INVALIDFILENAME" (failed to
+open).
+
+B<SORTCOLUMNI<id>> (write-only): sort the specified lines of the matrix
+based on the values of the given column (id). Can be ALL (1-NUMLIN), an
+interval in the format "L1-L2", INVERT (invert the order in the current
+interval of the current column, id is ignored) or RESET (remove any
+ordering). The SORTSIGNI<id> attribute will be updated to reflect the
+ordering.
+
+When the SORTCOLUMNCOMPARE_CB callback is NOT defined, and the column
+in NOT numeric, then the text is sorted using an B<Alphanumeric
+Algorithm>. This means that numbers and text in the same value are
+sorted separately (for ex: A1 A2 A11 A30 B1). Also natural alphabetic
+order is used: 123...aA...bBcC... The internal comparison will work
+only for Latin-1 characters, even if UTF8MODE is Yes.
+
+B<IMPORTANT>: The sort will not affect the original data, only how it
+is displayed from the original data and how it is updated to the
+original data. The line and cell attributes of the sorted will NOT be
+affected. This means that colors and fonts will NOT follow the sort
+order, also means that cell address in FOCUS_CELL, MARKED, ORIGIN,
+SHOW, HEIGHTn, and others, are all relative to the displayed cells and
+they do NOT follow the sort order. *VALUE_CB, EDITION_CB and
+VALUE_EDIT_CB will be called with the correct index following the sort
+order, all other callbacks won't.
+
+B<SORTCOLUMNORDER>: defines if the number or text comparison is in
+ASCENDING or DESCENDING order. Default: ASCENDING. Used during
+SORTCOLUMNI<id> and when the SORTCOLUMNCOMPARE_CB callback is NOT
+defined. Used to update the SORTSIGNI<id> attribute when the
+SORTCOLUMNCOMPARE_CB callback is defined.
+
+B<SORTCOLUMNCASESENSITIVE>: defines if the text comparison is case
+sensitive. Can be Yes or No. Default: Yes. Used only during
+SORTCOLUMNI<id> and when the SORTCOLUMNCOMPARE_CB callback is not
+defined.
+
+B<SORTCOLUMNINTERVAL> (read-only): Returns the last sorted interval, in
+the format "L1,L2".
+
+B<UNDOREDO>: Enable or disable the Undo/Redo support. Can be Yes or No.
+Default: No. Undo/Redo support is available only for cell values,
+interactively or programmatically changed. Attributes are not
+saved/restored.
+
+B<UNDOCOUNT> (read-only): Returns the total number of stored undo
+levels.
+
+B<UNDONAMEI<id>> (read-only): Returns a name for the given undo level.
+It represents the operation that was performed. Uses descriptive
+strings based on the names "PASTECLIP", "PASTEDATA", "PASTEFILE",
+"COPYCOLTO:ALL", "COPYCOLTO:TOP", "COPYCOLTO:BOTTOM",
+"COPYCOLTO:MARKED", "COPYCOLTO:INTERVAL", "CLEARVALUE", "SETCELL" and
+"EDITCELL", that are language dependent.
+
+B<UNDO>: Sets the number of undo levels to be performed. If value is
+NULL will undo 1 level. When retrieved returns Yes or No indicating if
+it has Undo to be performed. BUSY will be set to Yes during the
+operation.
+
+B<REDO>: Sets the number of redo levels to be performed. If value is
+NULL will redo 1 level. When retrieved returns Yes or No indicating if
+it has Redo to be performed. BUSY will be set to Yes during the
+operation.
+
+B<UNDOCLEAR> (write-only): clears all Undo/Redo information.
+
+B<VISIBLECOLI<id>>: returns if the column is visible ("Yes" or "No").
+Actually checks for WIDTHid and RASTERWIDTHid if they are defined and
+non zero, but more complex logic when id=0. When changed will simply
+set those attributes to zero or NULL (when setting to NULL and col=0
+not necessarily the column will became visible because of the internal
+matrix logic for titles).
+
+B<VISIBLELINI<id>>: returns if the line is visible ("Yes" or "No").
+Actually checks for HEIGHTid and RASTERHEIGHTid if they are defined and
+non zero, but more complex logic when id=0. When changed will simply
+set those attributes to zero or NULL (when setting to NULL and lin=0
+not necessarily the line will became visible because of the internal
+matrix logic for titles).
+
+----
+
+The following attributes will affect all B<IupMatrixEx> controls. So
+the application can register new quantities and all B<IupMatrixEx>
+elements will benefit. All strings must be constant strings. All
+attributes are Write-Only and non inheritable. They all can be set
+without the element being mapped to the native system.
+
+B<NUMERICUNITSPELL>: spelling used for Unit names. The default
+"INTERNATIONAL" uses the International Bureau of Weights and Measures
+standards: metre and litre. Set to "AMERICAN" To use the American
+spelling: "meter" and "liter".
+
+B<NUMERICADDQUANTITY>: adds a new quantity given its name. Can have up
+to 25 B<new> names. If the name exists, simply prepare to add new units
+to that quantity.
+
+B<NUMERICADDUNIT>: adds a new unit given its name for the last quantity
+added. Can have up to 25 total names. The first unit added will be the
+reference unit and its factor will be automatically set to 1.
+
+B<NUMERICADDUNITSYMBOL>: sets the symbol name of the last unit added.
+
+B<NUMERICADDUNITFACTOR>: sets the factor number in double precision of
+the last unit added. Use "%.18g" in B<IupSetStrf> or B<sprintf> for
+maximum double precision. The factor is the reference multiplier to
+obtain the unit, or how much you multiply a value in the reference unit
+to obtain a new value in this unit. For example, 1 km = 1000 m, then
+for the "km" unit factor=1000 considering that the reference unit is
+"m".
+
+=head2 Callbacks
+
+The B<IupMatrixEx> element understands all callbacks defined for a
+L<IupMatrix|iupmatrix_cb.html> control.
+
+----
+
+B<BUSY_CB>: Action generated when the library is changing the matrix
+contents as a result of an operation such as paste or copy.
+
+ int function(Ihandle* ih, int status, int count, char* name); [in C]elem:busy_cb(status,count: number, name: string) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<status>: can be 1=process started, 2=iteration, 0=process finished.
+
+B<count>: when status=1 is the total number of iterations. when
+status=2 is the current iteration. ignored when status=0.
+
+B<name>: valid only when status=1, otherwise is NULL. Can be
+"PASTECLIP", "PASTEDATA", "PASTEFILE", "COPYCOLTO:ALL",
+"COPYCOLTO:TOP", "COPYCOLTO:BOTTOM", "COPYCOLTO:MARKED",
+"COPYCOLTO:INTERVAL", "UNDO" or "REDO".
+
+Returns: When status=2 and IUP_IGNORE is returned the processing is
+aborted. When process is aborted the callback will be called once more
+with status=0.
+
+X<NUMERICGETVALUE_CB>B<NUMERICGETVALUE_CB>: Action generated when a
+cell value is being retrieved from a numeric column. It is only called
+if the cell value is NULL in normal mode, or the
+L<VALUE_CB|iupmatrix_cb.html#VALUE_CB> returned value is NULL in
+callback mode, and the column has B<NUMERICQUANTITYI<id > >defined. Not
+called for lin=0.
+
+ double function(Ihandle* ih, int lin, int col); [in C]
+ elem:numericgetvalue_cb(lin, col: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<lin>, B<col>: coordinates of the cell.
+
+Returns: the number to be drawn.
+
+X<NUMERICSETVALUE_CB>B<NUMERICSETVALUE_CB>: Action generated when a
+cell value is being modified at a numeric column. It is only called if
+the column has B<NUMERICQUANTITYI<id > >defined. Not called for lin=0.
+If defined the value will not be updated as string in normal mode and
+L< VALUE_EDIT_CB|iupmatrix_cb.html#VALUE_EDIT_CB> will not be called in
+callback mode.
+
+ int function(Ihandle* ih, int lin, int col, double value); [in C]
+ elem:numericsetvalue_cb(lin, col, value: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<lin>, B<col>: coordinates of the cell.
+
+B<value>: new value of the cell.
+
+B<X<MENUCONTEXT_CB>MENUCONTEXT_CB>: Action generated after the context
+menu is created but before it is displayed, so the application can add
+or removed items from the menu.
+
+ int function(Ihandle* ih, Ihandle* menu, int lin, int col); [in C]elem:menucontext_cb(menu: ihandle, lin, col: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<menu>: identifier of the menu that will be shown to the user.
+
+B<lin>, B<col>: coordinates of the cell.
+
+B<X<PASTESIZE_CB>PASTESIZE_CB>: Action generated when pasting and data
+at the insert position will have more lines or columns than the current
+matrix. The application can change the NUMLIN and NUMCOL attributes to
+receive the new data.
+
+ int function(Ihandle* ih, int num_lin, int num_col); [in C]elem:pastesize_cb(num_lin, num_col: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<status>: can be 1=process started, 2=iteration, 0=process finished.
+
+B<count>: when status=1 is the total number of iterations. when
+status=2 is the current iteration. ignored when status=0.
+
+B<name>: valid only when status=1, otherwise is NULL. Can be "PASTE",
+"PASTEDATA", "PASTEFILE".
+
+Returns: if returns IUP_IGNORE the process will be aborted. if returns
+IUP_CONTINUE, the NUMLIN and NUMCOL attributes will be automatically
+changed to the given values. Otherwise and if the callback does not
+exist nothing is done, and the exceeding data will be discarded.
+
+B<X<SORTCOLUMNCOMPARE_CB>SORTCOLUMNCOMPARE_CB>: Action generated when
+sorting data in a column to compare two cell values.
+
+ int function(Ihandle* ih, int col, int lin1, int lin2); [in C]elem:sortcolumncompare_cb(col,lin1,lin2: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<col>: column being sorted.
+
+B<lin1>, B<lin2>: the line numbers of the two cells being compared.
+
+Returns: must return 0 if "col:lin1==col:lin2", -1 if
+"col:lin1E<lt>col:lin2", and 1 if "col:lin1E<gt>col:lin2".
+
+=head2 Auxiliary Functions
+
+ void IupMatrixExInit(Ihandle* ih); [in C]
+ iup.MatrixExInit(ih: ihandle) [in Lua]
+
+Register the new attributes and callbacks in a regular B<IupMatrix>
+control.
+
+=head2 Notes
+
+=head2 Context Menu
+
+The library adds a context menu where the user can execute the new
+features. If the matrix is read-only some of the features are not
+shown.
+
+ Export
+ 	Txt...       => Shows a file selection dialog and saves the cells to a file.
+ 	LaTeX...     => ( " )
+ 	Html...      => (  " )
+ Import
+ 	Txt...       => Shows a file selection dialog and loads the cells from a file.
+ Undo                => Undo 1 level
+ Redo                => Redo 1 level
+ Undo List...        => Show the Undo Dialog
+ Cut                 => Copy + Clear Cell Values
+ Copy                => Copy to Clipboard
+ Paste               => Paste from Clipboard
+ Erase               => Clear Cell Values
+ Find...             => Show the Find Dialog
+ Go To...            => Show the Go To Cell Dialog
+ Sort...             => Show the Sort Dialog
+ Freeze/UnFreeze     => Makes the current cell a non scrollable point / Reset to default
+ Visibility
+ 	Hide Column
+ 	Show Hidden Columns
+ 	Hide Line
+ 	Show Hidden Lines
+ Numeric Units... / Numeric Decimals...   => Show Numeric Units Dialog or Numeric Decimals Dialog
+ Copy To (Same Column)    Copy cell value to other lines in the same column
+ 	All Lines       => Copy To All Lines
+ 	Here to Top     => Copy From the Current Cell to L=0
+ 	Here to Bottom  => Copy From the Current Cell to L=NUMLIN
+ 	Interval...     => Show "Copy To - Interval" Dialog
+ 	Selected Lines  => Copy to the Selected Cells
+
+=head2 Dialogs
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+[IMAGE]
+
+=head2 Shortcut Keys
+
+The library adds some shortcut keys to the already implemented in B<
+IupMatrix>:
+
+ Ctrl+A (English)    => Select All
+ Ctrl+T (Portuguese) => Select All
+ Ctrl+X              => Cut (Copy + Clear Cell Values)
+ Ctrl+C              => Copy to Clipboard
+ Ctrl+V              => Paste from Clipboard
+ Ctrl+Z              => Undo 1 level
+ Ctrl+Y (English)    => Redo 1 level
+ Ctrl+R (Portuguese) => Redo 1 level
+ Ctrl+F (English)    => Show the Find Dialog
+ Ctrl+L (Portuguese) => Show the Find Dialog
+ Alt+F3              => Show the Find Dialog
+ Esc                 => Hide the Find Dialog
+ F3                  => Find Next
+ Shift+F3            => Find Previous
+ Ctrl+G              => Show the Go To Cell Dialog
+
+=head2 X<UNITS>Available Quantity and Units
+
+Unit names, symbols and conversion factors were almost all based on:
+
+L<http:E<47>E<47>en.wikipedia.orgE<47>wikiE<47>Conversion_of_units|http://en.wikipedia.org/wiki/Conversion_of_units>
+
+By definition, unit names and symbols follow the case displayed in the
+table. When setting the NUMERICQUANTITY and NUMERICUNIT attributes use
+English names, the case is insensitive and spaces are ignored. Some
+Quantities have alternative names, once used the returned values in the
+attribute will be the same alternative name. For example, you can use
+"Specific Weight" or "SPECIFICWEIGHT", and you can use "Speed" or
+"Velocity".
+
+All numeric attributes can be set without the element being mapped to
+the native system, so the B<IupMatrixEx> element can also be used as a
+Quantity Units database.
+
+The unit used as a reference for conversion is always the first unit
+listed, and it is the unit defined by the L< International System of
+Units|http://en.wikipedia.org/wiki/International_System_of_Units> (SI).
+The American spell can be used setting B<NUMERICUNITSPELL=AMERICAN.>
+
+NOTICE: These are only a small set of commonly used units. If you need
+other units, please let us know so we can include them.
+
+Obs: "g" in Comments is the standard gravity. All Quantity and Unit
+names are described in English. The symbols that have extended
+characters will work in ISO8859-1 and in UTF-8, according to the
+UTF8MODE global attribute. The cell background colors are just for
+clarity and do not imply in any standard classification.
+
+Quantity
+
+NUMERICQUANTITY
+
+Units
+
+NUMERICUNIT
+
+Symbol
+
+NUMERICUNITSYMBOL
+
+Comments
+
+Time
+
+second
+
+minute
+
+hour
+
+day
+
+week
+
+millisecond
+
+microsecond
+
+s
+
+min
+
+h
+
+d
+
+wk
+
+ms
+
+s
+
+Mass
+
+kilogram
+
+gram
+
+tonne
+
+pound
+
+ounce
+
+kg
+
+g
+
+t
+
+lb
+
+oz
+
+- (CGS Unit)
+
+- metric ton
+
+- (international avoirdupois)
+
+- oz = lb / 16
+
+Temperature
+
+Kelvin
+
+degree Celsius
+
+degree Fahrenheit
+
+degree Rankine
+
+K
+
+C
+
+F
+
+Ra
+
+Length
+
+metre
+
+millimetre
+
+centimetre
+
+kilometre
+
+nanometre
+
+angstrom
+
+micron
+
+inch
+
+foot
+
+yard
+
+mile
+
+nautical mile
+
+m
+
+mm
+
+cm
+
+km
+
+nm
+
+in
+
+ft
+
+yd
+
+mi
+
+NM
+
+- (CGS Unit)
+
+- micrometre
+
+- in = 25.4 mm (international)
+
+- ft = 12 in (international)
+
+- yd = 3 ft (international)
+
+- mi = 1760 yd (international)
+
+- NM = 6080 ft (Admiralty)
+
+Area
+
+square metre
+
+square centimetre
+
+square millimetre
+
+square inch
+
+square foot
+
+square kilometre
+
+square yard
+
+square mile
+
+acre
+
+hectare
+
+m
+
+cm
+
+mm
+
+sq in
+
+sq ft
+
+km
+
+sq yd
+
+sq mi
+
+ac
+
+ha
+
+- (CGS Unit)
+
+- ac = 4840 sq yd
+
+Volume
+
+cubic metre
+
+cubic centimetre
+
+cubic millimetre
+
+cubic kilometre
+
+cubic inch
+
+cubic foot
+
+cubic mile
+
+cubic yard
+
+litre
+
+gallon
+
+barrel
+
+m
+
+cm
+
+mm
+
+km
+
+cu in
+
+cu ft
+
+cu mi
+
+cu yd
+
+L
+
+gal
+
+bl
+
+- (CGS Unit)
+
+- gal = 231 cu in (US fluid; Wine)
+
+- bl = 42 gal (petroleum)
+
+Angle
+
+radian
+
+degree
+
+gradian
+
+rad
+
+grad
+
+Speed
+
+(or Velocity)
+
+metre per second
+
+inch per second
+
+foot per second
+
+kilometre per hour
+
+centimetre per second
+
+mile per hour
+
+knot
+
+m/s
+
+in/s
+
+ft/s
+
+km/h
+
+cm/s
+
+mph
+
+kn
+
+- (CGS Unit)
+
+- kn = NM/h
+
+Angular Speed
+
+(or Angular Frequency)
+
+radian per second
+
+radian per minute
+
+degree per second
+
+degree per minute
+
+Hertz
+
+revolution per minute
+
+rad/s
+
+rad/min
+
+deg/s
+
+deg/min
+
+Hz
+
+rpm
+
+- revolution per second (frequency)
+
+Acceleration
+
+metre per second squared
+
+inch per second squared
+
+knot per second
+
+mile per second squared
+
+standard gravity
+
+m/s
+
+in/s
+
+kn/s
+
+mi/s
+
+g
+
+Kinematic Viscosity
+
+square metre per second
+
+square foot per second
+
+stokes
+
+m/s
+
+ft/s
+
+St
+
+- (CGS Unit)
+
+Dynamic Viscosity
+
+pascal second
+
+poise
+
+pound per foot hour
+
+pound per foot second
+
+Pas
+
+P
+
+lb/(fth)
+
+lb/(fts)
+
+Flow
+
+cubic metre per second
+
+cubic inch per second
+
+cubic foot per second
+
+m/s
+
+in/s
+
+ft/s
+
+Force
+
+Newton
+
+Kilonewton
+
+dyne
+
+kilogram-force
+
+pound-force
+
+kip-force
+
+ton-force
+
+N
+
+kN
+
+dyn
+
+kgf
+
+lbf
+
+kip
+
+tnf
+
+E<61> kgm/s
+
+E<61> gcm/s (CGS Unit)
+
+- lbf = g lb
+
+- kip = g 1000 lb
+
+- tnf = g 2000 lb
+
+Pressure
+
+(or Mechanical Stress)
+
+Pascal
+
+kilopascal
+
+atmosphere
+
+millimetre of mercury
+
+bar
+
+torr
+
+pound per square inch
+
+kip per square inch
+
+Pa
+
+kPa
+
+atm
+
+mmHg
+
+bar
+
+torr
+
+psi
+
+ksi
+
+- Pa = N/m = kg/(ms)
+
+- (standard)
+
+E<61> mmHg =13595.1 kg/mmmg
+
+- psi = lbf/sq in
+
+- ksi = kip/sq in
+
+Force per length
+
+(or Linear Weight)
+
+Newton per metre
+
+Kilonewton per metre
+
+kilogram-force per metre
+
+ton-force per metre
+
+N/m
+
+kN/m
+
+kgf/m
+
+tnf/m
+
+E<61> kg/s
+
+Torque
+
+(or Moment of Force)
+
+Newton metre
+
+kilogram-force metre
+
+ton-force metre
+
+Newton centimetre
+
+kilogram-force centimetre
+
+ton-force centimetre
+
+Kilonewton-metre
+
+metre kilogram
+
+Nm
+
+kgfm
+
+tnfm
+
+Ncm
+
+kgfcm
+
+tnfcm
+
+kNm
+
+mkg
+
+E<61> kgm/s
+
+Specific Mass
+
+(or Density)
+
+kilogram per cubic metre
+
+gram per cubic centimetre
+
+gram per millilitre
+
+kilogram per litre
+
+pound per cubic foot
+
+pound per cubic inch
+
+pound per gallon
+
+kg/m
+
+g/cm
+
+g/mL
+
+kg/L
+
+lb/ft
+
+lb/in
+
+lb/gal
+
+Specific Weight
+
+Newton per cubic metre
+
+Kilonewton per cubic metre
+
+kilogram-force per cubic metre
+
+ton-force per cubic metre
+
+kilogram-force per litre
+
+pound-force per cubic foot
+
+N/m
+
+kN/m
+
+kgf/m
+
+tnf/m
+
+kgf/L
+
+lbf/ft
+
+Energy
+
+Joule
+
+Kilojoule
+
+calorie
+
+kilocalorie
+
+British Thermal Unit
+
+Kilowatt-hour
+
+horsepower-hour
+
+J
+
+kJ
+
+cal
+
+kcal
+
+BTU
+
+kW.h
+
+hp.h
+
+E<61> mN = kgm/s
+
+- (International Table)
+
+- (International Table)
+
+Power
+
+(or Heat Flow Rate)
+
+Watt
+
+Kilowatt
+
+calorie per second
+
+horsepower
+
+W
+
+kW
+
+cal/s
+
+hp
+
+E<61> J/s = Nm/s = kgm/s
+
+- (International Table)
+
+- hp = 550 ft lbf/s (imperial mechanical)
+
+Electric Charge
+
+Coulomb
+
+Faraday
+
+milliampere hour
+
+C
+
+F
+
+mAh
+
+E<61> As
+
+Illuminance
+
+lux
+
+footcandle
+
+lumen per square inch
+
+phot
+
+lx
+
+fc
+
+lm/in
+
+ph
+
+- lm/m
+
+- lumen per square foot
+
+Fraction
+
+percentage
+
+per one
+
+per ten
+
+per thousand
+
+%
+
+/1
+
+/10
+
+/1000
+
+None
+
+Use numeric values
+
+but without quantity.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=head2 X<SeeAlso>See Also
+
+L<IupMatrix|iupmatrix.html>
+
+=cut

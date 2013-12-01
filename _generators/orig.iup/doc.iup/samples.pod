@@ -6,8 +6,8 @@ The following example creates a dialog with virtually all of IUP
 standard elements as well as some variations of them, with some
 attributes changed. The same example is implemented in C, LED and Lua.
 The C code is ready to compile. The LED code can be loaded and viewed
-in the B<IupView> application. The Lua code can be loaded and executed
-in the B<IupLua> standalone application.
+in the L<IupView|executables.html> application. The Lua code can be
+loaded and executed in the B<IupLua> standalone application.
 
 in C
 

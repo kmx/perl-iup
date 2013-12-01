@@ -49,7 +49,7 @@ B< Natural> size. In this case they usually have SIZE or RASTERSIZE
 pre-set.
 
 To obtain the last computed B<Natural> size of the control in pixels,
-use the read-only attribute B<NATURALSIZE>.
+use the read-only attribute L<NATURALSIZE|attrib/iup_naturalsize.html>.
 
  dlg = iup.dialog
  {
@@ -263,8 +263,7 @@ L<IupRefresh|func/iuprefresh.html>, even if the dialog is not mapped.
 After changing containers attributes or element sizes that affect the
 layout the elements are NOT immediately repositioned. Call
 B<IupRefresh> for an element inside the dialog to update the dialog
-layout. To force a redraw of an element without layout update call
-L<IupUpdate|func/iupupdate.html>.
+layout.
 
 The Layout update is done in two phases. First the layout is computed,
 this can be done without the dialog being mapped. Second is the native
@@ -293,5 +292,35 @@ the inner elements on the layout hierarchy, after all sizes are
 computed.
 
 =back
+
+=head2 X<Update>Element Update
+
+Usually IUP automatically updates everything for the application, for
+instance there is no need to force a display update after an attribute
+is changed. But there are some situations where you need to force an
+update. Here is a summary of the functions that can be used to update
+an element state:
+
+L<IupUpdate|func/iupupdate.html> - update the element look by letting
+the system to schedule a redraw. Rarely used.
+
+L<IupRedraw|func/iupredraw.html> - has the same effect of B< IupUpdate>
+but forces the element to redraw now.
+
+L<IupRefresh|func/iuprefresh.html> - if the application changed some
+attribute that affects the natural size, for instance SIZE or
+RASTERSIZE among others, the actual element size is NOT immediately
+updated. That's because it can affect the size and position of other
+elements in the dialog. B<IupRefresh> will force an update in the
+layout of the hole dialog, and of course if an element has its size
+changed its appearance will be automatically updated.
+
+L<IupFlush|func/iupflush.html> - process all events that are waiting to
+be processed. When you set an attribute, a system event is generated,
+but it will wait until is processed by the event loop. Sometimes the
+application needs an immediate result, so calling B<IupFlush> will
+process that event but it will also process every other event that was
+waiting to be processed, so other callbacks could be trigger during
+B<IupFlush> call.
 
 =cut

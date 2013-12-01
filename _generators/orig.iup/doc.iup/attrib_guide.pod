@@ -9,27 +9,11 @@ application to receive notifications from the system that the user or
 the system itself has interacted with the user interface of the
 application.
 
-There are two functions to change them:
+There are several functions to access attributes, see the documentation
+of the L<IupSetAttribute|func/iupsetattribute.html> and
+L<IupGetAttribute|func/iupgetattribute.html> for more options.
 
-=over
-
-=item * B<IupSetAttribute> stores only a pointer to the string and does
-not duplicate it.
-
-=item * B<IupStoreAtribute> duplicates the string, allowing you to use
-it for other purposes.
-
-=back
-
-With B<IupSetAttribute> you can also store application pointers that
-can be strings or not. This can be very useful, for instance, used
-inside B<callbacks>. For example, by storing a C pointer of an
-application defined structure, the application can retrieve this
-pointer inside the callback through function B<IupGetAttribute>.
-Therefore, even if the callbacks are global functions, the same
-callback can be used for several objects, even of different types.
-
-When an attribute is updated (B<Set>) it is stored internally at the
+When an attribute is modified (B<Set>) it is stored internally at the
 hash table of the control only if the control class allows it. If the
 value is NULL, the attribute will also be removed from the hash table
 and the default value will be used if there is one defined. Finally the
@@ -67,10 +51,39 @@ Attribute names are always upper case, lower case names will not work.
 But attribute values like "YES", "NO", "TOP", are case insensitive, so
 "Yes", "no", "top", and other variations will work.
 
-Boolean attributes accept the values "1", "YES", "ON" or "TRUE" for
-B<true>, and NULL (not defined), "0", "NO", "OFF" or "FALSE" for
-B<false>, even if in the documentation is only one of these
-combinations.
+Boolean attributes accept the values "1", "YES" or "ON" for B<true>,
+and "0", "NO" or "OFF" for B<false>. But they will return the value
+described in the documentation. You can also use B<IupSetInt> with 1
+for B<true> and 0 for B<false>. B<IupGetInt> will return 1 for any of
+the B<true> values, and 0 for any of the B<false> values.
+
+Floating point numbers when stored as strings use the application
+locale for decimal separator. Notice that by default C applications use
+the C locale, not the current system locale, in this case decimal
+separator is ".".
+
+Combination of values in a single attribute is common, but there is no
+specific definitions on how they can be combined. Although all
+attributes that represent sizes using width and height adopt the "WxH"
+definition, for example "640x480". Position usually adopt "x,y"
+definition, range is usually "x1-x2" but can also be "x1:x2", so there
+are variations that for compatibility reasons were maintained. Cell
+specification is always "lin:col".
+
+With B<IupSetAttribute> you can also store application pointers that
+can be strings or not. This can be very useful, for instance, used
+inside B<callbacks>. For example, by storing a C pointer of an
+application defined structure, the application can retrieve this
+pointer inside the callback through function B<IupGetAttribute>.
+Therefore, even if the callbacks are global functions, the same
+callback can be used for several objects, even of different types.
+
+Some controls, like B<IupList>, B<IupTree>, B<IupTabs> and
+B<IupMatrix>, have ids associated with some attributes so its value
+will affect only the respective id item in the control. For example:
+"TITLE3" will set the TITLE attribute for the item 3. To set that kind
+of attribute B<IupSetAttribute> can be used, but B<IupSetAttributeId>
+can also be used specially if the id is a variable.
 
 There are attributes common to all the elements. In some cases, common
 attributes behave differently in different elements, but in such cases,

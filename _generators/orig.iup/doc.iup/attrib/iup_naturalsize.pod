@@ -1,0 +1,17 @@
+=head1 NATURALSIZE (non inheritable, read-only)
+
+Returns the element last computed B<Natural> size in pixels.
+
+See the L<Layout Guide|../layout_guide.html> for more details on sizes.
+
+=head2 Value
+
+"I<width>xI<height>", where I<width> and I<height> are integer values
+corresponding to the horizontal and vertical size, respectively, in
+pixels.
+
+=head2 See Also
+
+L<SIZE|iup_size.html>, L<RASTERSIZE|iup_rastersize.html>
+
+=cut

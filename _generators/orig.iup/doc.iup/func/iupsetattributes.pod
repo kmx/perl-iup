@@ -14,10 +14,6 @@ where vi is the name of an attribute and ai is its value.
 
 Returns: the same B<ih>.
 
-=head2 Notes
-
-Internally will call B<IupStoreAttribute>.
-
 =head2 Examples
 
 This function returns the same Ihandle it receives. This way, it is a
@@ -40,8 +36,6 @@ option.
 
 L<IupGetAttribute|iupgetattribute.html>,
 L<IupSetAttribute|iupsetattribute.html>,
-L<IupGetAttributes|iupgetattributes.html>,
-L<IupStoreAttribute|iupstoreattribute.html>,
-L<IupSetAtt|iupsetatt.html>
+L<IupGetAttributes|iupgetattributes.html>, L<IupSetAtt|iupsetatt.html>
 
 =cut

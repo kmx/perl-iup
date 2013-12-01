@@ -28,9 +28,9 @@ value is "YES". See the documentation of the attribute for EXPAND
 inheritance.
 
 B<EXPANDCHILDREN> (non inheritable): forces all children to expand
-horizontally. Default: "NO". This has the same effect as setting
-EXPAND=HORIZONTAL on each child, but their vertical expansion will be
-preserved. (since 3.0)
+horizontally and to fully occupy its space available inside the box.
+Default: "NO". This has the same effect as setting EXPAND=HORIZONTAL on
+each child, but the box expansion will not be affected. (since 3.0)
 
 B<GAP, CGAP>: Defines a vertical space in pixels between the children,
 B<CGAP> is in the same units of the B<SIZE> attribute for the height.
@@ -40,10 +40,9 @@ B<NGAP, NCGAP> (non inheritable): Same as B< GAP> but are non
 inheritable. (since 3.0)
 
 B<HOMOGENEOUS> (non inheritable): forces all children to get equal
-vertical space. The natural size height will be based on the highest
-child. Default: "NO". Notice that this does not changes the children
-size, only the available space for each one of them to expand. (since
-3.0)
+vertical space. The space height will be based on the highest child.
+Default: "NO". Notice that this does not changes the children size,
+only the available space for each one of them to expand. (since 3.0)
 
 B<MARGIN, CMARGIN>: Defines a margin in pixels, B<CMARGIN >is in the
 same units of the B< SIZE> attribute. Its value has the format
@@ -58,7 +57,8 @@ B<NORMALIZESIZE> (non inheritable): normalizes all children natural
 size to be the biggest natural size among them. All natural width will
 be set to the biggest width, and all natural height will be set to the
 biggest height according to is value. Can be NO, HORIZONTAL, VERTICAL
-or BOTH. Default: "NO". (since 3.0)
+or BOTH. Default: "NO". Same as using
+L<IupNormalizer|iupnormalizer.html>. (since 3.0)
 
 L<SIZE|../attrib/iup_size.html> /
 L<RASTERSIZE|../attrib/iup_rastersize.html> (non inheritable): Defines

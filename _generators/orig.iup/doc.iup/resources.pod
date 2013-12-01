@@ -35,6 +35,10 @@ or in Lua:
  }
  myButton = iupbutton { title = "", image = myImg }
 
+The L<IupView|executables.html> application is capable of converting
+several image formats into an B<IupImage>, and save an B<IupImage> as
+LED, Lua or ICO.
+
 Only dialogs, timers, popup menus and images can be destroyed. Menu
 bars associated with dialogs are automatically destroyed.
 

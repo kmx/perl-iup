@@ -17,11 +17,12 @@ B<size>: Number of options
 B<list>: List of options. Must have B<size> elements
 
 B<op>: Initial selected item when type=1. starts at 1 (note that this
-index is different from the return value, kept for compability reasons)
+index is different from the return value, kept for compatibility
+reasons)
 
-B<max_col>: Maximum number of columns in the list
+B<max_col>: number of visible columns in the list
 
-B<max_lin>: Maximum number of lines in the list
+B<max_lin>: number of visible lines in the list
 
 B<marks>: List of the items selection state, used only when type=2. Can
 be NULL when type=1. When type=2 must have B<size> elements

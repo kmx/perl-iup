@@ -16,6 +16,8 @@ and events similarly to the other IUP elements.
 
 Notice that this control works only on Windows.
 
+When linking with GCC add the "oleaut32" to the list of libraries.
+
 =head2 Initialization and usage
 
 The B<IupOleControlOpen> function must be called after a B<IupOpen>, so

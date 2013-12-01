@@ -1,7 +1,7 @@
 =head1 IupPPlot
 
-Creates a PPlot plot. It inherits from
-L<IupCanvas|../elem/iupcanvas.html>.
+Creates a plot of one or more data sets. It inherits from
+L<IupCanvas|../elem/iupcanvas.html>. Uses the PPlot library.
 
 PPlot is a library for creating plots that is system independent. It is
 maintained by Pier Philipsen (pierphil@xs4all.nl) and available at
@@ -79,12 +79,16 @@ combination is pressed the zoom selection is restricted to the Y axis,
 the X axis will be left unchanged. If the B<Ctrl+R> key combination is
 pressed the zoom selection is restored to a free rectangle.
 
+The mouse B<Wheel> will pan in the vertical direction, and when
+B<Shift> is pressed will pan in the horizontal direction. (Since 3.9)
+
 Each zoom in operation is stacked, so each zoom out operation goes back
 the the previous zoom selection.
 
 Zoom operates on B<AXS_XMAX, AXS_XMIN, AXS_YMAX, AXS_YMIN> even if B<
 AUTOMIN/MAX> is enabled. The axis may be hidden depending on the
-selected rectangle.
+selected rectangle. The B< AUTOMIN/MAX> attributes will be disabled
+during zoom in, and restored when zoom out completely.
 
 =head2 CrossHair Cursor
 
@@ -161,8 +165,8 @@ Notice that DS_MODE must be set before other "DS_*" attributes.
 
  void IupPPlotInsert(Ihandle *ih, int index, int sample_index, float x, float y); [in C]
  void IupPPlotInsertStr(Ihandle *ih, int index, int sample_index, const char* x, float y);
- iup.IupPPlotInsert(ih: ihandle, index, sample_index, x, y: number) [in Lua]
- iup.IupPPlotInsertStr(ih: ihandle, index, sample_index, x, y: number)
+ iup.PPlotInsert(ih: ihandle, index, sample_index, x, y: number) [in Lua]
+ iup.PPlotInsertStr(ih: ihandle, index, sample_index: number, x: string, y: number)
 
 Inserts a sample in a dataset at the given B<sample_index>. Can be used
 only after the dataset is added to the plot.
@@ -171,8 +175,8 @@ only after the dataset is added to the plot.
 
  void IupPPlotInsertPoints(Ihandle *ih, int index, int sample_index, float* x, float* y, int count); [in C]
  void IupPPlotInsertStrPoints(Ihandle *ih, int index, int sample_index, const char** x, float* y, int count);
- iup.IupPPlotInsertPoints(ih: ihandle, index, sample_index, x, y: table of number) [in Lua]
- iup.IupPPlotInsertStrPoints(ih: ihandle, index, sample_index, x, y: table of number)
+ iup.PPlotInsertPoints(ih: ihandle, index, sample_index: number, x, y: table of number) [in Lua]
+ iup.PPlotInsertStrPoints(ih: ihandle, index, sample_index: number, x, y: table of number)
 
 Inserts an array of samples in a dataset at the given B<sample_index>.
 Can be used only after the dataset is added to the plot. (Since 3.4)
@@ -181,8 +185,8 @@ Can be used only after the dataset is added to the plot. (Since 3.4)
 
  void IupPPlotAddPoints(Ihandle *ih, int index, float* x, float* y, int count); [in C]
  void IupPPlotAddStrPoints(Ihandle *ih, int index, const char** x, float* y, int count);
- iup.IupPPlotAddPoints(ih: ihandle, index, x, y: table of number) [in Lua]
- iup.IupPPlotAddStrPoints(ih: ihandle, index, x, y: table of number)
+ iup.PPlotAddPoints(ih: ihandle, index: number, x, y: table of number) [in Lua]
+ iup.PPlotAddStrPoints(ih: ihandle, index: number, x, y: table of number)
 
 Adds an array of samples in a dataset at the end. Can be used only
 after the dataset is added to the plot. (Since 3.4)
@@ -206,30 +210,62 @@ Plots to the given CD canvas instead of the display canvas.
 
 =head2 Attributes
 
-B<REDRAW> (write-only) (non inheritable): redraw the plot and update
+B<REDRAW> (write-only) (non inheritable): redraw all plots and update
 the display. Value is ignored. All other attributes will B<NOT> update
 the display, so you can set many attributes without visual output.
+
+B<SYNCVIEW> (non inheritable): when a plot view is changed by
+interactive zoom or pan, the other plots are zoomed or panned
+accordingly. (since 3.9)
 
 B<USE_IMAGERGB >(non inheritable): defines if the double buffer will
 use standard driver image (NO - faster) or an RGB image (YES - slower).
 Default: NO. The IMAGERGB driver has anti-aliasing which can improve
 the line drawing.
 
-B<USE_GDI>+ [Windows Only] (non inheritable): defines if the double
-buffer will use GDI+ (YES) for drawing or standard GDI (NO). Default:
-NO. The GDI+ driver has anti-aliasing which can improve the line
-drawing.
+B<USE_CONTEXTPLUS> (non inheritable): defines if the CD canvas will use
+ContextPlus drivers (YES) for drawing or standard drivers (NO).
+Default: NO. The ContextPlus drivers has anti-aliasing which can
+improve the line drawing. (renamed from USE_GDI+ in 3.8)
+
+=head2 Multiple Plots Management (non inheritable) (since 3.9)
+
+B<PLOT_COUNT>: defines the number of multiple plots in the same
+control. Default: 1. The minimum value is 1. If set to a smaller value
+will automatically remove the remaining plots. If set to a larger value
+will automatically add new plots at the end. The maximum number of
+plots is 20.
+
+B<PLOT_NUMCOL>: defines the number of columns for multiple plot.
+Default: 1. The plots will fill the space starting at the first line at
+the top from left to right. If there is not enough plots to fill all
+columns an empty space will be displayed.
+
+B<PLOT_CURRENT>: current plot index. Default: 0. All plot attributes
+are dependent on this value. When set can use also the B<TITLE > name
+as value.
+
+B<PLOT_INSERT> (write-only): inserts a new plot at the given index. If
+value is NULL will append after the last plot. Value can also be the
+TITLE of an existing plot. When a new plot is inserted it becomes the
+current plot.
+
+B<PLOT_REMOVE> (write-only): removes a plot given its index. If value
+is NULL the current plot is removed. Value can also be the TITLE of an
+existing plot.
+
+=head2 Plot Configuration (non inheritable)
 
 B<L<FONT|../attrib/iup_font.html>>: the default font used in all text
 elements of the plot: title, legend and labels.
 
-B<L<BGCOLOR|../attrib/iup_bgcolor.html>>: the background color. The
-default value is white "255 255 255".
+B<L<BGCOLOR|../attrib/iup_bgcolor.html>>: the background color of the
+plot. The default value is white "255 255 255".
 
 B<MARGINLEFT, MARGINRIGHT, MARGINTOP, MARGINBOTTOM >(non inheritable):
-margin of the dataset area. PPlot implementation demands that margins
-must be set so the plot is not cropped. Default: "15", "15", "30",
-"15".
+margin of the dataset area in pixels. PPlot implementation demands that
+margins B<must be set >so the plot is not cropped. Default: "15", "15",
+"30", "15".
 
 =head2 Title Configuration (non inheritable)
 
@@ -242,7 +278,8 @@ area.
 B<TITLEFONTSIZE, TITLEFONTSTYLE >(non inheritable): the title font size
 and style. The default values depends on the FONT attribute and the
 returned value is NULL. Set to NULL, to use the FONT attribute values.
-Style can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC".
+Style can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC". The size is
+provided in points (1/72 inch) or in pixels (using negative values).
 
 =head2 Legend Configuration (non inheritable)
 
@@ -250,7 +287,10 @@ B<LEGENDSHOW>: shows or hides the legend box. Can be YES or NO.
 Default: NO.
 
 B<LEGENDPOS>: legend box position. Can be: "TOPLEFT", "TOPRIGHT",
-"BOTTOMLEFT", or "BOTTOMRIGHT. Default: "TOPRIGHT".
+"BOTTOMLEFT", "BOTTOMRIGHT, or "BOTTOMCENTER". Default: "TOPRIGHT". The
+legend box is displayed inside the plot area, except for BOTTOMCENTER
+that is displayed bellow the plot area, along with the axis.
+("BOTTOMCENTER" since 3.9)
 
 B<LEGENDFONTSIZE, LEGENDFONTSTYLE>: the legend box text font size and
 style.
@@ -268,7 +308,10 @@ B<GRIDCOLOR>: grid color. Default: "200 200 200".
 
 =head2 Dataset List Management (non inheritable)
 
-B<REMOVE> (write-only): removes a dataset given its index.
+B<REMOVE> (write-only): removes a dataset given its index or its
+B<DS_LEGEND> name (DS_LEGEND since 3.9). Notice that after removing a
+dataset the other datasets indices that are greater than the given
+index will be updated.
 
 B<CLEAR> (write-only): removes all datasets. Value is ignored.
 
@@ -276,7 +319,8 @@ B<COUNT> [read-only]: total number of datasets.
 
 B<CURRENT>: current dataset index. Default is -1. When a dataset is
 added it becomes the current dataset. The index starts at 0. All "DS_*"
-attributes are dependent on this value.
+attributes are dependent on this value. When set can use also the
+B<DS_LEGEND> name as value (since 3.9).
 
 =head2 Dataset Configuration (non inheritable)
 
@@ -284,9 +328,12 @@ B<DS_LEGEND>: legend text of the current dataset. Default is
 dynamically generated: "plot 0", "plot 1", "plot 2", ...
 
 B<DS_COLOR>: color of the current dataset and it legend text. Default
-is dynamically generated for the 6 first datasets, others are default
-to black "0 0 0". The first 6 are: 0="255 0 0", 1="0 0 255", 2="0 255
-0", 3="0 255 255", 4="255 0 255", 5="255 255 0".
+is dynamically set from the list "255 0 0", "0 255 0", "0 0 255", "0
+255 255", "255 0 255", "255 255 0", "128 0 0", "0 128 0", "0 0 128", "0
+128 128", "128 0 128", "128 128 0". If the color is not already being
+used in an existent dataset then it is used as the new default. If all
+defaults are used then black is used "0 0 0". (added more colors and
+existing check since 3.9)
 
 B<DS_COUNT>: returns the number of samples of the current dataset.
 (since 3.6)
@@ -305,7 +352,7 @@ B<DS_MARKSTYLE>: mark style of the current dataset. Can be: "PLUS",
 "STAR", "CIRCLE", "X", "BOX", "DIAMOND", "HOLLOW_CIRCLE", "HOLLOW_BOX",
 "HOLLOW_DIAMOND". Default is "X".
 
-B<DS_MARKSIZE>: mark size of the current dataset. Default: 7.
+B<DS_MARKSIZE>: mark size of the current dataset in pixels. Default: 7.
 
 B<DS_SHOWVALUES>: enable or disable the display of the values near each
 sample. Can be YES or NO. Default: NO.
@@ -323,11 +370,13 @@ B<AXS_XCOLOR, AXS_YCOLOR>: axis, ticks and label color. Default: "0 0
 
 B<AXS_XMAX, AXS_XMIN, AXS_YMAX, AXS_YMIN>: minimum and maximum
 displayed values of the respective axis. Automatically calculated
-values when AUTOMIN or AUTOMAX are enabled.
+values when AUTOMIN or AUTOMAX are enabled. Interactive zoom will
+change this values during run time.
 
 B<AXS_XAUTOMIN, AXS_XAUTOMAX, AXS_YAUTOMIN, AXS_YAUTOMAX>: configures
 the automatic scaling of the minimum and maximum display values. Can be
-YES or NO. Default: YES.
+YES or NO. Default: YES. They will be disabled during zoom in and
+restored when zoom out completely.
 
 B<AXS_XLABEL, AXS_YLABEL>: text label of the respective axis.
 
@@ -362,7 +411,9 @@ AXS_YTICKFONTSTYLE>: axis tick number font size and style. See
 TITLEFONTSIZE and TITLEFONTSTYLE.
 
 B<AXS_XAUTOTICK>, B<AXS_YAUTOTICK: >configures the automatic tick
-spacing. Can be YES or NO. Default: YES.
+spacing. Can be YES or NO. Default: YES. Notice that when enabled the
+attributes B< *TICKMAJORSPAN>,B< *TICKDIVISION>, and B<*TICKFORMAT> are
+affected during tick computation.
 
 B<AXS_XTICKMAJORSPAN>, B<AXS_YTICKMAJORSPAN>: The spacing between major
 ticks. Default is 1 when AUTOTICK is disabled.
@@ -405,6 +456,8 @@ once for each selected point.
  int function(Ihandle *ih, int index, int sample_index, float x, float y); [in C]
  elem:delete_cb(index, sample_index, x, y: number) -> (ret: number) [in Lua]
 
+B<ih>: identifier of the element that activated the event.
+
 B<index>: index of the dataset
 
 B<sample_index>: index of the sample in the dataset
@@ -423,6 +476,8 @@ also defined.
  elem:deletebegin_cb() -> (ret: number) [in Lua]
  elem:deleteend_cb() -> (ret: number) [in Lua]
 
+B<ih>: identifier of the element that activated the event.
+
 Returns: If DELETEBEGIN_CB returns IUP_IGNORE the delete operation for
 all the selected samples are aborted.
 
@@ -433,6 +488,8 @@ changed.
 
  int function(Ihandle *ih, int index, int sample_index, float x, float y, int select); [in C]
  elem:select_cb(index, sample_index, x, y, select: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
 
 B<index>: index of the dataset
 
@@ -455,6 +512,8 @@ also defined.
  elem:selectbegin_cb() -> (ret: number) [in Lua]
  elem:selectend_cb() -> (ret: number) [in Lua]
 
+B<ih>: identifier of the element that activated the event.
+
 Returns: If SELECTBEGIN_CB returns IUP_IGNORE the selection operation
 is aborted.
 
@@ -465,6 +524,8 @@ changed.
 
  int function(Ihandle *ih, int index, int sample_index, float x, float y, float *new_x, float *new_y); [in C]
  elem:edit_cb(index, sample_index, x, y, new_x, new_y: number) -> (new_x, new_y, ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
 
 B<index>: index of the dataset
 
@@ -489,8 +550,16 @@ also defined.
  elem:editbegin_cb() -> (ret: number) [in Lua]
  elem:editend_cb() -> (ret: number) [in Lua]
 
+B<ih>: identifier of the element that activated the event.
+
 Returns: If EDITBEGIN_CB returns IUP_IGNORE the editing operation is
 aborted.
+
+B<PLOTBUTTON_CB>: similar to L<BUTTON_CB|../call/iup_button_cb.html>
+but coordinates are float in plot scale. (since 3.9)
+
+B<PLOTMOTION_CB>: similar to L<MOTION_CB|../call/iup_motion_cb.html>
+but coordinates are float in plot scale. (since 3.9)
 
 B<PREDRAW_CB, POSTDRAW_CB>: Actions generated before and after the
 redraw operation. Predraw can be used to draw a different background
@@ -503,7 +572,9 @@ function.
  elem:predraw_cb(cnv: cdCanvas) -> (ret: number) [in Lua]
  elem:postdraw_cb(cnv: cdCanvas) -> (ret: number) [in Lua]
 
-B<cnv>: the CD canvas where the draw operation occurs.
+B<ih>: identifier of the element that activated the event.
+
+cnv: the CD canvas where the draw operation occurs.
 
 =over
 

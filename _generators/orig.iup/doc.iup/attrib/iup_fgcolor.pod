@@ -10,6 +10,10 @@ blank space.
 
 Default: "0 0 0".
 
+Hexadecimal notation in the format "#RRGGBB" is also accepted in all
+color attributes. For example, "255 0 128" can also be written as
+"#FF0080".
+
 =head2 Affects
 
 All.

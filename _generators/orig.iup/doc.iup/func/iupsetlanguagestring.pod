@@ -1,0 +1,62 @@
+=head1 IupSetLanguageString
+
+Associates a name with a string as an auxiliary method for
+Internationalization of applications.
+
+=head2 Parameters/Return
+
+ void IupSetLanguageString(const char *name, const char *value); [in C] 
+ void IupStoreLanguageString(const char *name, const char *value);
+ iup.SetLanguageString(name, value: string) [in Lua]
+
+B<name>: name of the string.
+
+B<value>: string value.
+
+=head2 Notes
+
+B<IupStoreLanguageString> will duplicate the string internally.
+B<IupSetLanguageString> will store the pointer.
+
+Elements that have pre-defined texts use this function when the current
+language is changed using B<IupSetLanguage>.
+
+IUP will B<not> store strings for several languages at the same time,
+it will store only for the current language. When B<IupSetLanguage> is
+called only the internal pre-defined strings are replace in the
+internal database. The application must register again all its strings
+for the new language.
+
+If a dialog is created with string names associations and the
+associations are about to be changed, then the dialog must be destroyed
+B<before> the associations are changed, then created again.
+
+Associations are retrieved using the B<IupGetLanguageString> function.
+But to simplify the usage of the string names associations attributes
+set with regular B<IupSetStr>* functions can use the prefix "_@" to
+indicate a string name and not the actual string. This includes any
+attributes set in LED or in Lua. B<IupSetAttribute>* functions can not
+be used because they simply store a pointer that may not be a string.
+
+=head2 Examples
+
+ // If Language is Englih 
+ IupSetLangueString("IUP_CANCEL", "Cancel");
+   or
+ // If Language is Portuguese
+ IupSetLangueString("IUP_CANCEL", "Cancelar");
+ 
+ 
+ // Then when setting a button title use:
+ Ihandle* button_cancel = IupButton(IupGetLanguageString("IUP_CANCEL"), NULL);
+   or
+ Ihandle* button_cancel = IupButton("_@IUP_CANCEL", NULL);
+   or
+ IupSetStrAttribute(button_cancel, "TITLE", "_@IUP_CANCEL");
+
+=head2 See Also
+
+L<IupGetLanguageString|iupgetlanguagestring.html>,
+L<IupSetLanguagePack|iupsetlanguagepack.html>
+
+=cut

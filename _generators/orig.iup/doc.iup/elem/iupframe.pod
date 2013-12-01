@@ -1,7 +1,7 @@
 =head1 IupFrame
 
-Creates a Frame interface element, which draws a frame with a title
-around an interface element.
+Creates a native container, which draws a frame with a title around its
+child.
 
 =head2 Creation
 
@@ -102,11 +102,11 @@ L<Browse for Example Files|../../examples/>
   IupSetAttribute(frame1, "TITLE", "Title Text");
   IupSetAttribute(frame2, "SUNKEN", "YES");
 
-Windows 2000
+Windows Classic
 
 [IMAGE]
 
-Windows XP
+Windows w/ Styles
 
 [IMAGE]
 

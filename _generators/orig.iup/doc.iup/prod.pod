@@ -90,7 +90,7 @@ The library is available for several B<operating systems>:
 
 =item * UNIX (FreeBSD and Linux) using GTK+ (since 3.0)
 
-=item * Microsoft Windows 2000/XP/2003/Vista/7 using the Win32 API
+=item * Microsoft Windows XP/2003/Vista/7 using the Win32 API
 
 =back
 

@@ -1,8 +1,4 @@
-=head1 IupGauge (Deprecated since 3.0, will be removed in a future
-version)
-
-B<Use the > L<B<IupProgressBar>|../elem/iupprogressbar.html>B< control
-of the main library.>
+=head1 IupGauge
 
 Creates a Gauge control. Shows a percent value that can be updated to
 simulate a progression. It inherits from
@@ -10,6 +6,10 @@ L<IupCanvas|../elem/iupcanvas.html>.
 
 This is an additional control that depends on the CD library. It is
 included in the L<Controls Library|../iupcontrols.html>.
+
+It is recommended that new applications use the
+L<IupProgressBar|../elem/iupprogressbar.html> control of the main
+library.
 
 =head2 Creation
 

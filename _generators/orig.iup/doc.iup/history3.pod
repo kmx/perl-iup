@@ -4,6 +4,337 @@ Check the L<Migration Guide|migration_guide.html> for a summary of the
 important changes and how to proceed when migrating from version 2.x to
 version 3.x.
 
+=head2 L<Version 3.9|http://sourceforge.net/projects/iup/files/3.9/>
+(22/Nov/2013)
+
+=over
+
+=item * New: KEYSUNICODE attribute for B< IupScintilla> on Windows.
+
+=item * New: support for command line processing in the B<IupView>
+application to convert image files to source code that creates an
+B<IupImage>.
+
+=item * New: L< IupProgressDlg|dlg/iupprogressdlg.html> pre-defined
+dialog.
+
+=item * New: utility functions B<IupSetInt*>, B<IupSetFloat*>,
+B<IupSetRGB* >andB< IupGetRGB*>.
+
+=item * New: support for UTF-8 strings in the Windows and GTK driver
+using the UTF8MODE global attribute.
+
+=item * New: ACTION callback for B< IupExpander>.
+
+=item * New: COLRESIZE_CB callback in B< IupMatrix>.
+
+=item * New: COPYCOL, COPYLIN, MOVECOL and MOVELIN attributes in
+B<IupMatrix>.
+
+=item * New: FRAMETITLEHIGHLIGHT and ALIGNMENTLIN0 attributes in B<
+IupMatrix>.
+
+=item * New: TYPEI<L:C> attribute and TYPE_CB callback in B< IupMatrix>
+that allow to display a color, a progress bar, and an image in a cell.
+
+=item * New: RESIZEMATRIXCOLOR attribute in B< IupMatrix> to control
+the resize column feedback color.
+
+=item * New: TOGGLEVALUE attribute and TOGGLEVALUE_CB callback in B<
+IupMatrix> to enable a toggle button inside a cell.
+
+=item * New: control L<IupMatrixList|ctrl/iupmatrixlist.html> that
+shows a list using an B<IupMatrix>.
+
+=item * New: L<IupMatrixEx|ctrl/iupmatrixex.html> library with an
+extension package for B<IupMatrix>.
+
+=item * New: VALUECHANGED_CB callback for B< IupMatrix>.
+
+=item * New: B<IupSetLanguagePack>, B<IupGetLanguageString> and
+B<IupSetLanguageString> functions to help in application
+Internationalization. Strings starting in "_@" will be automatically
+retrieved from the internal string database.
+
+=item * New: MASKFAIL_CB callback for B< IupText> and B<IupList> when
+MASK is used and an invalid text is typed.
+
+=item * New: Ihandle* parameter for B< IupGetParam>.
+
+=item * New: attributes REMOVE and CURRENT in B<IupPPlot> now also
+accepts the DS_NAME as value when setting.
+
+=item * New: PLOT_COUNT, PLOT_NUMCOL, PLOT_CURRENT, PLOT_INSERT and
+PLOT_REMOVE attributes for B<IupPPlot> to support multiple plots in the
+same display area.
+
+=item * New: PLOTBUTTON_CB and PLOTMOTION_CB calbacks for B<IupPPlot.>
+
+=item * B<Changed:> preserve of FRAMEVERTCOLOR*, FRAMEHORIZCOLOR*,
+SORTSIGN*, MASK*, WIDTH*, RASTERWIDTH*, HEIGHT* and RASTERHEIGHT*
+attributes when lines or columns are added or removed in B<IupMatrix>.
+
+=item * B<Changed:> all color values in attributes now accepts also the
+notation "#RRGGBB" in hexadecimal.
+
+=item * B<Changed:> removed Windows 2000 compatibility.
+
+=item * B<Changed:> UTF8AUTOCONVERT global attribute renamed to
+UTF8MODE with inverted meaning. Old name still supported for
+compatibility.
+
+=item * B<Changed:> renamed B<IupStoreAttribute> to
+B<IupSetStrAttribute>, and B<IupSetStrfAttribute> to B<IupSetStrf>, old
+names kept for compatibility.
+
+=item * B<Changed:> B<IupMglPlot> attribute ZOOM to not use "," where
+floating point values are specified, changed to ":".
+
+=item * B<Changed:> added support for more keys in iupkey.h. New key
+definitions: K_LSHIFT, K_RSHIFT, K_LCTRL, K_RCTRL, K_LALT, K_RALT,
+K_NUM, K_SCROLL, K_CAPS and K_diaeresis. Now all GDK and X11 keys are
+supported, but non defined keys are supported using its hexadecimal
+value. Modifiers are now a bit value separated from the base key code,
+which can be obtained using the macro B<iup_XkeyBase>. See the
+"iupkey.h" file for more definitions. B<IMPORTANT>: any C/C++ source
+code that uses the "iupkey.h" definitions MUST be recompiled.
+
+=item * B<Changed:> added support for keyboard selection in
+B<IupMatrix>.
+
+=item * B<Changed:> When LIMITEXPAND=Yes in B<IupMatrix> and the
+scrollbars have *AUTOHIDE=Yes, the maximum size will not include the
+scrollbars.
+
+=item * B<Changed:> updated Scintilla version to 3.3.5.
+
+=item * B<Changed:> STEREO attribute processing in B<IupGLCanvas> to
+avoid failure during canvas creation. If stereo is not available it
+will still create a regular OpenGL context.
+
+=item * B<Changed:> ENTERITEM_CB callback in B<IupMatrix> is now also
+called when focus is changed because lines or columns were added or
+removed.
+
+=item * Fixed: repaint of the B< IupOleControl> that affected the
+B<IupWebBrowser> on Windows.
+
+=item * Fixed: NODEREMOVED_CB callback for B<IupTree>, was providing
+the wrong userdata in some cases.
+
+=item * Fixed: B<IupScintilla> library build to internally use the
+Scintilla name space.
+
+=item * Fixed: K_ANY callback return code processing in B<IupScintilla>
+on Windows.
+
+=item * Fixed: VALUE and CHARn attributes returned value in
+B<IupScintilla>.
+
+=item * Fixed: B<IupToggle> focus feedback behavior in Windows.
+
+=item * Fixed: missing B<IupGridBox> register in Lua.
+
+=item * Fixed: fail to update B<IupTabs> when a child is removed on
+Windows.
+
+=item * Fixed: documentation of internal callback parameters format
+list.
+
+=item * Fixed: unmap of B<IupTree>, B<IupText> and B<IupTabs> in
+Windows.
+
+=item * Fixed: B<IupScrollBox> expand behavior to not depends on
+children expansion, just like it is not dependent on children size.
+
+=item * Fixed: focus behavior in B< IupScrollBox>, now CANFOCUS=NO.
+
+=item * Fixed: LEDC processing of B< IupSplit> controls.
+
+=item * Fixed: B<IupGetAttributeHandle> not checking at control
+implementation.
+
+=item * Fixed: B<IupExpander> layout when closed but has a child that
+can be expanded.
+
+=item * Fixed: frame color transparency using BGCOLOR for title cells
+in B<IupMatrix>.
+
+=item * Fixed: B<IupTextConvertPosToLinCol> function for B<IupMatrix>.
+
+=item * Fixed: position of dialog using B< IupShowXY> when using
+IUP_LEFT and IUP_TOP, and the taskbar is at left or top in Windows.
+
+=item * Fixed: fixed internal test for known non string attributes that
+affected B<IupGetAttributes> and iup.B<GetAttribute> in Lua.
+
+=item * Fixed: clipboard and drag&drop data size in GTK.
+
+=item * Fixed: MASKFLOAT attribute parsing.
+
+=item * Fixed: CANFOCUS=NO in B<IupVal> on Windows.
+
+=item * Fixed: B<IupWebBrowser> when creating and destroying multiple
+controls in Windows.
+
+=item * Fixed: B<IupPPlotPaintTo> to update plot sizes.
+
+=item * Fixed: returned value by SCREENPOSITION/X/Y attributes in
+Windows when the taskbar is at the top, or left of the screen.
+
+=item * Fixed: B<IupScrollBox> mouse respond when there is no
+scrollbars.
+
+=item * Fixed: Spin was not being redraw when ACTIVE was changed in
+B<IupText> on Windows.
+
+=item * Fixed: unmap of B<IupScintilla>.
+
+=back
+
+=head2 L<Version 3.8|http://sourceforge.net/projects/iup/files/3.8/>
+(08/May/2013)
+
+=over
+
+=item * B<IMPORTANT:> the pre-compiled binaries are compatible only
+with CD version 5.6.1 pre-compiled binaries.
+
+=item * New: attribute TOGGLEVISIBLEid for B<IupTree> when
+SHOWTOGGLE=Yes.
+
+=item * New: attribute TABVISIBLEid for B< IupTabs>.
+
+=item * New: L<IupLink|elem/iuplink.html> control that shows a
+clickable URL.
+
+=item * New: L<IupGridBox|elem/iupgridbox.html> container to arrange
+elements in a regular grid.
+
+=item * New: L<IupScintilla|ctrl/iup_scintilla.html> control that shows
+a source code text editor based on the Scintilla library.
+
+=item * New: support for IUP_CONTINUE return code and FILE attribute
+update inside the FILE_CB callback when status=OK in the B<IupFileDlg>
+dialog.
+
+=item * New: L<IupExpander|elem/iupexpander.html> container to
+interactively control the visibility of a child inside the dialog.
+
+=item * B<Changed:> GTK stock images now uses the same size as the
+Windows and Motif images in B<IupImageLib>
+
+=item * Fixed: line detection on strings using DOS line breaks (\r+\n).
+
+=item * Fixed: B<IupScrollBox> child expansion when the container is
+greater than the child natural size.
+
+=item * Fixed: B<IupScrollBox> binding for Lua.
+
+=item * Fixed: B<IupClipboard> in Windows was clearing the clipboard
+contents every time data was copied.
+
+=item * Fixed: B<IupWebBrowser> for GTK was using an old function call
+of the internal SDK.
+
+=item * Fixed: the DIRECTORY attribute was not being updated when a new
+file filename was selected in B<IupFileDlg>.
+
+=item * Fixed: in a multi-selection B< IupTree> the selection callbacks
+were being called with status=0 when a single item was selected. In GTK
+the callback were also called when a branch were simply expanded or
+contracted.
+
+=item * Fixed: toggle processing in Windows when SHOWTOGGLE=Yes in B<
+IupTree>. Fixed spacing from toggle to image in Windows. Removed
+support for SHOWTOGGLE=Yes in Motif.
+
+=item * Fixed: dialog client size computation in Windows when the Win32
+API returns an invalid value.
+
+=item * Fixed: B<IupScrollBox> available space computation.
+
+=item * Fixed: FGCOLOR and PADDING for B< IupLabel> when used before
+map in Windows.
+
+=item * Fixed: BUTTON_CB, ENTERWINDOW_CB and LEAVEWINDOW_CB callbacks
+for B<IupLabel> on GTK.
+
+=item * Fixed: underline and strikeout support in GTK.
+
+=item * Fixed: B<IupMatrix> redraw when selecting lines or columns in a
+matrix with non scrollable lines or columns.
+
+=item * Fixed: BGCOLOR return value in B< IupButton> on Windows.
+
+=item * Fixed: "Load Image Lib" feature in B<IupView> when using GTK.
+
+=item * Fixed: ZORDER attribute in Motif.
+
+=back
+
+=head2 L<Version 3.7|http://sourceforge.net/projects/iup/files/3.7/>
+(29/Nov/2012)
+
+=over
+
+=item * New: support for GTK 3. The pre-compiled binaries still use GTK
+2. See the L<GTK|drv/gtk.html> driver documentation.
+
+=item * New: layout composition element B< IupScrollBox>.
+
+=item * New: B<SHOWDRAGDROP> attribute and B<DRAGDROP_CB> callback to
+support internal drag and drop of items in B<IupList>.
+
+=item * New: support for global callbacks in Lua.
+
+=item * New: ADDFORMAT, FORMAT, FORMATAVAILABLE, FORMATDATA and
+FORMATDATASIZE attributes for B<IupClipboard>.
+
+=item * New: TOGGLE option for VALUE attribute in B<IupToggle>.
+
+=item * Fixed: IMAGEid attribute update in B<IupList>.
+
+=item * Fixed: B<IupGetParam> callback return value parsing in Lua.
+
+=item * Fixed: B<IupCanvas> size when scrollbars are hidden in Motif.
+
+=item * Fixed: B<IupLabel> missing drag&drop support.
+
+=item * Fixed: B<IupMatrix> in GTK when editing a cell and Esc was
+pressed.
+
+=item * Fixed: the return value for POSX and POSY in B<IupCanvas> when
+the respective scrollbar is hidden or disabled.
+
+=item * Fixed: detection of the minimum size of a child inside
+B<IupSplit>.
+
+=item * Fixed: B<IupCanvas> RESIZE_CB was called recursively when DX or
+DY attributes were updated during the callback and XAUTOHIDE=Yes or
+YAUTOHIDE=Yes.
+
+=item * Fixed: maintain LASTADDNODE id consistent when one or more
+nodes are removes in B<IupTree>.
+
+=item * Fixed: key processing in B< IupText> and B<IupList> on Motif to
+avoid Alt, Ctrl and Sys keys to generate text input.
+
+=item * Fixed: B<IupLabel> mnemonic parsing in GTK.
+
+=item * Fixed: Mnemonic processing in Windows.
+
+=item * Fixed: B<IupButton> visual feedback when the user double click
+the button in Windows.
+
+=item * Fixed: B<IupToggle> response when the user double click the
+button in Windows.
+
+=item * Fixed: natural size computation in B<IupMatrix> when
+BORDER=Yes.
+
+=back
+
 =head2 L<Version 3.6|http://sourceforge.net/projects/iup/files/3.6/>
 (23/June/2012)
 

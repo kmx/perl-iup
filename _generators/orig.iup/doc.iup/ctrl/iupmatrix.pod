@@ -243,6 +243,9 @@ determine if a dropdown feedback should be shown.
 L<DROP_CB|iupmatrix_cb.html#DROP_CB> - Action generated to determine if
 a text field or a dropdown will be shown.
 
+L<MENUDROP_CB|iupmatrix_cb.html#MENUDROP_CB> - Action generated to
+determine if a popup menu will be shown.
+
 L<DROPSELECT_CB|iupmatrix_cb.html#DROPSELECT_CB> - Action generated
 when an element in the dropdown list is selected.
 
@@ -268,31 +271,31 @@ selection state of a cell was changed.
 These functions can be used to help set and get attributes from the
 matrix:
 
- void  IupMatSetAttribute(Ihandle* ih, const char* name, int lin, int col, const char* value);
- void  IupMatStoreAttribute(Ihandle* ih, const char* name, int lin, int col, const char* value);
- char* IupMatGetAttribute(Ihandle* ih, const char* name, int lin, int col);
- int   IupMatGetInt(Ihandle* ih, const char* name, int lin, int col);
- float IupMatGetFloat(Ihandle* ih, const char* name, int lin, int col);
- void  IupMatSetfAttribute(Ihandle* ih, const char* name, int lin, int col, const char* format, ...);
+ void  IupSetAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* value);
+ char* IupGetAttributeId2(Ihandle* ih, const char* name, int lin, int col);
+ int   IupGetIntId2(Ihandle* ih, const char* name, int lin, int col);
+ float IupGetFloatId2(Ihandle* ih, const char* name, int lin, int col);
+ void  IupSetfAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* format, ...);
+ void  IupSetIntId2(Ihandle* ih, const char* name, int lin, int col, int value);
+ void  IupSetFloatId2(Ihandle* ih, const char* name, int lin, int col, float value);
 
 They work just like the respective traditional set and get functions.
 But the attribute string is complemented with the L and C values. When
 only one value is needed then use the Iup*AttributeId functions. For
 ex:
 
- IupMatSetAttribute(ih, "", 30, 10, value) == IupSetAttribute(ih, "30:10", value)
- IupMatSetAttribute(ih, "BGCOLOR", 30, 10, value) == IupSetAttribute(ih, "BGCOLOR30:10", value)
- IupSetAttributeId(ih, "ALIGNMENT", 10, value) == IupSetAttribute(ih, "ALIGNMENT10", value)
+ IupSetAttribute(ih, "30:10", value)        => IupSetAttributeId2(ih, "", 30, 10, value)
+ IupSetAttribute(ih, "BGCOLOR30:10", value) => IupSetAttributeId2(ih, "BGCOLOR", 30, 10, value)
+ IupSetAttribute(ih, "ALIGNMENT10", value)  => IupSetAttributeId(ih, "ALIGNMENT", 10, value)
 
-But these functions are faster than the traditional functions because
-they do not need to parse the attribute name string and the application
-does not need to concatenate the attribute name with the id.
+When one of the indices is the asterisk, use IUP_INVALID_ID as the
+parameter. For ex:
 
-Some of these functions are also available in Lua:
+ IupSetAttribute(ih, "BGCOLOR30:*", value) => IupSetAttributeId2(ih, "BGCOLOR", 30, IUP_INVALID_ID, value)
 
- iup.MatSetAttribute(ih: ihandle, name: string, lin: number, col: number, value: string)
- iup.MatStoreAttribute(ih: ihandle, name: string, lin: number, col: number, value: string)
- iup.MatGetAttribute(ih: ihandle, name: string, lin: number, col: number) -> value: string
+These functions are faster than the traditional functions because they
+do not need to parse the attribute name string and the application does
+not need to concatenate the attribute name with the id.
 
 They are used by the additional methods in Lua:
 
@@ -321,20 +324,19 @@ in callback mode cell values stored in the hash table are ignored.
 
 =head2 Callback Mode
 
-Very large matrices must use the callback mode to set the values, and
-not the regular value attributes of the cells. The idea is the
-following:
+Very large matrices can use the callback mode to store the cell values
+at the application, and not at the internal matrix storage. The idea is
+the following:
 
 1 - Register the VALUE_CB callback
 
-2 - No longer set the value of the cells. They will be set one by one
-by the callback. Note that the values of the cells must now be stored
-by the user.
+2 - No longer set the value of the cells. Store the cell value at the
+application. They will be retreived one by one by the callback.
 
-3 - If the matrix is editable, set the VALUE_EDIT_CB callback.
+3 - If the matrix can be edited, set the VALUE_EDIT_CB callback.
 
-4 - When the matrix must be invalidated, use the REDRAW attribute to
-force a matrix redraw.
+4 - When the matrix display must be updated, use the REDRAW attribute
+to force a matrix redraw.
 
 A negative aspect is that, when VALUE_CB is defined, after it is mapped
 the matrix never verifies attributes of type L:C again.
@@ -432,11 +434,14 @@ visible page.
 =item * B<End> B<End> B<End>: Moves the focus to the lower right corner
 of the last page in the matrix.
 
-=item * B<F2, Enter> or B<Space>: enters editing mode.
-
-=item * B<Del>: remove the selected cells contents.
-
 =back
+
+When using the keyboard to change the focus cell if the limit of the
+visible area is reached then the cells are automatically scrolled. Also
+if a cell partially visible is edited then first it is scrolled to the
+visible area. Also while pressing together the B<Shift> key and marks
+are enabled with MARKMULTIPLE=Yes then a continuous area will be
+selected (since 3.9).
 
 When the matrix is outside the edition mode, pressing any character key
 makes the current key to enter in the edition mode, the old text is
@@ -444,11 +449,6 @@ replaced by the new one being typed. If B<F2, Enter> or B<Space> is
 pressed, the current cell enters the edition mode with the current text
 of the cell. Double-clicking a cell also enters the edition mode (in
 Motif the user must click again to the edit control get the focus).
-
-When using the keyboard to change the focus cell if the limit of the
-visible area is reached then the cells are automatically scrolled. Also
-if a cell partially visible is edited then first it is scrolled to the
-visible area.
 
 Inside the B<edition mode>, the following keys are used for a text
 field:
@@ -477,7 +477,7 @@ below the current cell, if at the last line then the focus goes to the
 cell on the left. The value confirmation depends on the EDITION_CB
 callback return code.
 
-=head2 Marks
+=head2 Marks (Selected Cells)
 
 When a mark mode is set the cells can be marked using mouse.
 
@@ -495,6 +495,9 @@ clicking at the end of the area. Segmented areas are marked or unmarked
 holding the B<Ctrl> key, the mark state is inverted. Clicking on the
 cell 0:0 will select all the items depending on MARKMODE, except for
 LINCOL.
+
+When there are cells marked, pressing the B<Del> key remove the
+selected cells contents.
 
 =head2 Examples
 

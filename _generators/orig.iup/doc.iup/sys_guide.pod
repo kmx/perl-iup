@@ -12,8 +12,8 @@ system.
 Executing these functions in this order is crucial for the correct
 functioning of the toolkit.
 
-Between calls to the IupOpen and IupClose functions, the application
-can create dialogs and display them.
+Between calls to the B<IupOpen> and B<IupClose> functions, the
+application can create dialogs and display them.
 
 Therefore, usually an application employing IUP will have a code in the
 main function similar to the following:
@@ -32,41 +32,5 @@ main function similar to the following:
  
    return 0;
  }
-
-=head2 X<led>LED
-
-LED is a dialog-specification language whose purpose is not to be a
-complete programming language, but rather to make dialog specification
-simpler than in C.
-
-In LED, attributes and expressions follow this form:
-
-elem =
-element[B<attribute1=value1,attribute2=value2,>...](...expression...)
-
-The names of the elements must not contain the iup prefix. Attribute
-values are always interpreted as strings, but they need to be in quotes
-() only when they include spaces. The IUP_ prefix must not be added to
-the names of the attributes and predefined values. Expressions contain
-parameters for creating the element.
-
-In LED there is no distinction between upper and lower case, except for
-attribute names.
-
-Though the LED files are text files, there is no way to interpret a
-text in memory there is only the IupLoad function, which loads a LED
-file and creates the IUP elements defined in it. Naturally, the same
-file cannot be loaded more than once, because the elements would be
-created again. This file interpretation does not map the elements to
-the native system.
-
-The LED files are dynamically loaded and must be sent together with the
-applications executable. However, this often becomes an inconvenience.
-To deal with it, there is the L<LEDC|ledc.html> compiler that creates a
-C module from the LED contents.
-
-To simply view a LED file objects use the LED viewer application, see
-B< IupView> in the applications included in the distribution. Available
-at the L<Download|download.html>.
 
 =cut

@@ -1,9 +1,10 @@
 =head1 IupGetFunction
 
-Returns the function associated to an action.
+Returns the function associated to an action when set using
+L<IupSetFunction|iupsetfunction.html>.
 
-This function is now deprecated. The applications should use
-B<IupGetCallback> instead.
+This function is now deprecated for regular elements, use it only
+global callbacks. For regular elements use B<IupGetCallback> instead.
 
 =head2 Parameters/Return
 

@@ -1,0 +1,134 @@
+=head1 IupProgressDlg (since 3.9)
+
+Creates a progress dialog element. It is a predefined dialog for
+displaying the progress of an operation. The dialog is meant to be
+shown with the show functions B<IupShow> or B<IupShowXY>.
+
+=head2 Creation
+
+ Ihandle* IupProgressDlg(void); [in C]
+ iup.progressdlg{} -> (elem: ihandle) [in Lua]
+ progressdlg() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+Supports all the L<IupDialog|iupdialog.html#Attributes> attributes. But
+some attributes where changed to configure the dialog. We recommend
+changing only the following attributes:
+
+L<TITLE|../attrib/iup_title.html> (non inheritable): DialogE<rsquo>s
+title. Default: NULL. If not set the title bar will not be displayed
+and the dialog will occupy less space on screen.
+
+L<VISIBLE|../attrib/iup_visible.html>: Simply call B<IupShow> or
+B<IupHide> for the dialog.
+
+L<PARENTDIALOG|../attrib/iup_parentdialog.html> (creation only): Name
+of a dialog to be used as parent. This dialog will be always in front
+of the parent dialog.
+
+L<TITLE|../attrib/iup_title.html>: Dialog title.
+
+----
+
+New attributes. All non inheritable.
+
+B<COUNT>: current count of iterations.
+
+B<INC> (write-only): increment the current count by the given amount.
+If set to NULL will increment +1.
+
+B<PERCENT>: current percent of iterations.
+
+B<TOTALCOUNT>: total number of iterations.
+
+B<STATE>: describe the state of the iteration. Can be: IDLE,
+PROCESSING, UNDEFINED or ABORTED. Default is IDLE. When INC, COUNT or
+PERCENT are set the state is changed to PROCESSING. If the user pressed
+the Cancel button the state is changed to ABORTED, but check the
+CANCEL_CB callback for other options. If the state is set to UNDEFINED
+by the application the progress bar will display an undefined state
+animation (same as setting MARQUEE=Yes in
+L<IupProgressBar|../elem/iupprogressbar.html>), to resume processing
+set the state attribute to PROCESSING.
+
+B<DESCRIPTION>: text description to be shown at the dialog.
+
+=head2 Callbacks
+
+Supports all the L<IupDialog|iupdialog.html#Callbacks> callbacks.
+
+----
+
+New callbacks.
+
+B<CANCEL_CB>: Action generated when the user clicked on the Cancel
+button.
+
+ int function(Ihandle* ih); [in C]elem:cancel_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+Returns: if different from IUP_CONTINUE then STATE will be changed to
+ABORTED, same behavior as if the callback does not exist.
+
+=head2 Notes
+
+The B<IupProgressDlg> will display the iteration state using a
+L<IupProgressBar|../elem/iupprogressbar.html> control.
+
+The dialog is B<not> automatically closed, the application must do that
+manually inside the CANCEL_CB callback or inside your processing loop
+by checking the STATE attribute.
+
+=head2 Examples
+
+ static int cancel_cb(Ihandle* ih)
+ {
+   int ret = IupAlarm("Warning!", "Interrupt Processing?", "Yes", "No", NULL);
+   if (ret == 1) /* Yes Interrupt */
+   {
+     IupExitLoop();
+     return IUP_DEFAULT;
+   }
+   
+   return IUP_CONTINUE;
+ }
+ 
+ ...
+ Ihandle* dlg = IupProgressDlg();
+   
+ IupSetAttribute(dlg, "TITLE", "IupProgressDlg Test");
+ IupSetAttribute(dlg, "DESCRIPTION", "Description first line\nSecond Line"); // Actually can have any number of lines.
+ IupSetCallback(dlg, "CANCEL_CB", cancel_cb);
+ IupSetAttribute(dlg, "TOTALCOUNT", "300");
+   
+ IupShowXY(dlg, IUP_CENTER, IUP_CENTER);
+ ...
+ 
+ // Called from inside the application processing loop
+ static int update_progress(Ihandle* ih)
+ {
+   IupSetAttribute(ih, "INC", NULL);
+   
+   // This is just an example, the application can control the loop in other ways
+   if (IupGetInt(ih, "COUNT")==IupGetInt(ih, "TOTALCOUNT"))
+   {
+     IupHide(ih);
+     return 0;
+   }
+     
+   return 1;
+ }
+
+[IMAGE]
+
+=head2 X<SeeAlso>See Also
+
+L<IupProgressBar|../elem/iupprogressbar.html>,
+L<IupDialog|iupdialog.html>
+
+=cut

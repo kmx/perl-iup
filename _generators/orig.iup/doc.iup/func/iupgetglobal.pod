@@ -18,17 +18,23 @@ Returns: the attribute value. If the attribute does not exist, NULL
 This functionE<rsquo>s return value is not necessarily the same one
 used by the application to set the attributeE<rsquo>s value.
 
-The subsequent call to the B<IupGetGlobal> function may change the
-contents of the previously returned pointer, as this is an internal IUP
-buffer. The user is in charge of storing the value before calling
-IupGetGlobal again. This pointer must not be free either.
+The returned value is not necessarily the same pointer used by the
+application to define the attribute value. The pointers of internal IUP
+attributes returned by B<IupGetGlobal> should B<never> be freed or
+changed, except when it is a custom application pointer that was stored
+using B< IupSetGlobal> and allocated by the application.
 
-B<IupGetAttribute> can also be used to get global attributes, just set
-the element to NULL.
+The returned pointer can be used safely even if B<IupGetGlobal> or
+B<IupGetAttribute> are called several times. But not too many times,
+because it is an internal buffer and after IUP may reuse it after
+around 50 calls.
+
+L<IupGetAttribute|iupgetattribute.html> can also be used to get global
+attributes, just set the element to NULL.
 
 =head2 See Also
 
-L<IupGetAttribute|iupgetattribute.html>,
-L<IupSetGlobal|iupsetglobal.html>
+L<IupSetGlobal|iupsetglobal.html>, L<Global
+Attributes|../attrib/iup_globals.html>
 
 =cut

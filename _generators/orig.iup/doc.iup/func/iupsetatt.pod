@@ -43,7 +43,6 @@ option.
 L<IupGetAttribute|iupgetattribute.html>,
 L<IupSetAttribute|iupsetattribute.html>,
 L<IupGetAttributes|iupgetattributes.html>,
-L<IupStoreAttribute|iupstoreattribute.html>,
 L<IupSetAttributes|iupsetattributes.html>
 
 =cut

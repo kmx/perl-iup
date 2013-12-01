@@ -32,6 +32,10 @@ B<CANFOCUS> (creation only) (non inheritable): enables the focus
 traversal of the control. In Windows the canvas will respect CANFOCUS
 in opposite to the other controls. Default: YES. (since 3.0)
 
+B<CAIRO_CR> [GTK Only] (non inheritable): Contains the "cairo_t*"
+parameter of the internal GTK callback. Valid only during the ACTION
+callback and onyl when using GTK version 3. (since 3.7)
+
 B<CLIPRECT> [Windows and GTK Only] (only during ACTION): Specifies a
 rectangle that has its region invalidated for painting, it could be
 used for clipping. Format: "%d %d %d %d"="x1 y1 x2 y2".

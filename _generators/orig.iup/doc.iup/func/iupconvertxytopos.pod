@@ -18,13 +18,15 @@ at 1). If fails returns -1.
 
 =head2 Notes
 
-It can be used for B<IupText> (returns a position in the string),
-B<IupList> (returns an item), B<IupTree> (returns a node identifier) or
-IupMatrix (returns a cell position, where pos=lin*numcol + col).
+It can be used for B<IupText> and B<IupScintilla> (returns a position
+in the string), B<IupList> (returns an item), B<IupTree> (returns a
+node identifier) or B<IupMatrix> (returns a cell position, where
+pos=lin*numcol + col).
 
 =head2 See Also
 
 L<IupText|../elem/iuptext.html>, L<IupList|../elem/iuplist.html>,
-L<IupTree|../elem/iuptree.html>
+L<IupTree|../elem/iuptree.html>, L< IupMatrix|../ctrl/iupmatrix.html>,
+L<IupScintilla|../ctrl/iup_scintilla.html>
 
 =cut

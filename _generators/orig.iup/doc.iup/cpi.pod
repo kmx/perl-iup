@@ -21,10 +21,10 @@ L<iupRegisterClass|../doxygen/group__register.html>. For example:
 
  void IupXxxOpen(void)
  {
-   iupRegisterClass(iupXxxGetClass());
+   iupRegisterClass(iupXxxNewClass());
  }
 
-The function iupXxxGetClass is internal to the control and it creates
+The function iupXxxNewClass is internal to the control and it creates
 the control class.
 
 =head2 Control Class Implementation
@@ -47,14 +47,12 @@ example:
    ic->interactive = 1;
  
    /* (3) - class methods */
+   ic->New = iupXxxGetClass;
    ic->Create = iXxxCreateMethod;
    ic->Map = iXxxMapMethod;
    ic->Destroy = iXxxDestroyMethod;
    ic->ComputeNaturalSize = iXxxComputeNaturalSizeMethod;
-   ic->SetCurrentSize = iXxxSetCurrentSizeMethod; 
-   ic->LayoutUpdate = iXxxLayoutUpdateMethod;
-   ic->DisplayUpdate = iXxxDisplayUpdateMethod;
-   ic->SetPosition = iXxxSetPositionMethod;
+   ...
  
    /* (4) - callbacks */
    iupClassRegisterCallback(ic, "XXX_CB", "i");
@@ -85,22 +83,24 @@ example:
    return ic;
  }
 
-You can use the iupXxxGetClass equivalent function of other controls to
+You can use the iupXxxNewClass equivalent function of other controls to
 initialize a new base class for a new control that inherits the
-functionalities of the base class.
+functionalities of the base class. For example:
+
+ Iclass* ic = iupClassNew(iupRegisterFindClass("canvas"));
 
 You can also use the L<Base Class|../doxygen/group__iclassbase.html>
-methods and attribute functions to simplify your iupXxxGetClass.
+methods and attribute functions to simplify your iupXxxNewClass.
 
 If the control is a native control then it usually will have separate
-modules for each driver. The iupXxxGetClass function could call a
+modules for each driver. The iupXxxNewClass function could call a
 iupdrvXxxInitClass(ic) function to initialize methods and attributes
 that are driver dependent.
 
 =head2 Control Creation
 
 All controls can be created using the IupCreate functions. But it is a
-common pratice to have a convenience function to create the control:
+common practice to have a convenience function to create the control:
 
  Ihandle* IupXxx(void)
  {

@@ -55,7 +55,7 @@ IUP_MASK_EFLOAT
 
 floating point number with exponential notation
 
-=head2 Auxiliar Attributes
+=head2 Auxiliary Attributes
 
 =head2 MASKCASEI (non inheritable)
 
@@ -71,6 +71,17 @@ will replace MASK.
 
 Defines a floating point mask with limits. Format: "%g:%g" ("min:max").
 It will replace MASK.
+
+=head2 Auxiliary X<Callbacks>Callbacks
+
+B<MASKFAIL_CB>: Action generated when the new text fails at the mask
+check. (since 3.9)
+
+ int function(Ihandle *ih, char *new_value); [in C]elem:maskfail(new_value: string) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<new_value>: Represents the new text value.
 
 =head2 Pattern Specification
 

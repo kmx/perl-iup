@@ -27,21 +27,20 @@ from the current alignment. In Motif, vertical alignment is restricted
 to "ACENTER". In GTK, horizontal alignment for multiple lines will
 align only the text block. (since 3.0)
 
-L<BGCOLOR|../attrib/iup_bgcolor.html>: Background color. BGCOLOR is
-ignored always when FLAT=YES because it will inherit from the native
-parent. If text and image are not defined, the BGCOLOR is used to show
-a color not necessary as a background color of the button, in this case
-set the button size because the natural size will be very small. In
-Windows, when using the Windows driver or the GTK driver, the BGCOLOR
-attribute is ignored if text or image is defined. Default: the global
-attribute DLGBGCOLOR.
+L<BGCOLOR|../attrib/iup_bgcolor.html>: Background color. If text and
+image are not defined, the button is configured to simply show a color,
+in this case set the button size because the natural size will be very
+small. In Windows, the BGCOLOR attribute is ignored if text or image is
+defined. Default: the global attribute DLGBGCOLOR. BGCOLOR is ignored
+when FLAT=YES because it will be used the background from the native
+parent.
 
 B<CANFOCUS> (creation only) (non inheritable): enables the focus
 traversal of the control. In Windows the button will respect CANFOCUS
 in opposite to the other controls. Default: YES. (since 3.0)
 
 B<FLAT> (creation only): Hides the button borders until the mouse enter
-the button area. Can be YES or NO.
+the button area. Can be YES or NO. Default: NO.
 
 L<FGCOLOR|../attrib/iup_fgcolor.html>: Text color. Default: the global
 attribute DLGFGCOLOR.
@@ -63,9 +62,9 @@ like other inactive objects. (GTK 2.6)
 
 B<IMPRESS >(non inheritable): Image name of the pressed button. If
 IMPRESS and IMAGE are defined, the button borders are not shown and not
-computed in size computation. When the button is clicked the pressed
-image does not offset. In Motif the button will lose its focus feedback
-also. (GTK 2.6)
+computed in natural size. When the button is clicked the pressed image
+does not offset. In Motif the button will lose its focus feedback also.
+(GTK 2.6)
 
 B<IMPRESSBORDER >(non inheritable): if enabled the button borders will
 be shown and computed even if IMPRESS is defined. Can be "YES" or "NO".
@@ -204,6 +203,6 @@ GTK
 =head2 X<SeeAlso>See Also
 
 L<IupImage|iupimage.html>, L<IupToggle|iuptoggle.html>,
-L<IupButton|iuplabel.html>
+L<IupLabel|iuplabel.html>
 
 =cut

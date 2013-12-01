@@ -20,6 +20,13 @@ considering the decorations (client size)
 This action is also generated when the dialog is mapped, after the map
 and before the show.
 
+When XAUTOHIDE=Yes or YAUTOHIDE=Yes, if the canvas scrollbar is
+hidden/shown after changing the DX or DY attributes from inside the
+callback, the size of the drawing area will immediately change, so the
+parameters B<with> and B<height> will be invalid. To update the
+parameters consult the DRAWSIZE attribute. Also activate the drawing
+toolkit only after updating the DX or DY attributes.
+
 =head2 Affects
 
 L<IupCanvas|../elem/iupcanvas.html>,

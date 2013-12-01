@@ -33,8 +33,9 @@ B<CANFOCUS> (creation only) (non inheritable): enables the focus
 traversal of the control. In Windows the control will still get the
 focus when clicked. Default: YES. (since 3.0)
 
-B<CARET> (non inheritable): Position of the insertion point. Its format
-depends in MULTILINE=YES. The first position, B<lin> or B<col>, is "1".
+B<CARET> (non inheritable): B<Character >position of the insertion
+point. Its format depends in MULTILINE=YES. The first position, B<lin>
+or B<col>, is "1".
 
 B<For multiple lines>: a string with the "B<lin>,B<col>" format, where
 B<lin> and B<col> are integer numbers corresponding to the caret's
@@ -59,17 +60,17 @@ receives the focus.
 
 See the Notes below if using UTF-8 strings in GTK.
 
-B<CARETPOS> (non inheritable): Also the position of the insertion
-point, but using a zero based character unique index "pos". Useful for
-indexing the VALUE string. See the Notes below if using UTF-8 strings
-in GTK. (since 3.0)
+B<CARETPOS> (non inheritable): Also the B<character >position of the
+insertion point, but using a zero based character unique index "pos".
+Useful for indexing the VALUE string. See the Notes below if using
+UTF-8 strings in GTK. (since 3.0)
 
 B<CLIPBOARD> (write-only): clear, cut, copy or paste the selection to
 or from the clipboard. Values: "CLEAR", "CUT", "COPY" or "PASTE". In
 Windows UNDO is also available, and REDO is available when
 FORMATTING=YES. (since 3.0)
 
-B<COUNT> (read-only): returns the number of characters in the text.
+B<COUNT> (read-only): returns the number of B<characters> in the text.
 (since 3.5)
 
 B<CUEBANNER> [Windows Only] (non inheritable): a text that is displayed
@@ -97,8 +98,8 @@ In GTK is always enabled, but only when MULTILINE=YES. Default: NO.
 B<INSERT> (write-only): Inserts a text in the caret's position, also
 replaces the current selection if any. Ignored if set before map.
 
-B<LINECOUNT> (read-only): returns the number of characters in the line
-where the caret is. When MULTILINE=NO returns always "1". (since 3.5)
+B<LINECOUNT> (read-only): returns the number of lines in the text. When
+MULTILINE=NO returns always "1". (since 3.5)
 
 B<LINEVALUE> (read-only): returns the text of the line where the caret
 is. It does not include the "\n" character. When MULTILINE=NO returns
@@ -112,10 +113,10 @@ multiple lines. In single line mode some characters are invalid, like
 "\t", "\r" and "\n". Default: NO. When set to Yes will also reset the
 SCROLLBAR attribute to Yes.
 
-B<NC>: Maximum number of characters allowed for keyboard input, larger
-text can still be set using attributes. The maximum value is the limit
-of the VALUE attribute. The "0" value is the same as maximum. Default:
-maximum.
+B<NC>: Maximum number of B<characters> allowed for keyboard input,
+larger text can still be set using attributes. The maximum value is the
+limit of the VALUE attribute. The "0" value is the same as maximum.
+Default: maximum.
 
 B<OVERWRITE> [Windows and GTK Only] (non inheritable): turns the
 overwrite mode ON or OFF. Works only when FORMATTING=YES. (since 3.0)
@@ -143,22 +144,21 @@ default AUTOHIDE=NO. In Windows when FORMATTING=NO, AUTOHIDE is not
 supported. In Motif AUTOHIDE is not supported.
 
 B<SCROLLTO> (non inheritable, write only): Scroll the text to make the
-given position visible. It uses the same format and reference of the
-CARET attribute ("lin:col" or "col" starting at 1). In Windows, when
-FORMATTING=Yes "col" is ignored. (since 3.0)
+given B<character >position visible. It uses the same format and
+reference of the CARET attribute ("lin:col" or "col" starting at 1). In
+Windows, when FORMATTING=Yes "col" is ignored. (since 3.0)
 
 B<SCROLLTOPOS> (non inheritable, write only): Scroll the text to make
-the given position visible. It uses the same format and reference of
-the CARETPOS attribute ("pos" starting at 0). In Windows, when
-FORMATTING=Yes "col" is ignored. (since 3.0)
+the given B<character >position visible. It uses the same format and
+reference of the CARETPOS attribute ("pos" starting at 0). (since 3.0)
 
 B<SELECTEDTEXT> (non inheritable): Selection text. Returns NULL if
 there is no selection. When changed replaces the current selection.
 Similar to INSERT, but does nothing if there is no selection.
 
-B<X<SELECTION>SELECTION> (non inheritable): Selection interval. Returns
-NULL if there is no selection. Its format depends in MULTILINE=YES. The
-first position, B<lin> or B<col>, is "1".
+B<X<SELECTION>SELECTION> (non inheritable): Selection interval in
+B<characters>. Returns NULL if there is no selection. Its format
+depends in MULTILINE=YES. The first position, B<lin> or B<col>, is "1".
 
 B<For multiple lines>: a string in the
 "B<lin1>,B<col1>:B<lin2>,B<col2>" format, where B<lin1>, B<col1>,
@@ -180,9 +180,9 @@ The values ALL and NONE are also accepted independently of MULTILINE
 See the Notes below if using UTF-8 strings in GTK.
 
 B<SELECTIONPOS> (non inheritable): Same as SELECTION but using a zero
-based character index "B<pos1>:B<pos2>". Useful for indexing the VALUE
-string. The values ALL and NONE are also accepted. See the Notes below
-if using UTF-8 strings in GTK. (since 3.0)
+based B<character> index "B<pos1>:B<pos2>". Useful for indexing the
+VALUE string. The values ALL and NONE are also accepted. See the Notes
+below if using UTF-8 strings in GTK. (since 3.0)
 
 L<SIZE|../attrib/iup_size.html> (non inheritable): Since the contents
 can be changed by the user, the B<Natural> B<Size> is not affected by
@@ -348,7 +348,7 @@ All common callbacks are supported.
 L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> callbacks are
 supported. See Notes bellow.
 
-=head2 Auxiliary Functions
+=head2 X<AUX>Auxiliary Functions
 
  void IupTextConvertLinColToPos(Ihandle* ih, int lin, int col, int *pos); [in C]iup.TextConvertLinColToPos(ih: ihandle, lin, col: number) -> pos: number [in Lua]
 

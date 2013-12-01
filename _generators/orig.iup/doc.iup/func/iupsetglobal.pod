@@ -6,7 +6,8 @@ attribute then it will not be stored internally.
 =head2 Parameters/Return
 
  void IupSetGlobal(const char *name, const char *value); [in C]
- iup.SetGlobal(name: string, value: string) [in Lua] 
+ void IupSetStrGlobal(const char *name, const char *value); [in C]
+ iup.SetGlobal(name: string, value: string) [in Lua]
 
 B<name>: name of the attribute.
 
@@ -15,20 +16,21 @@ the attribute will be removed.
 
 =head2 Notes
 
-The value stored in the attribute is not duplicated. Therefore, you can
-store your private attributes, such as a structure of data to be used
+B<IupSetGlobal> can store only constant strings (like "Title", "30",
+etc) or application pointers. The given value is not duplicated as a
+string, only a reference is stored. Therefore, you can store
+application custom attributes, such as a context structure to be used
 in a callback.
 
-When you want IUP to store the attribute's value by duplicating the
-string, use function B<IupStoreGlobal>.
+B<IupSetStrGlobal> (old B<IupStoreGlobal>) can only store strings. The
+given string value will be duplicated internally.
 
-B<IupSetAttribute> can also be used to set global attributes, just set
-the element to NULL.
+L<IupSetAttribute|iupsetattribute.html> functions can also be used to
+set global attributes, just set the element to NULL.
 
 =head2 See Also
 
-L<IupSetAttribute|iupsetattribute.html>,
-L<IupGetGlobal|iupgetglobal.html>,
-L<IupStoreGlobal|iupstoreglobal.html>
+L<IupGetGlobal|iupgetglobal.html>, L<Global
+Attributes|../attrib/iup_globals.html>
 
 =cut

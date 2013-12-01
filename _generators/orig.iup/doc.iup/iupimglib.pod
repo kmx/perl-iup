@@ -29,10 +29,9 @@ automatically loaded when associated with a control.
 
 =head2 Bitmap Group
 
-These bitmaps are 16x16-8bpp (Motif), 16x16-32bpp (Win32) or
-24x24-32bpp (GTK) pixels size images that can be used in Buttons,
-usually inside toolbars. Do not set RASTERSIZE of buttons so they can
-expand when switching to GTK.
+These bitmaps are 16x16-8bpp (Motif) and 16x16-32bpp (Win32 and GTK)
+pixels size images that can be used in Buttons, usually inside
+toolbars.
 
 Name
 
@@ -474,8 +473,8 @@ Image
 
 =head2 Icon Group
 
-These icons are 32x32 pixels size (or just 32 pixels height) images
-that can be used in Labels, usually inside toolbars.
+These icons are 32x32-32bpp pixels size (or just 32 pixels height)
+images that can be used in Labels, usually inside toolbars.
 
 Name
 
@@ -515,8 +514,8 @@ Image
 
 =head2 Logo Group (NOT included in the pre-compiled library, since 3.3)
 
-These logos are 48x48 pixels size (or just 48 pixels height) images
-that can be used in Labels, usually inside dialogs.
+These logos are 48x48-32bpp pixels size (or just 48 pixels height)
+images that can be used in Labels, usually inside dialogs.
 
 Name
 
@@ -557,7 +556,7 @@ Image
 =head2 Other (NOT included in the pre-compiled library, since 3.3)
 
 Here are other images available in the IUP stock library, commonly used
-by the respective systems. All images are 48x48 pixels size and 32bpp.
+by the respective systems. All images are 48x48-32bpp pixels size.
 
 Name
 

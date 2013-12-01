@@ -31,6 +31,11 @@ to "ACENTER". (vertical alignment since 3.0)
 L<BGCOLOR|../attrib/iup_bgcolor.html>: ignored, transparent in all
 systems. Will use the background color of the native parent.
 
+B<DROPFILESTARGET> [Windows and GTK Only] (non inheritable): Enable or
+disable the drop of files. Default: NO, but if DROPFILES_CB is defined
+when the element is mapped then it will be automatically enabled.
+(since 3.0)
+
 B<ELLIPSIS> [Windows and GTK only]: add an ellipsis: "..." to the text
 if there is not enough space to render the entire string. Can be "YES"
 or "NO". Default: "NO". (since 3.0) (GTK 2.6)
@@ -95,6 +100,9 @@ L<TIP|../attrib/iup_tip.html>, L<SIZE|../attrib/iup_size.html>,
 L<RASTERSIZE|../attrib/iup_rastersize.html>,
 L<ZORDER|../attrib/iup_zorder.html>,
 L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes and
+callbacks are supported.
 
 =head2 Callbacks
 

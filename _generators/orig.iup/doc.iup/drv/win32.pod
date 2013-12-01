@@ -1,7 +1,7 @@
 =head1 Win32 System Driver
 
 This driver was designed for the modern Microsoft Windows in 32 bits or
-64 bits (2000/XP/2003/Vista/7).
+64 bits (XP/2003/Vista/7).
 
 =head2 DLL
 
@@ -17,6 +17,44 @@ Usually the program does not need to be re-linked when the DLL is
 updated.
 
 =head2 Tips
+
+=head2 UTF-8
+
+When IUP is built with UNICODE enabled, it is possible to specify
+strings in UTF-8. But the default is still to use the current locale.
+To use UTF-8 strings set the global attribute UTF8MODE to YES.
+
+=head2 LINK : warning defaultlib 'LIBCMT' conflicts with use of other
+libs; use /NODEFAULTLIB:library
+
+This is a message displayed by Visual C++ compilers when one or more
+libraries included for linking is not using the same C Run Time Library
+as the application. In the same Visual C++ compiler there are 4
+different libraries resulting from the combination of 2 options:
+B<debug>/B<release> x B<dll>/B<static>.
+
+The default configuration when a new project is created uses the C Run
+Time Library in a DLL, options named "Multi-threaded Debug DLL (/MDd)"
+for the B<Debug> configuration and "Multi-threaded DLL (/MD)" for the
+B<Release> configuration. The IUP package that matches that
+configuration is the "dll*" packages.
+
+If you want to use static libraries then use the options
+"Multi-threaded Debug (/MTd)" for the B<Debug> configuration and
+"Multi-threaded (/MT)" for the B<Release> configuration. Then use the
+IUP packages named "vc*".
+
+The IUP pre-compiled packages do not have debug information, so even
+selecting the correct B<dll>/B<static> combination, the warning will
+also be displayed. In this case the warning is harmless. But if you
+really want to avoid the warning simply use the same option without the
+Debug information for Release and Debug configurations.
+
+Finally one thing that is B<NOT> recommended is to do what the linker
+warning suggests, to ignore the default libraries using the
+/NODEFAULTLIB parameter. Only use that parameter if you really know
+what you are doing, because using it you can create other linking
+problems.
 
 =head2 Visual C++ 6
 
@@ -71,15 +109,15 @@ IUP controls appearance will follow the system appearance only if you
 are using the manifest. If not using the manifest, then it will always
 look like Windows Classic.
 
-=head2 B<Black Canvas>
-
-The B<IupGLCanvas> does not work when inside an B<IupFrame>, the result
-is a black canvas with no drawing. (Only in IUP 2.x)
-
 =head2 B<Help in CHM format fail to open>
 
 When you download a CHM file from the Internet Windows blocks your
 access to the file. You must unblock it manually. Right click the file
 in Explorer and select "Unblock" at the bottom of the dialog.
+
+=head2 B<Black Canvas (Only in IUP 2.x)>
+
+The B<IupGLCanvas> does not work when inside an B<IupFrame>, the result
+is a black canvas with no drawing.
 
 =cut

@@ -140,11 +140,11 @@ GTK
 
 =head2 L<IupFrame|elem/iupframe.html>
 
-Windows 2000
+Windows Classic
 
 [IMAGE]
 
-Windows XP
+Windows w/ Styles
 
 [IMAGE]
 
@@ -158,11 +158,25 @@ GTK
 
 =head2 L<IupList|elem/iuplist.html>
 
-Windows 2000
+Windows Classic
 
 [IMAGE]
 
-Windows XP
+Windows w/ Styles
+
+[IMAGE]
+
+Motif
+
+[IMAGE]
+
+GTK
+
+[IMAGE]
+
+=head2 L<IupTree|elem/iuptree.html>
+
+Windows
 
 [IMAGE]
 

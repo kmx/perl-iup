@@ -11,10 +11,8 @@ Default: "0.0"
 =head2 Notes
 
 When the canvas is visible, a change in POSY can generate a redraw in
-the vertical scrollbar on the screen.
-
-This attribute does not generate a redraw of the canvas. If you need a
-redraw call B<IupUpdate> in L<SCROLL_CB|../call/iup_scroll_cb.html>.
+the vertical scrollbar on the screen, but will NOT generate a redraw of
+the canvas.
 
 =head2 Affects
 

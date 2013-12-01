@@ -13,6 +13,10 @@ Default: It is the value of the DLGBGCOLOR global attribute. On some
 controls if not defined will inherit the background of the native
 parent.
 
+Hexadecimal notation in the format "#RRGGBB" is also accepted in all
+color attributes. For example, "255 0 128" can also be written as
+"#FF0080".
+
 =head2 Affects
 
 All, but with restrictions. Several controls have transparent parts

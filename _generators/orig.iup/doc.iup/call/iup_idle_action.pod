@@ -25,13 +25,14 @@ It is important that you set it to NULL when not using it. Or the
 application will be consuming CPU even if the callback is doing
 nothing.
 
-It can only be set using B<IupSetFunction>.
+It can only be set using B<IupSetFunction(>name, funcB<)>.
 
 =head2 Lua Binding
 
-To modify this action use the function
-B<iup>.B<SetIdle>B<(>myfunctionB<)> in Lua. Using nil as a parameter to
-remove the association.
+To modify this action use the function B<iup>.B<SetIdle>B<(>funcB<)> in
+Lua. Using nil as a parameter to remove the association.
+
+Or use the iup.B<SetGlobalCallback>(name, func) function. (since 3.7)
 
 =head2 Long Time Operations
 

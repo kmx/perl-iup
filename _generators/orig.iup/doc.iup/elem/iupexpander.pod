@@ -1,0 +1,109 @@
+=head1 IupExpander (since 3.8)
+
+Creates a void container that can interactively show or hide its child.
+
+It does not have a native representation, but it contains also a
+B<IupCanvas> to implement the bar handler.
+
+=head2 Creation
+
+ Ihandle* IupExpander(Ihandle* child); [in C]
+ iup.expander{child: ihandle} -> (elem: ihandle) [in Lua]
+ expander(child) [in LED]
+
+B<child>: Identifier of an interface element. It can be NULL.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<AUTOSHOW> (non inheritable): enables the automatic show of the child
+when mouse is over the handler more than 1 second. Default: No. See
+L<Notes|#Notes> bellow.
+
+B<BARSIZE> (non inheritable): controls the size of the bar handler.
+Default: the height of a text line plus 5 pixels.
+
+L<BGCOLOR|../attrib/iup_bgcolor.html>: ignored, transparent in all
+systems. Will use the background color of the native parent.
+
+L<FGCOLOR|../attrib/iup_fgcolor.html>: Text color. Default: the global
+attribute DLGFGCOLOR.
+
+B<BARPOSITION> (creation only): Indicates the bar handler position.
+Possible values are "TOP", "BOTTOM", "LEFT" or "RIGHT". Default: "TOP".
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
+value is "YES".
+
+B<STATE> (non inheritable): Show or hide the container elements.
+Possible values: "OPEN" (expanded) or "CLOSE" (collapsed). Default:
+OPEN. Setting this attribute will automatically change the layout of
+the entire dialog so the child can be recomposed.
+
+B<TITLE> (non inheritable): the title, shown in the title bar near the
+expand or collapse symbol. Shown only when BARPOSITION=TOP.
+
+B<WID> (read-only): returns -1 if mapped.
+
+=over
+
+----
+
+=back
+
+L<FONT|../attrib/iup_font.html>, L<SIZE|../attrib/iup_size.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
+
+=head2 Callbacks
+
+L<ACTION|../call/iup_action.html>: Action generated expander state is
+interactively changed. (Since 3.9)
+
+ int function(Ihandle* ih); [in C]elem:action() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+=head2 Notes
+
+The B<IupCanvas> bar handler is always the first child of the expander.
+It can be obtained using B<IupGetChild> or B< IupGetNextChild>.
+
+The container can be created with no elements and be dynamic filled
+using L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
+
+When the TITLE is defined and BARPOSITION=TOP then the expand/collapse
+symbol is left aligned. In all other situations the expand/collapse
+symbol is centered.
+
+When AUTOSHOW=Yes the dialog layout is NOT recalculated. The child is
+shown on top of the dialog, so the other children will not move or
+redraw. After the mouse is move away from the child then it is
+automatically hidden. B<IMPORTANT>: this feature will ONLY work if the
+child is a native container like B< IupFrame>, B<IupScrollBar> or
+B<IupTabs>.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+Container Expanded
+
+(STATE = "OPEN")
+
+[IMAGE]
+
+Container Collapsed
+
+(STATE = "CLOSE")
+
+=cut

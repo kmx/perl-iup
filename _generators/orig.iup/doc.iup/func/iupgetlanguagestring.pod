@@ -1,0 +1,24 @@
+=head1 IupGetLanguageString
+
+Returns a language dependent string. The string must have been
+associated with the name using the B<IupSetLanguageString> or B<
+IupSetLanguagePack> functions.
+
+=head2 Parameters/Return
+
+ char* IupGetLanguageString(const char* name); [in C] iup.GetLanguageString(name: string) -> (value: string) [in Lua] 
+
+Returns: a string associated with the name.
+
+=head2 Notes
+
+If the association is not found returns the B<name> itself.
+
+See L<IupSetLanguageString|iupsetlanguagestring.html> for an example.
+
+=head2 See Also
+
+L<IupSetLanguageString|iupsetlanguagestring.html>,
+L<IupSetLanguagePack|iupsetlanguagepack.html>.
+
+=cut

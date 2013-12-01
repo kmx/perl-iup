@@ -91,14 +91,16 @@ or "NO". Default "NO".
 L<FGCOLOR|../attrib/iup_fgcolor.html>: Text color. Default: the global
 attribute TXTFGCOLOR.
 
-B<IMAGEid> (non inheritable): image name to be used in the specified
-item, where id is the specified item starting at 1. The item must
-already exist. Use L<IupSetHandle|../func/iupsethandle.html> or
+B<IMAGEid> (non inheritable) (write only) [Windows and GTK Only]: image
+name to be used in the specified item, where id is the specified item
+starting at 1. The item must already exist. Use
+L<IupSetHandle|../func/iupsethandle.html> or
 L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
 associate an image to a name. See also L<IupImage|iupimage.html>. The
 image is always displayed at the left of the text and only when
 SHOWIMAGE=Yes. When EDITBOX=Yes the image is not display at the edit
-box. Images don't need to have the same size. (since 3.6)
+box. Images don't need to have the same size. In Windows, list items
+are limited to 255 pixels height. (since 3.6)
 
 B<INSERTITEMid> (write-only): inserts an item before the given id
 position. id starts at 1. If id=COUNT+1 then it will append after the
@@ -128,11 +130,16 @@ items are always visible. In Motif, the horizontal scrollbar is never
 shown. In Windows, if DROPEXPAND=YES then the horizontal scrollbar is
 never shown.
 
+B<SHOWDRAGDROP> (creation only) (non inheritable): Enables the internal
+drag and drop of items, and enables the B<DRAGDROP_CB> callback.
+Default: "NO". Works only if DROPDOWN=NO and MULTIPLE=NO. (since 3.7)
+
 B<SHOWDROPDOWN> (write-only): opens or closes the dropdown list. Can be
 "YES" or "NO". Valid only when DROPDOWN=YES. Ignored if set before map.
 
-B<SHOWIMAGE> (creation only): enables the use of an image for each
-item. Can be "YES" or "NO". Ignored if set before map. (since 3.6)
+B<SHOWIMAGE> (creation only) [Windows and GTK Only]: enables the use
+of an image for each item. Can be "YES" or "NO". Ignored if set before
+map. (since 3.6)
 
 L<SIZE|../attrib/iup_size.html>: Size of the list. The B<Natural>
 B<Size> is defined by the number of elements in the list and the with
@@ -276,6 +283,27 @@ B<item>: Number of the selected item starting at 1.
 
 B<text>: Text of the selected item.
 
+B<DRAGDROP_CB>: Action generated when an internal drag and drop is
+executed. Only active if B<SHOWDRAGDROP=YES.> (since 3.7)
+
+ int function(Ihandle *ih, int drag_id, int drop_id, int isshift, int iscontrol); [in C] 
+ elem:dragdrop_cb(drag_id, drop_id, isshift, iscontrol: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<drag_id>: Identifier of the clicked item where the drag start.
+
+B<drop_id>: Identifier of the clicked item where the drop were
+executed. -1 indicates a drop in a blank area.
+
+B<isshift>: Boolean flag indicating the shift key state.
+
+B<iscontrol>: Boolean flag indicating the control key state.
+
+Returns: if returns IUP_CONTINUE, or if the callback is not defined and
+B<SHOWDRAGDROP=YES>, then the item is moved to the new position. If
+Ctrl is pressed then the item is copied instead of moved.
+
 B<DROPDOWN_CB>: Action generated when the list of a dropdown is shown
 or hidden. Called only when DROPDOWN=YES. (since 3.0)
 
@@ -357,7 +385,7 @@ L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>:
 All common callbacks are supported.
 
 L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes and
-callbacks are supported.
+callbacks are supported, but SHOWDRAGDROP must be set to NO.
 
 =head2 Notes
 
@@ -402,19 +430,30 @@ controlled by the system, and has the height just right to include the
 borders and the text. So the B<User> height from RASTERSIZE or SIZE
 will be always ignored.
 
+In Windows, list items are limited to 255 pixels height.
+
 In GTK older than 2.12, the editbox of a dropdown will not follow the
 list attributes: FONT, BGCOLOR, FGCOLOR and SPACING.
+
+B<Clicking and dragging a item>: if SHOWDRAGDROP=Yes starts a drag.
+When mouse is released, the DRAGDROP_CB callback is called. If the
+callback does not exist or if it returns IUP_CONTINUE then the item is
+moved to the new position. If Ctrl is pressed then the node is copied
+instead of moved. In Windows and GTK, drag is performed with the left
+mouse button. In Motif, the middle mouse button is used to drag. (since
+3.7)
 
 =head2 Utility Functions
 
 These functions can be used to set and get attributes from the element:
 
  void  IupSetAttributeId(Ihandle *ih, const char* name, int id, const char* value);
- void  IupStoreAttributeId(Ihandle *ih, const char* name, int id, const char* value);
  char* IupGetAttributeId(Ihandle *ih, const char* name, int id);
  int   IupGetIntId(Ihandle *ih, const char* name, int id);
  float IupGetFloatId(Ihandle *ih, const char* name, int id);
  void  IupSetfAttributeId(Ihandle *ih, const char* name, int id, const char* format, ...);
+ void  IupSetIntId(Ihandle* ih, const char* name, int id, int value);
+ void  IupSetFloatId(Ihandle* ih, const char* name, int id, float value);
 
 They work just like the respective traditional set and get functions.
 But the attribute string is complemented with the id value. For ex:
@@ -430,11 +469,11 @@ does not need to concatenate the attribute name with the id.
 
 L<Browse for Example Files|../../examples/>
 
-Windows 2000
+Windows Classic
 
 [IMAGE]
 
-Windows XP
+Windows w/ Styles
 
 [IMAGE]
 

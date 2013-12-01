@@ -4,14 +4,12 @@ Global attributes are not associated with any particular element. They
 represent and affect the global behavior of the toolkit.
 
 To access global attributes use the
-L<IupGetGlobal|../func/iupgetglobal.html>,
-L<IupStoreGlobal|../func/iupstoreglobal.html> and
+L<IupGetGlobal|../func/iupgetglobal.html> and
 L<IupSetGlobal|../func/iupsetglobal.html> functions. In Lua global
 attributes can only be accessed trough those functions. In C, the
-functions L<IupGetAttribute|../func/iupgetattribute.html>,
-L<IupStoreAttribute|../func/iupstoreattribute.html>,
-L<IupSetAttribute|../func/iupsetattribute.html> and others can also be
-used if you set the element handle to NULL.
+functions L<IupGetAttribute|../func/iupgetattribute.html> and
+L<IupSetAttribute|../func/iupsetattribute.html> can also be used if you
+set the element handle to NULL.
 
 ----
 
@@ -22,7 +20,7 @@ used if you set the element handle to NULL.
 The language used by some pre-defined dialogs.
 
 Can have the values ENGLISH and PORTUGUESE. Default: ENGLISH. Can also
-be set by B<IupSetLanguage>.
+be set by L<IupSetLanguage|../func/iupsetlanguage.html>.
 
 =head2 B<X<version>VERSION> (read-only)
 
@@ -36,7 +34,7 @@ referring to corrections only. Ex.: "1.7.2".
 
 Returns the IUP's copyright.
 
-Ex: "Copyright (C) 1994-2004 Tecgraf/PUC-Rio and PETROBRAS S/A".
+Ex: "Copyright (C) 1994-2013 Tecgraf/PUC-Rio".
 
 =head2 LASTERROR [Windows Only] (since 3.6)
 
@@ -62,13 +60,17 @@ When the last visible dialog is closed the B<IupExitLoop> function is
 called. To avoid that set LOCKLOOP=YES before hiding the last dialog.
 Possible values: "YES" or "NO". Default: "NO".
 
-=head2 B<X<UTF8AUTOCONVERT>UTF8AUTOCONVERT> [GTK Only]
+=head2 B<X<UTF8MODE>UTF8MODE> [Windows and GTK Only]
 
-GTK uses UTF-8 as its charset for all displayed text, so IUP will
-automatically convert all strings to (SetAttribute) and from
-(GetAttribute) UTF-8. Default: YES. If the default locale is already
-UTF-8, but the given string is not UTF-8 then it will be assumed that
-the string uses the ISO8859-1 charset.
+By default IUP uses strings in the current locale (See
+L<FONT|iup_font.html#Encoding> attribute). To use UTF-8 strings set
+this attribute to Yes. Default: NO.
+
+=head2 B<UTF8MODE_FILE> [Windows Only]
+
+By default IUP uses file names in the current locale, even when
+UTF8MODE=Yes. To use UTF-8 file names set this attribute to Yes.
+Default: NO.
 
 =head2 SHOWMENUIMAGES [GTK Only] (since 3.5)
 
@@ -77,7 +79,8 @@ Force the display of images in menus. Default: Yes
 =head2 GLOBALMENU [GTK Only] (since 3.6)
 
 Flag indicating that GTK is using a global menu instead of a per window
-menu. This was introduced in the new Ubuntu Unity desktop.
+menu. See more information at the L<GTK driver|../drv/gtk.html>
+documentation.
 
 =head2 B<SINGLEINSTANCE> [Windows Only] (since 3.2)
 
@@ -161,12 +164,16 @@ applications.
 Turns on/off ("YES" or "NO") the global callbacks used to intercept
 global mouse and keyboard events. The callbacks must be set using the
 L<IupSetFunction|../func/iupsetfunction.html> function using the
-following names: GLOBALL<KEYPRESS_CB|../call/iup_keypress_cb.html>,
-GLOBALL<MOTION_CB|../call/iup_motion_cb.html>,
-GLOBALL<BUTTON_CB|../call/iup_button_cb.html> and
-GLOBALL<WHEEL_CB|../call/iup_wheel_cb.html> (Windows Only). Their
+following names:
+B<GLOBAL>L<B<KEYPRESS_CB>|../call/iup_keypress_cb.html>,
+B<GLOBAL>L<B<MOTION_CB>|../call/iup_motion_cb.html>,
+B<GLOBAL>L<B<BUTTON_CB>|../call/iup_button_cb.html> and
+B<GLOBAL>L<B<WHEEL_CB>|../call/iup_wheel_cb.html> (Windows Only). Their
 parameters are the same as the standard callbacks, but without the
 B<Ihandle>* parameter.
+
+In Lua use the iup.B<SetGlobalCallback>(name, func) function. (since
+3.7)
 
 =head2 System X<Information>Information
 
@@ -204,6 +211,8 @@ Windows 2000, Windows XP or Windows Vista. Some known names:
 
 =item * "Win7"
 
+=item * "Win8"
+
 =back
 
 =back
@@ -223,6 +232,11 @@ Returns a text with a description of the system language.
 =head2 B<SYSTEM>LOCALE (read-only) (since 3.4)
 
 Returns a text with a description of the system locale.
+
+=head2 SCROLLBARSIZE (read-only) (since 3.9)
+
+Returns the width of the vertical scrollbar (the same as the height of
+the horizontal scrollbar).
 
 =head2 B<X<GTKVERSION>GTKVERSION> (read-only) [GTK Only]
 
@@ -365,13 +379,18 @@ tree. Usually is "255 255 255".
 The default foreground color for editable text, also used by lists and
 tree. Usually is "0 0 0".
 
+=head2 B<X<LINKFGCOLOR>LINKFGCOLOR> (since 3.8)
+
+The default foreground color for linked text. In GTK and Motif is "0 0
+238".
+
 =head2 B<X<DEFAULTFONT>DEFAULTFONT>
 
 The default font used by all elements, except for menus.
 
 =head2 B<X<DEFAULTFONTSIZE>DEFAULTFONTSIZE> (since 3.0)
 
-Auxiliar attribute to retrieve and set the default font size used by
+Auxiliary attribute to retrieve and set the default font size used by
 all elements. It retrieves the size from DEFAULTFONT. When changed will
 actually change the DEFAULTFONT.
 

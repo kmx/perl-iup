@@ -1,0 +1,36 @@
+=head1 IupSetLanguagePack
+
+Sets a pack of associations between names and string values. Internally
+will call B<IupSetLanguageString> for each name in the pack.
+
+=head2 Parameters/Return
+
+ void IupSetLanguagePack(Ihandle* ih); [in C] 
+ iup.SetLanguagePack(ih: ihandle) [in Lua]
+
+B<ih>: pack of name-value association. It is simply a B< IupUser>
+element with several attributes set.
+
+=head2 Notes
+
+After setting the pack it can be destroyed.
+
+The existent associations will not be removed. But if the new ones have
+the same names, the old ones will be replaced. If set to NULL will
+remove all current associations.
+
+=head2 Examples
+
+  pack = iup.user{}
+ pack["IUP_RED"] = "Vermelho"
+ pack["MY_ITEMCOLORTEST"] = "Teste de Cor" 
+ iup.SetLanguagePack(pack) 
+ iup.Destroy(pack)
+
+=head2 See Also
+
+L<IupGetLanguageString|iupgetlanguagestring.html>,
+L<IupSetLanguageString|iupsetlanguagestring.html>,
+L<IupUser|../elem/iupuser.html>
+
+=cut

@@ -53,7 +53,7 @@ constrain the interactive change of the bar handler. Default: "0:1000".
 (Since 3.2)
 
 B<SHOWGRIP> (non inheritable): Shows the bar grip affordance. Default:
-YES. When set to NO, the BARSIZE is changed from 5 to 3.
+YES. When set to NO, the BARSIZE is set to 3.
 
 B<VALUE> (non inheritable): The proportion of the left or top (child1)
 client area relative to the full available area. It is an integer
@@ -79,21 +79,20 @@ L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
 =head2 Notes
 
 The controls that you want to be resized must have the EXPAND=YES
-attribute set. The control inside the split will not be resized with a
-size lesser than its B<Natural> size. See the L<Layout
-Guide|../layout_guide.html> for mode details on sizes.
+attribute set. See the L<Layout Guide|../layout_guide.html> for mode
+details on sizes.
 
-B<IupSplit> is not capable of detecting a child minimum size, so if a
-child has a minimum size, then manually set the B<MINMAX> attribute to
-avoid invalid positioning of the B<IupSplit> bar.
+If you set the MINMAX attribute for a direct child, B<IupSplit> will
+respect that size. Nested children will also have their size limits
+respected.
 
 The B<IupCanvas> bar handler is always the first child of the split. It
 can be obtained using B<IupGetChild> or B< IupGetNextChild>.
 
 The B<IupSplit> control looks just like the B<IupSbox>, but internally
-is very different. While sbox controls only one element and can push
-other elements outside the dialog, split balance its internal size and
-never push other elements outside its boundaries.
+is very different. While the B<IupSbox >controls only one element and
+can push other elements outside the dialog, the B<IupSplit> balance its
+internal size and never push other elements outside its boundaries.
 
 The container can be created with no elements and be dynamic filled
 using L<IupAppend|../func/iupappend.html> or

@@ -1,18 +1,16 @@
 =head1 B<Keyboard Codes>
 
-The table below shows the IUP codification of every key in the
+The table below shows the IUP codification of common keys in a
 keyboard. Each key is represented by an integer value, defined in the
 "iupkey.h" file header, which should be included in the application to
 use the key definitions. These keys are used in K_ANY and KEYPRESS_CB
 callbacks to inform the key that was pressed in the keyboard.
 
-IUP uses the US default codification this means that if you installed a
-keyboard specific for your country the key codes will be different from
-the real keys for a small group of keys. Except for the Brazilian ABNT
-keyboard which works in Windows and Linux. This does not affect the
-B<IupText> and B<IupMultiline> text input.
+IUP provides definitions only for common control keys and ASCii
+characters. This does not affect the B<IupText> and B<IupMultiline>
+text input.
 
-Notice that somes key combinations are not available because they are
+Notice that some key combinations are not available because they are
 restricted by the system.
 
 The B<iup_isprint(key)> macro informs if a key can be directly used as
@@ -25,12 +23,13 @@ B<iup_isSysXkey(key)> macro for the Sys modifier. These macros are also
 available in Lua as a function with the same name (iup.isprint(key),
 iup.isXkey(key), and so on) and returning a boolean.
 
-In the table below there are the most common definitions. Change the
-definition to K_s*, K_c*, K_m* and K_y* when the respective modifier is
-pressed (Shift, Control, Alt and Sys). Sys in Windows is the Windows
-key and in Mac is the Apple key. Check the "iupkey.h" file header for
-all the definitions. To detect the combination of two or more modifiers
-use global attribute "MODKEYSTATE".
+Change the definition to K_s*, K_c*, K_m* and K_y* when the respective
+modifier is pressed (Shift, Control, Alt and Sys). Sys in Windows is
+the Windows key and in Mac is the Apple key. Check the "iupkey.h" file
+header for all the definitions. To detect the combination of two or
+more modifiers the global attribute "MODKEYSTATE" can be used, but
+since IUP 3.9 modifiers can be combined in a single key value (although
+there are definitions only for the old simple combinations).
 
 Note: GTK in Windows does not generates the Win modifier key, the
 K_Print and the K_Pause keys (up to GTK version 2.8.18).
@@ -497,6 +496,8 @@ K_acute
 
 K_ccedilla
 
+K_diaeresis
+
 F1
 
 K_F1
@@ -544,5 +545,41 @@ K_F11
 F12
 
 K_F12
+
+Left Shift
+
+K_LSHIFT
+
+Right Shift
+
+K_RSHIFT
+
+Left Ctrl
+
+K_LCTRL
+
+Right Ctrl
+
+K_RCTRL
+
+Left Alt
+
+K_LALT
+
+Right Alt
+
+K_RALT
+
+Scroll Lock
+
+K_SCROLL
+
+Num Lock
+
+K_NUM
+
+Caps Lock
+
+K_CAPS
 
 =cut

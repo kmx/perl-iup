@@ -42,7 +42,7 @@ directory of the selected file.
 
 =over
 
-In Motif or GTK, if not defined the dialog opens in the current
+In Motif or GTK, if not defined, the dialog opens in the current
 directory.
 
 In Windows, if not defined and the application has used the dialog in
@@ -65,7 +65,7 @@ filters, so it is recommended to always add a less restrictive filter
 to the filter list, for example "All Files|*.*".
 
 B<FILE>: Name of the file initially shown in the "File Name" field in
-the dialog. If contains a path, then it is used as the initial
+the dialog. If contains a full path, then it is used as the initial
 directory and B<DIRECTORY> is ignored.
 
 B<FILEEXIST> (read-only): Indicates if the file defined by the FILE
@@ -108,7 +108,7 @@ treated as a child of the specified dialog.
 
 B<SHOWHIDDEN>: Show hidden files. Default: NO. (since 3.0) (GTK 2.6)
 
-B<SHOWPREVIEW>: A preview area is shown inside the File Dialog. Can
+B<SHOWPREVIEW>: A preview area is shown inside the file dialog. Can
 have values "YES" or "NO". Default: "NO". In Windows, you must link
 with the "iup.rc" resource file so the preview area can be enabled (not
 necessary if using "iup.dll"). Valid only if the FILE_CB callback is
@@ -130,12 +130,12 @@ of the client rectangle for the preview area.
 are relative to the preview area.
 
 If the attribute PREVIEWGLCANVAS is defined then it is used as the name
-of an existent IupGLCanvas control to be mapped internally to the
-preview canvas. Notice that this is not a fully implemented IupGLCanvas
-that inherits from IupCanvas. This does the minimum necessary so you
-can use IupGLCanvas auxiliary functions for the preview canvas and call
-OpenGL functions. No IupCanvas attributes or callbacks are available.
-(since 3.0)
+of an existent B<IupGLCanvas> control to be mapped internally to the
+preview canvas. Notice that this is not a fully implemented
+B<IupGLCanvas> that inherits from B<IupCanvas>. This does the minimum
+necessary so you can use B<IupGLCanvas> auxiliary functions for the
+preview canvas and call OpenGL functions. No B<IupCanvas> attributes or
+callbacks are available. (since 3.0)
 
 =back
 
@@ -184,8 +184,10 @@ B<status>: describes the action. Can be:
 =item * "OTHER" - an invalid file or a directory is selected. file_name
 is the one selected. (Since 3.0)
 
-=item * "OK" - the user pressed the OK button. If returns IUP_IGNORE
-the action is refused and the dialog is not closed.
+=item * "OK" - the user pressed the OK button. If returns IUP_IGNORE,
+the action is refused and the dialog is not closed, if returns
+IUP_CONTINUE does the same, but if the FILE attribute is defined the
+current filename is updated (since 3.8).
 
 =item * "PAINT" - the preview area must be redrawn.
 
@@ -194,8 +196,9 @@ selected, file_name is NULL.
 
 =item * "FILTER" - when a filter is changed. (Windows Only) (since 3.6)
 
-FILTERUSED attribute will be updated to reflect the change. FILE
-attribute can be used to change the current filename.
+FILTERUSED attribute will be updated to reflect the change. If returns
+IUP_CONTINUE, the FILE attribute if defined will update the current
+filename.
 
 =back
 
@@ -215,7 +218,7 @@ Lua, use the popup function.
 The dialog is mapped only inside B<IupPopup>, B<IupMap> does nothing.
 
 The L< IupGetFile|iupgetfile.html> function simply creates and popup a
-IupFileDlg.
+B<IupFileDlg>.
 
 In Windows, the FILE and the DIRECTORY attributes also accept strings
 containing "/" as path separators, but the VALUE attribute will always
@@ -223,6 +226,23 @@ return strings using the "\" character.
 
 In Windows, the dialog will be modal relative only to its parent or to
 the active dialog.
+
+In Windows, when using UTF-8 strings (UTF8MODE=Yes), attributes that
+return file names are still using the current locale, because the
+standard file I/O functions, like fopen, use ANSI file names. To use
+UTF-8 filenames (that can be lately be converted to UTF-16) set the
+global attribute L<UTF8MODE_FILE|../attrib/iup_globals.html#UTF8MODE>
+to Yes. In a specific case, the application can set before popup, and
+unset after, so for just that call will return in UTF-8.
+
+When saving a file, the overwrite check is done before the FILE_CB
+callback is called with status=OK. If the application wants to add an
+extension to the file name inside the FILE_CB callback when status=OK,
+then it must manually check if the file with the extension exits and
+asks the user if the file should be replaced, if not then the callback
+can set the FILE attribute and returns IUP_CONTINUE, so the file dialog
+will remain open and the user will have an opportunity to change the
+file name now that it contains the extension.
 
 =head2 Examples
 
@@ -235,7 +255,7 @@ the active dialog.
  
  IupPopup(dlg, IUP_CURRENT, IUP_CURRENT); 
  
- if (IupGetInt(dlg, "STATUS"))
+ if (IupGetInt(dlg, "STATUS") != -1)
  {
    printf("OK\n");
    printf("  VALUE(%s)\n", IupGetAttribute(dlg, "VALUE")); 

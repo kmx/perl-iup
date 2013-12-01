@@ -1,9 +1,13 @@
 =head1 IupSetFunction
 
-Associates a function to an action.
+Associates a function to an action as a global callback.
 
-This function is now deprecated. The applications should use
-B<IupSetCallback> instead.
+This function is now deprecated for regular elements, use it only
+global callbacks. For regular elements use B<IupSetCallback> instead.
+
+Notice that the application or libraries may set the same name for two
+different functions by mistake. B<IupSetCallback> does not depends on
+global names.
 
 =head2 Parameters/Return
 

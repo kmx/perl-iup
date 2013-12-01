@@ -23,7 +23,6 @@ or max_n==0 then returns the maximum number of names.
 
 L<IupGetAttribute|iupgetattribute.html>,
 L<IupSetAttribute|iupsetattribute.html>,
-L<IupSetAttributes|iupsetattributes.html>,
-L<IupStoreAttribute|iupstoreattribute.html>
+L<IupSetAttributes|iupsetattributes.html>
 
 =cut

@@ -139,7 +139,7 @@ B<ih>: identifier of the element that activated the event.
 B<drag_id>: Identifier of the clicked node where the drag start.
 
 B<drop_id>: Identifier of the clicked node where the drop were
-executed.
+executed. -1 indicates a drop in a blank area.
 
 B<isshift>: Boolean flag indicating the shift key state.
 
@@ -181,10 +181,12 @@ B<id>: node identifier.
 B<TOGGLEVALUE_CB>: Action generated when the toggle's state was
 changed. The callback also receives the new toggle's state. (since 3.6)
 
- int function(Ihandle *ih, int state); [in C]
- elem:togglevalue_cb(id: number: string) -> (ret: number) [in Lua]
+ int function(Ihandle *ih, int id, int state); [in C]
+ elem:togglevalue_cb(id, state: number: string) -> (ret: number) [in Lua]
 
 B<ih>: identifier of the element that activated the event.
+
+B<id>: node identifier.
 
 B<state>: 1 if the toggle's state was shifted to ON; 0 if it was
 shifted to OFF. If SHOW3STATE=YES, E<minus>1 if it was shifted to
@@ -224,6 +226,6 @@ are delayed to when the user enter again, firing a leave and enter
 events at enter time.
 
 L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> callbacks are
-supported, but SHOWDRAGDROP must be set no No.
+supported, but SHOWDRAGDROP must be set to NO.
 
 =cut

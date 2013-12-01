@@ -11,12 +11,13 @@ Font description containing typeface, style and size. Default: the
 global attribute DEFAULTFONT.
 
 The common format definition is similar to the the L<
-Pango|http://www.pango.org/> library Font Description, used by GTK+2.
-It is defined as having 3 parts: "E<lt>font familyE<gt>, E<lt>font
+Pango|http://www.pango.org/> library Font Description, used by GTK+. It
+is defined as having 3 parts: "E<lt>font faceE<gt>B<,> E<lt>font
 stylesE<gt> E<lt>font sizeE<gt>".
 
-Font family can be a list of fonts face names, but this is only
-accepted in GTK. So the font family can be reduced to font face.
+Font face is the font face name, and can be any name. Although only
+names recognized by the system will be actually used. The names
+Helvetica, Courier and Times are always accepted in all systems.
 
 The supported font style is a combination of: B<Bold>, B<Italic>, B<
 Underline> and B<Strikeout>. The Pango format include many other
@@ -27,9 +28,9 @@ must be in the same case describe here.
 Font size is in points (1/72 inch) or in pixels (using negative
 values).
 
-The old L<Font Names|iup_font.html#Font_Names> are still supported. The
-old Windows L<FONT|iup_font.html> format is still supported in the
-Windows driver.
+The old L<Font Names|iup_font2.html#Font_Names> are still supported.
+The old Windows L< FONT|iup_font2.html> format is still supported in
+the Windows driver.
 
 Returned values will be the same value when changing the attribute,
 except for the old font names that will be converted to the new common
@@ -38,7 +39,8 @@ format definition.
 =head2 Windows
 
 The DEFAULTFONT is retrieved from the System Settings (see below), if
-this failed then "Tahoma, 10" is assumed.
+this failed then "Tahoma, 10" for Windows XP, or "Segoe UI, 9" since
+Windows Vista, is assumed.
 
 The native handle can be obtained using the "B<HFONT>" attribute.
 
@@ -78,6 +80,9 @@ The X-Windows Logical Font Description format (XLFD) is also supported.
 The native handle can be obtained using the "B<PANGOFONTDESC>"
 attribute.
 
+Font face can be a list of fonts face names in GTK. For example
+"Arial,Helvetica, 12". Not accepted in the other drivers.
+
 Style can also be a combination of: Small-Caps,
 [Ultra-Light|Light|Medium|Semi-Bold|Bold|Ultra-Bold|Heavy],
 [Ultra-Condensed|Extra-Condensed|Condensed|Semi-Condensed|Semi-Expanded|Expanded|Extra-Expanded|Ultra-Expanded].
@@ -90,7 +95,7 @@ tab change the Applications Font to affect the default font.
 =head2 Examples:
 
  "Times, Bold 18"
- "Arial,Helvetica, 24" (list of fonts for GTK)
+ "Arial, 24" (no style)
  "Courier New, Italic Underline -30" (size in pixels)
 
 =head2 Affects
@@ -187,32 +192,29 @@ encoding is defined by a charset.
 IUP uses the default locale in ANSI-C. This means that it does not
 adopts a specific charset, and so the results can be different if the
 developer charset is different than the run time charset where the user
-is running the application. The advantage is that different charsets
-can be used. For example, if the developer is using a charset, and its
-user is also using the same encoding, then everything will work fine
-without the need of text encoding conversions.
+is running the application. For example, if the developer is using a
+charset, and its user is also using the same encoding, then everything
+will work fine without the need of text encoding conversions. The
+advantage is that any charset can be used, and localization is usually
+done in that way.
 
-GTK uses UTF-8 (ISO10646-1) as its charset for all displayed text, so
-IUP will automatically convert all strings to (SetAttribute) and from
-(GetAttribute) UTF-8. If you want to specify strings in the UTF-8
-charset at the GTK driver, then set the global attribute
-UTF8AUTOCONVERT to NO, the default is YES. If the default locale is
-already UTF-8, but the given string is not UTF-8 then it will be
-assumed that the string uses the ISO8859-1 charset.
-
-In the future IUP should also support Unicode strings, increasing
-application portability.
+Since version 3.9, IUP supports also the L<UTF-8|#UTF-8> (ISO10646-1)
+encoding in the GTK and Windows driver. To specify string in UTF-8
+encoding set the "UTF8MODE" attribute to "Yes".
 
 =head2 ISO8859-1 and Windows-1252 Displayable Characters
 
 The Latin-1 charset (ISO8859-1) defines an encoding for all of the
-characters used in Western languages. The first half of Latin-1 is
-standard ASCII, while the second half (with the eighth bit set)
-contains accented characters needed for Western languages other than
-English. In Windows, the ISO8859-1 charset was changed, and some
-control characters were replaced to include more display characters,
-this new charset is named Windows-1252. These characters are marked in
-the table below with thick borders.
+characters used in Western languages. It is the most common encoding,
+besides L<UTF-8|#UTF-8>.
+
+The first half of Latin-1 is standard ASCII (128 characters), while the
+second half (with the highest bit set) contains accented characters
+needed for Western languages other than English. In Windows, the
+ISO8859-1 charset was changed, and some control characters were
+replaced to include more display characters, this new charset is named
+Windows-1252 (these characters are marked in the table below with thick
+borders).
 
 32
 
@@ -860,5 +862,309 @@ Accented
 
 Adapted from L<
 http:E<47>E<47>en.wikipedia.orgE<47>wikiE<47>Windows-1252|http://en.wikipedia.org/wiki/Windows-1252>.
+
+=head2 UTF-8
+
+"Universal character set Transformation Format - 8 bits" is part of the
+Unicode standard that is used in most modern Web applications and it is
+becoming widely used in desktop applications too.
+
+It allows the application to use a regular "char*" for strings, but it
+is a variable width encoding, meaning that a single character may have
+up to four bytes in sequence. And the code "\0" is still used as a
+string terminator (NULL). So all the regular B<strstr>, B<strcmp>,
+B<strlen>, B<strcpy> and B<strcat> functions will work normally, except
+B<strchr> because it will search only for 1 byte characters. Notice
+that B<strlen> will return the number of bytes, not the number of
+multi-byte charcters. And B< strcmp> will compare byte encodings.
+
+The first 128 characters of Unicode, which correspond one-to-one with
+L<ASCII|http://en.wikipedia.org/wiki/ASCII>, are encoded using a single
+octet with the same binary value as ASCII, making valid ASCII text
+valid UTF-8-encoded Unicode as well. If the highest bit is 1 then one
+to three more bytes will follow to the define the actual character
+encoding. The number of bytes following is determined by the number of
+bits set to 1 after the highest bit.
+
+The next 1920 characters need two bytes to encode. This covers the
+remainder of almost all L<Latin-derived
+alphabets|http://en.wikipedia.org/wiki/Latin-derived_alphabet>, and
+also L< Greek|http://en.wikipedia.org/wiki/Greek_alphabet>,
+L<Cyrillic|http://en.wikipedia.org/wiki/Cyrillic_script>,
+L<Coptic|http://en.wikipedia.org/wiki/Coptic_alphabet>,
+L<Armenian|http://en.wikipedia.org/wiki/Armenian_alphabet>,
+L<Hebrew|http://en.wikipedia.org/wiki/Hebrew_alphabet>,
+L<Arabic|http://en.wikipedia.org/wiki/Arabic_alphabet>,
+L<Syriac|http://en.wikipedia.org/wiki/Syriac_alphabet> and
+L<Tna|http://en.wikipedia.org/wiki/Tna> alphabets, as well as
+L<Combining Diacritical
+Marks|http://en.wikipedia.org/wiki/Combining_Diacritical_Marks>. Three
+bytes are needed for characters in the rest of the L<Basic Multilingual
+Plane|http://en.wikipedia.org/wiki/Mapping_of_Unicode_character_planes>
+(which contains virtually all characters in common
+useL<[11]|http://en.wikipedia.org/wiki/UTF-8#cite_note-unicode-ch02-bmp-11>).
+Four bytes are needed for characters in the L<other planes of
+Unicode|http://en.wikipedia.org/wiki/Mapping_of_Unicode_characters>,
+which include less common L<CJK
+characters|http://en.wikipedia.org/wiki/CJK_characters> and various
+historic scripts and mathematical symbols.
+
+The bytes 0xFE and 0xFF do not appear, so a valid UTF-8 string can
+cannot be confused with an UTF-16 sequence.
+
+The second half (128-255) of the Latin-1 charset characters found in
+the previous table, are called "Latin-1 Supplement" in the Unicode
+standard. They all have two bytes, except some of the additional
+Windows 1252 characters. And they have the following encoding in UTF-8
+(codes in hexadecimal):
+
+E2 82 AC
+
+E2 80 9A
+
+C6 92
+
+E2 80 9E
+
+E2 80 A6
+
+E2 80 A0
+
+E2 80 A1
+
+CB 86
+
+E2 80 B0
+
+C5 A0
+
+E2 80 B9
+
+C5 92
+
+C5 BD
+
+E2 80 98
+
+E2 80 99
+
+E2 80 9C
+
+E2 80 9D
+
+E2 80 A2
+
+E2 80 93
+
+E2 80 94
+
+CB 9C
+
+E2 84 A2
+
+C5 A1
+
+E2 80 BA
+
+C5 93
+
+C5 BE
+
+C5 B8
+
+C2 A0
+
+C2 A1
+
+C2 A2
+
+C2 A3
+
+C2 A4
+
+C2 A5
+
+C2 A6
+
+C2 A7
+
+C2 A8
+
+C2 A9
+
+C2 AA
+
+C2 AB
+
+C2 AC
+
+C2 AD
+
+C2 AE
+
+C2 AF
+
+C2 B0
+
+C2 B1
+
+C2 B2
+
+C2 B3
+
+C2 B4
+
+C2 B5
+
+C2 B6
+
+C2 B7
+
+C2 B8
+
+C2 B9
+
+C2 BA
+
+C2 BB
+
+C2 BC
+
+C2 BD
+
+C2 BE
+
+C2 BF
+
+C3 80
+
+C3 81
+
+C3 82
+
+C3 83
+
+C3 84
+
+C3 85
+
+C3 86
+
+C3 87
+
+C3 88
+
+C3 89
+
+C3 8A
+
+C3 8B
+
+C3 8C
+
+C3 8D
+
+C3 8E
+
+C3 8F
+
+C3 90
+
+C3 91
+
+C3 92
+
+C3 93
+
+C3 94
+
+C3 95
+
+C3 96
+
+C3 97
+
+C3 98
+
+C3 99
+
+C3 9A
+
+C3 9B
+
+C3 9C
+
+C3 9D
+
+C3 9E
+
+C3 9F
+
+C3 A0
+
+C3 A1
+
+C3 A2
+
+C3 A3
+
+C3 A4
+
+C3 A5
+
+C3 A6
+
+C3 A7
+
+C3 A8
+
+C3 A9
+
+C3 AA
+
+C3 AB
+
+C3 AC
+
+C3 AD
+
+C3 AE
+
+C3 AF
+
+C3 B0
+
+C3 B1
+
+C3 B2
+
+C3 B3
+
+C3 B4
+
+C3 B5
+
+C3 B6
+
+C3 B7
+
+C3 B8
+
+C3 B9
+
+C3 BA
+
+C3 BB
+
+C3 BC
+
+C3 BD
+
+C3 BE
+
+C3 BF
+
+Adapted from
+L<http:E<47>E<47>en.wikipedia.orgE<47>wikiE<47>UTF-8|http://en.wikipedia.org/wiki/UTF-8>
 
 =cut

@@ -4,7 +4,7 @@ Instead of using B<IupSetHandle> and B<IupSetAttribute> with a new
 creative name, this function automatically creates a non conflict name
 and associates the name with the attribute.
 
-It is very usefull for associating images and menus.
+It is very useful for associating images and menus.
 
 =head2 Parameters/Return
 
@@ -25,14 +25,14 @@ that associate handles are not inheritable.
 This work is automatically done in Lua when an attribute that is an
 element name is set to an element handle. In other words, in Lua you
 can set a string or a handle as the attribute value, when a handle is
-used a name is automatically created just as the IupSetAttributeHandle.
+used a name is automatically created just as the
+B<IupSetAttributeHandle>.
 
 =head2 See Also
 
 L<IupGetAttributeHandle|iupgetattributehandle.html>,
 L<IupSetAttribute|iupsetattribute.html>,
 L<IupSetAttributes|iupsetattributes.html>,
-L<IupStoreAttribute|iupstoreattribute.html>,
 L<IupSetHandle|iupsethandle.html>
 
 =cut
