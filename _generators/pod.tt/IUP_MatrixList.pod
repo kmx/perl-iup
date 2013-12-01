@@ -1,0 +1,111 @@
+=for comment based on iup-3.9
+
+[% h.name %]
+
+[% n.iupmatrixlist %]
+
+[% h.desc %]
+
+XXX-TODO
+
+=begin HTML
+
+[% html.iupmatrixlist %]
+
+=end HTML
+
+[% h.usage %]
+
+[% h.create %]
+
+ $mlist = IUP::MatrixList->new( 1=>"line 1", 2=>"line 2", 3=>"line 3" );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+=over
+
+=item B<"1">
+
+First item in the list.
+
+=item B<"2">
+
+Second item in the list.
+
+=item B<"3">
+
+Third item in the list.
+
+=item B<< "<n>" >>
+
+n-th item in the list. 
+
+=item B<ADDLIN>
+
+XXX-TODO
+
+=back
+
+[%txt.at_common%]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<FONT|[%m.at%]/FONT>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+=back
+
+[% h.cb %]
+
+[%txt.cb_intro%]
+
+=over
+
+=item B<IMAGEVALUECHANGED_CB>
+
+XXX-TODO
+
+=back 
+  
+[% h.examples %]
+
+[% IF examples.iupmatrixlist %]
+The element B<IUP::Matrix> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupmatrixlist %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
+
+[% h.see %]
+
+L<IUP::Canvas|IUP::Canvas>
+
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupmatrixlist.html|[%url.iuporigdoc%]ctrl/iupmatrixlist.html>
+[%END%] 
+
+=cut
