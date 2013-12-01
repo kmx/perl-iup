@@ -6,9 +6,30 @@
 
 ## BEWARE: pointer has to be 'Ihandle* ih' NOT 'Ihandle *ih'
 
+IUP::MatrixList, IUP::Expander, IUP::Link, IUP::GridBox, IUP::Gauge, IUP::ProgressDlg         
+
+#MatrixEx
+# ? iupmatex_busy.c:  iupClassRegisterCallback(ic, "BUSY_CB", "iis");                   IUP::Matrix;BUSY_CB;iis;int;Ihandle* ih,int status,int count,char* name
+# ? iupmat_ex.c:  iupClassRegisterCallback(ic, "NUMERICGETVALUE_CB", "ii=d");           IUP::Matrix;NUMERICGETVALUE_CB;ii;double;Ihandle* ih,int lin, int col
+# ? iupmat_ex.c:  iupClassRegisterCallback(ic, "NUMERICSETVALUE_CB", "iid");            IUP::Matrix;NUMERICSETVALUE_CB;iid;int;Ihandle* ih,int lin,int col,double value
+# ? iup_matrixex.c:  iupClassRegisterCallback(ic, "MENUCONTEXT_CB", "nii")              IUP::Matrix;MENUCONTEXT_CB;nii;int;Ihandle* ih,Ihandle* menu,int lin,int col
+# ? iupmatex_clipboard.c:  iupClassRegisterCallback(ic, "PASTESIZE_CB", "ii");          IUP::Matrix;PASTESIZE_CB;ii;int;Ihandle* ih,int num_lin,int num_col
+# ? iupmat_ex.c:  iupClassRegisterCallback(ic, "SORTCOLUMNCOMPARE_CB", "iii");          IUP::Matrix;SORTCOLUMNCOMPARE_CB;iii;int;Ihandle* ih,int col,int lin1,int lin2
+
+
 IUP::Button;ACTION;;int;Ihandle* ih
 IUP::Button;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
-IUP::CanvasGL;RESIZE_CB;ii;int;Ihandle* ih,int width,int height
+_canvas;ACTION;ff;int;Ihandle* ih,float posx,float posy
+_canvas;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
+_canvas;FOCUS_CB;i;int;Ihandle* ih,int focus
+_canvas;KEYPRESS_CB;ii;int;Ihandle* ih,int c,int press
+_canvas;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
+_canvas;MULTITOUCH_CB;iAAAA;int;Ihandle* ih,int count,int* pid,int* px,int* py,int* pstate
+_canvas;RESIZE_CB;ii;int;Ihandle* ih,int width,int height
+_canvas;SCROLL_CB;iff;int;Ihandle* ih,int op,float posx,float posy
+_canvas;TOUCH_CB;iiis;int;Ihandle* ih,int id,int x,int y,char* state
+_canvas;WHEEL_CB;fiis;int;Ihandle* ih,float delta,int x,int y,char* status
+_canvas;WOM_CB;i;int;Ihandle* ih,int state
 IUP::Cells;DRAW_CB;iiiiiiv;int;Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas
 IUP::Cells;HEIGHT_CB;i;int;Ihandle* ih,int line
 IUP::Cells;HSPAN_CB;ii;int;Ihandle* ih,int line,int column
@@ -19,6 +40,16 @@ IUP::Cells;NLINES_CB;;int;Ihandle* ih
 IUP::Cells;SCROLLING_CB;ii;int;Ihandle* ih,int line,int column
 IUP::Cells;VSPAN_CB;ii;int;Ihandle* ih,int line,int column
 IUP::Cells;WIDTH_CB;i;int;Ihandle* ih,int column
+_base;ENTERWINDOW_CB;;int;Ihandle* ih
+_base;GETFOCUS_CB;;int;Ihandle* ih
+_base;HELP_CB;;int;Ihandle* ih
+_base;K_ANY;i;int;Ihandle* ih,int c
+_base;KILLFOCUS_CB;;int;Ihandle* ih
+_base;LEAVEWINDOW_CB;;int;Ihandle* ih
+_base;MAP_CB;;int;Ihandle* ih
+_base;UNMAP_CB;;int;Ihandle* ih
+## note: TIPS_CB - affects all except menus
+_base;TIPS_CB;ii;int;Ihandle* ih,int x,int y
 IUP::ColorBar;CELL_CB;i;char*;Ihandle* ih,int cell
 IUP::ColorBar;EXTENDED_CB;i;int;Ihandle* ih,int cell
 IUP::ColorBar;SELECT_CB;ii;int;Ihandle* ih,int cell,int type
@@ -30,10 +61,22 @@ IUP::Dial;BUTTON_PRESS_CB;d;int;Ihandle* ih,double angle
 IUP::Dial;BUTTON_RELEASE_CB;d;int;Ihandle* ih,double angle
 IUP::Dial;MOUSEMOVE_CB;d;int;Ihandle* ih,double angle
 IUP::Dial;VALUECHANGED_CB;;int;Ihandle* ih
+_dialog;CLOSE_CB;;int;Ihandle* ih
+_dialog;RESIZE_CB;ii;int;Ihandle* ih,int width,int height
+_dialog;SHOW_CB;i;int;Ihandle* ih,int state
+## the following dialog related callbacks are special: MDIACTIVATE_CB/TRAYCLICK_CB - Win
+_dialog;MDIACTIVATE_CB;;int;Ihandle* ih
+_dialog;TRAYCLICK_CB;iii;int;Ihandle* ih,int but,int pressed,int dclick
+_dialog;COPYDATA_CB;si;int;Ihandle* ih,char* cmdLine,int size
+_dialog;MOVE_CB;ii;int;Ihandle* ih,int x,int y
+IUP::Expander;ACTION;;int;Ihandle* ih
 IUP::FileDlg;FILE_CB;ss;int;Ihandle* ih,const char* file_name,const char* status
+## IUP::Frame MAP_CB/UNMAP_CB not necessary as they are part of _base
 IUP::Item;ACTION;;int;Ihandle* ih
 IUP::Item;HIGHLIGHT_CB;;int;Ihandle* ih
 IUP::Label;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
+## IUP::Label MAP_CB/UNMAP_CB/ENTERWINDOW_CB/LEAVEWINDOW_CB not necessary as they are part of _base
+IUP::Link;ACTION;s;int;Ihandle* ih,char* url
 IUP::List;ACTION;sii;int;Ihandle* ih,char* text,int item,int state
 IUP::List;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
 IUP::List;CARET_CB;iii;int;Ihandle* ih,int lin,int col,int pos
@@ -44,30 +87,43 @@ IUP::List;EDIT_CB;is;int;Ihandle* ih,int c,char* new_value
 IUP::List;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
 IUP::List;MULTISELECT_CB;s;int;Ihandle* ih,char* value
 IUP::List;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::MatrixList;IMAGEVALUECHANGED_CB;ii;int;Ihandle* ih,int lin,int imagevalue
+IUP::MatrixList;LISTACTION_CB;ii;int;Ihandle* ih,int item,int state
+IUP::MatrixList;LISTCLICK_CB;iis;int;Ihandle* ih,int lin,int col,char* status
+IUP::MatrixList;LISTDRAW_CB;iiiiiiv;int;Ihandle* ih,int lin,int col,int x1,int x2,int y1,int y2,cdCanvas* cnv
+IUP::MatrixList;LISTEDITION_CB;iiii;int;Ihandle* ih,int lin,int col,int mode,int update
+IUP::MatrixList;LISTINSERT_CB;i;int;Ihandle* ih,int lin
+IUP::MatrixList;LISTRELEASE_CB;iis;int;Ihandle* ih,int lin,int col,char* status
+IUP::MatrixList;LISTREMOVE_CB;i;int;Ihandle* ih,int lin
 IUP::Matrix;ACTION_CB;iiiis;int;Ihandle* ih,int c,int lin,int col,int edition,char* after
 IUP::Matrix;BGCOLOR_CB;iiIII;int;Ihandle* ih,int lin,int col,unsigned int* red,unsigned int* green,unsigned int* blue
 IUP::Matrix;CLICK_CB;iis;int;Ihandle* ih,int lin,int col,char* status
+IUP::Matrix;COLRESIZE_CB;i;int;Ihandle* ih,int col
 IUP::Matrix;DRAW_CB;iiiiiiv;int;Ihandle* ih,int lin,int col,int x1,int x2,int y1,int y2,cdCanvas* cnv
-IUP::Matrix;DROP_CB;nii;int;Ihandle* ih,Ihandle* drop,int lin,int col
 IUP::Matrix;DROPCHECK_CB;ii;int;Ihandle* ih,int lin,int col
 IUP::Matrix;DROPSELECT_CB;iinsii;int;Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v
+IUP::Matrix;DROP_CB;nii;int;Ihandle* ih,Ihandle* drop,int lin,int col
 IUP::Matrix;EDITION_CB;iiii;int;Ihandle* ih,int lin,int col,int mode,int update
 IUP::Matrix;ENTERITEM_CB;ii;int;Ihandle* ih,int lin,int col
 IUP::Matrix;FGCOLOR_CB;iiIII;int;Ihandle* ih,int lin,int col,unsigned int* red,unsigned int* green,unsigned int* blue
 IUP::Matrix;FONT_CB;ii;char*;Ihandle* ih,int lin,int col
 IUP::Matrix;LEAVEITEM_CB;ii;int;Ihandle* ih,int lin,int col
-IUP::Matrix;MARK_CB;ii;int;Ihandle* ih,int lin,int col
 IUP::Matrix;MARKEDIT_CB;iii;int;Ihandle* ih,int lin,int col,int marked
+IUP::Matrix;MARK_CB;ii;int;Ihandle* ih,int lin,int col
 IUP::Matrix;MENUDROP_CB;nii;int;Ihandle* ih,Ihandle* drop,int lin,int col
 IUP::Matrix;MOUSEMOVE_CB;ii;int;Ihandle* ih,int lin,int col
 IUP::Matrix;RELEASE_CB;iis;int;Ihandle* ih,int lin,int col,char* status
 IUP::Matrix;SCROLLTOP_CB;ii;int;Ihandle* ih,int lin,int col
+IUP::Matrix;TOGGLEVALUE_CB;iii;int;Ihandle* ih,int lin,int col,int status
+IUP::Matrix;TYPE_CB;ii;char*;Ihandle* ih,int lin,int col
+IUP::Matrix;VALUECHANGED_CB;;int;Ihandle* ih
 IUP::Matrix;VALUE_CB;ii;char*;Ihandle* ih,int lin,int col
 IUP::Matrix;VALUE_EDIT_CB;iis;int;Ihandle* ih,int lin,int col,char* newval
 IUP::Menu;ACTION;;int;Ihandle* ih
 IUP::Menu;HIGHLIGHT_CB;;int;Ihandle* ih
 IUP::Menu;MENUCLOSE_CB;;int;Ihandle* ih
 IUP::Menu;OPEN_CB;;int;Ihandle* ih
+## IUP::Frame MAP_CB/UNMAP_CB not necessary as they are part of _base
 IUP::MglPlot;DELETE_CB;iiff;int;Ihandle* ih,int index,int sample_index,float x,float y
 IUP::MglPlot;DELETEBEGIN_CB;;int;Ihandle* ih
 IUP::MglPlot;DELETEEND_CB;;int;Ihandle* ih
@@ -126,42 +182,11 @@ IUP::WebBrowser;ERROR_CB;s;int;Ihandle* ih,char* url
 IUP::WebBrowser;NAVIGATE_CB;s;int;Ihandle* ih,char* url
 IUP::WebBrowser;NEWWINDOW_CB;s;int;Ihandle* ih,char* url
 
-_base;ENTERWINDOW_CB;;int;Ihandle* ih
-_base;GETFOCUS_CB;;int;Ihandle* ih
-_base;HELP_CB;;int;Ihandle* ih
-_base;K_ANY;i;int;Ihandle* ih,int c
-_base;KILLFOCUS_CB;;int;Ihandle* ih
-_base;LEAVEWINDOW_CB;;int;Ihandle* ih
-_base;MAP_CB;;int;Ihandle* ih
-_base;UNMAP_CB;;int;Ihandle* ih
-## note: TIPS_CB - affects all except menus
-_base;TIPS_CB;ii;int;Ihandle* ih,int x,int y
-
-_canvas;ACTION;ff;int;Ihandle* ih,float posx,float posy
-_canvas;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
-_canvas;FOCUS_CB;i;int;Ihandle* ih,int focus
-_canvas;KEYPRESS_CB;ii;int;Ihandle* ih,int c,int press
-_canvas;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
-_canvas;MULTITOUCH_CB;iAAAA;int;Ihandle* ih,int count,int* pid,int* px,int* py,int* pstate
-_canvas;RESIZE_CB;ii;int;Ihandle* ih,int width,int height
-_canvas;SCROLL_CB;iff;int;Ihandle* ih,int op,float posx,float posy
-_canvas;TOUCH_CB;iiis;int;Ihandle* ih,int id,int x,int y,char* state
-_canvas;WHEEL_CB;fiis;int;Ihandle* ih,float delta,int x,int y,char* status
-_canvas;WOM_CB;i;int;Ihandle* ih,int state
-
-_dialog;CLOSE_CB;;int;Ihandle* ih
-_dialog;RESIZE_CB;ii;int;Ihandle* ih,int width,int height
-_dialog;SHOW_CB;i;int;Ihandle* ih,int state
-_dialog;COPYDATA_CB;si;int;Ihandle* ih,char* cmdLine,int size
-_dialog;MDIACTIVATE_CB;;int;Ihandle* ih
-_dialog;TRAYCLICK_CB;iii;int;Ihandle* ih,int but,int pressed,int dclick
-_dialog;MOVE_CB;ii;int;Ihandle* ih,int x,int y
-
 ## _dragdrop is related to: IupLabel, IupText, IupList, IupTree, IupCanvas and IupDialog
-_dragdrop;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y
 _dragdrop;DRAGBEGIN_CB;ii;int;Ihandle* ih,int x,int y
-#XXX-FIXME-XXX _dragdrop;DRAGDATA_CB;sUi;int;Ihandle* ih,char* type,void* data,int size
-#XXX-FIXME-XXX _dragdrop;DROPDATA_CB;sUiii;int;Ihandle* ih,char* type,void* data,int size,int x,int y
 _dragdrop;DRAGDATASIZE_CB;s;int;Ihandle* ih,char* type
+#XXX-FIXME-XXX _dragdrop;DRAGDATA_CB;sUi;int;Ihandle* ih,char* type,void* data,int size
 _dragdrop;DRAGEND_CB;i;int;Ihandle* ih,int action
+#XXX-FIXME-XXX _dragdrop;DROPDATA_CB;sUiii;int;Ihandle* ih,char* type,void* data,int size,int x,int y
+_dragdrop;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y
 _dragdrop;DROPMOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status

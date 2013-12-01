@@ -3,7 +3,7 @@ Revision history for perl module IUP
 0.201 2013-XX-XX
     - UTF-8 support
     - INCOMPATIBLE CHANGE: IUP::PPlot completely new interface
-    - NEW: IUP::MglPlot
+    - NEW: IUP::MglPlot, IUP::MatrixList, IUP::Expander, IUP::Link, IUP::GridBox, IUP::Gauge, IUP::ProgressDlg
     - Fixed Append()/Insert() bug
     
 0.101 2013-07-31

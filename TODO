@@ -1,24 +1,14 @@
 ################ the last time working on ################ 
 
-- new callbacks (iup-3.7)
-- drag&drop
-- IupMglPlot
+IUP::MatrixList, IUP::Expander, IUP::Link, IUP::GridBox, IUP::Gauge, IUP::ProgressDlg - missing POD, missing examples!!!
 
 XXX-FIXME:
 */ CB: we need special handling for _dragdrop|DROPDATA_CB + DRAGDATA_CB (see NODEREMOVED_CB)
-*/ IupMglPlot* - we need to add wrapper functions in LibraryIup.xs 
 */ cb_table->{_dragdrop} what about CanvasGL, PPlot, MglPlot
 */ cb_table->{_canvas}   what about PPlot, MglPlot
 */ global callbacks
 
 ##########################################################
-
-UTF8
-#ifdef sv_utf8_decode
-        sv_utf8_decode(sv);
-#else
-        SvUTF8_on(sv);
-#endif
 
 ######## POD/IMPORTANT: 
 - finish pod for IUP::Canvas::(Palette|Pattern|Stipple|Bitmap)

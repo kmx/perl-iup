@@ -323,6 +323,54 @@ _init_cb_VALUE_EDIT_CB_iis(ih)
 		IupSetCallback(ih, "VALUE_EDIT_CB", (Icallback)internal_cb_VALUE_EDIT_CB_iis);
 
 void
+_init_cb_IMAGEVALUECHANGED_CB_ii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "IMAGEVALUECHANGED_CB", (Icallback)internal_cb_IMAGEVALUECHANGED_CB_ii);
+
+void
+_init_cb_LISTACTION_CB_ii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "LISTACTION_CB", (Icallback)internal_cb_LISTACTION_CB_ii);
+
+void
+_init_cb_LISTCLICK_CB_iis(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "LISTCLICK_CB", (Icallback)internal_cb_LISTCLICK_CB_iis);
+
+void
+_init_cb_LISTDRAW_CB_iiiiiiv(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "LISTDRAW_CB", (Icallback)internal_cb_LISTDRAW_CB_iiiiiiv);
+
+void
+_init_cb_LISTEDITION_CB_iiii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "LISTEDITION_CB", (Icallback)internal_cb_LISTEDITION_CB_iiii);
+
+void
+_init_cb_LISTINSERT_CB_i(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "LISTINSERT_CB", (Icallback)internal_cb_LISTINSERT_CB_i);
+
+void
+_init_cb_LISTRELEASE_CB_iis(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "LISTRELEASE_CB", (Icallback)internal_cb_LISTRELEASE_CB_iis);
+
+void
+_init_cb_LISTREMOVE_CB_i(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "LISTREMOVE_CB", (Icallback)internal_cb_LISTREMOVE_CB_i);
+
+void
 _init_cb_MENUCLOSE_CB_(ih)
 		Ihandle* ih;
 	CODE:

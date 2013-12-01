@@ -1159,6 +1159,47 @@ _IupToggle(title,action)
 		RETVAL
 
 #### Original C function from <iup.h>
+# Ihandle* IupLink(const char *url, const char * title);
+Ihandle*
+_IupLink(url,title)
+		const char* url;
+		const char* title;
+	CODE:
+		RETVAL = IupLink(url,title);
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <iup.h>
+# Ihandle* IupExpander(Ihandle* child);
+Ihandle*
+_IupExpander(child)
+		Ihandle* child;
+	CODE:
+		RETVAL = IupExpander(child);
+	OUTPUT:
+		RETVAL
+
+
+#### Original C function from <iup.h>
+# Ihandle* IupGridBoxv(Ihandle **children);
+Ihandle*
+_IupGridBox(...)
+	PREINIT:
+		int i;
+	CODE:
+		if (items>1) {
+		  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );
+		  for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
+		  pointers[i] = NULL;
+		  RETVAL = IupGridBoxv(pointers);
+		  free(pointers);
+		}
+		else if (items==1) RETVAL = SvOK(ST(0)) ? IupGridBox(mySV2IHN(ST(0)), NULL) : NULL;
+		else RETVAL = IupGridBox(NULL);
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <iup.h>
 # Ihandle* IupTimer (void);
 Ihandle*
 _IupTimer()
@@ -1375,6 +1416,15 @@ Ihandle*
 _IupFontDlg()
 	CODE:
 		RETVAL = IupFontDlg();
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <iup.h>
+# Ihandle* IupProgressDlg(void);
+Ihandle*
+_IupProgressDlg()
+	CODE:
+		RETVAL = IupProgressDlg();
 	OUTPUT:
 		RETVAL
 
@@ -1892,6 +1942,34 @@ _IupCells()
 		RETVAL = IupCells();
 #else
 		warn("Error: IUP was built without IupCells() support");
+		RETVAL = NULL;
+#endif
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <iupcontrols.h>
+# Ihandle* IupGauge(void);
+Ihandle*
+_IupGauge()
+	CODE:
+#ifdef HAVELIB_IUPCONTROLS
+		RETVAL = IupGauge();
+#else
+		warn("Error: IUP was built without IupGauge() support");
+		RETVAL = NULL;
+#endif
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <iupcontrols.h>
+# Ihandle* IupMatrixList(void);
+Ihandle*
+_IupMatrixList()
+	CODE:
+#ifdef HAVELIB_IUPCONTROLS
+		RETVAL = IupMatrixList();
+#else
+		warn("Error: IUP was built without IupMatrixList() support");
 		RETVAL = NULL;
 #endif
 	OUTPUT:

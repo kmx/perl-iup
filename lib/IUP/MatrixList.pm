@@ -6,7 +6,23 @@ use IUP::Internal::LibraryIup;
 use Carp;
 
 sub _create_element {
-  return shift->_proc_child_param(\&IUP::Internal::LibraryIup::_IupMatrixList, @_);
+  my ($self, $args) = @_;
+  my $ih = IUP::Internal::LibraryIup::_IupMatrixList();
+
+  if (defined $ih) {
+    $self->ihandle($ih);
+    if (my $c = delete $args->{items}) {
+      if (ref($c) eq 'ARRAY') {
+        my $i = 1; #BEWARE: the first item is saved as attribute "1"	
+        $self->SetAttribute($i++, $_) for (@$c);
+      }
+      else {
+        carp "Warning: parameter 'items' has to be an ARRAY ref";
+      }
+    }
+  }
+
+  return $ih;
 }
 
 1;

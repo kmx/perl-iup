@@ -88,6 +88,16 @@ my $cb_table = {
     VALUE_CB => \&_init_cb_VALUE_CB_ii,
     VALUE_EDIT_CB => \&_init_cb_VALUE_EDIT_CB_iis,
   },
+  'IUP::MatrixList' => {
+    IMAGEVALUECHANGED_CB => \&_init_cb_IMAGEVALUECHANGED_CB_ii,
+    LISTACTION_CB => \&_init_cb_LISTACTION_CB_ii,
+    LISTCLICK_CB => \&_init_cb_LISTCLICK_CB_iis,
+    LISTDRAW_CB => \&_init_cb_LISTDRAW_CB_iiiiiiv,
+    LISTEDITION_CB => \&_init_cb_LISTEDITION_CB_iiii,
+    LISTINSERT_CB => \&_init_cb_LISTINSERT_CB_i,
+    LISTRELEASE_CB => \&_init_cb_LISTRELEASE_CB_iis,
+    LISTREMOVE_CB => \&_init_cb_LISTREMOVE_CB_i,
+  },
   'IUP::Menu' => {
     ACTION => \&_init_cb_ACTION_,
     HIGHLIGHT_CB => \&_init_cb_HIGHLIGHT_CB_,

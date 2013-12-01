@@ -17,11 +17,13 @@ use Getopt::Long;
 require "$FindBin::Bin/utils.pm";
 die "Cannot require utils.pm\n" if $@;
 
+my $what = 'cd-5.7';
+
 # global variables
 my $g_help    = 0;
-my $g_iupdoc  = 'y:\IUP.Unpacked\iup-3.5';
-my $g_podraw  = "$FindBin::Bin/xxpod.raw.iup-3.5";
-my $g_podtt   = "$FindBin::Bin/xxtmp.pod.iup-3.5";
+my $g_iupdoc  = 'y:/IUP.Unpacked/' . $what;
+my $g_podraw  = "$FindBin::Bin/xxpod.raw.$what";
+my $g_podtt   = "$FindBin::Bin/xxtmp.pod.$what";
 # processing commandline options
 my $getopt_rv = GetOptions(
   'help|?' => \$g_help,
@@ -58,7 +60,7 @@ sub procfile {
   die "Non-existing file '$f'" unless -f $f;
   my ($html_v, $html_d, $html_f) = File::Spec->splitpath($f);
   
-  my $html = decode('utf-8',read_file($f));
+  my $html = decode('utf-8', scalar read_file($f, {binmode=>':raw'}));
   # HTML replacements here
   $html =~ s|href="|href="pod:|gi;  
   
@@ -100,7 +102,7 @@ sub procfile {
   
   #warn " -> writting POD.RAW '$rawname' ...\n";  
   My::Utils::make_path_for_file($rawname);
-  write_file($rawname, {binmode=>1}, encode('utf-8',$pod)); #save original
+  write_file($rawname, {binmode=>':raw'}, encode('utf-8',$pod)); #save original
   
   # POD replacements here
   $pod =~ s|X<SeeAlso>||g;
@@ -141,43 +143,43 @@ sub procfile {
   
   #warn " -> writting POD.TT '$name_f'\n";
   My::Utils::make_path_for_file($name);
-  write_file($name, {binmode=>1}, encode('utf-8',$pod));  
+  write_file($name, {binmode=>':raw'}, encode('utf-8',$pod));  
 }
 
 sub proc_at {
   my $file = shift;
-  my $pod = read_file($file, {binmode=>1} );
+  my $pod = read_file($file, {binmode=>':raw'} );
   
   #xxxTODO
   $pod =~ s/=head1/=head3/g;
   $pod =~ s/=head2/=head4/g;
   $pod .= "\n\n";
   
-  write_file("$g_podtt/IUP_AT.pod", {binmode=>1, append=>1}, $pod);
+  write_file("$g_podtt/IUP_AT.pod", {binmode=>':raw', append=>1}, $pod);
 }
 
 sub proc_cb {
   my $file = shift;
-  my $pod = read_file($file, {binmode=>1} );
+  my $pod = read_file($file, {binmode=>':raw'} );
   
   #xxxTODO
   $pod =~ s/=head1/=head3/g;
   $pod =~ s/=head2/=head4/g;
   $pod .= "\n\n";
   
-  write_file("$g_podtt/IUP_CB.pod", {binmode=>1, append=>1}, $pod);
+  write_file("$g_podtt/IUP_CB.pod", {binmode=>':raw', append=>1}, $pod);
 }
 
 sub proc_func {
   my $file = shift;  
-  my $pod = read_file($file, {binmode=>1} );
+  my $pod = read_file($file, {binmode=>':raw'} );
   
   #xxxTODO
   $pod =~ s/=head1/=head3/g;
   $pod =~ s/=head2/=head4/g;
   $pod .= "\n\n";
   
-  write_file("$g_podtt/IUP_Func.pod", {binmode=>1, append=>1}, $pod);
+  write_file("$g_podtt/IUP_Func.pod", {binmode=>':raw', append=>1}, $pod);
 }
 
 warn ">>>>[$0] Started!\n";

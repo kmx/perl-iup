@@ -1,0 +1,148 @@
+=for comment XXX-TODO
+
+[% h.name %]
+
+[% n.iupplot %]
+
+[% h.desc %]
+
+Creates a MathGLPlot-based plot. MathGLPlot is a library for creating plots that is system independent. 
+
+=begin HTML
+
+[% html.iupmglplot %]
+
+=end HTML
+
+[% h.usage %]
+
+[% h.create %]
+
+ $plot = IUP::MglPlot->new( TITLE=>"Simple Data", GRID=>"YES" );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
+
+=head2 Auxiliary Functions
+
+=head3 PlotBegin()
+
+ $plot->PlotBegin($dim);
+ # $dim = 1 (for 1D) or 2 (for 2D) or 3 (for 3D)
+
+=head3 PlotEnd()
+
+ $index = $plot->PlotEnd();
+
+=head3 PlotNewDataSet()
+
+  $plot->PlotNewDataSet($dim);
+  # $dim = 1 (for 1D) or 2 (for 2D) or 3 (for 3D)
+  
+=head3 PlotAdd1D()
+
+ $plot->PlotAdd1D($name, $y);
+ #or
+ $plot->PlotAdd1D(\@name, \@y);
+ #or
+ $plot->PlotAdd1D($y);
+ #or
+ $plot->PlotAdd1D(\@y);
+
+=head3 PlotAdd2D()
+
+ $plot->PlotAdd2D($x, $y);
+ #or
+ $plot->PlotAdd2D(\@x, \@y);
+
+=head3 PlotAdd3D()
+
+ $plot->PlotAdd3D($x, $y, $z);
+ #or
+ $plot->PlotAdd3D(\@x, \@y, \@z);
+
+=head3 PlotInsert1D()
+
+ $plot->PlotInsert1D($index, $sample_index, \@name, \@y);
+ #or
+ $plot->PlotInsert1D($index, $sample_index, \@y);
+
+=head3 PlotInsert2D()
+
+ $plot->PlotInsert2D($index, $sample_index, \@x, \@y);
+
+=head3 PlotInsert3D()
+
+ $plot->PlotInsert3D($index, $sample_index, \@x, \@y, \@z);
+
+=head3 PlotAppend1D()
+
+ $plot->PlotAppend1D($index, \@name, \@y);
+ #or
+ $plot->PlotAppend1D($index, \@y);
+
+=head3 PlotAppend2D()
+
+ $plot->PlotAppend2D($index, \@x, \@y);
+
+=head3 PlotAppend3D()
+
+ $plot->PlotAppend3D($index, \@x, \@y, \@z);
+
+=head3 PlotSet1D()
+
+ $plot->PlotSet1D($index, \@name, \@y);
+
+=head3 PlotSet2D()
+
+ $plot->PlotSet2D($index, \@x, \@y);
+
+=head3 PlotSet3D()
+
+ $plot->PlotSet3D($index, \@x, \@y, \@z);
+
+=head3 PlotTransform()
+
+ ($ix, $iy) = $plot->PlotTransform($x, $y, $z);
+
+=head3 PlotTransformXYZ()
+
+ ($x, $y, $z) = $plot->PlotTransformXYZ($ix, $iy);
+
+=head3 PlotPaintTo()
+
+ $plot->PlotPaintTo($filename);
+ #or
+ $plot->PlotPaintTo($w, $h, $dpi, $filename);
+ 
+Note: only *.svg and *.eps formats are supported
+
+=head2 ATTRIBUTES
+
+XXX-TODO
+
+[% h.examples %]
+
+[% IF examples.iupmglplot %]
+The element B<IUP::MglPlot> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupmglplot %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+[%END%]
+
+[% h.see %]
+
+L<IUP::PPlot|IUP::PPlot>
+
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iup_mglplot.html|[%url.iuporigdoc%]ctrl/iup_mglplot.html>
+[%END%]
+
+=cut

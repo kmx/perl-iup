@@ -2,7 +2,7 @@
 
 [% h.name %]
 
-[% n.iupmatrixlist %]
+[% n.iuplink %]
 
 [% h.desc %]
 
@@ -10,7 +10,7 @@ XXX-TODO
 
 =begin HTML
 
-[% html.iupmatrixlist %]
+[% html.iuplink %]
 
 =end HTML
 
@@ -18,7 +18,7 @@ XXX-TODO
 
 [% h.create %]
 
- $mlist = IUP::MatrixList->new( 1=>"line 1", 2=>"line 2", 3=>"line 3" );
+ $mlist = IUP::Link->new(XXX-TODO);
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
@@ -86,11 +86,11 @@ XXX-TODO
   
 [% h.examples %]
 
-[% IF examples.iupmatrixlist %]
-The element B<IUP::MatrixList> is used in the following sample scripts:
+[% IF examples.iuplink %]
+The element B<IUP::Link> is used in the following sample scripts:
 
 =over
-[%FOREACH e IN examples.iupmatrixlist %]
+[%FOREACH e IN examples.iuplink %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
 =back 
@@ -105,7 +105,7 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::Canvas|IUP::Canvas>
 
 [%IF flags.gennerate_origdoc -%]
-The original doc: L<iupmatrixlist.html|[%url.iuporigdoc%]ctrl/iupmatrixlist.html>
+The original doc: L<iuplink.html|[%url.iuporigdoc%]elem/iuplink.html>
 [%END%] 
 
 =cut

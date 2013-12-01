@@ -6,14 +6,12 @@ use IUP::Internal::LibraryIup;
 use Carp;
 
 sub _create_element {
-  my ($self, $args, $firstonly) = @_;
+  my ($self, $args) = @_;
   my $ih = IUP::Internal::LibraryIup::_IupList(undef);
 
   if (defined $ih) {
     $self->ihandle($ih);
-    my $c = $args->{items};
-    delete $args->{items};
-    if (defined $c) {
+    if (my $c = delete $args->{items}) {
       if (ref($c) eq 'ARRAY') {
         my $i = 1; #BEWARE: the first item is saved as attribute "1"	
         $self->SetAttribute($i++, $_) for (@$c);

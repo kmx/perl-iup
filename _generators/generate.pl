@@ -44,6 +44,7 @@ sub file2hash {
     next if /^#/;
     next if /^[\t\s]*$/;
     my @items = split(';', $_);
+    die "INVALID: '$_'" unless $items[0] && $items[1];
     $rv->{$items[0]}->{$items[1]}->{valid} = 1;
     for(my $i=2; $i < scalar(@cols); $i++) {
       $rv->{$items[0]}->{$items[1]}->{$cols[$i]} = $items[$i];

@@ -32,7 +32,10 @@ my @pm_calls = grep(/^IUP::Internal::LibraryIup::/, (split "\n", $all_code));
 @pm_calls = map { $1 if(/^IUP::Internal::LibraryIup::([^\(\s,]+)/) } @pm_calls;
 @pm_calls = grep(!/^(_register_(ch|ih)|_translate_(ch|ih)|_unregister_(ch|ih))$/, @pm_calls);
 
-my @xs_funcs = grep(/^_/, read_file("$root/lib/IUP/Internal/LibraryIup.xs"));
+my @xs_funcs = grep(/^_/, read_file("$root/lib/IUP/Internal/LibraryIup.xs"), 
+                          read_file("$root/lib/IUP/Internal/PPlot.xs.inc"), 
+                          read_file("$root/lib/IUP/Internal/MglPlot.xs.inc"),
+                   );
 @xs_funcs = map { $1 if(/^(_[^\s\(]+)/) } @xs_funcs;
 
 @xs_funcs = sort(@xs_funcs);
