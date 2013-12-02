@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-
+IUP::ProgressDlg - [pre-defined dialog] displaying the progress of an operation
 
 =head1 DESCRIPTION
 
@@ -10,7 +10,7 @@ XXX-TODO
 
 =begin HTML
 
-
+<p><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/progressdlg.png"></p>
 
 =end HTML
 

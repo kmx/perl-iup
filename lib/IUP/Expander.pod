@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-
+IUP::Expander - [GUI element] container that can interactively show or hide its child
 
 =head1 DESCRIPTION
 
@@ -10,7 +10,20 @@ XXX-TODO
 
 =begin HTML
 
-
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <td>Container Expanded (STATE = "OPEN")</td>
+        <td>Container Collapsed (STATE = "CLOSE")</td>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupexpander_open.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupexpander_close.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
 
 =end HTML
 

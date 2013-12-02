@@ -17,15 +17,15 @@ L<Popup|IUP::Manual::02_Elements/"Popup()"> function only.
     <tbody align="left">
       <tr>
         <th>GTK</th>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/filedlg_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/filedlg_gtk.png"></td>
       </tr>
       <tr>
         <th>Motif</th>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/filedlg_mot.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/filedlg_mot.png"></td>
       </tr>
       <tr>
         <th>Windows</th>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/filedlg_win.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/filedlg_win.png"></td>
       </tr>
     </tbody>
   </table>
@@ -299,7 +299,7 @@ The element B<IUP::FileDlg> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/filedlg.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/filedlg.pl> - IUP::FileDlg example
+=item * L<0-basic/filedlg.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/filedlg.pl> - IUP::FileDlg example
 
 =back 
 

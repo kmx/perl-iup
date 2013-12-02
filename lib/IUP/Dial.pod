@@ -10,7 +10,7 @@ Creates a dial for regulating a given angular variable.
 
 =begin HTML
 
-<p><img src="http://kmx.github.io/perl-iup/img-3.5/ctrl/iupdial.gif"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupdial.gif"></p>
 
 =end HTML
 
@@ -222,11 +222,11 @@ The element B<IUP::Dial> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/dial.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/dial.pl> - IUP::Dial example
+=item * L<0-basic/dial.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/dial.pl> - IUP::Dial example
 
-=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/plot_advanced.pl> - Plot controls
+=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/plot_advanced.pl> - Plot controls
 
-=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/1-apps/app-plot-demo.pl> - dials for zooming
+=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
 =back 
 

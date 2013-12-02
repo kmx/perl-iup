@@ -22,33 +22,33 @@ updated to simulate a progression.
 	</tr>
 	<tr style="background-color: rgb(173, 177, 194);">
 		<th style="text-align: center;">Motif</th>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupprogressbar_mot_continuous.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_mot_continuous.png"></td>
 		<td>(same as DASHED=NO)</td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupprogressbar_mot_marquee.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_mot_marquee.png"></td>
 	</tr>
 	<tr style="background-color: rgb(212, 208, 200);">
 		<th style="text-align: center;">Windows Classic</th>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupprogressbar_win2k_continuous.png"></td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupprogressbar_win2k_dash.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_win2k_continuous.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_win2k_dash.png"></td>
 		<td>(same as DASHED)</td>
 	</tr>
 	<tr style="background-color: rgb(239, 235, 231);">
 		<th style="text-align: center;">Windows w/ Styles</th>
 		<td>(same as DASHED=YES)</td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupprogressbar_winxp_dash.png"></td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupprogressbar_winxp_marquee.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_winxp_dash.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_winxp_marquee.png"></td>
 	</tr>
 	<tr style="background-color: rgb(239, 235, 231);">
 		<th style="text-align: center;">Windows Vista</th>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupprogressbar_vista_continuous.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_vista_continuous.png"></td>
 		<td>(same as DASHED=NO)</td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupprogressbar_vista_marquee.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_vista_marquee.png"></td>
 	</tr>
 	<tr style="background-color: rgb(236, 233, 216);">
 		<th style="text-align: center;">GTK</th>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupprogressbar_gtk_continuous.png"></td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupprogressbar_gtk_dashed.png"></td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupprogressbar_gtk_marquee.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_gtk_continuous.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_gtk_dashed.png"></td>
+		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_gtk_marquee.png"></td>
 	</tr>
     </tbody>
   </table>
@@ -169,21 +169,21 @@ The element B<IUP::ProgressBar> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/canvas3.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/canvas3.pl> - IUP::Canvas example
+=item * L<0-basic/canvas3.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/canvas3.pl> - IUP::Canvas example
 
-=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/progressbar1.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/progressbar1.pl> - IUP::Progressbar example
+=item * L<0-basic/progressbar1.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/progressbar1.pl> - IUP::Progressbar example
 
-=item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
+=item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
 
-=item * L<0-basic/progressbar3.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/progressbar3.pl> - IUP::ProgressBar example
+=item * L<0-basic/progressbar3.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/progressbar3.pl> - IUP::ProgressBar example
 
-=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
-=item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
 =back 
 

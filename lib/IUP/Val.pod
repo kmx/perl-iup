@@ -27,18 +27,18 @@ known as Scale or Trackbar in native systems.
         <th>GTK</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_mot_horiz.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_win2k_horiz.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_winxp_horiz.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_vista_horiz.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_gtk_horiz.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupval_mot_horiz.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupval_win2k_horiz.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupval_winxp_horiz.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupval_vista_horiz.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupval_gtk_horiz.png"></td>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_mot_vert.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_win2k_vert.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_winxp_vert.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_vista_vert.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupval_gtk_vert.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupval_mot_vert.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupval_win2k_vert.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupval_winxp_vert.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupval_vista_vert.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupval_gtk_vert.png"></td>
       </tr>
       <tr>
     </tbody>
@@ -271,17 +271,17 @@ The element B<IUP::Val> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/val.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/val.pl> - IUP::Val example
+=item * L<0-basic/val.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/val.pl> - IUP::Val example
 
-=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
-=item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
 =back 
 

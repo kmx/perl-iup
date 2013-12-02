@@ -18,15 +18,15 @@ selecting a color.
       <col style="text-align: left;">
       <tr>
         <th>GTK</th>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/colordlg_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/colordlg_gtk.png"></td>
       </tr>
       <tr>
         <th>Windows</th>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/colordlg_win.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/colordlg_win.png"></td>
       </tr>
       <tr>
         <th>ColorBrowser<br>based</th>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/colordlg_cb.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/colordlg_cb.png"></td>
       </tr>
     </tbody>
   </table>
@@ -169,7 +169,7 @@ The element B<IUP::ColorDlg> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/colordlg.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/colordlg.pl> - IUP::ColorDlg example (used for screenshot - IUP.pod)
+=item * L<0-basic/colordlg.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/colordlg.pl> - IUP::ColorDlg example (used for screenshot - IUP.pod)
 
 =back 
 

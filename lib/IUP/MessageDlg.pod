@@ -21,9 +21,9 @@ function only.
         <th>Windows</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/messagedlg_gtk.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/messagedlg_mot.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/messagedlg_win.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/messagedlg_gtk.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/messagedlg_mot.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/messagedlg_win.png"></td>
       </tr>
     </tbody>
   </table>
@@ -128,7 +128,7 @@ The element B<IUP::MessageDlg> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/messagedlg.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/messagedlg.pl> - IUP::MessageDlg example
+=item * L<0-basic/messagedlg.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/messagedlg.pl> - IUP::MessageDlg example
 
 =back 
 

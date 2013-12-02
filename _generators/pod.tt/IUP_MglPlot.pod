@@ -2,7 +2,7 @@
 
 [% h.name %]
 
-[% n.iupplot %]
+[% n.iupmglplot %]
 
 [% h.desc %]
 

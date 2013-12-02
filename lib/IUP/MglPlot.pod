@@ -10,7 +10,19 @@ Creates a MathGLPlot-based plot. MathGLPlot is a library for creating plots that
 
 =begin HTML
 
-
+<p>
+  <table border="1">
+    <tbody>
+    <tr>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iup_mglplot0.png" border="0"></td>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iup_mglplot1.png" border="0"></td>
+    </tr>
+    <tr>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iup_mglplot2.png" border="0"></td>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iup_mglplot3.png" border="0"></td>
+    </tr>
+  </table>
+</p>
 
 =end HTML
 
@@ -126,7 +138,14 @@ XXX-TODO
 =head1 EXAMPLES
 
 
-Unfortunately there are no sample scripts using this element.
+The element B<IUP::MglPlot> is used in the following sample scripts:
+
+=over
+
+=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-plot-demo.pl> - dials for zooming
+
+=back 
+
 
 
 =head1 SEE ALSO

@@ -201,49 +201,6 @@ internal_cb_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char
 } 
 
 int
-internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
-{
-	dSP;
-	int count;
-	int rv;
-	SV * SV_rv;
-	SV* element;
-	
-	rv = IUP_DEFAULT;
-	element = ihandle2SV_nocreate(ih);
-	if(!SvOK(element)) {
-	  warn("Warning: callback  - cannot convert ihandle!\n");
-	  return rv;
-	}
-  
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(element);
-  	XPUSHs(sv_2mortal(newSViv(width)));
-  	XPUSHs(sv_2mortal(newSViv(height)));
-  	PUTBACK;
-
-	count = call_cb_func(element,"!int!cb!RESIZE_CB!func");
-
-	SPAGAIN;
-
-	if (count != 1) { /* no warning, use default retval */ }
-	else {
-	  SV_rv = POPs;
-	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
-	}
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
 internal_cb_DRAW_CB_iiiiiiv (Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas)
 {
 	dSP;
@@ -1189,6 +1146,48 @@ internal_cb_HIGHLIGHT_CB_ (Ihandle* ih)
 } 
 
 int
+internal_cb_ACTION_s (Ihandle* ih,char* url)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+	
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+  
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSVpv(url, 0)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!ACTION!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
 internal_cb_ACTION_sii (Ihandle* ih,char* text,int item,int state)
 {
 	dSP;
@@ -1655,6 +1654,48 @@ internal_cb_CLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
   	PUTBACK;
 
 	count = call_cb_func(element,"!int!cb!CLICK_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_COLRESIZE_CB_i (Ihandle* ih,int col)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+	
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+  
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(col)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!COLRESIZE_CB!func");
 
 	SPAGAIN;
 
@@ -2276,6 +2317,92 @@ internal_cb_SCROLLTOP_CB_ii (Ihandle* ih,int lin,int col)
 	else {
 	  SV_rv = POPs;
 	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_TOGGLEVALUE_CB_iii (Ihandle* ih,int lin,int col,int status)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+	
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+  
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(lin)));
+  	XPUSHs(sv_2mortal(newSViv(col)));
+  	XPUSHs(sv_2mortal(newSViv(status)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!TOGGLEVALUE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+char*
+internal_cb_TYPE_CB_ii (Ihandle* ih,int lin,int col)
+{
+	dSP;
+	int count;
+	char* rv;
+	
+	SV* element;
+	
+	rv = NULL;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+  
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(lin)));
+  	XPUSHs(sv_2mortal(newSViv(col)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!TYPE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  rv = POPpx;
 	}
 
 	PUTBACK;
@@ -4569,6 +4696,49 @@ internal_cb_MULTITOUCH_CB_iAAAA (Ihandle* ih,int count_,int* pid,int* px,int* py
   	PUTBACK;
 
 	count = call_cb_func(element,"!int!cb!MULTITOUCH_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
+internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+	
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+  
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(width)));
+  	XPUSHs(sv_2mortal(newSViv(height)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!RESIZE_CB!func");
 
 	SPAGAIN;
 

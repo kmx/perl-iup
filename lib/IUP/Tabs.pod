@@ -23,16 +23,16 @@ systems.
         <th>Windows w/ Style</th>
       </tr>
       <tr>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptabs_win2k_top.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptabs_winxp_top.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iuptabs_win2k_top.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iuptabs_winxp_top.png"></td>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptabs_win2k_left.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptabs_winxp_left.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iuptabs_win2k_left.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iuptabs_winxp_left.png"></td>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptabs_win2k_top_multi.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptabs_winxp_top_multi.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iuptabs_win2k_top_multi.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iuptabs_winxp_top_multi.png"></td>
       </tr>
     </tbody>
   </table>
@@ -45,12 +45,12 @@ systems.
         <th colspan="2">GTK</th>
       </tr>
       <tr>          
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptabs_gtk_top.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptabs_gtk_left.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iuptabs_gtk_top.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iuptabs_gtk_left.png"></td>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptabs_gtk_top_vert.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptabs_gtk_left_vert.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iuptabs_gtk_top_vert.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iuptabs_gtk_left_vert.png"></td>
       </tr>
     </tbody>
   </table>
@@ -63,8 +63,8 @@ systems.
         <th colspan="2">Motif</th>
       </tr>
       <tr>          
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptabs_mot_top.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iuptabs_mot_left.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iuptabs_mot_top.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iuptabs_mot_left.png"></td>
       </tr>
     </tbody>
   </table>
@@ -336,19 +336,19 @@ The element B<IUP::Tabs> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/plot_advanced.pl> - Plot controls
+=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/plot_advanced.pl> - Plot controls
 
-=item * L<0-basic/tabs1.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/tabs1.pl> - IUP::Tabs example 
+=item * L<0-basic/tabs1.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/tabs1.pl> - IUP::Tabs example 
 
-=item * L<0-basic/tabs2.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/tabs2.pl> - IUP::Tabs example
+=item * L<0-basic/tabs2.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/tabs2.pl> - IUP::Tabs example
 
-=item * L<0-basic/tabs3.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/tabs3.pl> - IUP::Tabs example 
+=item * L<0-basic/tabs3.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/tabs3.pl> - IUP::Tabs example 
 
-=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
 =back 
 

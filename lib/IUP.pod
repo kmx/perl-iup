@@ -42,7 +42,7 @@ On all platform it uses native GUI widgets.
 
 =end html
 
-B<Source code:> see L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples//1-apps/app-sample1.pl>
+B<Source code:> see L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples//1-apps/app-sample1.pl>
 
 =head2 IUP's Strengths
 
@@ -99,7 +99,7 @@ they are handled by separate L<Alien::IUP|Alien::IUP> module.
 
 At this point we show just basic ideas behind IUP based GUI applications.
 For more details see L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>.
-Or if you wanna skip the theory you can go directly to L<examples|https://metacpan.org/source/KMX/IUP-0.200_3/examples/>
+Or if you wanna skip the theory you can go directly to L<examples|https://metacpan.org/source/KMX/IUP-0.200_4/examples/>
 directory of IUP distribution.
 
 =head2 Simple GUI Dialogs
@@ -343,23 +343,29 @@ L<IUP::Dialog>
 =item * GUI elements:
 
 L<IUP::Button|IUP::Button>,
-L<IUP::Canvas|IUP::Canvas>,
 L<IUP::CanvasGL|IUP::CanvasGL>,
+L<IUP::Canvas|IUP::Canvas>,
 L<IUP::Cbox|IUP::Cbox>,
 L<IUP::Cells|IUP::Cells>,
 L<IUP::ColorBar|IUP::ColorBar>,
 L<IUP::ColorBrowser|IUP::ColorBrowser>,
-L<IUP::Dial|IUP::Dial>,
 L<IUP::Dialog|IUP::Dialog>,
+L<IUP::Dial|IUP::Dial>,
+L<IUP::Expander|IUP::Expander>,
 L<IUP::Fill|IUP::Fill>,
 L<IUP::Frame|IUP::Frame>,
+L<IUP::Gauge|IUP::Gauge>,
+L<IUP::GridBox|IUP::GridBox>,
 L<IUP::Hbox|IUP::Hbox>,
 L<IUP::Image|IUP::Image>,
 L<IUP::Item|IUP::Item>,
 L<IUP::Label|IUP::Label>,
+L<IUP::Link|IUP::Link>,
 L<IUP::List|IUP::List>,
+L<IUP::MatrixList|IUP::MatrixList>,
 L<IUP::Matrix|IUP::Matrix>,
 L<IUP::Menu|IUP::Menu>,
+L<IUP::MglPlot|IUP::MglPlot>,
 L<IUP::Normalizer|IUP::Normalizer>,
 L<IUP::Ole|IUP::Ole>,
 L<IUP::PPlot|IUP::PPlot>,
@@ -367,8 +373,8 @@ L<IUP::ProgressBar|IUP::ProgressBar>,
 L<IUP::Radio|IUP::Radio>,
 L<IUP::Sbox|IUP::Sbox>,
 L<IUP::Separator|IUP::Separator>,
-L<IUP::Spin|IUP::Spin>,
 L<IUP::SpinBox|IUP::SpinBox>,
+L<IUP::Spin|IUP::Spin>,
 L<IUP::Split|IUP::Split>,
 L<IUP::Submenu|IUP::Submenu>,
 L<IUP::Tabs|IUP::Tabs>,
@@ -386,7 +392,8 @@ L<IUP::Zbox|IUP::Zbox>
 L<IUP::ColorDlg|IUP::ColorDlg>,
 L<IUP::FileDlg|IUP::FileDlg>,
 L<IUP::FontDlg|IUP::FontDlg>,
-L<IUP::MessageDlg|IUP::MessageDlg>
+L<IUP::MessageDlg|IUP::MessageDlg>,
+L<IUP::ProgressDlg|IUP::ProgressDlg>
 
 =item * Special non-GUI elements:
 
@@ -807,7 +814,7 @@ Shows a modal dialog containing a message and up to three buttons.
 
 =begin html
 
-<p><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/alarm.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/alarm.png"></p>
 
 =end html
 
@@ -868,11 +875,11 @@ pre-defined dialog L<IUP::ColorDlg|IUP::ColorDlg>.
     <tbody align="left">
       <tr>
         <th>MS&nbsp;Windows</th>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/colordlg_cb.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/colordlg_cb.png"></td>
       </tr>
       <tr>
         <th>GTK</th>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/colordlg_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/colordlg_gtk.png"></td>
       </tr>
     </tbody>
   </table>
@@ -920,15 +927,15 @@ filename. Uses pre-defined dialog L<IUP::FileDlg|IUP::FileDlg>.
     <tbody align="left">
       <tr>
         <th>MS&nbsp;Windows</th>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/filedlg_win.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/filedlg_win.png"></td>
       </tr>
       <tr>
         <th>GTK</th>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/filedlg_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/filedlg_gtk.png"></td>
       </tr>
       <tr>
         <th>Motif</th>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/filedlg_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/filedlg_mot.png"></td>
       </tr>
     </tbody>
   </table>
@@ -981,7 +988,7 @@ of controls.
 
 =begin html
 
-<p><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/getparam.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/getparam.png"></p>
 
 =end html
 
@@ -1200,7 +1207,7 @@ Shows a modal dialog to edit a multiline text.
 
 =begin html
 
-<p><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/gettext.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/gettext.png"></p>
 
 =end html
 
@@ -1233,7 +1240,7 @@ selection list.
 
 =begin html
 
-<p><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/listdialog.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/listdialog.png"></p>
 
 =end html
 
@@ -1291,15 +1298,15 @@ a L<IUP::MessageDlg|IUP::MessageDlg>.
     <tbody align="left">
       <tr>
         <th>MS&nbsp;Windows</th>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/messagedlg_win.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/messagedlg_win.png"></td>
       </tr>
       <tr>
         <th>GTK</th>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/messagedlg_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/messagedlg_gtk.png"></td>
       </tr>
       <tr>
         <th>Motif</th>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/messagedlg_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/messagedlg_mot.png"></td>
       </tr>
     </tbody>
   </table>

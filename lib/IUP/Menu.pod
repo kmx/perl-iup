@@ -22,10 +22,10 @@ a menu will be an error.
         <th>Windows w/ Style</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_gtk.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_mot.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_win2k.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_winxp.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupmenu_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupmenu_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupmenu_win2k.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupmenu_winxp.png"></td>
       </tr>
       <tr>
         <th>RADIO=YES</th>
@@ -34,15 +34,15 @@ a menu will be an error.
         <th>RADIO=YES</th>
       </tr>      
       <tr>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_gtk_radio.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_mot_radio.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_win2k_radio.png"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_winxp_radio.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupmenu_gtk_radio.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupmenu_mot_radio.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupmenu_win2k_radio.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupmenu_winxp_radio.png"></td>
       </tr>
     </tbody>
   </table>
 </p>
-<p><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupmenu_fromsyntax.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupmenu_fromsyntax.png"></p>
 
 =end HTML
 
@@ -149,27 +149,27 @@ The element B<IUP::Menu> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/dialog2.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/dialog2.pl> - IUP::Dialog example
+=item * L<0-basic/dialog2.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/dialog2.pl> - IUP::Dialog example
 
-=item * L<0-basic/item.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/item.pl> - IUP::Item Example
+=item * L<0-basic/item.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/item.pl> - IUP::Item Example
 
-=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/menu.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/menu.pl> - IUP::Menu example
+=item * L<0-basic/menu.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/menu.pl> - IUP::Menu example
 
-=item * L<0-basic/separator.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/separator.pl> - IUP::Separator example
+=item * L<0-basic/separator.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/separator.pl> - IUP::Separator example
 
-=item * L<0-basic/submenu.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/submenu.pl> - IUP::Submenu example
+=item * L<0-basic/submenu.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/submenu.pl> - IUP::Submenu example
 
-=item * L<0-basic/tray.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/tray.pl> - IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
+=item * L<0-basic/tray.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/tray.pl> - IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
 
-=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/1-apps/app-mdi.pl> - IUP app example
+=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
-=item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
 =back 
 

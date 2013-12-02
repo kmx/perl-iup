@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-
+IUP::Link - [GUI element] label that displays an underlined clickable text
 
 =head1 DESCRIPTION
 
@@ -10,7 +10,7 @@ XXX-TODO
 
 =begin HTML
 
-
+<p><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iuplink.png"></p>
 
 =end HTML
 

@@ -31,8 +31,8 @@ also must be given using SIZE or RASTERSIZE attributes.
         <th>Numbering Cells</th>
       </tr>
       <tr>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/ctrl/iupcells_chess.jpg"></td>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/ctrl/iupcells_num.jpg"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupcells_chess.jpg"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupcells_num.jpg"></td>
       </tr>
     </tbody>
   </table>
@@ -434,11 +434,11 @@ The element B<IUP::Cells> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/cells_checkboard.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/cells_checkboard.pl> - IUP::Cells example
+=item * L<0-basic/cells_checkboard.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/cells_checkboard.pl> - IUP::Cells example
 
-=item * L<0-basic/cells_degrade.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/cells_degrade.pl> - IUP::Cells example
+=item * L<0-basic/cells_degrade.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/cells_degrade.pl> - IUP::Cells example
 
-=item * L<0-basic/cells_numbering.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/cells_numbering.pl> - IUP::Cells example
+=item * L<0-basic/cells_numbering.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/cells_numbering.pl> - IUP::Cells example
 
 =back 
 

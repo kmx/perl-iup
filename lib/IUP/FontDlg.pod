@@ -19,15 +19,15 @@ only.
       <col style="text-align: left;">
       <tr>
         <th>GTK</th>
-        <td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/fontdlg_gtk.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/fontdlg_gtk.png"></td>
       </tr>
       <tr>
         <th>Motif</th>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/fontdlg_mot.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/fontdlg_mot.png"></td>
       </tr>
       <tr>
         <th>Windows</th>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.5/dlg/fontdlg_win.png"></td>
+	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/fontdlg_win.png"></td>
       </tr>
     </tbody>
   </table>

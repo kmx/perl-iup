@@ -23,12 +23,6 @@ _init_cb_BUTTON_CB_iiiis(ih)
 		IupSetCallback(ih, "BUTTON_CB", (Icallback)internal_cb_BUTTON_CB_iiiis);
 
 void
-_init_cb_RESIZE_CB_ii(ih)
-		Ihandle* ih;
-	CODE:
-		IupSetCallback(ih, "RESIZE_CB", (Icallback)internal_cb_RESIZE_CB_ii);
-
-void
 _init_cb_DRAW_CB_iiiiiiv(ih)
 		Ihandle* ih;
 	CODE:
@@ -161,6 +155,12 @@ _init_cb_HIGHLIGHT_CB_(ih)
 		IupSetCallback(ih, "HIGHLIGHT_CB", (Icallback)internal_cb_HIGHLIGHT_CB_);
 
 void
+_init_cb_ACTION_s(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "ACTION", (Icallback)internal_cb_ACTION_s);
+
+void
 _init_cb_ACTION_sii(ih)
 		Ihandle* ih;
 	CODE:
@@ -225,6 +225,12 @@ _init_cb_CLICK_CB_iis(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "CLICK_CB", (Icallback)internal_cb_CLICK_CB_iis);
+
+void
+_init_cb_COLRESIZE_CB_i(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "COLRESIZE_CB", (Icallback)internal_cb_COLRESIZE_CB_i);
 
 void
 _init_cb_DROPCHECK_CB_ii(ih)
@@ -309,6 +315,18 @@ _init_cb_SCROLLTOP_CB_ii(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "SCROLLTOP_CB", (Icallback)internal_cb_SCROLLTOP_CB_ii);
+
+void
+_init_cb_TOGGLEVALUE_CB_iii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "TOGGLEVALUE_CB", (Icallback)internal_cb_TOGGLEVALUE_CB_iii);
+
+void
+_init_cb_TYPE_CB_ii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "TYPE_CB", (Icallback)internal_cb_TYPE_CB_ii);
 
 void
 _init_cb_VALUE_CB_ii(ih)
@@ -627,6 +645,12 @@ _init_cb_MULTITOUCH_CB_iAAAA(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "MULTITOUCH_CB", (Icallback)internal_cb_MULTITOUCH_CB_iAAAA);
+
+void
+_init_cb_RESIZE_CB_ii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "RESIZE_CB", (Icallback)internal_cb_RESIZE_CB_ii);
 
 void
 _init_cb_SCROLL_CB_iff(ih)

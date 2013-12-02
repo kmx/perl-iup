@@ -25,7 +25,7 @@ linear, see L<Notes|#Notes> below.
 
 =begin HTML
 
-<p><img src="http://kmx.github.io/perl-iup/img-3.5/ctrl/iupcolorbrowser.png"></p>
+<p><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupcolorbrowser.png"></p>
 
 =end HTML
 
@@ -199,7 +199,7 @@ The element B<IUP::ColorBrowser> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/colorbrowser.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/colorbrowser.pl> - IUP::ColorBrowser example
+=item * L<0-basic/colorbrowser.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/colorbrowser.pl> - IUP::ColorBrowser example
 
 =back 
 

@@ -6,8 +6,6 @@
 
 ## BEWARE: pointer has to be 'Ihandle* ih' NOT 'Ihandle *ih'
 
-IUP::MatrixList, IUP::Expander, IUP::Link, IUP::GridBox, IUP::Gauge, IUP::ProgressDlg         
-
 #MatrixEx
 # ? iupmatex_busy.c:  iupClassRegisterCallback(ic, "BUSY_CB", "iis");                   IUP::Matrix;BUSY_CB;iis;int;Ihandle* ih,int status,int count,char* name
 # ? iupmat_ex.c:  iupClassRegisterCallback(ic, "NUMERICGETVALUE_CB", "ii=d");           IUP::Matrix;NUMERICGETVALUE_CB;ii;double;Ihandle* ih,int lin, int col

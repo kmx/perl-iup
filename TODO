@@ -1,6 +1,9 @@
 ################ the last time working on ################ 
 
-IUP::MatrixList, IUP::Expander, IUP::Link, IUP::GridBox, IUP::Gauge, IUP::ProgressDlg - missing POD, missing examples!!!
+- IUP::MglPlot, IUP::MatrixList, IUP::Expander, IUP::Link, IUP::GridBox, IUP::Gauge, IUP::ProgressDlg - missing POD, missing examples!!!
+- MatrixEx callbacks?
+        IupMatrixExOpen()                                               void IupMatrixExOpen(void);
+        calling IupMatrixExInit for an existing IupMatrix control.      void IupMatrixExInit(Ihandle* ih);
 
 XXX-FIXME:
 */ CB: we need special handling for _dragdrop|DROPDATA_CB + DRAGDATA_CB (see NODEREMOVED_CB)

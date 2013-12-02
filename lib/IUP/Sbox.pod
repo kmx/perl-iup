@@ -24,10 +24,10 @@ L<IUP::Canvas> to implement the bar handler.
 	  <th>After Expanding the Sbox</th>
 	</tr>
 	<tr>
-	  <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupsbox1.png"></td>
-	  <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupsbox2.png"></td>
-	  <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupsbox3.png"></td>
-	  <td><img src="http://kmx.github.io/perl-iup/img-3.5/elem/iupsbox4.png"></td>
+	  <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsbox1.png"></td>
+	  <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsbox2.png"></td>
+	  <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsbox3.png"></td>
+	  <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsbox4.png"></td>
 	</tr>
     </tbody>
   </table>
@@ -134,9 +134,9 @@ The element B<IUP::Sbox> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/sbox1.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/sbox1.pl> - IUP::Sbox example
+=item * L<0-basic/sbox1.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/sbox1.pl> - IUP::Sbox example
 
-=item * L<0-basic/sbox2.pl|https://metacpan.org/source/KMX/IUP-0.200_3/examples/0-basic/sbox2.pl> - IUP::Sbox example
+=item * L<0-basic/sbox2.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/sbox2.pl> - IUP::Sbox example
 
 =back 
 

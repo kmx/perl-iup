@@ -12,9 +12,6 @@ my $cb_table = {
     ACTION => \&_init_cb_ACTION_,
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
   },
-  'IUP::CanvasGL' => {
-    RESIZE_CB => \&_init_cb_RESIZE_CB_ii,
-  },
   'IUP::Cells' => {
     DRAW_CB => \&_init_cb_DRAW_CB_iiiiiiv,
     HEIGHT_CB => \&_init_cb_HEIGHT_CB_i,
@@ -44,6 +41,9 @@ my $cb_table = {
     MOUSEMOVE_CB => \&_init_cb_MOUSEMOVE_CB_d,
     VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
   },
+  'IUP::Expander' => {
+    ACTION => \&_init_cb_ACTION_,
+  },
   'IUP::FileDlg' => {
     FILE_CB => \&_init_cb_FILE_CB_ss,
   },
@@ -53,6 +53,9 @@ my $cb_table = {
   },
   'IUP::Label' => {
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
+  },
+  'IUP::Link' => {
+    ACTION => \&_init_cb_ACTION_s,
   },
   'IUP::List' => {
     ACTION => \&_init_cb_ACTION_sii,
@@ -70,6 +73,7 @@ my $cb_table = {
     ACTION_CB => \&_init_cb_ACTION_CB_iiiis,
     BGCOLOR_CB => \&_init_cb_BGCOLOR_CB_iiIII,
     CLICK_CB => \&_init_cb_CLICK_CB_iis,
+    COLRESIZE_CB => \&_init_cb_COLRESIZE_CB_i,
     DRAW_CB => \&_init_cb_DRAW_CB_iiiiiiv,
     DROPCHECK_CB => \&_init_cb_DROPCHECK_CB_ii,
     DROPSELECT_CB => \&_init_cb_DROPSELECT_CB_iinsii,
@@ -85,6 +89,9 @@ my $cb_table = {
     MOUSEMOVE_CB => \&_init_cb_MOUSEMOVE_CB_ii,
     RELEASE_CB => \&_init_cb_RELEASE_CB_iis,
     SCROLLTOP_CB => \&_init_cb_SCROLLTOP_CB_ii,
+    TOGGLEVALUE_CB => \&_init_cb_TOGGLEVALUE_CB_iii,
+    TYPE_CB => \&_init_cb_TYPE_CB_ii,
+    VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
     VALUE_CB => \&_init_cb_VALUE_CB_ii,
     VALUE_EDIT_CB => \&_init_cb_VALUE_EDIT_CB_iis,
   },

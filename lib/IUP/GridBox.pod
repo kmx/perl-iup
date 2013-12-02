@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-
+IUP::GridBox - [GUI element] container for composing elements in a regular grid
 
 =head1 DESCRIPTION
 
@@ -10,7 +10,22 @@ XXX-TODO
 
 =begin HTML
 
-
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <td>DEFAULT</td>
+        <td>NORMALIZE=BOTH</td>
+        <td>EXPANDCHILDREN=YES</td>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupgridbox.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupgridbox_normalize.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupgridbox_expandchild.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
 
 =end HTML
 
