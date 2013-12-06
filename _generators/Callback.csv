@@ -183,8 +183,8 @@ IUP::WebBrowser;NEWWINDOW_CB;s;int;Ihandle* ih,char* url
 ## _dragdrop is related to: IupLabel, IupText, IupList, IupTree, IupCanvas and IupDialog
 _dragdrop;DRAGBEGIN_CB;ii;int;Ihandle* ih,int x,int y
 _dragdrop;DRAGDATASIZE_CB;s;int;Ihandle* ih,char* type
-#XXX-FIXME-XXX _dragdrop;DRAGDATA_CB;sUi;int;Ihandle* ih,char* type,void* data,int size
+_dragdrop;DRAGDATA_CB;sUi;int;Ihandle* ih,char* type,void* data,int size
 _dragdrop;DRAGEND_CB;i;int;Ihandle* ih,int action
-#XXX-FIXME-XXX _dragdrop;DROPDATA_CB;sUiii;int;Ihandle* ih,char* type,void* data,int size,int x,int y
+_dragdrop;DROPDATA_CB;sUiii;int;Ihandle* ih,char* type,void* data,int size,int x,int y
 _dragdrop;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y
 _dragdrop;DROPMOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status

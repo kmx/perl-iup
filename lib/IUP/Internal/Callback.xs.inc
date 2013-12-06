@@ -725,10 +725,22 @@ _init_cb_DRAGDATASIZE_CB_s(ih)
 		IupSetCallback(ih, "DRAGDATASIZE_CB", (Icallback)internal_cb_DRAGDATASIZE_CB_s);
 
 void
+_init_cb_DRAGDATA_CB_sUi(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "DRAGDATA_CB", (Icallback)internal_cb_DRAGDATA_CB_sUi);
+
+void
 _init_cb_DRAGEND_CB_i(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "DRAGEND_CB", (Icallback)internal_cb_DRAGEND_CB_i);
+
+void
+_init_cb_DROPDATA_CB_sUiii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "DROPDATA_CB", (Icallback)internal_cb_DROPDATA_CB_sUiii);
 
 void
 _init_cb_DROPFILES_CB_siii(ih)

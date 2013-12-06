@@ -31,17 +31,17 @@ The element B<IUP::Separator> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_5/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/separator.pl|https://metacpan.org/source/KMX/IUP-0.200_5/examples/0-basic/separator.pl> - IUP::Separator example
+=item * L<0-basic/separator.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/separator.pl> - IUP::Separator example
 
-=item * L<0-basic/submenu.pl|https://metacpan.org/source/KMX/IUP-0.200_5/examples/0-basic/submenu.pl> - IUP::Submenu example
+=item * L<0-basic/submenu.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/submenu.pl> - IUP::Submenu example
 
-=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.200_5/examples/1-apps/app-mdi.pl> - IUP app example
+=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_5/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_5/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
 =back 
 
