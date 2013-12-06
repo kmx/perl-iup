@@ -247,7 +247,7 @@ sub _get_cb_list {
   push @list, keys(%{$cb_table->{$pkg}});
   push @list, keys(%{$cb_table->{_dialog}})   if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg)$/;
   push @list, keys(%{$cb_table->{_dragdrop}}) if $pkg =~ /^IUP::(Label|Text|List|Tree|Canvas|Dialog)$/;
-  push @list, keys(%{$cb_table->{_canvas}})   if $pkg =~ /^IUP::(Canvas|CanvasGL)$/;
+  push @list, keys(%{$cb_table->{_canvas}})   if $pkg =~ /^IUP::(Canvas|CanvasGL|Matrix)$/;
   push @list, keys(%{$cb_table->{_base}});
   return keys %{{ map { $_ => 1 } @list }}; #return just uniq items
 }

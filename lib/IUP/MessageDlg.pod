@@ -128,7 +128,7 @@ The element B<IUP::MessageDlg> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/messagedlg.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/0-basic/messagedlg.pl> - IUP::MessageDlg example
+=item * L<0-basic/messagedlg.pl|https://metacpan.org/source/KMX/IUP-0.200_5/examples/0-basic/messagedlg.pl> - IUP::MessageDlg example
 
 =back 
 

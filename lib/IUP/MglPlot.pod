@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::PPlot - [GUI element] canvas-like element for creating 2D plots
+IUP::MglPlot - [GUI element] canvas-like element for creating 2D plots (based on MathGL library)
 
 =head1 DESCRIPTION
 
@@ -142,7 +142,7 @@ The element B<IUP::MglPlot> is used in the following sample scripts:
 
 =over
 
-=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_4/examples/1-apps/app-plot-demo.pl> - dials for zooming
+=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_5/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
 =back 
 

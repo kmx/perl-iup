@@ -4,7 +4,7 @@
 - MatrixEx callbacks?
         IupMatrixExOpen()                                               void IupMatrixExOpen(void);
         calling IupMatrixExInit for an existing IupMatrix control.      void IupMatrixExInit(Ihandle* ih);
-
+- fix POD
 XXX-FIXME:
 */ CB: we need special handling for _dragdrop|DROPDATA_CB + DRAGDATA_CB (see NODEREMOVED_CB)
 */ cb_table->{_dragdrop} what about CanvasGL, PPlot, MglPlot

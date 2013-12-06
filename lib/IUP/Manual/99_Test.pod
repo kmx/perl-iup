@@ -895,8 +895,8 @@ IUP::Manual::99_Test - Testing HTML+POD
   <table border="1">
     <tbody align="center">
       <tr>
-        <td>Container Expanded (STATE = "OPEN")</td>
-        <td>Container Collapsed (STATE = "CLOSE")</td>
+        <td><strong>Container Expanded (STATE = "OPEN")</strong></td>
+        <td><strong>Container Collapsed (STATE = "CLOSE")</strong></td>
       </tr>
       <tr>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupexpander_open.png"></td>
