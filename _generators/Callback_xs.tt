@@ -137,9 +137,17 @@ int call_cb_func(SV* element, char *actionkey) {
 	  return rv;
 	}
 [% IF i.xs_spec_NODEREMOVED_CB -%]
-	SV * SV_userdata, **SV_ref;
+	SV * SV_userdata, **SV_refxxx;
 	char * hkey_userdata;
 	HV *element_hash;
+[% ELSIF i.xs_spec_DROPDATA_CB -%]
+	XPUSHs(sv_2mortal(newSVpv(type, 0)));
+	XPUSHs(sv_2mortal(newSVpv(type, 0)));
+	/* XPUSHs(sv_2mortal(newSViv(data))); */
+	XPUSHs(sv_2mortal(newSViv(x)));
+	XPUSHs(sv_2mortal(newSViv(y)));
+[% ELSIF i.xs_spec_DRAGDATA_CB -%]
+	SV * SV_drag_data; /* xxx */
 [% ELSE -%]
   [% FOR j IN i.xs_internal_cb_locvar -%]
 	[% j %]
@@ -172,6 +180,10 @@ int call_cb_func(SV* element, char *actionkey) {
           else XPUSHs(*SV_ref);
         }        
         /* converting userdata - done */
+[% ELSIF i.xs_spec_DROPDATA_CB -%]
+	/* xxxxx DROP */
+[% ELSIF i.xs_spec_DRAGDATA_CB -%]
+	/* xxxxx DRAG */
 [% ELSE -%]
   [% FOREACH j IN i.xs_internal_cb_push -%]
 	[% j %]

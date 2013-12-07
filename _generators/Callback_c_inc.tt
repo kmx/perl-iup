@@ -164,6 +164,15 @@ int call_cb_func(SV* element, char *actionkey) {
           else XPUSHs(*SV_ref);
         }        
         /* converting userdata - done */
+[% ELSIF i.xs_spec_DROPDATA_CB -%]
+	XPUSHs(sv_2mortal(newSVpv(type, 0)));
+	XPUSHs(sv_2mortal(newSVpvn(data, size)));
+	XPUSHs(sv_2mortal(newSViv(x)));
+	XPUSHs(sv_2mortal(newSViv(y)));
+[% ELSIF i.xs_spec_DRAGDATA_CB -%]
+	XPUSHs(sv_2mortal(newSVpv(type, 0)));
+	XPUSHs(sv_2mortal(newSVpvn(data, size))); /*XXX-FIXME THIS IS BUGGY */
+	XPUSHs(sv_2mortal(newSViv(size)));
 [% ELSE -%]
   [% FOREACH j IN i.xs_internal_cb_push -%]
 	[% j %]

@@ -310,29 +310,29 @@ The element B<IUP::Toggle> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/0-basic/image.pl> - IUP::Image example
+=item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/image.pl> - IUP::Image example
 
-=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/0-basic/plot_advanced.pl> - Plot controls
+=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/plot_advanced.pl> - Plot controls
 
-=item * L<0-basic/radio.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/0-basic/radio.pl> - IUP::Radio example
+=item * L<0-basic/radio.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/radio.pl> - IUP::Radio example
 
-=item * L<0-basic/text_format.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/0-basic/text_format.pl> - IUP::Text (formating) example
+=item * L<0-basic/text_format.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/text_format.pl> - IUP::Text (formating) example
 
-=item * L<0-basic/toggle.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/0-basic/toggle.pl> - IUP::Toggle example
+=item * L<0-basic/toggle.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/toggle.pl> - IUP::Toggle example
 
-=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/1-apps/app-mdi.pl> - IUP app example
+=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/1-apps/app-plot-demo.pl> - dials for zooming
+=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
-=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
-=item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
 =back 
 

@@ -109,7 +109,7 @@ The element B<IUP::GridBox> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/gridbox.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/0-basic/gridbox.pl> - IUP::GridBox example
+=item * L<0-basic/gridbox.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/gridbox.pl> - IUP::GridBox example
 
 =back 
 

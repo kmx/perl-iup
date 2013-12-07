@@ -5333,9 +5333,10 @@ internal_cb_DRAGDATA_CB_sUi (Ihandle* ih,char* type,void* data,int size)
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(element);
-  	XPUSHs(sv_2mortal(newSVpv(type, 0)));
-  	XPUSHs(sv_2mortal(newSViv(size)));
-  	PUTBACK;
+	XPUSHs(sv_2mortal(newSVpv(type, 0)));
+	XPUSHs(sv_2mortal(newSVpvn(data, size))); /*XXX-FIXME THIS IS BUGGY */
+	XPUSHs(sv_2mortal(newSViv(size)));
+	PUTBACK;
 
 	count = call_cb_func(element,"!int!cb!DRAGDATA_CB!func");
 
@@ -5418,11 +5419,11 @@ internal_cb_DROPDATA_CB_sUiii (Ihandle* ih,char* type,void* data,int size,int x,
 	/* push params for _execute_cb() */
 	PUSHMARK(SP);
 	XPUSHs(element);
-  	XPUSHs(sv_2mortal(newSVpv(type, 0)));
-  	XPUSHs(sv_2mortal(newSViv(size)));
-  	XPUSHs(sv_2mortal(newSViv(x)));
-  	XPUSHs(sv_2mortal(newSViv(y)));
-  	PUTBACK;
+	XPUSHs(sv_2mortal(newSVpv(type, 0)));
+	XPUSHs(sv_2mortal(newSVpvn(data, size)));
+	XPUSHs(sv_2mortal(newSViv(x)));
+	XPUSHs(sv_2mortal(newSViv(y)));
+	PUTBACK;
 
 	count = call_cb_func(element,"!int!cb!DROPDATA_CB!func");
 

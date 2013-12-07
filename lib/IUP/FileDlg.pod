@@ -299,9 +299,9 @@ The element B<IUP::FileDlg> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/filedlg.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/0-basic/filedlg.pl> - IUP::FileDlg example
+=item * L<0-basic/filedlg.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/filedlg.pl> - IUP::FileDlg example
 
-=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
+=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
 
 =back 
 

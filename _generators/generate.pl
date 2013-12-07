@@ -134,6 +134,7 @@ sub cb_generate1 {
       my $MULTITOUCH_CB_marker;
       for(my $i=1; $i<scalar(@fp); $i++) {
         my $n = 'xxx';
+        
         if ($fp[$i] =~ /^.*?([^ ]*)$/) {
           $n = $1;          
         }
@@ -185,9 +186,19 @@ sub cb_generate1 {
         elsif ($tp[$i-1] =~ /^(A)$/) {
           warn "###FATAL: do not know how to handle '$tp_all_in_one'\n";
         }
-        elsif ($tp[$i-1] =~ /^(U)$/ && $tp_all_in_one eq 'U') {
+        elsif ($tp[$i-1] eq 'U' && $tp_all_in_one eq 'U') {
           # hack for NODEREMOVED_CB
           $h->{$m}->{$a}->{xs_spec_NODEREMOVED_CB} = 1;
+          last;
+        }
+        elsif ($tp[$i-1] eq 'U' && $tp_all_in_one eq 'sUi') {
+          warn "hack for DRAGDATA_CB m='$m' a='$a' $tp_all_in_one\n";
+          $h->{$m}->{$a}->{xs_spec_DRAGDATA_CB} = 1;
+          last;
+        }
+        elsif ($tp[$i-1] eq 'U' && $tp_all_in_one eq 'sUiii') {
+          warn "hack for DROPDATA_CB m='$m' a='$a' $tp_all_in_one\n";
+          $h->{$m}->{$a}->{xs_spec_DROPDATA_CB} = 1;
           last;
         }
         elsif ($tp[$i-1] =~ /^(f|d)$/) {
@@ -283,8 +294,11 @@ my $cb_data1 = {
 };
 #die Dumper($cb_data1);
 #$tt->process($FindBin::Bin.'/Callback_xs.tt', $cb_data1, $g_dst.'/Callback.xs') || die $tt->error();
+warn "gonna process Callback_xs_inc.tt\n";
 $tt->process($FindBin::Bin.'/Callback_xs_inc.tt', $cb_data1, $g_dst.'/Callback.xs.inc') || die $tt->error();
+warn "gonna process Callback_c_inc.tt\n";
 $tt->process($FindBin::Bin.'/Callback_c_inc.tt', $cb_data1, $g_dst.'/Callback.c.inc') || die $tt->error();
+warn "gonna process Callback_pm.tt\n";
 $tt->process($FindBin::Bin.'/Callback_pm.tt', $cb_data1, $g_dst.'/Callback.pm') || die $tt->error();
 
 warn ">>>>[$0] Finished!\n";
