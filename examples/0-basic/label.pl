@@ -40,11 +40,13 @@ my $lbl_explain = IUP::Label->new( TITLE=>"The label on the right has the image 
 # Creates a label whose title is not important, cause it will have an image;
 my $lbl_star = IUP::Label->new( TITLE=>"Does not matter", IMAGE=>$img_star );
 
+# Creates a clickable label (= IupLink)
+my $lbl_link = IUP::Link->new( TITLE=>"This is a link not label", URL=>'http://www.tecgraf.puc-rio.br/iup' );
+
 # Creates dialog with these three labels;
-my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new( MARGIN=>"10x10", child=>[ $lbl, IUP::Hbox->new( child=>[$lbl_explain, $lbl_star] ) ]),
+my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new( MARGIN=>"10x10", child=>[ $lbl, IUP::Hbox->new( child=>[$lbl_explain, $lbl_star] ), $lbl_link ]),
                             GAP=>3, TITLE=>"IupLabel Example" );
 
 # Shows dialog in the center of the screen;
 $dlg->ShowXY ( IUP_CENTER, IUP_CENTER );
-
 IUP->MainLoop;

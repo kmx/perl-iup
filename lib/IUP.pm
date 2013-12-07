@@ -30,10 +30,10 @@ sub import {
 
   my %tags = (
      #UPDATE when element list change
-     ':basic' => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg Dial Dialog FileDlg Fill FontDlg Frame
-                     Hbox Image Item Label List Menu MessageDlg Normalizer ProgressBar Radio 
+     ':basic' => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg ProgressDlg Dial Dialog FileDlg Fill FontDlg Frame
+                     Hbox Image Item Label List Menu MessageDlg Normalizer ProgressBar Radio Expander Link GridBox 
                      Sbox Separator Spin SpinBox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox/], 
-     ':extended' => [qw/Matrix Cells Canvas CanvasGL PPlot MglPlot LayoutDialog ElementPropertiesDialog/],
+     ':extended' => [qw/Matrix MatrixList Cells Canvas CanvasGL PPlot MglPlot LayoutDialog ElementPropertiesDialog Gauge/],
      ':all' => [],
   );  
   @{$tags{':all'}} = ( @{$tags{':basic'}}, @{$tags{':extended'}} );
