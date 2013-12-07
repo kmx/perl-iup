@@ -1,6 +1,15 @@
 ################ the last time working on ################ 
 
-- IUP::MglPlot, IUP::MatrixList, IUP::Expander, IUP::Link, IUP::GridBox, IUP::Gauge, IUP::ProgressDlg - missing POD, missing examples!!!
+- IUP::Expander         http://www.tecgraf.puc-rio.br/iup/en/elem/iupexpander.html      sample
+- IUP::Link             http://www.tecgraf.puc-rio.br/iup/en/elem/iuplink.html          sample
+- IUP::GridBox          http://www.tecgraf.puc-rio.br/iup/en/elem/iupgridbox.html       sample
+- IUP::Gauge            http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupgauge.html         sample
+- IUP::MglPlot          http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_mglplot.html
+- IUP::MatrixList       http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixlist.html    sample
+- IUP::MatrixEx ???     http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixex.html
+- IUP::ProgressDlg      http://www.tecgraf.puc-rio.br/iup/en/dlg/iupprogressdlg.html    sample
+
+- missing POD, missing examples!!!
 - MatrixEx callbacks?
         IupMatrixExOpen()                                               void IupMatrixExOpen(void);
         calling IupMatrixExInit for an existing IupMatrix control.      void IupMatrixExInit(Ihandle* ih);

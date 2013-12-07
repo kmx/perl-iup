@@ -42,7 +42,7 @@ On all platform it uses native GUI widgets.
 
 =end html
 
-B<Source code:> see L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples//1-apps/app-sample1.pl>
+B<Source code:> see L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples//1-apps/app-sample1.pl>
 
 =head2 IUP's Strengths
 
@@ -99,7 +99,7 @@ they are handled by separate L<Alien::IUP|Alien::IUP> module.
 
 At this point we show just basic ideas behind IUP based GUI applications.
 For more details see L<IUP::Manual::01_Introduction|IUP::Manual::01_Introduction>.
-Or if you wanna skip the theory you can go directly to L<examples|https://metacpan.org/source/KMX/IUP-0.200_6/examples/>
+Or if you wanna skip the theory you can go directly to L<examples|https://metacpan.org/source/KMX/IUP-0.200_7/examples/>
 directory of IUP distribution.
 
 =head2 Simple GUI Dialogs

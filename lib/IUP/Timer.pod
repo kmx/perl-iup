@@ -80,11 +80,11 @@ The element B<IUP::Timer> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/glcanvas2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/glcanvas2.pl> - IUP::CanvasGL example
+=item * L<0-basic/glcanvas2.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/0-basic/glcanvas2.pl> - IUP::CanvasGL example
 
-=item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
+=item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
 
-=item * L<0-basic/timer.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/timer.pl> - IUP::Timer example
+=item * L<0-basic/timer.pl|https://metacpan.org/source/KMX/IUP-0.200_7/examples/0-basic/timer.pl> - IUP::Timer example
 
 =back 
 
