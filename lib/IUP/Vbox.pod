@@ -227,7 +227,11 @@ The element B<IUP::Vbox> is used in the following sample scripts:
 
 =item * L<0-basic/dialog2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/dialog2.pl> - IUP::Dialog example
 
+=item * L<0-basic/expander.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/expander.pl> - IUP::Expander example
+
 =item * L<0-basic/fill.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/fill.pl> - IUP::Fill Example
+
+=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/gauge.pl> - IUP::Gauge example
 
 =item * L<0-basic/hbox.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/hbox.pl> - IUP::Hbox example
 
@@ -235,11 +239,13 @@ The element B<IUP::Vbox> is used in the following sample scripts:
 
 =item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/image.pl> - IUP::Image example
 
-=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/label.pl> - IUP::Label example
+=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/label.pl> - IUP::Label and IUP::Link example
 
 =item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
 =item * L<0-basic/list2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/list2.pl> - IUP::List example
+
+=item * L<0-basic/matrixlist.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/matrixlist.pl> - IUP::MatrixList example
 
 =item * L<0-basic/matrix_basic.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/matrix_basic.pl> - IUP::Matrix example
 

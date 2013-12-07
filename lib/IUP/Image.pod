@@ -292,9 +292,11 @@ The element B<IUP::Image> is used in the following sample scripts:
 
 =item * L<0-basic/dialog2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/dialog2.pl> - IUP::Dialog example
 
+=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/gauge.pl> - IUP::Gauge example
+
 =item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/image.pl> - IUP::Image example
 
-=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/label.pl> - IUP::Label example
+=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/label.pl> - IUP::Label and IUP::Link example
 
 =item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
 

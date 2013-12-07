@@ -1,4 +1,4 @@
-# IUP::Expander example
+# IUP::Gauge example
 
 use strict;
 use warnings;

@@ -171,6 +171,8 @@ The element B<IUP::ColorDlg> is used in the following sample scripts:
 
 =item * L<0-basic/colordlg.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/colordlg.pl> - IUP::ColorDlg example (used for screenshot - IUP.pod)
 
+=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
+
 =back 
 
 

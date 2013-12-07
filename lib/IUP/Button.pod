@@ -324,7 +324,13 @@ The element B<IUP::Button> is used in the following sample scripts:
 
 =item * L<0-basic/dialog2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/dialog2.pl> - IUP::Dialog example
 
+=item * L<0-basic/expander.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/expander.pl> - IUP::Expander example
+
 =item * L<0-basic/fill.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/fill.pl> - IUP::Fill Example
+
+=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/gauge.pl> - IUP::Gauge example
+
+=item * L<0-basic/gridbox.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/gridbox.pl> - IUP::GridBox example
 
 =item * L<0-basic/hbox.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/hbox.pl> - IUP::Hbox example
 
@@ -339,6 +345,8 @@ The element B<IUP::Button> is used in the following sample scripts:
 =item * L<0-basic/message_clone.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/message_clone.pl>
 
 =item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/plot_advanced.pl> - Plot controls
+
+=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
 
 =item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
 

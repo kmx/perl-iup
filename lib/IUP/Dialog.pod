@@ -734,15 +734,21 @@ The element B<IUP::Dialog> is used in the following sample scripts:
 
 =item * L<0-basic/dialog2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/dialog2.pl> - IUP::Dialog example
 
+=item * L<0-basic/expander.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/expander.pl> - IUP::Expander example
+
 =item * L<0-basic/fill.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/fill.pl> - IUP::Fill Example
 
 =item * L<0-basic/frame1.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/frame1.pl> - IUP::Frame Example
 
 =item * L<0-basic/frame2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/frame2.pl> - IUP::Image example
 
+=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/gauge.pl> - IUP::Gauge example
+
 =item * L<0-basic/glcanvas1.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/glcanvas1.pl> - IUP::CanvasGL example
 
 =item * L<0-basic/glcanvas2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/glcanvas2.pl> - IUP::CanvasGL example
+
+=item * L<0-basic/gridbox.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/gridbox.pl> - IUP::GridBox example
 
 =item * L<0-basic/hbox.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/hbox.pl> - IUP::Hbox example
 
@@ -752,7 +758,7 @@ The element B<IUP::Dialog> is used in the following sample scripts:
 
 =item * L<0-basic/item.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/item.pl> - IUP::Item Example
 
-=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/label.pl> - IUP::Label example
+=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/label.pl> - IUP::Label and IUP::Link example
 
 =item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
@@ -763,6 +769,8 @@ The element B<IUP::Dialog> is used in the following sample scripts:
 =item * L<0-basic/mask_matrix.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/mask_matrix.pl> - IUP::Matrix + MASK example
 
 =item * L<0-basic/mask_simple.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/mask_simple.pl> - IUP::Text + MASK example
+
+=item * L<0-basic/matrixlist.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/matrixlist.pl> - IUP::MatrixList example
 
 =item * L<0-basic/matrix_basic.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/matrix_basic.pl> - IUP::Matrix example
 
@@ -783,6 +791,8 @@ The element B<IUP::Dialog> is used in the following sample scripts:
 =item * L<0-basic/plot5.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/plot5.pl> - IUP::PPlot example
 
 =item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/plot_advanced.pl> - Plot controls
+
+=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
 
 =item * L<0-basic/progressbar1.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/progressbar1.pl> - IUP::Progressbar example
 

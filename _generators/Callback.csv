@@ -144,6 +144,7 @@ IUP::PPlot;PREDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
 IUP::PPlot;SELECT_CB;iiffi;int;Ihandle* ih,int index,int sample_index,float x,float y,int select
 IUP::PPlot;SELECTBEGIN_CB;;int;Ihandle* ih
 IUP::PPlot;SELECTEND_CB;;int;Ihandle* ih
+IUP::ProgressDlg;CANCEL_CB;;int;Ihandle* ih
 IUP::Spin;SPIN_CB;i;int;Ihandle* ih,int inc
 IUP::SpinBox;SPIN_CB;i;int;Ihandle* ih,int inc
 IUP::Submenu;HIGHLIGHT_CB;;int;Ihandle* ih

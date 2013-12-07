@@ -203,11 +203,13 @@ The element B<IUP::Label> is used in the following sample scripts:
 
 =item * L<0-basic/frame1.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/frame1.pl> - IUP::Frame Example
 
+=item * L<0-basic/gridbox.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/gridbox.pl> - IUP::GridBox example
+
 =item * L<0-basic/idle.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/idle.pl> - IUP->SetIdle Example
 
 =item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/image.pl> - IUP::Image example
 
-=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/label.pl> - IUP::Label example
+=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/label.pl> - IUP::Label and IUP::Link example
 
 =item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 

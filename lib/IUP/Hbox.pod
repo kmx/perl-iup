@@ -214,11 +214,15 @@ The element B<IUP::Hbox> is used in the following sample scripts:
 
 =item * L<0-basic/frame2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/frame2.pl> - IUP::Image example
 
+=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/gauge.pl> - IUP::Gauge example
+
+=item * L<0-basic/gridbox.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/gridbox.pl> - IUP::GridBox example
+
 =item * L<0-basic/hbox.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/hbox.pl> - IUP::Hbox example
 
 =item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/image.pl> - IUP::Image example
 
-=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/label.pl> - IUP::Label example
+=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/label.pl> - IUP::Label and IUP::Link example
 
 =item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
@@ -227,6 +231,8 @@ The element B<IUP::Hbox> is used in the following sample scripts:
 =item * L<0-basic/list2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/list2.pl> - IUP::List example
 
 =item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/plot_advanced.pl> - Plot controls
+
+=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
 
 =item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
 

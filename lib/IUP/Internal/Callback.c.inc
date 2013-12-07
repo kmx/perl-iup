@@ -3400,6 +3400,47 @@ internal_cb_SELECT_CB_iiffi (Ihandle* ih,int index,int sample_index,float x,floa
 } 
 
 int
+internal_cb_CANCEL_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+	
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+  
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!CANCEL_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+	
+	return rv;
+} 
+
+int
 internal_cb_SPIN_CB_i (Ihandle* ih,int inc)
 {
 	dSP;

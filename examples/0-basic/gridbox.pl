@@ -1,4 +1,4 @@
-# IUP::Expander example
+# IUP::GridBox example
 
 use strict;
 use warnings;

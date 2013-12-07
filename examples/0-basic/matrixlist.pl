@@ -1,4 +1,4 @@
-# IUP::Expander example
+# IUP::MatrixList example
 
 use strict;
 use warnings;

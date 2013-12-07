@@ -137,6 +137,9 @@ my $cb_table = {
     SELECTEND_CB => \&_init_cb_SELECTEND_CB_,
     SELECT_CB => \&_init_cb_SELECT_CB_iiffi,
   },
+  'IUP::ProgressDlg' => {
+    CANCEL_CB => \&_init_cb_CANCEL_CB_,
+  },
   'IUP::Spin' => {
     SPIN_CB => \&_init_cb_SPIN_CB_i,
   },

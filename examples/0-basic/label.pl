@@ -1,4 +1,4 @@
-# IUP::Label example
+# IUP::Label and IUP::Link example
 #
 # Creates three labels, one using all attributes except for image, other
 # with normal text and the last one with an image.

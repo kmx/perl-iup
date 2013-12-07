@@ -467,6 +467,12 @@ _init_cb_SELECT_CB_iiffi(ih)
 		IupSetCallback(ih, "SELECT_CB", (Icallback)internal_cb_SELECT_CB_iiffi);
 
 void
+_init_cb_CANCEL_CB_(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "CANCEL_CB", (Icallback)internal_cb_CANCEL_CB_);
+
+void
 _init_cb_SPIN_CB_i(ih)
 		Ihandle* ih;
 	CODE:

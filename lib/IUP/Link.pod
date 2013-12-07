@@ -90,7 +90,13 @@ XXX-TODO
 =head1 EXAMPLES
 
 
-Unfortunately there are no sample scripts using this element.
+The element B<IUP::Link> is used in the following sample scripts:
+
+=over
+
+=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/label.pl> - IUP::Label and IUP::Link example
+
+=back 
 
 
 

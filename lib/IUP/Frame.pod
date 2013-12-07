@@ -164,6 +164,8 @@ The element B<IUP::Frame> is used in the following sample scripts:
 
 =item * L<0-basic/frame2.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/frame2.pl> - IUP::Image example
 
+=item * L<0-basic/gridbox.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/gridbox.pl> - IUP::GridBox example
+
 =item * L<0-basic/hbox.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/hbox.pl> - IUP::Hbox example
 
 =item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.200_6/examples/0-basic/image.pl> - IUP::Image example
