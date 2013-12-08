@@ -94,7 +94,7 @@ The element B<IUP::Gauge> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/gauge.pl> - IUP::Gauge example
+=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/gauge.pl> - IUP::Gauge example
 
 =back 
 

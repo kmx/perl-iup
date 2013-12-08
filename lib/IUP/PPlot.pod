@@ -772,19 +772,19 @@ The element B<IUP::PPlot> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/plot1.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/plot1.pl> - IUP::PPlot example
+=item * L<0-basic/plot1.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/plot1.pl> - IUP::PPlot example
 
-=item * L<0-basic/plot2.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/plot2.pl> - IUP::PPlot example
+=item * L<0-basic/plot2.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/plot2.pl> - IUP::PPlot example
 
-=item * L<0-basic/plot3.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/plot3.pl> - IUP::PPlot example
+=item * L<0-basic/plot3.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/plot3.pl> - IUP::PPlot example
 
-=item * L<0-basic/plot4.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/plot4.pl> - IUP::PPlot example
+=item * L<0-basic/plot4.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/plot4.pl> - IUP::PPlot example
 
-=item * L<0-basic/plot5.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/plot5.pl> - IUP::PPlot example
+=item * L<0-basic/plot5.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/plot5.pl> - IUP::PPlot example
 
-=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/0-basic/plot_advanced.pl> - Plot controls
+=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/plot_advanced.pl> - Plot controls
 
-=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_8/examples/1-apps/app-plot-demo.pl> - dials for zooming
+=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
 =back 
 

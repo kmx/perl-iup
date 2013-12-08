@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::Spin - [GUI element] vertical box containing 2 buttons for incrementing/decrementing values
+IUP::SpinBox - [GUI element] horizontal container that already contains a IUP::Spin
 
 =head1 DESCRIPTION
 

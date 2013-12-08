@@ -194,6 +194,12 @@ sub cb_generate1 {
         elsif ($tp[$i-1] eq 'U' && $tp_all_in_one eq 'sUi') {
           warn "hack for DRAGDATA_CB m='$m' a='$a' $tp_all_in_one\n";
           $h->{$m}->{$a}->{xs_spec_DRAGDATA_CB} = 1;
+          push @l_xslocvar, "SV * SV_data;";
+          push @l_xslocvar, "char * data_ptr=NULL;";
+          push @l_xslocvar, "STRLEN data_len=0;";
+          push @l_xspop, "SV_data = POPs;";
+          push @l_rvname, "\$data_ptr";
+          $rv_count = 2;
           last;
         }
         elsif ($tp[$i-1] eq 'U' && $tp_all_in_one eq 'sUiii') {

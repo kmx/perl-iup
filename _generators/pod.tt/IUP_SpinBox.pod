@@ -2,7 +2,7 @@
 
 [% h.name %]
 
-[% n.iupspin %]
+[% n.iupspinbox %]
 
 [% h.desc %]
 

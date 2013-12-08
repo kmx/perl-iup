@@ -104,7 +104,7 @@ The element B<IUP::Cbox> is used in the following sample scripts:
 
 =over
 [%FOREACH e IN examples.iupcbox %]
-=item * L<[%e.pl%]|[%e.url.examples%][%e.pl%]>[%e.desc%]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
 =back 
 

@@ -121,14 +121,15 @@ internal_cb_ACTION_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -162,14 +163,15 @@ internal_cb_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -208,14 +210,15 @@ internal_cb_DRAW_CB_iiiiiiv (Ihandle* ih,int line,int column,int xmin,int xmax,i
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -256,14 +259,15 @@ internal_cb_HEIGHT_CB_i (Ihandle* ih,int line)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -298,14 +302,15 @@ internal_cb_HSPAN_CB_ii (Ihandle* ih,int line,int column)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -341,14 +346,15 @@ internal_cb_MOUSECLICK_CB_iiiiiis (Ihandle* ih,int button,int pressed,int line,i
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -389,14 +395,15 @@ internal_cb_MOUSEMOTION_CB_iiiis (Ihandle* ih,int line,int column,int x,int y,ch
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -435,14 +442,15 @@ internal_cb_NCOLS_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -476,14 +484,15 @@ internal_cb_NLINES_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -517,14 +526,15 @@ internal_cb_SCROLLING_CB_ii (Ihandle* ih,int line,int column)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -560,14 +570,15 @@ internal_cb_VSPAN_CB_ii (Ihandle* ih,int line,int column)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -603,14 +614,15 @@ internal_cb_WIDTH_CB_i (Ihandle* ih,int column)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -645,14 +657,15 @@ internal_cb_CELL_CB_i (Ihandle* ih,int cell)
 	char* rv;
 	
 	SV* element;
-	
+
+  
 	rv = NULL;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -686,14 +699,15 @@ internal_cb_EXTENDED_CB_i (Ihandle* ih,int cell)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -728,14 +742,15 @@ internal_cb_SELECT_CB_ii (Ihandle* ih,int cell,int type)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -771,14 +786,15 @@ internal_cb_SWITCH_CB_ii (Ihandle* ih,int prim_cell,int sec_cell)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -814,14 +830,15 @@ internal_cb_CHANGE_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned 
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -858,14 +875,15 @@ internal_cb_DRAG_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned ch
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -902,14 +920,15 @@ internal_cb_VALUECHANGED_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -943,14 +962,15 @@ internal_cb_BUTTON_PRESS_CB_d (Ihandle* ih,double angle)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -985,14 +1005,15 @@ internal_cb_BUTTON_RELEASE_CB_d (Ihandle* ih,double angle)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1027,14 +1048,15 @@ internal_cb_MOUSEMOVE_CB_d (Ihandle* ih,double angle)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1069,14 +1091,15 @@ internal_cb_FILE_CB_ss (Ihandle* ih,const char* file_name,const char* status)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1112,14 +1135,15 @@ internal_cb_HIGHLIGHT_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1153,14 +1177,15 @@ internal_cb_ACTION_s (Ihandle* ih,char* url)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1195,14 +1220,15 @@ internal_cb_ACTION_sii (Ihandle* ih,char* text,int item,int state)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1239,14 +1265,15 @@ internal_cb_CARET_CB_iii (Ihandle* ih,int lin,int col,int pos)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1283,14 +1310,15 @@ internal_cb_DBLCLICK_CB_is (Ihandle* ih,int item,char* text)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1326,14 +1354,15 @@ internal_cb_DRAGDROP_CB_iiii (Ihandle* ih,int drag_id,int drop_id,int isshift,in
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1371,14 +1400,15 @@ internal_cb_DROPDOWN_CB_i (Ihandle* ih,int state)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1413,14 +1443,15 @@ internal_cb_EDIT_CB_is (Ihandle* ih,int c,char* new_value)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1456,14 +1487,15 @@ internal_cb_MOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1500,14 +1532,15 @@ internal_cb_MULTISELECT_CB_s (Ihandle* ih,char* value)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1542,14 +1575,15 @@ internal_cb_ACTION_CB_iiiis (Ihandle* ih,int c,int lin,int col,int edition,char*
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1588,14 +1622,15 @@ internal_cb_BGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1634,14 +1669,15 @@ internal_cb_CLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1678,14 +1714,15 @@ internal_cb_COLRESIZE_CB_i (Ihandle* ih,int col)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1720,14 +1757,15 @@ internal_cb_DROPCHECK_CB_ii (Ihandle* ih,int lin,int col)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1763,14 +1801,15 @@ internal_cb_DROPSELECT_CB_iinsii (Ihandle* ih,int lin,int col,Ihandle* drop,char
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1810,14 +1849,15 @@ internal_cb_DROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1854,14 +1894,15 @@ internal_cb_EDITION_CB_iiii (Ihandle* ih,int lin,int col,int mode,int update)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1899,14 +1940,15 @@ internal_cb_ENTERITEM_CB_ii (Ihandle* ih,int lin,int col)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1942,14 +1984,15 @@ internal_cb_FGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -1988,14 +2031,15 @@ internal_cb_FONT_CB_ii (Ihandle* ih,int lin,int col)
 	char* rv;
 	
 	SV* element;
-	
+
+  
 	rv = NULL;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2030,14 +2074,15 @@ internal_cb_LEAVEITEM_CB_ii (Ihandle* ih,int lin,int col)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2073,14 +2118,15 @@ internal_cb_MARKEDIT_CB_iii (Ihandle* ih,int lin,int col,int marked)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2117,14 +2163,15 @@ internal_cb_MARK_CB_ii (Ihandle* ih,int lin,int col)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2160,14 +2207,15 @@ internal_cb_MENUDROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2204,14 +2252,15 @@ internal_cb_MOUSEMOVE_CB_ii (Ihandle* ih,int lin,int col)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2247,14 +2296,15 @@ internal_cb_RELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2291,14 +2341,15 @@ internal_cb_SCROLLTOP_CB_ii (Ihandle* ih,int lin,int col)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2334,14 +2385,15 @@ internal_cb_TOGGLEVALUE_CB_iii (Ihandle* ih,int lin,int col,int status)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2378,14 +2430,15 @@ internal_cb_TYPE_CB_ii (Ihandle* ih,int lin,int col)
 	char* rv;
 	
 	SV* element;
-	
+
+  
 	rv = NULL;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2420,14 +2473,15 @@ internal_cb_VALUE_CB_ii (Ihandle* ih,int lin,int col)
 	char* rv;
 	
 	SV* element;
-	
+
+  
 	rv = NULL;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2462,14 +2516,15 @@ internal_cb_VALUE_EDIT_CB_iis (Ihandle* ih,int lin,int col,char* newval)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2506,14 +2561,15 @@ internal_cb_IMAGEVALUECHANGED_CB_ii (Ihandle* ih,int lin,int imagevalue)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2549,14 +2605,15 @@ internal_cb_LISTACTION_CB_ii (Ihandle* ih,int item,int state)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2592,14 +2649,15 @@ internal_cb_LISTCLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2636,14 +2694,15 @@ internal_cb_LISTDRAW_CB_iiiiiiv (Ihandle* ih,int lin,int col,int x1,int x2,int y
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2684,14 +2743,15 @@ internal_cb_LISTEDITION_CB_iiii (Ihandle* ih,int lin,int col,int mode,int update
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2729,14 +2789,15 @@ internal_cb_LISTINSERT_CB_i (Ihandle* ih,int lin)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2771,14 +2832,15 @@ internal_cb_LISTRELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2815,14 +2877,15 @@ internal_cb_LISTREMOVE_CB_i (Ihandle* ih,int lin)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2857,14 +2920,15 @@ internal_cb_MENUCLOSE_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2898,14 +2962,15 @@ internal_cb_OPEN_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2939,14 +3004,15 @@ internal_cb_DELETEBEGIN_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -2980,14 +3046,15 @@ internal_cb_DELETEEND_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3021,14 +3088,15 @@ internal_cb_DELETE_CB_iiff (Ihandle* ih,int index,int sample_index,float x,float
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3066,14 +3134,15 @@ internal_cb_EDITBEGIN_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3107,14 +3176,15 @@ internal_cb_EDITEND_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3148,14 +3218,15 @@ internal_cb_EDIT_CB_iiffFF (Ihandle* ih,int index,int sample_index,float x,float
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3195,14 +3266,15 @@ internal_cb_POSTDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3237,14 +3309,15 @@ internal_cb_PREDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3279,14 +3352,15 @@ internal_cb_SELECTBEGIN_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3320,14 +3394,15 @@ internal_cb_SELECTEND_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3361,14 +3436,15 @@ internal_cb_SELECT_CB_iiffi (Ihandle* ih,int index,int sample_index,float x,floa
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3407,14 +3483,15 @@ internal_cb_CANCEL_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3448,14 +3525,15 @@ internal_cb_SPIN_CB_i (Ihandle* ih,int inc)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3490,14 +3568,15 @@ internal_cb_TABCHANGEPOS_CB_ii (Ihandle* ih,int new_pos,int old_pos)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3533,14 +3612,15 @@ internal_cb_TABCHANGE_CB_nn (Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3576,14 +3656,15 @@ internal_cb_ACTION_is (Ihandle* ih,int c,char* new_value)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3619,14 +3700,15 @@ internal_cb_ACTION_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3660,14 +3742,15 @@ internal_cb_ACTION_i (Ihandle* ih,int state)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3702,14 +3785,15 @@ internal_cb_BRANCHCLOSE_CB_i (Ihandle* ih,int id)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3744,14 +3828,15 @@ internal_cb_BRANCHOPEN_CB_i (Ihandle* ih,int id)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3786,14 +3871,15 @@ internal_cb_EXECUTELEAF_CB_i (Ihandle* ih,int id)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3828,16 +3914,17 @@ internal_cb_MULTISELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  	int loc_i;
+  	AV * r_ids;
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  	int loc_i;
-  	AV * r_ids;
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3875,16 +3962,17 @@ internal_cb_MULTIUNSELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  	int loc_i;
+  	AV * r_ids;
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  	int loc_i;
-  	AV * r_ids;
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -3922,16 +4010,17 @@ internal_cb_NODEREMOVED_CB_U (Ihandle* ih,void* userdata)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+	SV * SV_userdata, **SV_ref;
+	char * hkey_userdata;
+	HV *element_hash;
+
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-	SV * SV_userdata, **SV_ref;
-	char * hkey_userdata;
-	HV *element_hash;
 
 	ENTER;
 	SAVETMPS;
@@ -3985,14 +4074,15 @@ internal_cb_RENAME_CB_is (Ihandle* ih,int id,char* title)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4028,14 +4118,15 @@ internal_cb_RIGHTCLICK_CB_i (Ihandle* ih,int id)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4070,14 +4161,15 @@ internal_cb_SELECTION_CB_ii (Ihandle* ih,int id,int status)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4113,14 +4205,15 @@ internal_cb_SHOWRENAME_CB_i (Ihandle* ih,int id)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4155,14 +4248,15 @@ internal_cb_TOGGLEVALUE_CB_ii (Ihandle* ih,int id,int status)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4198,14 +4292,15 @@ internal_cb_ENTERWINDOW_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4239,14 +4334,15 @@ internal_cb_GETFOCUS_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4280,14 +4376,15 @@ internal_cb_HELP_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4321,14 +4418,15 @@ internal_cb_KILLFOCUS_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4362,14 +4460,15 @@ internal_cb_K_ANY_i (Ihandle* ih,int c)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4404,14 +4503,15 @@ internal_cb_LEAVEWINDOW_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4445,14 +4545,15 @@ internal_cb_MAP_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4486,14 +4587,15 @@ internal_cb_TIPS_CB_ii (Ihandle* ih,int x,int y)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4529,14 +4631,15 @@ internal_cb_UNMAP_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4570,14 +4673,15 @@ internal_cb_ACTION_ff (Ihandle* ih,float posx,float posy)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4613,14 +4717,15 @@ internal_cb_FOCUS_CB_i (Ihandle* ih,int focus)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4655,14 +4760,15 @@ internal_cb_KEYPRESS_CB_ii (Ihandle* ih,int c,int press)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4698,19 +4804,20 @@ internal_cb_MULTITOUCH_CB_iAAAA (Ihandle* ih,int count_,int* pid,int* px,int* py
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
-	rv = IUP_DEFAULT;
-	element = ihandle2SV_nocreate(ih);
-	if(!SvOK(element)) {
-	  warn("Warning: callback  - cannot convert ihandle!\n");
-	  return rv;
-	}
+
   	int loc_i;
   	AV * r_pid;
   	AV * r_px;
   	AV * r_py;
   	AV * r_pstate;
   
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
 	ENTER;
 	SAVETMPS;
 
@@ -4761,14 +4868,15 @@ internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4804,14 +4912,15 @@ internal_cb_SCROLL_CB_iff (Ihandle* ih,int op,float posx,float posy)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4848,14 +4957,15 @@ internal_cb_TOUCH_CB_iiis (Ihandle* ih,int id,int x,int y,char* state)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4893,14 +5003,15 @@ internal_cb_WHEEL_CB_fiis (Ihandle* ih,float delta,int x,int y,char* status)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4938,14 +5049,15 @@ internal_cb_WOM_CB_i (Ihandle* ih,int state)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -4980,14 +5092,15 @@ internal_cb_CLOSE_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -5021,14 +5134,15 @@ internal_cb_COPYDATA_CB_si (Ihandle* ih,char* cmdLine,int size)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -5064,14 +5178,15 @@ internal_cb_MDIACTIVATE_CB_ (Ihandle* ih)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -5105,14 +5220,15 @@ internal_cb_MOVE_CB_ii (Ihandle* ih,int x,int y)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -5148,14 +5264,15 @@ internal_cb_SHOW_CB_i (Ihandle* ih,int state)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -5190,14 +5307,15 @@ internal_cb_TRAYCLICK_CB_iii (Ihandle* ih,int but,int pressed,int dclick)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -5234,14 +5352,15 @@ internal_cb_DRAGBEGIN_CB_ii (Ihandle* ih,int x,int y)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -5277,14 +5396,15 @@ internal_cb_DRAGDATASIZE_CB_s (Ihandle* ih,char* type)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -5319,14 +5439,18 @@ internal_cb_DRAGDATA_CB_sUi (Ihandle* ih,char* type,void* data,int size)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  	SV * SV_data;
+  	char * data_ptr=NULL;
+  	STRLEN data_len=0;
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -5334,7 +5458,6 @@ internal_cb_DRAGDATA_CB_sUi (Ihandle* ih,char* type,void* data,int size)
 	PUSHMARK(SP);
 	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVpv(type, 0)));
-	XPUSHs(sv_2mortal(newSVpvn(data, size))); /*XXX-FIXME THIS IS BUGGY */
 	XPUSHs(sv_2mortal(newSViv(size)));
 	PUTBACK;
 
@@ -5342,10 +5465,16 @@ internal_cb_DRAGDATA_CB_sUi (Ihandle* ih,char* type,void* data,int size)
 
 	SPAGAIN;
 
-	if (count != 1) { /* no warning, use default retval */ }
+	Zero(data, size, void);
+	if (count != 2) { warn("Warning: callback DRAGDATA_CB has returned %d instead of 2 values!\n",count); }
 	else {
+	  SV_data = POPs;
 	  SV_rv = POPs;
 	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	  if (SvOK(SV_data)) {
+	    data_ptr = SvPVbyte(SV_data, data_len); 
+	    Copy(data_ptr, data, data_len > size ? size : data_len, void);
+	  }
 	}
 
 	PUTBACK;
@@ -5363,14 +5492,15 @@ internal_cb_DRAGEND_CB_i (Ihandle* ih,int action)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -5405,14 +5535,15 @@ internal_cb_DROPDATA_CB_sUiii (Ihandle* ih,char* type,void* data,int size,int x,
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -5450,14 +5581,15 @@ internal_cb_DROPFILES_CB_siii (Ihandle* ih,const char* filename,int num,int x,in
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 
@@ -5495,14 +5627,15 @@ internal_cb_DROPMOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
 	int rv;
 	SV * SV_rv;
 	SV* element;
-	
+
+  
 	rv = IUP_DEFAULT;
 	element = ihandle2SV_nocreate(ih);
 	if(!SvOK(element)) {
 	  warn("Warning: callback  - cannot convert ihandle!\n");
 	  return rv;
 	}
-  
+
 	ENTER;
 	SAVETMPS;
 

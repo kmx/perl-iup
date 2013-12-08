@@ -121,13 +121,7 @@ int call_cb_func(SV* element, char *actionkey) {
 	[% i.c_retval %] rv;
 	[%IF i.xs_declare_sv_rv%][% i.xs_declare_sv_rv %];[%END%]
 	SV* element;
-	
-	rv = [% i.xs_internal_default_rv %];
-	element = ihandle2SV_nocreate(ih);
-	if(!SvOK(element)) {
-	  warn("Warning: callback [%xs_init_cb_action%] - cannot convert ihandle!\n");
-	  return rv;
-	}
+
 [% IF i.xs_spec_NODEREMOVED_CB -%]
 	SV * SV_userdata, **SV_ref;
 	char * hkey_userdata;
@@ -137,6 +131,13 @@ int call_cb_func(SV* element, char *actionkey) {
 	[% j %]
   [% END -%]
 [% END -%]
+
+	rv = [% i.xs_internal_default_rv %];
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback [%xs_init_cb_action%] - cannot convert ihandle!\n");
+	  return rv;
+	}
 
 	ENTER;
 	SAVETMPS;
@@ -171,7 +172,6 @@ int call_cb_func(SV* element, char *actionkey) {
 	XPUSHs(sv_2mortal(newSViv(y)));
 [% ELSIF i.xs_spec_DRAGDATA_CB -%]
 	XPUSHs(sv_2mortal(newSVpv(type, 0)));
-	XPUSHs(sv_2mortal(newSVpvn(data, size))); /*XXX-FIXME THIS IS BUGGY */
 	XPUSHs(sv_2mortal(newSViv(size)));
 [% ELSE -%]
   [% FOREACH j IN i.xs_internal_cb_push -%]
@@ -184,6 +184,9 @@ int call_cb_func(SV* element, char *actionkey) {
 
 	SPAGAIN;
 
+[% IF i.xs_spec_DRAGDATA_CB -%]
+	Zero(data, size, void);
+[% END -%]
 	[% i.xs_internal_cb_rvcheck %]
 	else {
 [% FOR j IN i.xs_internal_cb_extrapop -%]
@@ -194,6 +197,12 @@ int call_cb_func(SV* element, char *actionkey) {
 	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
 [% ELSE -%]
 	  rv = [% i.xs_internal_cb_pop %];
+[% END -%]
+[% IF i.xs_spec_DRAGDATA_CB -%]
+	  if (SvOK(SV_data)) {
+	    data_ptr = SvPVbyte(SV_data, data_len); 
+	    Copy(data_ptr, data, data_len > size ? size : data_len, void);
+	  }
 [% END -%]
 	}
 

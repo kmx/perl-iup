@@ -1,24 +1,25 @@
 ################ the last time working on ################ 
 
-- IUP::Expander         http://www.tecgraf.puc-rio.br/iup/en/elem/iupexpander.html      sample
-- IUP::Link             http://www.tecgraf.puc-rio.br/iup/en/elem/iuplink.html          sample
-- IUP::GridBox          http://www.tecgraf.puc-rio.br/iup/en/elem/iupgridbox.html       sample
-- IUP::Gauge            http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupgauge.html         sample
-- IUP::MglPlot          http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_mglplot.html
-- IUP::MatrixList       http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixlist.html    sample
-- IUP::MatrixEx ???     http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixex.html
-- IUP::ProgressDlg      http://www.tecgraf.puc-rio.br/iup/en/dlg/iupprogressdlg.html    sample
+- IUP::Expander         http://www.tecgraf.puc-rio.br/iup/en/elem/iupexpander.html              !!pod
+- IUP::Link             http://www.tecgraf.puc-rio.br/iup/en/elem/iuplink.html                  !!pod
+- IUP::GridBox          http://www.tecgraf.puc-rio.br/iup/en/elem/iupgridbox.html               !!pod
+- IUP::Gauge            http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupgauge.html                 !!pod
+- IUP::MglPlot          http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_mglplot.html      !!sampl !!pod
+- IUP::MatrixList       http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixlist.html            !!pod
+- IUP::ProgressDlg      http://www.tecgraf.puc-rio.br/iup/en/dlg/iupprogressdlg.html            !!pod
 
-- missing POD, missing examples!!!
+- IUP::PPlot            http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_pplot.html                !!pod
+- IUP::MatrixEx ???     http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixex.html      !!sampl !!pod
+
 - MatrixEx callbacks?
         IupMatrixExOpen()                                               void IupMatrixExOpen(void);
         calling IupMatrixExInit for an existing IupMatrix control.      void IupMatrixExInit(Ihandle* ih);
 - fix POD
-XXX-FIXME:
-*/ CB: we need special handling for _dragdrop|DROPDATA_CB + DRAGDATA_CB (see NODEREMOVED_CB)
-*/ cb_table->{_dragdrop} what about CanvasGL, PPlot, MglPlot
-*/ cb_table->{_canvas}   what about PPlot, MglPlot
-*/ global callbacks
+
+- cb_table->{_dragdrop} what about CanvasGL, PPlot, MglPlot
+- cb_table->{_canvas}   what about PPlot, MglPlot
+- global callbacks
+- POD error - https://metacpan.org/source/KMX/IUP-0.101/lib/IUP/Manual/04_Callbacks.pod
 
 ##########################################################
 
