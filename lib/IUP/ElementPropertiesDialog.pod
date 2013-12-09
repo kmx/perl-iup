@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-IUP::ElementPropertiesDialog [pre-defined dialog] special dialog for GUI editing of IUP elements
+IUP::ElementPropertiesDialog - [pre-defined dialog] special dialog for GUI editing of IUP elements
 
 =head1 DESCRIPTION
 
