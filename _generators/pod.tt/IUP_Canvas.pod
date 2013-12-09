@@ -1,4 +1,4 @@
-=for comment based on iup-3.2
+=for comment based on iup-3.2 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupcanvas.html
 
 [% h.name %]
 

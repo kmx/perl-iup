@@ -1181,6 +1181,16 @@ _IupExpander(child)
 
 
 #### Original C function from <iup.h>
+# Ihandle* IupScrollBox(Ihandle* child);
+Ihandle*
+_IupScrollBox(child)
+		Ihandle* child;
+	CODE:
+		RETVAL = IupScrollBox(child);
+	OUTPUT:
+		RETVAL
+
+#### Original C function from <iup.h>
 # Ihandle* IupGridBoxv(Ihandle **children);
 Ihandle*
 _IupGridBox(...)

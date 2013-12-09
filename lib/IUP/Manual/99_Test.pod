@@ -1384,6 +1384,16 @@ IUP::Manual::99_Test - Testing HTML+POD
 
 =end html
 
+=head2 Screenshot - iupscrollbox
+
+=begin html
+
+<p>
+<img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupscrollbox.png ">
+</p>
+
+=end html
+
 =head2 Screenshot - iupspin
 
 =begin html

@@ -1,4 +1,4 @@
-=for comment based on iup-3.9
+=for comment based on iup-3.9 - http://www.tecgraf.puc-rio.br/iup/en/elem/iuplink.html
 
 =head1 NAME
 
@@ -6,7 +6,7 @@ IUP::Link - [GUI element] label that displays an underlined clickable text
 
 =head1 DESCRIPTION
 
-XXX-TODO
+Creates a label that displays an underlined clickable text. It is derived from L<IUP::Label|IUP::Label>.
 
 =begin HTML
 
@@ -18,7 +18,7 @@ XXX-TODO
 
 =head2 CREATION - new() method
 
- $mlist = IUP::Link->new(XXX-TODO);
+ $link = IUP::Link->new( TITLE=>"Clickable text", URL=>'http://server.com/path/file.html' );
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
@@ -30,47 +30,17 @@ to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements/"new()
 For more info about concept of attributes (setting/getting values etc.)
 see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
 
-=over
-
-=item B<"1">
-
-First item in the list.
-
-=item B<"2">
-
-Second item in the list.
-
-=item B<"3">
-
-Third item in the list.
-
-=item B<< "<n>" >>
-
-n-th item in the list. 
-
-=item B<ADDLIN>
-
-XXX-TODO
-
-=back
-
-The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+Inherits all attributes of the L<IUP::Label|IUP::Label>, but redefines a few attributes.
 
 =over
 
-=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
-L<EXPAND|IUP::Manual::03_Attributes/EXPAND>,
-L<FONT|IUP::Manual::03_Attributes/FONT>,
-L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
-L<POSITION|IUP::Manual::03_Attributes/POSITION>,
-L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
-L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>,
-L<WID|IUP::Manual::03_Attributes/WID>,
-L<TIP|IUP::Manual::03_Attributes/TIP>,
-L<SIZE|IUP::Manual::03_Attributes/SIZE>,
-L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
-L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
-L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+=item L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
+
+Text color. Default: the global attribute LINKFGCOLOR.
+
+=item B<URL>
+
+URL Address or a special values "NO" (= not clickable).
 
 =back
 
@@ -79,14 +49,41 @@ L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
 For more info about concept of callbacks (setting callback handlers etc.)
 see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
 
+Inherits all callbacks of the L<IUP::Label|IUP::Label>.
+
 =over
 
-=item B<IMAGEVALUECHANGED_CB>
+=item * L<ACTION|IUP::Manual::04_Callbacks/ACTION>
 
-XXX-TODO
+Action generated when the link is activated.
+
+B<Callback handler prototype:>
+
+ sub action_handler {
+   my ($self, $url) = @_;
+   #...
+ }
+
+
+B<$self:> reference to the element (IUP::Link) that activated the event
+
+B<$url:> the destination address of the link
+
+B<Returns:> IUP_CLOSE will be processed. If returns IUP_DEFAULT or it is
+not defined, the L<Help|IUP::Manual::02_Elements/"Help()"> function will be called.
 
 =back 
   
+=head1 NOTES
+
+When the cursor is over the text, it is changed to the HAND cursor.
+
+If the callback is not defined the L<Help|IUP::Manual::02_Elements/"Help()"> function is called with
+the given URL.
+
+The L<IUP::Label|IUP::Label> callbacks BUTTON_CB, ENTERWINDOW_CB and LEAVEWINDOW_CB
+are used internally.
+
 =head1 EXAMPLES
 
 
@@ -94,7 +91,7 @@ The element B<IUP::Link> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/label.pl> - IUP::Label and IUP::Link example
+=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/label.pl> - IUP::Label and IUP::Link example
 
 =back 
 
@@ -102,7 +99,7 @@ The element B<IUP::Link> is used in the following sample scripts:
 
 =head1 SEE ALSO
 
-L<IUP::Canvas|IUP::Canvas>
+L<IUP::Label|IUP::Label>
 
 The original doc: L<iuplink.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iuplink.html>
  

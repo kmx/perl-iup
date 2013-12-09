@@ -1,4 +1,4 @@
-=for comment based on iup-3.2
+=for comment based on iup-3.2 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupbutton.html
 
 [% h.name %]
 
@@ -191,8 +191,7 @@ button can be activated from any control in the dialog using the
 =item * L<ACTIVE|[%m.at%]/ACTIVE>,
 L<FONT|[%m.at%]/FONT>,
 L<EXPAND|[%m.at%]/EXPAND>,
-L<X|[%m.at%]/X>,
-L<Y|[%m.at%]/Y>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
 L<POSITION|[%m.at%]/POSITION>,
 L<MINSIZE|[%m.at%]/MINSIZE>,
 L<MAXSIZE|[%m.at%]/MAXSIZE>,

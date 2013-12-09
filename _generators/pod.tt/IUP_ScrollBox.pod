@@ -1,0 +1,98 @@
+=for comment based on iup-3.9 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupscrollbox.html
+
+[% h.name %]
+
+[% n.iupscrollbox %]
+
+[% h.desc %]
+
+Creates a native container that allows its child to be scrolled. It
+inherits from L<IUP::Canvas|IUP::Canvas>.
+
+=begin HTML
+
+[% html.iupscrollbox %]
+
+=end HTML
+
+[% h.usage %]
+
+[% h.create %]
+
+ #standard way
+ $mlist = IUP::ScrollBox->new( child=>$child, ANYATTRIBUTE=>'any value' );
+ #or with just 1 parameter
+ $mlist = IUP::ScrollBox->new($child);
+ 
+B<child:> (named parameter) reference to an interface element.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
+
+[% h.at %]
+
+[%txt.at_intro%]
+
+Inherits all attributes and callbacks of the L<IUP::Canvas|IUP::Canvas>, but redefines a few attributes.
+
+=over
+
+=item L<BGCOLOR|[%m.at%]/BGCOLOR>
+
+will use the background color of the native parent by default.
+
+=item B<BORDER>
+
+I<(creation only)> the default value is "NO".
+
+=item L<EXPAND|[%m.at%]/EXPAND>
+
+I<(non inheritable)> the default value is "YES".
+
+=item L<SCROLLBAR|[%m.at%]/SCROLLBAR>
+
+I<(creation only)> the default value is "YES".
+
+=item L<CLIENTSIZE|[%m.at%]/CLIENTSIZE>, L<CLIENTOFFSET|[%m.at%]/CLIENTOFFSET> also accepted.
+
+=back
+
+[% h.notes %]
+
+The box allows the application to create a virtual space for the dialog
+that is actually larger than the visible area. The current size of the
+box defines the visible area. The natural size of the child (and its
+children) defines the virtual space size. So the L<IUP::ScrollBox|IUP::ScrollBox> does
+not depend on its child size or expansion, and its natural size is
+always "0x0".
+
+The user can move the box contents by dragging the background. Also the
+mouse wheel scrolls the contents vertically.
+
+The box can be created with no elements and be dynamic filled 
+using L<Append|[%m.elem%]/"Append()"> or L<Insert|[%m.elem%]/"Insert()">.
+
+[% h.examples %]
+
+[% IF examples.iupscrollbox %]
+The element B<IUP::ScrollBox> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupscrollbox %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back 
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
+
+[% h.see %]
+
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupscrollbox.html|[%url.iuporigdoc%]elem/iupscrollbox.html>
+[%END%] 
+
+=cut

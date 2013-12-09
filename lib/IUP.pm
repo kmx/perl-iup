@@ -9,7 +9,7 @@ use IUP::Internal::LibraryIup;
 use IUP::Constants;
 
 # following recommendation from http://www.dagolden.com/index.php/369/version-numbers-should-be-boring/
-our $VERSION = "0.200_9";
+our $VERSION = "0.200_10";
 $VERSION = eval $VERSION;
 
 sub BEGIN {
@@ -31,7 +31,7 @@ sub import {
   my %tags = (
      #UPDATE when element list change
      ':basic' => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg ProgressDlg Dial Dialog FileDlg Fill FontDlg Frame
-                     Hbox Image Item Label List Menu MessageDlg Normalizer ProgressBar Radio Expander Link GridBox 
+                     Hbox Image Item Label List Menu MessageDlg Normalizer ProgressBar Radio Expander ScrollBox Link GridBox 
                      Sbox Separator Spin SpinBox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox/], 
      ':extended' => [qw/Matrix MatrixList Cells Canvas CanvasGL PPlot MglPlot LayoutDialog ElementPropertiesDialog Gauge/],
      ':all' => [],
@@ -206,6 +206,14 @@ sub GetByIhandle {
     val          => "IUP::Val",
     vbox         => "IUP::Vbox",
     zbox         => "IUP::Zbox",  
+    mglplot      => 'IUP::MglPlot',
+    matrixlist   => 'IUP::MatrixList',
+    expander     => 'IUP::Expander',
+    link         => 'IUP::Link',
+    gridbox      => 'IUP::GridBox',
+    gauge        => 'IUP::Gauge',
+    progressdlg  => 'IUP::ProgressDlg',
+    scrollbox    => 'IUP::ScrollBox',
   };
   return unless $ih;
   my $e = IUP::Internal::LibraryIup::_translate_ih($ih);

@@ -1,4 +1,4 @@
-=for comment based on iup-3.9
+=for comment based on iup-3.9 - http://www.tecgraf.puc-rio.br/iup/en/elem/iuplink.html
 
 [% h.name %]
 
@@ -6,7 +6,7 @@
 
 [% h.desc %]
 
-XXX-TODO
+Creates a label that displays an underlined clickable text. It is derived from L<IUP::Label|IUP::Label>.
 
 =begin HTML
 
@@ -18,7 +18,7 @@ XXX-TODO
 
 [% h.create %]
 
- $mlist = IUP::Link->new(XXX-TODO);
+ $link = IUP::Link->new( TITLE=>"Clickable text", URL=>'http://server.com/path/file.html' );
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
@@ -28,47 +28,17 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 [%txt.at_intro%]
 
-=over
-
-=item B<"1">
-
-First item in the list.
-
-=item B<"2">
-
-Second item in the list.
-
-=item B<"3">
-
-Third item in the list.
-
-=item B<< "<n>" >>
-
-n-th item in the list. 
-
-=item B<ADDLIN>
-
-XXX-TODO
-
-=back
-
-[%txt.at_common%]
+Inherits all attributes of the L<IUP::Label|IUP::Label>, but redefines a few attributes.
 
 =over
 
-=item * L<ACTIVE|[%m.at%]/ACTIVE>,
-L<EXPAND|[%m.at%]/EXPAND>,
-L<FONT|[%m.at%]/FONT>,
-L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
-L<POSITION|[%m.at%]/POSITION>,
-L<MINSIZE|[%m.at%]/MINSIZE>,
-L<MAXSIZE|[%m.at%]/MAXSIZE>,
-L<WID|[%m.at%]/WID>,
-L<TIP|[%m.at%]/TIP>,
-L<SIZE|[%m.at%]/SIZE>,
-L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
-L<ZORDER|[%m.at%]/ZORDER>,
-L<VISIBLE|[%m.at%]/VISIBLE>
+=item L<FGCOLOR|[%m.at%]/FGCOLOR>
+
+Text color. Default: the global attribute LINKFGCOLOR.
+
+=item B<URL>
+
+URL Address or a special values "NO" (= not clickable).
 
 =back
 
@@ -76,14 +46,41 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 [%txt.cb_intro%]
 
+Inherits all callbacks of the L<IUP::Label|IUP::Label>.
+
 =over
 
-=item B<IMAGEVALUECHANGED_CB>
+=item * L<ACTION|[%m.cb%]/ACTION>
 
-XXX-TODO
+Action generated when the link is activated.
+
+[%h.at_handler%]
+
+ sub action_handler {
+   my ($self, $url) = @_;
+   #...
+ }
+
+
+B<$self:> reference to the element (IUP::Link) that activated the event
+
+B<$url:> the destination address of the link
+
+B<Returns:> IUP_CLOSE will be processed. If returns IUP_DEFAULT or it is
+not defined, the L<Help|[%m.elem%]/"Help()"> function will be called.
 
 =back 
   
+[% h.notes %]
+
+When the cursor is over the text, it is changed to the HAND cursor.
+
+If the callback is not defined the L<Help|[%m.elem%]/"Help()"> function is called with
+the given URL.
+
+The L<IUP::Label|IUP::Label> callbacks BUTTON_CB, ENTERWINDOW_CB and LEAVEWINDOW_CB
+are used internally.
+
 [% h.examples %]
 
 [% IF examples.iuplink %]
@@ -102,7 +99,7 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-L<IUP::Canvas|IUP::Canvas>
+L<IUP::Label|IUP::Label>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iuplink.html|[%url.iuporigdoc%]elem/iuplink.html>

@@ -1,4 +1,4 @@
-=for comment based on iup-3.5
+=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupclipboard.html
 
 =head1 NAME
 
@@ -19,7 +19,7 @@ Example - copy to clipboard:
  $clipboard = IUP::Clipboard->new();
  $clipboard->TEXT( $text->VALUE );
  $clipboard->Destroy();
- ###ZZZ-test-this
+ ###XXX-todo-not-tested
 
 Example - paste from clipboard:
 
@@ -28,7 +28,7 @@ Example - paste from clipboard:
  $clipboard = IUP::Clipboard->new();
  $text->VALUE( $clipboard->TEXT );
  $clipboard->Destroy();
- ###ZZZ-test-this
+ ###XXX-todo-not-tested
 
 =head1 USAGE
 

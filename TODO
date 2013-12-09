@@ -1,21 +1,16 @@
 ################ the last time working on ################ 
 
-- IUP::Expander         http://www.tecgraf.puc-rio.br/iup/en/elem/iupexpander.html              !!pod
-- IUP::Link             http://www.tecgraf.puc-rio.br/iup/en/elem/iuplink.html                  !!pod
-- IUP::GridBox          http://www.tecgraf.puc-rio.br/iup/en/elem/iupgridbox.html               !!pod
-- IUP::Gauge            http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupgauge.html                 !!pod
+fix POD:
 - IUP::MglPlot          http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_mglplot.html      !!sampl !!pod
-- IUP::MatrixList       http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixlist.html            !!pod
-- IUP::ProgressDlg      http://www.tecgraf.puc-rio.br/iup/en/dlg/iupprogressdlg.html            !!pod
-
 - IUP::PPlot            http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_pplot.html                !!pod
-- IUP::MatrixEx ???     http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixex.html      !!sampl !!pod
 
-- MatrixEx callbacks?
-        IupMatrixExOpen()                                               void IupMatrixExOpen(void);
-        calling IupMatrixExInit for an existing IupMatrix control.      void IupMatrixExInit(Ihandle* ih);
-- fix POD
+add element:
+- IUP::MatrixEx ???     http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixex.html      !!sampl !!pod !!pm
+  - callbacks
+  - IupMatrixExOpen()                                               void IupMatrixExOpen(void);
+  - calling IupMatrixExInit for an existing IupMatrix control.      void IupMatrixExInit(Ihandle* ih);
 
+fix:
 - cb_table->{_dragdrop} what about CanvasGL, PPlot, MglPlot
 - cb_table->{_canvas}   what about PPlot, MglPlot
 - global callbacks

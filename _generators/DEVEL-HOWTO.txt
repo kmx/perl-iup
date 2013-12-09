@@ -1,0 +1,22 @@
+Before release (from git checkout dir):
+- set VERSION in IUP.pm
+- update Changes + TODO
+
+perl Build.PL & Build clean & Build realclean & perl Build.PL
+Build gencode & Build gendoc & Build manifest & Build xs & Build test Build xt
+Build test & Build distcheck & Build dist
+
+### New element
+- e.g. IupMatrixList
+- in lib/IUP/Internal/LibraryIup.xs add _IupMatrixList(..)
+- create lib/IUP/MatrixList.pm
+- create _generators/pod.tt/IUP_MatrixList.pod 
+- create _generators/pod.htmlinc/iupmatrixlist.html
+- fix    _generators/proc-pod.tt2pod.pl: n => { ... } NAME text
+- fix    _generators/proc-pod.tt2pod.pl: modlist   => <<'MARKER'...
+- fix    IUP.pm - :all import
+- fix    IUP.pm - :my $mapping = {...}
+- fix    _generators/Callback.csv
+- fix    _generators/Callback_pm.tt - check _<name> callback placeholders
+- Build gencode & Build gendoc & Build manifest & Build test & Build xt
+- add example

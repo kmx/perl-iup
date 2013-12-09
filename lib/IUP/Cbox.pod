@@ -1,4 +1,4 @@
-=for comment based on iup-3.2
+=for comment based on iup-3.2 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupcbox.html
 
 =head1 NAME
 
@@ -106,7 +106,7 @@ The element B<IUP::Cbox> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/cbox.pl> - IUP::Cbox example
 
 =back 
 

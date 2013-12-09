@@ -1,4 +1,4 @@
-=for comment based on iup-3.9
+=for comment based on iup-3.9 - http://www.tecgraf.puc-rio.br/iup/en/dlg/iupprogressdlg.html
 
 [% h.name %]
 
@@ -6,7 +6,9 @@
 
 [% h.desc %]
 
-XXX-TODO
+Creates a progress dialog element. It is a predefined dialog for
+displaying the progress of an operation. The dialog is meant to be
+shown with the show functions L<Popup|[%m.elem%]/"Popup()"> or L<ShowXY|[%m.elem%]/"ShowXY()">.
 
 =begin HTML
 
@@ -18,7 +20,7 @@ XXX-TODO
 
 [% h.create %]
 
- $mlist = IUP::ProgressDlg->new( 1=>"line 1", 2=>"line 2", 3=>"line 3" );
+ $progressdlg = IUP::ProgressDlg->new( TITLE=>"Hello" );
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
@@ -28,47 +30,68 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 [%txt.at_intro%]
 
+Supports all the L<IUP::Dialog|IUP::Dialog> attributes. But
+some attributes where changed to configure the dialog. We recommend
+changing only the following attributes:
+
 =over
 
-=item B<"1">
+=item L<TITLE|[%m.at%]/TITLE>
 
-First item in the list.
+I<(non inheritable)> DialogE<rsquo>s title. 
+If not set the title bar will not be displayed
+and the dialog will occupy less space on screen.
 
-=item B<"2">
+=item L<VISIBLE|[%m.at%]/VISIBLE>
 
-Second item in the list.
+Simply call L<Show|[%m.elem%]/"Show()"> or L<Hide|[%m.elem%]/"Hide()"> for the dialog.
 
-=item B<"3">
+=item L<PARENTDIALOG|[%m.at%]/PARENTDIALOG>
 
-Third item in the list.
+I<(creation only)> Name of a dialog to be used as parent.
+This dialog will be always in front of the parent dialog.
 
-=item B<< "<n>" >>
+=item L<TITLE|[%m.at%]/TITLE>
 
-n-th item in the list. 
-
-=item B<ADDLIN>
-
-XXX-TODO
+Dialog title.
 
 =back
 
-[%txt.at_common%]
+New attributes (all non inheritable):
 
 =over
 
-=item * L<ACTIVE|[%m.at%]/ACTIVE>,
-L<EXPAND|[%m.at%]/EXPAND>,
-L<FONT|[%m.at%]/FONT>,
-L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
-L<POSITION|[%m.at%]/POSITION>,
-L<MINSIZE|[%m.at%]/MINSIZE>,
-L<MAXSIZE|[%m.at%]/MAXSIZE>,
-L<WID|[%m.at%]/WID>,
-L<TIP|[%m.at%]/TIP>,
-L<SIZE|[%m.at%]/SIZE>,
-L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
-L<ZORDER|[%m.at%]/ZORDER>,
-L<VISIBLE|[%m.at%]/VISIBLE>
+=item B<COUNT>
+
+current count of iterations.
+
+=item B<INC>
+
+I<(write-only)> increment the current count by the given amount.
+If set to C<undef> will increment +1.
+
+=item B<PERCENT>
+
+current percent of iterations.
+
+=item B<TOTALCOUNT>
+
+total number of iterations.
+
+=item B<STATE>
+
+describe the state of the iteration. Can be: 'IDLE',
+'PROCESSING', 'UNDEFINED' or 'ABORTED'. Default is 'IDLE'. When INC, COUNT or
+PERCENT are set the state is changed to 'PROCESSING'. If the user pressed
+the Cancel button the state is changed to 'ABORTED', but check the
+CANCEL_CB callback for other options. If the state is set to 'UNDEFINED'
+by the application the progress bar will display an undefined state
+animation (same as setting MARQUEE=Yes in L<IUP::ProgressBar|IUP::ProgressBar>),
+to resume processing set the state attribute to 'PROCESSING'.
+
+=item B<DESCRIPTION>
+
+text description to be shown at the dialog.
 
 =back
 
@@ -76,13 +99,36 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 [%txt.cb_intro%]
 
+Supports all the L<IUP::Dialog|IUP::Dialog> callbacks + following new callbacks:
+
 =over
 
-=item B<IMAGEVALUECHANGED_CB>
+=item B<CANCEL_CB>
 
-XXX-TODO
+Action generated when the user clicked on the Cancel button.
 
-=back 
+[%h.at_handler%]
+
+ sub cancel_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::ProgressDlg) that activated the event
+
+B<Returns:> if different from IUP_CONTINUE then STATE will be changed to
+ABORTED, same behavior as if the callback does not exist.
+
+=back
+
+[% h.notes %]
+
+The L<IUP::ProgressDlg|IUP::ProgressDlg> will display the iteration state using a
+L<IUP::ProgressBar|IUP::ProgressBar> control.
+
+The dialog is B<not> automatically closed, the application must do that
+manually inside the CANCEL_CB callback or inside your processing loop
+by checking the STATE attribute.
   
 [% h.examples %]
 
@@ -102,7 +148,7 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-L<IUP::Canvas|IUP::Canvas>
+L<IUP::ProgressBar|IUP::ProgressBar>, L<IUP::Dialog|IUP::Dialog>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupprogressdlg.html|[%url.iuporigdoc%]dlg/iupprogressdlg.html>

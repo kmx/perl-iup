@@ -1,4 +1,4 @@
-=for comment based on iup-3.9
+=for comment based on iup-3.9 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupexpander.html
 
 [% h.name %]
 
@@ -6,7 +6,10 @@
 
 [% h.desc %]
 
-XXX-TODO
+Creates a void container that can interactively show or hide its child.
+
+It does not have a native representation, but it contains also a
+L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
 
 =begin HTML
 
@@ -18,7 +21,12 @@ XXX-TODO
 
 [% h.create %]
 
- $mlist = IUP::Expander->new(XXX-TODO);
+ #standard way
+ $mlist = IUP::Expander->new( child=>$child, ANYATTRIBUTE=>'any value' );
+ #or with just 1 parameter
+ $mlist = IUP::Expander->new($child);
+ 
+B<child:> (named parameter) reference to an interface element.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
@@ -30,25 +38,49 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item B<"1">
+=item B<AUTOSHOW>
 
-First item in the list.
+I<(non inheritable)> enables the automatic show of the child
+when mouse is over the handler more than 1 second. Default: No. See
+=item * L<Notes|#Notes> bellow.
 
-=item B<"2">
+=item B<BARSIZE>
 
-Second item in the list.
+I<(non inheritable)> controls the size of the bar handler.
+Default: the height of a text line plus 5 pixels.
 
-=item B<"3">
+=item L<BGCOLOR|[%m.at%]/BGCOLOR>
 
-Third item in the list.
+ignored, transparent in all systems. Will use the background color of the native parent.
 
-=item B<< "<n>" >>
+=item L<FGCOLOR|[%m.at%]/FGCOLOR>
 
-n-th item in the list. 
+Text color. Default: the global attribute DLGFGCOLOR.
 
-=item B<ADDLIN>
+=item B<BARPOSITION>
 
-XXX-TODO
+I<(creation only)> Indicates the bar handler position.
+Possible values are "TOP", "BOTTOM", "LEFT" or "RIGHT". Default: "TOP".
+
+=item L<EXPAND|[%m.at%]/EXPAND>
+
+I<(non inheritable)> The default value is "YES".
+
+=item B<STATE>
+
+I<(non inheritable)> Show or hide the container elements.
+Possible values: "OPEN" (expanded) or "CLOSE" (collapsed). Default:
+OPEN. Setting this attribute will automatically change the layout of
+the entire dialog so the child can be recomposed.
+
+=item B<TITLE>
+
+I<(non inheritable)> the title, shown in the title bar near the
+expand or collapse symbol. Shown only when BARPOSITION=TOP.
+
+=item B<WID>
+
+I<(read-only)> returns -1 if mapped.
 
 =back
 
@@ -57,8 +89,8 @@ XXX-TODO
 =over
 
 =item * L<ACTIVE|[%m.at%]/ACTIVE>,
-L<EXPAND|[%m.at%]/EXPAND>,
 L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
 L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
 L<POSITION|[%m.at%]/POSITION>,
 L<MINSIZE|[%m.at%]/MINSIZE>,
@@ -78,12 +110,39 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 
 =over
 
-=item B<IMAGEVALUECHANGED_CB>
+=item L<ACTION|[%m.cb%]/ACTION>
 
-XXX-TODO
+Action generated expander state is interactively changed. (Since iup-3.9)
+
+[%h.at_handler%]
+
+ sub action_handler {
+   my ($self) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::Expander) that activated the event
 
 =back 
   
+[% h.notes %]
+
+The L<IUP::Canvas|IUP::Canvas> bar handler is always the first child of the expander.
+It can be obtained using L<GetChild|[%m.elem%]/"GetChild()"> or L<GetNextChild|[%m.elem%]/"GetNextChild()">.
+
+The container can be created with no elements and be dynamic filled
+using L<Append|[%m.elem%]/"Append()"> or L<Insert|[%m.elem%]/"Insert()">.
+
+When the TITLE is defined and BARPOSITION=TOP then the expand/collapse
+symbol is left aligned. In all other situations the expand/collapse symbol is centered.
+
+When AUTOSHOW=Yes the dialog layout is NOT recalculated. The child is
+shown on top of the dialog, so the other children will not move or
+redraw. After the mouse is move away from the child then it is
+automatically hidden. B<IMPORTANT>: this feature will ONLY work if the
+child is a native container like L<IUP::Frame>, L<IUP::ScrollBar|IUP::ScrollBar> or
+L<IUP::Tabs|IUP::Tabs>.
+
 [% h.examples %]
 
 [% IF examples.iupexpander %]
@@ -101,8 +160,6 @@ Unfortunately there are no sample scripts using this element.
 [%END%]
 
 [% h.see %]
-
-L<IUP::Canvas|IUP::Canvas>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupexpander.html|[%url.iuporigdoc%]elem/iupexpander.html>

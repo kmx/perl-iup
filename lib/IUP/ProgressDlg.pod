@@ -1,4 +1,4 @@
-=for comment based on iup-3.9
+=for comment based on iup-3.9 - http://www.tecgraf.puc-rio.br/iup/en/dlg/iupprogressdlg.html
 
 =head1 NAME
 
@@ -6,7 +6,9 @@ IUP::ProgressDlg - [pre-defined dialog] displaying the progress of an operation
 
 =head1 DESCRIPTION
 
-XXX-TODO
+Creates a progress dialog element. It is a predefined dialog for
+displaying the progress of an operation. The dialog is meant to be
+shown with the show functions L<Popup|IUP::Manual::02_Elements/"Popup()"> or L<ShowXY|IUP::Manual::02_Elements/"ShowXY()">.
 
 =begin HTML
 
@@ -18,7 +20,7 @@ XXX-TODO
 
 =head2 CREATION - new() method
 
- $mlist = IUP::ProgressDlg->new( 1=>"line 1", 2=>"line 2", 3=>"line 3" );
+ $progressdlg = IUP::ProgressDlg->new( TITLE=>"Hello" );
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
@@ -30,47 +32,68 @@ to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements/"new()
 For more info about concept of attributes (setting/getting values etc.)
 see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
 
+Supports all the L<IUP::Dialog|IUP::Dialog> attributes. But
+some attributes where changed to configure the dialog. We recommend
+changing only the following attributes:
+
 =over
 
-=item B<"1">
+=item L<TITLE|IUP::Manual::03_Attributes/TITLE>
 
-First item in the list.
+I<(non inheritable)> DialogE<rsquo>s title. 
+If not set the title bar will not be displayed
+and the dialog will occupy less space on screen.
 
-=item B<"2">
+=item L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
 
-Second item in the list.
+Simply call L<Show|IUP::Manual::02_Elements/"Show()"> or L<Hide|IUP::Manual::02_Elements/"Hide()"> for the dialog.
 
-=item B<"3">
+=item L<PARENTDIALOG|IUP::Manual::03_Attributes/PARENTDIALOG>
 
-Third item in the list.
+I<(creation only)> Name of a dialog to be used as parent.
+This dialog will be always in front of the parent dialog.
 
-=item B<< "<n>" >>
+=item L<TITLE|IUP::Manual::03_Attributes/TITLE>
 
-n-th item in the list. 
-
-=item B<ADDLIN>
-
-XXX-TODO
+Dialog title.
 
 =back
 
-The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+New attributes (all non inheritable):
 
 =over
 
-=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
-L<EXPAND|IUP::Manual::03_Attributes/EXPAND>,
-L<FONT|IUP::Manual::03_Attributes/FONT>,
-L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
-L<POSITION|IUP::Manual::03_Attributes/POSITION>,
-L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
-L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>,
-L<WID|IUP::Manual::03_Attributes/WID>,
-L<TIP|IUP::Manual::03_Attributes/TIP>,
-L<SIZE|IUP::Manual::03_Attributes/SIZE>,
-L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
-L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
-L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+=item B<COUNT>
+
+current count of iterations.
+
+=item B<INC>
+
+I<(write-only)> increment the current count by the given amount.
+If set to C<undef> will increment +1.
+
+=item B<PERCENT>
+
+current percent of iterations.
+
+=item B<TOTALCOUNT>
+
+total number of iterations.
+
+=item B<STATE>
+
+describe the state of the iteration. Can be: 'IDLE',
+'PROCESSING', 'UNDEFINED' or 'ABORTED'. Default is 'IDLE'. When INC, COUNT or
+PERCENT are set the state is changed to 'PROCESSING'. If the user pressed
+the Cancel button the state is changed to 'ABORTED', but check the
+CANCEL_CB callback for other options. If the state is set to 'UNDEFINED'
+by the application the progress bar will display an undefined state
+animation (same as setting MARQUEE=Yes in L<IUP::ProgressBar|IUP::ProgressBar>),
+to resume processing set the state attribute to 'PROCESSING'.
+
+=item B<DESCRIPTION>
+
+text description to be shown at the dialog.
 
 =back
 
@@ -79,13 +102,36 @@ L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
 For more info about concept of callbacks (setting callback handlers etc.)
 see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
 
+Supports all the L<IUP::Dialog|IUP::Dialog> callbacks + following new callbacks:
+
 =over
 
-=item B<IMAGEVALUECHANGED_CB>
+=item B<CANCEL_CB>
 
-XXX-TODO
+Action generated when the user clicked on the Cancel button.
 
-=back 
+B<Callback handler prototype:>
+
+ sub cancel_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::ProgressDlg) that activated the event
+
+B<Returns:> if different from IUP_CONTINUE then STATE will be changed to
+ABORTED, same behavior as if the callback does not exist.
+
+=back
+
+=head1 NOTES
+
+The L<IUP::ProgressDlg|IUP::ProgressDlg> will display the iteration state using a
+L<IUP::ProgressBar|IUP::ProgressBar> control.
+
+The dialog is B<not> automatically closed, the application must do that
+manually inside the CANCEL_CB callback or inside your processing loop
+by checking the STATE attribute.
   
 =head1 EXAMPLES
 
@@ -94,7 +140,7 @@ The element B<IUP::ProgressDlg> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
+=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
 
 =back 
 
@@ -102,7 +148,7 @@ The element B<IUP::ProgressDlg> is used in the following sample scripts:
 
 =head1 SEE ALSO
 
-L<IUP::Canvas|IUP::Canvas>
+L<IUP::ProgressBar|IUP::ProgressBar>, L<IUP::Dialog|IUP::Dialog>
 
 The original doc: L<iupprogressdlg.html|http://www.tecgraf.puc-rio.br/iup/en/dlg/iupprogressdlg.html>
  

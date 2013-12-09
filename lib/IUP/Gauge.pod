@@ -1,4 +1,4 @@
-=for comment based on iup-3.9
+=for comment based on iup-3.9 - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupgauge.html
 
 =head1 NAME
 
@@ -6,7 +6,11 @@ IUP::Gauge - [GUI element] shows a percent value that can be updated to simulate
 
 =head1 DESCRIPTION
 
-XXX-TODO
+Creates a Gauge control. Shows a percent value that can be updated to
+simulate a progression. It inherits from L<IUP::Canvas|IUP::Canvas>.
+
+It is recommended that new applications use the
+L<IUP::ProgressBar|IUP::ProgressBar> control.
 
 =begin HTML
 
@@ -18,7 +22,7 @@ XXX-TODO
 
 =head2 CREATION - new() method
 
- $mlist = IUP::Gauge->new( 1=>"line 1", 2=>"line 2", 3=>"line 3" );
+ $gauge = IUP::Gauge->new( MIN=>0, MAX=>100 );
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
@@ -32,25 +36,49 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item B<"1">
+=item B<DASHED>
 
-First item in the list.
+Changes the style of the gauge for a dashed pattern. Default is "NO".
 
-=item B<"2">
+=item L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
 
-Second item in the list.
+Controls the gauge and text color. The default is "64 96 192".
 
-=item B<"3">
+=item B<MAX>
 
-Third item in the list.
+I<(non inheritable)> Contains the maximum value. Default is "1".
 
-=item B<< "<n>" >>
+=item B<MIN>
 
-n-th item in the list. 
+I<(non inheritable)> Contains the minimum value. Default is "0".
 
-=item B<ADDLIN>
+=item B<PADDING>
 
-XXX-TODO
+internal margin. Works just like the MARGIN attribute of
+the L<IUP::Hbox|IUP::Hbox> and L<IUP::Vbox|IUP::Vbox> containers, but uses a different name to
+avoid inheritance problems. Default value: "0x0". 
+
+=item B<SHOW_TEXT>
+
+Indicates if the text inside the Gauge is to be shown or
+not. If the gauge is dashed the text is never shown. Possible values:
+"YES" or "NO". Default: "YES".
+
+=item L<SIZE|IUP::Manual::03_Attributes/SIZE>
+
+I<(non inheritable)> The initial size is "120x14".
+Set to C<undef> to allow the automatic layout use smaller values.
+
+=item B<TEXT>
+
+I<(non inheritable)> Contains a text to be shown inside the Gauge
+when SHOW_TEXT=YES. If it is C<undef>, the percentage calculated from VALUE
+will be used. If the gauge is dashed the text is never shown.
+
+=item B<VALUE>
+
+I<(non inheritable)> Contains a number between "MIN" and "MAX",
+controlling the current position.
 
 =back
 
@@ -59,6 +87,7 @@ The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> 
 =over
 
 =item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
+L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>,
 L<EXPAND|IUP::Manual::03_Attributes/EXPAND>,
 L<FONT|IUP::Manual::03_Attributes/FONT>,
 L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
@@ -67,7 +96,6 @@ L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
 L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>,
 L<WID|IUP::Manual::03_Attributes/WID>,
 L<TIP|IUP::Manual::03_Attributes/TIP>,
-L<SIZE|IUP::Manual::03_Attributes/SIZE>,
 L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
 L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
 L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
@@ -79,13 +107,7 @@ L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
 For more info about concept of callbacks (setting callback handlers etc.)
 see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
 
-=over
-
-=item B<IMAGEVALUECHANGED_CB>
-
-XXX-TODO
-
-=back 
+common callbacks are supported: L<MAP_CB|IUP::Manual::03_Attributes/MAP_CB>, L<UNMAP_CB|IUP::Manual::03_Attributes/UNMAP_CB>
   
 =head1 EXAMPLES
 
@@ -94,7 +116,7 @@ The element B<IUP::Gauge> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/gauge.pl> - IUP::Gauge example
+=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/gauge.pl> - IUP::Gauge example
 
 =back 
 

@@ -1,4 +1,4 @@
-=for comment based on iup-3.2
+=for comment based on iup-3.2 - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupcells.html
 
 =head1 NAME
 
@@ -434,11 +434,11 @@ The element B<IUP::Cells> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/cells_checkboard.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/cells_checkboard.pl> - IUP::Cells example
+=item * L<0-basic/cells_checkboard.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/cells_checkboard.pl> - IUP::Cells example
 
-=item * L<0-basic/cells_degrade.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/cells_degrade.pl> - IUP::Cells example
+=item * L<0-basic/cells_degrade.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/cells_degrade.pl> - IUP::Cells example
 
-=item * L<0-basic/cells_numbering.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/cells_numbering.pl> - IUP::Cells example
+=item * L<0-basic/cells_numbering.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/cells_numbering.pl> - IUP::Cells example
 
 =back 
 

@@ -1,4 +1,4 @@
-=for comment based on iup-3.5
+=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupcolorbrowser.html
 
 =head1 NAME
 
@@ -199,7 +199,7 @@ The element B<IUP::ColorBrowser> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/colorbrowser.pl|https://metacpan.org/source/KMX/IUP-0.200_9/examples/0-basic/colorbrowser.pl> - IUP::ColorBrowser example
+=item * L<0-basic/colorbrowser.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/colorbrowser.pl> - IUP::ColorBrowser example
 
 =back 
 
