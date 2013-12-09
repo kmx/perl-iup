@@ -66,25 +66,25 @@ Check the L<IUP::Dialog|IUP::Dialog/"CALLBACKS"> callbacks.
 =head2 Menu
 
  Dialog
- 	New  - creates a new empty dialog, it will be destroyed when the layout is destroyed.
- 	Load - loads an existent dialog from the application.
- 	Load Visible - lists only visible dialogs from the application to be loaded.
- 	Reload - reloads the current dialog into the Layout Dialog.
- 	Export - exports the current dialog to a text file in the specified language.
- 		C
- 		LED
- 		Lua
- 	Refresh - recalculates the dialog layout of the current dialog (IUP::Refresh).
- 	Redraw - send a redraw to the current dialog (IUP::Redraw).
- 	Show - shows the current dialog (IUP::Show) 
- 	Hide - hides the current dialog (IUP::Hide) 
- 	Close - hides the Layout Dialog, optionally self destroy according to DESTROYWHENCLOSED.
+         New  - creates a new empty dialog, it will be destroyed when the layout is destroyed.
+         Load - loads an existent dialog from the application.
+         Load Visible - lists only visible dialogs from the application to be loaded.
+         Reload - reloads the current dialog into the Layout Dialog.
+         Export - exports the current dialog to a text file in the specified language.
+                 C
+                 LED
+                 Lua
+         Refresh - recalculates the dialog layout of the current dialog (IUP::Refresh).
+         Redraw - send a redraw to the current dialog (IUP::Redraw).
+         Show - shows the current dialog (IUP::Show) 
+         Hide - hides the current dialog (IUP::Hide) 
+         Close - hides the Layout Dialog, optionally self destroy according to DESTROYWHENCLOSED.
  Layout
- 	Hierarchy - shows or hides the layout hierarchy tree at left.
- 	Update - redraw the layout.
- 	Auto Update - periodically redraw the layout.
- 	Show Hidden - show hidden elements in the layout.
- 	Opacity - controls the Layout Dialog opacity so you can composite it on top of the selected dialog.
+         Hierarchy - shows or hides the layout hierarchy tree at left.
+         Update - redraw the layout.
+         Auto Update - periodically redraw the layout.
+         Show Hidden - show hidden elements in the layout.
+         Opacity - controls the Layout Dialog opacity so you can composite it on top of the selected dialog.
 
 Use B<Reload> when the dialog has been changed and the layout was
 modified by the application. Use B<Update> when attributes of the

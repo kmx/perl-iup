@@ -15,7 +15,7 @@ Creates an image to be shown on a label, button, toggle, or as a cursor.
  #8bit/256colors image + color palette definition + 2-dimensional pixels array
  my $img = IUP::Image->new( 
              BPP=>8, colors=>[ "0 0 0", "255 0 0", "128 0 0" ],
-	     pixels=>[[ 0,0,0,0,0,0,0,0,0,0,0,0 ],
+             pixels=>[[ 0,0,0,0,0,0,0,0,0,0,0,0 ],
                       [ 0,0,0,0,2,2,2,2,2,2,2,0 ],
                       [ 0,0,0,0,0,2,1,1,1,1,2,0 ],
                       [ 0,0,0,0,0,2,1,1,1,1,2,0 ],
@@ -31,9 +31,9 @@ Creates an image to be shown on a label, button, toggle, or as a cursor.
  
  #the same 8bit/256colors image - defined by 1-dimensional pixels array
  my $img = IUP::Image->new(
-	     HEIGHT=>12, WIDTH=>12, BPP=>8, # HEIGHT*WIDTH*BPP/8 should match the size of pixels
+             HEIGHT=>12, WIDTH=>12, BPP=>8, # HEIGHT*WIDTH*BPP/8 should match the size of pixels
              colors=>[ "0 0 0", "255 0 0", "128 0 0" ],
-	     pixels=>[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,0,
+             pixels=>[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,0,
                       0,0,0,0,0,2,1,1,1,1,2,0,0,0,0,0,0,2,1,1,1,1,2,0,
                       0,0,0,0,2,1,1,1,1,1,2,0,0,0,0,2,1,1,1,1,1,1,2,0,
                       0,0,2,1,1,1,1,1,2,2,2,0,0,2,1,1,1,1,1,2,0,0,2,0,
@@ -77,16 +77,16 @@ Creates an image to be shown on a label, button, toggle, or as a cursor.
 
  #8bit/256colors image + color palette definition + pixels in a rawbuffer
  my $img = IUP::Image->new(
-	     HEIGHT=>12, WIDTH=>12, BPP=>8, # HEIGHT*WIDTH*BPP/8 should match the size of pixels
+             HEIGHT=>12, WIDTH=>12, BPP=>8, # HEIGHT*WIDTH*BPP/8 should match the size of pixels
              colors=>[ "0 0 0", "255 0 0", "128 0 0" ],
-	     pixels=>$rawdata, # e.g. $rawdata buffer got via sysread()
+             pixels=>$rawdata, # e.g. $rawdata buffer got via sysread()
  );
 
  #8bit/256colors image + pixels in a rawbuffer + setting color palette via attributes "0", "1", "2" ...
  my $img = IUP::Image->new(
-	     HEIGHT=>12, WIDTH=>12, BPP=>8, # HEIGHT*WIDTH*BPP/8 should match the size of pixels
+             HEIGHT=>12, WIDTH=>12, BPP=>8, # HEIGHT*WIDTH*BPP/8 should match the size of pixels
              0=>"0 0 0", 1=>"255 0 0", 2=>"128 0 0", #alternative color palete definition
-	     pixels=>$rawdata, # e.g. $rawdata buffer got via sysread()
+             pixels=>$rawdata, # e.g. $rawdata buffer got via sysread()
  );
 
  #creating image object from file

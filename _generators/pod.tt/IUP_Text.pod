@@ -617,7 +617,7 @@ B<Navigation:>
 
  Keys             Action             
  --------------------------------------------------
- Arrows	          move by individual characters/lines
+ Arrows           move by individual characters/lines
  Ctrl+Arrows      move by words/paragraphs
  Home/End         move to begin/end line
  Ctrl+Home/End    move to begin/end text

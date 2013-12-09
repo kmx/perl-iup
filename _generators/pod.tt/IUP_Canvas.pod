@@ -1500,10 +1500,10 @@ Hatch Styles
 
 =head3 cdStipple()
 
- $stipple = IUP::Canvas::Stipple->new( [[1 0 1 0 1 0 1 1 0 1], 
-							            [1 0 1 0 1 1 0 1 1 0],
-										[1 0 1 1 0 1 0 1 1 0],
-										[1 0 1 1 0 1 1 0 1 1]] );
+ $stipple = IUP::Canvas::Stipple->new( [[1,0,1,0,1,0,1,1,0,1], 
+                                        [1,0,1,0,1,1,0,1,1,0],
+                                        [1,0,1,1,0,1,0,1,1,0],
+                                        [1,0,1,1,0,1,1,0,1,1]] );
  $canvas->cdStipple($stipple);
 
 Defines a stipple (= matrix of zeros 0 and ones 1). The zeros are
@@ -1536,8 +1536,8 @@ Returns C<undef> if no I<stipple> was defined.
  $color1 = $canvas->cdEncodeColor(0, 0, 220);
  $color2 = $canvas->cdEncodeColor(220, 0, 220); 
  $pattern = IUP::Canvas::Pattern->new( [[$color1, $color2, $color1], 
-									    [$color2, $color1, $color2],
-										[$color1, $color2, $color1]] );
+                                        [$color2, $color1, $color2],
+                                        [$color1, $color2, $color1]] );
  $canvas->cdPattern($pattern);
 
 Defines a new color matrix (C<< $pattern->[$line]->[$column] >>)
@@ -1634,7 +1634,7 @@ in the driver.
       </tr>
       <tr>
         <td><img src="[%url.ghwebroot%]/imgcd-5.4.1/fonts.gif"></td>
-	<td><img src="[%url.ghwebroot%]/imgcd-5.4.1/font_style.gif"></td>
+        <td><img src="[%url.ghwebroot%]/imgcd-5.4.1/font_style.gif"></td>
       </tr>
     </tbody>
   </table>

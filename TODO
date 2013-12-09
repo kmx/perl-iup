@@ -1,16 +1,22 @@
 ################ the last time working on ################ 
 
+Canvas:
+- void functions should return $self
+
 fix POD:
 - IUP::MglPlot          http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_mglplot.html      !!sampl !!pod
 - IUP::PPlot            http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_pplot.html                !!pod
-- POD error - https://metacpan.org/pod/release/KMX/IUP-0.200_10/lib/IUP/Manual/04_Callbacks.pod (Around line 68: =over without closing =back)
 
-add element:
-- IUP::MatrixEx ???     http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixex.html      !!sampl !!pod !!pm
-- or maybe extend existing IUP::Matrix
-  - callbacks
-  - IupMatrixExOpen()                                               void IupMatrixExOpen(void);
-  - calling IupMatrixExInit for an existing IupMatrix control.      void IupMatrixExInit(Ihandle* ih);
+POD typos/errors:
+- POD error - https://metacpan.org/pod/release/KMX/IUP-0.200_10/lib/IUP/Manual/04_Callbacks.pod (Around line 68: =over without closing =back)
+- Text.pod + Manual_Attributes.pod - look for 'XXX-needs-fix-after-adding-UTF8-support'
+- Manual_Introduction.pod - IUP::Close
+
+add new element - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixex.html
+- IUP::MatrixEx? or maybe extend existing IUP::Matrix?
+- callbacks
+- IupMatrixExOpen()                                               void IupMatrixExOpen(void);
+- calling IupMatrixExInit for an existing IupMatrix control.      void IupMatrixExInit(Ihandle* ih);
 
 fix:
 - cb_table->{_dragdrop} what about CanvasGL, PPlot, MglPlot

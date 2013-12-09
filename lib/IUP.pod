@@ -218,7 +218,7 @@ L<IUP::MessageDlg|IUP::MessageDlg>.
                 IUP::Vbox->new( child=>[
                   IUP::Button->new( TITLE=>"Test Me", ACTION=>\&my_cb ),
                   IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf", TITLE=>"Text" ),
-	          IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf" ),
+                  IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf" ),
                   IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf", IMPRESS=>"IUP_Tecgraf" ),
                 ])
               );
@@ -1377,7 +1377,7 @@ precision will be affected.
 =back
 
 =head3 RecordInput()
-	      
+
 =over
 
 Records all mouse and keyboard input in a file for later reproduction.
