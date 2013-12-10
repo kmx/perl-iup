@@ -469,7 +469,7 @@ value that will be updated in the cell.
 
 I<(read-only)> Returns the cell
 computed offset in pixels from the top-left corner of the matrix, in
-the format "XxY" or "%dx%d" in C. Returns NULL if the cell does not
+the format "XxY" or "%dx%d" in C. Returns C<undef> if the cell does not
 exists, or it is not visible, or the element is not mapped. It will
 only return a valid result if the cell has already been displayed. They
 are similar to the parameters of the DRAW_CB callback but they do NOT
@@ -478,7 +478,7 @@ include the decorations. (since 3.5)
 =item B<CELLSIZE(L):(C)>
 
 I<(read-only)> Returns the cell computed
-size in pixels, in the format "WxH" or "%dx%d" in C. Returns NULL if
+size in pixels, in the format "WxH" or "%dx%d" in C. Returns C<undef> if
 the cell does not exists, or the element is not mapped. It will only
 return a valid result if the cell has already been displayed. They are
 similar to the parameters of the DRAW_CB callback but they do NOT
@@ -714,8 +714,8 @@ MARKMODE=LIN,COL,LINCOL you can specify a single cell address. (since
 =item B<MARKED>
 
 String of '0' or '1' characters, informing which
-cells are marked (indicated by value '1'). Use NULL to clear all marks,
-returns NULL if no marks. The format of this character vector depends
+cells are marked (indicated by value '1'). Use C<undef> to clear all marks,
+returns C<undef> if no marks. The format of this character vector depends
 on the value of the MARKMODE attribute: if its value is CELL, the
 vector will have NUMLIN x NUMCOL positions, corresponding to all the
 cells in the matrix starting with all the cells of the first line, then
@@ -750,7 +750,7 @@ NUMLIN_VISIBLE are considered when fitting and they are not changed,
 only the RASTERWIDTHn and RASTERHEIGHTn attributes are changed. But if
 any of the RASTERWIDTHn and RASTERHEIGHTn attributes where already set,
 then they will not be changed. If the matrix is resized then it must be
-set again to obtain the same result, but before doing that set to NULL
+set again to obtain the same result, but before doing that set to C<undef>
 all the RASTERWIDTHn and RASTERHEIGHTn attributes that you want to be
 changed. Can be LINES, COLUMNS or YES (meaning both). (since 3.3)
 

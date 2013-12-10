@@ -169,7 +169,7 @@ buttons do not move or change their sizes.
 When the application defines the L<SIZE|attrib/iup_size.html> or
 L<RASTERSIZE|attrib/iup_rastersize.html> attributes, it changes the
 B<User> size in IUP. The initial internal value is "0x0". When set to
-NULL the B<User> size is internally set to "0x0".
+C<undef> the B<User> size is internally set to "0x0".
 
 By default the layout computation uses the B<Natural> size of the
 elements to compose the layout of the dialog, but if the B<User> size
@@ -186,7 +186,7 @@ The returned value for SIZE or RASTERSIZE is the B<Current> size in
 IUP. It returns the native B<Window> size of the element after the
 element is mapped to the native system. Before mapping, the returned
 value is the B<User> size defined by SIZE or RASTERSIZE attributes if
-any, otherwise they are NULL.
+any, otherwise they are C<undef>.
 
 Defining the SIZE attribute of the buttons in the example we can make
 all have the same size. (In the following example the dialog size was

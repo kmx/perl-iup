@@ -56,7 +56,7 @@ The default is "NO".
 
 I<(non inheritable)>
 
-The initial size is "181x181". Set to NULL to allow the automatic layout
+The initial size is "181x181". Set to C<undef> to allow the automatic layout
 use smaller values.
 
 =item B<RGB>

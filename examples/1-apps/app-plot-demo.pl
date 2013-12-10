@@ -63,7 +63,7 @@ sub InitPlot {
     push @x, (0.001*$theI);
     push @y, (0.01+$theFac*$theI*$theI*$theI);
   }
-  $mainplot->PlotAdd2D(\@x, \@y);
+  $mainplot->PlotBegin(2)->PlotAdd2D(\@x, \@y)->PlotEnd;
   #$mainplot->SetAttribute("DS_COLOR", "100 100 200");
   #$mainplot->SetAttribute("DS_EDIT", "YES");
   $mainplot->SetCallback("DELETE_CB", \&delete_cb);

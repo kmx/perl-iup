@@ -257,26 +257,6 @@ Also for the 1D version, the X axis data is automatically generated
 
 See L<PlotInsert2D|/"PlotInsert2D()">.
 
-=head3 PlotAppend1D()
-
- $plot->PlotAppend1D($index, \@name, \@y);
- #or
- $plot->PlotAppend1D($index, \@y);
-
-Insert at DS_COUNT position.
-
-=head3 PlotAppend2D()
-
- $plot->PlotAppend2D($index, \@x, \@y);
-
-Insert at DS_COUNT position.
-
-=head3 PlotAppend3D()
-
- $plot->PlotAppend3D($index, \@x, \@y, \@z);
-
-Insert at DS_COUNT position.
-
 =head3 PlotSet1D()
 
  $plot->PlotSet1D($index, \@name, \@y);
@@ -330,7 +310,11 @@ If B<width>, B<$height> or B<$dpi> are 0 the screen equivalent is used.
  
 =head3 PlotSetFormula()
 
- $plot->PlotSetFormula($ds_index, $formulaX, $formulaY, $formulaZ, $count);
+ $plot->PlotSetFormula($ds_index, $count, $formulaX);                           # 1D
+ #or
+ $plot->PlotSetFormula($ds_index, $count, $formulaX, $formulaY);                # 2D
+ #or
+ $plot->PlotSetFormula($ds_index, $count, $formulaX, $formulaY, $formulaZ);     # 3D
 
 Same as PlotSet1D/2D/3D but data is generated from a formula. If
 B<$count> is 0 the current size is used. If 2D data then B<$formulaY>
@@ -344,6 +328,7 @@ The operators and functions can be:
  + - * / ^      (^=integer power)
  < > = & |      (logical operators, &=true if a and b both nonzero, |=true if x or y nonzero)
  sqrt(a)  pow(a,b)  log(a,b)  ln(a)     lg(a)              (ln(a)=log(e,a)  lg(a)=log(10,a)
+ abs(a)   sign(a)   mod(a,b)  step(a)   int(a)    rnd       pi
  abs(a)   sign(a)   mod(a,b)  step(a)   int(a)    rnd       pi
  sin(a)   cos(a)    tan(a)    asin(a)   acos(a)   atan(a)
  sinh(a)  cosh(a)   tanh(a)   asinh(a)  acosh(a)  atanh(a)
@@ -505,7 +490,11 @@ their default values. Value is ignored.
 
 I<(non inheritable)> Enable or disable the transparency support. Default: No.
 
+=back
+
 =head3 Interaction (non inheritable)
+
+=over
 
 =item B<ROTATE>
 
@@ -526,7 +515,11 @@ and/or x2 coordinates, the zoom is restricted to the X axis. On the
 other hand, if values are set only to y1 and/or y2 coordinates, the
 zoom is restricted to the Y axis. Default: 0:0:1:1
 
+=back
+
 =head3 Title Configuration (non inheritable)
+
+=over
 
 =item B<TITLE>
 
@@ -544,10 +537,14 @@ size. Default: 1.6
 =item B<TITLEFONTSTYLE>
 
 title font style. If not defined the FONT attribute
-will be used instead. Set to NULL, to use the FONT attribute values.
+will be used instead. Set to C<undef>, to use the FONT attribute values.
 Style can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC".
 
+=back
+
 =head3 Legend Configuration (non inheritable)
+
+=over
 
 =item B<LEGEND>
 
@@ -569,7 +566,7 @@ FONT size. Default: 0.8
 =item B<LEGENDFONTSTYLE>
 
 legend font style. If not defined the FONT
-attribute will be used instead. Set to NULL, to use the FONT attribute
+attribute will be used instead. Set to C<undef>, to use the FONT attribute
 values. Style can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC".
 
 =item B<LEGENDPOS>
@@ -577,7 +574,11 @@ values. Style can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC".
 legend box position. Can be: "TOPLEFT", "TOPRIGHT",
 "BOTTOMLEFT", or "BOTTOMRIGHT. Default: "TOPRIGHT".
 
+=back
+
 =head3 Colorbar Configuration (non inheritable)
+
+=over
 
 =item B<COLORBAR>
 
@@ -598,7 +599,11 @@ interval of data values used for pseudo coloring in some plot modes. Must be "mi
 axis used as reference for colorbar ticks.
 Default: Z
 
+=back
+
 =head3 Grid Configuration (non inheritable)
+
+=over
 
 =item B<GRID>
 
@@ -617,7 +622,11 @@ line style of the grid. Can be: "CONTINUOUS",
 "DASHED", "DOTTED", "DASH_DOT", "DASH_DOT_DOT". Default is
 "CONTINUOUS".
 
+=back
+
 =head3 Box Configuration (non inheritable)
+
+=over
 
 =item B<BOX>
 
@@ -632,7 +641,11 @@ Default: YES.
 
 box color. Default: FGCOLOR.
 
+=back
+
 =head3 Dataset List Management (non inheritable)
+
+=over
 
 =item B<CLEAR>
 
@@ -652,7 +665,11 @@ attributes are dependent on this value.
 
 I<(write-only)> removes a dataset given its index.
 
+=back
+
 =head3 Dataset Configuration (non inheritable)
+
+=over
 
 =item B<DS_COLOR>
 
@@ -749,7 +766,11 @@ I<(write-only)> removes a sample from the current dataset
 given its index. It can specify a range of samples using "index:count"
 (%d:%d). Ignored for planar and volumetric datasets.
 
+=back
+
 =head3 Axis Configuration (non inheritable) (for X, Y and Z)
+
+=over
 
 Note: attributes C<AXS_?SOMENAME> means 3 possible variants C<AXS_XSOMENAME>, C<AXS_YSOMENAME> and C<AXS_ZSOMENAME>
 
@@ -774,9 +795,9 @@ ticks values and label color. Default: "0 0 0".
 
 =item B<AXS_?CROSSORIGIN>
 
-same as setting AXS_?ORIGIN to 0 or NULL. Can be
+same as setting AXS_?ORIGIN to 0 or C<undef>. Can be
 YES or NO. Default: NO. Returns YES if AXS_?ORIGIN is 0 and returns NO
-if AXS_?ORIGIN in NULL. Available for compatibility with IUP::PPlot, but
+if AXS_?ORIGIN in C<undef>. Available for compatibility with IUP::PPlot, but
 the default is different.
 
 =item B<AXS_?FONTSIZE>
@@ -787,7 +808,7 @@ FONT size. Default: 1.0
 =item B<AXS_?FONTSTYLE>
 
 axis label font style. If not defined the FONT
-attribute will be used instead. Set to NULL, to use the FONT attribute
+attribute will be used instead. Set to C<undef>, to use the FONT attribute
 values. Can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC".
 
 =item B<AXS_?LABEL>
@@ -822,7 +843,7 @@ when AUTOMIN or AUTOMAX are enabled. Default: 1.0 and 0.0.
 =item B<AXS_?ORIGIN>
 
 position the origin of the axis in plot coordinates
-(%g). But if set to NULL will automatically position the origin at the
+(%g). But if set to C<undef> will automatically position the origin at the
 bottom left corner of the dataset area. Default: not defined.
 
 =item B<AXS_?REVERSE>
@@ -836,7 +857,11 @@ right.
 configures the scale of the respective axis. Can be: LIN
 (linear) or LOG10 (decimal logarithm base 10). Default: LIN.
 
+=back
+
 =head3 Axis Ticks Configuration (non inheritable) (for X, Y and Z)
+
+=over
 
 =item B<AXS_?TICK>
 
@@ -862,7 +887,7 @@ multiple of the FONT size. Default: 0.8
 =item B<AXS_?TICKFONTSTYLE>
 
 axis tick number font style. If not defined the
-FONT attribute will be used instead. Set to NULL, to use the FONT
+FONT attribute will be used instead. Set to C<undef>, to use the FONT
 attribute values. Can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC".
 
 =item B<AXS_?TICKFORMAT>
@@ -1125,14 +1150,30 @@ L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
 See original documentatiom L<iup_mglplot_modes.htm|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_mglplot_modes.html>
 
+=back
+
 =head3 For Linear Datasets
+
+=over
 
 =head4 LINE
 
 Draws lines between points. DS_COLOR, DS_LINESTYLE and DS_LINEWIDTH are
 used to configure the lines.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_line.png" height="248" width="348"></td>
+        <td valign="top">(3 plots)<br>BOX=Yes</td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_line3d.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+        </td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 MARK
 
@@ -1153,7 +1194,16 @@ lines and a circle for rs are drawn. DS_COLOR, DS_LINESTYLE and
 DS_LINEWIDTH are used to configure the lines. DS_COLOR, DS_MARKSTYLE
 and DS_MARKSIZE are used to configure the marks.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_radar.png" height="248" width="348"></td>
+        <td valign="top">(3 plots)<br>RADARSHIFT=0.4<br>DATAGRID=Yes<br>BOX=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 AREA
 
@@ -1161,7 +1211,16 @@ Draws lines between points and fills it to axis plane. DS_COLOR is used
 to configure fill color. The order of the datasets will define which
 one will be drawn first.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_area.png" height="248" width="348"></td>
+        <td valign="top">(3 plots)<br>AXS_XORIGIN=0<br>AXS_YORIGIN=0<br>BOX=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 BAR
 
@@ -1169,7 +1228,19 @@ Draws vertical bars from points to axis plane. If DATAGRID=Yes then
 grid lines are drawn, default=No. BARWIDTH sets relative width of
 rectangles, default=0.7.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_bar.png" height="248" width="348"></td>
+        <td valign="top">AXS_XORIGIN=0<br>AXS_YORIGIN=0<br>BOX=Yes</td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_bar3d.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>
+        </td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 BARHORIZONTAL
 
@@ -1177,7 +1248,16 @@ Draws horizontal bars from points to axis plane. If DATAGRID=Yes then
 grid lines are drawn, default=No. BARWIDTH sets relative width of
 rectangles, default=0.7.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_barhorizontal.png" height="248" width="348"></td>
+        <td valign="top">AXS_XORIGIN=0<br>AXS_YORIGIN=0<br>BOX=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 CHART
 
@@ -1185,7 +1265,18 @@ Draws colored stripes (boxes). If DATAGRID=Yes then black border lines
 are drawn, default=No. If PIECHART=Yes cylindrical coordinates are
 used, default=No.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_chart.png" height="248" width="348"></td>
+        <td valign="top">DATAGRID=Yes<br>BOX=Yes</td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_chartpie.png" height="248" width="348"></td>
+        <td valign="top">DATAGRID=Yes<br>BOX=Yes<br>PIECHART=Yes<br>COLORSCHEME=bgr cmy</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 STEP
 
@@ -1193,7 +1284,16 @@ Draws continuous stairs for points to axis plane. DS_COLOR,
 DS_LINESTYLE and DS_LINEWIDTH are used to configure the lines.
 DS_COLOR, DS_MARKSTYLE and DS_MARKSIZE are used to configure the marks.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_step.png" height="248" width="348"></td>
+        <td valign="top">(3 plots)<br>BOX=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 STEM
 
@@ -1201,14 +1301,32 @@ Draws vertical lines from points to axis plane. DS_COLOR, DS_LINESTYLE
 and DS_LINEWIDTH are used to configure the lines. DS_COLOR,
 DS_MARKSTYLE and DS_MARKSIZE are used to configure the marks.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_stem.png" height="248" width="348"></td>
+        <td valign="top">(3 plots)<br>DS_MARKSTYLE=HOLLOW_CIRCLE<br>DS_SHOWMARKS=Yes<br>AXS_XORIGIN=0<br>AXS_YORIGIN=0<br>BOX=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 DOTS
 
 Draws arbitrary placed points. Colors will be used from the previous
 color scheme or from COLORSCHEME if defined.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_dots.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 CRUST
 
@@ -1218,7 +1336,16 @@ holes), default=0. If DATAGRID=Yes then wire plot is produced,
 default=No. Colors will be used from the previous color scheme or from
 COLORSCHEME if defined.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_crust.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head3 For Planar Datasets
 
@@ -1247,7 +1374,14 @@ plot where color may show the exact position of a piece of surface.
 
 Here are some examples or color codes and color schemes:
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<p>
+<img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_colorschemes.png">
+<img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_colorcodes.png">
+</p>
+
+=end HTML
 
 =head4 PLANAR_MESH
 
@@ -1255,7 +1389,16 @@ Draws mesh lines for the surface. Mesh lines are plotted for each z
 slice of the data. DS_LINESTYLE and DS_LINEWIDTH are used to configure
 the lines.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_mesh.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 PLANAR_FALL
 
@@ -1263,35 +1406,82 @@ Draws fall lines for the surface. DS_LINESTYLE and DS_LINEWIDTH are
 used to configure the lines. If DIR=X, then lines are drawn along
 x-direction else lines are drawn along y-direction, default=Y.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_fall.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 PLANAR_BELT
 
 Draws belts for the surface. If DIR=X, then lines are drawn along
 x-direction else lines are drawn along y-direction, default=Y.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_belt.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 PLANAR_SURFACE
 
 Draws the surface. If DATAGRID=Yes then grid lines are drawn,
 default=No.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_surface.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes</td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_surface_colors.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes<br>COLORSCHEME=BbcyrR|</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 PLANAR_BOXES
 
 Draws vertical boxes for the surface. If DATAGRID=Yes then box lines
 are drawn, default=No.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_boxes.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes<br>AXS_XORIGIN=0<br>AXS_YORIGIN=0<br>AXS_ZORIGIN=0</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 PLANAR_TILE
 
 Draws horizontal tiles for the surface, it can be seen as 3D
 generalization of STEP.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_tile.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 PLANAR_DENSITY
 
@@ -1299,7 +1489,16 @@ Draws density plot for the surface at a specified z coordinate.
 PLANARVALUE specifies the z coordinate, if not defined AXS_ZMIN is
 used.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_density.png" height="248" width="348"></td>
+        <td valign="top">BOX=Yes<br>TRANSPARENT=No<br>COLORBAR=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 PLANAR_CONTOUR
 
@@ -1310,7 +1509,24 @@ COLORBARRANGE interval. If CONTOURFILLED=Yes draws solid (or filled)
 contour lines for the surface, default=No. If CONTOURLABELS is defined
 then contour labels will be drawn BELLOW or ABOVE the contours.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_contour.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes<br>CONTOURLABELS=BELLOW</td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_contour_filled.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes<br>CONTOURFILLED=Yes</td>
+    </tr>
+    <tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_surface_contour.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes<br><br>(dual plot)<br>DS_MODE=PLANAR_SURFACE<br>DS_MODE=PLANAR_CONTOUR</td>
+        <td>&nbsp;</td>
+        <td valign="top">&nbsp;</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 PLANAR_AXIALCONTOUR
 
@@ -1318,7 +1534,16 @@ Draws a surface which is result of the contour plot rotation for the
 surface. AXIALCOUNT defines the number of elements distributed in the
 COLORBARRANGE interval, default=3.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_axialcontour.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=Yes<br>LIGHT=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 PLANAR_GRADIENTLINES
 
@@ -1328,7 +1553,18 @@ defined AXS_ZMIN is used. Number of lines is proportional to
 GRADLINESCOUNT, default=5 . If GRADLINESCOUNTE<lt>0 then lines start
 from borders only. Lines are plotted for each z slice of the data.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_gradientlines.png" height="248" width="348"></td>
+        <td valign="top">BOX=Yes<br>TRANSPARENT=Yes<br>LIGHT=Yes</td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_planar_density_gradientlines.png" height="248" width="348"></td>
+        <td valign="top">BOX=Yes<br>TRANSPARENT=Yes<br>LIGHT=Yes<br><br>(dual plot)<br>DS_MODE=PLANAR_GRADIENTLINES <br>DS_MODE=PLANAR_DENSITY </td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head3 For Volumetric Datasets
 
@@ -1346,7 +1582,16 @@ Note, that there is possibility of incorrect plotting due to
 uncertainty of cross-section defining if there are two or more
 isosurface intersections inside one cell.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_volume_isosurface.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=Yes<br>LIGHT=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 VOLUME_DENSITY
 
@@ -1359,7 +1604,18 @@ SLICEX, SLICEY and SLICEZ, are used to define the slice where the plot
 is done, default is -1 (central). SLICEDIR defines which directions are
 used, default "XYZ".
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_volume_density.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=Yes<br>LIGHT=No<br>AXS_XORIGIN=0<br>AXS_YORIGIN=0<br>AXS_ZORIGIN=0<br>AXS_X=Yes<br>AXS_Y=Yes<br>AXS_Z=Yes</td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_volume_densityproject.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=No<br>PROJECT=Yes<br>PROJECTVALUEX=-1<br>PROJECTVALUEY=1<br>PROJECTVALUEZ=-1</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 VOLUME_CONTOUR
 
@@ -1375,7 +1631,24 @@ contour lines for the surface, default=No. CONTOURCOUNT defines the
 number of contour lines, default=7. Where lines are used, DS_LINESTYLE
 and DS_LINEWIDTH are used to configure the lines.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_volume_contour.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes</td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_volume_contourproject.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes<br>PROJECT=Yes<br>PROJECTVALUEX=-1<br>PROJECTVALUEY=1<br>PROJECTVALUEZ=-1</td>
+    </tr>
+    <tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_volume_contourfilled.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes</td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_volume_contourfilledproject.png" height="268" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=No<br>LIGHT=Yes<br>PROJECT=Yes<br>PROJECTVALUEX=-1<br>PROJECTVALUEY=1<br>PROJECTVALUEZ=-1<br>CONTOURFILLED=Yes</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head4 VOLUME_CLOUD
 
@@ -1385,7 +1658,18 @@ like cloud low value is transparent but higher ones are not. If
 CLOUDCUBES=No the semi-transparent points are used instead of cubes,
 default=Yes.
 
-  XXX-MISSING-TABLE+EXAMPLE
+=begin HTML
+
+<table style="border-collapse: collapse" border="0" bordercolor="#111111" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_volume_cloud.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=Yes<br>LIGHT=No<br>COLORSCHEME=wyrRk<br>CLOUDCUBES=No</td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/ctrl/iupmglplot_volume_cloudcubes.png" height="248" width="348"></td>
+        <td valign="top">ROTATE=40:0:60<br>BOX=Yes<br>TRANSPARENT=Yes<br>LIGHT=No<br>COLORSCHEME=wyrRk</td>
+    </tr>
+</tbody></table>
+
+=end HTML
 
 =head2 Known Issues
 

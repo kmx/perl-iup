@@ -40,15 +40,9 @@ sub PlotNewDataSet {
 sub PlotAdd1D {
   # params: ($x, $y) or (\@x, \@y)
   my ($self, $x, $y) = @_;
-  if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
-    $self->PlotBegin(1);
-    IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, $x, $y);
-    return $self->PlotEnd();
-  }
-  elsif (ref $x eq 'ARRAY' && !defined $y) {
-    $self->PlotBegin(1);
+  if (ref $x eq 'ARRAY' && !defined $y) {
     IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, [(0..scalar(@$x)-1)], $x);
-    return $self->PlotEnd();
+    return $self;
   }
   elsif (defined $x && !ref $x && !defined $y) {
     IUP::Internal::LibraryIup::_IupPPlotAddStr($self->ihandle, '', $x);
@@ -63,30 +57,23 @@ sub PlotAdd1D {
 sub PlotAdd2D {
   # params: ($x, $y) or (\@x, \@y)
   my ($self, $x, $y) = @_;
-  if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
-    $self->PlotBegin(2);
-    IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $x, $y);
-    return $self->PlotEnd();
-  }
-  else {
-    IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $x, $y);
-    return $self;
-  }
-}
-
-sub PlotAppend1D {
-  # params: ($ds_index, \@x, \@y)
-  my $self = shift;
-  IUP::Internal::LibraryIup::_IupPPlotAddStrPoints($self->ihandle, @_);
+  IUP::Internal::LibraryIup::_IupPPlotAdd($self->ihandle, $x, $y);
   return $self;
 }
 
-sub PlotAppend2D {
-  # params: ($ds_index, \@x, \@y)
-  my $self = shift;
-  IUP::Internal::LibraryIup::_IupPPlotAddPoints($self->ihandle, @_);
-  return $self;
-}
+#sub PlotAppend1D {
+#  # params: ($ds_index, \@x, \@y)
+#  my $self = shift;
+#  IUP::Internal::LibraryIup::_IupPPlotAddStrPoints($self->ihandle, @_);
+#  return $self;
+#}
+
+#sub PlotAppend2D {
+#  # params: ($ds_index, \@x, \@y)
+#  my $self = shift;
+#  IUP::Internal::LibraryIup::_IupPPlotAddPoints($self->ihandle, @_);
+#  return $self;
+#}
 
 sub PlotSet1D {
   # params: ($ds_index, $x, $y) or ($ds_index, \@x, \@y)
@@ -140,7 +127,7 @@ sub PlotTransform {
   return ($ix, $iy);
 }
 
-sub PlotPaintTo {
+sub PlotPaintToCanvas {
   #void IupPlotPaintTo(Ihandle* ih, cdCanvas* cnv); [in C]
   #iup.PlotPaintTo(ih: ihandle, cnv: cdCanvas) [in Lua]
   my ($self, $cnv) = @_;

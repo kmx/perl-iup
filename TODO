@@ -1,23 +1,14 @@
 ################ the last time working on ################ 
 
-fix:
-$plot->PlotBegin(1)->PlotAdd1D([1,'a',3,4,5], [2,4.4,6,8,10])->PlotEnd();
-or
-$plot->PlotAdd1D([1,'a',3,4,5], [2,4.4,6,8,10]) # without PlotBegin + PlotEnd ?
-
-fix_
-- $plot->PlotSetFormula($ds_index, $formulaX, $formulaY, $formulaZ, $count);
-+ $plot->PlotSetFormula($ds_index, $count, $formulaX, $formulaY, $formulaZ);
-
-add new element - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixex.html
+IupMatrixEx - add new element - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixex.html
 - IUP::MatrixEx? or maybe extend existing IUP::Matrix?
 - callbacks
 - IupMatrixExOpen()                                               void IupMatrixExOpen(void);
 - calling IupMatrixExInit for an existing IupMatrix control.      void IupMatrixExInit(Ihandle* ih);
 
 fix:
-- cb_table->{_dragdrop} what about CanvasGL, PPlot, MglPlot
-- cb_table->{_canvas}   what about PPlot, MglPlot
+- cb_table->{_dragdrop} what about CanvasGL, PPlot, MglPlot ?
+- cb_table->{_canvas}   what about PPlot, MglPlot ?
 - global callbacks
 
 ##########################################################
@@ -25,14 +16,10 @@ fix:
 ######## later
 - POD: html tables - metacpan.org breaks header line (probably broken <th>)
 - Canvas: void functions should return $self
-- implement: MglPlotSetData(Ihandle *ih, int ds_index, float* data, int count_x, int count_y, int count_z); [in C]
+- implement: MglPlotSetData(Ihandle *ih, int ds_index, float* data, int count_x, int count_y, int count_z);
 - POD: IUP::Canvas::FileBitmap: Supported constructors: XXX-TODO add some description
 - POD: IUP::Canvas::FileVector: Supported formats: XXX-TODO more description
-
-######## POD/IMPORTANT: 
-- finish pod for IUP::Canvas::(Palette|Pattern|Stipple|Bitmap)
-- finish pod for IUP::Manual::* (CB/AT accessors)
-- overall "doc polish" needed
+- POD: overall "doc polish" needed
 
 ######## CODE/IMPORTANT: correct element destruction still needs some work
 - Internal/Element.pm (look for XXX-FIXME + XXX-CHECKLATER)

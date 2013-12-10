@@ -344,7 +344,7 @@ indent. In Windows is limited to a minimum of 5 pixels.
 
 I<(non inheritable)>
 
-The initial size is "400x200". Set to NULL to allow the automatic layout
+The initial size is "400x200". Set to C<undef> to allow the automatic layout
 use smaller values.
 
 =item B<SHOWDRAGDROP>
@@ -435,7 +435,7 @@ I<(read only)> Returns the identifier of the specified node.
 
 =item B<STATE(id)>
 
-The state of the specified branch. Returns NULL for a LEAF.
+The state of the specified branch. Returns C<undef> for a LEAF.
 In Windows, it will be effective only if the branch has children. In
 GTK, it will be effective only if the parent is expanded. Possible
 values:

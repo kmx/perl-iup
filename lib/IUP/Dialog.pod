@@ -105,7 +105,7 @@ I<(non inheritable) (creation only)>
 
 Shows a resize border
 around the dialog. Default: "YES". BORDER=NO is useful only when
-RESIZE=NO, MAXBOX=NO, MINBOX=NO, MENUBOX=NO and TITLE=NULL, if any of
+RESIZE=NO, MAXBOX=NO, MINBOX=NO, MENUBOX=NO and TITLE=undef, if any of
 these are defined there will be always some border.
 
 =item L<CURSOR|IUP::Manual::03_Attributes/CURSOR>
@@ -168,10 +168,10 @@ of the dialog.
 Values set at SIZE or RASTERSIZE attributes of a dialog are always
 accepted, regardless of the minimum size required by its children. For
 a dialog to have the minimum necessary size to fit all elements
-contained in it, simply define SIZE or RASTERSIZE to NULL. Also if you
+contained in it, simply define SIZE or RASTERSIZE to C<undef>. Also if you
 set SIZE or RASTERSIZE to be used as the initial size of the dialog,
 its contents will be limited to this size as the minimum size, if you
-do not want that, then after showing the dialog reset this size to NULL
+do not want that, then after showing the dialog reset this size to C<undef>
 so the dialog can be resized to smaller values. But notice that its
 contents will still be limited by the B<Natural> size, to also remove
 that limitation set SHRINK=YES.
@@ -183,7 +183,7 @@ For more information see L<IUP::Manual::05_DialogLayout>.
 I<(non inheritable)>
 
 Dialogs title.
-Default: NULL. If you want to remove the title bar you must also set
+Default: C<undef>. If you want to remove the title bar you must also set
 MENUBOX=NO, MAXBOX=NO and MINBOX=NO, before map. But in Motif and GTK
 it will hide it only if RESIZE=NO also.
 
@@ -388,7 +388,7 @@ HIDETASKBAR also. Possible values: YES, NO.
 
 I<[Windows and GTK Only]> sets the dialog transparency alpha
 value. Valid values range from 0 (completely transparent) to 255
-(opaque). In Windows set to NULL to remove the LAYERED style bit. (GTK
+(opaque). In Windows set to C<undef> to remove the LAYERED style bit. (GTK
 2.12)
 
 =item B<TOPMOST>

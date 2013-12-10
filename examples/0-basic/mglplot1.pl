@@ -32,7 +32,7 @@ sub add_series {
   my ($self, $xvalues, $yvalues) = (shift, shift, shift);
   my $plot = $self->{p};
   my %options = @_;
-  $plot->PlotAdd2D($xvalues, $yvalues);
+  $plot->PlotBegin(2)->PlotAdd2D($xvalues, $yvalues)->PlotEnd;
   $plot->SetAttribute(DS_MODE=>delete $options{DS_MODE}) if $options{DS_MODE};
   $plot->SetAttribute(%options);
 }

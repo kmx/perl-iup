@@ -39,24 +39,8 @@ sub PlotNewDataSet {
 sub PlotAdd1D {
   # params: ($x, $y) or (\@x, \@y)
   my ($self, $x, $y) = @_;
-  if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
-    $self->PlotBegin(1);
-    IUP::Internal::LibraryIup::_IupMglPlotAdd1D($self->ihandle, $x, $y);
-    return $self->PlotEnd();
-  }
-  elsif (ref $x eq 'ARRAY' && !defined $y) {
-    $self->PlotBegin(1);
-    IUP::Internal::LibraryIup::_IupMglPlotAdd1D($self->ihandle, undef, $x);
-    return $self->PlotEnd();
-  }
-  elsif (defined $x && !ref $x && !defined $y) {
-    IUP::Internal::LibraryIup::_IupMglPlotAdd1D($self->ihandle, undef, $x);
-    return $self;
-  }
-  else {
-    IUP::Internal::LibraryIup::_IupMglPlotAdd1D($self->ihandle, $x, $y);
-    return $self;
-  }
+  IUP::Internal::LibraryIup::_IupMglPlotAdd1D($self->ihandle, $x, $y);
+  return $self;
 }
 
 sub PlotSet1D {
@@ -77,26 +61,19 @@ sub PlotInsert1D {
   return $self;
 }
 
-sub PlotAppend1D {
-  # params: ($ds_index, \@x, \@y) or ($ds_index, \@y)
-  my ($self, $ds_index) = @_;
-  return $self->PlotInsert1D($ds_index, $self->DS_COUNT, @_);
-}
+#sub PlotAppend1D {
+#  # params: ($ds_index, \@x, \@y) or ($ds_index, \@y)
+#  my ($self, $ds_index) = @_;
+#  return $self->PlotInsert1D($ds_index, $self->DS_COUNT, @_);
+#}
 
 ### 2D
 
 sub PlotAdd2D {
   # params: ($x, $y) or (\@x, \@y)
   my ($self, $x, $y) = @_;
-  if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY') {
-    $self->PlotBegin(2);
-    IUP::Internal::LibraryIup::_IupMglPlotAdd2D($self->ihandle, $x, $y);
-    return $self->PlotEnd();
-  }
-  else {
-    IUP::Internal::LibraryIup::_IupMglPlotAdd2D($self->ihandle, $x, $y);
-    return $self;
-  }
+  IUP::Internal::LibraryIup::_IupMglPlotAdd2D($self->ihandle, $x, $y);
+  return $self;
 }
 
 sub PlotSet2D {
@@ -115,26 +92,19 @@ sub PlotInsert2D {
   return $self;
 }
 
-sub PlotAppend2D {
-  # params: ($ds_index, \@x, \@y)
-  my ($self, $ds_index) = (shift, shift);
-  return $self->PlotInsert2D($ds_index, $self->DS_COUNT, @_);
-}
+#sub PlotAppend2D {
+#  # params: ($ds_index, \@x, \@y)
+#  my ($self, $ds_index) = (shift, shift);
+#  return $self->PlotInsert2D($ds_index, $self->DS_COUNT, @_);
+#}
 
 ### 3D
 
 sub PlotAdd3D {
   # params: ($x, $y, $z) or (\@x, \@y, \@z)
   my ($self, $x, $y, $z) = @_;
-  if (ref $x eq 'ARRAY' && ref $y eq 'ARRAY' && ref $z eq 'ARRAY') {
-    $self->PlotBegin(2);
-    IUP::Internal::LibraryIup::_IupMglPlotAdd3D($self->ihandle, $x, $y, $z);
-    return $self->PlotEnd();
-  }
-  else {
-    IUP::Internal::LibraryIup::_IupMglPlotAdd3D($self->ihandle, $x, $y, $z);
-    return $self;
-  }
+  IUP::Internal::LibraryIup::_IupMglPlotAdd3D($self->ihandle, $x, $y, $z);
+  return $self->PlotEnd();
 }
 
 sub PlotSet3D {
@@ -153,11 +123,11 @@ sub PlotInsert3D {
   return $self;
 }
 
-sub PlotAppend3D {
-  # params: ($ds_index, \@x, \@y, \@z)
-  my ($self, $ds_index) = @_;
-  return $self->PlotInsert3D($ds_index, $self->DS_COUNT, @_);
-}
+#sub PlotAppend3D {
+#  # params: ($ds_index, \@x, \@y, \@z)
+#  my ($self, $ds_index) = @_;
+#  return $self->PlotInsert3D($ds_index, $self->DS_COUNT, @_);
+#}
 
 ###
 

@@ -217,7 +217,7 @@ Shows only the B<IMAGEDEL> image and ignores B<IMAGECHECK> and B<IMAGEUNCHECK>.
 
 =item B<TITLE>
 
-title of the list. When not NULL the list will display a non scrollable title.
+title of the list. When not C<undef> the list will display a non scrollable title.
 
 =item B<TOPITEM>
 

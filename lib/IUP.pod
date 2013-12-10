@@ -1384,7 +1384,7 @@ Records all mouse and keyboard input in a file for later reproduction.
 
  my $ret = IUP->RecordInput($filename, $mode);
 
-B<$filename:> name of the file to be saved. NULL will stop recording.
+B<$filename:> name of the file to be saved. C<undef> will stop recording.
 
 B<$mode:> flag for controlling the file generation. Can be: IUP_RECBINARY or IUP_RECTEXT.
 

@@ -342,7 +342,7 @@ _IupMglPlotDrawText(Ihandle* ih, const char* text, float x, float y, float z)
 
 #### Original C function from <iup_mglplot.h> # void IupMglPlotSetFormula(Ihandle* ih, int ds_index, const char* formulaX, const char* formulaY, const char* formulaZ, int count);
 void
-_IupMglPlotSetFormula(Ihandle* ih, int ds_index, char* formulaX, char* formulaY, char* formulaZ, int count)
+_IupMglPlotSetFormula(Ihandle* ih, int ds_index, int count, char* formulaX, char* formulaY, char* formulaZ)
 	CODE:
 #ifdef HAVELIB_IUP_MGLPLOT
 		IupMglPlotSetFormula(ih,ds_index,formulaX,formulaY,formulaZ,count);

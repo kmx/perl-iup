@@ -31,10 +31,10 @@ sub add_series {
   my ($plot, $xvalues, $yvalues, $options) = @_;
   # are we given strings for the x values?
   if (looks_like_number($xvalues->[1])) {
-    $plot->PlotAdd2D($xvalues,$yvalues);
+    $plot->PlotBegin(2)->PlotAdd2D($xvalues,$yvalues)->PlotEnd;
   }
   else {
-    $plot->PlotAdd1D($xvalues,$yvalues);
+    $plot->PlotBegin(1)->PlotAdd1D($xvalues,$yvalues)->PlotEnd;
   }
   # set any series-specific plot attributes
   if ($options) {

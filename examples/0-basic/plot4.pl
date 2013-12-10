@@ -34,7 +34,7 @@ sub AddSeries {
     push @x, $_->[0];
     push @y, $_->[1];
   }
-  $plot->PlotAdd2D(\@x,\@y);
+  $plot->PlotBegin(2)->PlotAdd2D(\@x,\@y)->PlotEnd;
 }
 
 

@@ -132,6 +132,13 @@ Can only be called if L<PlotBegin|IUP::PPlot/"PlotBegin()"> was called. Whenever
 dataset all its "DS_*" attributes will be set to the default values.
 Notice that DS_MODE must be set before other "DS_*" attributes.
 
+=head3 PlotNewDataSet()
+
+  $plot->PlotNewDataSet($dim);
+  # $dim = 1 (for 1D) or 2 (for 2D)
+  
+Creates an empty dataset to receive samples. The dimension of the data can be 1 or 2.
+
 =head3 PlotAdd1D()
 
  $plot->PlotAdd1D($name, $y);
@@ -171,26 +178,12 @@ B<sample_index>. Can be used only after the dataset is added to the plot
 (after L<PlotBegin|/"PlotBegin()">). B<sample_index> can be after the
 last sample so data is appended to the array. Current data is shifted if necessary.
 
-=head3 PlotAppend1D()
-
- $plot->PlotAppend1D($index, \@name, \@y);
- #or
- $plot->PlotAppend1D($index, \@y);
-
-Insert at DS_COUNT position (= at the end).
-
-=head3 PlotAppend2D()
-
- $plot->PlotAppend2D($index, \@x, \@y);
-
-Insert at DS_COUNT position (= at the end).
-
 =head3 PlotTransform()
 
  ($ix, $iy) = $plot->PlotTransform($x, $y);
 
 Converts coordinates in plot units to pixels. It should be used in
-PREDRAW_CB and POSTDRAW_CB callbacks only. Output variables can be NULL
+PREDRAW_CB and POSTDRAW_CB callbacks only. Output variables can be C<undef>
 if not used. It can be used inside other callbacks, but make sure that
 the drawing after a resize is done.
 
@@ -216,26 +209,20 @@ Handy if you want to save the plot into L<IUP::Canvas::SVG> or L<IUP::Canvas::EM
 
 =item B<REDRAW>
 
-I<(write-only) (non inheritable)>
-
-Redraw the plot and update
+I<(write-only, non inheritable)> Redraw the plot and update
 the display. Value is ignored. All other attributes will B<NOT> update
 the display, so you can set many attributes without visual output.
 
 =item B<USE_IMAGERGB>
 
-I<(non inheritable)>
-
-Defines if the double buffer will
+I<(non inheritable)> Defines if the double buffer will
 use standard driver image (NO - faster) or an RGB image (YES - slower).
 Default: NO. The IMAGERGB driver has anti-aliasing which can improve
 the line drawing.
 
 =item B<USE_GDI+>
 
-I<[Windows Only] (non inheritable)>
-
-Defines if the double
+I<[Windows Only] (non inheritable)> Defines if the double
 buffer will use GDI+ (YES) for drawing or standard GDI (NO). Default:
 NO. The GDI+ driver has anti-aliasing which can improve the line
 drawing.
@@ -257,27 +244,19 @@ value is black "0 0 0".
 
 =item B<TITLE>
 
-I<(non inheritable)>
-
-The title. Located always at the top center
-area.
+I<(non inheritable)> The title. Located always at the top center area.
 
 =item B<TITLEFONTSIZE, TITLEFONTSTYLE>
 
-I<(non inheritable)>
-
-The title font size
+I<(non inheritable)> The title font size
 and style. The default values depends on the FONT attribute and the
-returned value is NULL. Set to NULL, to use the FONT attribute values.
+returned value is C<undef>. Set to C<undef>, to use the FONT attribute values.
 Style can be "PLAIN", "BOLD", "ITALIC" or "BOLDITALIC".
 
 =item B<MARGINLEFT, MARGINRIGHT, MARGINTOP, MARGINBOTTOM>
 
-I<(non inheritable)>
-
-Margin of the dataset area. PPlot implementation demands that margins
-must be set so the plot is not cropped. Default: "15", "15", "30",
-"15".
+I<(non inheritable)> Margin of the dataset area. PPlot implementation demands that margins
+must be set so the plot is not cropped. Default: "15", "15", "30", "15".
 
 =back
 
@@ -328,21 +307,15 @@ YES (both), HORIZONTAL, VERTICAL or NO. Default: NO.
 
 =item B<REMOVE>
 
-I<(write-only)>
-
-Removes a dataset given its index.
+I<(write-only)> Removes a dataset given its index.
 
 =item B<CLEAR>
 
-I<(write-only)>
-
-Removes all datasets. Value is ignored.
+I<(write-only)> Removes all datasets. Value is ignored.
 
 =item B<COUNT>
 
-I<[read-only]>
-
-Total number of datasets.
+I<[read-only]> Total number of datasets.
 
 =item B<CURRENT>
 
@@ -395,10 +368,7 @@ sample. Can be YES or NO. Default: NO.
 
 =item B<DS_REMOVE>
 
-I<(write-only)>
-
-Removes a sample from the current dataset
-given its index.
+I<(write-only)> Removes a sample from the current dataset given its index.
 
 =item B<DS_EDIT>
 

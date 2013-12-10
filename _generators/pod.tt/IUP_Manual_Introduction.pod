@@ -253,7 +253,7 @@ following attributes are B<NON> inheritable always:
 
 Inheritable attributes are stored in the hash table so the
 L<SetAttribute|[%m.elem%]/"SetAttribute()> / L<GetAttribute|[%m.elem%]/"GetAttribute()> logic can work, even if the control class store it
-internally. But when you change an attribute to NULL, then its value is
+internally. But when you change an attribute to C<undef>, then its value is
 removed from the hash table and the default value if any is passed to
 the native system.
 
@@ -262,7 +262,7 @@ not defined then it checks in the hash table. If not defined in its
 hash table, the attribute will be inherited from its parent's hash
 table and so forth, until it reaches the root child (usually the
 dialog). But if still then the attribute is not defined a default value
-for the element is returned (the default value can also be NULL).
+for the element is returned (the default value can also be C<undef>).
 
 When changed the attribute change is propagated to all children except
 for those who the attribute is already defined in the hash table.
@@ -280,7 +280,7 @@ attributes, by default an unknown attribute is treated as inheritable,
 that's why it will be automatically propagated.
 
 An example: the IMAGE attribute of a Label is B<non inheritable>, so
-when checked at the Label it will return NULL if not defined, and the
+when checked at the Label it will return C<undef> if not defined, and the
 Label parent tree will not be consulted. If you change the IMAGE
 attribute at a Vbox that contains several Labels, the child Labels will
 not be affected.
@@ -296,7 +296,7 @@ documentation of the attribute:
 =item * B<read only>: the attribute can not be changed. Ignored when set.
 
 =item * B<write only>: the attribute can not be retrieved. Normally
-used for action attributes. Returns NULL, or eventually some value set
+used for action attributes. Returns C<undef>, or eventually some value set
 before the element was mapped.
 
 =item * B<creation only>: it will be used only when the element is
