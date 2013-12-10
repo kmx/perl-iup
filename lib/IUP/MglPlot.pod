@@ -1424,9 +1424,9 @@ The element B<IUP::MglPlot> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/mglplot1.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/mglplot1.pl> - IUP::MglPlot example
+=item * L<0-basic/mglplot1.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/0-basic/mglplot1.pl> - IUP::MglPlot example
 
-=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/1-apps/app-plot-demo.pl> - dials for zooming
+=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
 =back 
 

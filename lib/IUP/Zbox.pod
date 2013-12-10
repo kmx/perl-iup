@@ -141,7 +141,7 @@ The element B<IUP::Zbox> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/zbox.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/zbox.pl> - IUP::Zbox example
+=item * L<0-basic/zbox.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/0-basic/zbox.pl> - IUP::Zbox example
 
 =back 
 
