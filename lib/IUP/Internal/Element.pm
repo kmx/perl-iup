@@ -24,7 +24,7 @@ sub AUTOLOAD {
   my ($name) = our $AUTOLOAD =~ /::(\w+)$/;
   die "FATAL: unknown method '$name'" unless $name =~ /^[A-Z0-9_]+$/;
   my $method = sub {
-        return $_[0]->GetAttribute($name) if scalar(@_) == 1; 
+        return $_[0]->GetAttribute($name) if scalar(@_) == 1;
         return $_[0]->SetAttribute($name, $_[1]) if scalar(@_) > 1;
   };
   no strict 'refs';
@@ -43,7 +43,7 @@ sub new {
   my $argc = scalar @_;
   my %args = ();
   my $firstonly;
-  
+
   my $self = { class => $class };
   bless($self, $class);
 
@@ -56,7 +56,7 @@ sub new {
   elsif ($argc > 0) {
     carp "Warning: $class->new() odd number of arguments ($argc), ignoring all parameters";
   }
-  
+
   $self->ihandle($self->_create_element(\%args, $firstonly));
   unless ($self->ihandle) {
     carp "Error: $class->new() failed";
@@ -77,7 +77,7 @@ sub new {
     else {
       carp "Warning: $class->new() ignoring unknown parameter '$_'";
     }
-  }  
+  }
   $self->SetAttribute(@at) if scalar(@at);
   $self->SetCallback(@cb) if scalar(@cb);
   if (!$self->HasValidClassName) {
@@ -111,7 +111,7 @@ sub new_from_ihandle {
 # accessor
 sub ihandle {
   if ($_[1]) {
-    IUP::Internal::LibraryIup::_register_ih($_[1], $_[0]);    
+    IUP::Internal::LibraryIup::_register_ih($_[1], $_[0]);
     return $_[0]->{'!int!ihandle'} = $_[1]
   }
   else {
@@ -123,39 +123,40 @@ sub GetName {
   #char* IupGetName(Ihandle* ih); [in C]
   #iup.GetName(ih: ihandle) -> (name: string) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupGetName($self->ihandle);    
+  return IUP::Internal::LibraryIup::_IupGetName($self->ihandle);
 }
 
 sub SetName {
   #Ihandle *IupSetHandle(const char *name, Ihandle *ih); [in C]
   #iup.SetHandle(name: string, ih: ihandle) -> old_ih: ihandle [in Lua]
-  my ($self, $name) = @_;  
-  return IUP::Internal::LibraryIup::_IupSetHandle($name, $self->ihandle);    
+  my ($self, $name) = @_;
+  my $ih = IUP::Internal::LibraryIup::_IupSetHandle($name, $self->ihandle);
+  return IUP->GetByIhandle($ih);
 }
 
 sub SetAttribute {
   #void IupSetAttribute(Ihandle *ih, const char *name, const char *value); [in C]
-  #iup.SetAttribute(ih: iulua_tag, name: string, value: string) [in Lua]   
+  #iup.SetAttribute(ih: iulua_tag, name: string, value: string) [in Lua]
   #void IupStoreAttribute(Ihandle *ih, const char *name, const char *value); [in C]
-  #iup.StoreAttribute(ih: iulua_tag, name: string, value: string) [in Lua] 
+  #iup.StoreAttribute(ih: iulua_tag, name: string, value: string) [in Lua]
   my $self = shift;
 
   #BEWARE: we need to keep the order of attribute assignment - thus cannot use for (keys %args) {...}
-  while(1) {    
-    my $k = shift;    
+  while(1) {
+    my $k = shift;
     carp("Warning: invalid attribute name"), last unless defined $k;
     my $v = shift;
-    if (!ref($v)) {      
+    if (!ref($v)) {
       IUP::Internal::LibraryIup::_IupStoreAttribute($self->ihandle, $k, $v);
     }
     elsif (blessed($v) && $v->can('ihandle')) {
       #carp "Debug: attribute '$k' is a refference '" . ref($v) . "'";
-      IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);      
-      #assuming any element ref stored into iup attribute to be a child      
+      IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
+      #assuming any element ref stored into iup attribute to be a child
       unless($self->_get_child_ref($v)) {
         #XXX-FIXME - child element destruction: happens for: MENU, MDIMENU, IMAGE*, PARENTDIALOG (can cause memory leaks)
-	#during Destroy() we might destroy elements shared by more dialogs
-        #warn "***DEBUG*** Unexpected situation elem='".ref($self)."' attr='$k'"; 
+        #during Destroy() we might destroy elements shared by more dialogs
+        #warn "***DEBUG*** Unexpected situation elem='".ref($self)."' attr='$k'";
         $self->_store_child_ref($v); #xxx(ANTI)DESTROY-MAGIC
       }
     }
@@ -164,21 +165,24 @@ sub SetAttribute {
     }
     last unless @_;
   }
+  return $self;
 }
 
 sub SetAttributeId {
   #void IupSetAttributeId(Ihandle *ih, const char *name, int id, const char *value); [in C]
-  #iup.SetAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua] 
+  #iup.SetAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua]
   #void IupStoreAttributeId(Ihandle *ih, const char *name, int id, const char *value); [in C]
-  #iup.StoreAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua] 
-  my ($self, $name, $id, $v) = @_;  
+  #iup.StoreAttributeId(ih: ihandle, name: string, id: number, value: string) [in Lua]
+  my ($self, $name, $id, $v) = @_;
   IUP::Internal::LibraryIup::_IupStoreAttributeId($self->ihandle, $name, $id, $v);
+  return $self;
 }
-  
+
 sub SetAttributeId2 {
   #void  IupStoreAttributeId2(Ihandle* ih, const char* name, int lin, int col, const char* value);
-  my ($self, $name, $lin, $col, $v) = @_;  
+  my ($self, $name, $lin, $col, $v) = @_;
   IUP::Internal::LibraryIup::_IupStoreAttributeId2($self->ihandle, $name, $lin, $col, $v);
+  return $self;
 }
 
 sub GetAttribute {
@@ -187,7 +191,7 @@ sub GetAttribute {
   #iup.GetAttribute(ih: ihandle, name: string) -> value: string [in Lua]
   my ($self, @names) = @_;
   my @rv = ();
-  push(@rv, IUP::Internal::LibraryIup::_IupGetAttribute($self->ihandle, $_)) for (@names);    
+  push(@rv, IUP::Internal::LibraryIup::_IupGetAttribute($self->ihandle, $_)) for (@names);
   return (scalar(@names) == 1) ? $rv[0] : @rv; #xxxCHECKLATER not sure if this is a good idea
 }
 
@@ -198,7 +202,7 @@ sub GetAttributeAsElement {
   my @rv = ();
   for (@names) {
     my $v = IUP::Internal::LibraryIup::_IupGetAttribute($self->ihandle, $_);
-    push(@rv, defined $v ? IUP->GetByName($v) : undef);    
+    push(@rv, defined $v ? IUP->GetByName($v) : undef);
   }
   return (scalar(@names) == 1) ? $rv[0] : @rv; #xxxCHECKLATER not sure if this is a good idea
 }
@@ -221,7 +225,7 @@ sub GetAttributeId2 {
 sub SetCallback {
   my ($self, %args) = @_;
   for (keys %args) {
-    my ($action, $func) = ($_, $args{$_});    
+    my ($action, $func) = ($_, $args{$_});
     my $cb_init_func = IUP::Internal::Callback::_get_cb_init_function(ref($self), $action);
     if (ref($cb_init_func) eq 'CODE') {
       if (defined $func) {
@@ -232,11 +236,11 @@ sub SetCallback {
       }
       else {
         #clear (unset) callback
-	#warn("***DEBUG*** gonna unset callback '$action'\n");
+        #warn("***DEBUG*** gonna unset callback '$action'\n");
         IUP::Internal::Callback::_clear_cb($self->ihandle,$action);
-	for (keys %$self) {    
-	  #clear all related values
-	  delete $self->{$_} if (/^!int!cb!\Q$action\E!/);
+        for (keys %$self) {
+          #clear all related values
+          delete $self->{$_} if (/^!int!cb!\Q$action\E!/);
         }
       }
     }
@@ -244,13 +248,14 @@ sub SetCallback {
       carp "Warning: ignoring unknown callback '$action' (".ref($self).")";
     }
   }
+  return $self;
 }
 
-sub IsValidCallbackName { 
+sub IsValidCallbackName {
   return IUP::Internal::Callback::_is_cb_valid(ref($_[0]), $_[1]);
 }
 
-sub HasValidClassName {  
+sub HasValidClassName {
   my $p = lc(ref($_[0]));            #perl class name
   my $c = $_[0]->GetClassName || ''; #iup internal class name
   # we are using IUP::Image for all - image, imagergb, imagergba
@@ -282,21 +287,23 @@ sub Destroy {
   #void IupDestroy(Ihandle *ih); [in C]
   #iup.Destroy(ih: ihandle) [in Lua]
   my $self = shift;
-  my $ih = $self->ihandle;  
-  
+  my $ih = $self->ihandle;
+
   #destroy all perl related stuff on element + its children
   $self->_internal_destroy();
   #BEWARE: at this point $self->ihandle is undef
-  
+
   IUP::Internal::LibraryIup::_unregister_ih($ih); #xxxCHECKLATER not necessary if weaken refs stored in global register
-  return IUP::Internal::LibraryIup::_IupDestroy($ih);
+  IUP::Internal::LibraryIup::_IupDestroy($ih);
+  return $self;
 }
 
 sub Detach {
   #void IupDetach(Ihandle *child); [in C]
   #iup.Detach(child: ihandle) or child:detach() [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupDetach($self->ihandle);
+  IUP::Internal::LibraryIup::_IupDetach($self->ihandle);
+  return $self;
 }
 
 sub GetAllAttributes {
@@ -308,10 +315,10 @@ sub GetAllAttributes {
 
 sub GetAttributes {
   #char* IupGetAttributes (Ihandle *ih); [in C]
-  #iup.GetAttributes(ih: iulua_tag) -> (ret: string) [in Lua] 
+  #iup.GetAttributes(ih: iulua_tag) -> (ret: string) [in Lua]
   #NOT USING original C API - different approach
   my $self = shift;
-  my $result = { };    
+  my $result = { };
   $result->{$_} = $self->GetAttribute($_) for ($self->GetAllAttributes);
   return $result;
 }
@@ -349,28 +356,31 @@ sub Map {
   #int IupMap(Ihandle* ih); [in C]
   #iup.Map(ih: iuplua-tag) -> ret: number [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupMap($self->ihandle);  
+  return IUP::Internal::LibraryIup::_IupMap($self->ihandle);
 }
 
 sub Redraw {
   #void IupRedraw(Ihandle* ih, int children); [in C]
   #iup.Redraw(ih: ihandle, children: boolen) [in Lua]
   my ($self, $children) = @_;
-  return IUP::Internal::LibraryIup::_IupRedraw($self->ihandle, $children);  
+  IUP::Internal::LibraryIup::_IupRedraw($self->ihandle, $children);
+  return $self;
 }
 
 sub Refresh {
   #void IupRefresh(Ihandle *ih); [in C]
   #iup.Refresh(ih: ihandle) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupRefresh($self->ihandle);  
+  IUP::Internal::LibraryIup::_IupRefresh($self->ihandle);
+  return $self;
 }
 
 sub RefreshChildren {
   #void IupRefreshChildren(Ihandle *ih); [in C]
   #iup.RefreshChildren(ih: ihandle) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupRefreshChildren($self->ihandle);
+  IUP::Internal::LibraryIup::_IupRefreshChildren($self->ihandle);
+  return $self;
 }
 
 sub Reparent {
@@ -382,51 +392,58 @@ sub Reparent {
 
 sub ResetAttribute {
   #void IupResetAttribute(Ihandle *ih, const char *name); [in C]
-  #iup.ResetAttribute(ih: iulua_tag, name: string) [in Lua] 
+  #iup.ResetAttribute(ih: iulua_tag, name: string) [in Lua]
   my ($self, $name) = @_;
-  return IUP::Internal::LibraryIup::_IupResetAttribute($self->ihandle, $name);  
+  IUP::Internal::LibraryIup::_IupResetAttribute($self->ihandle, $name);
+  return $self;
 }
 
 sub SaveClassAttributes {
   #void IupSaveClassAttributes(Ihandle* ih); [in C]
   #iup.SaveClassAttributes(ih: ihandle) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupSaveClassAttributes($self->ihandle);  
+  IUP::Internal::LibraryIup::_IupSaveClassAttributes($self->ihandle);
+  return $self;
 }
 
 sub SetFocus {
   #Ihandle *IupSetFocus(Ihandle *ih); [in C]
   #iup.SetFocus(ih: ihandle) -> ih: ihandle [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupSetFocus($self->ihandle);  
+  my $ih = IUP::Internal::LibraryIup::_IupSetFocus($self->ihandle);
+  return IUP->GetByIhandle($ih);
 }
 
 sub Unmap {
   #void IupUnmap(Ihandle* ih); [in C]
   #iup.Unmap(ih: iuplua-tag) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupUnmap($self->ihandle);  
+  IUP::Internal::LibraryIup::_IupUnmap($self->ihandle);
+  return $self;
 }
 
 sub Update {
   #void IupUpdate(Ihandle* ih); [in C]
   #iup.Update(ih: ihandle) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupUpdate($self->ihandle);  
+  IUP::Internal::LibraryIup::_IupUpdate($self->ihandle);
+  return $self;
 }
 
 sub UpdateChildren {
   #void IupUpdateChildren(Ihandle* ih); [in C]
   #iup.UpdateChildren(ih: ihandle) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupUpdateChildren($self->ihandle);  
+  IUP::Internal::LibraryIup::_IupUpdateChildren($self->ihandle);
+  return $self;
 }
 
 sub Hide {
   #int IupHide(Ihandle *ih); [in C]
   #iup.Hide(ih: ihandle) -> (ret: number) [in Lua]
   my $self = shift;
-  return IUP::Internal::LibraryIup::_IupHide($self->ihandle);  
+  IUP::Internal::LibraryIup::_IupHide($self->ihandle);
+  return $self;
 }
 
 sub Popup {
@@ -436,7 +453,7 @@ sub Popup {
   my ($self, $x, $y) = @_;
   $x = IUP_CURRENT unless defined $x;
   $y = IUP_CURRENT unless defined $y;
-  return IUP::Internal::LibraryIup::_IupPopup($self->ihandle, $x, $y);  
+  return IUP::Internal::LibraryIup::_IupPopup($self->ihandle, $x, $y);
 }
 
 sub Show {
@@ -460,8 +477,8 @@ sub ShowXY {
 sub GetNextChild {
   #Ihandle *IupGetNextChild(Ihandle* ih, Ihandle* child); [in C]
   #iup.GetNextChild(ih, child: ihandle) -> next_child: ihandle [in Lua]
-  my ($self, $child) = @_; 
-  my $ih;  
+  my ($self, $child) = @_;
+  my $ih;
   #xxxCHECKLATER check this - kind of a hack (now more or less works)
   if (defined $child) {
     $ih = IUP::Internal::LibraryIup::_IupGetNextChild($self->ihandle, $child->ihandle);
@@ -484,8 +501,7 @@ sub GetChildPos {
   #int IupGetChildPos(Ihandle* ih, Ihandle* child); [in C]
   #iup.GetChildPos(ih, child: ihandle) ->  pos: number [in Lua]
   my ($self, $child) = @_;
-  my $ih = IUP::Internal::LibraryIup::_IupGetChildPos($self->ihandle, $child->ihandle);
-  return IUP->GetByIhandle($ih);
+  return IUP::Internal::LibraryIup::_IupGetChildPos($self->ihandle, $child->ihandle);
 }
 
 sub GetDialog {
@@ -507,7 +523,7 @@ sub GetDialogChild {
 sub GetParamParam {
   #iup.GetParamParam(dialog: ihandle, param_index: number)-> (param: ihandle) [in Lua]
   my ($self, $param_index) = @_;
-  my $ih = IUP::Internal::LibraryIup::_IupGetAttributeIH($self->ihandle, "PARAM" . $param_index);  
+  my $ih = IUP::Internal::LibraryIup::_IupGetAttributeIH($self->ihandle, "PARAM" . $param_index);
   return IUP->GetByIhandle($ih);
 }
 
@@ -525,13 +541,13 @@ sub GetParamValue {
     $newval++ if ($t && $t eq 'LIST' && looks_like_number($newval) && $newval >=0);
     #xxxWORKAROUND-FINISHED
     IUP::Internal::LibraryIup::_IupStoreAttribute($ih, "VALUE", $newval);
-    IUP::Internal::LibraryIup::_IupStoreAttribute($ct, "VALUE", $newval); 
+    IUP::Internal::LibraryIup::_IupStoreAttribute($ct, "VALUE", $newval);
   }
   else {
     return IUP::Internal::LibraryIup::_IupGetAttribute($ih, "VALUE"); #usually the new value
     #XXX-beware it might be dufferent from:
-    #return IUP::Internal::LibraryIup::_IupGetAttribute($ct, "VALUE"); #usually the old value    
-  }  
+    #return IUP::Internal::LibraryIup::_IupGetAttribute($ct, "VALUE"); #usually the old value
+  }
 }
 
 sub GetChild {
@@ -569,7 +585,7 @@ sub NextField {
 
 sub DESTROY {
   #IMPORTANT: do not automatically destroy iup elements
-  #warn "XXX-DEBUG: IUP::Internal::Element::DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";  
+  #warn "XXX-DEBUG: IUP::Internal::Element::DESTROY(): " . ref($_[0]) . " [" . $_[0]->ihandle . "]\n";
 }
 
 ###### INTERNAL HELPER FUNCTIONS
@@ -608,16 +624,16 @@ sub _internal_destroy {
   }
   #in the last step destroy $self->ihandle
   #warn("***DEBUG*** _internal_destroy ".$self->ihandle." finished\n");
-  $self->ihandle(undef);  
+  $self->ihandle(undef);
 }
 
 sub _proc_child_param {
   #handling new(child=>$child) or new(child=>[...]) of new($child) or new([...])
   #warn "***DEBUG*** _proc_child_param started\n";
-  my ($self, $func, $args, $firstonly) = @_;    
+  my ($self, $func, $args, $firstonly) = @_;
   my @list;
   my @ihlist;
-  
+
   if (defined $firstonly) {
     @list = (ref($firstonly) eq 'ARRAY') ? @$firstonly : ($firstonly);
   }
@@ -625,7 +641,7 @@ sub _proc_child_param {
     if (ref($args->{child}) eq 'ARRAY') {
       @list = @{$args->{child}};
     }
-    elsif (blessed($args->{child}) && $args->{child}->can('ihandle')) {      
+    elsif (blessed($args->{child}) && $args->{child}->can('ihandle')) {
       @list = ($args->{child});
     }
     else {
@@ -633,7 +649,7 @@ sub _proc_child_param {
     }
     delete $args->{child};
   }
-  
+
   for (@list) {
     if (blessed($_) && $_->can('ihandle')) {
       push @ihlist, $_->ihandle;
@@ -641,7 +657,7 @@ sub _proc_child_param {
     }
     else {
       carp "warning: undefined item passed as 'child' parameter of ",ref($self),"->new()";
-    }        
+    }
   }
   return &$func(@ihlist);
 }
@@ -653,29 +669,29 @@ sub _proc_child_param_single {
   my ($self, $func, $args, $firstonly) = @_;
   my $ih;
   if (defined $firstonly) {
-    if (blessed($firstonly) && $firstonly->can('ihandle')) {      
+    if (blessed($firstonly) && $firstonly->can('ihandle')) {
       $ih = &$func($firstonly->ihandle); #call func
       $self->_store_child_ref($firstonly); #xxx(ANTI)DESTROY-MAGIC
     }
-    else {      
+    else {
       carp "Warning: parameter 'child' has to be a reference to IUP element";
       $ih = &$func(undef); #call func
     }
   }
   elsif (defined $args && defined $args->{child}) {
-    if (blessed($args->{child}) && $args->{child}->can('ihandle')) {      
+    if (blessed($args->{child}) && $args->{child}->can('ihandle')) {
       $ih = &$func($args->{child}->ihandle); #call func
       $self->_store_child_ref($args->{child}); #xxx(ANTI)DESTROY-MAGIC
     }
     else {
-      carp "Warning: 'child' parameter has to be a reference to IUP element";      
+      carp "Warning: 'child' parameter has to be a reference to IUP element";
       $ih = &$func(undef); #call func
     }
     delete $args->{child};
   }
-  else {    
+  else {
     $ih = &$func(undef); #call func
-  }  
+  }
   return $ih;
 }
 

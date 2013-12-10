@@ -1,8 +1,5 @@
 ################ the last time working on ################ 
 
-fix:
-- global attribute called UTF8MODE_FILE ... See docs http://www.tecgraf.puc-rio.br/iup/en/attrib/iup_globals.html
-
 IupMatrixEx - add new element - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixex.html
 - IUP::MatrixEx? or maybe extend existing IUP::Matrix?
 - callbacks
