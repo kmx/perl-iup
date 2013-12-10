@@ -757,9 +757,9 @@ given its index. It can specify a range of samples using "index:count"
 
 =head3 Axis Configuration (non inheritable) (for X, Y and Z)
 
-=over
-
 Note: attributes C<AXS_?SOMENAME> means 3 possible variants C<AXS_XSOMENAME>, C<AXS_YSOMENAME> and C<AXS_ZSOMENAME>
+
+=over
 
 =item B<AXS_?>
 
@@ -1136,11 +1136,7 @@ L<HELP_CB|[%m.cb%]/HELP_CB>
 
 See original documentatiom L<iup_mglplot_modes.htm|[%url.iuporigdoc%]ctrl/iup_mglplot_modes.html>
 
-=back
-
 =head3 For Linear Datasets
-
-=over
 
 =head4 LINE
 

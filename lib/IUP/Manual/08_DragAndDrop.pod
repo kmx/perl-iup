@@ -51,7 +51,7 @@ Steps to use the Drag & Drop support in an IUP application:
 
 =over
 
-=item * B<AT SOURCE:>
+=item * B<AT SOURCE>
 
 =over
 
@@ -63,7 +63,7 @@ Steps to use the Drag & Drop support in an IUP application:
 
 =back
 
-=item * B<AT TARGET:>
+=item * B<AT TARGET>
 
 =over
 
@@ -85,18 +85,18 @@ Steps to use the Drag & Drop support in an IUP application:
 
 =item B<DRAGSOURCE>
 
-I<(non inheritable)> Set up a control as a source for drag operations. Default: NO.
+I<(non inheritable)>: Set up a control as a source for drag operations. Default: NO.
 
 =item B<DRAGTYPES>
 
-I<(non inheritable)> A list of data types that are
+I<(non inheritable)>: A list of data types that are
 supported by the source. Accepts a string with one or more names
 separated by commas. See L<Notes|#Notes> bellow for a list of known
 names. Must be set.
 
 =item B<DRAGSOURCEMOVE>
 
-I<(non inheritable)> Enables the move action. Default: NO (only copy is enabled).
+I<(non inheritable)>: Enables the move action. Default: NO (only copy is enabled).
 
 =back
 
