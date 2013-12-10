@@ -53,33 +53,33 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<PREVIEWTEXT> [GTK and Motif only]
+=item B<PREVIEWTEXT>
 
-the text shown in the preview
+I<[GTK and Motif only]> the text shown in the preview
 area. If not defined the system will provide a default text.
 
-=item * B<COLOR> [Windows Only]
+=item B<COLOR>
 
-The initial color value and the returned
+I<[Windows Only]> The initial color value and the returned
 selected value if the user pressed the Ok button. In Windows the Choose
 Font dialog allows the user to select a color from a pre-defined list
 of colors.
 
-=item * L<PARENTDIALOG|IUP::Manual::03_Attributes/PARENTDIALOG> (creation only)
+=item L<PARENTDIALOG|IUP::Manual::03_Attributes/PARENTDIALOG>
 
-Name of a dialog to be used as parent. This dialog will be always in front
+I<(creation only)> Name of a dialog to be used as parent. This dialog will be always in front
 of the parent dialog.
 
-=item * B<STATUS> (read-only)
+=item B<STATUS>
 
-Defined to "1" if the user pressed the Ok
+I<(read-only)> Defined to "1" if the user pressed the Ok
 button, C<undef> if pressed the Cancel button.
 
-=item * L<TITLE|IUP::Manual::03_Attributes/TITLE>
+=item L<TITLE|IUP::Manual::03_Attributes/TITLE>
 
 Dialog title.
 
-=item * B<VALUE>
+=item B<VALUE>
 
 The initial font value and the returned selected value if the
 user pressed the Ok button. Has the same format of the
@@ -94,7 +94,7 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
+=item L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
 Action generated when the Help button is pressed.
 

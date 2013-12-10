@@ -332,40 +332,40 @@ These attributes are only updated in the display when you set the L<REDRAW|#REDR
 
 =over
 
-=item * B<(L):(C)>
+=item B<(L):(C)>
 
 Text of the cell located in line L and column C, where L and C are integer numbers.
 Example C<< $m->GetAttribute("12:15") >>
 
-=item * B<(L):0>
+=item B<(L):0>
 
 Title of line L. Example C<< $m->GetAttribute("12:0") >>
 
-=item * B<0:(C)>
+=item B<0:(C)>
 
 Title of column C. Example C<< $m->GetAttribute("0:15") >>
 
-=item * B<0:0>
+=item B<0:0>
 
 Title of the area between the line and column titles.
 
 These are valid only in normal mode.
 
-=item * B<BGCOLOR>
+=item B<BGCOLOR>
 
 Background color of the matrix. (inheritable)
 
-=item * B<BGCOLOR*:(C)>
+=item B<BGCOLOR*:(C)>
 
 Background color of column C.
 Example C<< $m->GetAttribute("BGCOLOR*:15") >>
 
-=item * B<BGCOLOR(L):*>
+=item B<BGCOLOR(L):*>
 
 Background color of line L.
 Example C<< $m->GetAttribute("BGCOLOR12:*") >>
 
-=item * B<BGCOLOR(L):(C)>
+=item B<BGCOLOR(L):(C)>
 
 Background color of the cell in line L and column C.
 Example C<< $m->GetAttribute("BGCOLOR12:15") >>
@@ -380,21 +380,21 @@ parent's BGCOLOR for titles.
 Since the matrix control can be larger than the matrix itself, the
 empty area will always be filled with the parent's BGCOLOR.
 
-=item * B<FGCOLOR>
+=item B<FGCOLOR>
 
 Text color. (inheritable)
 
-=item * B<FGCOLOR*:(C)>
+=item B<FGCOLOR*:(C)>
 
 Text color of column C.
 Example C<< $m->GetAttribute("FGCOLOR*:15") >>
 
-=item * B<FGCOLOR(L):*>
+=item B<FGCOLOR(L):*>
 
 Text color of line L.
 Example C<< $m->GetAttribute("FGCOLOR12:*") >>
 
-=item * B<FGCOLOR(L):(C)>
+=item B<FGCOLOR(L):(C)>
 
 Text color of the cell in line L and column C.
 Example C<< $m->GetAttribute("BGCOLOR12:15") >>
@@ -406,19 +406,19 @@ FGCOLOR*:(C), and last FGCOLOR. (L or C E<gt>= 0)
 Default FGCOLOR is the global attribute TXTFGCOLOR for cells or the
 global attribute DLGFGCOLOR for titles.
 
-=item * B<L<FONT|[%m.at%]/FONT>>
+=item L<FONT|[%m.at%]/FONT>
 
 Character font of the text. (inheritable)
 
-=item * B<FONT(L):*>
+=item B<FONT(L):*>
 
 Text font of the cells in line L.
 
-=item * B<FONT*:(C)>
+=item B<FONT*:(C)>
 
 Text font of the cells in column C.
 
-=item * B<FONT(L):(C)>
+=item B<FONT(L):(C)>
 
 Text font of the cell in line L and column C.
 
@@ -426,34 +426,34 @@ This attribute must be set before the control is showed. It affects the
 calculation of the size of all the matrix cells. The cell size is
 always calculated from the base FONT attribute.
 
-=item * B<FRAMECOLOR>
+=item B<FRAMECOLOR>
 
 Sets the color to be used in the frame
 lines. (inheritable)
 
-=item * B<FRAMEVERTCOLOR(L):(C)>
+=item B<FRAMEVERTCOLOR(L):(C)>
 
 Color of the vertical right frame of the cell.
 When not defined the FRAMECOLOR is used. For a title cell defines right
 and left frames. If value is "BGCOLOR" the frame line is not drawn.
 
-=item * B<FRAMEVERTCOLOR*:(C)>
+=item B<FRAMEVERTCOLOR*:(C)>
 
 same as FRAMEVERTCOLORI<L:C> but for all the
 cells of the column C. (since 3.5)
 
-=item * B<FRAMEHORIZCOLOR(L):(C)>
+=item B<FRAMEHORIZCOLOR(L):(C)>
 
 Color of the horizontal bottom frame of the
 cell. When not defined the FRAMECOLOR is used. For a title cell defines
 bottom and top frames. If value is "BGCOLOR" the frame line is not
 drawn.
 
-=item * B<FRAMEHORIZCOLOR(L):*>
+=item B<FRAMEHORIZCOLOR(L):*>
 
 same as FRAMEHORIZCOLORI<L:C > but for all the cells of the line L. (since 3.5)
 
-=item * B<VALUE>
+=item B<VALUE>
 
 Allows setting or verifying the value of the current
 cell. Is the same as obtaining the current cell from FOCUS_CELL value
@@ -463,9 +463,9 @@ consulted instead of the matrix cell. When retrieved inside the
 EDITION_CB callback when mode is 0, then the return value is the new
 value that will be updated in the cell.
 
-=item * B<CELLOFFSET(L):(C)> (read-only)
+=item B<CELLOFFSET(L):(C)>
 
-Returns the cell
+I<(read-only)> Returns the cell
 computed offset in pixels from the top-left corner of the matrix, in
 the format "XxY" or "%dx%d" in C. Returns NULL if the cell does not
 exists, or it is not visible, or the element is not mapped. It will
@@ -473,9 +473,9 @@ only return a valid result if the cell has already been displayed. They
 are similar to the parameters of the DRAW_CB callback but they do NOT
 include the decorations. (since 3.5)
 
-=item * B<CELLSIZE(L):(C)> (read-only)
+=item B<CELLSIZE(L):(C)>
 
-Returns the cell computed
+I<(read-only)> Returns the cell computed
 size in pixels, in the format "WxH" or "%dx%d" in C. Returns NULL if
 the cell does not exists, or the element is not mapped. It will only
 return a valid result if the cell has already been displayed. They are
@@ -488,7 +488,7 @@ include the decorations. (since 3.5)
 
 =over
 
-=item * B<ALIGNMENT(C)>
+=item B<ALIGNMENT(C)>
 
 Alignment of the cells in column C (C E<gt>= 0). Possible values: "ALEFT", "ACENTER" or "ARIGHT". Default:
 "ALEFT" for n=0 and "ACENTER" for n E<gt> 0. Not used for the column
@@ -497,7 +497,7 @@ are also centered but if they do not fit in the cell then the alignment
 is changed to ALEFT. Before checking the default value it will check
 the "B<ALIGNMENT>" attribute value.
 
-=item * B<SORTSIGN(C)>
+=item B<SORTSIGN(C)>
 
 Shows a sort sign (up or down arrow) in the
 column C title. Possible values: "UP", "DOWN" and "NO". Default: NO.
@@ -522,19 +522,19 @@ default value WIDTHDEF is used.
 
 =over
 
-=item * B<RASTERWIDTH(n)>
+=item B<RASTERWIDTH(n)>
 
 Same as WIDTHn but in pixels. Has lower
 priority than WIDTHn.
 
-=item * B<WIDTH(n)>
+=item B<WIDTH(n)>
 
 Width of column n in SIZE units, where n is the
 number of the column (n E<gt>= 0). If the width value is 0, the column
 will not be shown on the screen. It does not includes the decoration
 size occupied by the frame lines.
 
-=item * B<WIDTHDEF>
+=item B<WIDTHDEF>
 
 Default column width in SIZE units. Not used
 for the title column. Default: 80 (width corresponding to 20
@@ -560,19 +560,19 @@ default value HEIGHTDEF is used.
 
 =over
 
-=item * B<HEIGHT(n)>
+=item B<HEIGHT(n)>
 
 Height of line n in SIZE units, where n is the
 number of the line (n E<gt>= 0). If the height value is 0, the line will
 not be shown on the screen. It does not includes the decoration size
 occupied by the frame lines.
 
-=item * B<HEIGHTDEF>
+=item B<HEIGHTDEF>
 
 Default line height in SIZE units. Not used
 for the title line. Default: 8 (height corresponding to 1 line).
 
-=item * B<RASTERHEIGHT(n)>
+=item B<RASTERHEIGHT(n)>
 
 Same as HEIGHTn but in pixels. Has
 lower priority than HEIGHTn.
@@ -583,9 +583,9 @@ lower priority than HEIGHTn.
 
 =over
 
-=item * B<ADDCOL> (write-only)
+=item B<ADDCOL>
 
-Adds a new column to the matrix after
+I<(write-only)> Adds a new column to the matrix after
 the specified column. To insert a column at the top of the spreadsheet,
 value 0 must be used. To add more than one column, use format
 "B<I<C-C>>", where the first number corresponds to the base column and
@@ -593,9 +593,9 @@ the second number corresponds to the number of columns to be added. It
 is valid only in normal operation mode. Can NOT add a title column.
 Ignored if set before map.
 
-=item * B<ADDLIN> (write-only)
+=item B<ADDLIN>
 
-Adds a new line to the matrix after
+I<(write-only)> Adds a new line to the matrix after
 the specified line. To insert a line at the top of the spreadsheet,
 value 0 must be used. To add more than one line, use format
 "B<I<L-L>>", where the first number corresponds to the base line and
@@ -603,32 +603,32 @@ the second number corresponds to the number of lines to be added. It is
 valid only in normal operation mode. Can NOT add a title line. Ignored
 if set before map.
 
-=item * B<DELCOL> (write-only)
+=item B<DELCOL>
 
-Removes the given column from the
+I<(write-only)> Removes the given column from the
 matrix. To remove more than one column, use format "B<I<C-C>>", where
 the first number corresponds to the base column and the second number
 corresponds to the number of columns to be removed. It is valid only in
 normal operation mode. Can NOT remove a title column, B<(C)> E<gt> 0.
 Ignored if set before map.
 
-=item * B<DELLIN> (write-only)
+=item B<DELLIN>
 
-Removes the given line from the
+I<(write-only)> Removes the given line from the
 matrix. To remove more than one line, use format "B<I<L-L>>", where the
 first number corresponds to the base line and the second number
 corresponds to the number of lines to be removed. It is valid only in
 normal operation mode. Can NOT remove a title line, B<(L)> E<gt> 0.
 Ignored if set before map.
 
-=item * B<NUMCOL>
+=item B<NUMCOL>
 
 Defines the number of columns in the matrix. Must
 be an integer number. Default: "0". It does not include the title
 column. If changed after map will add empty cells or discard cells at
 the end.
 
-=item * B<NUMCOL_VISIBLE>
+=item B<NUMCOL_VISIBLE>
 
 When set defines the number of
 visible columns to be counted when calculating the B<Natural> size, not
@@ -642,7 +642,7 @@ only by using the scrollbar. IMPORTANT: When retrieved returns the
 current number of visible columns, not including the non scrollable
 columns. Default: "4".
 
-=item * B<NUMCOL_NOSCROLL>
+=item B<NUMCOL_NOSCROLL>
 
 Number of columns that are non
 scrollable, not counting the title column. Default: "0". It does not
@@ -652,13 +652,13 @@ cells appearance will be the same of ordinary cells, and they can also
 receive the focus and be edited. Must be less than the total number of
 columns. (since 3.5)
 
-=item * B<NUMLIN>
+=item B<NUMLIN>
 
 Defines the number of lines in the matrix. Must be
 an integer number. Default: "0". It does not include the title line. If
 changed after map will add empty cells or discard cells at the end.
 
-=item * B<NUMLIN_VISIBLE>
+=item B<NUMLIN_VISIBLE>
 
 When set defines the number of
 visible lines to be counted when calculating the B<Natural> size, not
@@ -671,7 +671,7 @@ the last lines. The remaining lines will be accessible only by using
 the scrollbar. IMPORTANT: When retrieved returns the current number of
 visible lines, not including the non scrollable lines. Default: "3".
 
-=item * B<NUMLIN_NOSCROLL>
+=item B<NUMLIN_NOSCROLL>
 
 Number of lines that are non
 scrollable, not counting the title line. Default: "0". It does not
@@ -687,20 +687,20 @@ lines. (since 3.5)
 
 =over
 
-=item * B<MARKAREA>
+=item B<MARKAREA>
 
 Defines if the area to be B<interactively>
 marked by the user must be continuous or not, valid only if
 MARKMULTIPLE=YES. Possible values: "CONTINUOUS" or "NOT_CONTINUOUS".
 Default: "CONTINUOUS".
 
-=item * B<MARKMODE>
+=item B<MARKMODE>
 
 Defines the entity that can be marked: none,
 lines, columns, (lines or columns), and cells. Possible values: "NO",
 "LIN", "COL", "LINCOL" or "CELL". Default: "NO" (no mark).
 
-=item * B<MARKI(L):(C)>
+=item B<MARKI(L):(C)>
 
 marks a cell, a line or a column depending on
 MARKMODE, and returns cell, line or column mark state according to
@@ -709,7 +709,7 @@ only the other element (ex: "0:3" set/get for column 3). Even when
 MARKMODE=LIN,COL,LINCOL you can specify a single cell address. (since
 3.0)
 
-=item * B<MARKED>
+=item B<MARKED>
 
 String of '0' or '1' characters, informing which
 cells are marked (indicated by value '1'). Use NULL to clear all marks,
@@ -728,7 +728,7 @@ attributes the marked cells are cleared. When setting the attribute the
 LIN and COL notation can be used even if MARKMODE=CELL. MULTIPLE and
 AREA are NOT considered when setting MARKED or MARKL:C.
 
-=item * B<MARKMULTIPLE>
+=item B<MARKMULTIPLE>
 
 Defines if more than one entity defined
 by MARKMODE can be B<interactively> marked. Possible values: "YES" or
@@ -740,9 +740,9 @@ by MARKMODE can be B<interactively> marked. Possible values: "YES" or
 
 =over
 
-=item * B<FITTOSIZE> (write-only)
+=item B<FITTOSIZE>
 
-force lines and/or columns sizes
+I<(write-only)> force lines and/or columns sizes
 so the matrix visible size fit in its current size. NUMCOL_VISIBLE and
 NUMLIN_VISIBLE are considered when fitting and they are not changed,
 only the RASTERWIDTHn and RASTERHEIGHTn attributes are changed. But if
@@ -752,9 +752,9 @@ set again to obtain the same result, but before doing that set to NULL
 all the RASTERWIDTHn and RASTERHEIGHTn attributes that you want to be
 changed. Can be LINES, COLUMNS or YES (meaning both). (since 3.3)
 
-=item * B<FITTOTEXT> (write-only)
+=item B<FITTOTEXT>
 
-set the RASTERWIDTHn or the
+I<(write-only)> set the RASTERWIDTHn or the
 RASTERHEIGHTn attribute for the given column or line, so that it will
 fit the largest text in the column or the highest text in the line. The
 number of the column or line must be preceded by a character
@@ -763,16 +763,16 @@ identifying its type, "C" for columns and "L" for lines. For example
 for the column or line they are used as maximum limit for the size.
 (since 3.4)
 
-=item * B<SHOW> (write-only)
+=item B<SHOW>
 
-If necessary scroll the visible area to
+I<(write-only)> If necessary scroll the visible area to
 make the given cell visible. To scroll to a line or a column, use a
 value such as "B<(L)>:*" or "*:B<(C)>" (where I<B<L>> E<gt> 0 and
 B<(C)> E<gt> 0). 
 
-=item * B<REDRAW> (write-only)
+=item B<REDRAW>
 
-The user can inform the matrix that
+I<(write-only)> The user can inform the matrix that
 the data has changed, and it must be redrawn. Values:
 
  "ALL": Redraws the whole matrix.
@@ -791,23 +791,23 @@ size attributes always automatically redraw the matrix.
 
 =over
 
-=item * B<CARET>
+=item B<CARET>
 
 Allows specifying and verifying the caret position of
 the text box in edition mode.
 
-=item * B<MASK(L):(C)>
+=item B<MASK(L):(C)>
 
 Defines a mask that will filter text input.
 The L<MASK|[%m.at%]/MASK> auxiliary attributes are also
 available adding the line and column at the end of the attribute name.
 
-=item * B<MULTILINE>
+=item B<MULTILINE>
 
 allows the edition of multiple lines. Use
 Shift+Enter to add lines. Enter will end the editing.
 
-=item * B<SELECTION>
+=item B<SELECTION>
 
 Allows specifying and verifying selection
 interval of the text box in edition mode.
@@ -818,11 +818,11 @@ interval of the text box in edition mode.
 
 =over
 
-=item * B<BORDER>
+=item B<BORDER>
 
 Changed to NO.
 
-=item * B<SCROLLBAR>
+=item B<SCROLLBAR>
 
 Changed to YES.
 
@@ -836,7 +836,7 @@ Changed to YES.
 
 =over
 
-=item * B<ACTION_CB>
+=item B<ACTION_CB>
 
 Action generated when a keyboard event
 occurs.
@@ -873,7 +873,7 @@ identifier of the key to be treated by the matrix.
 
 =back
 
-=item * B<CLICK_CB>
+=item B<CLICK_CB>
 
 Action generated when any mouse button is
 pressed over a cell. This callback is always called after other
@@ -902,7 +902,7 @@ B<Returns:> To avoid the display update return IUP_IGNORE.
 
 =back
 
-=item * B<RELEASE_CB>
+=item B<RELEASE_CB>
 
 Action generated when any mouse button is
 released over a cell. This callback is always called after other
@@ -931,7 +931,7 @@ B<Returns:> To avoid the display update return IUP_IGNORE.
 
 =back
 
-=item * B<MOUSEMOVE_CB>
+=item B<MOUSEMOVE_CB>
 
 Action generated to notify the
 application that the mouse has moved over the matrix.
@@ -952,7 +952,7 @@ currently on.
 
 =back
 
-=item * B<ENTERITEM_CB>
+=item B<ENTERITEM_CB>
 
 Action generated when a matrix cell is
 selected, becoming the current cell. Also called when matrix is getting
@@ -973,7 +973,7 @@ B<$lin, $col:> Coordinates of the selected cell.
 
 =back
 
-=item * B<LEAVEITEM_CB>
+=item B<LEAVEITEM_CB>
 
 Action generated when a cell is no
 longer the current cell. Also called when the matrix is losing focus.
@@ -998,7 +998,7 @@ so leaveitem_cb and enteritem_cb will be called.
 
 =back
 
-=item * B<SCROLLTOP_CB>
+=item B<SCROLLTOP_CB>
 
 Action generated when the matrix is
 scrolled with the scrollbars or with the keyboard. Can be used together
@@ -1028,7 +1028,7 @@ corner of the matrix.
 
 =over
 
-=item * B<BGCOLOR_CB>
+=item B<BGCOLOR_CB>
 
 Action generated to retrieve the background color of a cell when it needs to be redrawn.
 
@@ -1056,7 +1056,7 @@ returned values will be used as the background color.
 
 =back
 
-=item * B<FGCOLOR_CB>
+=item B<FGCOLOR_CB>
 
 Action generated to retrieve the foreground color of a cell when it needs to be redrawn.
 
@@ -1084,7 +1084,7 @@ returned values will be used as the foreground color.
 
 =back
 
-=item * B<FONT_CB>
+=item B<FONT_CB>
 
 Action generated to verify the font of a cell.
 Called both for common cells and for line and column titles. (since iup-3.0)
@@ -1107,7 +1107,7 @@ font.
 
 =back
 
-=item * B<DRAW_CB>
+=item B<DRAW_CB>
 
 Action generated before a cell is drawn. Allows to draw a custom cell contents. You must use the
 L<IUP::Canvas> methods. The clipping is set for the bounding rectangle. The callback is called
@@ -1135,7 +1135,7 @@ B<Returns:> If IUP_IGNORE the normal text drawing will take place.
 
 =back
 
-=item * B<DROPCHECK_CB>
+=item B<DROPCHECK_CB>
 
 Action generated before the current
 cell is redrawn to determine if a dropdown feedback should be shown. If
@@ -1165,7 +1165,7 @@ to NOT draw the dropdown feedback.
 
 =over
 
-=item * B<DROP_CB>
+=item B<DROP_CB>
 
 Action generated before the current cell enters
 edition mode to determine if a text field or a dropdown will be shown.
@@ -1198,7 +1198,7 @@ B<Returns:> IUP_IGNORE to show a text-edition field, or IUP_DEFAULT to show a dr
 
 =back
 
-=item * B<DROPSELECT_CB>
+=item B<DROPSELECT_CB>
 
 Action generated when an element in
 the dropdown list is selected. If returns IUP_CONTINUE the value is
@@ -1228,7 +1228,7 @@ B<$v:> Indicates if item was selected or unselected (1 or 0).
 
 =back
 
-=item * B<EDITION_CB>
+=item B<EDITION_CB>
 
 Action generated when the current cell
 enters or leaves the edition mode. Not called if READONLY=YES.
@@ -1283,7 +1283,7 @@ called only with mode=1).
 
 =over
 
-=item * B<VALUE_CB>
+=item B<VALUE_CB>
 
 Action generated to verify the value of a cell.
 Called both for common cells and for line and column titles.
@@ -1308,7 +1308,7 @@ operation mode of the matrix when it is mapped.
 
 =back
 
-=item * B<VALUE_EDIT_CB>
+=item B<VALUE_EDIT_CB>
 
 Action generated to notify the
 application that the value of a cell was edited. Since it is a
@@ -1337,7 +1337,7 @@ when the matrix is mapped it will be read-only.
 
 =back
 
-=item * B<MARK_CB>
+=item B<MARK_CB>
 
 Action generated to verify the selection state of
 a cell. Called only for common cells, only when MARKMODE=CELL and only
@@ -1361,7 +1361,7 @@ the attribute "B<MARKI<L>>B<:I<C>>" will be returned.
 
 =back
 
-=item * B<MARKEDIT_CB>
+=item B<MARKEDIT_CB>
 
 Action generated to notify the
 application that the selection state of a cell was changed. Since it is

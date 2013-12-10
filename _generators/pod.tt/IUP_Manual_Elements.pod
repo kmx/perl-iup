@@ -644,13 +644,9 @@ you must use the following function:
 
  my $element = $dialog->GetParamParam($param_index);
 
-=over
+B<$dialog:> Reference to IUP::Dialog object.
 
-=item * B<$dialog:> Reference to IUP::Dialog object.
-
-=item * B<$param_index:> Parameter to be retrieved.
-
-=back 
+B<$param_index:> Parameter to be retrieved.
 
 =back
 

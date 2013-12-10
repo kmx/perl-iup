@@ -760,4 +760,6 @@ B<Affects:> L<IUP::Dialog|IUP::Dialog>,
 L<IUP::Canvas|IUP::Canvas>,
 L<IUP::CanvasGL|IUP::CanvasGL>
 
+=back
+
 =cut

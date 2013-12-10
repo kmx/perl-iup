@@ -78,20 +78,20 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
+=item L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
 
 The background color of the menu, affects all items in the menu. 
 
-=item * B<X<RADIO>RADIO> (non inheritable)
+=item B<RADIO>
 
-Enables the automatic toggle of one
+I<(non inheritable)> Enables the automatic toggle of one
 child item. When a child item is selected the other item is
 automatically deselected. The menu acts like a L<IUP::Radio|IUP::Radio> for its
 children. Submenus and their children are not affected.
 
-=item * L<WID|IUP::Manual::03_Attributes/WID> (non inheritable)
+=item L<WID|IUP::Manual::03_Attributes/WID>
 
-In Windows, returns the HMENU of the menu.
+I<(non inheritable)> In Windows, returns the HMENU of the menu.
 
 =back
 
@@ -116,8 +116,7 @@ The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are
 
 =over
 
-=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
-L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>
+=item L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>, L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>
 
 =back
 

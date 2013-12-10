@@ -48,22 +48,21 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<EMFAVAILABLE> (read-only) [Windows Only]
+=item B<EMFAVAILABLE>
 
-informs if there is a
+I<(read-only) [Windows Only]> informs if there is a
 Windows Enhanced Metafile available at the clipboard. (Since iup-3.2)
 
-=item * B<IMAGE> (write-only)
+=item B<IMAGE>
 
-name of an image to copy (set) or paste (get),
+I<(write-only)> name of an image to copy (set) or paste (get),
 to or from the clipboard. (GTK 2.6)
 
-=item * B<IMAGEAVAILABLE> (read-only)
+=item B<IMAGEAVAILABLE>
 
-informs if there is an image available
-at the clipboard. (GTK 2.6)
+I<(read-only)> informs if there is an image available at the clipboard. (GTK 2.6)
 
-=item * B<NATIVEIMAGE>
+=item B<NATIVEIMAGE>
 
 Native handle of an image to copy or paste, to or from the clipboard.
 
@@ -79,28 +78,27 @@ The returned handle in a paste must be released after used (GlobalFree(handle), 
 or XFreePixmap(display, pixmap)). After copy, do NOT release the given
 handle. See IUP-IM Functions for utility functions on image native handles. (GTK 2.6)
 
-=item * B<SAVEEMF> (write-only) [Windows Only]
+=item B<SAVEEMF>
 
-saves the EMF from the
+I<(write-only) [Windows Only]> saves the EMF from the
 clipboard to the given filename. (Since iup-3.2)
 
-=item * B<SAVEWMF> (write-only) [Windows Only]
+=item B<SAVEWMF>
 
-saves the WMF from the
+I<(write-only) [Windows Only]> saves the WMF from the
 clipboard to the given filename. (Since iup-3.2)
 
-=item * B<TEXT>
+=item B<TEXT>
 
 copy or paste text to or from the clipboard.
 
-=item * B<TEXTAVAILABLE> (read-only)
+=item B<TEXTAVAILABLE>
 
-informs if there is a text available at
-the clipboard.
+I<(read-only)> informs if there is a text available at the clipboard.
 
-=item * B<WMFAVAILABLE> (read-only) [Windows Only]
+=item B<WMFAVAILABLE>
 
-informs if there is a
+I<(read-only) [Windows Only]> informs if there is a
 Windows Metafile available at the clipboard. (Since iup-3.2)
 
 =back

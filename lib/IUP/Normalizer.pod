@@ -46,26 +46,26 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<NORMALIZE> (non inheritable)
+=item B<NORMALIZE>
 
-Normalization direction. Can be
+I<(non inheritable)> Normalization direction. Can be
 HORIZONTAL, VERTICAL or BOTH. These are the same values of the
 NORMALIZESIZE attribute. Default: HORIZONTAL.
 
-=item * B<NORMALIZERGROUP> (non inheritable, for contained controls use)
+=item B<NORMALIZERGROUP>
 
-Name of a normalizer to automatically add the control. If a normalizer
+I<(non inheritable, for contained controls use)> Name of a normalizer to automatically add the control. If a normalizer
 with that name does not exists then one is created.
 
-=item * B<ADDCONTROL> (non inheritable)
+=item B<ADDCONTROL>
 
-Adds a control to the normalizer. The value passed must be the perl reference or name of the element.
+I<(non inheritable)> Adds a control to the normalizer. The value passed must be the perl reference or name of the element.
 
 To associate a name to element use L<SetName|/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
 
-=item * B<ADDCONTROL_HANDLE> (non inheritable)
+=item B<ADDCONTROL_HANDLE>
 
-Adds a control to the normalizer. The value passed must be a handle of an element.
+I<(non inheritable)> Adds a control to the normalizer. The value passed must be a handle of an element.
 
 =back
 

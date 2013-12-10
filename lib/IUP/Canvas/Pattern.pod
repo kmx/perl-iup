@@ -21,7 +21,7 @@ IUP::Canvas::Pattern - [special Canvas helper] Fill pattern for use with IUP::Ca
 
 =head1 DESCRIPTION
 
-XXX-FIXME-TODO
+B<IUP::Canvas::Bitmap> is a helper class used by L<IUP::Canvas> methods: L<cdPattern|IUP::Canvas/"cdPattern()">, L<wdPattern|IUP::Canvas/"wdPattern()"> and L<cdGetPattern|IUP::Canvas/"cdGetPattern()">
 
 =head1 SEE ALSO
 

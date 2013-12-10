@@ -47,20 +47,20 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * L<BGCOLOR|[%m.at%]/BGCOLOR>
+=item L<BGCOLOR|[%m.at%]/BGCOLOR>
 
 The background color of the menu, affects all items in the menu. 
 
-=item * B<X<RADIO>RADIO> (non inheritable)
+=item B<RADIO>
 
-Enables the automatic toggle of one
+I<(non inheritable)> Enables the automatic toggle of one
 child item. When a child item is selected the other item is
 automatically deselected. The menu acts like a L<IUP::Radio|IUP::Radio> for its
 children. Submenus and their children are not affected.
 
-=item * L<WID|[%m.at%]/WID> (non inheritable)
+=item L<WID|[%m.at%]/WID>
 
-In Windows, returns the HMENU of the menu.
+I<(non inheritable)> In Windows, returns the HMENU of the menu.
 
 =back
 
@@ -84,8 +84,7 @@ Called just after the menu is closed.
 
 =over
 
-=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
-L<UNMAP_CB|[%m.cb%]/UNMAP_CB>
+=item L<MAP_CB|[%m.cb%]/MAP_CB>, L<UNMAP_CB|[%m.cb%]/UNMAP_CB>
 
 =back
 

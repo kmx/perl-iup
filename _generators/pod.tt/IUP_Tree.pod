@@ -399,27 +399,27 @@ empty, then the focus node is used as the specified node.
 
 =over
 
-=item * B<CHILDCOUNT(id)> (read only)
+=item B<CHILDCOUNT(id)>
 
-Returns the immediate children count of
+I<(read only)> Returns the immediate children count of
 the specified branch. It does not count children of child that are
 branches. 
 
-=item * B<COLOR(id)>
+=item B<COLOR(id)>
 
 Text foreground color of the specified node. The value
 should be a string in the format "R G B" where R, G, B are numbers from
 0 to 255.
 
-=item * B<DEPTH(id)> (read only)
+=item B<DEPTH(id)>
 
-Returns the depth of the specified node. The
+I<(read only)> Returns the depth of the specified node. The
 first node has depth=0, its immediate children has depth=1, their
 children has depth=2 and so on.
 
-=item * B<KIND(id)> (read only)
+=item B<KIND(id)>
 
-Returns the kind of the specified node. Possible values:
+I<(read only)> Returns the kind of the specified node. Possible values:
 
 =over
 
@@ -429,11 +429,11 @@ Returns the kind of the specified node. Possible values:
 
 =back
 
-=item * B<PARENT(id)> (read only)
+=item B<PARENT(id)>
 
-Returns the identifier of the specified node.
+I<(read only)> Returns the identifier of the specified node.
 
-=item * B<STATE(id)>
+=item B<STATE(id)>
 
 The state of the specified branch. Returns NULL for a LEAF.
 In Windows, it will be effective only if the branch has children. In
@@ -448,21 +448,21 @@ values:
 
 =back
 
-=item * B<TITLE(id)>
+=item B<TITLE(id)>
 
 The text label of the specified node.
 
-=item * B<TITLEFONT(id)>
+=item B<TITLEFONT(id)>
 
 The text font of the specified node. The format is the
 same as the L<FONT|[%m.at%]/FONT> attribute. 
 
-=item * B<TOTALCHILDCOUNT(id)> (read only)
+=item B<TOTALCHILDCOUNT(id)>
 
-Returns the total children count of
+I<(read only)> Returns the total children count of
 the specified branch. It counts all grandchildren. 
 
-=item * B<USERDATA(id)>
+=item B<USERDATA(id)>
 
 The user data associated with the specified node. (since iup-3.0)
 
@@ -472,7 +472,7 @@ The user data associated with the specified node. (since iup-3.0)
 
 =over
 
-=item * B<IMAGE(id)>
+=item B<IMAGE(id)>
 
 Image name or reference to L<IUP::Image> to be used in the specified node, where id is
 the specified node identifier. If id is empty, then the focus node is
@@ -483,23 +483,23 @@ See - L<Using Images in Other Elements (via IMAGE Attribute)|IUP::Image/"Using I
 In Windows and Motif set the BGCOLOR attribute before setting the image.
 If node is a branch it is used when collapsed.
 
-=item * B<IMAGEEXPANDED(id)>
+=item B<IMAGEEXPANDED(id)>
 
 Same as the IMAGE attribute but used for expanded branches.
 
-=item * B<IMAGELEAF>
+=item B<IMAGELEAF>
 
 The image name that will be shown for all leaves.
 Default: "IMGLEAF". Internal values "IMGBLANK" and "IMGPAPER" are also
 available. If BGCOLOR is set the image is automatically updated.
 
-=item * B<IMAGEBRANCHCOLLAPSED>
+=item B<IMAGEBRANCHCOLLAPSED>
 
 The image name that will be shown for all
 collapsed branches. Default: "IMGCOLLAPSED". If BGCOLOR is set the
 image is automatically updated.
 
-=item * B<IMAGEBRANCHEXPANDED>
+=item B<IMAGEBRANCHEXPANDED>
 
 The image name that will be shown for all
 expanded branches. Default: "IMGEXPANDED". If BGCOLOR is set the image
@@ -511,9 +511,9 @@ is automatically updated.
 
 =over
 
-=item * B<VALUE> (non inheritable)
+=item B<VALUE>
 
-The focus node identifier. When retrieved
+I<(non inheritable)> The focus node identifier. When retrieved
 but there isn't a node with focus it returns 0 if there are any nodes,
 and returns -1 if there are no nodes. When changed and MARKMODE=SINGLE
 the node is also selected. The tree is always scrolled so the node
@@ -546,9 +546,9 @@ at the first does nothing
 
 =over
 
-=item * B<MARK> (write only, non inheritable)
+=item B<MARK>
 
-Selects a range of nodes in the
+I<(write only, non inheritable)> Selects a range of nodes in the
 format "start-end" (%d-%d). Allowed only when MARKMODE=MULTIPLE. Also
 accepts the values:
 
@@ -569,27 +569,27 @@ block-marking node defined by MARKSTART
 
 =back
 
-=item * B<MARKED(id)> (non inheritable)
+=item B<MARKED(id)>
 
-The selection state of the specified
+I<(non inheritable)> The selection state of the specified
 node, where id is the specified node identifier. If id is empty, then
 the focus node is used as reference node. Can be: YES or NO. Default: NO
 
-=item * B<MARKEDNODES> (non inheritable)
+=item B<MARKEDNODES>
 
-The selection state of all nodes when
+I<(non inheritable)> The selection state of all nodes when
 MARKMODE=MULTIPLE. It is/accepts a sequence of '+' and '-' symbols
 indicating the state of each item ('+'=selected, '-'=unselected. When
 setting this value, if the number of specified symbols is smaller than
 the total count then the remaining nodes will not be changed. (since iup-3.1)
 
-=item * B<MARKMODE>
+=item B<MARKMODE>
 
 Defines how the nodes can be selected. Can be: SINGLE or MULTIPLE. Default: SINGLE.
 
-=item * B<MARKSTART> (non inheritable)
+=item B<MARKSTART>
 
-Defines the initial node for the block
+I<(non inheritable)> Defines the initial node for the block
 marking, used when MARK=BLOCK. The value must be the node identifier.
 Default: 0 (first node).
 
@@ -599,9 +599,9 @@ Default: 0 (first node).
 
 =over
 
-=item * B<ADDLEAF(id)> (write only)
+=item B<ADDLEAF(id)>
 
-Adds a new leaf after the reference
+I<(write only)> Adds a new leaf after the reference
 node, where id is the reference node identifier. If id is empty, then
 the focus node is used as reference node. Use id=-1 to add the first
 node in an empty tree. The value is used as the text label of the new
@@ -615,9 +615,9 @@ is a leaf then the new node has the same depth. If you need to add a
 node after a specified node but at a different depth use B<
 INSERTLEAF>. Ignored if set before map.
 
-=item * B<ADDBRANCH(id)> (write only)
+=item B<ADDBRANCH(id)>
 
-Same as B<ADDLEAF> for branches. Branches can be created expanded or
+I<(write only)> Same as B<ADDLEAF> for branches. Branches can be created expanded or
 collapsed depending on B<ADDEXPANDED>. Ignored if set before map.
 
 =begin HTML
@@ -626,9 +626,9 @@ collapsed depending on B<ADDEXPANDED>. Ignored if set before map.
 
 =end HTML
 
-=item * B<COPYNODE(id)> (write only)
+=item B<COPYNODE(id)>
 
-Copies a node and its children, where id is
+I<(write only)> Copies a node and its children, where id is
 the specified node identifier. If id is empty, then the focus node is
 used as the specified node. The value is the destination node
 identifier. If the destination node is a branch and it is expanded,
@@ -638,9 +638,9 @@ is a leaf, then it is inserted as the next brother of the leaf. The
 specified node is not changed. All node attributes are copied, except
 user data. Ignored if set before map. 
 
-=item * B<DELNODE(id)> (write only)
+=item B<DELNODE(id)>
 
-Removes a node and/or its children, where id
+I<(write only)> Removes a node and/or its children, where id
 is the specified node identifier. If id is empty, then the focus node
 is used as the specified node. Ignored if set before map. Possible
 values:
@@ -657,13 +657,13 @@ values:
 
 =back
 
-=item * B<EXPANDALL> (write only)
+=item B<EXPANDALL>
 
-Expand or contracts all nodes. Can be YES (expand all), or NO (contract all). 
+I<(write only)> Expand or contracts all nodes. Can be YES (expand all), or NO (contract all). 
 
-=item * B<INSERTLEAF(id)>, B<INSERTBRANCH(id)> (write only)
+=item B<INSERTLEAF(id)>, B<INSERTBRANCH(id)>
 
-Same as B<ADDLEAF> and B<ADDBRANCH> but the depth of the new node is always the same of
+I<(write only)> Same as B<ADDLEAF> and B<ADDBRANCH> but the depth of the new node is always the same of
 the reference node. If the reference node is a leaf, then the id of the
 new node will be the id of the reference node + 1. If the reference
 node is a branch the id of the new node will be the id of the reference
@@ -675,9 +675,9 @@ node + 1 + the total number of child nodes of the reference node.
 
 =end HTML
 
-=item * B<MOVENODE(id)> (write only)
+=item B<MOVENODE(id)>
 
-Moves a node and its children, where id is
+I<(write only)> Moves a node and its children, where id is
 the specified node identifier. If id is empty, then the focus node is
 used as the specified node. The value is the destination node
 identifier. If the destination node is a branch and it is expanded,
@@ -693,27 +693,28 @@ preserved. Ignored if set before map.
 
 =over
 
-=item * B<RENAME> (write only)
+=item B<RENAME>
 
-Forces a rename action to take place. Valid only when SHOWRENAME=YES.
+I<(write only)> Forces a rename action to take place. Valid only when SHOWRENAME=YES.
 
-=item * B<RENAMECARET> (write only)
+=item B<RENAMECARET>
 
-The caret's position of the text
+I<(write only)> The caret's position of the text
 box when in-place renaming. Same as the CARET attribute for
 L<IUP::Text|IUP::Text>, but here is used only once after
 SHOWRENAME_CB is called and before the text box is shown.
 
-=item * B<RENAMESELECTION> (write only)
+=item B<RENAMESELECTION>
 
-The selection interval of the text box
+I<(write only)> The selection interval of the text box
 when in-place renaming. Same as the SELECTION attribute for
 L<IUP::Text|IUP::Text>, but here is used only once after
 SHOWRENAME_CB is called and before the text box is shown.
 
-=item * B<SHOWRENAME> (creation in Windows, non inheritable)
+=item B<SHOWRENAME>
 
-Allows the in place rename of a node. Default: "NO". Since iup-3.0, F2 and clicking
+I<(creation in Windows, non inheritable)> Allows the
+in place rename of a node. Default: "NO". Since iup-3.0, F2 and clicking
 twice only starts to rename a node if SHOWRENAME=Yes. In Windows must
 be set to YES before map, but can be changed later (since iup-3.3).
 

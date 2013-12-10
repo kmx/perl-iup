@@ -48,7 +48,7 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<DESTROYWHENCLOSED>
+=item B<DESTROYWHENCLOSED>
 
 The dialog will be automatically destroyed when
 closed. Default: Yes.

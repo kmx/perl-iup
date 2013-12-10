@@ -531,7 +531,7 @@ XXX-FIXME-ADD ACCESSOR TABLE
 IUP is an event-oriented interface system, so it will keep a loop
 E<ldquo>waitingE<rdquo> for the user to interact with the application.
 For this loop to occur, the application must call the L<MainLoop|IUP/"MainLoop()">
-function, which is generally used right before L<IUP::Close|IUP::Close>.
+function, which is generally used right before L<Close|IUP/"Close()">.
 
 When the application is closed by returning IUP_CLOSE in a callback,
 calling L<ExitLoop|IUP/"ExitLoop()"> or by hiding the last visible dialog, the

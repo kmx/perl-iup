@@ -25,9 +25,9 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<CLEARATTRIBUTES> (write-only, non inheritable)
+=item B<CLEARATTRIBUTES>
 
-It will clear all attributes stored internally and remove all references. 
+I<(write-only, non inheritable)> It will clear all attributes stored internally and remove all references. 
 
 =back
 

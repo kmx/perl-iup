@@ -657,28 +657,28 @@ IUP::Manual::99_Test - Testing HTML+POD
         <td style="text-align: center;">Motif</td>
       </tr>
       <tr>
-        <th>image</th>
+        <td>image</td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_winxp_image.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_win2k_image.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_gtk_image.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_mot_image.png"></td>
       </tr>
       <tr>
-        <th>text</th>
+        <td>text</td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_winxp_text.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_win2k_text.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_gtk_text.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_mot_text.png"></td>
       </tr>
       <tr>
-        <th>image+text</th>
+        <td>image+text</td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_winxp_imagetext.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_win2k_imagetext.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_gtk_imagetext.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_mot_imagetext.png"></td>
       </tr>
       <tr>
-        <th>background<br>color</th>
+        <td>background<br>color</td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_winxp_bgcolor.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_win2k_bgcolor.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupbutton_gtk_bgcolor.png"></td>

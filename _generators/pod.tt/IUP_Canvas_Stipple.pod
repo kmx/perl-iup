@@ -21,7 +21,7 @@
 
 [% h.desc %]
 
-XXX-FIXME-TODO
+B<IUP::Canvas::Bitmap> is a helper class used by L<IUP::Canvas> methods: L<cdStipple|IUP::Canvas/"cdStipple()">, L<wdStipple|IUP::Canvas/"wdStipple()"> and L<cdGetStipple|IUP::Canvas/"cdGetStipple()">
 
 [% h.see %]
 

@@ -115,21 +115,10 @@ moving the Y coordinate.
 
 =head3 PlotBegin()
 
-  $plot->PlotBegin($strXdata);
-  #or
-  $plot->PlotBegin();
+ $plot->PlotBegin($dim);
+ # $dim = 1 (for 1D) or 2 (for 2D)
 
-Prepares a dataset to receive samples. If strXdata is 1 then the X axis
-value is a string.
-
-=head3 PlotAdd()
-
- $plot->PlotAdd($x, $y);
-
-Adds a sample to the dataset. 
-
-NOTE: there is an autodetection whether it calls iupPlotAddStr
-or iupPlotAdd behind the scene.
+Prepares a dataset to receive samples. The dimension of the data can be 1, 2 or 3.
 
 =head3 PlotEnd()
 
@@ -143,47 +132,58 @@ Can only be called if L<PlotBegin|IUP::PPlot/"PlotBegin()"> was called. Whenever
 dataset all its "DS_*" attributes will be set to the default values.
 Notice that DS_MODE must be set before other "DS_*" attributes.
 
-=head3 PlotInsert()
+=head3 PlotAdd1D()
 
- $plot->PlotInsert($index, $sample_index, $x, $y);
+ $plot->PlotAdd1D($name, $y);
+ #or
+ $plot->PlotAdd1D(\@name, \@y);
+ #or
+ $plot->PlotAdd1D($y);
+ #or
+ $plot->PlotAdd1D(\@y);
 
-Inserts a sample in a dataset at the given B<sample_index>. Can be used
-only after the dataset is added to the plot (after L<PlotBegin|/"PlotBegin()">).
+Adds a sample to the dataset. Can only be called if L<PlotBegin|/"PlotBegin()">
+was called with dim=1. B<name> is an optional string used for tick
+labels in the X axis, and it can be C<undef>. Names are
+allowed only for the first dataset and when set ticks configuration for
+the X axis is ignored, all the names are shown.
 
-NOTE: there is an autodetection whether it calls iupPlotInsertStr
-or iupPlotInsert behind the scene.
+=head3 PlotAdd2D()
 
-=head3 PlotInsertPoints()
+ $plot->PlotAdd2D($x, $y);
+ #or
+ $plot->PlotAdd2D(\@x, \@y);
 
- @values = ( $x1, $y1, $x2, $y2, $x3, $y3, $x4, $y4 );
- $plot->InsertPoints($index, $sample_index, \@values);
+=head3 PlotInsert1D()
 
-Inserts an array of samples in a dataset at the given B<sample_index>. (Since iup-3.4)
+ $plot->PlotInsert1D($index, $sample_index, \@name, \@y);
+ #or
+ $plot->PlotInsert1D($index, $sample_index, \@y);
 
-Can be used only after the dataset is added to the plot e.g.
+See L<PlotInsert2D|/"PlotInsert2D()">.
 
-  $plot->PlotBegin(0);
-  $index = $mainplot->PlotEnd();
-  $plot->PlotInsertPoints($index, 2, \@values); ###ZZZ-test-this(maybe add example)
+=head3 PlotInsert2D()
 
-NOTE: there is an autodetection whether it calls iupPlotInsertStrPoints
-or iupPlotInsertPoints behind the scene.
+ $plot->PlotInsert2D($index, $sample_index, \@x, \@y);
 
-=head3 PlotAddPoints()
+Inserts an array of samples in the dataset B<ds_index> at the given
+B<sample_index>. Can be used only after the dataset is added to the plot
+(after L<PlotBegin|/"PlotBegin()">). B<sample_index> can be after the
+last sample so data is appended to the array. Current data is shifted if necessary.
 
- @values = ( $x1, $y1, $x2, $y2, $x3, $y3, $x4, $y4 );
- $plot->PlotAddPoints($index, \@values);
+=head3 PlotAppend1D()
 
-Adds an array of samples in a dataset at the end. (Since iup-3.4)
+ $plot->PlotAppend1D($index, \@name, \@y);
+ #or
+ $plot->PlotAppend1D($index, \@y);
 
-Can be used only after the dataset is added to the plot e.g.
+Insert at DS_COUNT position (= at the end).
 
-  $plot->PlotBegin(0);
-  $index = $mainplot->PlotEnd();
-  $plot->PlotAddPoints($index, \@values);  
+=head3 PlotAppend2D()
 
-NOTE: there is an autodetection whether it calls iupPlotAddStrPoints
-or iupPlotAddPoints behind the scene.
+ $plot->PlotAppend2D($index, \@x, \@y);
+
+Insert at DS_COUNT position (= at the end).
 
 =head3 PlotTransform()
 

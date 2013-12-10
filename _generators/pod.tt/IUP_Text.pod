@@ -96,8 +96,6 @@ position can be changed even if not visible. When changed it will also
 change the selection but the text will be scrolled only when it
 receives the focus.
 
-XXX-needs-fix-after-adding-UTF8-support
-
 =item B<CARETPOS>
 
 I<(non inheritable)>
@@ -105,8 +103,6 @@ I<(non inheritable)>
 Also the position of the insertion
 point, but using a zero based character unique index "pos". Useful for
 indexing the VALUE string.
-
-XXX-needs-fix-after-adding-UTF8-support
 
 =item B<CLIPBOARD>
 
@@ -291,8 +287,6 @@ changed.
 
 The values ALL and NONE are also accepted independently of MULTILINE.
 
-XXX-needs-fix-after-adding-UTF8-support
-
 =item B<SELECTIONPOS>
 
 I<(non inheritable)>
@@ -300,8 +294,6 @@ I<(non inheritable)>
 Same as SELECTION but using a zero
 based character index B<< "<pos1>:<pos2>" >>. Useful for indexing the VALUE
 string. The values ALL and NONE are also accepted.
-
-XXX-needs-fix-after-adding-UTF8-support
 
 =item L<SIZE|[%m.at%]/SIZE>
 
@@ -601,12 +593,9 @@ next element press E<lt>CtrlE<gt>+E<lt>TabE<gt>.
 In Windows, if you press a Ctrl+key combination that is not supported
 by the control, then a beep is sound.
 
-XXX-needs-fix-after-adding-UTF8-support
 When using UTF-8 strings be aware that all attributes are
 indexed by characters, NOT by byte index, because some characters in
-UTF-8 can use more than one byte. This also applies to Windows if
-FORMATTING=YES depending on the Windows codepage (for example East
-Asian codepage where some characters take two bytes).
+UTF-8 can use more than one byte.
 
 =head2 Navigation, Selection and Clipboard Keys
 

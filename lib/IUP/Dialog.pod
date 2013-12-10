@@ -214,30 +214,30 @@ Note that ACTIVE, BGCOLOR and FONT will also affect all the controls inside the 
 
 =over
 
-=item * B<DEFAULTENTER>
+=item B<DEFAULTENTER>
 
 Name of the button activated when the user press Enter when focus is in another control of the dialog.
 
 To associate a name to element use L<SetName|/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
 
-=item * B<DEFAULTESC>
+=item B<DEFAULTESC>
 
 Name of the button activated when the user press Esc when focus is in another control of the dialog.
 
 To associate a name to element use L<SetName|/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
 
-=item * B<DIALOGFRAME>
+=item B<DIALOGFRAME>
 
 Set the common decorations for modal dialogs. This
 means RESIZE=NO, MINBOX=NO and MAXBOX=NO. In Windows, if the
 PARENTDIALOG is defined then the MENUBOX is also removed, but the Close
 button remains.
 
-=item * L<ICON|IUP::Manual::03_Attributes/ICON>
+=item L<ICON|IUP::Manual::03_Attributes/ICON>
 
 Dialogs icon.
 
-=item * B<FULLSCREEN>
+=item B<FULLSCREEN>
 
 Makes the dialog occupy the whole screen over any system
 bars in the main monitor. All dialog details, such as title bar,
@@ -249,48 +249,48 @@ In Motif you may have to click in the dialog to set its focus.
 In Motif if set to YES when the dialog is hidden, then it can not be
 changed after it is visible.
 
-=item * B<HWND> [Windows Only] (non inheritable, read-only)
+=item B<HWND>
 
-Returns the
+I<[Windows Only] (non inheritable, read-only)> Returns the
 Windows Window handle. Available in the Windows driver or in the GTK
 driver in Windows.
 
-=item * B<MAXBOX> (creation only)
+=item B<MAXBOX>
 
-Requires a maximize button from the window
+I<(creation only)> Requires a maximize button from the window
 manager. If RESIZE=NO then MAXBOX will be set to NO. Default: YES. In
 Motif the decorations are controlled by the Window Manager and may not
 be possible to be changed from IUP. In Windows MAXBOX is hidden only if
 MINBOX is hidden as well, or else it will be just disabled.
 
-=item * B<MAXSIZE>
+=item B<MAXSIZE>
 
 Maximum size for the dialog in raster units (pixels). The
 windowing system will not be able to change the size beyond this limit.
 Default: 65535x65535. 
 
-=item * B<MENU>
+=item B<MENU>
 
 Name of a menu or L<IUP::Menu> reference. Associates a menu to the dialog as a menu bar.
 The previous menu, if any, is unmapped.
 
-=item * B<MENUBOX> (creation only)
+=item B<MENUBOX>
 
-Requires a system menu box from the window
+I<(creation only)> Requires a system menu box from the window
 manager. If hidden will also remove the Close button. Default: YES. In
 Motif the decorations are controlled by the Window Manager and may not
 be possible to be changed from IUP. In Windows if hidden will hide also
 MAXBOX and MINBOX.
 
-=item * B<MINBOX> (creation only)
+=item B<MINBOX>
 
-Requires a minimize button from the window
+I<(creation only)> Requires a minimize button from the window
 manager. Default: YES. In Motif the decorations are controlled by the
 Window Manager and may not be possible to be changed from IUP. In
 Windows MINBOX is hidden only if MAXBOX is hidden as well, or else it
 will be just disabled.
 
-=item * B<MINSIZE>
+=item B<MINSIZE>
 
 Minimum size for the dialog in raster units (pixels). The
 windowing system will not be able to change the size beyond this limit.
@@ -298,22 +298,22 @@ Default: 1x1. Some systems define a very minimum size greatter than
 this. Typically Windows has an horizontal minimum size that includes
 the window decoration buttons. 
 
-=item * B<MODAL> (read-only)
+=item B<MODAL>
 
-Returns the popup state. It is "YES" if the
+I<(read-only)> Returns the popup state. It is "YES" if the
 dialog was shown using L<Popup|IUP::Manual::02_Elements/"Popup()">. It is "NO" if L<Show|IUP::Manual::02_Elements/"Show()"> was used
 or it is not visible. 
 
-=item * B<NATIVEPARENT> (creation only)
+=item B<NATIVEPARENT>
 
-Native handle of a dialog to be used
+I<(creation only)> Native handle of a dialog to be used
 as parent. Used only if PARENTDIALOG is not defined.
 
-=item * L<PARENTDIALOG|IUP::Manual::03_Attributes/PARENTDIALOG> (creation only)
+=item L<PARENTDIALOG|IUP::Manual::03_Attributes/PARENTDIALOG>
 
-Name of a dialog to be used as parent.
+I<(creation only)> Name of a dialog to be used as parent.
 
-=item * B<PLACEMENT>
+=item B<PLACEMENT>
 
 Changes how the dialog will be shown. Values:
 "FULL", "MAXIMIZED", "MINIMIZED" and "NORMAL". Default: NORMAL. After
@@ -323,16 +323,16 @@ area, menu and decorations will be there but out of the screen. In UNIX
 there is a chance that the placement won't work correctly, that depends
 on the Window Manager.
 
-=item * B<RESIZE> (creation only)
+=item B<RESIZE>
 
-Allows interactively changing the dialogs
+I<(creation only)> Allows interactively changing the dialogs
 size. Default: YES. If RESIZE=NO then MAXBOX will be set to NO. In
 Motif the decorations are controlled by the Window Manager and may not
 be possible to be changed from IUP.
 
-=item * B<SAVEUNDER> [Windows and Motif Only] (creation only)
+=item B<SAVEUNDER>
 
-When this
+I<[Windows and Motif Only] (creation only)> When this
 attribute is true (YES), the dialog stores the original image of the
 desktop region it occupies (if the system has enough memory to store
 the image). In this case, when the dialog is closed or moved, a
@@ -340,13 +340,13 @@ redrawing event is not generated for the windows that were shadowed by
 it. Its default value is YES. To save memory disable it for your main
 dialog. Not available in GTK.
 
-=item * L<SHRINK|IUP::Manual::03_Attributes/SHRINK>
+=item L<SHRINK|IUP::Manual::03_Attributes/SHRINK>
 
 Allows changing the elements
 distribution when the dialog is smaller than the minimum size. Default:
 NO.
 
-=item * B<STARTFOCUS>
+=item B<STARTFOCUS>
 
 Name of the element that must receive the focus right
 after the dialog is shown using L<Show|IUP::Manual::02_Elements/"Show()"> or L<Popup|IUP::Manual::02_Elements/"Popup()">. If not
@@ -355,9 +355,9 @@ defined then the first control than can receive the focus is selected
 the dialog). Updated after SHOW_CB is called and only if the focus was
 not changed during the callback.
 
-=item * B<XWINDOW> [UNIX Only] (non inheritable, read-only)
+=item B<XWINDOW>
 
-Returns the
+I<[UNIX Only] (non inheritable, read-only)> Returns the
 X-Windows Window (Drawable). Available in the Motif driver or in the
 GTK driver in UNIX.
 
@@ -367,15 +367,15 @@ GTK driver in UNIX.
 
 =over
 
-=item * B<ACTIVEWINDOW> [Windows and GTK Only] (read-only)
+=item B<ACTIVEWINDOW>
 
-informs if the
+I<[Windows and GTK Only] (read-only)> informs if the
 dialog is the active window (the window with focus). Can be Yes or No.
 (since iup-3.4)
 
-=item * B<HIDETASKBAR> [Windows and GTK Only] (write-only)
+=item B<HIDETASKBAR>
 
-Action attribute
+I<[Windows and GTK Only] (write-only)> Action attribute
 that when set to "YES", hides the dialog, but does not decrement the
 visible dialog count, does not call SHOW_CB and does not mark the
 dialog as hidden inside IUP. It is usually used to hide the dialog and
@@ -384,31 +384,29 @@ same effect as setting LOCKLOOP=Yes and normally hiding the dialog.
 IMPORTANT: when you hide using HIDETASKBAR, you must show using
 HIDETASKBAR also. Possible values: YES, NO.
 
-=item * B<OPACITY> [Windows and GTK Only]
+=item B<OPACITY>
 
-sets the dialog transparency alpha
+I<[Windows and GTK Only]> sets the dialog transparency alpha
 value. Valid values range from 0 (completely transparent) to 255
 (opaque). In Windows set to NULL to remove the LAYERED style bit. (GTK
 2.12)
 
-=item * B<TOPMOST> [Windows and GTK Only]
+=item B<TOPMOST>
 
-puts the dialog always in front of
+I<[Windows and GTK Only]> puts the dialog always in front of
 all other dialogs in all applications. Default: NO.
 
-=item * B<TRAY> [Windows and GTK Only]
+=item B<TRAY>
 
-When set to "YES", displays an icon on
-the system tray. (GTK 2.10)
+I<[Windows and GTK Only]> When set to "YES", displays an icon on the system tray. (GTK 2.10)
 
-=item * B<TRAYIMAGE> [Windows and GTK Only]
+=item B<TRAYIMAGE>
 
-Name of a IUP image to be used as
-the tray icon. (GTK 2.10)
+I<[Windows and GTK Only]> Name of a IUP image to be used as the tray icon. (GTK 2.10)
 
-=item * B<TRAYTIP> [Windows and GTK Only] 
+=item B<TRAYTIP>
 
-Tray icon's tooltip text. (GTK 2.10)
+I<[Windows and GTK Only]> Tray icon's tooltip text. (GTK 2.10)
 
 =back
 
@@ -416,10 +414,9 @@ Tray icon's tooltip text. (GTK 2.10)
 
 =over
 
-=item * B<DIALOGHINT> (creation-only)
+=item B<DIALOGHINT>
 
-if enabled sets the window type hint to
-a dialog hint.
+I<(creation-only)> if enabled sets the window type hint to a dialog hint.
 
 =back
 
@@ -427,25 +424,25 @@ a dialog hint.
 
 =over
 
-=item * B<BRINGFRONT> [Windows Only] (write-only)
+=item B<BRINGFRONT>
 
-makes the dialog the
+I<[Windows Only] (write-only)> makes the dialog the
 foreground window. Use "YES" to activate it. Useful for multithreaded
 applications.
 
-=item * B<COMPOSITED> [Windows Only] (creation only)
+=item B<COMPOSITED>
 
-controls if the window
+I<[Windows Only] (creation only)> controls if the window
 will have an automatic double buffer for all children. Default is "NO".
 In Windows Vista it is NOT working as expected.
 
-=item * L<CONTROL|IUP::Manual::03_Attributes/CONTROL> [Windows Only] (creation only)
+=item L<CONTROL|IUP::Manual::03_Attributes/CONTROL>
 
-Embeds the dialog inside another window.
+I<[Windows Only] (creation only)> Embeds the dialog inside another window.
 
-=item * B<HELPBUTTON> [Windows Only] (creation only)
+=item B<HELPBUTTON>
 
-Inserts a help button in
+I<[Windows Only] (creation only)> Inserts a help button in
 the same place of the maximize button. It can only be used for dialogs
 without the minimize and maximize buttons, and with the menu box. For
 the next interaction of the user with a control in the dialog, the
@@ -453,9 +450,9 @@ callback L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB> will be called instead of
 the control defined ACTION callback. Possible values: YES, NO. Default:
 NO.
 
-=item * B<TOOLBOX> [Windows Only] (creation only)
+=item B<TOOLBOX>
 
-makes the dialog look like a
+I<[Windows Only] (creation only)> makes the dialog look like a
 toolbar. It is only valid if the PARENTDIALOG or NATIVEPARENT attribute
 is also defined. Default: NO.
 
@@ -465,32 +462,32 @@ is also defined. Default: NO.
 
 =over
 
-=item * B<MDIFRAME> (creation only) [Windows Only] (non inheritable)
+=item B<MDIFRAME>
 
-Configure this dialog as a MDI frame. Can be YES or NO. Default: NO.
+I<(creation only, non inheritable) [Windows Only]> Configure this dialog as a MDI frame. Can be YES or NO. Default: NO.
 
-=item * B<MDIACTIVE> [Windows Only] (read-only)
+=item B<MDIACTIVE>
 
-Returns the name of the
+I<[Windows Only] (read-only)> Returns the name of the
 current active MDI child. Use IUP::GetAttributeHandle to directly
 retrieve the child handle.
 
-=item * B<MDIACTIVATE> [Windows Only] (write-only)
+=item B<MDIACTIVATE>
 
-Name of a MDI child window
+I<[Windows Only] (write-only)> Name of a MDI child window
 to be activated. If value is "NEXT" will activate the next window after
 the current active window. If value is "PREVIOUS" will activate the
 previous one.
 
-=item * B<MDIARRANGE> [Windows Only] (write-only)
+=item B<MDIARRANGE>
 
-Action to arrange MDI child
+I<[Windows Only] (write-only)> Action to arrange MDI child
 windows. Possible values: TILEHORIZONTAL, TILEVERTICAL, CASCADE and
 ICON (arrange the minimized icons).
 
-=item * B<MDICLOSEALL> [Windows Only] (write-only)
+=item B<MDICLOSEALL>
 
-Action to close and destroy
+I<[Windows Only] (write-only)> Action to close and destroy
 all MDI child windows. The CLOSE_CB callback will be called for each
 child.
 
@@ -498,30 +495,31 @@ IMPORTANT: When a MDI child window is closed it is automatically
 destroyed. The application can override this returning IUP_IGNORE in
 CLOSE_CB.
 
-=item * B<MDINEXT> [Windows Only] (read-only)
+=item B<MDINEXT>
 
-Returns the name of the next
+I<[Windows Only] (read-only)> Returns the name of the next
 available MDI child. Use IUP::GetAttributeHandle to directly retrieve the
 child handle. Must use MDIACTIVE to retrieve the first child. If the
 application is going to destroy the child retrieve the next child
 before destroying the current.
 
-=item * B<MDICLIENT> [Windows Only] (non inheritable, creation only)
+=item B<MDICLIENT>
 
-Configure the canvas as a MDI client. Can be YES or NO. No callbacks
+I<[Windows Only] (non inheritable, creation only)> Configure
+the canvas as a MDI client. Can be YES or NO. No callbacks
 will be called. This canvas will be used internally only by the MDI
 Frame and its MDI Children. The MDI frame must have one and only one
 MDI client. Default: NO.
 
-=item * B<MDIMENU> (creation only) [Windows Only]
+=item B<MDIMENU>
 
-Name of a IUP::Menu to be used
+I<(creation only) [Windows Only]> Name of a IUP::Menu to be used
 as the Window list of a MDI frame. The system will automatically add
 the list of MDI child windows there.
 
-=item * B<MDICHILD> (creation only) [Windows Only]
+=item B<MDICHILD>
 
-Configure this dialog to be
+I<(creation only) [Windows Only]> Configure this dialog to be
 a MDI child. Can be YES or NO. The PARENTDIALOG attribute must also be
 defined. Each MDI child is automatically named if it does not have one.
 Default: NO.
@@ -781,6 +779,8 @@ The element B<IUP::Dialog> is used in the following sample scripts:
 =item * L<0-basic/menu.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/menu.pl> - IUP::Menu example
 
 =item * L<0-basic/message_clone.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/message_clone.pl>
+
+=item * L<0-basic/mglplot1.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/mglplot1.pl> - IUP::MglPlot example
 
 =item * L<0-basic/plot1.pl|https://metacpan.org/source/KMX/IUP-0.200_10/examples/0-basic/plot1.pl> - IUP::PPlot example
 

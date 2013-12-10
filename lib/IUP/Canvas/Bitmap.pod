@@ -71,7 +71,7 @@ IUP::Canvas::Bitmap - [special Canvas helper] Bitmap for use with IUP::Canvas
 
 =head1 DESCRIPTION
 
-XXX-FIXME-TODO
+B<IUP::Canvas::Bitmap> is a helper class used by L<IUP::Canvas> methods: L<cdPutBitmap|IUP::Canvas/"cdPutBitmap()">, L<wdPutBitmap|IUP::Canvas/"wdPutBitmap()"> and L<cdGetBitmap|IUP::Canvas/"cdGetBitmap()">
 
 =head1 SEE ALSO
 

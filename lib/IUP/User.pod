@@ -26,9 +26,9 @@ to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements/"new()
 
 =over
 
-=item * B<CLEARATTRIBUTES> (write-only, non inheritable)
+=item B<CLEARATTRIBUTES>
 
-It will clear all attributes stored internally and remove all references. 
+I<(write-only, non inheritable)> It will clear all attributes stored internally and remove all references. 
 
 =back
 

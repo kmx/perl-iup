@@ -683,7 +683,7 @@ B<CD_FORCE> or B<CD_POLITE>. B<CD_FORCE> ignores the system
 colors and interface elements, since the menus and dialogues may be in
 illegible colors, but there will be more colors available.
 C<B<CD_POLITE>> is the recommended type. It must always be used before
-drawing. It cannot be queried.
+drawing. It cannot be queried. See also L<IUP::Canvas::Palette>.
 
 =head3 cdCreatePalette()
 
@@ -691,7 +691,7 @@ drawing. It cannot be queried.
  #or
  $palete = IUP::Canvas=>cdCreatePalette($size);
 
-Creates a palette.
+Creates a palette. See also L<IUP::Canvas::Palette>.
 
 =head3 cdKillPalette()
 
@@ -699,8 +699,7 @@ Creates a palette.
  #or
  IUP::Canvas->cdKillPalette($palette);
 
-Destroys the created palette and liberates allocated memory. If this
-function is not called in Lua, the garbage collector will call it.
+Destroys the created palette and liberates allocated memory.
 
 =head3 Palette Data Access
 

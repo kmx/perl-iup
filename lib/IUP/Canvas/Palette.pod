@@ -18,7 +18,7 @@ IUP::Canvas::Palette - [special Canvas helper] Color palette for use with IUP::C
 
 =head1 DESCRIPTION
 
-XXX-FIXME-TODO
+B<IUP::Canvas::Bitmap> is a helper class used by L<IUP::Canvas> methods: L<cdPalette|IUP::Canvas/"cdPalette()">
 
 =head1 SEE ALSO
 

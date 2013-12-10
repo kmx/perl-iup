@@ -38,7 +38,7 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<SPIN_CB>
+=item B<SPIN_CB>
 
 Called each time the user clicks in the buttons. It will
 increment 1 and decrement -1 by default. Holding the Shift key will set

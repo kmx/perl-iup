@@ -46,7 +46,7 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<DESTROYWHENCLOSED>
+=item B<DESTROYWHENCLOSED>
 
 The dialog will be automatically destroyed when
 closed. Default: Yes.

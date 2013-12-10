@@ -25,20 +25,20 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<TIME>
+=item B<TIME>
 
 The time interval in milliseconds. In Windows the minimum
 value is 10ms.
 
-=item * B<RUN>
+=item B<RUN>
 
 Starts and stops the timer. Possible values: "YES" or "NO".
 Returns the current timer state. If you have multiple threads start the
 timer in the main thread.
 
-=item * B<WID> (read-only)
+=item B<WID>
 
-Returns the native serial number of the timer.
+I<(read-only)> Returns the native serial number of the timer.
 Returns -1 if not running. A timer is mapped only when it is running.
 
 =back
@@ -49,7 +49,7 @@ Returns -1 if not running. A timer is mapped only when it is running.
 
 =over
 
-=item * B<ACTION_CB>
+=item B<ACTION_CB>
 
 Called when the time is up.
 

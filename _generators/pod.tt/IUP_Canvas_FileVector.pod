@@ -18,7 +18,7 @@
  $cnv->cdLineStyle(CD_DOTTED);
  $cnv->cdArc(200,200,180,380,0,360);
 
- $cnv->cdKillCanvas;
+ $cnv->cdKillCanvas; # this saves the file to disk
 
 [% h.desc %]
 

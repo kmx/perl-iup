@@ -1,16 +1,13 @@
 ################ the last time working on ################ 
 
-Canvas:
-- void functions should return $self
+fix:
+$plot->PlotBegin(1)->PlotAdd1D([1,'a',3,4,5], [2,4.4,6,8,10])->PlotEnd();
+or
+$plot->PlotAdd1D([1,'a',3,4,5], [2,4.4,6,8,10]) # without PlotBegin + PlotEnd ?
 
-fix POD:
-- IUP::MglPlot          http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_mglplot.html      !!sampl !!pod
-- IUP::PPlot            http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_pplot.html                !!pod
-
-POD typos/errors:
-- POD error - https://metacpan.org/pod/release/KMX/IUP-0.200_10/lib/IUP/Manual/04_Callbacks.pod (Around line 68: =over without closing =back)
-- Text.pod + Manual_Attributes.pod - look for 'XXX-needs-fix-after-adding-UTF8-support'
-- Manual_Introduction.pod - IUP::Close
+fix_
+- $plot->PlotSetFormula($ds_index, $formulaX, $formulaY, $formulaZ, $count);
++ $plot->PlotSetFormula($ds_index, $count, $formulaX, $formulaY, $formulaZ);
 
 add new element - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixex.html
 - IUP::MatrixEx? or maybe extend existing IUP::Matrix?
@@ -24,6 +21,13 @@ fix:
 - global callbacks
 
 ##########################################################
+
+######## later
+- POD: html tables - metacpan.org breaks header line (probably broken <th>)
+- Canvas: void functions should return $self
+- implement: MglPlotSetData(Ihandle *ih, int ds_index, float* data, int count_x, int count_y, int count_z); [in C]
+- POD: IUP::Canvas::FileBitmap: Supported constructors: XXX-TODO add some description
+- POD: IUP::Canvas::FileVector: Supported formats: XXX-TODO more description
 
 ######## POD/IMPORTANT: 
 - finish pod for IUP::Canvas::(Palette|Pattern|Stipple|Bitmap)

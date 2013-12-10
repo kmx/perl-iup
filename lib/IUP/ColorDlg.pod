@@ -63,14 +63,14 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
-=item * B<ALPHA> [ColorBrowser and GTK only]
+=item B<ALPHA>
 
-if defined it will enable an
+I<[ColorBrowser and GTK only]> if defined it will enable an
 alpha selection additional controls with its initial value. If the user
 pressed the Ok button contains the returned value. Default: no defined,
 or 255 if SHOWALPHA=YES.
 
-=item * B<COLORTABLE>
+=item B<COLORTABLE>
 
 list of colors separated by ";". In GTK and in the
 ColorBrowser based accepts 20 values and if not present the palette
@@ -79,60 +79,64 @@ visible, even if the colors are not defined (in this case are
 initialized with black). If a color is not specified then the default
 color is used. You can skip colors using ";;".
 
-=item * L<PARENTDIALOG|IUP::Manual::03_Attributes/PARENTDIALOG> (creation only)
+=item L<PARENTDIALOG|IUP::Manual::03_Attributes/PARENTDIALOG>
 
-Name
-of a dialog to be used as parent. This dialog will be always in front
-of the parent dialog.
+I<(creation only)> Name of a dialog to be used as parent. This dialog will be always in front of the parent dialog.
 
-=item * B<SHOWALPHA> [ColorBrowser and GTK only]
+=item B<SHOWALPHA>
+
+I<[ColorBrowser and GTK only]>
 
 if enabled will display the
 alpha selection controls, regardless if ALPHA is defined for the
 initial value or not.
 
-=item * B<SHOW>B<COLORTABLE>
+=item B<SHOWCOLORTABLE>
 
 if enabled will display the color table,
 regardless if B<COLORTABLE> is defined or not. The default colors in
 the color table are different in GTK and in the ColorBrowser based
 dialog. In Windows the default colors are all black.
 
-=item * B<SHOWHEX> [ColorBrowser only]
+=item B<SHOWHEX>
 
-if enabled will display the Hexadecimal
+I<[ColorBrowser only]> if enabled will display the Hexadecimal
 notation of the color.
 
-=item * B<SHOWHELP> [ColorBrowser only]
+=item B<SHOWHELP>
 
-if enabled will display the Help
+I<[ColorBrowser only]> if enabled will display the Help
 button. In GTK and Windows, the Help button is shown only if the
 HELP_CB callback is defined.
 
-=item * B<STATUS> (read-only)
+=item B<STATUS>
 
-defined to "1" if the user pressed the Ok
-button, NULL if pressed the Cancel button.
+I<(read-only)> defined to "1" if the user pressed the Ok
+button, C<undef> if pressed the Cancel button.
 
-=item * L<TITLE|IUP::Manual::03_Attributes/TITLE>
+=item L<TITLE|IUP::Manual::03_Attributes/TITLE>
 
 Dialog title.
 
-=item * B<VALUE>
+=item B<VALUE>
 
 The color value in RGB coordinates and optionally alpha. It
 is used as the initial value and contains the selected value if the
 user pressed the Ok button. Format: "R G B" or "R G B A". Each
 component range from 0 to 255.
 
-=item * B<VALUEHSI> [ColorBrowser only]
+=item B<VALUEHSI>
+
+I<[ColorBrowser only]>
 
 The color value in HSI coordinates. It
 is used as the initial value and contains the selected value if the
 user pressed the Ok button. Format: "H S I". Each component range from
 0-359, 0-100 and 0-100 respectively.
 
-=item * B<VALUEHEX> [ColorBrowser only]
+=item B<VALUEHEX>
+
+I<[ColorBrowser only]>
 
 The color value in RGB Hexadecimal
 notation. It is used as the initial value and contains the selected
@@ -148,7 +152,7 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
-=item * L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
+=item L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
 Action generated when the Help
 button is pressed.

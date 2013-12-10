@@ -32,33 +32,33 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<PREVIEWTEXT> [GTK and Motif only]
+=item B<PREVIEWTEXT>
 
-the text shown in the preview
+I<[GTK and Motif only]> the text shown in the preview
 area. If not defined the system will provide a default text.
 
-=item * B<COLOR> [Windows Only]
+=item B<COLOR>
 
-The initial color value and the returned
+I<[Windows Only]> The initial color value and the returned
 selected value if the user pressed the Ok button. In Windows the Choose
 Font dialog allows the user to select a color from a pre-defined list
 of colors.
 
-=item * L<PARENTDIALOG|[%m.at%]/PARENTDIALOG> (creation only)
+=item L<PARENTDIALOG|[%m.at%]/PARENTDIALOG>
 
-Name of a dialog to be used as parent. This dialog will be always in front
+I<(creation only)> Name of a dialog to be used as parent. This dialog will be always in front
 of the parent dialog.
 
-=item * B<STATUS> (read-only)
+=item B<STATUS>
 
-Defined to "1" if the user pressed the Ok
+I<(read-only)> Defined to "1" if the user pressed the Ok
 button, C<undef> if pressed the Cancel button.
 
-=item * L<TITLE|[%m.at%]/TITLE>
+=item L<TITLE|[%m.at%]/TITLE>
 
 Dialog title.
 
-=item * B<VALUE>
+=item B<VALUE>
 
 The initial font value and the returned selected value if the
 user pressed the Ok button. Has the same format of the
@@ -72,7 +72,7 @@ L<FONT|[%m.at%]/FONT> attribute.
 
 =over
 
-=item * L<HELP_CB|[%m.cb%]/HELP_CB>
+=item L<HELP_CB|[%m.cb%]/HELP_CB>
 
 Action generated when the Help button is pressed.
 

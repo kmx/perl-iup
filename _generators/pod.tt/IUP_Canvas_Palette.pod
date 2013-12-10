@@ -18,7 +18,7 @@
 
 [% h.desc %]
 
-XXX-FIXME-TODO
+B<IUP::Canvas::Bitmap> is a helper class used by L<IUP::Canvas> methods: L<cdPalette|IUP::Canvas/"cdPalette()">
 
 [% h.see %]
 

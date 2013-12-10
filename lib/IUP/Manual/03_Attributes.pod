@@ -389,8 +389,7 @@ except for menus.
 
 B<Notes:>
 
-When FONT is changed and L<SIZE|/SIZE> is set, then
-L<RASTERSIZE|/RASTERSIZE> is also updated.
+When FONT is changed and L<SIZE|/SIZE> is set, then L<RASTERSIZE|/RASTERSIZE> is also updated.
 
 Since font face names are not a standard between Windows, Motif and
 GTK, a few names are specially handled to improve application
@@ -400,78 +399,43 @@ names always have a native system name equivalent. If you use those
 names IUP will automatically map to the native system equivalent. See
 the table bellow:
 
-XXX-FIXME-missing-table
+ Motif            Windows           GTK               Description
+ ---------------- ----------------- ----------------- -------------------------------
+ Helvetica        Arial             Sans              without serif, variable spacing 
+ Courier          Courier New       Monospace         with serif, fixed spacing 
+ Times            Times New Roman   Serif             with serif, variable spacing 
 
 B<Notes: Font - Auxiliary Attributes>
 
-See FONTFACE, FONTSIZE, FONTSTYLE, FOUNDRY - they will change the FONT attribute, and depends on it. They are used
-only to set partial FONT parameters of style and size. To do that the
-FONT attribute is parsed, changed and updated to the new value in the
-common format definition. This means that if the attribute was set in
+See FONTFACE, FONTSIZE, FONTSTYLE, FOUNDRY - they will change the FONT
+attribute, and depends on it. They are used only to set partial FONT
+parameters of style and size. To do that the FONT attribute is
+parsed, changed and updated to the new value in the common
+format definition. This means that if the attribute was set in
 X-Windows format or in the old Windows and IUP formats, the previous
 value will be replaced by a new value in the common format definition.
 Pango additional styles will also be removed.
 
-Font - Encoding 
-
-XXX-needs-fix-after-adding-UTF8-support
-
-The number that represents each character is dependent on the encoding
-used. For example, in ASCII encoding the letter A has code 65, but
-codes above 128 can be very different according to the encoding. An
-encoding is defined by a charset.
-
-IUP uses the default locale in ANSI-C. This means that it does not
-adopts a specific charset, and so the results can be different if the
-developer charset is different than the run time charset where the user
-is running the application. The advantage is that different charsets
-can be used. For example, if the developer is using a charset, and its
-user is also using the same encoding, then everything will work fine
-without the need of text encoding conversions.
-
-GTK uses UTF-8 (ISO10646-1) as its charset for all displayed text, so
-IUP will automatically convert all strings to (SetAttribute) and from
-(GetAttribute) UTF-8. If you want to specify strings in the UTF-8
-charset at the GTK driver, then set the global attribute
-UTF8AUTOCONVERT to NO, the default is YES. If the default locale is
-already UTF-8, but the given string is not UTF-8 then it will be
-assumed that the string uses the ISO8859-1 charset.
-
-In the future IUP should also support Unicode strings, increasing
-application portability.
-
-B<See Also:> L<IUP::MapFont|IUP::MapFont>, L<IUP::UnMapFont|IUP::UnMapFont>
-
 =item B<FONTFACE>
 
-I<(read-only, non inheritable)>
-
-Returns the face name of the current FONT attribute.
+I<(read-only, non inheritable)> Returns the face name of the current FONT attribute.
 
 =item B<FONTSIZE>
 
-I<(non inheritable)>
-
-Replaces or returns the size of the current FONT attribute.
+I<(non inheritable)> Replaces or returns the size of the current FONT attribute.
 
 =item B<FONTSTYLE>
 
-I<(non inheritable)>
-
-Replaces or returns the style of the current FONT attribute.
+I<(non inheritable)> Replaces or returns the style of the current FONT attribute.
 
 =item B<FOUNDRY>
 
-I<(non inheritable) [Motif Only]>
-
-Allows to select a foundry for the FONT being selected. Must be set
+I<(non inheritable) [Motif Only]> Allows to select a foundry for the FONT being selected. Must be set
 before setting the FONT attribute.
 
 =item B<MAXSIZE>
 
-I<(non inheritable)>
-
-Specifies the element maximum size in pixels during the layout process.
+I<(non inheritable)> Specifies the element maximum size in pixels during the layout process.
 
 See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for more details on sizes.
 
@@ -503,9 +467,7 @@ B<See Also:> L<RASTERSIZE|/RASTERSIZE>, L<MINSIZE|iup_minsize.html>
 
 =item B<MINSIZE>
 
-I<(non inheritable)>
-
-Specifies the element minimum size in pixels during the layout process.
+I<(non inheritable)> Specifies the element minimum size in pixels during the layout process.
 
 See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for more details on sizes.
 
@@ -537,17 +499,13 @@ B<See Also:> L<RASTERSIZE|/RASTERSIZE>, L<MAXSIZE|iup_maxsize.html>
 
 =item B<NAME>
 
-I<(non inheritable)>
-
-Name of the control inside the dialog. Not releated to L<SetName|IUP::Manual::02_Elements/"SetName()">.
+I<(non inheritable)> Name of the control inside the dialog. Not releated to L<SetName|IUP::Manual::02_Elements/"SetName()">.
 
 B<Value:> Text.
 
 B<Notes:>
 
-The NAME value will be used by
-L<GetDialogChild|IUP::Manual::02_Elements/"GetDialogChild()"> to find a child
-inside a dialog.
+The NAME value will be used by L<GetDialogChild|IUP::Manual::02_Elements/"GetDialogChild()"> to find a child inside a dialog.
 
 B<Affects:> All controls.
 
@@ -555,9 +513,8 @@ B<See Also:> L<GetDialogChild|IUP::Manual::02_Elements/"GetDialogChild()">
 
 =item B<POSITION>
 
-I<(read-only) (non inheritable)>
-
-The position of the element relative to the origin of the B<Client>
+I<(read-only, non inheritable)> The position of the element
+relative to the origin of the B<Client>
 area of the native parent. If you add the CLIENTOFFSET attribute of the
 native parent, you can obtain the coordinates relative to the B<Window>
 area of the native parent. See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout>.
@@ -575,10 +532,7 @@ L<FLOATING|/FLOATING>, L<CLIENTOFFSET|/CLIENTOFFSET>
 
 =item B<RASTERSIZE>
 
-I<(non inheritable)>
-
-Specifies the element B<User> size, and returns the B<Current> size, in
-pixels.
+I<(non inheritable)> Specifies the element B<User> size, and returns the B<Current> size, in pixels.
 
 See the L<IUP::Manual::05_DialogLayout|IUP::Manual::05_DialogLayout> for more details on sizes.
 

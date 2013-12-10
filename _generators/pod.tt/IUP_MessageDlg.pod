@@ -32,41 +32,40 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
-=item * B<BUTTONDEFAULT>
+=item B<BUTTONDEFAULT>
 
 Number of the default button. Can be "1" or "2". "2"
 is valid only for "OKCANCEL" and "YESNO" button configurations.
 Default: "1".
 
-=item * B<BUTTONRESPONSE>
+=item B<BUTTONRESPONSE>
 
 Number of the pressed button. Can be "1" or "2".
 Default: "1".
 
-=item * B<BUTTONS>
+=item B<BUTTONS>
 
 Buttons configuration. Can have values: "OK", "OKCANCEL" or
 "YESNO". Default: "OK". Additionally the "Help" button is displayed if
 the HELP_CB callback is defined.
 
-=item * B<DIALOGTYPE>
+=item B<DIALOGTYPE>
 
 Type of dialog defines which icon will be displayed
 besides the message text. Can have values: "MESSAGE" (No Icon), "ERROR"
 (Stop-sign), "WARNING" (Exclamation-point), "QUESTION" (Question-mark)
 or "INFORMATION" (Letter "i"). Default: "MESSAGE".
 
-=item * L<PARENTDIALOG|[%m.at%]/PARENTDIALOG> (creation only)
+=item L<PARENTDIALOG|[%m.at%]/PARENTDIALOG>
 
-Name of a dialog to be used as parent. This dialog will be always in front
-of the parent dialog. If not defined in Motif the dialog could not be
-modal.
+I<(creation only)> Name of a dialog to be used as parent. This dialog will be always in front
+of the parent dialog. If not defined in Motif the dialog could not be modal.
 
-=item * L<TITLE|[%m.at%]/TITLE>
+=item L<TITLE|[%m.at%]/TITLE>
 
 Dialog title.
 
-=item * B<VALUE>
+=item B<VALUE>
 
 Message text.
 
@@ -78,7 +77,7 @@ Message text.
 
 =over
 
-=item * L<HELP_CB|[%m.cb%]/HELP_CB>
+=item L<HELP_CB|[%m.cb%]/HELP_CB>
 
 Action generated when the Help button is pressed.
 
