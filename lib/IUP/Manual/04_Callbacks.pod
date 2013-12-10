@@ -22,6 +22,8 @@ IUP::Manual::04_Callbacks - Callbacks concept, using callbacks, common + global 
 
 =item * L<IUP::Manual::07_UsingImageLibrary|IUP::Manual::07_UsingImageLibrary>
 
+=item * L<IUP::Manual::08_DragAndDrop|IUP::Manual::08_DragAndDrop>
+
 =back
 
 =head1 INTRODUCTION

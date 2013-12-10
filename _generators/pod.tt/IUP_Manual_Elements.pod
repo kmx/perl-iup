@@ -22,6 +22,8 @@
 
 =item * L<[%m.imglib%]|[%m.imglib%]>
 
+=item * L<[%m.dnd%]|[%m.dnd%]>
+
 =back
 
 =head1 INTRODUCTION

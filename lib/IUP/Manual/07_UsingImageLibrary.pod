@@ -22,6 +22,8 @@ IUP::Manual::07_UsingImageLibrary - Using IUP buil-in image library
 
 =item * IUP::Manual::07_UsingImageLibrary E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
 
+=item * L<IUP::Manual::08_DragAndDrop|IUP::Manual::08_DragAndDrop>
+
 =back
 
 =head1 Available Images

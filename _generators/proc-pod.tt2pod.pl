@@ -144,6 +144,7 @@ my $ttdata = {
     dlg      => 'IUP::Manual::05_DialogLayout',
     keys     => 'IUP::Manual::06_HandlingKeyboard',
     imglib   => 'IUP::Manual::07_UsingImageLibrary',
+    dnd      => 'IUP::Manual::08_DragAndDrop',
     led      => 'IUP::Manual::08_UsingLED',
     examples => 'IUP::Manual::09_Examples',
     test     => 'IUP::Manual::99_Test',

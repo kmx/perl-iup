@@ -22,6 +22,8 @@
 
 =item * [%m.imglib%] E<nbsp>E<nbsp>E<nbsp>E<nbsp>E<nbsp> B<E<lt>E<lt>E<lt> this document>
 
+=item * L<[%m.dnd%]|[%m.dnd%]>
+
 =back
 
 =head1 Available Images

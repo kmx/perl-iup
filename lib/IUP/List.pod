@@ -642,23 +642,23 @@ The element B<IUP::List> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/list1.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/0-basic/list1.pl> - IUP::List example
+=item * L<0-basic/list1.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/list1.pl> - IUP::List example
 
-=item * L<0-basic/list2.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/0-basic/list2.pl> - IUP::List example
+=item * L<0-basic/list2.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/list2.pl> - IUP::List example
 
-=item * L<0-basic/text_font.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/0-basic/text_font.pl> - IUP::Text (font) example
+=item * L<0-basic/text_font.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/text_font.pl> - IUP::Text (font) example
 
-=item * L<0-basic/zbox.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/0-basic/zbox.pl> - IUP::Zbox example
+=item * L<0-basic/zbox.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/zbox.pl> - IUP::Zbox example
 
-=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/1-apps/app-mdi.pl> - IUP app example
+=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
 =back 
 

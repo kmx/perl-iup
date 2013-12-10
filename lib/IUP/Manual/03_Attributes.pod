@@ -22,6 +22,8 @@ IUP::Manual::03_Attributes - Attributes concept, using attributes, common + glob
 
 =item * L<IUP::Manual::07_UsingImageLibrary|IUP::Manual::07_UsingImageLibrary>
 
+=item * L<IUP::Manual::08_DragAndDrop|IUP::Manual::08_DragAndDrop>
+
 =back
 
 =head1 INTRODUCTION

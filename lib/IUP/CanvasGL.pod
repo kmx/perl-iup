@@ -257,9 +257,9 @@ The element B<IUP::CanvasGL> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/glcanvas1.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/0-basic/glcanvas1.pl> - IUP::CanvasGL example
+=item * L<0-basic/glcanvas1.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/glcanvas1.pl> - IUP::CanvasGL example
 
-=item * L<0-basic/glcanvas2.pl|https://metacpan.org/source/KMX/IUP-0.200_11/examples/0-basic/glcanvas2.pl> - IUP::CanvasGL example
+=item * L<0-basic/glcanvas2.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/glcanvas2.pl> - IUP::CanvasGL example
 
 =back 
 
