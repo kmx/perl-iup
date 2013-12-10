@@ -49,9 +49,7 @@ cancel a drag at any time by pressing the ESCAPE key.
 
 Steps to use the Drag & Drop support in an IUP application:
 
-=over
-
-=item * B<AT SOURCE>
+=head2 AT SOURCE
 
 =over
 
@@ -63,7 +61,7 @@ Steps to use the Drag & Drop support in an IUP application:
 
 =back
 
-=item * B<AT TARGET>
+=head2 AT TARGET
 
 =over
 
@@ -72,8 +70,6 @@ Steps to use the Drag & Drop support in an IUP application:
 =item Define the data types supported by the element for the drop using the DROPTYPES attribute;
 
 =item Register the required callback DROPDATA_CB for handling the data received. This callback and all the drop target attributes must be set too. DROPMOTION_CB is the only optional drop callback.
-
-=back
 
 =back
 
