@@ -19,8 +19,8 @@ my $frm_1 = IUP::Frame->new( TITLE=>"ALIGNMENT=ALEFT, GAP=10", child=>
                   IUP::Button->new(TITLE=>"2", SIZE=>"30x30", ACTION=>""),
                   IUP::Button->new(TITLE=>"3", SIZE=>"40x30", ACTION=>""),
                 ] ),
-		IUP::Fill->new(),
-	      ] )
+                IUP::Fill->new(),
+              ] )
             );
 
 # Creates frame 2;
@@ -32,8 +32,8 @@ my $frm_2 = IUP::Frame->new( TITLE=>"ALIGNMENT=ACENTER", child=>
                   IUP::Button->new(TITLE=>"2", SIZE=>"30x30", ACTION=>""),
                   IUP::Button->new(TITLE=>"3", SIZE=>"40x30", ACTION=>""),
                 ] ),
-		IUP::Fill->new(),
-	      ] )
+                IUP::Fill->new(),
+              ] )
             );
 
 # Creates frame 3;
@@ -45,8 +45,8 @@ my $frm_3 = IUP::Frame->new( TITLE=>"ALIGNMENT=ARIGHT", child=>
                   IUP::Button->new(TITLE=>"2", SIZE=>"30x30", ACTION=>""),
                   IUP::Button->new(TITLE=>"3", SIZE=>"40x30", ACTION=>""),
                 ] ),
-		IUP::Fill->new(),
-	      ] )
+                IUP::Fill->new(),
+              ] )
             );
 
 my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new( child=>[$frm_1, $frm_2, $frm_3] ), TITLE=>"IUP::Vbox Example", SIZE=>"250x" );

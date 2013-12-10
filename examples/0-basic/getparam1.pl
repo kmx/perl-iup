@@ -20,7 +20,7 @@ sub param_action {
     print "PARAM[$param_index]",
           " typ=", $self->GetParamParam($param_index)->GetAttribute('TYPE'),
           " val=", $self->GetParamValue($param_index),
-	  "\n";
+          "\n";
   }
   return 1;
 }

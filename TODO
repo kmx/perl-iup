@@ -1,5 +1,8 @@
 ################ the last time working on ################ 
 
+Bug:
+- BROKEN $canvas->cdDumpBitmap("tmp-testoutput.png", "PNG");  - tmp-testoutput.png / examples/2-canvas/simpledraw.pl
+
 IupMatrixEx - add new element - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixex.html
 - IUP::MatrixEx? or maybe extend existing IUP::Matrix?
 - callbacks

@@ -55,10 +55,10 @@ my $val_h = IUP::Val->new( TYPE=>"HORIZONTAL", MIN=>0.0, MAX=>1.0, VALUE=>0,
 
 my $dlg_val = IUP::Dialog->new( TITLE=>"Valuator Test", child=>
                 IUP::Hbox->new( child=>[
-		  IUP::Frame->new( child=>IUP::Vbox->new( child=>[$val_v, $lbl_v] ) ),
-		  IUP::Frame->new( child=>IUP::Vbox->new( child=>[$val_h, $lbl_h] ) ),
+                  IUP::Frame->new( child=>IUP::Vbox->new( child=>[$val_v, $lbl_v] ) ),
+                  IUP::Frame->new( child=>IUP::Vbox->new( child=>[$val_h, $lbl_h] ) ),
                 ] )
-	      );
+              );
 
 $dlg_val->Show();
 

@@ -18,7 +18,7 @@ my $frame = IUP::Frame->new( child=>$exclusive, TITLE=>"Gender" );
 
 my $dialog = IUP::Dialog->new( child=>IUP::Hbox->new( [ IUP::Fill->new(), $frame, IUP::Fill->new() ]),
                                TITLE=>"IUP::Radio",
-			       SIZE=>140,
+                               SIZE=>140,
                                RESIZE=>"NO",
                                MINBOX=>"NO",
                                MAXBOX=>"NO"

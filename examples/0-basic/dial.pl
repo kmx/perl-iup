@@ -29,7 +29,7 @@ $dial_h->MOUSEMOVE_CB(\&h_mousemove_cb);
 my $dlg = IUP::Dialog->new( TITLE=>"IUP::Dial", child=>
     IUP::Vbox->new( MARGIN=>"5x5", GAP=>"5", child=>[
         IUP::Vbox->new( child=>[ IUP::Frame->new( TITLE=>"vertical", child=>$dial_v),
-	                         IUP::Frame->new( TITLE=>"horizontal", child=>$dial_h) ] ),
+                                 IUP::Frame->new( TITLE=>"horizontal", child=>$dial_h) ] ),
         IUP::Vbox->new( child=>[ $lbl_v, $lbl_h ] ),
     ] ) );
 

@@ -61,8 +61,8 @@ my $menu = IUP::Menu->new( child=>[$submenu_file, $submenu_edit, $submenu_help] 
 # Creates dialog with a text, sets its title and associates a menu to it
 my $dlg = IUP::Dialog->new( child=>$text,
                             TITLE=>"IUP::Submenu Example",
-			    MENU=>$menu,
-			    SIZE=>"QUARTERxEIGHTH" );
+                            MENU=>$menu,
+                            SIZE=>"QUARTERxEIGHTH" );
 
 # Shows dialog in the center of the screen
 $dlg->ShowXY (IUP_CENTER,IUP_CENTER);

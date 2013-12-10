@@ -9,8 +9,8 @@ use IUP ':all';
 my $vboxA = IUP::Vbox->new( child=>[
               IUP::Fill->new(),
               IUP::Label->new( TITLE=>"TABS AAA", EXPAND=>"HORIZONTAL" ),
-	      IUP::Button->new( TITLE=>"AAA")
-	    ], TABTITLE=>"AAAAAA" );
+              IUP::Button->new( TITLE=>"AAA")
+            ], TABTITLE=>"AAAAAA" );
 my $vboxB = IUP::Vbox->new( child=>[
               IUP::Label->new( TITLE=>"TABS BBB" ),
               IUP::Button->new( TITLE=>"BBB" )

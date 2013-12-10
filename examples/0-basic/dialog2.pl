@@ -69,7 +69,7 @@ my $dialog = IUP::Dialog->new( child      => IUP::Vbox->new($quit_bt),
                                TITLE      => "IUP::Dialog",
                                MENU       => $menu,
                                CURSOR     => "CROSS",
-			       SIZE       => "200x100",
+                               SIZE       => "200x100",
                                ICON       => $icon,
                                DEFAULTESC => "quit" );
 

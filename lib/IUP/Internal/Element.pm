@@ -48,10 +48,10 @@ sub new {
   bless($self, $class);
 
   if ($argc == 1) {
-    $firstonly = $_[0];
+    $firstonly = shift;
   }
   elsif ($argc > 1 && $argc % 2 == 0) {
-    %args = @_ ;
+    %args = @_;
   }
   elsif ($argc > 0) {
     carp "Warning: $class->new() odd number of arguments ($argc), ignoring all parameters";
@@ -62,28 +62,34 @@ sub new {
     carp "Error: $class->new() failed";
     return;
   }
-  my @cb;
-  my @at;
-  for (keys %args) {
-    if ($self->IsValidCallbackName($_)) {
-      push(@cb, $_, $args{$_});
-    }
-    elsif ($_ eq 'name') {
-      $self->SetName($args{$_});
-    }
-    elsif ($_ eq uc($_)) {
-      push(@at, $_, $args{$_});  # assuming an attribute
-    }
-    else {
-      carp "Warning: $class->new() ignoring unknown parameter '$_'";
-    }
-  }
-  $self->SetAttribute(@at) if scalar(@at);
-  $self->SetCallback(@cb) if scalar(@cb);
+
   if (!$self->HasValidClassName) {
     my $c = $self->GetClassName || '';
     carp "Warning: $class->new() classname mismatch '$class' vs. '$c'";
   }
+
+  my @cb;
+  my @at;
+  while (@_) { # keep original order
+    my $k = shift;
+    my $v = shift;
+    next unless defined $k;
+    next unless exists $args{$k}; #some values may be deleted during _create_element()
+    if ($self->IsValidCallbackName($k)) {
+      push(@cb, $k, $v);
+    }
+    elsif ($k eq 'name') {
+      $self->SetName($v);
+    }
+    elsif ($k eq uc($k)) {
+      push(@at, $k, $v);  # assuming an attribute
+    }
+    else {
+      carp "Warning: $class->new() ignoring unknown parameter '$k'";
+    }
+  }
+  $self->SetCallback(@cb) if scalar(@cb);
+  $self->SetAttribute(@at) if scalar(@at);
   return $self;
 }
 

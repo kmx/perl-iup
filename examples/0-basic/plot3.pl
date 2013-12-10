@@ -13,9 +13,9 @@ my $plot = IUP::PPlot->new(
              AXS_XLABEL   => "X",
              AXS_YLABEL   => "Y",
              AXS_YMIN     => -1.1,
-	     AXS_YAUTOMIN => "NO",
+             AXS_YAUTOMIN => "NO",
              AXS_YMAX     => 1.1,
-	     AXS_YAUTOMAX => "NO",
+             AXS_YAUTOMAX => "NO",
 );
 
 $plot->PlotBegin(2);

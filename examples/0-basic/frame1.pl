@@ -15,7 +15,7 @@ my $frame = IUP::Frame->new(
                 IUP::Label->new( TITLE=>"IUP::Frame Test - with quite a long label text" ),
                 IUP::Fill->new(),
               ] ) );
-	    
+            
 $frame->SetAttribute(
   MARGIN =>"20x20",
   FGCOLOR=>"255 0 0",

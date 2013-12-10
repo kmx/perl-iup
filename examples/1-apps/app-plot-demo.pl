@@ -296,9 +296,9 @@ $dial1 = IUP::Dial->new( TYPE=>"VERTICAL", ACTIVE=>"NO", SIZE=>"20x52",
 $tgg1 = IUP::Toggle->new( TITLE=>"Y Autoscale", ACTION=>\&tgg1_cb, VALUE=>"ON" );
 my $boxinfo = IUP::Vbox->new( child=>[ 
                                 IUP::Label->new( TITLE=>"-", EXPAND=>"NO" ),
-				IUP::Fill->new(),
+                                IUP::Fill->new(),
                                 IUP::Label->new( TITLE=>"+", EXPAND=>"NO" )
-			      ],
+                              ],
                               ALIGNMENT=>"ACENTER", SIZE=>"20x52",
                               GAP=>"2", MARGIN=>"4", EXPAND=>"YES" );
 my $boxdial1 = IUP::Hbox->new( child=>[$boxinfo, $dial1], ALIGNMENT=>"ACENTER" );
@@ -312,11 +312,11 @@ $dial2 = IUP::Dial->new( TYPE=>"HORIZONTAL", ACTIVE=>"NO", SIZE=>"64x16",
 $tgg2 = IUP::Toggle->new( TITLE=>"X Autoscale", ACTION=>\&tgg2_cb, VALUE=>"ON" );
 my $boxinfoxxx = IUP::Hbox->new( child=>[ 
                                 IUP::Label->new( TITLE=>"-", EXPAND=>"NO" ),
-				IUP::Fill->new(),
+                                IUP::Fill->new(),
                                 IUP::Label->new( TITLE=>"+", EXPAND=>"NO" )
-			      ],
+                              ],
                               ALIGNMENT=>"ACENTER", SIZE=>"64x16", GAP=>"2",
-			      MARGIN=>"4", EXPAND=>"HORIZONTAL" );
+                              MARGIN=>"4", EXPAND=>"HORIZONTAL" );
 my $boxdial2 = IUP::Vbox->new( child=>[$dial2, $boxinfoxxx], ALIGNMENT=>"ACENTER" );
 my $f2 = IUP::Frame->new( child=>IUP::Vbox->new( child=>[$boxdial2, $tgg2] ), TITLE=>"X Zoom" );
 
@@ -341,8 +341,8 @@ $mainfunc = IUP::Text->new( VALUE=>'sin($x)', VISIBLECOLUMNS=>50, VISIBLELINES=>
 my $hbox1 = IUP::Hbox->new( child=>[$vboxl, $mainplot], MARGIN=>"4x4", GAP=>"10" );
 my $hbox2 = IUP::Hbox->new( child=>[
                               IUP::Label->new( TITLE=>'$y =' ),
-			      $mainfunc,
-	 		      IUP::Button->new( TITLE=>"Draw", ACTION=>\&bt3_cb ),
+                              $mainfunc,
+                               IUP::Button->new( TITLE=>"Draw", ACTION=>\&bt3_cb ),
                            ], MARGIN=>"4x4", GAP=>"2" );
  
 my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new([$hbox1, $hbox2]), SIZE=>"500x300", TITLE=>"IupPlot Example" );

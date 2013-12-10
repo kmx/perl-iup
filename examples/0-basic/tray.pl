@@ -62,9 +62,9 @@ my $tecgraf = IUP::Image->new( pixels=>
 my $dg = IUP::Dialog->new( child=>IUP::Label->new( TITLE=>"Tray example" ),
                            TITLE=>"Tray",
                            TRAY=>"YES",
-			   TRAYTIP=>"This is a tip at tray",
-			   TRAYIMAGE=>$tecgraf,
-			   SIZE=>"QUARTERx" );
+                           TRAYTIP=>"This is a tip at tray",
+                           TRAYIMAGE=>$tecgraf,
+                           SIZE=>"QUARTERx" );
 
 $dg->Show();
 

@@ -49,27 +49,27 @@ cancel a drag at any time by pressing the ESCAPE key.
 
 Steps to use the Drag & Drop support in an IUP application:
 
-=head2 AT SOURCE
+=head2 AT SOURCE:
 
 =over
 
-=item Enable the element as source using the attribute DRAGSOURCE=YES;
+=item * Enable the element as source using the attribute DRAGSOURCE=YES;
 
-=item Define the data types supported by the element for the drag operation using the DRAGTYPES attribute;
+=item * Define the data types supported by the element for the drag operation using the DRAGTYPES attribute;
 
-=item Register the required callbacks DRAGBEGIN_CB, DRAGDATASIZE_CB and DRAGDATA_CB for drag handling. DRAGEND_CB is the only optional drag callback, all other callbacks and attributes must be set.
+=item * Register the required callbacks DRAGBEGIN_CB, DRAGDATASIZE_CB and DRAGDATA_CB for drag handling. DRAGEND_CB is the only optional drag callback, all other callbacks and attributes must be set.
 
 =back
 
-=head2 AT TARGET
+=head2 AT TARGET:
 
 =over
 
-=item Enable the element as target using the attribute DROPTARGET=YES;
+=item * Enable the element as target using the attribute DROPTARGET=YES;
 
-=item Define the data types supported by the element for the drop using the DROPTYPES attribute;
+=item * Define the data types supported by the element for the drop using the DROPTYPES attribute;
 
-=item Register the required callback DROPDATA_CB for handling the data received. This callback and all the drop target attributes must be set too. DROPMOTION_CB is the only optional drop callback.
+=item * Register the required callback DROPDATA_CB for handling the data received. This callback and all the drop target attributes must be set too. DROPMOTION_CB is the only optional drop callback.
 
 =back
 

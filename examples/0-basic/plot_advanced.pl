@@ -573,7 +573,7 @@ $lbl1 = IUP::Label->new( TITLE=>"-", EXPAND=>"NO" );
 $lbl2 = IUP::Label->new( TITLE=>"+", EXPAND=>"NO" );
 $boxinfo = IUP::Hbox->new( child=>[$lbl1, IUP::Fill->new(), $lbl2],
                            ALIGNMENT=>"ACENTER", SIZE=>"64x16", GAP=>"2",
-			   MARGIN=>"4", EXPAND=>"HORIZONTAL" );
+                           MARGIN=>"4", EXPAND=>"HORIZONTAL" );
 $boxdial2 = IUP::Vbox->new( child=>[$dial2, $boxinfo], ALIGNMENT=>"ACENTER" );
 $tgg2 = IUP::Toggle->new( TITLE=>"X Autoscale", ACTION=>\&tgg2_cb );
 $f2 = IUP::Frame->new( child=>IUP::Vbox->new( child=>[$boxdial2, $tgg2] ), TITLE=>"X Zoom" );

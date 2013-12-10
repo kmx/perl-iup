@@ -13,12 +13,12 @@ use IUP ':all';
 my $fr1 = IUP::Frame->new( TITLE=>"Alignment = ATOP", child=>
             IUP::Hbox->new( child=>[
               IUP::Fill->new(),
-	      IUP::Button->new(TITLE=>"1", SIZE=>"30x30"),
-	      IUP::Button->new(TITLE=>"2", SIZE=>"30x40"),
-	      IUP::Button->new(TITLE=>"3", SIZE=>"30x50"),
-	      IUP::Fill->new(),
-	    ], ALIGNMENT=>"ATOP" )
-	  );
+              IUP::Button->new(TITLE=>"1", SIZE=>"30x30"),
+              IUP::Button->new(TITLE=>"2", SIZE=>"30x40"),
+              IUP::Button->new(TITLE=>"3", SIZE=>"30x50"),
+              IUP::Fill->new(),
+            ], ALIGNMENT=>"ATOP" )
+          );
 
 my $fr2 = IUP::Frame->new( TITLE=>"Alignment = ACENTER", child=>
             IUP::Hbox->new( child=>[
@@ -27,7 +27,7 @@ my $fr2 = IUP::Frame->new( TITLE=>"Alignment = ACENTER", child=>
               IUP::Button->new(TITLE=>"2", SIZE=>"30x40", ACTION=>""),
               IUP::Button->new(TITLE=>"3", SIZE=>"30x50", ACTION=>""),
               IUP::Fill->new(),
-	    ], ALIGNMENT=>"ACENTER" )
+            ], ALIGNMENT=>"ACENTER" )
           );
 
 my $fr3 = IUP::Frame->new( TITLE=>"Alignment = ABOTTOM", child=>
@@ -37,7 +37,7 @@ my $fr3 = IUP::Frame->new( TITLE=>"Alignment = ABOTTOM", child=>
               IUP::Button->new(TITLE=>"2", SIZE=>"30x40", ACTION=>""),
               IUP::Button->new(TITLE=>"3", SIZE=>"30x50", ACTION=>""),
               IUP::Fill->new(),
-	    ], ALIGNMENT=>"ABOTTOM" )
+            ], ALIGNMENT=>"ABOTTOM" )
           );
 
 my $dlg = IUP::Dialog->new( 

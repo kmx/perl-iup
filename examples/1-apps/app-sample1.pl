@@ -26,7 +26,7 @@ sub init_dialog {
                IUP::Vbox->new( child=>[
                  IUP::Button->new( TITLE=>"Button Text", ACTION=>\&my_cb ),
                  IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf", TITLE=>"Text" ),
-		 IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf" ),
+                 IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf" ),
                  IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf", IMPRESS=>"IUP_Tecgraf" ),
                ])
              );
@@ -71,7 +71,7 @@ sub init_dialog {
                  IUP::List->new( ACTION=>\&my_cb, EDITBOX=>"YES",  EXPAND=>"YES", VALUE=>"3",
                                  1=>"Item 1 Text", 2=>"Item 2 Text", 3=>"Item 3 Text" ),
                ])
-	     );
+             );
 
   my $frm6 = IUP::Frame->new( TITLE=>"IupVal", child=>IUP::Val->new( MIN=>0, MAX=>100 ) );
 
@@ -79,9 +79,9 @@ sub init_dialog {
 
   my $frm8 = IUP::Frame->new( TITLE=>"IupTabs",
                               child=>IUP::Tabs->new( child=>[
-			          IUP::Label->new( TABTITLE=>"Tab Title 0", EXPAND=>"HORIZONTAL"),
-				  IUP::Label->new( TABTITLE=>"Tab Title 1", EXPAND=>"HORIZONTAL"),
-				  IUP::Label->new( TABTITLE=>"Tab Title 2", EXPAND=>"HORIZONTAL"),
+                                  IUP::Label->new( TABTITLE=>"Tab Title 0", EXPAND=>"HORIZONTAL"),
+                                  IUP::Label->new( TABTITLE=>"Tab Title 1", EXPAND=>"HORIZONTAL"),
+                                  IUP::Label->new( TABTITLE=>"Tab Title 2", EXPAND=>"HORIZONTAL"),
                               ]));
   
   my $frm9 = IUP::Frame->new( TITLE=>"IupCanvas", child=>IUP::Canvas->new( SIZE=>"x50", SCROLLBAR=>"HORIZONTAL", BGCOLOR=>"128 255 0" ) );

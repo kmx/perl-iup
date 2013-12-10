@@ -132,7 +132,7 @@ my $frm1 = IUP::Frame->new( child=>
                IUP::Button->new( TITLE=>"Button Text", CINDEX=>1 ),
                IUP::Button->new( IMAGE=>$img1, CINDEX=>2 ),
                IUP::Button->new( IMAGE=>$img1, IMPRESS=>$img2, CINDEX=>3 ),
-	     ]),
+             ]),
              TITLE=>"IUP::Button", CX=>10, CY=>180 );
 
 my $frm2 = IUP::Frame->new( child=>
@@ -148,8 +148,8 @@ my $frm3 = IUP::Frame->new( child=>
                IUP::Toggle->new( TITLE=>"Toggle Text", VALUE=>"ON", CINDEX=>1 ),
                IUP::Toggle->new( IMAGE=>$img1, IMPRESS=>$img2, CINDEX=>2 ),
                IUP::Frame->new( child=>
-	         IUP::Radio->new( TITLE=>"IUP::Radio", child=>
-		   IUP::Vbox->new( child=>[
+                 IUP::Radio->new( TITLE=>"IUP::Radio", child=>
+                   IUP::Vbox->new( child=>[
                      IUP::Toggle->new( TITLE=>"Toggle Text", CINDEX=>3 ),
                      IUP::Toggle->new( TITLE=>"Toggle Text", CINDEX=>4 ),
                    ]),

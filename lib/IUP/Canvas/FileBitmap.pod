@@ -20,9 +20,8 @@ IUP::Canvas::FileBitmap - [special] 2D drawing canvas storing the result into bi
 
  # BEWARE: this is different from IUP::Canvas::FileVector
  $cnv->cdDumpBitmap("output.png", "PNG");
- $cnv->cdDumpBitmap("output.jpg", "JPG");
-
- $cnv->cdKillCanvas; # this saves the file to disk
+ $cnv->cdDumpBitmap("output.jpg", "JPEG");
+ $cnv->cdKillCanvas;
 
 Supported constructors: XXX-TODO add some description
 

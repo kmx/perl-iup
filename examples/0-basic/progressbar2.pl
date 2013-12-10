@@ -145,10 +145,10 @@ my $timer = IUP::Timer->new( ACTION_CB=>\&time_cb, TIME=>100 );
 my $progressbar1 = IUP::ProgressBar->new( EXPAND=>"YES", DASHED=>"NO", MARQUEE=>"YES" ); #xxxFIXME MARQUEE not working
 my $progressbar2 = IUP::ProgressBar->new( ORIENTATION=>"VERTICAL", 
                                           BGCOLOR=>"255 0 128", 
-					  FGCOLOR=>"0 128 0", 
-					  RASTERSIZE=>"30x100", 
-					  MAX=>50, 
-					  VALUE=>25 );
+                                          FGCOLOR=>"0 128 0", 
+                                          RASTERSIZE=>"30x100", 
+                                          MAX=>50, 
+                                          VALUE=>25 );
  
 my $btn_restart    = IUP::Button->new( IMAGE=>$img_restart, ACTION=>\&btn_restart_cb );
 my $btn_pause      = IUP::Button->new( IMAGE=>$img_pause, TIP=>"Play/Pause", TIP=>"Restart", ACTION=>\&btn_pause_cb );
@@ -225,13 +225,13 @@ sub btn_show2_cb {
 
 my $hbox = IUP::Hbox->new( child=>[
                              IUP::Fill->new(), 
-			     $btn_pause,
-			     $btn_restart,
-			     $btn_decelerate,
-			     $btn_accelerate,
-			     $btn_show1,
-			     $btn_show2,
-			     IUP::Fill->new()] );
+                             $btn_pause,
+                             $btn_restart,
+                             $btn_decelerate,
+                             $btn_accelerate,
+                             $btn_show1,
+                             $btn_show2,
+                             IUP::Fill->new()] );
 
 my $vbox = IUP::Hbox->new( child=>[ IUP::Vbox->new([$progressbar1, $hbox]), $progressbar2 ],
                            MARGIN=>"10x10", GAP=>5 );

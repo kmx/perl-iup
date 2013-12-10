@@ -89,7 +89,7 @@ sub getfocus_cb {
   my $self = shift;
   printf STDERR "$line-getfocus(%s#%s)\n",
          $self->GetClassName(), 
-	 ($self->GetAttribute("CINDEX") || 'n.a.');
+         ($self->GetAttribute("CINDEX") || 'n.a.');
   $line++;
   return IUP_DEFAULT;
 }
@@ -98,7 +98,7 @@ sub killfocus_cb {
   my $self = shift;
   printf STDERR "$line-killfocus(%s#%s)\n",
          $self->GetClassName(), 
-	 ($self->GetAttribute("CINDEX") || 'n.a.');	 
+         ($self->GetAttribute("CINDEX") || 'n.a.');         
   $line++;
   return IUP_DEFAULT;
 }
@@ -107,8 +107,8 @@ sub action {
   my $self = shift;
   printf STDERR "$line-action(%s#%s) Value=%s\n", 
          $self->GetClassName(), 
-	 ($self->GetAttribute("CINDEX") || 'n.a.'),
-	 ($self->GetAttribute("VALUE") || 'n.a.');
+         ($self->GetAttribute("CINDEX") || 'n.a.'),
+         ($self->GetAttribute("VALUE") || 'n.a.');
   $line++;
   return IUP_DEFAULT;
 }
@@ -127,19 +127,19 @@ sub set_callbacks {
 sub createDialog {
   my $frm_1 = IUP::Frame->new( child=>
                 IUP::Vbox->new( child=>[
-		  IUP::Button->new( TITLE=>"Button Text", CINDEX=>1 ),
+                  IUP::Button->new( TITLE=>"Button Text", CINDEX=>1 ),
                   IUP::Button->new( TITLE=>"", CINDEX=>2, BGCOLOR=>"255 128 0", RASTERSIZE=>"30x30" ),
                   IUP::Button->new( TITLE=>"", IMAGE=>$img1, CINDEX=>3 ),
                   IUP::Button->new( TITLE=>"", IMAGE=>$img1, CINDEX=>4, FLAT=>"YES" ),
                   IUP::Button->new( TITLE=>"", IMAGE=>$img1, IMPRESS=>$img2, CINDEX=>5 ),
-		]), TITLE=>"IupButton" );
+                ]), TITLE=>"IupButton" );
 
   my $frm_2 = IUP::Frame->new( child=>
                 IUP::Vbox->new( child=>[
                   IUP::Label->new( TITLE=>"Label Text\nLine 2\nLine 3", CINDEX=>1 ),
                   IUP::Label->new( TITLE=>"", SEPARATOR=>"HORIZONTAL", CINDEX=>2 ),
                   IUP::Label->new( TITLE=>"", IMAGE=>$img1, CINDEX=>3 ),
-		]), TITLE=>"IupLabel" );
+                ]), TITLE=>"IupLabel" );
 
   my $frm_3 = IUP::Frame->new( child=>
                 IUP::Vbox->new( child=>[
@@ -147,28 +147,28 @@ sub createDialog {
                   IUP::Toggle->new( TITLE=>"3State Text", VALUE=>"NOTDEF", CINDEX=>2, '3STATE'=>"YES" ),
                   IUP::Toggle->new( TITLE=>"", IMAGE=>$img1, IMPRESS=>$img2, CINDEX=>3 ),
                   IUP::Frame->new( child=>
-		    IUP::Radio->new( TITLE=>"IupRadio", child=>
-		      IUP::Vbox->new( child=>[
+                    IUP::Radio->new( TITLE=>"IupRadio", child=>
+                      IUP::Vbox->new( child=>[
                         IUP::Toggle->new( TITLE=>"Toggle Text", CINDEX=>4 ),
                         IUP::Toggle->new( TITLE=>"Toggle Text", CINDEX=>5 ),
-		      ]),		      
-		    ),
-		  )
-		]), TITLE=>"IupToggle" );
+                      ]),                      
+                    ),
+                  )
+                ]), TITLE=>"IupToggle" );
 
   my $text_1 = IUP::Text->new(
                  VALUE=>"IupText Text",
-		 #SIZE=>"80x",
-		 CINDEX=>1 );
+                 #SIZE=>"80x",
+                 CINDEX=>1 );
 
   my $ml_1 = IUP::Text->new(
                MULTILINE=>1,
-	       VALUE=>"IupMultiline Text\nSecond Line\nThird Line",
+               VALUE=>"IupMultiline Text\nSecond Line\nThird Line",
                #SIZE=>"50x30",
                #EXPAND=>"YES",
                #SIZE=>"80x60",
-	       CINDEX=>1 );
-	       
+               CINDEX=>1 );
+               
   my $frm_4 = IUP::Frame->new( TITLE=>"IupText/IupMultiline", child=>IUP::Vbox->new( child=>[$text_1, $ml_1,]) );
 
   my $list_1 = IUP::List->new(
@@ -313,12 +313,12 @@ sub mdi_new {
 sub createMenu {
   my $mnu = IUP::Menu->new( name=>"mnu", child=>[
               IUP::Submenu->new( TITLE=>"MDI", child=>
-	        IUP::Menu->new( child=>
+                IUP::Menu->new( child=>
                   IUP::Item->new( TITLE=>"New", ACTION=>\&mdi_new ),
-		),
-              ),		
+                ),
+              ),                
               IUP::Submenu->new( TITLE=>"Window", , child=> 
-	        IUP::Menu->new( name=>"winmenu", child=>[
+                IUP::Menu->new( name=>"winmenu", child=>[
                   IUP::Item->new( TITLE=>"Tile Horizontal", ACTION=>\&mdi_tilehoriz ), 
                   IUP::Item->new( TITLE=>"Tile Vertical", ACTION=>\&mdi_tilevert ), 
                   IUP::Item->new( TITLE=>"Cascade", ACTION=>\&mdi_cascade ), 
@@ -327,9 +327,9 @@ sub createMenu {
                   IUP::Separator->new(),
                   IUP::Item->new( TITLE=>"Next", ACTION=>\&mdi_next ), 
                   IUP::Item->new( TITLE=>"Previous", ACTION=>\&mdi_previous ), 
-		]),
-	      ),
-	    ]);  
+                ]),
+              ),
+            ]);  
   return $mnu;
 }
 
@@ -339,7 +339,7 @@ sub createFrame {
   my $cnv = IUP::Canvas->new( MDICLIENT=>"YES", MDIMENU=>$mdiMenu );
   my $dlg = IUP::Dialog->new( name=>"mdiFrame", child=>$cnv, 
                               MENU=>$menu, TITLE=>"MDI Frame", 
-			      MDIFRAME=>"YES", RASTERSIZE=>"800x600" );
+                              MDIFRAME=>"YES", RASTERSIZE=>"800x600" );
   return $dlg;
 }
 

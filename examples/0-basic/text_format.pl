@@ -399,13 +399,13 @@ sub TextTest {
                                 IUP::Hbox->new( [$btn_append, $btn_insert, $btn_caret, $btn_readonly, $btn_selection] ),
                                 IUP::Hbox->new( [$btn_selectedtext, $btn_nc, $btn_value, $btn_tabsize, $btn_clip, $btn_key] ),
                                 IUP::Hbox->new( [$btn_def_enter, $btn_def_esc, $btn_active, $btn_remformat, $btn_overwrite] ),
-			      ] ),
-  			      TITLE=>"IupText Test",
-  			      MARGIN=>"10x10",
-  			      GAP=>5,
-  			      DEFAULTENTER=>$btn_def_enter,
-  			      DEFAULTESC=>$btn_def_esc,
-  			      SHRINK=>"YES" );  
+                              ] ),
+                                TITLE=>"IupText Test",
+                                MARGIN=>"10x10",
+                                GAP=>5,
+                                DEFAULTENTER=>$btn_def_enter,
+                                DEFAULTESC=>$btn_def_esc,
+                                SHRINK=>"YES" );  
 
   if ($formatting) { # just to make easier to comment this section
     $dlg->Map(); # formatting after Map

@@ -24,8 +24,8 @@ sub cb_k_any {
   return bs_handler if $c == K_BS;
   return IUP_IGNORE if $c==K_CR || $c==K_SP || $c==K_ESC || $c==K_INS || 
                        $c==K_DEL || $c==K_TAB || $c==K_HOME || $c==K_UP || 
-		       $c==K_PGUP || $c==K_LEFT || $c==K_MIDDLE || 
-		       $c==K_RIGHT || $c==K_END || $c==K_DOWN || $c==K_PGDN;
+                       $c==K_PGUP || $c==K_LEFT || $c==K_MIDDLE || 
+                       $c==K_RIGHT || $c==K_END || $c==K_DOWN || $c==K_PGDN;
   return IUP_DEFAULT;
 }
 

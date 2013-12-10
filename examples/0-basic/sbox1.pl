@@ -17,8 +17,8 @@ my $lb = IUP::Label->new( TITLE=>"Label", EXPAND=>"VERTICAL" );
 
 my $dg = IUP::Dialog->new( child=>IUP::Hbox->new( child=>[$vb, $lb] ), 
                            TITLE=>"IUP::Sbox Example", 
-			   MARGIN=>"10x10", 
-			   GAP=>10 );
+                           MARGIN=>"10x10", 
+                           GAP=>10 );
 $dg->Show();
 
 IUP->MainLoop();

@@ -38,8 +38,8 @@ my $tree_bright = IUP::Tree->new( ADDROOT=>'NO' );
 
 my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new([
                               IUP::Hbox->new([$tree_tleft,$tree_tright]), 
-			      IUP::Hbox->new([$tree_bleft,$tree_bright]), 
-			    ]), TITLE=>"IUP::Tree Animals", SIZE=>"600x300" );
+                              IUP::Hbox->new([$tree_bleft,$tree_bright]), 
+                            ]), TITLE=>"IUP::Tree Animals", SIZE=>"600x300" );
 
 $dlg->ShowXY(IUP_CENTER,IUP_CENTER);
 

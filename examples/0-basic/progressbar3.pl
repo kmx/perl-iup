@@ -176,7 +176,7 @@ my $hbox = IUP::Hbox->new( child=>[
              $btn_decelerate,
              $btn_accelerate,
              IUP::Fill->new()
-	   ]);
+           ]);
 
 my $vbox = IUP::Vbox->new( child=>[$gauge, $hbox], MARGIN=>"10x10", GAP=>5 );
 

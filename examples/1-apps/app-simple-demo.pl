@@ -19,7 +19,7 @@
                 IUP::Vbox->new( child=>[
                   IUP::Button->new( TITLE=>"Test Me", ACTION=>\&my_cb ),
                   IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf", TITLE=>"Text" ),
-	          IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf" ),
+                  IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf" ),
                   IUP::Button->new( ACTION=>\&my_cb, IMAGE=>"IUP_Tecgraf", IMPRESS=>"IUP_Tecgraf" ),
                 ])
               );

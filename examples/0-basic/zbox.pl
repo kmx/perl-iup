@@ -35,7 +35,7 @@ my $frm = IUP::Frame->new( TITLE=>"Select an element", child=>
               IUP::Fill->new(),
               $list,
               IUP::Fill->new(),
-	    ] )
+            ] )
           );
 
 my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new( "MARGIN", "7x7", child=>[$frm, $zbox] ), SIZE=>"QUARTER", TITLE=>"IupZbox Example" );

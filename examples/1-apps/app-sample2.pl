@@ -146,7 +146,7 @@ sub init_dialog {
                  IUP::List->new( ACTION=>\&myaction, EDITBOX=>"YES",  EXPAND=>"YES", VALUE=>"3",
                                  1=>"Item 1 Text", 2=>"Item 2 Text", 3=>"Item 3 Text" ),
                ])
-	     );
+             );
 
   my $frm6 = IUP::Frame->new( TITLE=>"IupVal", child=>IUP::Val->new( MIN=>0, MAX=>100 ) );
 
@@ -154,9 +154,9 @@ sub init_dialog {
 
   my $frm8 = IUP::Frame->new( TITLE=>"IupTabs",
                               child=>IUP::Tabs->new( child=>[
-			          IUP::Label->new( TABTITLE=>"Tab Title 0", EXPAND=>"HORIZONTAL"),
-				  IUP::Label->new( TABTITLE=>"Tab Title 1", EXPAND=>"HORIZONTAL"),
-				  IUP::Label->new( TABTITLE=>"Tab Title 2", EXPAND=>"HORIZONTAL"),
+                                  IUP::Label->new( TABTITLE=>"Tab Title 0", EXPAND=>"HORIZONTAL"),
+                                  IUP::Label->new( TABTITLE=>"Tab Title 1", EXPAND=>"HORIZONTAL"),
+                                  IUP::Label->new( TABTITLE=>"Tab Title 2", EXPAND=>"HORIZONTAL"),
                               ] ) );
   
   my $frm9 = IUP::Frame->new( TITLE=>"IupCanvas", child=>IUP::Canvas->new( SIZE=>"x50", SCROLLBAR=>"YES", BGCOLOR=>"128 255 0" ) );
