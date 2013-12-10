@@ -1461,13 +1461,13 @@ The element B<IUP::Matrix> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=item * L<0-basic/mask_matrix.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/mask_matrix.pl> - IUP::Matrix + MASK example
+=item * L<0-basic/mask_matrix.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/0-basic/mask_matrix.pl> - IUP::Matrix + MASK example
 
-=item * L<0-basic/matrix_basic.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/matrix_basic.pl> - IUP::Matrix example
+=item * L<0-basic/matrix_basic.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/0-basic/matrix_basic.pl> - IUP::Matrix example
 
-=item * L<0-basic/matrix_cbmode.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/matrix_cbmode.pl> - IUP::Matrix (callback mode) example
+=item * L<0-basic/matrix_cbmode.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/0-basic/matrix_cbmode.pl> - IUP::Matrix (callback mode) example
 
 =back 
 

@@ -140,7 +140,7 @@ The element B<IUP::ProgressDlg> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
+=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
 
 =back 
 

@@ -14,12 +14,12 @@ fix:
 ##########################################################
 
 ######## later
-- POD: html tables - metacpan.org breaks header line (probably broken <th>)
 - Canvas: void functions should return $self
 - implement: MglPlotSetData(Ihandle *ih, int ds_index, float* data, int count_x, int count_y, int count_z);
 - POD: IUP::Canvas::FileBitmap: Supported constructors: XXX-TODO add some description
 - POD: IUP::Canvas::FileVector: Supported formats: XXX-TODO more description
-- POD: overall "doc polish" needed
+- POD: overall "doc polish" needed - search for 'XXX'
+- POD: html tables - metacpan.org breaks header line (probably broken <th>)
 
 ######## CODE/IMPORTANT: correct element destruction still needs some work
 - Internal/Element.pm (look for XXX-FIXME + XXX-CHECKLATER)

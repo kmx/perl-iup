@@ -2359,27 +2359,27 @@ The element B<IUP::Canvas> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/canvas1.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/canvas1.pl> - IUP::Canvas example
+=item * L<0-basic/canvas1.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/0-basic/canvas1.pl> - IUP::Canvas example
 
-=item * L<0-basic/canvas2.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/canvas2.pl> - IUP::Canvas example
+=item * L<0-basic/canvas2.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/0-basic/canvas2.pl> - IUP::Canvas example
 
-=item * L<0-basic/canvas3.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/canvas3.pl> - IUP::Canvas example
+=item * L<0-basic/canvas3.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/0-basic/canvas3.pl> - IUP::Canvas example
 
-=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=item * L<0-basic/colorbar.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/colorbar.pl> - IUP::ColorBar example
+=item * L<0-basic/colorbar.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/0-basic/colorbar.pl> - IUP::ColorBar example
 
-=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/sbox2.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/sbox2.pl> - IUP::Sbox example
+=item * L<0-basic/sbox2.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/0-basic/sbox2.pl> - IUP::Sbox example
 
-=item * L<0-basic/scrollbar.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/0-basic/scrollbar.pl> - IUP::Canvas (with scrollbar) example
+=item * L<0-basic/scrollbar.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/0-basic/scrollbar.pl> - IUP::Canvas (with scrollbar) example
 
-=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/1-apps/app-mdi.pl> - IUP app example
+=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_12/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.200_13/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
 =back 
 
