@@ -1,5 +1,8 @@
 Revision history for perl module IUP
 
+0.202 2014-04-08
+    - fixing bug in loading IUP::Internal::Canvas
+
 0.201 2013-12-10
     - UTF-8 support (requires iup-3.9)
     - INCOMPATIBLE CHANGE: IUP::PPlot has completely new interface (like MglPlot)

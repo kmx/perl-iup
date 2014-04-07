@@ -1,10 +1,11 @@
 package IUP::Internal::LibraryIup;
 
-@ISA = qw/ DynaLoader /;
-require DynaLoader;
-
+use strict;
+use warnings;
 use Scalar::Util 'weaken';
 
+our @ISA = qw/ DynaLoader /;
+require DynaLoader;
 bootstrap IUP::Internal::LibraryIup;
 
 #xxxCHECKLATER maybe something more thread safe

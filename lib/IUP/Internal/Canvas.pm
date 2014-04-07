@@ -1,9 +1,9 @@
 package IUP::Internal::Canvas;
 
-@ISA = qw/ DynaLoader /;
-require DynaLoader;
+use strict;
+use warnings;
 
-bootstrap IUP::Internal::Canvas; # load XS part
+use IUP::Internal::LibraryIup; #loads also XS part
 
 # accessor
 sub cnvhandle {

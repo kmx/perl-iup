@@ -9,13 +9,15 @@ if ($@) {
   exit 0;
 }
 
-my $lflags = Alien::IUP->config('LIBS');
-my $cflags = Alien::IUP->config('INC');
-
 unless (Alien::IUP->havelib( qw/iup im cd/ )) {
-  warn "Some of the essential libraries - iup, im, cd - is missing!\nGonna quit!\n";
+  warn "Some of the essential libraries - iup, im, cd - are missing!\n";
+  warn "Alien::IUP::VERSION=$Alien::IUP::VERSION\n";
+  warn "Gonna quit!\n";
   exit 0;
 }
+
+my $lflags = Alien::IUP->config('LIBS');
+my $cflags = Alien::IUP->config('INC');
 
 $cflags .= ' -DHAVELIB_IUPCD'         if Alien::IUP->havelib('iupcd');
 $cflags .= ' -DHAVELIB_IUPIM'         if Alien::IUP->havelib('iupim');
