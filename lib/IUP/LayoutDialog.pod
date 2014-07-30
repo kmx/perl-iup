@@ -164,7 +164,7 @@ The element B<IUP::LayoutDialog> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
 =back 
 

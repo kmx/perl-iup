@@ -39,7 +39,7 @@ The element B<IUP::User> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/text_format.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/0-basic/text_format.pl> - IUP::Text (formating) example
+=item * L<0-basic/text_format.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/text_format.pl> - IUP::Text (formating) example
 
 =back 
 

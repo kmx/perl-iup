@@ -286,29 +286,29 @@ The element B<IUP::Image> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/button.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/0-basic/button.pl> - IUP::Button example
+=item * L<0-basic/button.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/button.pl> - IUP::Button example
 
-=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=item * L<0-basic/dialog2.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/0-basic/dialog2.pl> - IUP::Dialog example
+=item * L<0-basic/dialog2.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/dialog2.pl> - IUP::Dialog example
 
-=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/0-basic/gauge.pl> - IUP::Gauge example
+=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/gauge.pl> - IUP::Gauge example
 
-=item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/0-basic/image.pl> - IUP::Image example
+=item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/image.pl> - IUP::Image example
 
-=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/0-basic/label.pl> - IUP::Label and IUP::Link example
+=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/label.pl> - IUP::Label and IUP::Link example
 
-=item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
+=item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
 
-=item * L<0-basic/progressbar3.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/0-basic/progressbar3.pl> - IUP::ProgressBar example
+=item * L<0-basic/progressbar3.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/progressbar3.pl> - IUP::ProgressBar example
 
-=item * L<0-basic/toggle.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/0-basic/toggle.pl> - IUP::Toggle example
+=item * L<0-basic/toggle.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/toggle.pl> - IUP::Toggle example
 
-=item * L<0-basic/tray.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/0-basic/tray.pl> - IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
+=item * L<0-basic/tray.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/tray.pl> - IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
 
-=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/1-apps/app-mdi.pl> - IUP app example
+=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
 =back 
 

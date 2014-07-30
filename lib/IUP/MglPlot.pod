@@ -43,9 +43,10 @@ Each plot can contain 2 or 3 B<axes> (X and Y and/or Z), a B<title>, a
 B< legend> B<box>, a B<colorbar>, a B<grid>, a B<dataset> B<area> and
 as many B<datasets> you want.
 
-Each dataset is added using the L<IUP::MglPlotAdd*|IUP::MglPlotAdd*>, L<IUP::MglPlotInsert*|IUP::MglPlotInsert*>
-andB< IUP::MglPlotSet* >functions. All other plot parameters are
-configured by attributes.
+Each dataset is added using the L<PlotAdd1D|/PlotAdd1D>, L<PlotAdd2D|/PlotAdd2D>, L<PlotAdd3D|/PlotAdd3D>, 
+L<PlotInsert1D|/PlotInsert1D>, L<PlotInsert2D|/PlotInsert2D>, L<PlotInsert3D|/PlotInsert3D>
+L<PlotSet1D|/PlotSet1D>, L<PlotSet2D|/PlotSet2D> and L<PlotSet3D|/PlotSet3D> functions. All other plot
+parameters are configured by attributes.
 
 If no attribute is set, the default values were selected to best
 display the plot.
@@ -226,25 +227,25 @@ automatically generated (0,1,2,3,...). I<Linear data only.>
  #or
  $plot->PlotAdd3D(\@x, \@y, \@z);
 
-Adds a sample to the dataset. Can only be called if L<IUP::MglPlotBegin|IUP::MglPlotBegin>
+Adds a sample to the dataset. Can only be called if L<PlotBegin|/PlotBegin>
 was called with dim=3. I<Linear data only.>
 
 =head3 PlotInsert1D()
 
- $plot->PlotInsert1D($index, $sample_index, \@name, \@y);
+ $plot->PlotInsert1D($ds_index, $sample_index, \@name, \@y);
  #or
- $plot->PlotInsert1D($index, $sample_index, \@y);
+ $plot->PlotInsert1D($ds_index, $sample_index, \@y);
 
 See L<PlotInsert2D|/"PlotInsert2D()">.
 
 =head3 PlotInsert2D()
 
- $plot->PlotInsert2D($index, $sample_index, \@x, \@y);
+ $plot->PlotInsert2D($ds_index, $sample_index, \@x, \@y);
 
 Inserts an array of samples in the dataset B<ds_index> at the given
 B<sample_index>. Can be used only after the dataset is added to the
 plot. B<sample_index> can be after the last sample so data is appended
-to the array. Current data is shifted if necessary. B<names> are
+to the array. Current data is shifted if necessary. For 1D version B<names> are
 optional strings used for tick labels in the X axis, and it can be C<undef>.
 Names are allowed only for the first dataset and when set
 ticks configuration for the X axis is ignored, all the names are shown.
@@ -269,7 +270,7 @@ See L<PlotSet2D|/"PlotSet2D()">.
 
 Sets an array of samples in the dataset B<ds_index>. Existing data is
 removed. Can be used only after the dataset is added to the plot.
-B<names> is an optional array of strings used for tick labels in the X
+For 1D version B<name> is an optional array of strings used for tick labels in the X
 axis, and it can be C<undef>. Names are allowed only for the
 first dataset and when set ticks configuration for the X axis is
 ignored, all the names are shown. Also for the 1D version, the X axis
@@ -289,9 +290,9 @@ Converts coordinates from plot coordinates to pixels. It can be used
 only inside PREDRAW_CB and POSTDRAW_CB callbacks. Output variables can
 be C<undef> if not used.
 
-=head3 PlotTransformXYZ()
+=head3 PlotTransformTo()
 
- ($x, $y, $z) = $plot->PlotTransformXYZ($ix, $iy);
+ ($x, $y, $z) = $plot->PlotTransformTo($ix, $iy);
 
 Converts coordinates from pixels to plot coordinates. It can be used
 only inside PREDRAW_CB and POSTDRAW_CB callbacks. Output variables can
@@ -1704,9 +1705,9 @@ The element B<IUP::MglPlot> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/mglplot1.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/0-basic/mglplot1.pl> - IUP::MglPlot example
+=item * L<0-basic/mglplot1.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/mglplot1.pl> - IUP::MglPlot example
 
-=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.201/examples/1-apps/app-plot-demo.pl> - dials for zooming
+=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
 =back 
 

@@ -55,7 +55,7 @@ _IupMglPlotNewDataSet(Ihandle *ih, int dim)
 	OUTPUT:
 		RETVAL
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotAdd1D(Ihandle *ih, const char* name, float y);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotAdd1D(Ihandle *ih, const char* name, double y);
 void
 _IupMglPlotAdd1D(Ihandle* ih, SV* xlist, SV* ylist)
 	INIT:
@@ -75,13 +75,13 @@ _IupMglPlotAdd1D(Ihandle* ih, SV* xlist, SV* ylist)
 		}
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotInsert1D(Ihandle* ih, int ds_index, int sample_index, const char** names, const float* y, int count);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotInsert1D(Ihandle* ih, int ds_index, int sample_index, const char** names, const double* y, int count);
 void
 _IupMglPlotInsert1D(Ihandle* ih, int ds_index, int sample_index, SV* xlist, SV* ylist)
 	INIT:
 		int pcount, xcount, ycount, i;
 		const char ** xpointers;
-		float * ypointers;
+		double * ypointers;
 	CODE:
 #ifdef HAVELIB_IUP_MGLPLOT
 		xcount = (SvROK(xlist) && SvTYPE(SvRV(xlist))==SVt_PVAV) ? (1+av_len((AV *)SvRV(xlist))) : 0;
@@ -89,7 +89,7 @@ _IupMglPlotInsert1D(Ihandle* ih, int ds_index, int sample_index, SV* xlist, SV* 
 		pcount = (xcount>ycount || xcount==0) ? ycount : xcount;
 		if (pcount>0) {
 		  xpointers = (xcount>0) ? malloc( pcount*sizeof(char*) ) : NULL;
-		  ypointers = malloc( pcount*sizeof(float) );
+		  ypointers = malloc( pcount*sizeof(double) );
 		  for(i=0; i<pcount; i++) { 
 		    if (xpointers) xpointers[i] = mySV2STR(*av_fetch((AV *)SvRV(xlist), i, 0));
 		    ypointers[i] = mySV2FLT(*av_fetch((AV *)SvRV(ylist), i, 0));
@@ -100,13 +100,13 @@ _IupMglPlotInsert1D(Ihandle* ih, int ds_index, int sample_index, SV* xlist, SV* 
 		}
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotSet1D(Ihandle* ih, int ds_index, const char** names, const float* y, int count);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotSet1D(Ihandle* ih, int ds_index, const char** names, const double* y, int count);
 void
 _IupMglPlotSet1D(Ihandle* ih, int ds_index, SV* xlist, SV* ylist)
 	INIT:
 		int pcount, xcount, ycount, i;
 		const char ** xpointers;
-		float * ypointers;
+		double * ypointers;
 	CODE:
 #ifdef HAVELIB_IUP_MGLPLOT
 		xcount = (SvROK(xlist) && SvTYPE(SvRV(xlist))==SVt_PVAV) ? (1+av_len((AV *)SvRV(xlist))) : 0;
@@ -114,7 +114,7 @@ _IupMglPlotSet1D(Ihandle* ih, int ds_index, SV* xlist, SV* ylist)
 		pcount = (xcount>ycount || xcount==0) ? ycount : xcount;
 		if (pcount>0) {
 		  xpointers = (xcount>0) ? malloc( pcount*sizeof(char*) ) : NULL;
-		  ypointers = malloc( pcount*sizeof(float) );
+		  ypointers = malloc( pcount*sizeof(double) );
 		  for(i=0; i<pcount; i++) { 
 		    if (xpointers) xpointers[i] = mySV2STR(*av_fetch((AV *)SvRV(xlist), i, 0));
 		    ypointers[i] = mySV2FLT(*av_fetch((AV *)SvRV(ylist), i, 0));
@@ -125,7 +125,7 @@ _IupMglPlotSet1D(Ihandle* ih, int ds_index, SV* xlist, SV* ylist)
 		}
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotAdd2D(Ihandle *ih, float x, float y);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotAdd2D(Ihandle *ih, double x, double y);
 void
 _IupMglPlotAdd2D(Ihandle* ih, SV* xlist, SV* ylist)
 	INIT:
@@ -145,21 +145,21 @@ _IupMglPlotAdd2D(Ihandle* ih, SV* xlist, SV* ylist)
 		}
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotInsert2D(Ihandle* ih, int ds_index, int sample_index, const float* x, const float* y, int count);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotInsert2D(Ihandle* ih, int ds_index, int sample_index, const double* x, const double* y, int count);
 void
 _IupMglPlotInsert2D(Ihandle* ih, int ds_index, int sample_index, SV* xlist, SV* ylist)
 	INIT:
 		int pcount, xcount, ycount, i;
-		float * xpointers;
-		float * ypointers;
+		double * xpointers;
+		double * ypointers;
 	CODE:
 #ifdef HAVELIB_IUP_MGLPLOT
 		xcount = (SvROK(xlist) && SvTYPE(SvRV(xlist))==SVt_PVAV) ? (1+av_len((AV *)SvRV(xlist))) : 0;
 		ycount = (SvROK(ylist) && SvTYPE(SvRV(ylist))==SVt_PVAV) ? (1+av_len((AV *)SvRV(ylist))) : 0;
 		pcount = (xcount>ycount) ? ycount : xcount;
 		if (pcount>0) {
-		  xpointers = malloc( pcount*sizeof(float) );
-		  ypointers = malloc( pcount*sizeof(float) );
+		  xpointers = malloc( pcount*sizeof(double) );
+		  ypointers = malloc( pcount*sizeof(double) );
 		  for(i=0; i<pcount; i++) { 
 		    xpointers[i] = mySV2FLT(*av_fetch((AV *)SvRV(xlist), i, 0));
 		    ypointers[i] = mySV2FLT(*av_fetch((AV *)SvRV(ylist), i, 0));
@@ -170,21 +170,21 @@ _IupMglPlotInsert2D(Ihandle* ih, int ds_index, int sample_index, SV* xlist, SV* 
 		}
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotSet2D(Ihandle* ih, int ds_index, const float* x, const float* y, int count);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotSet2D(Ihandle* ih, int ds_index, const double* x, const double* y, int count);
 void
 _IupMglPlotSet2D(Ihandle* ih, int ds_index, SV* xlist, SV* ylist)
 	INIT:
 		int pcount, xcount, ycount, i;
-		float * xpointers;
-		float * ypointers;
+		double * xpointers;
+		double * ypointers;
 	CODE:
 #ifdef HAVELIB_IUP_MGLPLOT
 		xcount = (SvROK(xlist) && SvTYPE(SvRV(xlist))==SVt_PVAV) ? (1+av_len((AV *)SvRV(xlist))) : 0;
 		ycount = (SvROK(ylist) && SvTYPE(SvRV(ylist))==SVt_PVAV) ? (1+av_len((AV *)SvRV(ylist))) : 0;
 		pcount = (xcount>ycount) ? ycount : xcount;
 		if (pcount>0) {
-		  xpointers = malloc( pcount*sizeof(float) );
-		  ypointers = malloc( pcount*sizeof(float) );
+		  xpointers = malloc( pcount*sizeof(double) );
+		  ypointers = malloc( pcount*sizeof(double) );
 		  for(i=0; i<pcount; i++) { 
 		    xpointers[i] = mySV2FLT(*av_fetch((AV *)SvRV(xlist), i, 0));
 		    ypointers[i] = mySV2FLT(*av_fetch((AV *)SvRV(ylist), i, 0));
@@ -195,7 +195,7 @@ _IupMglPlotSet2D(Ihandle* ih, int ds_index, SV* xlist, SV* ylist)
 		}
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotAdd3D(Ihandle *ih, float x, float y, float z);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotAdd3D(Ihandle *ih, double x, double y, double z);
 void
 _IupMglPlotAdd3D(Ihandle* ih, SV* xlist, SV* ylist, SV* zlist)
 	INIT:
@@ -221,14 +221,14 @@ _IupMglPlotAdd3D(Ihandle* ih, SV* xlist, SV* ylist, SV* zlist)
 		}
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotInsert3D(Ihandle* ih, int ds_index, int sample_index, const float* x, const float* y, const float* z, int count);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotInsert3D(Ihandle* ih, int ds_index, int sample_index, const double* x, const double* y, const double* z, int count);
 void
 _IupMglPlotInsert3D(Ihandle* ih, int ds_index, int sample_index, SV* xlist, SV* ylist, SV* zlist)
 	INIT:
 		int pcount, xcount, ycount, zcount, i;
-		float * xpointers;
-		float * ypointers;
-                float * zpointers;
+		double * xpointers;
+		double * ypointers;
+                double * zpointers;
 	CODE:
 #ifdef HAVELIB_IUP_MGLPLOT
 		xcount = (SvROK(xlist) && SvTYPE(SvRV(xlist))==SVt_PVAV) ? (1+av_len((AV *)SvRV(xlist))) : 0;
@@ -237,9 +237,9 @@ _IupMglPlotInsert3D(Ihandle* ih, int ds_index, int sample_index, SV* xlist, SV* 
 		if (xcount>ycount) pcount = ycount; else pcount = xcount;
 		if (pcount>zcount) pcount = zcount;
 		if (pcount>0) {
-		  xpointers = malloc( pcount*sizeof(float) );
-		  ypointers = malloc( pcount*sizeof(float) );
-		  zpointers = malloc( pcount*sizeof(float) );
+		  xpointers = malloc( pcount*sizeof(double) );
+		  ypointers = malloc( pcount*sizeof(double) );
+		  zpointers = malloc( pcount*sizeof(double) );
 		  for(i=0; i<pcount; i++) { 
 		    xpointers[i] = mySV2FLT(*av_fetch((AV *)SvRV(xlist), i, 0));
 		    ypointers[i] = mySV2FLT(*av_fetch((AV *)SvRV(ylist), i, 0));
@@ -252,14 +252,14 @@ _IupMglPlotInsert3D(Ihandle* ih, int ds_index, int sample_index, SV* xlist, SV* 
 		}
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotSet3D(Ihandle* ih, int ds_index, const float* x, const float* y, const float* z, int count);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotSet3D(Ihandle* ih, int ds_index, const double* x, const double* y, const double* z, int count);
 void
 _IupMglPlotSet3D(Ihandle* ih, int ds_index, SV* xlist, SV* ylist, SV* zlist)
 	INIT:
 		int pcount, xcount, ycount, zcount, i;
-		float * xpointers;
-		float * ypointers;
-		float * zpointers;
+		double * xpointers;
+		double * ypointers;
+		double * zpointers;
 	CODE:
 #ifdef HAVELIB_IUP_MGLPLOT
 		xcount = (SvROK(xlist) && SvTYPE(SvRV(xlist))==SVt_PVAV) ? (1+av_len((AV *)SvRV(xlist))) : 0;
@@ -268,9 +268,9 @@ _IupMglPlotSet3D(Ihandle* ih, int ds_index, SV* xlist, SV* ylist, SV* zlist)
 		if (xcount>ycount) pcount = ycount; else pcount = xcount;
 		if (pcount>zcount) pcount = zcount;
 		if (pcount>0) {
-		  xpointers = malloc( pcount*sizeof(float) );
-		  ypointers = malloc( pcount*sizeof(float) );
-		  zpointers = malloc( pcount*sizeof(float) );
+		  xpointers = malloc( pcount*sizeof(double) );
+		  ypointers = malloc( pcount*sizeof(double) );
+		  zpointers = malloc( pcount*sizeof(double) );
 		  for(i=0; i<pcount; i++) { 
 		    xpointers[i] = mySV2FLT(*av_fetch((AV *)SvRV(xlist), i, 0));
 		    ypointers[i] = mySV2FLT(*av_fetch((AV *)SvRV(ylist), i, 0));
@@ -283,9 +283,9 @@ _IupMglPlotSet3D(Ihandle* ih, int ds_index, SV* xlist, SV* ylist, SV* zlist)
 		}
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotTransform(Ihandle* ih, float x, float y, float z, int *ix, int *iy);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotTransform(Ihandle* ih, double x, double y, double z, int *ix, int *iy);
 void
-_IupMglPlotTransform(Ihandle* ih, float x, float y, float z)
+_IupMglPlotTransform(Ihandle* ih, double x, double y, double z)
 	INIT:
 		int ix, iy;
 	PPCODE:
@@ -295,46 +295,46 @@ _IupMglPlotTransform(Ihandle* ih, float x, float y, float z)
 		XPUSHs(sv_2mortal(newSViv(iy)));
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotTransformXYZ(Ihandle* ih, int ix, int iy, float *x, float *y, float *z);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotTransformTo(Ihandle* ih, int ix, int iy, double *x, double *y, double *z);
 void
-_IupMglPlotTransformXYZ(Ihandle* ih, int ix, int iy)
+_IupMglPlotTransformTo(Ihandle* ih, int ix, int iy)
 	INIT:
-		float x, y, z;
+		double x, y, z;
 	PPCODE:
 #ifdef HAVELIB_IUP_MGLPLOT
-		IupMglPlotTransformXYZ(ih,ix,iy,&x,&y,&z);
+		IupMglPlotTransformTo(ih,ix,iy,&x,&y,&z);
 		XPUSHs(sv_2mortal(newSVnv(x)));
 		XPUSHs(sv_2mortal(newSVnv(y)));
 		XPUSHs(sv_2mortal(newSVnv(z)));
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotPaintTo(Ihandle *ih, const char* format, int w, int h, float dpi, void *data);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotPaintTo(Ihandle *ih, const char* format, int w, int h, double dpi, void *data);
 void
-_IupMglPlotPaintTo(Ihandle* ih, char* format, int w, int h, float dpi, char *data)
+_IupMglPlotPaintTo(Ihandle* ih, char* format, int w, int h, double dpi, char *data)
 	CODE:
 #ifdef HAVELIB_IUP_MGLPLOT
 		IupMglPlotPaintTo(ih,format,w,h,dpi,data); /* data == filename*/
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotDrawMark(Ihandle* ih, float x, float y, float z);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotDrawMark(Ihandle* ih, double x, double y, double z);
 void
-_IupMglPlotDrawMark(Ihandle* ih, float x, float y, float z)
+_IupMglPlotDrawMark(Ihandle* ih, double x, double y, double z)
 	CODE:
 #ifdef HAVELIB_IUP_MGLPLOT
 		IupMglPlotDrawMark(ih,x,y,z);
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotDrawLine(Ihandle* ih, float x1, float y1, float z1, float x2, float y2, float z2);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotDrawLine(Ihandle* ih, double x1, double y1, double z1, double x2, double y2, double z2);
 void
-_IupMglPlotDrawLine(Ihandle* ih, float x1, float y1, float z1, float x2, float y2, float z2)
+_IupMglPlotDrawLine(Ihandle* ih, double x1, double y1, double z1, double x2, double y2, double z2)
 	CODE:
 #ifdef HAVELIB_IUP_MGLPLOT
 		IupMglPlotDrawLine(ih,x1,y1,z1,x2,y2,z2);
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotDrawText(Ihandle* ih, const char* text, float x, float y, float z);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotDrawText(Ihandle* ih, const char* text, double x, double y, double z);
 void
-_IupMglPlotDrawText(Ihandle* ih, const char* text, float x, float y, float z)
+_IupMglPlotDrawText(Ihandle* ih, const char* text, double x, double y, double z)
 	CODE:
 #ifdef HAVELIB_IUP_MGLPLOT
 		IupMglPlotDrawText(ih,text,x,y,z);
@@ -374,7 +374,7 @@ _IupMglPlotSetFromFormula(Ihandle* ih, int ds_index, char* formula, ...)
                 IupMglPlotSetFromFormula(ih,ds_index,formula,count_x,count_y,count_z);
 #endif
 
-#### Original C function from <iup_mglplot.h> # void IupMglPlotSetData(Ihandle* ih, int ds_index, const float* data, int count_x, int count_y, int count_z);
+#### Original C function from <iup_mglplot.h> # void IupMglPlotSetData(Ihandle* ih, int ds_index, const double* data, int count_x, int count_y, int count_z);
 void
 _IupMglPlotSetData(Ihandle* ih, int ds_index, SV* data, int count_x, int count_y, int count_z)
 	CODE:

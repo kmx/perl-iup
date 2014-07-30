@@ -22,10 +22,12 @@ my $cflags = Alien::IUP->config('INC');
 $cflags .= ' -DHAVELIB_IUPCD'         if Alien::IUP->havelib('iupcd');
 $cflags .= ' -DHAVELIB_IUPIM'         if Alien::IUP->havelib('iupim');
 $cflags .= ' -DHAVELIB_IUPGL'         if Alien::IUP->havelib('iupgl');
+$cflags .= ' -DHAVELIB_IUPGLCONTROLS' if Alien::IUP->havelib('iupglcontrols');
 $cflags .= ' -DHAVELIB_IUPOLE'        if Alien::IUP->havelib('iupole');
 $cflags .= ' -DHAVELIB_IUPCONTROLS'   if Alien::IUP->havelib('iupcontrols');
 $cflags .= ' -DHAVELIB_IUP_PPLOT'     if Alien::IUP->havelib('iup_pplot');
 $cflags .= ' -DHAVELIB_IUP_MGLPLOT'   if Alien::IUP->havelib('iup_mglplot');
+$cflags .= ' -DHAVELIB_IUP_SCINTILLA' if Alien::IUP->havelib('iup_scintilla');
 $cflags .= ' -DHAVELIB_IUPIMGLIB'     if Alien::IUP->havelib('iupimglib');
 $cflags .= ' -DHAVELIB_CDCONTEXTPLUS' if Alien::IUP->havelib('cdcontextplus');
 

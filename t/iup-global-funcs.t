@@ -11,7 +11,7 @@ use Test::More;
 use IUP ':all';
 #use Data::Dumper;
 
-like(IUP->Version, qr/^[0-9]\.[0-9]$/, 'IUP->Version' );
+like(IUP->Version, qr/^[0-9]+\.[0-9]+$/, 'IUP->Version' );
 like(IUP->VersionNumber, qr/^[0-9]+$/, 'IUP->VersionNumber' );
 
 my $l = IUP->GetLanguage;

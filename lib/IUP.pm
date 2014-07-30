@@ -9,8 +9,7 @@ use IUP::Internal::LibraryIup;
 use IUP::Constants;
 
 # following recommendation from http://www.dagolden.com/index.php/369/version-numbers-should-be-boring/
-our $VERSION = "0.202";
-$VERSION = eval $VERSION;
+our $VERSION = "0.202_1";
 
 sub BEGIN {
   #warn "[DEBUG] IUP::BEGIN() started\n";

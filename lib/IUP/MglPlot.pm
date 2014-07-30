@@ -137,9 +137,9 @@ sub PlotTransform {
   return ($ix, $iy);
 }
 
-sub PlotTransformXYZ {
+sub PlotTransformTo {
   my ($self, $ix, $iy) = @_;
-  my ($x, $y, $z) = IUP::Internal::LibraryIup::_IupMglPlotTransformXYZ($self->ihandle, $ix, $iy);
+  my ($x, $y, $z) = IUP::Internal::LibraryIup::_IupMglPlotTransformTo($self->ihandle, $ix, $iy);
   return ($x, $y, $z);
 }
 
