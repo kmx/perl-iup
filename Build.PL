@@ -31,6 +31,8 @@ $cflags .= ' -DHAVELIB_IUP_SCINTILLA' if Alien::IUP->havelib('iup_scintilla');
 $cflags .= ' -DHAVELIB_IUPIMGLIB'     if Alien::IUP->havelib('iupimglib');
 $cflags .= ' -DHAVELIB_CDCONTEXTPLUS' if Alien::IUP->havelib('cdcontextplus');
 
+$lflags .= ' -limm32' if Alien::IUP->havelib('iup_scintilla') && $^O eq 'MSWin32';
+
 my $class = 'Module::Build';
 if (-d '.git') { #adding some custom actions relevant only for module development
   $class = Module::Build->subclass( class => "Module::Build::Custom", code => <<'CODE' );

@@ -36,6 +36,18 @@
 #include <iupole.h>
 #endif
 
+#ifdef HAVELIB_IUPGLCONTROLS
+#include <iupglcontrols.h>
+#endif
+
+#ifdef HAVELIB_IUP_SCINTILLA
+#include <iup_scintilla.h>
+#endif
+
+#ifdef HAVELIB_CDCONTEXTPLUS
+/* XXX */
+#endif
+
 /* Used only by the Perl binding not in iup.h */
 int iupGetParamCount(const char *format, int *param_extra);
 char iupGetParamType(const char* format, int *line_size);
@@ -1886,6 +1898,29 @@ _IupPlayInput(filename)
         OUTPUT:
                 RETVAL
                 
+################################################################################ iup_scintilla.h
+
+# void IupScintillaOpen(void);
+void
+_IupScintillaOpen()
+        CODE:
+#ifdef HAVELIB_IUP_SCINTILLA
+                IupScintillaOpen();
+#endif
+
+
+# Ihandle *IupScintilla(void);
+Ihandle*
+_IupScintilla()
+        CODE:
+#ifdef HAVELIB_IUP_SCINTILLA
+                RETVAL = IupScintilla();
+#else
+                RETVAL = 0;
+#endif
+        OUTPUT:
+                RETVAL
+
 ################################################################################ iupcontrols.h
 
 #### Original C function from <iupcontrols.h>
