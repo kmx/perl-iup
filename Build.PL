@@ -75,7 +75,7 @@ my $builder = $class->new(
   build_requires       => { # need to have for running: ./Build (install|test)
     'perl'                 => 5.008008,
     'Module::Build'        => 0.36,
-    'Alien::IUP'           => 0.600,
+    'Alien::IUP'           => 0.700,
     'Test::More'           => 0,
     'Carp'                 => 0,
     'constant'             => 0,
@@ -83,7 +83,7 @@ my $builder = $class->new(
   configure_requires   => { # need to have for running: perl Buil.PL
     'perl'                 => 5.008008,
     'Module::Build'        => 0.36,
-    'Alien::IUP'           => 0.600,
+    'Alien::IUP'           => 0.700,
   },
   c_source             => 'src', # ppport.h
   extra_linker_flags   => $lflags,

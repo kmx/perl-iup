@@ -73,19 +73,19 @@ turns the overwrite mode ON or OFF.
 When enabled, each typed character replaces the character to the right
 of the text caret. When disabled, characters are inserted at the caret.
 
-=item * B<READONLY >(non inheritable)
+=item * B<READONLY> (non inheritable)
 
 Allows the user only to read the
 contents, without changing it. Restricts the insertion using keyboard
 input and attributes. Navigation keys are still available. 
 Possible values: "YES" and "NO". Default: NO.
 
-=item * B<X<SAVEDSTATE>SAVEDSTATE> (non inheritable)
+=item * B<SAVEDSTATE> (non inheritable)
 
 sets the current state of
 the document to saved (given value is ignored), returns Yes or No if
 the document has been modified. After setting the SAVEDSTATE, when
-editing is done the L< SAVEPOINT_CB|#SAVEPOINT_CB> callback is called
+editing is done the L<SAVEPOINT_CB> callback is called
 with status=0. When undo is performed back to the point were the saved
 state was set the callback is called again with status=1.
 
@@ -150,7 +150,7 @@ of the current text. If APPENDNEWLINE=YES, a "\n" character will be
 automatically inserted before the appended text if the current text is
 not empty (APPENDNEWLINE default is YES).
 
-=item * B<CHARI<id>> (non inheritable, read-only)
+=item * B<CHAR(id)> (non inheritable, read-only)
 
 returns the character at a
 given position, considering the "id" as the position.
@@ -171,14 +171,14 @@ Deletes a range of text
 in the document. It uses a string format "B<pos,len>" in order to
 indicate the start position and text length to delete.
 
-=item * B<INSERTI<id>> (non inheritable, write-only)
+=item * B<INSERT(id)> (non inheritable, write-only)
 
 Inserts a text string at
 position "id" or at the current position if pos is -1 or omitted. If
 the current position is after the insertion point then it is moved
 along with its surrounding text but no scrolling is performed.
 
-=item * B<LINEI<id>> (non inheritable, read-only)
+=item * B<LINE(id)> (non inheritable, read-only)
 
 returns the text of the
 line, considering the "id" as the line number. It does not include the
@@ -201,7 +201,7 @@ Inserts a text at the
 will be automatically inserted after the prepended text if the current
 text is not empty (APPENDNEWLINE default is YES).
 
-B<VALUE >(non inheritable)
+=item * B<VALUE> (non inheritable)
 
 Text entered by the user. The "\n"
 character indicates a new line. After the element is mapped and if
@@ -214,14 +214,14 @@ text in the document with the zero terminated text string you pass in.
 
 =over
 
-=item * B<ANNOTATIONTEXT>B<B<I<id>> >(non inheritable)
+=item * B<ANNOTATIONTEXT(id)> (non inheritable)
 
 defines and returns an
 annotation displayed underneath a specific line, considering the "id"
 as the line number. An annotation may consist of multiple lines
 separated by '\n'.
 
-=item * B<ANNOTATIONSTYLE>B<B<I<id>> >(non inheritable)
+=item * B<ANNOTATIONSTYLE(id)> (non inheritable)
 
 sets and gets a
 particular style to the annotation, considering the "id" as the line
@@ -250,7 +250,7 @@ annotations.
 
 =over
 
-=item * B<AUTOCSHOWB<I<id>>> (non inheritable, write only)
+=item * B<AUTOCSHOW(id)> (non inheritable, write only)
 
 causes a list of
 words to be displayed. The words are separated by a space. "id" defines
@@ -333,7 +333,7 @@ the brace badlighting style (See L<Style Definition|#StyleDefinition>,
 id = 35) can be used to show the brace that is unmatched. Set -1 as
 position removes the highlight.
 
-=item * B<BRACEMATCHI<id>> (non inheritable, read only)
+=item * B<BRACEMATCH(id)> (non inheritable, read only)
 
 finds a corresponding
 matching brace given id, the position of one brace. The brace
@@ -347,7 +347,7 @@ matching brace cannot be found, the return value is -1.
 
 =over
 
-=item * B<X<CARET>CARET> (non inheritable)
+=item * B<CARET> (non inheritable)
 
 Position of the insertion point.
 The first position, B<lin> or B<col>, is "0". It uses a string format
@@ -361,7 +361,7 @@ line.
 
 If the caret is not visible the text is scrolled to make it visible.
 
-=item * B<X<CARETPOS>CARETPOS> (non inheritable)
+=item * B<CARETPOS> (non inheritable)
 
 Position of the insertion
 point using a zero based character unique index "pos". Useful for
@@ -408,7 +408,7 @@ lines are drawn. Can be: "LEVELNUMBERS", "LINEBEFORE_EXPANDED",
 "LINEBEFORE_CONTRACTED", "LINEAFTER_EXPANDED" or "LINEAFTER_CONTRACTED
 " (default).
 
-=item * B<FOLDLEVELI<id>> (non inheritable)
+=item * B<FOLDLEVEL(id)> (non inheritable)
 
 sets and gets the fold level of a
 "id" line. Can be: "WHITEFLAG", "HEADERFLAG", "NUMBERMASK" or "BASE"
@@ -428,7 +428,7 @@ lines, or contracted, hiding all the child lines.
 
 =over
 
-=item * B<KEYWORDI<id>> (non inheritable, write-only)
+=item * B<KEYWORD(id)> (non inheritable, write-only)
 
 keyword list used by the
 current Lexer. Until 9 lists of keywords can set up using id from 0 to
@@ -477,19 +477,19 @@ information then an empty string is returned.
 
 =over
 
-=item * B<MARGINMASKFOLDERSI<id> >(non inheritable)
+=item * B<MARGINMASKFOLDERS(id)> (non inheritable)
 
 defines if a margin is
 folding or non-folding. Can be: Yes or No.
 
-=item * B<MARGINSENSITIVEI<id> >(non inheritable)
+=item * B<MARGINSENSITIVE(id)> (non inheritable)
 
 determines if a margin is
 sensitive or not. Margins that are not sensitive act as selection
 margins which make it easy to select ranges of lines. By default, all
 margins are insensitive. Can be: YES or NO.
 
-=item * B<MARGINTYPEI<id> >(non inheritable)
+=item * B<MARGINTYPE(id)> (non inheritable)
 
 set and get the type of a margin.
 The margin argument should be 0, 1, 2, 3 or 4. Each margin can be set
@@ -499,7 +499,7 @@ text), "BACKGROUND" or "FOREGROUND" (the latter two used for symbol
 margins that set their background or foreground using the style default
 colors).
 
-=item * B<MARGINWIDTHI<id> >(non inheritable)
+=item * B<MARGINWIDTH(id)> (non inheritable)
 
 width of a margin in pixels
 (Default value: 0). A margin with width=0 is invisible. The margins are
@@ -519,12 +519,12 @@ side. Default: 1.
 size of the blank margin on the right
 side. Default: 1.
 
-=item * B<MARGINTEXTI<id> >(non inheritable)
+=item * B<MARGINTEXT(id)> (non inheritable)
 
 controls the text of each line of
 a text margin. id is the line number.
 
-=item * B<MARGINTEXTSTYLEI<id> >(non inheritable)
+=item * B<MARGINTEXTSTYLE(id)> (non inheritable)
 
 controls the style of the
 text of each line of a text margin. id is the line number.
@@ -534,7 +534,7 @@ text of each line of a text margin. id is the line number.
 clear all text and
 styles of a text margin.
 
-=item * B<MARGINCURSORI<id> >(non inheritable)
+=item * B<MARGINCURSOR(id)> (non inheritable)
 
 set and get the arrow cursor
 normally shown over margins. Can be: "REVERSEARROW" (default) or
@@ -559,7 +559,7 @@ pre-defined names: "FOLDEREND", "FOLDEROPENMID", "FOLDERMIDTAIL",
 
 =item * B<Marker symbols:> (see MARKERSYMBOL).
 
-B<MARKERSYMBOLI<id>> (non inheritable)
+=item * B<MARKERSYMBOL(id)> (non inheritable)
 
 Defines a marker symbol given
 its number. id can be from 0 to 31.
@@ -574,31 +574,31 @@ its number. id can be from 0 to 31.
 the line), "RGBAIMAGE" and "CHARACTER+c" (where c is an ASCii character
 code).
 
-B<MARKERFGCOLORI<id> >(non inheritable, write only)
+=item * B<MARKERFGCOLOR(id)> (non inheritable, write only)
 
 defines the
 foreground color of a marker number (id). Values in RGB format ("r g
 b").
 
-=item * B<MARKERBGCOLORI<id>> (non inheritable, write only)
+=item * B<MARKERBGCOLOR(id)> (non inheritable, write only)
 
 defines the
 background color of a marker number (id). Values in RGB format ("r g
 b").
 
-=item * B<MARKERBGCOLORSELI<id>> (non inheritable, write only)
+=item * B<MARKERBGCOLORSEL(id)> (non inheritable, write only)
 
 defines the
 highlight background colour of a marker number (id) when its folding
 block is selected. Values in RGB format ("r g b").
 
-=item * B<MARKERALPHAI<id> >(non inheritable, write only)
+=item * B<MARKERALPHA(id)> (non inheritable, write only)
 
 defines the alpha
 value of a marker number (id). Markers may be drawn translucently when
 there are no margins.
 
-=item * B<MARKERRGBAIMAGEI<id> >(non inheritable, write only)
+=item * B<MARKERRGBAIMAGE(id)> (non inheritable, write only)
 
 defines the
 image name to be used on a marker number. Use
@@ -620,7 +620,7 @@ enable or disable the the
 highlight folding block when it is selected. (i.e. block that contains
 the caret). Can be Yes or No. Default: No.
 
-=item * B<MARKERADDI<id>> (non inheritable, write-only)
+=item * B<MARKERADD(id)> (non inheritable, write-only)
 
 adds marker number to
 a line (id). Internally, sets the marker handle number
@@ -630,7 +630,7 @@ a marker is after moving or combining lines removes markers of the
 given number from all lines. If marker number is -1, it deletes all
 markers from all lines.
 
-=item * B<MARKERDELETEI<id>> (non inheritable, write-only)
+=item * B<MARKERDELETE(id)> (non inheritable, write-only)
 
 deletes marker
 number given a line number (id). If marker number is -1, all markers
@@ -642,13 +642,13 @@ removes markers of
 the given number from all lines. If marker number is -1, it deletes all
 markers from all lines.
 
-=item * B<MARKERGETI<id>> (non inheritable, read-only)
+=item * B<MARKERGET(id)> (non inheritable, read-only)
 
 returns a 32-bit
 integer that indicates which markers were present on the line (id). Bit
 0 is set if marker 0 is present, bit 1 for marker 1 and so on.
 
-=item * B<MARKERNEXTI<id>> (non inheritable, write-only)
+=item * B<MARKERNEXT(id)> (non inheritable, write-only)
 
 searches a given
 marker number, starting at line number (id) and continuing forwards to
@@ -656,7 +656,7 @@ the end of the file. Internally, sets the the line number of the first
 line that contains the marker (LASTMARKERFOUND attribute) or -1, if no
 marker is found.
 
-=item * B<MARKERPREVIOUSI<id>> (non inheritable, write-only)
+=item * B<MARKERPREVIOUS(id)> (non inheritable, write-only)
 
 searches a given
 marker number, starting at line number (id) and continuing backwards to
@@ -664,7 +664,7 @@ the start of the file. Internally, sets the the line number of the
 first line that contains the marker (LASTMARKERFOUND attribute) or -1,
 if no marker is found.
 
-=item * B<MARKERLINEFROMHANDLEI<id>> (non inheritable, read-only)
+=item * B<MARKERLINEFROMHANDLE(id)> (non inheritable, read-only)
 
 searches the
 document for the marker given its handle returned in MARKERADDid (use
@@ -791,37 +791,36 @@ attribute TXTFGCOLOR. If changed it will affect the default style.
 the text font. Default: the global
 attribute DEFAULTFONT. If changed it will affect the default style.
 
-=item * B<STYLEBGCOLORI<id>> (non inheritable)
+=item * B<STYLEBGCOLOR(id)> (non inheritable)
 
 background color for a style
 (See L<Style Definition|#StyleDefinition>). Values in RGB format ("r g
 b").
 
-=item * B<STYLEBOLDI<id>> (non inheritable)
+=item * B<STYLEBOLD(id)> (non inheritable)
 
-the boldness of a font (See
-=item * L<Style Definition|#StyleDefinition>).
+the boldness of a font (See Style Definition).
 
-B<STYLECASEI<id>> (non inheritable)
+=item * B<STYLECASE(id)> (non inheritable)
 
 determines how text is displayed
 (See L<Style Definition|#StyleDefinition>). Values: LOWERCASE,
 UPPERCASE or MIXED (default).
 
-=item * B<STYLECHARSETI<id>> (non inheritable)
+=item * B<STYLECHARSET(id)> (non inheritable)
 
 sets and gets a style to use a
 different character set than the default (See L<Style
 Definition|#StyleDefinition>). Can be ANSI (default), EASTEUROPE,
 RUSSIAN, GB2312, HANGUL or SHIFTJIS.
 
-=item * B<STYLECLEARALLI<id>> (non inheritable)
+=item * B<STYLECLEARALL(id)> (non inheritable)
 
 sets all styles to have the
 same attributes as default global style (id = 32) (See L<Style
 Definition|#StyleDefinition>).
 
-=item * B<STYLEEOLFILLEDI<id>> (non inheritable)
+=item * B<STYLEEOLFILLED(id)> (non inheritable)
 
 If the last character in the
 line has a style with this attribute set, the remainder of the line up
@@ -829,32 +828,32 @@ to the right edge of the window is filled with the background color set
 for the last character (See L<Style Definition|#StyleDefinition>). Can
 be YES (italic) or NO.
 
-=item * B<STYLEFGCOLORI<id>> (non inheritable)
+=item * B<STYLEFGCOLOR(id)> (non inheritable)
 
 foreground color for a style
 (See L<Style Definition|#StyleDefinition>). Values in RGB format ("r g
 b").
 
-=item * B<STYLEFONTI<id>> (non inheritable)
+=item * B<STYLEFONT(id)> (non inheritable)
 
 sets and gets the font name (See
 =item * L<Style Definition|#StyleDefinition>). Scintilla caches fonts by their
 names, but the cache is case sensitive.
 
-B<STYLEFONTSIZEI<id>> (non inheritable)
+=item * B<STYLEFONTSIZE(id)> (non inheritable)
 
 sets and gets the font size
 (See L<Style Definition|#StyleDefinition>), using a integer number of
 points.
 
-=item * B<STYLEFONTSIZEFRACI<id>> (non inheritable)
+=item * B<STYLEFONTSIZEFRAC(id)> (non inheritable)
 
 sets and gets the font
 size (See L<Style Definition|#StyleDefinition>), using a fractional
 point size in hundredths of a point. For example, a text size of 9.4
 points is set with value = 940.
 
-=item * B<STYLEHOTSPOTI<id>> (non inheritable)
+=item * B<STYLEHOTSPOT(id)> (non inheritable)
 
 used to mark ranges of text
 that can detect mouse clicks (See L<Style
@@ -863,29 +862,29 @@ hotspots, and the foreground, and background colors may change and an
 underline appear to indicate that these areas are sensitive to
 clicking. This may be used to allow hyperlinks to other documents.
 
-=item * B<STYLEITALICI<id>> (non inheritable)
+=item * B<STYLEITALIC(id)> (non inheritable)
 
 the italic style of a font (See
 =item * L<Style Definition|#StyleDefinition>). Can be YES (italic) or NO.
 
-B<STYLERESETI<id>> (non inheritable, write-only)
+=item * B<STYLERESET(id)> (non inheritable, write-only)
 
 Resets to the initial
 Scintilla style default (See L<Style Definition|#StyleDefinition>).
 
-=item * B<STYLEUNDERLINEI<id>> (non inheritable)
+=item * B<STYLEUNDERLINE(id)> (non inheritable)
 
 determines if the underline
 is drawn, using a foreground color (See L<Style
 Definition|#StyleDefinition>). Can be YES (underline) or NO.
 
-=item * B<STYLEVISIBLEI<id>> (non inheritable)
+=item * B<STYLEVISIBLE(id)> (non inheritable)
 
 determines if the text is
 visible (YES) or hidden (NO) (See L<Style
 Definition|#StyleDefinition>).
 
-=item * B<STYLEWEIGHTI<id>> (non inheritable)
+=item * B<STYLEWEIGHT(id)> (non inheritable)
 
 the weight of a font (See
 =item * L<Style Definition|#StyleDefinition>). Predefined values
@@ -910,7 +909,7 @@ information and reset the folding state.
 prepares for styling by
 setting the styling position.
 
-=item * B<STYLINGI<id>> (non inheritable, write only)
+=item * B<STYLING(id)> (non inheritable, write only)
 
 sets the style of given
 length characters starting at the styling position and then increases
@@ -1144,8 +1143,6 @@ B<$pos> - 0 based character position.
 
 Action generated when
 one or more files are dropped in the element.
-
-=back
 
 =item * B<HOTSPOTCLICK_CB>
 
