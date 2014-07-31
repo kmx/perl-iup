@@ -17,7 +17,8 @@ use Getopt::Long;
 require "$FindBin::Bin/utils.pm";
 die "Cannot require utils.pm\n" if $@;
 
-my $what = 'cd-5.7';
+my $what = 'cd-5.8';
+#my $what = 'iup-3.11';
 
 # global variables
 my $g_help    = 0;
