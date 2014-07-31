@@ -808,6 +808,8 @@ The element B<IUP::Dialog> is used in the following sample scripts:
 
 =item * L<0-basic/sbox2.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/sbox2.pl> - IUP::Sbox example
 
+=item * L<0-basic/scintilla.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/scintilla.pl> - IUP::Scintilla example
+
 =item * L<0-basic/scrollbar.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/scrollbar.pl> - IUP::Canvas (with scrollbar) example
 
 =item * L<0-basic/separator.pl|https://metacpan.org/source/KMX/IUP-0.202_1/examples/0-basic/separator.pl> - IUP::Separator example
