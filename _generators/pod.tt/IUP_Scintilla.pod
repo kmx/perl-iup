@@ -1053,10 +1053,7 @@ L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
 L<ZORDER|[%m.at%]/ZORDER>,
 L<VISIBLE|[%m.at%]/VISIBLE>
 
-also accepted.
-
-L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> attributes are
-supported. See Notes bellow.
+=item * Drag E<amp> Drop attributes are supported.
 
 =back
 
@@ -1072,21 +1069,17 @@ Action generated when the text is
 edited, but before its value is actually changed. Can be generated when
 using the keyboard, undo/redo system or from the clipboard.
 
- int function(Ihandle *ih, int insert, int pos, int length, char* text ); [in C]elem:action(insert: boolean, pos, length: number, text: string) -> (ret: number) [in Lua]
+ XXXXXX-TODO: int function(Ihandle *ih, int insert, int pos, int length, char* text ); [in C]elem:action(insert: boolean, pos, length: number, text: string) -> (ret: number) [in Lua]
 
-=over
+B<$ih> - identifier of the element that activated the event.
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$insert> - =1 when text is inserted, =0 when text is deleted.
 
-=item * B<insert> - =1 when text is inserted, =0 when text is deleted.
+B<$pos> - 0 based character position when change started.
 
-=item * B<pos> - 0 based character position when change started.
+B<$length> - size of the change.
 
-=item * B<length> - size of the change.
-
-=item * B<text> - the inserted text value. It is NULL when insert=0.
-
-=back
+B<$text> - the inserted text value. It is NULL when insert=0.
 
 =item * B<AUTOCSELECTION_CB>
 
@@ -1096,43 +1089,31 @@ inserted. Automatic insertion can be cancelled by setting the B<
 AUTOCCANCEL> attribute before returning from the callback. (since
 3.10.1)
 
- int function(Ihandle *ih, int pos, char* text ); [in C]elem:autocselection_cb(pos: number, text: string) -> (ret: number) [in Lua]
+ XXX-TODO: int function(Ihandle *ih, int pos, char* text ); [in C]elem:autocselection_cb(pos: number, text: string) -> (ret: number) [in Lua]
 
-=over
+B<$ih> - identifier of the element that activated the event.
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$pos> - 0 based character start position of the word being completed.
 
-=item * B<pos> - 0 based character start position of the word being completed.
-
-=item * B<text> - the text of the selection.
-
-=back
+B<$text> - the text of the selection.
 
 =item * B<AUTOCCANCELLED_CB>
 
 Called after the user has cancelled an
 auto-completion list. (since 3.10.1)
 
- int function(Ihandle *ih); [in C]elem:autoccancelled_cb() -> (ret: number) [in Lua]
+ XXX-TODO: int function(Ihandle *ih); [in C]elem:autoccancelled_cb() -> (ret: number) [in Lua]
 
-=over
-
-=item * B<ih> - identifier of the element that activated the event.
-
-=back
+B<$ih> - identifier of the element that activated the event.
 
 =item * B<AUTOCCHARDELETED_CB>
 
 Called after the user deleted a character while
 auto-completion list was active. (since 3.10.1)
 
- int function(Ihandle *ih); [in C]elem:autocchardeleted_cb() -> (ret: number) [in Lua]
+ XXX-TODO: int function(Ihandle *ih); [in C]elem:autocchardeleted_cb() -> (ret: number) [in Lua]
 
-=over
-
-=item * B<ih> - identifier of the element that activated the event.
-
-=back
+B<$ih> - identifier of the element that activated the event.
 
 =item * L<BUTTON_CB|../call/iup_button_cb.html>
 
@@ -1148,17 +1129,13 @@ coordinates in character positioning.
 Action generated when the caret/cursor position is
 changed.
 
- int function(Ihandle *ih, int lin, int col, int pos); [in C]elem - caret_cb(lin, col, pos: number) -> (ret: number) [in Lua]
+ XXX-TODO: int function(Ihandle *ih, int lin, int col, int pos); [in C]elem - caret_cb(lin, col, pos: number) -> (ret: number) [in Lua]
 
-=over
+B<$ih> - identifier of the element that activated the event.
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$lin, col> - line and column number (start at 0).
 
-=item * B<lin, col> - line and column number (start at 0).
-
-=item * B<pos> - 0 based character position.
-
-=back
+B<$pos> - 0 based character position.
 
 =item * L<DROPFILES_CB|../call/iup_dropfiles_cb.html>
 
@@ -1172,22 +1149,19 @@ one or more files are dropped in the element.
 Action generated when the user clicks or double
 clicks on text that is in a style with the hotspot attribute set.
 
- int function(Ihandle *ih, int pos, int lin, int col, char* status); [in C]elem:hotspotclick_cb(pos, lin, col: number, status: string) -> (ret: number) [in Lua]
+ XXX-TODO: int function(Ihandle *ih, int pos, int lin, int col, char* status); [in C]elem:hotspotclick_cb(pos, lin, col: number, status: string) -> (ret: number) [in Lua]
 
-=over
+B<$ih> - identifier of the element that activated the event.
 
-=item * B<ih> - identifier of the element that activated the event.
-
-=item * B<pos> - the character position in the document that corresponds to the
+B<$pos> - the character position in the document that corresponds to the
 hotspot click.
 
-=item * B<lin> - line in the document that corresponds to the hotspot click.
+B<$lin> - line in the document that corresponds to the hotspot click.
 
-=item * B<col> - column in the document that corresponds to the hotspot click.
+B<$col> - column in the document that corresponds to the hotspot click.
 
-=item * B<status> - status of mouse buttons and certain keyboard keys at the
+B<$status> - status of mouse buttons and certain keyboard keys at the
 moment the event was generated. The same macros used for
-=back
 
 =item * L<BUTTON_CB|../call/iup_button_cb.html> can be used for this status.
 
@@ -1196,63 +1170,46 @@ moment the event was generated. The same macros used for
 Action generated when the mouse button is clicked
 inside a margin that is marked as sensitive.
 
- int function(Ihandle *ih, int margin, int lin, char* status); [in C]elem - marginclick_cb(margin, lin: number, status: string) -> (ret: number) [in Lua]
+ XXX-TODO: int function(Ihandle *ih, int margin, int lin, char* status); [in C]elem - marginclick_cb(margin, lin: number, status: string) -> (ret: number) [in Lua]
 
-=over
+B<$ih> - identifier of the element that activated the event.
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$margin> - the margin number that was clicked.
 
-=item * B<margin> - the margin number that was clicked.
+B<$lin> - line in the document that corresponds to the margin click.
 
-=item * B<lin> - line in the document that corresponds to the margin click.
-
-=item * B<status> - status of mouse buttons and certain keyboard keys at the
+B<$status> - status of mouse buttons and certain keyboard keys at the
 moment the event was generated. The same macros used for
-=back
 
-=item * L<BUTTON_CB|../call/iup_button_cb.html> can be used for this status.
+=item * L<BUTTON_CB>
 
-=item * L<MOTION_CB|../call/iup_motion_cb.html>
+=item * L<MOTION_CB>
 
 Action generated when the
-mouse is moved. Use L<IUP::ConvertXYToPos|IUP::ConvertXYToPos>
+mouse is moved. Use L<ConvertXYToPos|ConvertXYToPos>
 to convert (x,y) coordinates in character positioning.
 
-=back
-
-=item * B<X<SAVEPOINT_CB>SAVEPOINT_CB>
+=item * B<SAVEPOINT_CB>
 
 Notifies the application that a save
 point was reached (1) or left (0). Can be used to controls whether to
 display a saved or modified document. To set the save point use the
-=back
+L<SAVEDSTATE> attribute.
 
-=item * L<SAVEDSTATE|#SAVEDSTATE> attribute.
+ XXX-TODO: int function(Ihandle *ih, int status); [in C]elem savepoint_cb(status - number) -> (ret: number) [in Lua]
 
- int function(Ihandle *ih, int status); [in C]elem
+B<$ih> - identifier of the element that activated the event.ih> - identifier of the element that activated the event.
 
-=over
-
-savepoint_cb(status - number) -> (ret: number) [in Lua]
-
-=item * B<ih> - identifier of the element that activated the event.
-
-=item * B<status> - can be 1 (reached) or 0 (left).
-
-=back
+B<$status> - can be 1 (reached) or 0 (left).
 
 =item * B<VALUECHANGED_CB>
 
 Called after the value was interactively changed by
 the user.
 
- int function(Ihandle *ih); [in C]elem:valuechanged_cb() -> (ret: number) [in Lua]
+ XXX-TODO: int function(Ihandle *ih); [in C]elem:valuechanged_cb() -> (ret: number) [in Lua]
 
-=over
-
-=item * B<ih> - identifier of the element that activated the event.
-
-=back
+B<$ih> - identifier of the element that activated the event.
 
 =item * B<ZOOM_CB>
 
@@ -1261,42 +1218,21 @@ using the keyboard or the ZOOM attribute. Can be used to recalculate
 positions, such as the width of the line number margin to maintain
 sizes in terms of characters rather than pixels.
 
- int function(Ihandle *ih, int zoomInPoints); [in C]elem:zoom_cb(zoomInPoints: number) -> (ret: number) [in Lua]
+ XXX-TODO: int function(Ihandle *ih, int zoomInPoints); [in C]elem:zoom_cb(zoomInPoints: number) -> (ret: number) [in Lua]
 
-=over
+B<$ih> - identifier of the element that activated the event.ih> - identifier of the element that activated the event.
 
-=item * B<ih> - identifier of the element that activated the event.
+B<$ih> - identifier of the element that activated the event.zoomInPoints> - the current zoom factor.
 
-=item * B<zoomInPoints> - the current zoom factor.
+=item * L<MAP_CB>, L<UNMAP_CB>, L<GETFOCUS_CB>, L<KILLFOCUS_CB>, L<ENTERWINDOW_CB>, L<LEAVEWINDOW_CB>, L<K_ANY>, L<HELP_CB>
 
-----
-
-=back
-
-=item * L<MAP_CB|../call/iup_map_cb.html>,
-L<UNMAP_CB|../call/iup_unmap_cb.html>,
-L<GETFOCUS_CB|../call/iup_getfocus_cb.html>,
-L<KILLFOCUS_CB|../call/iup_killfocus_cb.html>,
-L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>,
-L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>,
-L<K_ANY|../call/iup_k_any.html>, L<HELP_CB|../call/iup_help_cb.html>
-
-All common callbacks are supported.
-
-=back
-
-=item * L<Drag E<amp> Drop|../attrib/iup_dragdrop.html> callbacks are
-supported. See Notes bellow.
+=item * L<Drag E<amp> Drop> callbacks are supported. See Notes bellow.
 
 =back
 
 =head3 Auxiliary Functions
 
-L<IUP::Text|IUP::Text> auxiliary functions
-L<IUP::TextConvertLinColToPos|IUP::TextConvertLinColToPos> and L<IUP::TextConvertPosToLinCol|IUP::TextConvertPosToLinCol> can also
-be used.
-
-=back
+L<IUP::Text|IUP::Text> auxiliary functions C<TextConvertLinColToPos> and C<TextConvertPosToLinCol> can be used.
 
 =head3 Style Definition
 
@@ -1354,23 +1290,6 @@ Here are some known styles for C++ and Lua:
  22  Hash-quoted strings                         -
  23  Preprocessor block comment                  -
 
-[% h.notes %]
-
-Enter key will add a new line, and the Tab key will insert a Tab.
-
-Internal Drag&Drop support is enabled by default.
-
-L<IUP::Scintilla|IUP::Scintilla> uses attributes and callbacks very similar to the
-L<IUP::Text|IUP::Text> control, except for text formatting.
-
-Although the L<IUP::Scintilla|IUP::Scintilla> documentation should be sufficient for
-most uses, some advanced features will be better understood if the
-L<Scintilla Documentation|http://www.scintilla.org/ScintillaDoc.html>
-is consulted. Also some Scintilla features are not available in B<
-IUP::Scintilla>, so by consulting that documentation you will be able to
-check which one and if necessary you can request the implementation in
-B< IUP::Scintilla>.
-
 =head2 Navigation, Selection and Clipboard Keys
 
 Here is a list of the common keys for all drivers. Other keys are
@@ -1394,11 +1313,11 @@ available depending on the driver.
 
 [% h.examples %]
 
-[% IF examples.iupfill %]
-The element B<IUP::Fill> is used in the following sample scripts:
+[% IF examples.iupscintilla %]
+The element B<IUP::Scintilla> is used in the following sample scripts:
 
 =over
-[%FOREACH e IN examples.iupfill %]
+[%FOREACH e IN examples.iupscintilla %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
 =back 
