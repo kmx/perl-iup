@@ -1,0 +1,113 @@
+=head1 IupDetachBox (since 3.10)
+
+Creates a detachable void container.
+
+Dragging and dropping this element, it creates a new dialog composed by
+its child or elements arranged in it (for example, a child like IupVbox
+or IupHbox). During the drag, the ESC key can be pressed to cancel the
+action.
+
+It does not have a native representation, but it contains also a
+B<IupCanvas> to implement the bar handler.
+
+=head2 Creation
+
+ Ihandle* IupDetachBox(Ihandle* child); [in C]
+ iup.detachbox{child: ihandle} -> (elem: ihandle) [in Lua]
+ detachbox(child) [in LED]
+
+B<child>: Identifier of an interface element that will receive the box.
+It can be NULL (nil in Lua), not optional in LED.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<BARSIZE> (non inheritable): controls the size of the bar handler.
+Default: 10.
+
+B<COLOR>: Changes the color of the bar grip affordance. The value
+should be given in "R G B" color style. Default: "160 160 160". When
+SHOWGRIP = NO, this attribute sets the background color of the bar
+handler.
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
+value is "YES".
+
+B<ORIENTATION> (creation only): Indicates the orientation of the bar
+handler. The direction of the resize is perpendicular to the
+orientation. Possible values are "VERTICAL" or "HORIZONTAL". Default:
+"VERTICAL".
+
+B<OLDPARENT_HANDLE> (read only): returns the previous parent of the
+detached element. Only valid after the element was detached.
+
+B<OLDBROTHER_HANDLE> (read only): returns the previous reference child
+of the detached element. Only valid after the element was detached. See
+L<IupReparent|../func/iupreparent.html> for a reference child
+definition.
+
+B<DETACH> (write-only): detach the box by creating a new dialog and
+placing the box as the child of the new dialog. The callback is called
+but its return value is ignored.
+
+B<RESTORE> (write-only): restore the box to its previous place and
+destroys the new dialog. Value is ignored.
+
+B<SHOWGRIP> (non inheritable): Shows the bar grip affordance. Default:
+YES. When set to NO, the BARSIZE is set to 5.
+
+B<WID> (read-only): returns -1 if mapped.
+
+=over
+
+----
+
+=back
+
+L<FONT|../attrib/iup_font.html>, L<SIZE|../attrib/iup_size.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
+
+=head2 Callbacks
+
+B<DETACHED_CB>: Callback called when the box is detached.
+
+ int function(Ihandle *ih, Ihandle *new_parent, int x, int y); [in C]
+ elem:detached_cb(new_parent: ihandle, x, y: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<new_parent>: identifier of the future parent of the box. It is a new
+L<IupDialog|../dlg/iupdialog.html> without any attributes, except that
+PARENTDIALOG is set to be the current parent.
+
+B<x, y>: dropped position.
+
+Returns: IUP_IGNORE will be processed, in order to cancel the detach
+action.
+
+=head2 Notes
+
+The box can be created with no elements and be dynamic filled using
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+[IMAGE]
+
+IupDetachBox (ORIENTATION = VERTICAL)
+
+[IMAGE]
+
+New dialog created after the detach action
+
+=cut

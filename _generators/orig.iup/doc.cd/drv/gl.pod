@@ -3,9 +3,15 @@
 This driver represents a driver for drawing using L<
 OpenGL|http://www.opengl.org/>. The implementation uses the OpenGL
 functions only. For the font support, this driver uses the
-L<FTGL|http://homepages.paradise.net.nz/henryj/code/index.html#FTGL>
-API functions, which it was written against the L<Free
-Type|http://www.freetype.org/> library.
+L<FTGL|ftgl.sourceforge.net> library, which it was written against the
+L<Free Type|http://www.freetype.org/> library. Currently CD is using
+the FTGL version 2.1.3-rc5 with modifications.
+
+The CD distribution includes the FTGL library, this is a third party
+library not developed at Tecgraf. But its license is also free and have
+the same freedom as the L<Tecgraf Library License|../copyright.html>.
+You can read the FTGL license and copyright in the file L<
+ftgl.txt|../ftgl.txt>. FTGL is copyright to Henry Maddocks.
 
 The driver is not dependent of system functions. It uses only the
 OpenGL portable functions. So if the window canvas changes its size the
@@ -129,14 +135,6 @@ value: "1".
 =item * "B<ANTIALIAS>": allows the use of anti-aliasing for the drawing
 shapes. Assumes values "1" (active) and "0" (inactive). Default value:
 "1".
-
-=back
-
-=over
-
-=item * "B<TEXTANTIALIAS>": controls the use of anti-aliasing for text
-primitives. Assumes values "1" (active) and "0" (inactive). Default
-value: "1". (since 5.6)
 
 =back
 

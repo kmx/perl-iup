@@ -8,8 +8,8 @@ attribute for more information.>
 Functions to associate an input mask to a B<IupText> or a B<IupMatrix>
 element.
 
-These functions are included in the L<Controls
-Library|../iupcontrols.html>.
+These functions are included in the L<IupControls|../iupcontrols.html>
+library.
 
 =head2 Functions
 

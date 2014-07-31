@@ -121,7 +121,7 @@ click and drag operations are not performed.
 
 =head2 X<SHIFTKEY>B<SHIFTKEY> (read-only) (since 3.0)
 
-Returns the state of the Shit keys (left and right). Possible values:
+Returns the state of the Shift keys (left and right). Possible values:
 "ON" or "OFF".
 
 =head2 X<CONTROLKEY>B<CONTROLKEY> (read-only) (since 3.0)
@@ -299,13 +299,20 @@ Returns the screen depth in bits per pixel.
 
 =head2 B<SCREENDPI> (read-only)
 
-Returns the screen resolution in dots or pixels per inch (DPI).
+Returns a real value with the screen resolution in pixels per inch
+(same as dots per inch - DPI).
 
 =head2 X<TRUECOLORCANVAS>B<TRUECOLORCANVAS> (read-only)
 
 Indicates if the display allows creating TrueColor (E<gt> 8bpp)
 B<IupCanvas> controls, even if PseudoColor is the default, i.e. even if
 SCREENDEPTHE<lt>=8 . Returns "YES" or "NO". Usefull in Motif.
+
+=head2 B<DWM_COMPOSITION> (read-only) [Win32 Only] (since 3.10)
+
+Returns the Desktop Window Manager Composition flag. Returns "YES" or
+"NO". Works only in Windows Vista and newer. Returns NULL if not
+supported.
 
 =head2 B<X<VIRTUALSCREEN>VIRTUALSCREEN> (read-only) [Win32 and GTK
 Only] (since 3.0)
@@ -361,13 +368,14 @@ similar of the dialog.
 The default foreground color for all elements that have text over the
 background of the dialog or similar. Usually is "0 0 0".
 
-=head2 B<X<MENUBGCOLOR>MENUBGCOLOR> (since 3.0)
+=head2 B<X<MENUBGCOLOR>MENUBGCOLOR> [Windows Only] (since 3.0)
 
 The default menu background color. Usually is "255 255 255".
 
-=head2 B<X<MENUFGCOLOR>MENUFGCOLOR> (since 3.0)
+=head2 B<X<MENUFGCOLOR>MENUFGCOLOR> [Windows Only] (since 3.0)
 
-The default menu foreground color. Usually is "0 0 0".
+The system default menu foreground color. Usually is "0 0 0". Unused in
+IUP.
 
 =head2 B<X<TXTBGCOLOR>TXTBGCOLOR> (since 3.0)
 
@@ -393,5 +401,11 @@ The default font used by all elements, except for menus.
 Auxiliary attribute to retrieve and set the default font size used by
 all elements. It retrieves the size from DEFAULTFONT. When changed will
 actually change the DEFAULTFONT.
+
+=head2 B<X<DEFAULTFONTSTYLE>DEFAULTFONTSTYLE> (since 3.11)
+
+Auxiliary attribute to retrieve and set the default font style used by
+all elements. It retrieves the style from DEFAULTFONT. When changed
+will actually change the DEFAULTFONT.
 
 =cut

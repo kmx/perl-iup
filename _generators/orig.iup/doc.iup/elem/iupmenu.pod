@@ -12,7 +12,8 @@ a menu will be an error.
  menu(child, ...) [in LED]
 
 B<child>, ... : List of identifiers that will be grouped by the menu.
-NULL must be used to mark the end of the list in C. It can be empty.
+NULL must be used to mark the end of the list in C. It can be empty in
+C or Lua, not in LED.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.

@@ -1,0 +1,86 @@
+=head1 IupGLLabel (since 3.11)
+
+Creates an embedded OpenGL label interface element, which displays a
+text and/or an image. It inherits from
+L<IupGLSubCanvas|iupglsubcanvas.html>. It exists only inside an
+L<IupGLCanvasBox|iupglcanvasbox.html>.
+
+=head2 Creation
+
+ Ihandle* IupGLLabel(const char *title); [in C]
+ iup.gllabel{[title = title: string]} -> (elem: ihandle) [in Lua]
+ gllabel(title) [in LED]
+
+B<title>: Text to be shown on the label. It can be NULL. It will set
+the TITLE attribute.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+The B<IupGLLabel> element handle all attributes defined for a
+L<IupGLSubCanvas|iupglsubcanvas.html> control.
+
+=over
+
+----
+
+=back
+
+B<ACTIVE>: Since it has no callbacks, the only difference between an
+active label and an inactive one is its visual feedback. Possible
+values: "YES, "NO". Default: "YES".
+
+B<ALIGNMENT> (non inheritable): horizontal and vertical alignment.
+Possible values: "ALEFT", "ACENTER" and "ARIGHT", combined to "ATOP",
+"ACENTER" and "ABOTTOM". Default: "ACENTER:ACENTER". Partial values are
+also accepted, like "ARIGHT" or ":ATOP", the other value will be used
+from the current alignment.
+
+L<FGCOLOR|../attrib/iup_fgcolor.html>: Text color. Can have an alpha
+component. Default: "0 0 0".
+
+B<IMAGE> (non inheritable): Image name. Use
+L<IupSetHandle|../func/iupsethandle.html> or
+L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
+associate an image to a name. See also L<IupImage|iupimage.html>.
+
+B<IMAGEHIGHLIGHT> (non inheritable): Image name of the element in
+highlight state.
+
+B<IMAGEINACTIVE> (non inheritable): Image name of the element when
+inactive. If it is not defined then the IMAGE is used and the colors
+will be replaced by a modified version creating the disabled effect.
+
+B<IMAGEPRESS >(non inheritable): Image name of the element in pressed
+state.
+
+B<IMAGEPOSITION >(non inheritable): Position of the image relative to
+the text when both are defined. Can be: LEFT, RIGHT, TOP, BOTTOM.
+Default: LEFT.
+
+B<PADDING> (non inheritable): internal margin. Works just like the
+MARGIN attribute of the B<IupHbox> and B<IupVbox> containers, but uses
+a different name to avoid inheritance problems. Default value: "0x0".
+
+B<SPACING >(non inheritable): defines the spacing between the image and
+the title. Default: "2".
+
+L<TITLE|../attrib/iup_title.html> (non inheritable): Label's text. The
+'\n' character is accepted for line change.
+
+=head2 Notes
+
+The B<IupGLLabel> can contain text and image simultaneously.
+
+The natural size will be a combination of the size of the image and the
+title, if any, plus PADDING and SPACING (if both image and title are
+present).
+
+=head2 X<SeeAlso>See Also
+
+L<IupImage|../elem/iupimage.html>, L<IupGLButton|iupglbutton.html>,
+L<IupGLToggle|iupgltoggle.html>.
+
+=cut

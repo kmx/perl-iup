@@ -145,8 +145,9 @@ Thanks to the people that worked and contributed to the library:
 =back
 
 We also thank the developers of the
-L<FreeType|http://www.freetype.org/>, L<libJPEG|http://www.ijg.org/>
-and L<Mesa|http://www.ssec.wisc.edu/~brianp/Mesa.html> libraries, for
+L<FreeType|http://www.freetype.org/>, L<FTGL|drv/ftgl.sourceforge.net>,
+L<PDFlib|http://www.pdflib.com/>, L<libJPEG|http://www.ijg.org/> and
+L<Mesa|http://www.ssec.wisc.edu/~brianp/Mesa.html> libraries, for
 making the source code available, which helped us improve our
 implementation of the Simulation driver and of the X-Windows driver.
 Thanks to Alan Richardson for the XVertex rotines. Thanks to Lode
@@ -161,7 +162,7 @@ copyright in the file L<freetype.txt|freetype.txt>. FreeType is
 copyright David Turner, Robert Wilhelm, and Werner Lemberg.
 
 Mesa X-Windows utilities source code copyright Brian Paul. libJPEG
-quantization source code copyright Thomas G. Lane. XVertex rotines
+quantization source code copyright Thomas G. Lane. XVertex routines
 source code copyright Alan Richardson.
 
 Thanks for the L<SourceForge|http://sourceforge.net/> for hosting the

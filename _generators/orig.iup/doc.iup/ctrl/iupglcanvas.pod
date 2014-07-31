@@ -141,6 +141,14 @@ sets:
 
  glViewport(0,0,width,height);
 
+B<SWAPBUFFERS_CB>: action generated when B< IupGLSwapBuffers> is
+called. (since 3.11)
+
+ int function(Ihandle* ih);  [in C]
+ elem:swapbuffers_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
 =head2 Auxiliary Functions
 
 These are auxiliary functions based on the WGL and XGL extensions.
@@ -193,8 +201,8 @@ acceleration will be disabled.
 The B<IupGLCanvas> works with the GTK base driver in Windows and in
 UNIX (X-Windows).
 
-Not available in SunOS510x86 just because we were not able to compile
-OpenGL code in our installation.
+Not available in our SunOS510x86 pre-compiled binaries just because we
+were not able to compile OpenGL code in our installation.
 
 Possible ERROR strings during B<IupMap>:
 

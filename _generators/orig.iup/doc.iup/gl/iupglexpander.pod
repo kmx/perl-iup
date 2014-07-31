@@ -1,0 +1,171 @@
+=head1 IupGLExpander (since 3.11)
+
+Creates an embedded OpenGL container that can interactively show or
+hide its child. It inherits from L<IupGLSubCanvas|iupglsubcanvas.html>.
+It exists only inside an L<IupGLCanvasBox|iupglcanvasbox.html>.
+
+=head2 Creation
+
+ Ihandle* IupGLExpander(Ihandle* child); [in C]
+ iup.glexpander{child: ihandle} -> (elem: ihandle) [in Lua]
+ glexpander(child) [in LED]
+
+B<child>: Identifier of an interface element. It can be NULL (nil in
+Lua), not optional in LED.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+The B<IupGLExpander> element handle all attributes defined for a
+L<IupGLSubCanvas|iupglsubcanvas.html> control.
+
+=over
+
+----
+
+=back
+
+B<BACKCOLOR> (non inheritable): background color of the title area.
+Default: "50 100 150".
+
+B<BARPOSITION>: indicates the bar handler position. Possible values are
+"TOP", "BOTTOM", "LEFT" or "RIGHT". Default: "TOP".
+
+B<BARSIZE> (non inheritable): controls the size of the bar handler.
+Default: the height of a text line plus 5 pixels.
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): the default
+value is "YES".
+
+B<EXTRABUTTONS> (non inheritable): sets the number of extra image
+buttons at right when BARPOSITION=TOP. The maximum number of buttons is
+3. See the EXTRABUTTON_CB callback. Default: 0.
+
+B<IMAGEEXTRAid>: image name used for the button. id can be 1, 2 or 3. 1
+is the rightmost button, and count from right to left.
+
+B<IMAGEEXTRAPRESSid>: image name used for the button when pressed.
+
+B<IMAGEEXTRAHIGHLIGHTid>: image name for the button used when mouse is
+over the button area.
+
+All images must be 16x16, or smaller but the occupied size will still
+be 16x16.
+
+B<FORECOLOR> (non inheritable): text and arrow color. Default: "255 255
+255".
+
+B<HIGHCOLOR> (non inheritable): text and arrow color when highlight.
+Default: "200 225 245".
+
+B<IMAGE> (non inheritable): image name to replace the arrow by an image
+STATE=CLOSE. Works only when BARPOSITION=TOP. The minimum horizontal
+space reserved for the handler is 20 pixels. Use
+L<IupSetHandle|../func/iupsethandle.html> or
+L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
+associate an image to a name. See also L<IupImage|iupimage.html>.
+
+B<IMAGEOPEN>: image name used when STATE=OPEN.
+
+B<IMAGEHIGHLIGHT>: image name used when mouse is over the bar handler
+and STATE=CLOSE.
+
+B<IMAGEOPENHIGHLIGHT>: image name used when mouse is over the bar
+handler and STATE=OPEN.
+
+B<MOVEABLE> (non inheritable): enable the frame to be interactively
+moved when it is a direct child of the B< IupGLCanvasBox>. Default: NO.
+
+B<PRESSCOLOR> (non inheritable): text and arrow color when pressed.
+Default: "150 200 235".
+
+B<STATE> (non inheritable): Show or hide the container elements.
+Possible values: "OPEN" (expanded) or "CLOSE" (collapsed). Default:
+OPEN. Setting this attribute will automatically change the layout of
+the entire dialog so the child can be recomposed.
+
+B<TITLE> (non inheritable): title text, shown in the title bar near the
+expand or collapse symbol. Shown only when BARPOSITION=TOP.
+
+=over
+
+----
+
+=back
+
+L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>: also accepted.
+
+=head2 Callbacks
+
+The B<IupGLFrame> element handle all callbacks defined for the
+B<IupGLSubCanvas> control.
+
+=over
+
+----
+
+=back
+
+L<ACTION|../call/iup_action.html>: Action generated after the expander
+state is interactively changed.
+
+ int function(Ihandle* ih); [in C]elem:action() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<MOVE_CB>: Called after the frame was moved on the B< IupGLCanvasBox>,
+when MOVEABLE=Yes. The coordinates are the same as the
+L<POSITION|../attrib/iup_position.html> attribute.
+
+ int function(Ihandle *ih, int x, int y); [in C]elem:trayclick_cb(x, y: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<x>, B<y>: coordinates of the new position.
+
+B<OPENCLOSE_CB>: Action generated before the expander state is
+interactively changed.
+
+ int function(Ihandle* ih, int state); [in C]elem:openclose_cb(state: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<state>: new state to be applied.
+
+B<Returns>: if return IUP_IGNORE the new state is ignored.
+
+B<EXTRABUTTON_CB>: Action generated when any mouse button is pressed
+and released.
+
+ int function(Ihandle* ih, int button, int pressed); [in C]
+ elem:extrabutton_cb(button, pressed: number) -> (ret: number) [in Lua]
+
+=over
+
+B<ih>: identifies the element that activated the event.
+
+B<button>: identifies the extra button. can be 1, 2 or 3. (this is not
+the same as BUTTON_CB)
+
+B<pressed>: boolean that indicates the state of the button:
+
+0 - mouse button was released;
+
+1 - mouse button was pressed.
+
+=back
+
+=head2 Notes
+
+The container can be created with no elements and be dynamic filled
+using L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
+
+When the TITLE is defined and BARPOSITION=TOP then the expand/collapse
+symbol is left aligned. In all other situations the expand/collapse
+symbol is centered.
+
+=cut

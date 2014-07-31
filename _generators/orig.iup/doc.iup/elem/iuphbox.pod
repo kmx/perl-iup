@@ -13,7 +13,8 @@ It does not have a native representation.
  hbox(child, ...) [in LED]
 
 B<child>,... : List of identifiers that will be placed in the box. NULL
-must be used to define the end of the list in C. It can be empty.
+must be used to define the end of the list in C. It can be empty in C
+or Lua, not in LED.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.
@@ -30,7 +31,7 @@ inheritance.
 B<EXPANDCHILDREN> (non inheritable): forces all children to expand
 vertically and to fully occupy its space available inside the box.
 Default: "NO". This has the same effect as setting EXPAND=VERTICAL on
-each child, but the box expansion will not be affected. (since 3.0)
+each child. (since 3.0)
 
 B<GAP, CGAP>: Defines an horizontal space in pixels between the
 children, B<CGAP> is in the same units of the B<SIZE> attribute for the

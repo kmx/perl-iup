@@ -16,7 +16,7 @@ color attributes. For example, "255 0 128" can also be written as
 
 =head2 Affects
 
-All.
+All controls that have visual representation.
 
 =head2 See Also
 

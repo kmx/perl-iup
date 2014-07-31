@@ -4,6 +4,242 @@ Check the L<Migration Guide|migration_guide.html> for a summary of the
 important changes and how to proceed when migrating from version 2.x to
 version 3.x.
 
+=head2 L<Version 3.11|http://sourceforge.net/projects/iup/files/3.11/>
+(28/Jul/2014)
+
+=over
+
+=item * New: CD_IUPDBUFFER and CD_IUPDBUFFERRGB drivers in the B<iupcd>
+library. B< IMPORTANT:> This IUP version depends on CD version 5.8.
+
+=item * New: IMAGE, IMHIGHLIGHT, IMOPEN, and IMOPENHIGHLIGHT attributes
+for replacing the arrow, or the arrow and the title of a B<IupExpander>
+when BARPOSITION=TOP.
+
+=item * New: EXTRABUTTONS, IMAGEEXTRAid, IMAGEEXTRAPRESSid,
+IMAGEEXTRAHIGHLIGHTid attributes and EXTRABUTTON_CB callback for
+B<IupExpander> to handle extra buttons at right when BARPOSITION=TOP.
+
+=item * New: B<IupPPlotGetSample> and B<IupPPlotGetSampleStr> functions
+for B<IupPPlot>.
+
+=item * New: LOADLEXERLIBRARY attribute in B< IupScintilla>.
+
+=item * New: DRAGCURSOR attribute for the Drag & Drop support.
+
+=item * New: SWAPBUFFERS_CB callback for B< IupGLCanvas>.
+
+=item * New: COLORUPDATE_CB callback for B< IupColorDlg>.
+
+=item * New: HORIZONTALFREE and VERTICALFREE values for the EXPAND
+attribute. The element will simply expand to the available free space
+at the container, and it will not affect the container expand.
+
+=item * New: DEFAULTFONTSTYLE global attribute.
+
+=item * New: OPENCLOSE_CB callback for B< IupExpander>.
+
+=item * New: L< IupGLControls|iupglcontrols.html> an OpenGL embeddable
+controls library.
+
+=item * New: B<IupScintillaSendMessage> function.
+
+=item * B<Changed:> SEPARATOR attribute behavior in B<IupLabel> will
+now use the HORIZONTALFREE and VERTICALFREE values for the EXPAND
+attribute.
+
+=item * B<Changed:> updated Scintilla version to 3.4.4.
+
+=item * B<Changed:> all the controls in the additional controls library
+(matrix, colorbrowser, gauge, dial, etc) and the IupPPlot control now
+uses the new CD_IUPDBUFFER* drivers.
+
+=item * B<Changed:> B<IupMglPlot> API replaced "float" by "double".
+Removed support for TrueType (*.ttf) and OpenType (*.otf) font files.
+PLANARVALUE and CLOUDCUBES attributea are not supported anymore.
+AXS_?MIN attributes default changed to -1, to match MathGL default.
+MathGL updated to version 2.2. B< IupMglPlotTransformXYZ> renamed to
+B<IupMglPlotTransformTo>. Plor area configured using boolean atributes
+MARGINLEFT, MARGINRIGHT, MARGINTOP, and MARGINBOTTOM.
+
+=item * Fixed: SORTSIGN attribute in B< IupMatrix> when set to NO.
+
+=item * Fixed: first item in single selection B<IupTree> was not
+showing that it is selected.
+
+=item * Fixed: B<IupScrollBox> when there is no child.
+
+=item * Fixed: LISTACTION_CB callback when state=0 in B<IupMatrixList>.
+
+=item * Fixed: ENTERWINDOW_CB callback for B<IupLabel> in Windows.
+
+=item * Fixed: BGCOLOR support in B< IupBackgroundBox>.
+
+=item * Fixed: B<IupExpander> expansion when closed. Alignment of arrow
+and title when bar size is greater than default.
+
+=item * Fixed: support for icons with multiple sizes in B<IupDialog> on
+Windows.
+
+=item * Fixed: delete all items in B< IupMatrixList> when click the del
+button on title line.
+
+=item * Fixed: VALUE attribute of B< IupList> when EDITBOX=YES and the
+text box is empty in Windows.
+
+=item * Fixed: MASK attribute processing in B<IupMatrixList> when
+starting to edit a label.
+
+=item * Fixed: Ctrl+V key combination to Paste cells starting at the
+focus cell in B<IupMatrixList>.
+
+=item * Fixed: B<IupVal> behavior when inside an B<IupBackgroundBox> or
+B<IupScrollBox> in Windows.
+
+=item * Fixed: attribute return value in Lua when it was not a string.
+
+=item * Fixed: B<IupFill> so it can be placed inside a B<IupGridBox>,
+the behavior will be the same as inside an B<IupHbox>.
+
+=item * Fixed: FITTOCHILDREN attribute in B<IupGridBox>.
+
+=item * Fixed: B<IupPPlotTransformTo> missing from DLLs and from Lua.
+
+=item * Fixed: Ctrl and Shift keys scrolling the B<IupMatrix> when
+pressed.
+
+=item * Fixed: SPIN_CB callback in B< IupText> when value was
+incremented/decremented out of range.
+
+=item * Fixed: CLIENTSIZE attribute in B<IupDetachBox>, B<IupSbox>,
+B<IupSpin> and B<IupSplit>. Changed CLIENTSIZE in B<IupHbox>,
+B<IupVbox> and B<IupGridBox> to use only the Current size.
+
+=item * Fixed: CLIENTOFFSET attribute in B< IupBackgroundBox>.
+
+=item * Fixed: K_ANY being called twice for each key in
+B<IupScintilla>.
+
+=item * Fixed: COUNT attribute return value in B<IupText> on Windows.
+
+=item * Fixed: dynamic insert of the first Tab in B<IupTabs> on
+Windows. Dynamic remove of the last Tab in B<IupTabs>. Management of
+hidden tabs inB< IupTabs> on Windows.
+
+=item * Fixed: NAME cache attribute when element is removed.
+
+=back
+
+=head2 L<Version
+3.10.1|http://sourceforge.net/projects/iup/files/3.10.1/> (24/Jan/2014)
+
+=over
+
+=item * New: RESIZEMATRIX_CB callback in B< IupMatrix>.
+
+=item * New: internal B<IupMatrix> callbacks BUTTON_CB, MOTION_CB and
+KEYPRESS_CB are now exported to Lua as "MatButtonCb", "MatMotionCb" and
+"MatKeyPressCb".
+
+=item * New: AUTOCSELECTION_CB, AUTOCCANCELLED_CB and
+AUTOCCHARDELETED_CB callbacks in B<IupScintilla>.
+
+=item * Fixed: key names in IupLua when modifiers are used. Thanks to
+kmx.
+
+=item * Fixed: text with computation in UTF-8 in Windows. Thanks to
+kmx.
+
+=item * Fixed: 3 state check box size in B< IupTree> on Windows when
+using Classic Style. Thanks to kmx.
+
+=item * Fixed: IUP_MOUSEPOS in Windows when the taskbar is at the top,
+or left of the screen.
+
+=item * Fixed: TABTITLE return value after tabs are added or removed.
+
+=item * Fixed: B<IupBackgroundBox> creation in Lua.
+
+=item * Fixed: map error in B<IupTabs> in GTK.
+
+=back
+
+=head2 L<Version 3.10|http://sourceforge.net/projects/iup/files/3.10/>
+(17/Jan/2014)
+
+=over
+
+=item * New: DRAGDROPTREE attribute to enable automatic drag&drop
+between B<IupTree>s in the same application.
+
+=item * New: DRAGDROPLIST attribute to enable automatic drag&drop
+between B<IupList>s in the same application.
+
+=item * New: SHOWCLOSE attribute and TABCLOSE_CB callback for
+B<IupTabs> to show a close button in each tab.
+
+=item * New: RIGHTCLICK_CB callback for B< IupTabs>.
+
+=item * New: TASKBARPROGRESS, TASKBARPROGRESSSTATE and
+TASKBARPROGRESSVALUE attributes for B<IupDialog> on Windows to show a
+progress feedback on the taskbar running in Windows 7+.
+
+=item * New: COPY, SELECTALL, PRINT and ZOOM attributes in
+B<IupWebBrowser>.
+
+=item * New: functionB< IupImageFromImImage> in the IUP-IM library.
+
+=item * New: FITTOCHILDREN attribute for B< IupGridBox>.
+
+=item * New: B<IupDetachBox> container element to allow interactively
+detach of an element and insert it in a new dialog.
+
+=item * New: TEXTNUMERICLOCALE attribute for B<IupMatrixEx> to allow a
+different locale during paste of numeric values.
+
+=item * New: B<IupBackgroundBox> native container to allow more control
+of children visibility.
+
+=item * B<Changed:> "IUP_EditErase" image to use "gtk-delete"
+definition instead of "gtk-close" in IupImageLib.
+
+=item * B<Changed:> TABIMAGEn and TABTITLEn attributes in B<IupTabs> to
+update the respective child attribute.
+
+=item * Fixed: VALUE_HANDLE attribute in B< IupZbox> was write-only.
+
+=item * Fixed: missing B<IupMatrixList> Lua binding.
+
+=item * Fixed: SAVEUNDER attribute in B< IupDialog> on Windows.
+
+=item * Fixed: B<IupWebBrowser> in GTK.
+
+=item * Fixed: horizontal frame color in B< IupMatrix>.
+
+=item * Fixed: B<IupLoadBuffer>.
+
+=item * Fixed: TIP attribute on Windows when not using Visual Styles.
+
+=item * Fixed: EXPANDCHILDREN in B<IupHbox>, B<IupVbox> and
+B<IupGridBox> when children contains an B<IupFill>.
+
+=item * Fixed: Caps Lock processing in Windows.
+
+=item * Fixed: COUNT, APPENDITEM, INSERTITEMid and REMOVEITEM in
+B<IupMatrixList> when EDITABLE=Yes. Drawing of the empty line when
+there is no other items. Insertion of the empty line when there is less
+than 2 items in the list.
+
+=item * Fixed: ACTION callback in B< IupText> when using UTF-8.
+
+=item * Fixed: SCROLLTO and SCROLLTOPOS attributes in B<IupText> on
+Windows when FORMATTING=Yes.
+
+=item * Fixed: support for UTF-8 in B< IupClipboard> on Windows that
+affected paste in B<IupText>.
+
+=back
+
 =head2 L<Version 3.9|http://sourceforge.net/projects/iup/files/3.9/>
 (22/Nov/2013)
 
@@ -834,9 +1070,8 @@ and Motif now works just like on Windows.
 
 =item * Changed: SHOWRENAME in B<IupTree> can now be changed after map.
 
-=item * Changed: CLIENTSIZE in B<IupVbox> and B<IupHbox> will not
-include margins anymore. Removed CLIENTSIZE1 and CLIENTSIZE2 from B<
-IupSplit> and added CLIENTSIZE.
+=item * Changed: Removed CLIENTSIZE1 and CLIENTSIZE2 from B< IupSplit>
+and added CLIENTSIZE.
 
 =item * Changed: TYPE attribute renamed to ORIENTATION in B<IupVal> and
 B< IupDial>. Old name still works.

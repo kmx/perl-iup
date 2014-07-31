@@ -10,7 +10,7 @@ inherits from L<IupCanvas|../elem/iupcanvas.html>.
  scrollbox(child) [in LED]
 
 B<child>: Identifier of an interface element which will receive the
-box. It can be NULL.
+box. It can be NULL (nil in Lua), not optional in LED.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.
@@ -20,16 +20,18 @@ occurs.
 Inherits all attributes and callbacks of the
 L<IupCanvas|../elem/iupcanvas.html>, but redefines a few attributes.
 
-L<BGCOLOR|../attrib/iup_bgcolor.html>: will use the background color of
-the native parent by default.
+L<BGCOLOR|../attrib/iup_bgcolor.html>: will always use the background
+color of the native parent.
 
-B<BORDER >(creation only): the default value is "NO".
+B<BORDER >(creation only): it is always "NO".
 
-L<EXPAND|../attrib/iup_expand.html> (non inheritable): the default
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
 value is "YES".
 
 L<SCROLLBAR|../attrib/iup_scrollbar.html> (creation only): the default
 value is "YES".
+
+B<CANFOCUS>: is set to NO.
 
 =over
 

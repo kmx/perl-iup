@@ -1,6 +1,44 @@
 =head1 History of Changes
 
 =head2 L<Version
+5.8|http://sourceforge.net/projects/canvasdraw/files/5.8/>
+(25/Jul/2014)
+
+=over
+
+=item * New: documentation and header for the CD_IUPDBUFFER and
+CD_IUPDBUFFERRGB drivers implemented in IUP 3.11.
+
+=item * New: KILLDBUFFER attribute for all double buffer drivers to
+automatically kill the front buffer canvas when the canvas is
+destroyed.
+
+=item * Changed: attribute TEXTANTIALIAS removed from CD_GL driver. It
+was useless.
+
+=item * Changed: FTGL code to include an additional function to return
+the font maximum width.
+
+=item * Fixed: B<cdCanvasGetTextSize> for the CD_GL driver.
+
+=item * Fixed: improved text performance with font cache in CD_GL
+driver.
+
+=item * Fixed: canvas:B<VectorTextTransform> and canvas:B<GetTransform>
+in Lua.
+
+=item * Fixed: system font name search in Windows for CD_IRGB and CD_GL
+drivers.
+
+=item * Fixed: bpp value for the CD_GL driver.
+
+=item * Fixed: FTGL to return the text height coherent with the
+FreeType use in the Simulation driver and to obtain better results for
+regular size computation.
+
+=back
+
+=head2 L<Version
 5.7|http://sourceforge.net/projects/canvasdraw/files/5.7/>
 (22/Nov/2013)
 
@@ -695,9 +733,8 @@ compatible with the "cd." name space used in the CDLUA for Lua 5. So
 the documentation now reflects only the new nomenclature although the
 old CDLua 3 names are still valid.
 
-=item * New: attribute "WINDOWRGN" for the Native Windows and IUP
-drivers to set the shape of a window to the current complex clipping
-region.
+=item * New: attribute "WINDOWRGN" for the Windows drivers to set the
+shape of a window to the current complex clipping region.
 
 =item * New: B<cdlua_close> function to release the memory allocated by
 the B< cdlua_open>.

@@ -1,11 +1,9 @@
 =head1 CLIENTSIZE (read-only*) (non inheritable) (since 3.0)
 
-Returns the container B<Current> size, in pixels, excluding the
-decorations, i.e. the size of the B<Client> area, see the L<Layout
-Guide|../layout_guide.html>. Useful for B<IupFrame>, B<IupTabs> and
-B<IupDialog> that have decorations. Can also be consulted in other
-containers, it will return the B<Current> size. For controls that have
-a native representation is only available when the control is mapped.
+Returns the client area size of a container. It is the space available
+for positioning and sizing children, see the L<Layout
+Guide|../layout_guide.html>. It is the container B<Current> size
+excluding the decorations (if any).
 
 =head2 Value
 
@@ -17,10 +15,18 @@ pixels.
 
 All elements that are containers, except menus.
 
-=head2 Notes*
+=head2 Notes
 
-For B<IupDialog> CLIENTSIZE is NOT read-only, and it will define
-RASTERSIZE by adding the decorations to the Client size. (Since 3.3)
+For B<IupHbox>, B<IupVbox> and B<IupGridBox> it consider the MARGIN
+attribute as a decoration.
+
+For B<IupDialog>, B<IupBackgroundBox>, B< IupScrollBox> and
+B<IupGLCanvasBox> is only available after the control is mapped.
+
+For B<IupDialog> is NOT read-only, and it will re-define RASTERSIZE by
+adding the decorations to the actual Client size. (Since 3.3)
+
+For B<IupSplit> returns the total area available for the two children.
 
 =head2 See Also
 

@@ -9,7 +9,7 @@ use it in other platforms without the risk of compilation error. If you
 attempt to create a canvas in another platform, function B<
 cdCreateCanvas> will return NULL.
 
-B<It is recomended to use EMF instead of WMF whenever is possible.>
+B<It is recommended to use EMF instead of WMF whenever is possible.>
 
 =head2 Use
 
@@ -35,14 +35,14 @@ Placeable Metafile (APM). It attaches a small header to the beginning
 of the file, allowing other applications to import better the metafile
 contents.
 
-This driver is NOT available for the GDI+ base driver.
-
 =head2 Behavior of Functions
 
-This driver is greatly platform-dependent. For further detail, see the
-B< Behavior of Functions> of the L<Microsoft Windows
-(GDI)|drv/win32.html> platform. However, it should be noted that some
-functions behave differently from the basic functions of each platform.
+This driver is very platform-dependent and depends on the base driver
+used. But the functions bellow behave differently.
+
+For further detail, see the B< Behavior of Functions> of the
+L<Microsoft Windows (GDI)|drv/win32.html> platform. This driver is NOT
+available for the other base drivers, including the GDI+ base driver.
 
 =head2 Control
 

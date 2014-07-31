@@ -13,7 +13,8 @@ It does not have a native representation.
  radio(child) [in LED]
 
 B<child>: Identifier of an interface element. Usually it is a vbox or
-an hbox containing the toggles associated to the radio. It can be NULL.
+an hbox containing the toggles associated to the radio. It can be NULL
+(nil in Lua), not optional in LED.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.

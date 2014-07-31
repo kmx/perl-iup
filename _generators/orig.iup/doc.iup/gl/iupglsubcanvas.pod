@@ -1,0 +1,178 @@
+=head1 IupGLSubCanvas (since 3.11)
+
+Creates an embedded OpenGL sub-canvas. It exists only inside an
+L<IupGLCanvasBox|iupglcanvasbox.html>.
+
+This is an additional control that depends on the OpenGL library. It is
+included in the L<IupGLControls|../iupglcontrols.html> library.
+
+It is a void element that does not map to a native canvas. It mimics an
+B<IupCanvas> with several attributes and callbacks in common, but
+everything is done inside a region of the B<IupGLCanvasBox>.
+
+The element does not to be a direct child of the B<IupGLCanvasBox>. It
+can be place inside void containers like B<IupHbox>, B< IupVbox>,
+B<IupGridBox> and so on.
+
+This control is used as the base control for all visual elements of the
+B<IupGLControls> library.
+
+=head2 Creation
+
+ Ihandle* IupGLSubCanvas(void); [in C]
+ iup.glsubcanvas{} -> (elem: ihandle) [in Lua]
+ glsubcanvas() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+B<BGCOLOR>: background color used in derived controls. Can have an
+alpha component. Default: NULL.
+
+B<BORDERCOLOR>: color used for borders in derived controls. Can have an
+alpha component. Default: "50 150 255".
+
+B<BORDERWIDTH>: line width used for borders in derived controls.
+Default: "1". Any borders can be disabled by simply setting this value
+to 0.
+
+L<CURSOR|../attrib/iup_cursor.html> (non inheritable): Defines a cursor
+for the sub-canvas.
+
+L<FONT|../attrib/iup_font.html>: Uses the FTGL library to render text.
+Depends on locating a font file that matches the font attribute. See
+L<Notes|#Notes> bellow.
+
+B<HIGHLIGHT> (non inheritable): boolean flag indicating that the
+control is highlighted. Dynamically updated during mouse move.
+
+B<HLCOLOR>: color used to indicate a highlight state in derived
+controls. Can have an alpha component. Default: "200 225 245".
+
+B<PRESSCOLOR>: color used to indicate a press state in derived
+controls. Can have an alpha component. Default: "150 200 235".
+
+B<PRESSED> (non inheritable): boolean flag indicating that the control
+is pressed with button1. Dynamically updated during button press.
+
+B<REDRAWALL> (non inheritable): boolean flag to control the redraw
+update during a change of state like highlight or pressed. If "No" only
+the element is redrawn, else all the B< IupGLCanvasBox> is redrawn. It
+will work only if the control is fully opaque. Default: "Yes".
+
+B<REDRAWFRONT> (non inheritable, write-only): redraw only the control
+on the front buffer. It will work only if the control is fully opaque.
+
+B<UNDERLINE> (non inheritable): boolean flag indicating that the
+control text should be redrawn with an underline. Since FTGL does not
+supports underline, the drawing of the text will manually draw a line
+under the text.
+
+L<WID|../attrib/iup_wid.html> (non inheritable): returns the same value
+as the B<IupGLCanvasBox> where the element is inside.
+
+L<ZORDER|../attrib/iup_zorder.html> (non inheritable, write-only):
+change the order of the control inside its parent.
+
+=over
+
+----
+
+=back
+
+L<ACTIVE|../attrib/iup_active.html>,
+L<SCREENPOSITION|../attrib/iup_screenposition.html>,
+L<POSITION|../attrib/iup_position.html>,
+L<MINSIZE|../attrib/iup_minsize.html>,
+L<MAXSIZE|../attrib/iup_maxsize.html>, L<TIP|../attrib/iup_tip.html>,
+L<SIZE|../attrib/iup_size.html>,
+L<RASTERSIZE|../attrib/iup_rastersize.html>,
+L<VISIBLE|../attrib/iup_visible.html>: also accepted.
+
+=head2 Callbacks
+
+B<GL_ACTION>: Action generated when the sub-canvas needs to be redrawn.
+
+ int function(Ihandle *ih); [in C]elem:action() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<GL_BUTTON_CB>: Action generated when any mouse button is pressed or
+released. Same parameters as L<BUTTON_CB|../call/iup_button_cb.html>.
+If IUP_CONTINUE is returned the application callback is called even the
+user clicked on the sub-canvas.
+
+B<GL_ENTERWINDOW_CB>: Action generated when the mouse enters the
+element. Same parameters as
+L<ENTERWINDOW_CB|../call/iup_enterwindow_cb.html>.
+
+B<GL_LEAVEWINDOW_CB>: Action generated when the mouse leaves the
+element. Same parameters as
+L<LEAVEWINDOW_CB|../call/iup_leavewindow_cb.html>.
+
+B<GL_MOTION_CB>: Action generated when the mouse is moved. Same
+parameters as L<MOTION_CB|../call/iup_motion_cb.html>. If IUP_CONTINUE
+is returned the application callback is called even the user moved the
+cursor on the sub-canvas.
+
+B<GL_WHEEL_CB>: Action generated when the mouse wheel is rotated. Same
+parameters as L<WHEEL_CB|../call/iup_wheel_cb.html>. If IUP_CONTINUE is
+returned the application callback is called even the user clicked on
+the sub-canvas.
+
+=over
+
+----
+
+=back
+
+L<MAP_CB|../call/iup_map_cb.html>,
+L<UNMAP_CB|../call/iup_unmap_cb.html>: common callbacks are supported.
+
+=head2 Notes
+
+FTGL is used to draw text in OpenGL. This is a third party library not
+developed at Tecgraf. But its license is also free and have the same
+freedom as the L<Tecgraf Library License|../copyright.html>. You can
+read the FTGL license and copyright in the file
+L<ftgl.txt|../ftgl.txt>. FTGL is copyright to Henry Maddocks.
+
+IUP uses the same FTGL library included in the CD library. Currently CD
+is using the FTGL version 2.1.3-rc5 with modifications.
+
+To locate font files we use several strategies.
+
+=over
+
+=over
+
+=item 1. search for the font in the system. In Windows use the Registry
+to locate the font, in UNIX use the FontConfig library;
+
+=item 2. use the type face as a file title, compose with the font path
+to get a filename (assume style already in the typeface);
+
+=item 3. try some pre-defined names, and use the style to compose the
+filename;
+
+=item 4. use the typeface directly as the file name;
+
+=back
+
+It will search for TrueType (*.ttf) and OpenType (*.otf) font files. It
+will search in the current directory; in the path returned by the
+FREETYPEFONTS_DIR environment variable or from the FREETYPEFONTS_DIR
+global attribute; and in Windows on the Fonts folder.
+
+=back
+
+FTGL fonts are cached internally to optimal use of multiple fonts in
+the same B<IupGLCanvasBox>.
+
+=head2 X<SeeAlso>See Also
+
+L<IupCanvas|../elem/iupcanvas.html>
+
+=cut

@@ -83,6 +83,15 @@ component range from 0-255, but in hexadecimal notation.
 
 =head2 Callbacks
 
+B<COLORUPDATE_CB> [ColorBrowser only]: Action generated when the color
+is updated in the dialog. It is also called when the color is updated
+programmatically. (since 3.11)
+
+ int function(Ihandle* ih);  [in C]
+ elem:colorupdate_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
 L<HELP_CB|../call/iup_help_cb.html>: Action generated when the Help
 button is pressed.
 

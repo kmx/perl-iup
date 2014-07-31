@@ -70,6 +70,12 @@ B<COUNT> (read-only) (non inheritable): returns the number of items.
 Before mapping it counts the number of non NULL items before the first
 NULL item. (since 3.0)
 
+B<DRAGDROPLIST> (non inheritable): enable or disable the drag and drop
+of items between lists, in the same IUP application. L<Drag E<amp>
+Drop|../attrib/iup_dragdrop.html> attributes must be set in order to
+activate the drag & drop support. On the other hand, it is not
+necessary to register drag & drop callbacks. Default: NO. (since 3.10)
+
 B<DROPFILESTARGET> [Windows and GTK Only] (non inheritable): Enable or
 disable the drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
@@ -130,7 +136,7 @@ items are always visible. In Motif, the horizontal scrollbar is never
 shown. In Windows, if DROPEXPAND=YES then the horizontal scrollbar is
 never shown.
 
-B<SHOWDRAGDROP> (creation only) (non inheritable): Enables the internal
+B<SHOWDRAGDROP> (creation only) (non inheritable): enables the internal
 drag and drop of items, and enables the B<DRAGDROP_CB> callback.
 Default: "NO". Works only if DROPDOWN=NO and MULTIPLE=NO. (since 3.7)
 
@@ -178,6 +184,9 @@ only when the list is empty).
 state of each item. When setting this value, the user must provide the
 same amount of '+' and '-' symbols as the amount of items in the list,
 otherwise the specified items will be deselected.
+
+=item * Obs: always returns a non NULL value, event if the list is
+empty or the text box is empty.
 
 =back
 

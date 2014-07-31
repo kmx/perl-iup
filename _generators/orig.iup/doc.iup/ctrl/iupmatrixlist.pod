@@ -8,8 +8,8 @@ boxes in a way that is not possible using B<IupList>. But the control
 mimics the B<IupList> attributes, callbacks and interaction, so the
 usage by the programmer and by the user should be very similar.
 
-This is an additional control that depends on the L<Controls
-Library|../iupcontrols.html>.
+This is an additional control that depends on the
+L<IupControls|../iupcontrols.html> library.
 
 Based on MTXLIB, developed at Tecgraf/PUC-Rio by Renata Trautmann and
 Andre Derraik.
@@ -63,18 +63,19 @@ VALUE1:VALUE2 (two columns) or VALUE1:VALUE2:VALUE3 (three columns).
 Default: "LABEL" (one column).
 
 B<COUNT>: defines the number of items in the list. Differently from the
-B<IupList> control it is not read-only.
+B<IupList> control it is not read-only. It does not include the extra
+empty item when EDITABLE=Yes.
 
 B<DELLIN> (write-only): removes the given line from the list. To remove
 more than one line, use format "B<I<L-L>>", where the first number
 corresponds to the base line and the second number corresponds to the
 number of lines to be removed. Ignored if set before map.
 
-B<EDITABLE>: enables the interactive editing of the list. It can be Yes
-or No. Default: "NO". An empty item at the end of the list will be
-available so new items can be interactively inserted. Also while
-editing a label, the IMAGE column will display a button so the item can
-be interactively removed.
+B<EDITABLE> (creation-only): enables the interactive editing of the
+list. It can be Yes or No. Default: "NO". An empty item at the end of
+the list will be available so new items can be interactively inserted.
+Also while editing a label, the IMAGE column will display a button so
+the item can be interactively removed.
 
 B<FOCUSCOLOR>: the background color when an item get the focus. Values
 in RGB format ("r g b"). Default: "255 235 155".
@@ -218,8 +219,8 @@ B<ih>: identifier of the element that activated the event.
 
 B<item>: Number of the changed item starting at 1.
 
-B<state>: Equal to 1 if the option was selected or to 0 if the option
-was deselected.
+B<state>: Equal to 1 if the item is in focus or to 0 if the item loses
+its focus.
 
 B<LISTCLICK_CB>: Action generated when any mouse button is pressed over
 a item.

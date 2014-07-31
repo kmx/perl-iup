@@ -18,6 +18,9 @@ parameters for creating the element.
 In LED there is no distinction between upper and lower case, except for
 attribute names.
 
+Also there is no NULL definition, so there is no optional parameters,
+in arrays at least one parameter must exist .
+
 The L<IupLoad|func/iupload.html> function can parse a text file and
 create the IUP elements defined in it. Naturally, the same file cannot
 be loaded more than once, because the elements would be created again.

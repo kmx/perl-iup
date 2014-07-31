@@ -15,7 +15,8 @@ container in the dialog.
  normalizer(ih_first, ...) [in LED]
 
 B<ih_first>, ... : List of the identifiers that will be normalized.
-NULL must be used to define the end of the list in C. It can be empty.
+NULL must be used to define the end of the list in C. It can be empty
+in C or Lua, not in LED.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.

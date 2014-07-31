@@ -34,6 +34,8 @@ CANFOCUS
 
 COUNT
 
+DRAGDROPTREE
+
 EXPAND
 
 FGCOLOR
@@ -270,8 +272,8 @@ IMGCOLLAPSED, IMGEXPANDED, IMGBLANK (blank sheet of paper) and IMGPAPER
 
 =head2 Simple Marking
 
-Is the IupTree default operation mode (MARKMODE=SINGLE). In this mode
-only one node can be selected.
+It is the default operation mode (MARKMODE=SINGLE). In this mode only
+one node can be selected.
 
 =head2 Multiple Marking
 

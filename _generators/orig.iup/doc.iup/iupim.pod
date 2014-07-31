@@ -74,6 +74,18 @@ copying data to a B<IupClipboard>. In Lua is a light user data.
 You must include the "im_image.h" header before the "iupim.h" to enable
 these functions.
 
+=head2 imImage to IupImage (since 3.10)
+
+ Ihandle* IupImageFromImImage(imImage* image); [in C]
+ iup.ImageFromImImage(image: imImage) -> (elem: ihandle) [in Lua]
+
+B<image:> the B<imImage>* handle. Must be a bitmap image.
+
+Returns: the IupImage handle.
+
+You must include the "im_image.h" header before the "iupim.h" to enable
+these functions.
+
 =head2 X<SeeAlso>See Also
 
 L<IupImage|elem/iupimage.html>,

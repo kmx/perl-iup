@@ -8,7 +8,7 @@ and you can double click the preview area to switch between primary and
 secondary colors.
 
 This is an additional control that depends on the CD library. It is
-included in the L<Controls Library|../iupcontrols.html>.
+included in the L<IupControls|../iupcontrols.html> library.
 
 It inherits from L<IupCanvas|../elem/iupcanvas.html>.
 

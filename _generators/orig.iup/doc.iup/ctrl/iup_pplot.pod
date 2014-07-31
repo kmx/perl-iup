@@ -34,8 +34,8 @@ Each plot can contain 2 B<axis> (X and Y), a B<title>, a B< legend>
 B<box>, a B<grid>, a B<dataset> B<area> and as many B<datasets> you
 want.
 
-Each data set is added using the B<IupPPlotAdd >function. All other
-plot parameters are configured by attributes.
+Each data set is added using the L<B<Auxiliary >B<Functions>|#aux>. All
+other plot parameters are configured by attributes.
 
 If no attribute is set, the default values were selected to best
 display the plot.
@@ -124,7 +124,7 @@ moving the Y coordinate.
 This function returns the identifier of the created plot, or NULL if an
 error occurs.
 
-=head2 Auxiliary Functions
+=head2 X<aux>Auxiliary Functions
 
  void IupPPlotBegin(Ihandle* ih, int strXdata); [in C]
  iup.PPlotBegin(ih: ihandle, strXdata: number) [in Lua]
@@ -193,6 +193,16 @@ after the dataset is added to the plot. (Since 3.4)
 
 ----
 
+ void IupPPlotGetSample(Ihandle *ih, int index, int sample_index, float *x, float *y); [in C]
+ void IupPPlotGetSampleStr(Ihandle *ih, int index, int sample_index, const char* *x, float *y);
+ iup.PPlotGetSample(ih: ihandle, index, sample_index: number) -> (x, y: number) [in Lua]
+ iup.PPlotGetSampleStr(ih: ihandle, index, sample_index: number) -> (x: string, y: number)
+
+Returns the sample value in a dataset at the given B<sample_index>. Can
+be used only after the dataset is added to the plot. (since 3.11)
+
+----
+
  void IupPPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy); [in C]
  iup.PPlotTransform(ih: ihandle, x, y: number) -> (ix, iy: number) [in Lua]
 
@@ -210,9 +220,16 @@ Plots to the given CD canvas instead of the display canvas.
 
 =head2 Attributes
 
+B<CANVAS> (read-only) (non inheritable): returns the internal CD canvas
+where the draw operation occurs. (since 3.11)
+
 B<REDRAW> (write-only) (non inheritable): redraw all plots and update
-the display. Value is ignored. All other attributes will B<NOT> update
-the display, so you can set many attributes without visual output.
+the display. All other attributes will B<NOT> update the display, so
+you can set many attributes without visual output. Value can be NULL.
+If value is "NOFLUSH" rendering is performed internally but display is
+not updated. If value is "CURRENT" only the current plot defined by
+"PLOT_CURRENT" will be updated and it will behave as "NOFLUSH" (since
+3.11).
 
 B<SYNCVIEW> (non inheritable): when a plot view is changed by
 interactive zoom or pan, the other plots are zoomed or panned
@@ -556,10 +573,14 @@ Returns: If EDITBEGIN_CB returns IUP_IGNORE the editing operation is
 aborted.
 
 B<PLOTBUTTON_CB>: similar to L<BUTTON_CB|../call/iup_button_cb.html>
-but coordinates are float in plot scale. (since 3.9)
+but coordinates are float in plot scale. It is called before the
+internal processing, if returns IUP_IGNORE internal processing will not
+be done. (since 3.9)
 
 B<PLOTMOTION_CB>: similar to L<MOTION_CB|../call/iup_motion_cb.html>
-but coordinates are float in plot scale. (since 3.9)
+but coordinates are float in plot scale. It is called before the
+internal processing, if returns IUP_IGNORE internal processing will not
+be done. (since 3.9)
 
 B<PREDRAW_CB, POSTDRAW_CB>: Actions generated before and after the
 redraw operation. Predraw can be used to draw a different background
@@ -574,7 +595,7 @@ function.
 
 B<ih>: identifier of the element that activated the event.
 
-cnv: the CD canvas where the draw operation occurs.
+cnv: the internal CD canvas where the draw operation occurs.
 
 =over
 

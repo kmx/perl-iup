@@ -1,4 +1,4 @@
-=head1 POSITION (read-only) (non inheritable)
+=head1 POSITION (non inheritable)
 
 The position of the element relative to the origin of the B<Client>
 area of the native parent. If you add the CLIENTOFFSET attribute of the
@@ -6,7 +6,8 @@ native parent, you can obtain the coordinates relative to the B<Window>
 area of the native parent. See the L<Layout
 Guide|../layout_guide.html>.
 
-It is normally read-only, but if FLOATING=YES then it can be set.
+It will be changed during the layout computation, except when
+FLOATING=YES or when used inside a concrete layout container.
 
 =head2 Value
 

@@ -4,7 +4,7 @@ IUP
 
 Portable User Interface
 
-Version 3.9
+Version 3.11
 
 ----
 

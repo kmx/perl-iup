@@ -170,10 +170,8 @@ LIGHT=Yes
 =head2 CRUST
 
 This will reconstruct and draw the surface for arbitrary placed points.
-Parameter CRUSTRADIUS set relative radius (increase it for removing
-holes), default=0. If DATAGRID=Yes then wire plot is produced,
-default=No. Colors will be used from the previous color scheme or from
-COLORSCHEME if defined.
+If DATAGRID=Yes then wire plot is produced, default=No. Colors will be
+used from the previous color scheme or from COLORSCHEME if defined.
 
 [IMAGE]
 
@@ -326,9 +324,7 @@ LIGHT=Yes
 
 =head2 PLANAR_DENSITY
 
-Draws density plot for the surface at a specified z coordinate.
-PLANARVALUE specifies the z coordinate, if not defined AXS_ZMIN is
-used.
+Draws density plot for the surface at minimum z coordinate.
 
 [IMAGE]
 
@@ -340,12 +336,11 @@ COLORBAR=Yes
 
 =head2 PLANAR_CONTOUR
 
-Draws contour lines for the surface at a z coordinate. CONTOURCOUNT
-defines the number of contour lines, default=7. PLANARVALUE specifies a
-z coordinate, if not defined contours are distributed in the
-COLORBARRANGE interval. If CONTOURFILLED=Yes draws solid (or filled)
-contour lines for the surface, default=No. If CONTOURLABELS is defined
-then contour labels will be drawn BELLOW or ABOVE the contours.
+Draws contour lines for the surface at the minimum z coordinate.
+CONTOURCOUNT defines the number of contour lines, default=7. If
+CONTOURFILLED=Yes draws solid (or filled) contour lines for the
+surface, default=No. If CONTOURLABELS is defined then contour labels
+will be drawn BELLOW or ABOVE the contours.
 
 [IMAGE]
 
@@ -405,11 +400,10 @@ LIGHT=Yes
 
 =head2 PLANAR_GRADIENTLINES
 
-Draws gradient lines for scalar field defined by the surface at a
-specified z coordinate. PLANARVALUE specifies the z coordinate, if not
-defined AXS_ZMIN is used. Number of lines is proportional to
-GRADLINESCOUNT, default=5 . If GRADLINESCOUNTE<lt>0 then lines start
-from borders only. Lines are plotted for each z slice of the data.
+Draws gradient lines for scalar field defined by the surface at minimum
+z coordinate. Number of lines is proportional to GRADLINESCOUNT,
+default=5 . If GRADLINESCOUNTE<lt>0 then lines start from borders only.
+Lines are plotted for each z slice of the data.
 
 [IMAGE]
 
@@ -587,22 +581,8 @@ CONTOURFILLED=Yes
 Draws cloud plot for the volume. This plot is a set of cubes with color
 and transparency proportional to value of ALPHA. The resulting plot is
 like cloud low value is transparent but higher ones are not. If
-CLOUDCUBES=No the semi-transparent points are used instead of cubes,
-default=Yes.
-
-[IMAGE]
-
-ROTATE=40:0:60
-
-BOX=Yes
-
-TRANSPARENT=Yes
-
-LIGHT=No
-
-COLORSCHEME=wyrRk
-
-CLOUDCUBES=No
+CLOUDLOW=Yes then lower quality plot will be produced with much low
+memory usage.
 
 [IMAGE]
 

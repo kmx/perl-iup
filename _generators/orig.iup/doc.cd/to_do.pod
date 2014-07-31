@@ -38,10 +38,7 @@ attribute (non rectangular windows from regions)
 
 =over
 
-=item * Use textures to improve image drawing with transformation and
-patter+stipple support.
-
-=item * Use tesselation to support fillmode and non convex polygons.
+=item * Use tessellation to support fillmode and non convex polygons.
 
 =back
 

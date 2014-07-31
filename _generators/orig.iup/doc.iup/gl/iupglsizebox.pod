@@ -1,0 +1,71 @@
+=head1 IupGLSizebox (since 3.11)
+
+Creates a void container that allows its child to be resized. Allows
+expanding and contracting the child B<size> in one or two directions.
+It inherits from L<IupGLSubCanvas|iupglsubcanvas.html>. It exists only
+inside an L<IupGLCanvasBox|iupglcanvasbox.html>.
+
+=head2 Creation
+
+ Ihandle* IupGLSizebox(Ihandle* child); [in C]
+ iup.glsizebox{child: ihandle} -> (elem: ihandle) [in Lua]
+ glsizebox(child) [in LED]
+
+B<child>: Identifier of an interface element which will receive the
+box. It can be NULL (nil in Lua), not optional in LED.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+The B<IupGLScrollBox> element handle all attributes defined for a
+L<IupGLSubCanvas|iupglsubcanvas.html> control.
+
+=over
+
+----
+
+=back
+
+B<FORECOLOR>: Changes the color of the bar handler. The value should be
+given in "R G B" color style. Default: "192 192 192".
+
+B<RESIZERS>: Indicates the direction of the resize. Possible values are
+"VERTICAL", "HORIZONTAL", or "BOTH". Default: "BOTH". The handler is
+always placed at the right/bottom of its child.
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
+value is "YES".
+
+=over
+
+----
+
+=back
+
+L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>: also accepted.
+
+=head2 Notes
+
+The control inside the B<IupGLSizeBox> will have its B< User> size
+changed. See the L<Layout Guide|../layout_guide.html> for mode details
+on sizes.
+
+B<IupGLSizeBox> can make the layout to be resized larger than the
+B<IupGLCanvasBox> size so some controls will be positioned outside the
+box area at right or bottom. In fact this is part of the dynamic layout
+default reposition of controls inside the box. See the B<IupRefresh>
+function. The IUP layout does not have a maximum limit only a minimum,
+except if you use the MAXSIZE common attribute.
+
+The box can be created with no elements and be dynamic filled using
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=cut

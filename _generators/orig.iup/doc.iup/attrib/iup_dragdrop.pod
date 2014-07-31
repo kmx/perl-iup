@@ -67,6 +67,12 @@ L<IupDialog|../dlg/iupdialog.html>.
 
 =head2 Attributes at Drag Source
 
+B<DRAGC>B<URSOR (non inheritable):> name of an image to be used as
+cursor during drag. Use L<IupSetHandle|../func/iupsethandle.html> or
+L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
+associate an image to a name. See also
+L<IupImage|../elem/iupimage.html>. (since 3.11)
+
 B<DRAGSOURCE>B< (non inheritable):> Set up a control as a source for
 drag operations. Default: NO.
 

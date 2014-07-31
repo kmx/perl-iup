@@ -1,0 +1,75 @@
+=head1 IupGLScrollBox (since 3.11)
+
+Creates an embedded OpenGL container that allows its child to be
+scrolled. It inherits from L<IupGLSubCanvas|iupglsubcanvas.html>. It
+exists only inside an L<IupGLCanvasBox|iupglcanvasbox.html>.
+
+=head2 Creation
+
+ Ihandle* IupGLScrollBox(Ihandle* child); [in C]
+ iup.glscrollbox{child: ihandle} -> (elem: ihandle) [in Lua]
+ glscrollbox(child) [in LED]
+
+B<child>: Identifier of an interface element which will receive the
+box. It can be NULL (nil in Lua), not optional in LED.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+The B<IupGLScrollBox> element handle all attributes defined for a
+L<IupGLSubCanvas|iupglsubcanvas.html> control.
+
+It contains automatic scrollbars that are shown or hidden accordingly
+if the child natural size fits the client size. See the L<Scrollbars
+Attributes for B<IupGLControls>|iupgl_scrollbars.html> for more
+details.
+
+=over
+
+----
+
+=back
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
+value is "YES".
+
+L<POSX|../attrib/iup_posx.html>: Position of the thumb in the
+horizontal scrollbar. Default: "0.0". DX is the visible horizontal area
+and XMAX is set to the child natural width.
+
+L<POSY|../attrib/iup_posy.html>: Position of the thumb in the vertical
+scrollbar. Default: "0.0". DY is the visible vertical area and YMAX is
+set to the child natural height.
+
+=over
+
+----
+
+=back
+
+L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>: also accepted.
+
+=head2 Notes
+
+The box allows the application to create a virtual space for the dialog
+that is actually larger than the visible area. The current size of the
+box defines the visible area. The natural size of the child (and its
+children) defines the virtual space size. So the B<IupGLScrollBox> does
+not depend on its child size or expansion, and its natural size is
+always 0x0.
+
+The user can move the box contents by dragging the background. Also the
+mouse wheel scrolls the contents vertically.
+
+The box can be created with no elements and be dynamic filled using
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=cut

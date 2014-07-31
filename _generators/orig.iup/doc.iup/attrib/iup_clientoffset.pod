@@ -3,21 +3,11 @@
 Returns the container offset to the B<Client> area, see the L<Layout
 Guide|../layout_guide.html>. Useful for B<IupFrame>, B<IupTabs> and
 B<IupDialog> that have decorations. Can also be consulted in other
-containers, it will return "0x0". For controls that have a native
-representation is only available when the control is mapped.
-
-In GTK and Motif, for the B<IupDialog>, the dy value is negative when
-there is a menu. This occours because in those systems the menu is
-placed inside the Client Area and all children must be placed below the
-menu.
-
-In Windows, for the B<IupFrame>, the value is always "0x0" because it
-actually does not have a B<Client> area, so the child is manually
-positioned in the expected B<Client> area.
+containers, it will simply return "0x0".
 
 This attribute can be used in conjunction with the POSITION attribute
 of a child so the coordinates of a child relative to the native parent
-top-left corner can be obtained.
+can be obtained.
 
 =head2 Value
 
@@ -27,6 +17,20 @@ to the horizontal and vertical offsets, respectively, in pixels.
 =head2 Affects
 
 All elements that are containers, except menus.
+
+=head2 Notes
+
+For B<IupDialog> is only available after the control is mapped.
+
+In GTK and Motif, for the B<IupDialog>, the dy value is negative when
+there is a menu. This occurs because in those systems the menu is
+placed inside the Client Area and all children must be placed below the
+menu.
+
+In Windows, for the B<IupFrame>, the value is always "0x0" the position
+of the child is still relative to the top-left corner of the frame.
+This is automatically compensated in calculation of the POSITION
+attribute.
 
 =head2 See Also
 

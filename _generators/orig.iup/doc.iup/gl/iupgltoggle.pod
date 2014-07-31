@@ -1,0 +1,96 @@
+=head1 IupGLToggle (since 3.11)
+
+Creates an embedded OpenGL toggle interface element. It is a two-state
+(on/off) button that, when selected, generates an action that activates
+a function in the associated application. Its visual representation can
+contain a text and/or an image. It inherits from
+L<IupGLButton|iupglbutton.html>. It exists only inside an
+L<IupGLCanvasBox|iupglcanvasbox.html>.
+
+=head2 Creation
+
+ Ihandle* IupGLToggle(const char *title); [in C]iup.gltoggle{[title = title: string]} -> (elem: ihandle) [in Lua]gltoggle(title) [in LED]
+
+B<title>: Text to be shown on the toggle. It can be NULL. It will set
+the TITLE attribute.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+The B<IupGLToggle> element handle all attributes defined for the
+L<IupGLButton|iupglbutton.html> control, and consequently for the
+L<IupGLLabel|iupgllabel.html> control and for the
+L<IupGLSubCanvas|iupglsubcanvas.html> control too.
+
+=over
+
+----
+
+=back
+
+B<CHECKMARK> (non inheritable): Enables the check mark. Default: NO.
+When enabled the border and the background are not drawn, and a check
+mark box is drawn at left or right, according to RIGHTBUTTON.
+
+B<CHECKMARKWIDTH> (non inheritable): Size of the check mark. Default:
+14.
+
+B<RADIO> (read-only): returns if the toggle is inside a radio. Can be
+"YES" or "NO". Valid only after the element is mapped, before returns
+NULL.
+
+B<RIGHTBUTTON> (non inheritable): place the check button at the right
+of the text. Can be "YES" or "NO". Default: "NO".
+
+B<VALUE> (non inheritable): Toggle's state. Values can be "ON", "OFF"
+or "TOGGLE". Default: "OFF". The TOGGLE option will invert the current
+state.
+
+=head2 Callbacks
+
+The B<IupGLToggle> element handle all callbacks defined for the
+B<IupGLSubCanvas> control.
+
+=over
+
+----
+
+=back
+
+L<ACTION|../call/iup_action.html>: Action generated when the toggle's
+state (on/off) was changed. The callback also receives the toggle's
+state.
+
+ int function(Ihandle* ih, int state); [in C]elem:action(state: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<state>: 1 if the toggle's state was set to on; 0 if it was set to
+off.
+
+Returns: IUP_CLOSE will be processed.
+
+B<VALUECHANGED_CB>: Called after the value was interactively changed by
+the user. Called after the ACTION callback, but under the same context.
+
+ int function(Ihandle *ih); [in C]elem:valuechanged_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+=head2 Notes
+
+B<IupGLToggle> visual is the same as a B<IupGLButton>. There is no
+check mark.
+
+To build a set of mutual exclusive toggles, insert them in a
+B<IupRadio> container. They must be inserted before creation, and their
+behavior can not be changed.
+
+=head2 X<SeeAlso>See Also
+
+L<IupImage|iupimage.html>, L<IupGLButton|iupglbutton.html>,
+L<IupGLLabel|iupgllabel.html>, L<IupRadio|iupradio.html>.
+
+=cut

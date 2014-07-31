@@ -2,10 +2,6 @@
 
 =head2 Additional Controls
 
-=head2 L<IupGLCanvas|ctrl/iupglcanvas.html>
-
-[IMAGE]
-
 =head2 L<IupColorBrowser|ctrl/iupcolorbrowser.html>
 
 [IMAGE]
@@ -15,6 +11,14 @@
 [IMAGE]
 
 =head2 L<IupMatrix|ctrl/iupmatrix.html>
+
+[IMAGE]
+
+=head2 L<IupGLCanvas|ctrl/iupglcanvas.html>
+
+[IMAGE]
+
+=head2 L<IupGLControls|iupglcontrol.html>
 
 [IMAGE]
 
@@ -33,6 +37,10 @@
 [IMAGE]
 
 =head2 L<IupWebBrowser|ctrl/iupweb.html>
+
+[IMAGE]
+
+=head2 L<IupScintilla|ctrl/iup_scintilla.html>
 
 [IMAGE]
 

@@ -1,6 +1,6 @@
 =head1 ENTERWINDOW_CB
 
-Action generated when the mouse enters the canvas or button.
+Action generated when the mouse enters the element.
 
 =head2 Callback
 

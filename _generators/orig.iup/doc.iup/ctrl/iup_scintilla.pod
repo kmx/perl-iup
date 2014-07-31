@@ -8,7 +8,8 @@ an emphasis on advanced features for source code editing. It comes with
 complete source code and a L<license|scintilla.txt> that permits use in
 any free project or commercial product, and it is available on L<
 http:E<47>E<47>www.scintilla.orgE<47>|http://www.scintilla.org/>.
-IupScintilla library includes the Scintilla 3.3.5 source code, so no
+
+IupScintilla library includes the Scintilla 3.4.4 source code, so no
 external references are needed.
 
 Supported in Windows and in the systems the GTK driver is supported.
@@ -33,6 +34,13 @@ library (iuplua_scintilla).
 
 This function returns the identifier of the created editing component,
 or NULL if an error occurs.
+
+=head2 X<aux>Auxiliary Functions
+
+ sptr_t IupScintillaSendMessage(Ihandle* ih, unsigned int iMessage, uptr_t wParam, sptr_t lParam); [in C]
+ Not available in Lua.
+
+Sends a message to the Scintilla control in any platform. (since 3.11)
 
 =head2 Attributes
 
@@ -176,6 +184,49 @@ Can be "HIDDEN" (not displayed), "STANDARD" (displayed) or "BOXED"
 B<ANNOTATIONCLEARALL> (non inheritable, write-only): deletes all
 annotations.
 
+=head2 Auto-Completion (since 3.10)
+
+B<AUTOCSHOWB<I<id>>> (non inheritable, write only): causes a list of
+words to be displayed. The words are separated by a space. "id" defines
+the number of characters of the word already entered by user.
+
+B<AUTOCCANCEL> (non inheritable, write only): cancels any displayed
+auto-completion list. When in auto-completion mode, the list should
+disappear when the user types a character that can not be part of the
+auto-completion.
+
+B<AUTOCACTIVE> (non inheritable, read only): returns YES if there is an
+active auto-completion list and NO if there is not.
+
+B<AUTOCPOSSTART> (non inheritable, read only): returns the current
+position when the list of words started to be shown.
+
+B<AUTOCCOMPLETE> (non inheritable, write only): triggers
+auto-completion. This has the same effect as the tab key.
+
+B<AUTOCSELECT> (non inheritable, write only): selects an item in the
+auto-completion list. It searches in the list of words for the first
+that matches of value (comparisons are case sensitive). If the item is
+not found, no item is selected.
+
+B<AUTOCSELECTEDINDEX> (non inheritable, read only): retrieves the
+current selection index, set by AUTOCSELECT attribute.
+
+B<AUTOCDROPRESTOFWORD> (non inheritable): when an item is selected, any
+word characters following the caret are first erased if this attribute
+is set YES. The default is NO.
+
+B<AUTOCMAXHEIGHT> (non inheritable): sets and gets the maximum number
+of rows that will be visible in an auto-completion list. If there are
+more rows in the list, then a vertical scrollbar is shown. The default
+is 5.
+
+B<AUTOCMAXWIDTH> (non inheritable): the maximum width of an
+auto-completion list expressed as the number of characters in the
+longest item that will be totally visible. The default is 0 (in this
+case, the list width is calculated to fit the item with the most
+characters).
+
 =head2 Brace Highlighting
 
 B<BRACEHIGHLIGHT> (non inheritable, write only): highlights the brace,
@@ -243,8 +294,8 @@ lines are drawn. Can be: "LEVELNUMBERS", "LINEBEFORE_EXPANDED",
 
 B<FOLDLEVELI<id>> (non inheritable): sets and gets the fold level of a
 "id" line. Can be: "WHITEFLAG", "HEADERFLAG", "NUMBERMASK" or "BASE"
-(default). If you use a lexer, it is not recommend to set the fold
-level (this is far better handled by the lexer). By contrast, get fold
+(default). If you use a Lexer, it is not recommend to set the fold
+level (this is far better handled by the Lexer). By contrast, get fold
 level is useful to decide how to handle user folding requests.
 
 B<FOLDTOGGLE> (non inheritable, write-only): Determines if the fold
@@ -254,20 +305,24 @@ lines, or contracted, hiding all the child lines.
 =head2 Lexer
 
 B<KEYWORDI<id>> (non inheritable, write-only): keyword list used by the
-current lexer. Until 9 lists of keywords can set up using id from 0 to
+current Lexer. Until 9 lists of keywords can set up using id from 0 to
 8. The value is a list of keywords separated by spaces, tabs, "\n" or
 "\r" or any combination of these.
 
 B<KEYWORDSETS> (non inheritable, read only): returns a description of
 all of the keyword sets separated by "\n".
 
-B<LEXERLANGUAGE> (non inheritable): associate the lexer language name.
+B<LEXERLANGUAGE> (non inheritable): associate the Lexer language name.
 It is case sensitive. Default: not defined. Set to NULL to clear the
 association. Can be: any name supported by Scintilla. For instance:
 asm, bash, freebasic, cmake, COBOL, cpp (C++), css, d, diff, eiffel,
 fortran, hypertext (HTML), xml, lisp, lua (Lua), makefile, matlab,
 mysql, nsis, pascal, perl, python, ruby, smalltalk, sql, tcl, tex, vb
 (Visual Basic), and many others.
+
+B<LOADLEXERLIBRARY> (non inheritable, write-only): Load a Lexer
+implemented in a dynamic library given the library file name. This is a
+.so file on GTK+/Linux or a .DLL file on Windows. (since 3.11)
 
 B<PROPERTY> (non inheritable): sets and gets Lexer properties using
 "name=value" string pairs, where name is case sensitive and value is
@@ -277,7 +332,7 @@ set the PROPERTYNAME attribute, the PROPERTY attribute will return its
 value.
 
 B<PROPERTYNAMES> (non inheritable, read only): returns a list of
-property names separated by "\n". If the lexer does not support this
+property names separated by "\n". If the Lexer does not support this
 information then an empty string is returned.
 
 =head2 Margins
@@ -451,6 +506,34 @@ the L<CARETPOS|#CARETPOS> attribute ("pos" starting at 0).
 
 B<SCROLLWIDTH> (non inheritable): controls the document width in
 pixels. Default: 2000.
+
+=head2 Search and Replace (since 3.10)
+
+B<SEARCHINTARGET> (non inheritable, write only): This searches for the
+first occurrence of a text string in the target defined by TARGETSTART
+and TARGETEND. If the search succeeds, the target is set to the found
+text.
+
+B<SEARCHFLAGS> (non inheritable): sets and gets the search flags used
+in SEARCHINTARGET attribute. Possible values: MATCHCASE, WHOLEWORD,
+WORDSTART, REGEXP and POSIX. The flag options are combined using "|" as
+separators. Use NULL to reset all flags.
+
+B<TARGETSTART> (non inheritable): sets and gets the start of target.
+When searching in non-regular expression mode, you can set TARGETSTART
+greater than TARGETEND to find the last matching text in the target
+rather than the first matching text. If set 0, target start will be 1
+(first position of text).
+
+B<TARGETEND> (non inheritable): sets and gets the end of target. If set
+0, target end will be the last position of text.
+
+B<TARGETFROMSELECTION> (non inheritable, write only): set the target
+start and end from current position of the selection.
+
+B<REPLACETARGET> (non inheritable, write only): replaces the target
+text. After replacement, the target range refers to the replacement
+text.
 
 =head2 Style Definition (See L<Style Definition|#StyleDefinition>)
 
@@ -656,6 +739,34 @@ B<pos>: 0 based character position when change started.
 B<length>: size of the change.
 
 B<text>: the inserted text value. It is NULL when insert=0.
+
+B<AUTOCSELECTION_CB>: Action generated when the user has selected an
+item in an auto-completion list. It is sent before the selection is
+inserted. Automatic insertion can be cancelled by setting the B<
+AUTOCCANCEL> attribute before returning from the callback. (since
+3.10.1)
+
+ int function(Ihandle *ih, int pos, char* text ); [in C]elem:autocselection_cb(pos: number, text: string) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<pos>: 0 based character start position of the word being completed.
+
+B<text>: the text of the selection.
+
+B<AUTOCCANCELLED_CB>: Called after the user has cancelled an
+auto-completion list. (since 3.10.1)
+
+ int function(Ihandle *ih); [in C]elem:autoccancelled_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<AUTOCCHARDELETED_CB>: Called after the user deleted a character while
+auto-completion list was active. (since 3.10.1)
+
+ int function(Ihandle *ih); [in C]elem:autocchardeleted_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
 
 L<BUTTON_CB|../call/iup_button_cb.html>: Action generated when any
 mouse button is pressed or released. Use
@@ -1010,7 +1121,7 @@ I<Selection>
 
 Shift+Arrows
 
-select charaters
+select characters
 
 Ctrl+A
 

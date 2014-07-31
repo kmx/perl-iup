@@ -71,6 +71,6 @@ B<x, y>: cursor position relative to the top-left corner of the element
 
 =head2 Affects
 
-All except menus.
+All controls that have visual representation, except menus.
 
 =cut

@@ -1,0 +1,115 @@
+=head1 IupGLCanvasBox (since 3.11)
+
+Creates an OpenGL canvas container. It inherits from
+L<IupGLCanvas|../ctrl/iupglcanvas.html>.
+
+This is an additional control that depends on the OpenGL library. It is
+included in the L<IupGLControls|../iupglcontrols.html> library.
+
+To use the controls available in the B<IupGLControls> library inside
+your OpenGL canvas you must replace the B<IupGLCanvas> by the
+B<IupGLCanvasBox> element.
+
+It can have any number of children, but only controls from the B<
+IupGLControls> library can be used as children along with the void
+containers such as B<IupHbox>, B<IupVbox>, and so on, including
+B<IupFill>.
+
+The elements that are a direct child of the box can be positioned using
+the VERTICALALIGN and/or HORIZONTALALIGN attributes, or using a
+position in pixels relative to the top left corner of the box by
+setting the attribute L<POSITION|../attrib/iup_position.html>.
+
+The box can be created with no elements and be dynamic filled using
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
+
+=head2 Creation
+
+ Ihandle* IupGLCanvasBox(Ihandle *child, ...); [in C]
+ Ihandle* IupGLCanvasBoxv(Ihandle **children); [in C]
+ iup.glcanvasbox{child, ...: ihandle} -> (elem: ihandle) [in Lua]
+ glcanvas(child, ...) [in LED]
+
+B<child>, ... : List of the identifiers that will be placed in the box.
+NULL must be used to define the end of the list in C. It can be empty
+in C or Lua, not in LED.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+The B<IupGLCanvasBox> element handle all attributes defined for an
+OpenGL canvas and a conventional canvas, see
+L<IupGLCanvas|../ctrl/iupglcanvas.html> and
+L<IupCanvas|../elem/iupcanvas.html>.
+
+=over
+
+----
+
+=back
+
+B<MARGIN> (non inheritable): Defines a margin in pixels. Its value has
+the format "I<width>xI<height>", where I< width> and I<height> are
+integer values corresponding to the horizontal and vertical margins,
+respectively. Default: "0x0" (no margin).
+
+B<REDRAW> (non inheritable, write-only): force a full redraw of all
+elements and the main canvas.
+
+=over
+
+----
+
+=back
+
+L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>: also accepted.
+
+=head2 Attributes (at Children)
+
+B<HORIZONTALALIGN> (non inheritable) B<(at children only)>:
+Horizontally aligns the element inside the box. Possible values:
+"ALEFT", "ACENTER", "ARIGHT" or "FLOAT". Default: "FLOAT". When FLOAT
+is used its horizontal position is obtained from the
+L<POSITION|../attrib/iup_position.html> attribute.
+
+B<VERTICALALIGN> (non inheritable) B<(at children only)>: Vertically
+aligns the element inside the box. Possible values: "ATOP", "ACENTER",
+"ABOTTOM" or "FLOAT". Default: "FLOAT". When FLOAT is used its vertical
+position is obtained from the L< POSITION|../attrib/iup_position.html>
+attribute.
+
+=head2 Callbacks
+
+The B<IupGLCanvasBox> element understands all callbacks defined for the
+L<IupGLCanvas|../ctrl/iupglcanvas.html>.
+
+But since it has to forward the mouse and action callbacks to the B<
+IupGLControls> elements when it is mapped the callbacks ACTION,
+BUTTON_CB, MOTION_CB, WHEEL_CB, and LEAVEWINDOW_CB are replaced by
+internal callbacks. The application callbacks will still be called and
+they can be retrieved by using the prefix "APP_" on the callback name.
+If for some reason the application set one of these callbacks after
+being mapped, the box internal callback can be retrieved by using the
+prefix "GLBOX_" on the callback name.
+
+Keyboard focus is NOT processed for B<IupGLCanvasBox> children.
+
+The B<IupGLCanvas> SWAPBUFFERS_CB callback is used internally to enable
+a correct display for the box children. This means that when the
+application calls B<IupGLSwapBuffers>, then children will be drawn
+before actually swapping the double buffer.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=head2 X<SeeAlso>See Also
+
+L<IupGLCanvas|../ctrl/iupglcanvas.html>,
+L<IupCanvas|../elem/iupcanvas.html>
+
+=cut

@@ -19,8 +19,11 @@ color attributes. For example, "255 0 128" can also be written as
 
 =head2 Affects
 
-All, but with restrictions. Several controls have transparent parts
-that are not affected by the BGCOLOR.
+All controls that have visual representation, but with some
+restrictions.
+
+Several controls have transparent parts that are not affected by the
+BGCOLOR.
 
 See also the screenshots of the L<sample.c|../../examples/C/sample.c>
 results with L<normal background|../sample_results.html>, changing the

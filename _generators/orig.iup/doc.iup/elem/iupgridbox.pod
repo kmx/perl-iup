@@ -39,7 +39,8 @@ It does not have a native representation.
  gridbox(child, ...) [in LED]
 
 B<child>, ... : List of the identifiers that will be placed in the box.
-NULL must be used to define the end of the list in C. It can be empty.
+NULL must be used to define the end of the list in C. It can be empty
+in C or Lua, not in LED.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.
@@ -65,8 +66,17 @@ inheritance.
 B<EXPANDCHILDREN> (non inheritable): forces all children to expand in
 the given direction and to fully occupy its space available inside the
 box. Can be YES (both directions), HORIZONTAL, VERTICAL or NO. Default:
-"NO". This has the same effect as setting EXPAND on each child, but the
-box expansion will not be affected.
+"NO". This has the same effect as setting EXPAND on each child.
+
+B<FITTOCHILDREN> (write-only): Set the RASTERSIZE attribute of the
+reference element in the given column or line, so that it will fit the
+largest element in the column or the highest element in the line. The
+number of the column or line must be preceded by a character
+identifying its type, "C" for columns and "L" for lines. For example
+"C5"=column 5 or "L3"=line 3. Can only be set after the layout of the
+dialog has been calculated at least 1 time. If FITMAXWIDTHn or
+FITMAXHEIGHTn are set for the column or line they are used as maximum
+limit for the size. (Since 3.10)
 
 B<GAPLIN, CGAPLIN>: Defines a vertical space in pixels between lines,
 B<CGAPLIN> is in the same units of the B<SIZE> attribute for the
@@ -81,13 +91,13 @@ B<NGAPLIN, NCGAPLIN, NGAPCOL, NCGAPCOL> (non inheritable): Same as B<
 
 B<HOMOGENEOUSLIN> (non inheritable): forces all lines to have the same
 vertical space, or height. The line height will be based on the highest
-child of the reference line (See B<SIZELIN>). Default: "NO". Notice
+child of the reference column (See B<SIZECOL>). Default: "NO". Notice
 that this does not changes the children size, only the available space
 for each one of them to expand.
 
 B<HOMOGENEOUSCOL> (non inheritable): forces all columns to have the
 same horizontal space, or width. The column width will be based on the
-largest child of the reference column (See B<SIZECOL>). Default: "NO".
+largest child of the reference line (See B<SIZELIN>). Default: "NO".
 Notice that this does not changes the children size, only the available
 space for each one of them to expand.
 
@@ -112,11 +122,13 @@ B<NUMCOL> (read-only): returns the number of columns.
 B<NUMLIN> (read-only): returns the number of lines.
 
 B<NORMALIZESIZE> (non inheritable): normalizes all children natural
-size to be the biggest natural size among the reference line and the
+size to be the biggest natural size among the reference line and/or the
 reference column. All natural width will be set to the biggest width,
 and all natural height will be set to the biggest height according to
-is value. Can be NO, HORIZONTAL, VERTICAL or BOTH. Default: "NO". Same
-as using L<IupNormalizer|iupnormalizer.html>.
+is value. Can be NO, HORIZONTAL (width only), VERTICAL (height only) or
+BOTH. Default: "NO". Same as using L<IupNormalizer|iupnormalizer.html>.
+Notice that this is different from the B<HOMOGENEOUS*> attributes in
+the sense that the children will have their sizes changed.
 
 B<ORIENTATION> (non inheritable): controls the distribution of the
 children in lines or in columns. Can be: HORIZONTAL or VERTICAL.

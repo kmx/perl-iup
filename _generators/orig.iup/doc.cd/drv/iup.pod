@@ -1,5 +1,9 @@
 =head1 CD_IUP - IUP Driver (cdiup.h)
 
+CD_IUPDBUFFER - IUP driver using double buffer (since 5.8)
+
+CD_IUPDBUFFERRGB - IUP driver using image rgb double buffer (since 5.8)
+
 This driver provides access to an interface element of a IUP canvas.
 IUP is a portable user-interface library used to create portable
 user-interface applications. See L<IUP
@@ -23,6 +27,11 @@ to B<close> the file properly.
 The CD canvas is automatically stored in the IUP canvas as the
 B<"_CD_CANVAS"> attribute.
 
+For the double buffer versions two canvas will be created. The returned
+canvas is the back buffer canvas. This canvas is stored as the
+B<"_CD_CANVAS_DBUFFER"> attribute and the front buffer canvas will
+still be stored as the B<"_CD_CANVAS"> attribute.
+
 To use this driver, it must be linked with the "B<iupcd>" library
 available in the IUP distribution.
 
@@ -33,36 +42,10 @@ require"iupluacd".
 
 =head2 Behavior of Functions
 
-This driver is very platform-dependent, although little dependent on
-the IUP library.
+This driver depends on the L<Native Window|native.html> driver.
 
-For further detail, see the B< Behavior of Functions> in each base
-driver: L<GDI|win32.html>, L<GDK|gdk.html> and L<X-Win|xwin.html>. To
-use this driver with a context plus base driver is necessary to call B<
-cdUseContextPlus>B<(1)> before creating the canvas, see the
-L<GDI+|../drv/gdiplus.html>, L<Cairo|../drv/cairo.html> and
-L<XRender|../drv/xrender.html> base drivers.
-
-However, it should be noted that some functions behave differently from
-the basic functions of each platform.
-
-=head2 Control
-
-=over
-
-=item * L<B< cdCanvasActivate>|../func/init.html#cdActivate>: updates
-the canvas size; the IUP canvas might have been resized.
-
-=back
-
-=head2 Exclusive Attributes
-
-=over
-
-=item * "B<WINDOWRGN>": set the shape of a window to the current
-complex clipping region (set only). If data is NULL the region is
-reset.
-
-=back
+When using the double buffer versions see the L<Double
+Buffer|dbuf.html> and L<Double Buffer using a RGB image|dbufrgb.html>
+drivers documentation.
 
 =cut

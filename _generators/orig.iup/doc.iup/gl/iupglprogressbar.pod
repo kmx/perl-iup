@@ -1,0 +1,60 @@
+=head1 IupGLProgressBar (since 3.11)
+
+Creates an embedded OpenGL progress bar control. Shows a percent value
+that can be updated to simulate a progression. It inherits from
+L<IupGLSubCanvas|iupglsubcanvas.html>. It exists only inside an
+L<IupGLCanvasBox|iupglcanvasbox.html>.
+
+=head2 Creation
+
+ Ihandle* IupGLProgressBar(void); [in C]
+ iup.glprogressbar{} -> (elem: ihandle) [in Lua]
+ glprogressbar() [in LED] 
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+The B<IupGLProgressBar> element handle all attributes defined for a
+L<IupGLSubCanvas|iupglsubcanvas.html> control.
+
+=over
+
+----
+
+=back
+
+L<FGCOLOR|../attrib/iup_fgcolor.html>: Controls the bar color. Can have
+an alpha component. Default: "200 225 245".
+
+B<MAX >(non inheritable): Contains the maximum value. Default is "1".
+
+B<MIN >(non inheritable): Contains the minimum value. Default is "0".
+
+B<ORIENTATION>: can be "VERTICAL" or "HORIZONTAL". Default:
+"HORIZONTAL". Horizontal goes from left to right, and vertical from
+bottom to top.
+
+B<PADDING>: internal margin. Works just like the MARGIN attribute of
+the B<IupHbox> and B<IupVbox> containers, but uses a different name to
+avoid inheritance problems. Default value: "0x0".
+
+B<SHOW_TEXT>: Indicates if the text inside the bar is to be shown or
+not. Possible values: "YES" or "NO". Default: "YES".
+
+B<TEXT >(non inheritable): Contains a text to be shown inside the bar
+when SHOW_TEXT=YES. If it is NULL, the percentage calculated from VALUE
+will be used.
+
+B<TXTCOLOR>: Text color. Can have an alpha component. Default: "0 0 0".
+
+B<VALUE >(non inheritable): Contains a number between "MIN" and "MAX",
+controlling the current position.
+
+=head2 Notes
+
+The natural size is the height of one character in one direction and
+the width of 15 characters in the other, plus PADDING and BORDERWIDTH.
+
+=cut

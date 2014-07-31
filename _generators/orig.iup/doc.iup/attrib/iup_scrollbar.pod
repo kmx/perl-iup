@@ -8,6 +8,44 @@ Associates a horizontal and/or vertical scrollbar to the element.
 
 Default: "NO"
 
+=head2 Configuration Attributes (non inheritable)
+
+L<DX|../attrib/iup_dx.html>: Size of the thumb in the horizontal
+scrollbar. Also the horizontal page size. Default: "0.1".
+
+L<DY|../attrib/iup_dy.html>: Size of the thumb in the vertical
+scrollbar. Also the vertical page size. Default: "0.1".
+
+L<POSX|../attrib/iup_posx.html>: Position of the thumb in the
+horizontal scrollbar. Default: "0.0".
+
+L<POSY|../attrib/iup_posy.html>: Position of the thumb in the vertical
+scrollbar. Default: "0.0".
+
+L<XMIN|../attrib/iup_xmin.html>: Minimum value of the horizontal
+scrollbar. Default: "0.0".
+
+L<XMAX|../attrib/iup_xmax.html>: Maximum value of the horizontal
+scrollbar. Default: "1.0".
+
+L<YMIN|../attrib/iup_ymin.html>: Minimum value of the vertical
+scrollbar. Default: "0.0".
+
+L<YMAX|../attrib/iup_ymax.html>: Maximum value of the vertical
+scrollbar. Default: "1.0".
+
+B<LINEX>: The amount the thumb moves when an horizontal step is
+performed. Default: 1/10th of DX. (since 3.0)
+
+B<LINEY>: The amount the thumb moves when a vertical step is performed.
+Default: 1/10th of DY. (since 3.0)
+
+B<X<XAUTOHIDE>XAUTOHIDE>: When enabled, if DX E<gt>= XMAX-XMIN then the
+horizontal scrollbar is hidden. Default: "YES". (since 3.0)
+
+B<X<YAUTOHIDE>YAUTOHIDE>: When enabled, if DY E<gt>= YMAX-YMIN then the
+vertical scrollbar is hidden. Default: "YES". (since 3.0)
+
 =head2 Notes
 
 The scrollbar allows you to create a virtual space associated to the
@@ -19,6 +57,12 @@ images/scrollbar.gif (2113 bytes)
 
 Hence you can clearly deduce that POSX is limited to XMIN and XMAX-DX,
 or B<XMINE<lt>=POSXE<lt>=XMAX-DX>.
+
+Usually applications configure XMIN and XMAX to a region in World
+coordinates, and set DX to the canvas visible area in World
+coordinates. Since the canvas can have scrollbars and borders, its
+visible area in pixel coordinates can be easily obtained using the
+B<DRAWSIZE> attribute.
 
 B<IMPORTANT:> the LINEX, XMAX and XMIN attributes are only updated in
 the scrollbar when the DX attribute is updated.
@@ -54,17 +98,19 @@ you can convert it to a 0-1 interval and then scale to the new limits:
  posx = (xmax - xmin)*old_posx_relative + xmin
 
 B<IupList,> B<IupTree>, and B<IupText/IupMultiline> scrollbars are
-automatically managed and do NOT have the POS, MIN, MAX and D
+automatically managed and do NOT have the POS*, *MIN, *MAX and D*
 attributes.
 
 =head2 Affects
 
 L<IupList|../elem/iuplist.html>,
 L<IupMultiline|../elem/iupmultiline.html>,
-L<IupCanvas|../elem/iupcanvas.html>, L<POSX|iup_posx.html>,
-L<XMIN|iup_xmin.html>, L<XMAX|iup_xmax.html>, L<DX|iup_dx.html>,
-L<XAUTOHIDE|../elem/iupcanvas.html#XAUTOHIDE>, L<POSY|iup_posy.html>,
-L<YMIN|iup_ymin.html>, L<YMAX|iup_ymax.html>, L<DY|iup_dy.html>,
-L<YAUTOHIDE|../elem/iupcanvas.html#YAUTOHIDE>.
+L<IupCanvas|../elem/iupcanvas.html>
+
+=head2 See Also
+
+L<POSX|iup_posx.html>, L<XMIN|iup_xmin.html>, L<XMAX|iup_xmax.html>,
+L<DX|iup_dx.html>, L<POSY|iup_posy.html>, L<YMIN|iup_ymin.html>,
+L<YMAX|iup_ymax.html>, L<DY|iup_dy.html>
 
 =cut

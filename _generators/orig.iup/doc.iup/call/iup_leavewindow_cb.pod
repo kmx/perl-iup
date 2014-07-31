@@ -1,6 +1,6 @@
 =head1 LEAVEWINDOW_CB
 
-Action generated when the mouse leaves a canvas or button.
+Action generated when the mouse leaves the element.
 
 =head2 Callback
 

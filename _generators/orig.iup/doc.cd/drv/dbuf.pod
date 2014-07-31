@@ -34,17 +34,7 @@ front buffer.
 
 =head2 Behavior of Functions
 
-This driver is very platform-dependent.
-
-For further detail, see the B< Behavior of Functions> in each base
-driver: L<GDI|win32.html>, L<GDK|gdk.html> and L<X-Win|xwin.html>. To
-use this driver with a context plus base driver is necessary to call B<
-cdUseContextPlus>B<(1)> before creating the canvas, see the
-L<GDI+|../drv/gdiplus.html>, L<Cairo|../drv/cairo.html> and
-L<XRender|../drv/xrender.html> base drivers.
-
-However, it should be noted that some functions behave differently from
-the basic functions of each platform.
+This driver depends on the L<Native Window|native.html> driver.
 
 =head2 Control
 

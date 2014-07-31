@@ -318,6 +318,34 @@ Natural Size
 
 After Changing the Bar Position
 
+=head2 L<IupDetachBox|elem/iupdetachbox.html>
+
+[IMAGE]
+
+(ORIENTATION = VERTICAL)
+
+[IMAGE]
+
+New dialog created after the detach action
+
+=head2 L<IupExpander|elem/iupexpander.html>
+
+[IMAGE]
+
+Container Expanded
+
+(STATE = "OPEN")
+
+[IMAGE]
+
+Container Collapsed
+
+(STATE = "CLOSE")
+
+=head2 L<IupScrollBox|elem/iupscrollbox.html>
+
+[IMAGE]
+
 =head2 Resources
 
 =head2 L<IupMenu|elem/iupmenu.html>,

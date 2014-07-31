@@ -62,8 +62,8 @@ Returns the canvas' internal image.
 
 =head2 Behavior of Functions
 
-All primitives are from the Simulation driver, see the
-L<Simulation|sim.html> driver documentation for further information.
+This drivers depends on the L<Simulation|sim.html> driver. But the
+functions bellow behave differently.
 
 =head2 Control
 

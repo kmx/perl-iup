@@ -4,18 +4,18 @@
 
 This is an example of a simple drawing program using a IUP canvas:
 
- cdCanvas* canvas = cdCreateCanvas(CD_NATIVEWINDOW, IupGetAttribute(IupCanvas,"CONID")); cdCanvasLineStyle(canvas, CD_DASHED);cdCanvasLine(canvas, 0, 0, 100, 100);cdKillCanvas(canvas);
+ cdCanvas* canvas = cdCreateCanvas(CD_NATIVEWINDOW, IupGetAttribute(IupCanvas,"WID")); cdCanvasLineStyle(canvas, CD_DASHED);cdCanvasLine(canvas, 0, 0, 100, 100);cdKillCanvas(canvas);
 
 If you want to use X<World Coordinates>B<World Coordinates>:
 
- cdCanvas* canvas = cdCreateCanvas(CD_NATIVEWINDOW, IupGetAttribute(IupCanvas,"CONID")); wdCanvasViewport(canvas, 0, 100, 0, 100); wdCanvasWindow(canvas, -1.5, 1.5, -3000, 3000); cdCanvasLineStyle(canvas, CD_DASHED); wdCanvasLine(canvas, -0.5, -500, 1.0, 1000); cdKillCanvas(canvas); 
+ cdCanvas* canvas = cdCreateCanvas(CD_NATIVEWINDOW, IupGetAttribute(IupCanvas,"WID")); wdCanvasViewport(canvas, 0, 100, 0, 100); wdCanvasWindow(canvas, -1.5, 1.5, -3000, 3000); cdCanvasLineStyle(canvas, CD_DASHED); wdCanvasLine(canvas, -0.5, -500, 1.0, 1000); cdKillCanvas(canvas); 
 
 =head2 X<Off Screen Drawing>Off Screen Drawing (Double Buffering)
 
 To draw in the background and later on transfer the drawing to the
 screen, use:
 
- cdCanvas* canvas = cdCreateCanvas(CD_NATIVEWINDOW, IupGetAttribute(IupCanvas,"CONID")); cdCanvas* db_canvas = cdCreateCanvas(CD_DBUFFER, canvas); cdCanvasActivate(db_canvas); // update canvas size, window could be resizedcdCanvasLineStyle(db_canvas, CD_DASHED); cdCanvasLine(db_canvas, 10, 10, 50, 50); cdCanvasFlush(db_canvas);  // swap to the window canvas cdKillCanvas(db_canvas); cdKillCanvas(canvas); 
+ cdCanvas* canvas = cdCreateCanvas(CD_NATIVEWINDOW, IupGetAttribute(IupCanvas,"WID")); cdCanvas* db_canvas = cdCreateCanvas(CD_DBUFFER, canvas); cdCanvasActivate(db_canvas); // update canvas size, window could be resizedcdCanvasLineStyle(db_canvas, CD_DASHED); cdCanvasLine(db_canvas, 10, 10, 50, 50); cdCanvasFlush(db_canvas);  // swap to the window canvas cdKillCanvas(db_canvas); cdKillCanvas(canvas); 
 
 To draw in a RGB image, use:
 

@@ -34,7 +34,7 @@ linked to the lua control library (iupluaweb).
 
 =head2 Creation
 
- Ihandle* IupWebBrowser(); [in C]
+ Ihandle* IupWebBrowser(void); [in C]
  iup.webbrowser{} -> (elem: ihandle) [in Lua]
  webbrowser() [in LED]
 
@@ -43,32 +43,41 @@ occurs.
 
 =head2 Attributes
 
-B<VALUE>: sets a specified URL to load into the webbrowser, or retrieve
-the current URL.
+B<BACKCOUNT> [GTK Only] (read only): gets the number of items that
+precede the current page.
 
 B<BACKFORWARD >(write only): sets the number of steps away from the
 current page and loads the history item. Negative values represent
 steps backward while positive values represent steps forward.
+
+B<COPY> (write only): copy the selection to the clipboard. (since 3.10)
+
+B<FORWARDCOUNT> [GTK Only] (read only): gets the number of items that
+succeed the current page.
+
+B<HTML> (write only): loads a given HTML content.
+
+B<ITEMHISTORYid> [GTK Only] (read only): Returns the URL associated
+with a specific history item. Negative "id" value represents a backward
+item while positive "id" value represents a forward item ("0"
+represents the current item).
+
+B<PRINT >(write only): shows the print dialog. (since 3.10)
+
+B<RELOAD> (write only): reloads the page in the webbrowser.
+
+B<SELECTALL> (write only): selects all contents. (since 3.10)
 
 B<STATUS> (read only): returns the load status. Can be "LOADING",
 "COMPLETED" or "FAILED".
 
 B<STOP >(write only): stops any ongoing load in the webbrowser.
 
-B<RELOAD> (write only): reloads the page in the webbrowser.
+B<VALUE>: sets a specified URL to load into the webbrowser, or retrieve
+the current URL.
 
-B<HTML> (write only): loads a given HTML content.
-
-B<BACKCOUNT> [GTK Only] (read only): gets the number of items that
-precede the current page.
-
-B<FORWARDCOUNT> [GTK Only] (read only): gets the number of items that
-succeed the current page.
-
-B<ITEMHISTORYid> [GTK Only] (read only): Returns the URL associated
-with a specific history item. Negative "id" value represents a backward
-item while positive "id" value represents a forward item ("0"
-represents the current item).
+B<ZOOM>: the zoom factor of the browser in percent. No zoom is 100%.
+(since 3.10)
 
 =over
 

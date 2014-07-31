@@ -238,16 +238,19 @@ cells (top-left selected cell), or can be a cell address "L:C".
 
 Data must be in plain text format. Lines can be separated in DOS, UNIX
 or MAC format. Columns can be separated with tabs ('\t'), with
-semicolon (';') or a custom value defined by the TEXTSEPARATOR
+semicolon (';') or a custom value defined by the B<TEXTSEPARATOR>
 attribute. Data must contain an exact matrix organization. Use the
-attribute TEXTSKIPLINES to skip a number of lines in the beginning of
-the data. If data at the insert position will have more lines or
+attribute B<TEXTSKIPLINES> to skip a number of lines in the beginning
+of the data. If data at the insert position will have more lines or
 columns than the current matrix, then the L<PASTESIZE_CB|#PASTESIZE_CB>
 callback is called. If defined the L<
 EDITION_CB|iupmatrix_cb.html#EDITION_CB> callback will be called before
-the cell value is set. LASTERROR can be set to "NOTEXT" (data is empty
-or NULL), "INVALIDMATRIX" (not a matrix data). BUSY will be set to Yes
-during the operation. Only visible cells will receive data.
+the cell value is set. B<LASTERROR> can be set to "NOTEXT" (data is
+empty or NULL), "INVALIDMATRIX" (not a matrix data). B<BUSY> will be
+set to Yes during the operation. Only visible cells will receive data.
+The B<TEXTNUMERICLOCALE> attribute can be used to set a different
+numeric locale during paste in case numeric conversions are being
+processed when the cell value is set (since 3.10).
 
 B<PASTEDATA> (write-only): paste data from a memory buffer. Value is
 the data. Insert position is obtained from the
@@ -503,8 +506,8 @@ shown.
  Redo                => Redo 1 level
  Undo List...        => Show the Undo Dialog
  Cut                 => Copy + Clear Cell Values
- Copy                => Copy to Clipboard
- Paste               => Paste from Clipboard
+ Copy                => Copy to Clipboard (marked cells)
+ Paste               => Paste from Clipboard (start at focus cell)
  Erase               => Clear Cell Values
  Find...             => Show the Find Dialog
  Go To...            => Show the Go To Cell Dialog
@@ -545,8 +548,8 @@ IupMatrix>:
  Ctrl+A (English)    => Select All
  Ctrl+T (Portuguese) => Select All
  Ctrl+X              => Cut (Copy + Clear Cell Values)
- Ctrl+C              => Copy to Clipboard
- Ctrl+V              => Paste from Clipboard
+ Ctrl+C              => Copy to Clipboard (marked cells)
+ Ctrl+V              => Paste from Clipboard (start at focus cell)
  Ctrl+Z              => Undo 1 level
  Ctrl+Y (English)    => Redo 1 level
  Ctrl+R (Portuguese) => Redo 1 level

@@ -5,7 +5,7 @@ simulate a progression. It inherits from
 L<IupCanvas|../elem/iupcanvas.html>.
 
 This is an additional control that depends on the CD library. It is
-included in the L<Controls Library|../iupcontrols.html>.
+included in the L<IupControls|../iupcontrols.html> library.
 
 It is recommended that new applications use the
 L<IupProgressBar|../elem/iupprogressbar.html> control of the main

@@ -58,7 +58,8 @@ is not necessary to have an active canvas to call this function.
 
 =head2 Behavior of Functions
 
-This driver is very platform-dependent.
+This driver is very platform-dependent and depends on the base driver
+used.
 
 For further detail, see the B< Behavior of Functions> in each base
 driver: L<GDI|win32.html>, L<GDK|gdk.html> and L<X-Win|xwin.html>. To
@@ -66,9 +67,6 @@ use this driver with a context plus base driver is necessary to call B<
 cdUseContextPlus>B<(1)> before creating the canvas, see the
 L<GDI+|../drv/gdiplus.html>, L<Cairo|../drv/cairo.html> and
 L<XRender|../drv/xrender.html> base drivers.
-
-However, it should be noted that some functions behave differently from
-the basic functions of each platform.
 
 =head2 Control
 
@@ -80,22 +78,12 @@ created using a HDC, the size will not be updated.
 
 B<IMPORTANT>: For the standard Win32 base driver (not GDI+) if your
 Windows does not have one of the styles CS_OWNDC or CS_CLASSDC, then a
-temporary HDC will be created everytime a B<cdCanvasActivate> is
+temporary HDC will be created every time a B<cdCanvasActivate> is
 called. To release this HDC call B<cdCanvasDeactivate> after drawing.
 The IupCanvas control of the IUP library in the Win32 driver have the
-style, so this should be ignored. But the IupCanvas in the GTK driver
-running in Win32 does not have this style so B<cdCanvasDeactivate>
-should be used.
-
-=back
-
-=head2 Exclusive Attributes
-
-=over
-
-=item * "B<WINDOWRGN>": set the shape of a window to the current
-complex clipping region (set only). If data is NULL the region is
-reset.
+style, so this could be ignored for regular IUP applications. But the
+IupCanvas in the GTK driver running in Win32 does not have this style
+so B<cdCanvasDeactivate> should be used.
 
 =back
 

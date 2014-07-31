@@ -21,7 +21,8 @@ their dialogs in other ways.
  iup.LayoutDialog(dialog: ihandle) -> (elem: ihandle) [in Lua]
  [NOT available in LED]
 
-B<dialog>: identifier of the dialog to display the layout. Can be NULL.
+B<dialog>: identifier of the dialog to display the layout. Can be NULL
+(nil in Lua).
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.

@@ -14,7 +14,8 @@ known as Notebook in native systems.
  tabs(child, ...) [in LED]
 
 B<child, ... >: List of the elements that will be placed in the box.
-NULL must be used to define the end of the list in C. It can be empty.
+NULL must be used to define the end of the list in C. It can be empty
+in C or Lua, not in LED.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.
@@ -45,6 +46,12 @@ just like the MARGIN attribute of the IupHbox and IupVbox containers,
 but uses a different name to avoid inheritance problems. Default value:
 "0x0". (since 3.0)
 
+B<SHOWCLOSE> [Windows and GTK Only] (non inheritable): enables the
+close button on each tab. Default value: "NO". In Windows the close
+button imply the classic visual for the control. By default when closed
+the tab is hidden. The change that behavior use the TABCLOSE_CB
+callback. (since 3.10)
+
 L<SIZE|../attrib/iup_size.html> (non inheritable): The default size is
 the smallest size that fits its largest child. All child elements are
 considered even invisible ones.
@@ -55,7 +62,8 @@ L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
 associate an image to a name. n starts at 0. See also
 L<IupImage|iupimage.html>. In Motif, the image is shown only if
 B<TABTITLEn> is NULL. In Windows and Motif set the BGCOLOR attribute
-before setting the image. (since 3.0)
+before setting the image. When set after map will update the TABIMAGE
+attribute on the respective child (since 3.10). (since 3.0)
 
 B<TABORIENTATION >(non inheritable): Indicates the orientation of tab
 text, which can be "HORIZONTAL" or "VERTICAL". Default is "HORIZONTAL".
@@ -74,7 +82,8 @@ remain empty. The "&" character can be used to define a mnemonic, the
 next character will be used as key. Use "&&" to show the "&" character
 instead on defining a mnemonic. The button can be activated from any
 control in the dialog using the "Alt+key" combination. (mnemonic
-support since 3.3) (since 3.0)
+support since 3.3). When set after map will update the TABTITLE
+attribute on the respective child (since 3.10). (since 3.0)
 
 B<TABTYPE >(non inheritable) (creation only in Windows): Indicates the
 type of tab, which can be "TOP", "BOTTOM", "LEFT" or "RIGHT". Default
@@ -121,8 +130,12 @@ L<VISIBLE|../attrib/iup_visible.html>: also accepted.
 =head2 Attributes (at Children)
 
 B<TABTITLE >(non inheritable) B<(at children only)>: Same as
-B<TABTITLEn> but set in each child. Works only before the child is
-added to the tabs.
+B<TABTITLEn> but set in each child. Works only if set before the child
+is added to the tabs.
+
+B<TABIMAGE >(non inheritable) B<(at children only)>: Same as
+B<TABIMAGEn> but set in each child. Works only if set before the child
+is added to the tabs.
 
 =head2 Callbacks
 
@@ -148,6 +161,31 @@ B<ih>: identifier of the element that activated the event.
 B<new_pos>: the new tab position selected by the user
 
 B<old_pos>: the previously selected tab position
+
+B<TABCLOSE_CB> [Windows and GTK Only]: Callback called when the user
+clicks on the close button (since 3.10). Called only when
+SHOWCLOSE=Yes.
+
+ int function(Ihandle* ih, int pos); [in C]
+ elem:tabclose_cb(pos: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<pos>: the tab position
+
+Returns: the tab will be hidden if the callback returns IUP_DEFAULT or
+if it does not exists. If IUP_CONTINUE is returned the tab is removed
+and its children are destroyed. If IUP_IGNORE is returned does nothing.
+
+B<RIGHTCLICK_CB>: Callback called when the user clicks on some tab
+using the right mouse button (since 3.10).
+
+ int function(Ihandle* ih, int pos); [in C]
+ elem:rightclick_cb(pos: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<pos>: the tab position
 
 =over
 

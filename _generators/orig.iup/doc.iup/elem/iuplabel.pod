@@ -61,14 +61,15 @@ commands. Works only if a mnemonic is NOT defined in the title. Can be
 "YES" or "NO". Default: "NO".
 
 B<PADDING>: internal margin. Works just like the MARGIN attribute of
-the IupHbox and IupVbox containers, but uses a different name to avoid
-inheritance problems. Not used when SEPARATOR is used. Default value:
-"0x0". (since 3.0)
+the B<IupHbox> and B<IupVbox> containers, but uses a different name to
+avoid inheritance problems. Not used when SEPARATOR is used. Default
+value: "0x0". (since 3.0)
 
 B<SEPARATOR >(creation only) (non inheritable): Turns the label into a
 line separator. Possible values: "HORIZONTAL" or "VERTICAL". When
-changed before mapping the EXPAND attribute is set to "HORIZONTAL" or
-"VERTICAL" accordingly.
+changed before mapping the EXPAND attribute is set to "HORIZONTALFREE"
+or "VERTICALFREE" accordingly. (Since 3.11 changed to FREE based
+expand)
 
 L<TITLE|../attrib/iup_title.html> (non inheritable): Label's text. If
 SEPARATOR or IMAGE are not defined before map, then the default

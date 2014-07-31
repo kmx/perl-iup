@@ -14,6 +14,12 @@ B<ih>: identifier of the element that activated the event.
 
 All elements with user interaction, except menus.
 
+In Windows, there are restrictions when using this callback. From MSDN
+on WM_KILLFOCUS: "While processing this message, do not make any
+function calls that display or activate a window. This causes the
+thread to yield control and can cause the application to stop
+responding to messages.
+
 =head2 See Also
 
 L<GETFOCUS_CB|iup_getfocus_cb.html>,

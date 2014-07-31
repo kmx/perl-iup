@@ -13,7 +13,7 @@ B<IupCanvas> to implement the bar handler.
  sbox(child) [in LED]
 
 B<child>: Identifier of an interface element which will receive the
-box. It can be NULL.
+box. It can be NULL (nil in Lua), not optional in LED.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.
@@ -57,11 +57,12 @@ Guide|../layout_guide.html> for mode details on sizes.
 The B<IupCanvas> bar handler is always the first child of the sbox. It
 can be obtained using B<IupGetChild> or B< IupGetNextChild>.
 
-B<IupSbox> can be resized above the maximum size so some controls go to
-outside the dialog area at right or bottom. In fact this is part of the
-dynamic layout default reposition of controls inside the dialog. See
-the B<IupRefresh> function. The IUP layout does not have a maximum
-limit only a minimum, except if you use the MAXSIZE common attribute.
+B<IupSbox> can make the layout to be resized larger than the dialog
+size so some controls will be positioned outside the dialog area at
+right or bottom. In fact this is part of the dynamic layout default
+reposition of controls inside the dialog. See the B<IupRefresh>
+function. The IUP layout does not have a maximum limit only a minimum,
+except if you use the MAXSIZE common attribute.
 
 The box can be created with no elements and be dynamic filled using
 L<IupAppend|../func/iupappend.html> or

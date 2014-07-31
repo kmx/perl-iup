@@ -10,7 +10,7 @@ child.
  frame(child) [in LED]
 
 B<child>: Identifier of an interface element which will receive the
-frame around. It can be NULL.
+frame around. It can be NULL (nil in Lua), not optional in LED.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.

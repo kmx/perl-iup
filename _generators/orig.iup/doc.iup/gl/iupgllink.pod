@@ -1,0 +1,74 @@
+=head1 IupGLLink (since 3.11)
+
+Creates an embedded OpenGL label that displays an underlined clickable
+text. It inherits from L<IupGLLabel|iupgllabel.html>. It exists only
+inside an L<IupGLCanvasBox|iupglcanvasbox.html>.
+
+=head2 Creation
+
+ Ihandle* IupGLLink(const char *url, const char * title); [in C]
+ iup.gllink{[url = url: string], [title = title: string]} -> (elem: ihandle) [in Lua]
+ gllink(url, title) [in LED]
+
+B<url>: the destination address of the link. Can be any text. If
+B<IupHelp> is used should be a valid URL. It can be NULL. It will set
+the URL attribute.
+
+B<title>: Text to be shown on the link. It can be NULL. It will set the
+TITLE attribute.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+The B<IupGLLink> element handle all attributes defined for the
+L<IupGLLabel|iupgllabel.html> control, and consequently for the
+L<IupGLSubCanvas|iupglsubcanvas.html> control too.
+
+=over
+
+----
+
+=back
+
+L<FGCOLOR|../attrib/iup_fgcolor.html>: Text color. Default: the global
+attribute LINKFGCOLOR.
+
+B<URL>: the default value is "YES".
+
+=head2 Callbacks
+
+The B<IupGLLink> element handle all callbacks defined for the
+B<IupGLSubCanvas> control.
+
+=over
+
+----
+
+=back
+
+L<ACTION|../call/iup_action.html>: Action generated when the link is
+activated.
+
+ int function(Ihandle* ih, char *url); [in C]elem:action(url: string) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<url>: the destination address of the link.
+
+Returns: IUP_CLOSE will be processed. If returns IUP_DEFAULT or it is
+not defined, the B<IupHelp> function will be called.
+
+=head2 Notes
+
+When the cursor is over the text, it is changed to the HAND cursor.
+
+If the callback is not defined the B<IupHelp> function is called with
+the given URL.
+
+=head2 X<SeeAlso>See Also
+
+L<IupGLLabel|iupgllabel.html>, L<IupHelp|../func/iuphelp.html>.
+
+=cut

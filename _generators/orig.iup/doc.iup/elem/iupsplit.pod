@@ -15,10 +15,10 @@ B<IupCanvas> to implement the bar handler.
  split(child1, child2) [in LED]
 
 B<child1>: Identifier of an interface element that will be at left or
-top. It can be NULL.
+top. It can be NULL (nil in Lua), not optional in LED.
 
 B<child2>: Identifier of an interface element that will be at right or
-bottom. It can be NULL.
+bottom. It can be NULL (nil in Lua), not optional in LED.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.

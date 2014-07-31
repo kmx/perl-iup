@@ -1,0 +1,38 @@
+=head1 IupGLSeparator (since 3.11)
+
+Creates an embedded OpenGL separator interface element, which displays
+a vertical or horizontal line. It inherits from
+L<IupGLSubCanvas|iupglsubcanvas.html>. It exists only inside an
+L<IupGLCanvasBox|iupglcanvasbox.html>.
+
+=head2 Creation
+
+ Ihandle* IupGLSeparator(void); [in C]
+ iup.glseparator{} -> (elem: ihandle) [in Lua]
+ glseparator() [in LED]
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+The B<IupGLSeparator> element handle all attributes defined for a
+L<IupGLSubCanvas|iupglsubcanvas.html> control.
+
+=over
+
+----
+
+=back
+
+B<ORIENTATION>: can be "VERTICAL" or "HORIZONTAL". Default: "VERTICAL".
+
+=head2 Notes
+
+The B<IupGLSeparator> visual is controlled by B<IupGLSubCanvas>
+attributes BORDERWIDTH and BORDERCOLOR.
+
+The natural size will be BORDERWIDTH in one direction and it will
+expand if there is free space in the other direction.
+
+=cut

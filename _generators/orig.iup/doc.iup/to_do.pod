@@ -2,32 +2,35 @@
 
 =head2 Roadmap for the Next Versions
 
-=head2 For Next Version (3.10 - January 2014)
+=head2 3.12 (Expected to November 2014)
 
 =over
 
-=item * Processing feedback in the taskbar on Window 7
+=item * B<Consolidate a plot control>
 
-=item * DND simple support for B<IupList> and B<IupTree> to allow DND
-from list to list, and tree to tree.
+=over
 
-=item * Improvements in B<IupWebBrowser>
-
-=item * Close button for a tab in B<IupTabs>
-
-=item * A detachable box
-
-=item * Support for image and text simultaneously on B<IupLabel>
+=item * double coordinates, OpenGL support, better zoom and pan,
+clipboard, configuration dialog
 
 =back
 
-=head2 Other Priorities
+=item * Paste Special Dialog (B<IupMatrixEx>)
+
+=item * Dynamic column value fill using Lua (B<IupMatrixEx>)
+
+=item * C++ API & Utilities
+
+=item * Migration from CVS to SVN
+
+=item * GTK defaults to GTK version 3 starting at Linux 3. (No XOR
+support)
+
+=back
+
+=head2 Next Version
 
 =over
-
-=item * OpenGL sub-canvas controls
-
-=item * Consolidate a plot control
 
 =item * Interactive Dialog Editor / Tools to improve productivity
 
@@ -47,15 +50,14 @@ from list to list, and tree to tree.
 Controls Demo just like GTK, wxWidgets and Qt have. Code snippets
 collection.
 
-=item * B<Priority:> support for image and text at the same time in
-B<IupLabel>.
-
 =item * B<Important:> RPM, Debian and LuaRocks distribution packages.
 
 =item * B<Important: IupGLCanvas> in MACOS X using native OpenGL
 support.
 
-=item * B<Important: > A MacOS X native driver using Carbon or Cocoa.
+=item * B<Important: >A MacOS X native driver using Carbon or Cocoa.
+
+=item * Support for image and text at the same time in B<IupLabel>.
 
 =item * The actual model for control data structure in the internal SDK
 is restricted for derived classes.
@@ -65,8 +67,6 @@ images inside the text.
 
 =item * Possibility to change the system menu in Windows. Support for
 cascading B< IupPopup> for menus.
-
-=item * Support for Portuguese in the B<IupView> application.
 
 =item * Vertical text in labels and buttons.
 
@@ -98,7 +98,8 @@ navigation is not done, when clicked the control will still get the
 focus. The only exceptions are button and canvas.
 
 =item * Known Issue (Compiler): the B<IupImgLib> takes an very long
-time to compile under Visual C++. (since 3.0)
+time to compile under Visual C++ up to version VC9 (starting in VC10
+the problem does no occour). (since 3.0)
 
 =item * Known Issue (Compiler): when building with Open Watcom the
 additional controls crash. When you add debug information to the main
@@ -143,9 +144,11 @@ B<IupList>.
 
 =back
 
-=head2 IupMatrix
+=head2 IupMatrixEx
 
 =over
+
+=item * B<Priority:> Dynamic column value fill using Lua.
 
 =item * Drag&drop of columns, i.e. interactive change of column
 position.
@@ -212,7 +215,15 @@ major ticks.
 
 =over
 
-=item * Upgrade to the MathGL version 2.
+=item * B<Important: > Text render quality is lower than in IupPPlot.
+
+=item * Add UTF-8 mode using MathGL unicode support.
+
+=item * Compile MathGL using OpenMP support.
+
+=item * Logarithm scale is not working properly.
+
+=item * Automatic ticks computation needs to be improved.
 
 =back
 
@@ -220,36 +231,25 @@ major ticks.
 
 =over
 
-=item * B<DropDownButton> - Mix between a drop down list and a button
-
-=item * B<Table> - similar to IupMatrix but using native controls
-(Windows,GTK,Motif)
-
 =item * B<Scripter - >Project Manager/Dialog Editor/Integrated Debugger
 for IupLua
 
 =item * B<CanvasCD> - an IupCanvas with a CD canvas associated.
 
-=item * B<Scrollbar> - just the scrollbar as a control.
-(Windows,GTK,Motif)
+=item * B<ProgressIndicator> - a simpler version of the IupProgressBar
 
 =item * -----------------------------
 
-=item * Toobar - button/toggle/list, detachable
+=item * DropDownButton - Mix between a drop down list and a button
+
+=item * Table - similar to IupMatrix but using native controls
+(Windows,GTK,Motif)
+
+=item * Scrollbar - just the scrollbar as a control.
+(Windows,GTK,Motif)
 
 =item * PropertyGrid - a 2 column matrix with expandable/closeable
 items
-
-=item * Lookup Table, maps a set of values in another set using a
-curve.
-
-=item * Progress Indicator - a simpler version of the IupProgressBar
-
-=item * Horizontal List
-
-=item * Statusbar (Windows,GTK)
-
-=item * Spinner (GTK)
 
 =item * Calendar (Windows)
 

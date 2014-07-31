@@ -6,7 +6,7 @@ is at B<SourceForge>:
 L<http:E<47>E<47>sourceforge.netE<47>projectsE<47>canvasdrawE<47>filesE<47>|http://sourceforge.net/projects/canvasdraw/files/>
 
 Use this link for the latest version:
-L<http:E<47>E<47>sourceforge.netE<47>projectsE<47>canvasdrawE<47>filesE<47>5.7E<47>|http://sourceforge.net/projects/canvasdraw/files/5.7/>
+L<http:E<47>E<47>sourceforge.netE<47>projectsE<47>canvasdrawE<47>filesE<47>5.8E<47>|http://sourceforge.net/projects/canvasdraw/files/5.8/>
 
 Before downloading any precompiled binaries, you should read before the
 L<Tecgraf Library Download Tips|download_tips.html>.

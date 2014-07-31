@@ -17,9 +17,9 @@ B<value>: new default value.
 =head2 Notes
 
 If the value is DEFAULTFONT, DLGBGCOLOR, DLGFGCOLOR, TXTBGCOLOR,
-TXTFGCOLOR or MENUBGCOLOR then the actual default value will be the
-global attribute of the same name consulted at the time the attribute
-is consulted.
+TXTFGCOLOR, LINKFGCOLOR or MENUBGCOLOR then the actual default value
+will be the global attribute of the same name consulted at the time the
+attribute is consulted.
 
 Attributes that are not strings and attributes that have variable
 names, like those which has a complementary number, can NOT have a

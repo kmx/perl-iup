@@ -33,19 +33,18 @@ new page. You can draw first on page 1, then on page 2 and so forth.
 
 =head2 Behavior of Functions
 
-This driver is very platform-dependent.
+This driver is very platform-dependent and depends on the base driver
+used.
 
 For further detail, see the B< Behavior of Functions> in each base
 driver: L<GDI|win32.html>. To use this driver with a context plus base
 driver is necessary to call B< cdUseContextPlus>B<(1)> before creating
 the canvas, see the L<GDI+|../drv/gdiplus.html> and
-L<Cairo|../drv/cairo.html> base drivers.
+L<Cairo|../drv/cairo.html> base drivers. This driver is NOT available
+for the other base drivers.
 
-However, it should be noted that some functions behave differently from
-the basic functions of each platform.
-
-A printer created in Windows has the same limitations as the L<EMF
-driver|emf.html>.
+Notice that a printer created in Windows has the same limitations as
+the L<EMF driver|emf.html>.
 
 =head2 Control
 

@@ -5,7 +5,7 @@ Action generated when a mouse button is pressed or released.
 =head2 Callback
 
  int function(Ihandle* ih, int button, int pressed, int x, int y, char* status); [in C]
- elem:button_cb(but, pressed, x, y: number, status: string) -> (ret: number) [in Lua]
+ elem:button_cb(button, pressed, x, y: number, status: string) -> (ret: number) [in Lua]
 
 B<ih>: identifies the element that activated the event.
 

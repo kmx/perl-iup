@@ -110,7 +110,7 @@ consistently across platforms.
 
  double* cdCanvasGetTransform(cdCanvas* canvas); [in C]
  
- canvas:GetTransformation() -> (matrix: table) [in Lua]
+ canvas:GetTransform() -> (matrix: table) [in Lua]
 
 Returns the transformation matrix. If the identity is set, returns
 NULL.

@@ -1,9 +1,11 @@
-=head1 Additional Controls
+=head1 IupControls
 
 =head2 Controls Library
 
-Most of the additional controls are included in only one library. Some
-of these controls are drawn by IUP and are not native controls.
+Several additional controls are included in this library. These
+controls are drawn by IUP using L<CD|http://www.tecgraf.puc-rio.br/cd>
+on a L<IupCanvas|elem/iupcanvas.html> control, and are not native
+controls.
 
 The B<iupcontrols.h> file must be included in the source code. If you
 plan to use the control in Lua, you should also include
@@ -15,14 +17,9 @@ manually call the initialization function in C, B<iupcontrolslua_open>,
 after calling B<iuplua_open>.
 
 When manually calling the function your application must be linked to
-the CPI control library (B<iupcontrols>), the CD_IUP driver (B<iupcd>),
-and with the L<CD|http://www.tecgraf.puc-rio.br/cd> library (B<cd>). To
-use its bindings to Lua, the program must also be linked to the
+the control library (B<iupcontrols>), the CD_IUP driver (B<iupcd>), and
+with the L<CD|http://www.tecgraf.puc-rio.br/cd> library (B<cd>). To use
+its bindings to Lua, the program must also be linked to the
 B<iupluacontrols> library.
-
-=head2 OpenGL Canvas
-
-The drawing canvas compatible with OpenGL is called
-L<IupGLCanvas|ctrl/iupglcanvas.html>.
 
 =cut

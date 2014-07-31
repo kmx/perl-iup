@@ -1,0 +1,51 @@
+=head1 IupGLControls (since 3.11)
+
+=head2 OpenGL Controls Library
+
+This library contains several controls that behave much like their
+standard controls counterpart such as B<IupLabel>, B<IupButton>,
+B<IupFrame>, and so on. But they were designed to be used only embedded
+in an OpenGL canvas along with the application drawing. They will work
+and be displayed on top of the application drawing and respond to mouse
+events concurrently with the application mouse events.
+
+In order to use these controls the application must use the B<
+IupGLCanvasBox> controls instead of the B<IupGLCanvas> control.
+Actually the B<IupGLCanvasBox> inherits from theB< IupGLCanvas> control
+so their usage is identical. But B< IupGLCanvasBox> can have children
+and it will manage the display and mouse events of all its children.
+
+All the visible elements that can be an embedded children of a B<
+IupGLCanvasBox> are based on the B<IupGLSubCanvas> control. Only
+elements that are void containers can also be used, such as B<IupHbox>,
+B<IupVbox>, B<IupGridBox>, and so on. B<IupFill> can also be used. All
+functions and resources, like B<IupImage>, are used just like any other
+IUP control.
+
+These controls are drawn by IUP using OpenGL on a
+L<IupGLCanvas|ctrl/iupglcanvas.html> control, and are not native
+controls.
+
+The B<iupglcontrols.h> file must be included in the source code. If you
+plan to use the control in Lua, you should also include
+B<iupluaglcontrols.h>.
+
+The B<IupGLControlsOpen> function must be called after B<IupOpen>. To
+make the controls available in Lua use require"iupluaglcontrols" or
+manually call the initialization function in C,
+B<iupglcontrolslua_open>, after calling B<iuplua_open>.
+
+When manually calling the function your application must be linked to
+the control library (B<iupglcontrols>), the B<IupGLCanvas> control
+library (B<iupgl>), with the FTGL library, and with the OpenGL library.
+To use its bindings to Lua, the program must also be linked to the
+B<iupluaglcontrols> library.
+
+The FTGL library is dependent also on the GLU library. In UNIX,
+B<IupGLControls> is also dependent on B<iconv> and B<fontconfig>.
+
+=head2 Examples
+
+[IMAGE]
+
+=cut

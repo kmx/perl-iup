@@ -9,9 +9,11 @@ Creates a menu item that, when selected, opens another menu.
  submenu(title, menu) [in LED]
 
 B<title>: String containing the text to be shown on the item. It can be
-NULL. It will set the TITLE attribute.
+NULL (nil in Lua), not optional in LED. It will set the TITLE
+attribute.
 
-B<menu>: optional child menu identifier. Can be NULL.
+B<menu>: optional child menu identifier. It can be NULL (nil in Lua),
+not optional in LED.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.

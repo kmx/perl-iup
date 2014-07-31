@@ -11,7 +11,8 @@ B<IupCanvas> to implement the bar handler.
  iup.expander{child: ihandle} -> (elem: ihandle) [in Lua]
  expander(child) [in LED]
 
-B<child>: Identifier of an interface element. It can be NULL.
+B<child>: Identifier of an interface element. It can be NULL (nil in
+Lua), not optional in LED.
 
 Returns: the identifier of the created element, or NULL if an error
 occurs.
@@ -22,27 +23,59 @@ B<AUTOSHOW> (non inheritable): enables the automatic show of the child
 when mouse is over the handler more than 1 second. Default: No. See
 L<Notes|#Notes> bellow.
 
+B<BACKCOLOR> (non inheritable): background color of the title area. If
+not defined it will use the background color of the native parent.
+(since 3.9)
+
+B<BARPOSITION> (creation only): indicates the bar handler position.
+Possible values are "TOP", "BOTTOM", "LEFT" or "RIGHT". Default: "TOP".
+
 B<BARSIZE> (non inheritable): controls the size of the bar handler.
 Default: the height of a text line plus 5 pixels.
 
-L<BGCOLOR|../attrib/iup_bgcolor.html>: ignored, transparent in all
-systems. Will use the background color of the native parent.
-
-L<FGCOLOR|../attrib/iup_fgcolor.html>: Text color. Default: the global
-attribute DLGFGCOLOR.
-
-B<BARPOSITION> (creation only): Indicates the bar handler position.
-Possible values are "TOP", "BOTTOM", "LEFT" or "RIGHT". Default: "TOP".
-
-L<EXPAND|../attrib/iup_expand.html> (non inheritable): The default
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): the default
 value is "YES".
+
+B<EXTRABUTTONS> (non inheritable): sets the number of extra image
+buttons at right when BARPOSITION=TOP. The maximum number of buttons is
+3. See the EXTRABUTTON_CB callback. Default: 0. (since 3.11)
+
+B<IMAGEEXTRAid>: image name used for the button. id can be 1, 2 or 3. 1
+is the rightmost button, and count from right to left.
+
+B<IMAGEEXTRAPRESSid>: image name used for the button when pressed.
+
+B<IMAGEEXTRAHIGHLIGHTid>: image name for the button used when mouse is
+over the button area.
+
+All images must be 16x16, or smaller but the occupied size will still
+be 16x16.
+
+B<FORECOLOR> (non inheritable): title color. Default: the global
+attribute DLGFGCOLOR. (since 3.9)
+
+B<IMAGE> (non inheritable): image name to replace the arrow by an image
+STATE=CLOSE. Works only when BARPOSITION=TOP. The minimum horizontal
+space reserved for the handler is 20 pixels. Use
+L<IupSetHandle|../func/iupsethandle.html> or
+L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
+associate an image to a name. See also L<IupImage|iupimage.html>.
+(since 3.11)
+
+B<IMAGEOPEN>: image name used when STATE=OPEN.
+
+B<IMAGEHIGHLIGHT>: image name used when mouse is over the bar handler
+and STATE=CLOSE.
+
+B<IMAGEOPENHIGHLIGHT>: image name used when mouse is over the bar
+handler and STATE=OPEN.
 
 B<STATE> (non inheritable): Show or hide the container elements.
 Possible values: "OPEN" (expanded) or "CLOSE" (collapsed). Default:
 OPEN. Setting this attribute will automatically change the layout of
 the entire dialog so the child can be recomposed.
 
-B<TITLE> (non inheritable): the title, shown in the title bar near the
+B<TITLE> (non inheritable): title text, shown in the title bar near the
 expand or collapse symbol. Shown only when BARPOSITION=TOP.
 
 B<WID> (read-only): returns -1 if mapped.
@@ -63,12 +96,44 @@ L<MAXSIZE|../attrib/iup_maxsize.html>: also accepted.
 
 =head2 Callbacks
 
-L<ACTION|../call/iup_action.html>: Action generated expander state is
-interactively changed. (Since 3.9)
+L<ACTION|../call/iup_action.html>: Action generated after the expander
+state is interactively changed. (Since 3.9)
 
  int function(Ihandle* ih); [in C]elem:action() -> (ret: number) [in Lua]
 
 B<ih>: identifier of the element that activated the event.
+
+B<OPENCLOSE_CB>: Action generated before the expander state is
+interactively changed. (Since 3.11)
+
+ int function(Ihandle* ih, int state); [in C]elem:openclose_cb(state: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<state>: new state to be applied.
+
+B<Returns>: if return IUP_IGNORE the new state is ignored.
+
+B<EXTRABUTTON_CB>: Action generated when any mouse button is pressed
+and released. (since 3.11)
+
+ int function(Ihandle* ih, int button, int pressed); [in C]
+ elem:extrabutton_cb(button, pressed: number) -> (ret: number) [in Lua]
+
+=over
+
+B<ih>: identifies the element that activated the event.
+
+B<button>: identifies the extra button. can be 1, 2 or 3. (this is not
+the same as BUTTON_CB)
+
+B<pressed>: boolean that indicates the state of the button:
+
+0 - mouse button was released;
+
+1 - mouse button was pressed.
+
+=back
 
 =head2 Notes
 
@@ -87,8 +152,8 @@ When AUTOSHOW=Yes the dialog layout is NOT recalculated. The child is
 shown on top of the dialog, so the other children will not move or
 redraw. After the mouse is move away from the child then it is
 automatically hidden. B<IMPORTANT>: this feature will ONLY work if the
-child is a native container like B< IupFrame>, B<IupScrollBar> or
-B<IupTabs>.
+child is a native container like B< IupFrame>, B<IupBackgroundBox,
+IupScrollBox> or B<IupTabs>.
 
 =head2 Examples
 

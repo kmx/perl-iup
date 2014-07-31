@@ -1,0 +1,105 @@
+=head1 IupGLVal (since 3.11)
+
+Creates an embedded OpenGL Valuator control. Selects a value in a
+limited interval. It inherits from
+L<IupGLSubCanvas|iupglsubcanvas.html>. It exists only inside an
+L<IupGLCanvasBox|iupglcanvasbox.html>.
+
+=head2 Creation
+
+ Ihandle* IupGLVal(const char *orientation); [in C]iup.glval{orientation: string} -> (elem: ihandle) [in Lua]glval(orientation) [in LED] 
+
+B<orientation>: optional orientation of valuator. Can be NULL. See
+ORIENTATION attribute.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+The B<IupGLVal> element handle all attributes defined for a
+L<IupGLSubCanvas|iupglsubcanvas.html> control.
+
+=over
+
+----
+
+=back
+
+L<FGCOLOR|../attrib/iup_fgcolor.html>: Controls the bar color. Can have
+an alpha component. Default: "200 225 245".
+
+B<HANDLERSIZE> (non inheritable): handler size in the opposite
+direction of the ORIENTATION. Default: 0. If set to 0 it will be
+calculated with half of the dimension opposite to the ORIENTATION.
+
+B<HLCOLOR>: color used to indicate a highlight state. Can have an alpha
+component. Default: "190 210 230".
+
+B<IMAGE> (non inheritable): Image name for the handler. Use
+L<IupSetHandle|../func/iupsethandle.html> or
+L<IupSetAttributeHandle|../func/iupsetattributehandle.html> to
+associate an image to a name. See also L<IupImage|iupimage.html>. If
+defined the handler will be replaced by the image.
+
+B<IMAGEHIGHLIGHT> (non inheritable): Image name of the element in
+highlight state.
+
+B<IMAGEINACTIVE> (non inheritable): Image name of the element when
+inactive. If it is not defined then the IMAGE is used and the colors
+will be replaced by a modified version creating the disabled effect.
+
+B<IMAGEPRESS >(non inheritable): Image name of the element in pressed
+state.
+
+B<MAX>: Contains the maximum valuator value. Default is "1". When
+changed the display will not be updated until VALUE is set.
+
+B<MIN>: Contains the minimum valuator value. Default is "0". When
+changed the display will not be updated until VALUE is set.
+
+B<ORIENTATION >(non inheritable): Informs whether the valuator is
+"VERTICAL" or "HORIZONTAL". Vertical valuators are bottom to up, and
+horizontal valuators are left to right variations of min to max.
+Default: "HORIZONTAL".
+
+B<SLIDERSIZE >(non inheritable): slider size in the same direction of
+the ORIENTATION. Default: 5.
+
+B<VALUE >(non inheritable): Contains a number between MIN and MAX,
+indicating the valuator position. Default: "0.0".
+
+=head2 Callbacks
+
+The B<IupGLVal> element handle all callbacks defined for the
+B<IupGLSubCanvas> control.
+
+=over
+
+----
+
+=back
+
+B<VALUECHANGED_CB>: Called after the value was interactively changed by
+the user.
+
+ int function(Ihandle *ih); [in C]elem:valuechanged_cb() -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<VALUECHANGING_CB>: Called when the value starts or ends to be
+interactively changed by the user.
+
+ int function(Ihandle *ih, int start); [in C]elem:valuechanging_cb(start: number) -> (ret: number) [in Lua]
+
+B<ih>: identifier of the element that activated the event.
+
+B<start>: flag that indicates if the value started to be changed (1) or
+the change just ended (0).
+
+=head2 Notes
+
+The natural size is the height of one character in one direction and
+the width of 15 characters in the other.
+
+=cut

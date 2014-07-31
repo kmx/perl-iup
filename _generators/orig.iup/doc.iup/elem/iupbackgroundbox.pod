@@ -1,0 +1,54 @@
+=head1 IupBackgroundBox (since 3.10)
+
+Creates a simple native container with no decorations. Useful for
+controlling children visibility for B<IupZbox> or B<IupExpander>. It
+inherits from L<IupCanvas|../elem/iupcanvas.html>.
+
+=head2 Creation
+
+ Ihandle* IupBackgroundBox(Ihandle* child); [in C]
+ iup.backgroundbox{child: ihandle} -> (elem: ihandle) [in Lua]
+ backgroundbox(child) [in LED]
+
+B<child>: Identifier of an interface element which will receive the
+box. It can be NULL (nil in Lua), not optional in LED.
+
+Returns: the identifier of the created element, or NULL if an error
+occurs.
+
+=head2 Attributes
+
+Inherits all attributes and callbacks of the
+L<IupCanvas|../elem/iupcanvas.html>, but redefines a few attributes.
+
+L<BGCOLOR|../attrib/iup_bgcolor.html>: by default will use the
+background color of the native parent, but can be set to a custom value
+(since 3.11).
+
+B<BORDER >(creation only): the default value is "NO".
+
+L<EXPAND|../attrib/iup_expand.html> (non inheritable): behaves as a
+container.
+
+B<CANFOCUS>: is set to NO.
+
+=over
+
+----
+
+=back
+
+L<CLIENTSIZE|../attrib/iup_clientsize.html>,
+L<CLIENTOFFSET|../attrib/iup_clientoffset.html>: also accepted.
+
+=head2 Notes
+
+The box can be created with no elements and be dynamic filled using
+L<IupAppend|../func/iupappend.html> or
+L<IupInsert|../func/iupinsert.html>.
+
+=head2 Examples
+
+L<Browse for Example Files|../../examples/>
+
+=cut
