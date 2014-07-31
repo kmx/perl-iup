@@ -38,10 +38,11 @@ my $sampleCode = <<'END';
   }
 END
 
-my $sci = IUP::Scintilla->new( EXPAND=>"YES" );
+my $sci = IUP::Scintilla->new( EXPAND=>"YES");
 my $dlg = IUP::Dialog->new( child=>$sci, TITLE=>"IupScintilla", SIZE=>"HALFxHALF" );
 $dlg->Show();
 
+$sci->SetCallback(CARET_CB => sub { warn "carret:$_[1]:$_[2]:$_[3]\n" });
 $sci->SetAttribute(
   KEYWORDS0 => "void struct union enum char short int long double float signed unsigned const static extern auto register volatile bool class private protected public friend inline template virtual asm explicit typename mutable"
               ."if else switch case default break goto return for while do continue typedef sizeof NULL new delete throw try catch namespace operator this const_cast static_cast dynamic_cast reinterpret_cast true false using"

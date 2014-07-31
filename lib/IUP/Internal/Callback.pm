@@ -140,6 +140,21 @@ my $cb_table = {
   'IUP::ProgressDlg' => {
     CANCEL_CB => \&_init_cb_CANCEL_CB_,
   },
+  'IUP::Scintilla' => {
+    ACTION => \&_init_cb_ACTION_iiis,
+    AUTOCCANCELLED_CB => \&_init_cb_AUTOCCANCELLED_CB_,
+    AUTOCCHARDELETED_CB => \&_init_cb_AUTOCCHARDELETED_CB_,
+    AUTOCSELECTION_CB => \&_init_cb_AUTOCSELECTION_CB_is,
+    BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
+    CARET_CB => \&_init_cb_CARET_CB_iii,
+    DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
+    HOTSPOTCLICK_CB => \&_init_cb_HOTSPOTCLICK_CB_iiis,
+    MARGINCLICK_CB => \&_init_cb_MARGINCLICK_CB_iis,
+    MOTION_CB => \&_init_cb_MOTION_CB_iis,
+    SAVEPOINT_CB => \&_init_cb_SAVEPOINT_CB_i,
+    VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
+    ZOOM_CB => \&_init_cb_ZOOM_CB_i,
+  },
   'IUP::Spin' => {
     SPIN_CB => \&_init_cb_SPIN_CB_i,
   },

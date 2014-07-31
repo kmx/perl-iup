@@ -145,6 +145,19 @@ IUP::PPlot;SELECT_CB;iiffi;int;Ihandle* ih,int index,int sample_index,float x,fl
 IUP::PPlot;SELECTBEGIN_CB;;int;Ihandle* ih
 IUP::PPlot;SELECTEND_CB;;int;Ihandle* ih
 IUP::ProgressDlg;CANCEL_CB;;int;Ihandle* ih
+IUP::Scintilla;ACTION;iiis;int;Ihandle* ih,int insert,int pos,int length,char* text
+IUP::Scintilla;AUTOCSELECTION_CB;is;int;Ihandle* ih,int pos,char* text
+IUP::Scintilla;AUTOCCANCELLED_CB;;int;Ihandle* ih
+IUP::Scintilla;AUTOCCHARDELETED_CB;;int;Ihandle* ih
+IUP::Scintilla;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
+IUP::Scintilla;CARET_CB;iii;int;Ihandle* ih,int lin,int col,int pos
+IUP::Scintilla;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y
+IUP::Scintilla;HOTSPOTCLICK_CB;iiis;int;Ihandle* ih,int pos,int lin,int col,char* status
+IUP::Scintilla;MARGINCLICK_CB;iis;int;Ihandle* ih,int margin,int lin,char* status
+IUP::Scintilla;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
+IUP::Scintilla;SAVEPOINT_CB;i;int;Ihandle* ih,int status
+IUP::Scintilla;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::Scintilla;ZOOM_CB;i;int;Ihandle* ih,int zoomInPoints
 IUP::Spin;SPIN_CB;i;int;Ihandle* ih,int inc
 IUP::SpinBox;SPIN_CB;i;int;Ihandle* ih,int inc
 IUP::Submenu;HIGHLIGHT_CB;;int;Ihandle* ih

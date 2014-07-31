@@ -473,6 +473,60 @@ _init_cb_CANCEL_CB_(ih)
 		IupSetCallback(ih, "CANCEL_CB", (Icallback)internal_cb_CANCEL_CB_);
 
 void
+_init_cb_ACTION_iiis(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "ACTION", (Icallback)internal_cb_ACTION_iiis);
+
+void
+_init_cb_AUTOCCANCELLED_CB_(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "AUTOCCANCELLED_CB", (Icallback)internal_cb_AUTOCCANCELLED_CB_);
+
+void
+_init_cb_AUTOCCHARDELETED_CB_(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "AUTOCCHARDELETED_CB", (Icallback)internal_cb_AUTOCCHARDELETED_CB_);
+
+void
+_init_cb_AUTOCSELECTION_CB_is(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "AUTOCSELECTION_CB", (Icallback)internal_cb_AUTOCSELECTION_CB_is);
+
+void
+_init_cb_DROPFILES_CB_siii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "DROPFILES_CB", (Icallback)internal_cb_DROPFILES_CB_siii);
+
+void
+_init_cb_HOTSPOTCLICK_CB_iiis(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "HOTSPOTCLICK_CB", (Icallback)internal_cb_HOTSPOTCLICK_CB_iiis);
+
+void
+_init_cb_MARGINCLICK_CB_iis(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "MARGINCLICK_CB", (Icallback)internal_cb_MARGINCLICK_CB_iis);
+
+void
+_init_cb_SAVEPOINT_CB_i(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "SAVEPOINT_CB", (Icallback)internal_cb_SAVEPOINT_CB_i);
+
+void
+_init_cb_ZOOM_CB_i(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "ZOOM_CB", (Icallback)internal_cb_ZOOM_CB_i);
+
+void
 _init_cb_SPIN_CB_i(ih)
 		Ihandle* ih;
 	CODE:
@@ -747,12 +801,6 @@ _init_cb_DROPDATA_CB_sUiii(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "DROPDATA_CB", (Icallback)internal_cb_DROPDATA_CB_sUiii);
-
-void
-_init_cb_DROPFILES_CB_siii(ih)
-		Ihandle* ih;
-	CODE:
-		IupSetCallback(ih, "DROPFILES_CB", (Icallback)internal_cb_DROPFILES_CB_siii);
 
 void
 _init_cb_DROPMOTION_CB_iis(ih)
