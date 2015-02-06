@@ -8,7 +8,7 @@ use Carp;
 
 sub _create_element {
   my ($self, $args, $firstonly) = @_;
-  my $c = $args->{child};
+  my $c = delete $args->{child};
   my $ih;
   if (defined $c && blessed $c && $c->can('ihandle')) {
     $ih = IUP::Internal::LibraryIup::_IupDialog($c->ihandle);
@@ -21,7 +21,6 @@ sub _create_element {
     $ih = IUP::Internal::LibraryIup::_IupDialog(undef);
   }
   
-  delete $args->{child};
   return $ih;
 }
 

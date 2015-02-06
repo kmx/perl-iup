@@ -3,8 +3,11 @@ Before release (from git checkout dir):
 - update Changes + TODO
 
 perl Build.PL & Build clean & Build realclean & perl Build.PL
-Build gencode & Build gendoc & Build manifest & Build xs & Build test Build xt
+Build gencode & Build gendoc & Build manifest & Build xs & Build test & Build xt
 Build test & Build distcheck & Build dist
+
+### callback list
+iupClassRegisterCallback
 
 ### New element
 - e.g. IupMatrixList

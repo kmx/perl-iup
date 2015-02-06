@@ -1,7 +1,8 @@
 Revision history for perl module IUP
 
-0.202_1 2014-07-31
+0.301 2015-02-06
     - new: IUP::Scintilla
+    - new: IUP::GL::*
 
 0.202 2014-04-08
     - fixing bug in loading IUP::Internal::Canvas

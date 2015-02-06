@@ -7,10 +7,7 @@ use Carp;
 
 sub _create_element {
   my ($self, $args, $firstonly) = @_;
-  my $ih = IUP::Internal::LibraryIup::_IupLink($args->{URL}, $args->{TITLE});
-  delete $args->{URL};
-  delete $args->{ADDR};
-  return $ih;
+  return IUP::Internal::LibraryIup::_IupLink(delete $args->{URL}, delete $args->{TITLE});
 }
 
 1;

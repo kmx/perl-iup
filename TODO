@@ -17,6 +17,9 @@ fix:
 
 ##########################################################
 
+constants via ExtUtils::Constant
+- e.g. https://metacpan.org/source/PEVANS/Socket-2.016/Makefile.PL#L163
+
 ######## later
 - Canvas: void functions should return $self
 - implement: MglPlotSetData(Ihandle *ih, int ds_index, float* data, int count_x, int count_y, int count_z);

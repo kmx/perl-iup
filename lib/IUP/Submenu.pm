@@ -10,8 +10,7 @@ sub _create_element {
   my ($t, $m);
   if (defined $args) {
 
-    $t = $args->{TITLE};
-    delete $args->{TITLE};
+    $t = delete $args->{TITLE};
 
     if (defined $args->{child}) {
       $m = $args->{child}->ihandle;

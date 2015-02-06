@@ -2068,6 +2068,210 @@ _IupMatGetAttribute(ih,name,lin,col)
         OUTPUT:
                 RETVAL
 
+################################################################################ iupglcontrols.h
+
+#### Original C function
+# int IupGLControlsOpen(void);
+void
+_IupGLControlsOpen()
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                IupGLControlsOpen();
+#endif
+
+#### Original C function
+# Ihandle* IupGLCanvasBox(Ihandle* child, ...);
+# Ihandle* IupGLCanvasBoxv(Ihandle** children);
+Ihandle*
+_IupGLCanvasBox(...)
+        PREINIT:
+                int i;
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                if (items>1) {
+                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );                  
+                  for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
+                  pointers[i] = NULL;
+                  RETVAL = IupGLCanvasBoxv(pointers);
+                  free(pointers);                  
+                }
+                else if (items==1) RETVAL = SvOK(ST(0)) ? IupGLCanvasBox(mySV2IHN(ST(0)), NULL) : NULL;
+                else RETVAL = IupGLCanvasBox(NULL);
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLSubCanvas(void);
+Ihandle*
+_IupGLSubCanvas()
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLSubCanvas();
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLLabel(const char* title);
+Ihandle*
+_IupGLLabel(const char* title)
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLLabel(title);
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLSeparator(void);
+Ihandle*
+_IupGLSeparator()
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLSeparator();
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLButton(const char* title);
+Ihandle*
+_IupGLButton(const char* title)
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLButton(title);
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLToggle(const char* title);
+Ihandle*
+_IupGLToggle(const char* title)
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLToggle(title);
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLLink(const char *url, const char * title);
+Ihandle*
+_IupGLLink(const char *url, const char * title)
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLLink(url, title);
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLProgressBar(void);
+Ihandle*
+_IupGLProgressBar()
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLProgressBar();
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLVal(void);
+Ihandle*
+_IupGLVal()
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLVal();
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLFrame(Ihandle* child);
+Ihandle*
+_IupGLFrame(Ihandle* child)
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLFrame(child);
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLExpander(Ihandle* child);
+Ihandle*
+_IupGLExpander(Ihandle* child)
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLExpander(child);
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLScrollBox(Ihandle* child);
+Ihandle*
+_IupGLScrollBox(Ihandle* child)
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLScrollBox(child);
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLSizeBox(Ihandle* child);
+Ihandle*
+_IupGLSizeBox(Ihandle* child)
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLSizeBox(child);
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
 ################################################################################ plots
 INCLUDE: MglPlot.xs.inc
 INCLUDE: PPlot.xs.inc

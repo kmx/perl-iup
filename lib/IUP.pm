@@ -8,8 +8,7 @@ use Carp;
 use IUP::Internal::LibraryIup;
 use IUP::Constants;
 
-# following recommendation from http://www.dagolden.com/index.php/369/version-numbers-should-be-boring/
-our $VERSION = "0.202_1";
+our $VERSION = "0.301";
 
 sub BEGIN {
   #warn "[DEBUG] IUP::BEGIN() started\n";
@@ -29,13 +28,15 @@ sub import {
 
   my %tags = (
      #UPDATE when element list change
-     ':basic' => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg ProgressDlg Dial Dialog FileDlg Fill FontDlg Frame
-                     Hbox Image Item Label List Menu MessageDlg Normalizer ProgressBar Radio Expander ScrollBox Link GridBox 
-                     Sbox Separator Spin SpinBox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox/], 
+     ':basic'    => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg ProgressDlg Dial Dialog FileDlg Fill FontDlg Frame
+                        Hbox Image Item Label List Menu MessageDlg Normalizer ProgressBar Radio Expander ScrollBox Link GridBox 
+                        Sbox Separator Spin SpinBox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox/], 
      ':extended' => [qw/Matrix MatrixList Cells Canvas CanvasGL PPlot MglPlot LayoutDialog ElementPropertiesDialog Gauge Scintilla/],
-     ':all' => [],
+     ':gl'       => [qw/GL::Button GL::CanvasBox GL::Expander GL::Frame GL::Label GL::Link GL::ProgressBar GL::ScrollBox GL::Separator 
+                        GL::SizeBox GL::SubCanvas GL::Toggle GL::Val/],
+     ':all'      => [],
   );  
-  @{$tags{':all'}} = ( @{$tags{':basic'}}, @{$tags{':extended'}} );
+  @{$tags{':all'}} = ( @{$tags{':basic'}}, @{$tags{':extended'}}, @{$tags{':gl'}} );
 
   my %valid = map { $_ => 1 } @{$tags{':all'}};
   my %all_params = map { $_ => 1 } @_;
@@ -213,6 +214,19 @@ sub GetByIhandle {
     gauge        => 'IUP::Gauge',
     progressdlg  => 'IUP::ProgressDlg',
     scrollbox    => 'IUP::ScrollBox',
+    glbutton     => 'IUP::GL::Button',
+    glcanvasbox  => 'IUP::GL::CanvasBox',
+    glexpander   => 'IUP::GL::Expander',
+    glframe      => 'IUP::GL::Frame',
+    gllabel      => 'IUP::GL::Label',
+    gllink       => 'IUP::GL::Link',
+    glprogressbar=> 'IUP::GL::ProgressBar',
+    glscrollbox  => 'IUP::GL::ScrollBox',
+    glseparator  => 'IUP::GL::Separator',
+    glsizebox    => 'IUP::GL::SizeBox',
+    glsubcanvas  => 'IUP::GL::SubCanvas',
+    gltoggle     => 'IUP::GL::Toggle',
+    glval        => 'IUP::GL::Val',
   };
   return unless $ih;
   my $e = IUP::Internal::LibraryIup::_translate_ih($ih);
