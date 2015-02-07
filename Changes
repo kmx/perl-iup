@@ -1,5 +1,8 @@
 Revision history for perl module IUP
 
+0.301 2015-02-07
+    - require Alien::IUP-0.702+
+
 0.301 2015-02-06
     - new: IUP::Scintilla
     - new: IUP::GL::*

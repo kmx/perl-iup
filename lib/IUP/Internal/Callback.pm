@@ -252,7 +252,7 @@ sub _get_cb_init_function {
   my $f = $p->{$action} if $p;
   $f ||= $cb_table->{_dialog}->{$action}   if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg|ProgressDlg)$/;
   $f ||= $cb_table->{_dragdrop}->{$action} if $pkg =~ /^IUP::(Label|Text|List|Tree|Canvas|Matrix|Dialog)$/;
-  $f ||= $cb_table->{_canvas}->{$action}   if $pkg =~ /^IUP::(Canvas|CanvasGL|Matrix|GL::CanvasBox)$/;
+  $f ||= $cb_table->{_canvas}->{$action}   if $pkg =~ /^IUP::(Canvas|CanvasGL|Matrix)$/;
   $f ||= $cb_table->{_base}->{$action};  
   return $f;
 }
@@ -268,7 +268,7 @@ sub _get_cb_list {
   push @list, keys(%{$cb_table->{$pkg}});
   push @list, keys(%{$cb_table->{_dialog}})   if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg|ProgressDlg)$/;
   push @list, keys(%{$cb_table->{_dragdrop}}) if $pkg =~ /^IUP::(Label|Text|List|Tree|Canvas|Matrix|Dialog)$/;
-  push @list, keys(%{$cb_table->{_canvas}})   if $pkg =~ /^IUP::(Canvas|CanvasGL|Matrix|GL::CanvasBox)$/;
+  push @list, keys(%{$cb_table->{_canvas}})   if $pkg =~ /^IUP::(Canvas|CanvasGL|Matrix)$/;
   push @list, keys(%{$cb_table->{_base}});
   return keys %{{ map { $_ => 1 } @list }}; #return just uniq items
 }
