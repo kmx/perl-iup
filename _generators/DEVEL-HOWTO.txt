@@ -2,9 +2,9 @@ Before release (from git checkout dir):
 - set VERSION in IUP.pm
 - update Changes + TODO
 
-perl Build.PL & Build clean & Build realclean & perl Build.PL
-Build gencode & Build gendoc & Build manifest & Build xs & Build test & Build xt
-Build test & Build distcheck & Build dist
+perl Build.PL && Build clean && Build realclean
+perl Build.PL && Build gencode && Build gendoc && Build manifest && Build xs && Build xt
+Build test && Build distcheck && Build dist
 
 ### callback list
 iupClassRegisterCallback

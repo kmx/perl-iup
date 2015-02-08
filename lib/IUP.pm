@@ -8,7 +8,7 @@ use Carp;
 use IUP::Internal::LibraryIup;
 use IUP::Constants;
 
-our $VERSION = "0.302";
+our $VERSION = "0.303";
 
 sub BEGIN {
   #warn "[DEBUG] IUP::BEGIN() started\n";
