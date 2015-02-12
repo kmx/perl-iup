@@ -297,7 +297,7 @@ sub load_examples {
     }
   }
   die "non-existing dir '$exdir'\n" unless -d $exdir;
-  for my $pl (My::Utils::find_file($exdir, qr/\.pl$/)) {
+  for my $pl (sort (My::Utils::find_file($exdir, qr/\.pl$/))) {
     my $content = read_file($pl) or die "No content for '$pl'\n";
     my $desc = '';
     if ($content =~ /#\s*([^\r\n]+)/) {
@@ -330,8 +330,8 @@ sub procfile {
   my $pod_new;
   my $pod_tmp;
   my $tt = Template->new(ABSOLUTE=>1);  
-  $tt->process($podtt, $ttdata, \$pod_tmp) || die $tt->error(), "\n";  
-  $tt->process(\$pod_tmp, $ttdata, \$pod_new) || die $tt->error(), "\n";  
+  $tt->process($podtt, $ttdata, \$pod_tmp, {binmode=>1}) || die $tt->error(), "\n";  
+  $tt->process(\$pod_tmp, $ttdata, \$pod_new, {binmode=>1}) || die $tt->error(), "\n";  
   $pod_new = encode('utf-8', $pod_new);
   if (sha1_hex($pod_orig) ne sha1_hex($pod_new)) {
     warn " -> orig=", sha1_hex($pod_orig), "\n" unless $pod_orig =~ /^EMPTY/;

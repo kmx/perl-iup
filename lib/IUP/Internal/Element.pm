@@ -269,7 +269,9 @@ sub HasValidClassName {
   $c = 'image' if $c eq 'imagergba';
   $c = 'canvasgl' if $c eq 'glcanvas';
   $p = 'iup::dialog' if ($p eq 'iup::layoutdialog') && ($c eq 'dialog'); #xxxCHECKLATER seems like a bug
-  return lc($p) eq "iup::$c" ? 1 : 0;
+  $p =~ s/^iup::gl::/gl/;
+  $p =~ s/^iup:://;
+  return $p eq $c ? 1 : 0;
 }
 
 sub Append {

@@ -6,9 +6,7 @@ use IUP::Internal::LibraryIup;
 
 sub _create_element {
   my ($self, $args, $firstonly) = @_;
-  my $ih = IUP::Internal::LibraryIup::_IupItem($args->{TITLE}, undef);
-  delete $args->{TITLE};
-  return $ih;
+  return IUP::Internal::LibraryIup::_IupItem(delete $args->{TITLE}, undef);
 }
 
 1;

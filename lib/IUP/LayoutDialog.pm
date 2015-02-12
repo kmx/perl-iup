@@ -13,8 +13,7 @@ sub _create_element {
     return IUP::Internal::LibraryIup::_IupLayoutDialog($firstonly->ihandle) if blessed($firstonly) && $firstonly->can('ihandle');
   }
   elsif (defined $args->{dialog}) {
-    my $d = $args->{dialog};
-    delete $args->{dialog};
+    my $d = delete $args->{dialog};
     return IUP::Internal::LibraryIup::_IupLayoutDialog($d->ihandle) if blessed($d) && $d->can('ihandle');    
   }
   carp "[warning] IUP::LayoutDialog->new() parameter mismatch";

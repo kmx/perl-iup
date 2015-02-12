@@ -11,12 +11,12 @@ sub _create_element {
   my %bpp2bytes_per_pix = ( 8 => 1, 24 => 3, 32 => 4 ); 
 
   my $bytes_per_pix;
-  my $p = $args->{pixels};
-  my $c = $args->{colors};
-  my $f = $args->{file};
-  my $b = $args->{BPP} || 0;
-  my $w = $args->{WIDTH} || 0;
-  my $h = $args->{HEIGHT} || 0;      
+  my $p = delete $args->{pixels};
+  my $c = delete $args->{colors};
+  my $f = delete $args->{file};
+  my $b = (delete $args->{BPP}   ) || 0;
+  my $w = (delete $args->{WIDTH} ) || 0;
+  my $h = (delete $args->{HEIGHT}) || 0;      
   my $data = '';
   my $ih;  
   
@@ -112,22 +112,27 @@ sub _create_element {
   
   # handle colors
   if (defined $c && !defined $f) {
-    if ($bytes_per_pix == 1) {    
+    if ($bytes_per_pix == 1) {
       my $i = 0;
-      $self->SetAttribute($i++, $_) for (@$c);
+      if (ref $c eq 'ARRAY') {
+        $self->SetAttribute($i++, $_) for (@$c);
+      }
+      else {
+        my @list = map { unpack("C", $_) } split(//, $c);
+        while (@list) {
+          my $r = shift @list;
+          my $g = shift @list;
+          my $b = shift @list;
+          last unless defined $r && defined $g && defined $b;
+          $self->SetAttribute($i++, "$r $g $b");
+        }
+      }
     }
     else {
       carp "Warning: ignoring parameter 'colors' by image with 'BPP' 24 or 32" if $c;
     }
   }
   
-  delete $args->{pixels};
-  delete $args->{colors};
-  delete $args->{file};
-  delete $args->{BPP};
-  delete $args->{WIDTH};
-  delete $args->{HEIGHT};
-
   return $ih;
 }
 

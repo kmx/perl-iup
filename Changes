@@ -1,7 +1,14 @@
 Revision history for perl module IUP
 
-0.202_1 2014-07-31
+0.303 2015-02-08
+    - require Alien::IUP-0.703 (better OpenGL handling on UNIX platforms)
+
+0.302 2015-02-07
+    - require Alien::IUP-0.702
+
+0.301 2015-02-06
     - new: IUP::Scintilla
+    - new: IUP::GL::*
 
 0.202 2014-04-08
     - fixing bug in loading IUP::Internal::Canvas
