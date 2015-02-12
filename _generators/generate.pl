@@ -36,8 +36,8 @@ sub file2hash {
   
   die "File '$fname' does not exist!\n" unless -f $fname;
   my ($head, @lines) = slurp($fname);
-  chomp ($head);
-  chomp (@lines);  
+  $head =~ s/[\n\r]*$//;
+  @lines = map { s/[\n\r]*$//; $_ } @lines;
   my @cols = split(';', $head);
   s/^#//g for (@cols);
   for (@lines) {

@@ -297,7 +297,7 @@ sub load_examples {
     }
   }
   die "non-existing dir '$exdir'\n" unless -d $exdir;
-  for my $pl (My::Utils::find_file($exdir, qr/\.pl$/)) {
+  for my $pl (sort (My::Utils::find_file($exdir, qr/\.pl$/))) {
     my $content = read_file($pl) or die "No content for '$pl'\n";
     my $desc = '';
     if ($content =~ /#\s*([^\r\n]+)/) {
