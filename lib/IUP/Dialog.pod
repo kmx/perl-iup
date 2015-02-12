@@ -772,11 +772,11 @@ The element B<IUP::Dialog> is used in the following sample scripts:
 
 =item * L<0-basic/mask_simple.pl|https://metacpan.org/source/KMX/IUP-0.303/examples/0-basic/mask_simple.pl> - IUP::Text + MASK example
 
-=item * L<0-basic/matrixlist.pl|https://metacpan.org/source/KMX/IUP-0.303/examples/0-basic/matrixlist.pl> - IUP::MatrixList example
-
 =item * L<0-basic/matrix_basic.pl|https://metacpan.org/source/KMX/IUP-0.303/examples/0-basic/matrix_basic.pl> - IUP::Matrix example
 
 =item * L<0-basic/matrix_cbmode.pl|https://metacpan.org/source/KMX/IUP-0.303/examples/0-basic/matrix_cbmode.pl> - IUP::Matrix (callback mode) example
+
+=item * L<0-basic/matrixlist.pl|https://metacpan.org/source/KMX/IUP-0.303/examples/0-basic/matrixlist.pl> - IUP::MatrixList example
 
 =item * L<0-basic/menu.pl|https://metacpan.org/source/KMX/IUP-0.303/examples/0-basic/menu.pl> - IUP::Menu example
 
