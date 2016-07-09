@@ -439,7 +439,8 @@ cdYAxisMode(canvas,invert)
                 SV* canvas;
                 int invert;
         CODE:
-                RETVAL = cdCanvasYAxisMode(ref2cnv(canvas),invert);
+                croak("OBSOLETE: cdCanvasYAxisMode");
+                RETVAL = 0;
         OUTPUT:
                 RETVAL
 

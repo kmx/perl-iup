@@ -109,7 +109,7 @@ int call_cb_func(SV* element, char *actionkey) {
   ref = hv_fetch(hash, actionkey, strlen(actionkey), 0);
   if (ref != NULL)
     if (SvOK(*ref)) return call_sv(*ref,G_ARRAY); /*xxxCHECKLATER better would be to test blessed(*ref)*/
-  warn("Warning: callback failed, $element->{'%s'} undefined\n");
+  warn("Warning: callback failed, $element->{'%s'} undefined\n", actionkey);
   return 0;
 }
 

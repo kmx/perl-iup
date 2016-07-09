@@ -31,8 +31,6 @@ $cflags .= ' -DHAVELIB_IUP_SCINTILLA' if Alien::IUP->havelib('iup_scintilla');
 $cflags .= ' -DHAVELIB_IUPIMGLIB'     if Alien::IUP->havelib('iupimglib');
 $cflags .= ' -DHAVELIB_CDCONTEXTPLUS' if Alien::IUP->havelib('cdcontextplus');
 
-$lflags .= ' -limm32' if Alien::IUP->havelib('iup_scintilla') && $^O eq 'MSWin32';
-
 my $class = 'Module::Build';
 if (-d '.git') { #adding some custom actions relevant only for module development
   $class = Module::Build->subclass( class => "Module::Build::Custom", code => <<'CODE' );
@@ -75,7 +73,7 @@ my $builder = $class->new(
   build_requires       => { # need to have for running: ./Build (install|test)
     'perl'                 => 5.008008,
     'Module::Build'        => 0.36,
-    'Alien::IUP'           => 0.700,
+    'Alien::IUP'           => 0.705,
     'Test::More'           => 0,
     'Carp'                 => 0,
     'constant'             => 0,
@@ -83,7 +81,7 @@ my $builder = $class->new(
   configure_requires   => { # need to have for running: perl Buil.PL
     'perl'                 => 5.008008,
     'Module::Build'        => 0.36,
-    'Alien::IUP'           => 0.702,
+    'Alien::IUP'           => 0.705,
   },
   c_source             => 'src', # ppport.h
   extra_linker_flags   => $lflags,
@@ -100,9 +98,12 @@ my $builder = $class->new(
 #set features for later use vie IUP::ConfigData->feature('name');
 $builder->feature('CanvasGL', 1)   if Alien::IUP->havelib('iupgl');
 $builder->feature('PPlot', 1)      if Alien::IUP->havelib('iup_pplot');
+$builder->feature('Plot', 1)       if Alien::IUP->havelib('iup_plot');
 $builder->feature('MGLPlot', 1)    if Alien::IUP->havelib('iup_mglplot');
 $builder->feature('OLE', 1)        if Alien::IUP->havelib('iupole');
 $builder->feature('ImgLib', 1)     if Alien::IUP->havelib('iupimglib');
 $builder->feature('Controls', 1)   if Alien::IUP->havelib('iupcontrols');
+$builder->feature('GLControls', 1) if Alien::IUP->havelib('iupglcontrols');
+$builder->feature('Scintilla', 1)  if Alien::IUP->havelib('iup_scintilla');
 
 $builder->create_build_script();

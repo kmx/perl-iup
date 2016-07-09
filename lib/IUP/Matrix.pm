@@ -13,20 +13,20 @@ sub _create_element {
 sub MatCell {
   my ($self, $lin, $col, $val) = @_;
   if (scalar(@_)>3) {
-    return IUP::Internal::LibraryIup::_IupMatStoreAttribute($self->ihandle, "", $lin, $col, $val);
+    return IUP::Internal::LibraryIup::_IupStoreAttributeId2($self->ihandle, "", $lin, $col, $val);
   }
   else {
-    return IUP::Internal::LibraryIup::_IupMatGetAttribute($self->ihandle, "", $lin, $col);
+    return IUP::Internal::LibraryIup::_IupGetAttributeId2($self->ihandle, "", $lin, $col);
   }
 }
 
 sub MatAttribute {
   my ($self, $attr, $lin, $col, $val) = @_;
   if (scalar(@_)>4) {
-    return IUP::Internal::LibraryIup::_IupMatStoreAttribute($self->ihandle, $attr, $lin, $col, $val);
+    return IUP::Internal::LibraryIup::_IupStoreAttributeId2($self->ihandle, $attr, $lin, $col, $val);
   }
   else {
-    return IUP::Internal::LibraryIup::_IupMatGetAttribute($self->ihandle, $attr, $lin, $col);
+    return IUP::Internal::LibraryIup::_IupGetAttributeId2($self->ihandle, $attr, $lin, $col);
   }
 }
 

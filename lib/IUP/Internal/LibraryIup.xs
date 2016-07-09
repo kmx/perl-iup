@@ -1,3 +1,5 @@
+#define NEED_newSVpvn_flags
+
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
@@ -7,6 +9,7 @@
 
 #ifdef HAVELIB_IUPCD
 #include <cd.h>
+#include <wd.h>
 #include <cdiup.h>
 #endif
 
@@ -124,6 +127,10 @@ typedef struct {
     /* maybe more in the future */
 } my_cxt_t;
 START_MY_CXT;
+
+int cb_ldestroy(Ihandle *ih) {
+  fprintf(stderr, "destroying id=%p\n", ih);
+}
 
 static int cb_idle_action() {  
   dMY_CXT;
@@ -1503,11 +1510,11 @@ _IupGetText(title,text)
                 char* text;
         INIT:
                 int rv;
-                char newtext[1000]; /* xxx hardcoded length */ 
+                char newtext[10001]; /* xxx hardcoded length */ 
         PPCODE:
-                strncpy(newtext, text, 999);
-                newtext[999] = 0;
-                rv = IupGetText(title,newtext);
+                strncpy(newtext, text, 10000);
+                newtext[10000] = 0;
+                rv = IupGetText(title,newtext,10000);
                 /* gonna return text or undef */
                 XPUSHs(sv_2mortal(newSVpvn_utf8(newtext, strlen(newtext), 1))); /* XPUSHs(sv_2mortal(newSVpv(newtext,0))); */
 
@@ -2032,38 +2039,6 @@ _IupMatrix(action)
 #else
                 warn("Error: IUP was built without IupMatrix() support");
                 RETVAL = NULL;
-#endif
-        OUTPUT:
-                RETVAL
-
-#### Original C function from <iupcontrols.h>
-# void IupMatStoreAttribute(Ihandle* ih, const char* name, int lin, int col, char* value);
-void
-_IupMatStoreAttribute(ih,name,lin,col,value)
-                Ihandle* ih;
-                const char* name;
-                int lin;
-                int col;
-                char* value;
-        CODE:
-#ifdef HAVELIB_IUPCONTROLS
-                IupMatStoreAttribute(ih,name,lin,col,value); /* XXX-HANDLE-UTF8 */
-#endif
-
-#### Original C function from <iupcontrols.h>
-# char* IupMatGetAttribute (Ihandle* ih, const char* name, int lin, int col);
-SV*
-_IupMatGetAttribute(ih,name,lin,col)
-                Ihandle* ih;
-                const char* name;
-                int lin;
-                int col;
-        CODE:
-#ifdef HAVELIB_IUPCONTROLS
-                char *v = (char*)IupMatGetAttribute(ih,name,lin,col);
-                RETVAL = (v==NULL) ? newSVpvn(NULL, 0) : newSVpvn_utf8(v, strlen(v), 1);
-#else
-                RETVAL = newSVpvn(NULL, 0); /* undef */
 #endif
         OUTPUT:
                 RETVAL
