@@ -103,8 +103,8 @@ __Bitmap__SetRect(self,xmin,xmax,ymin,ymax)
 IUP::Canvas::Bitmap
 __Bitmap__RGB2Map(self)
                 IUP::Canvas::Bitmap self;
-        INIT:
-                //char *CLASS = "IUP::Canvas::Bitmap"; /* XXX-CHECKLATER ugly hack to handle return value conversion */
+        PREINIT:
+                /* char *CLASS = "IUP::Canvas::Bitmap"; / * XXX-CHECKLATER ugly hack to handle return value conversion */
                 unsigned char* index;
                 long* colors;
         CODE:
@@ -148,8 +148,9 @@ __Bitmap__Type(self)
 SV*
 __Bitmap__Data(self)
                 IUP::Canvas::Bitmap self;
-        CODE:
+        PREINIT:
                 unsigned char *r, *g, *b, *a, *m;
+        CODE:
                 /* warn("XXX-DEBUG: Bitmap->Data type=%d, w=%d h=%d\n",self->type,self->w,self->h); */
                 if (self->type == CD_RGBA) {
                   /* warn("XXX-DEBUG: Bitmap->Data RGBA 1\n"); */
@@ -181,10 +182,11 @@ __Bitmap__Data(self)
 SV*
 __Bitmap__Palette(self)
                 IUP::Canvas::Bitmap self;
-        CODE:
+        PREINIT:
                 long *c;
                 unsigned char *m;
                 int max_index=0, i;
+        CODE:
                 if (self->type != CD_MAP) XSRETURN_UNDEF;
                 c = (long*)cdBitmapGetData(self, CD_COLORS);
                 m = (unsigned char*)cdBitmapGetData(self, CD_INDEX);
@@ -199,8 +201,9 @@ long
 __Bitmap__Color(self,n,...)
                 IUP::Canvas::Bitmap self;
                 int n;
-        CODE:
+        PREINIT:
                 long *c;
+        CODE:
                 if (self->type!=CD_MAP) XSRETURN_UNDEF;
                 if (n<0 || n>=256) XSRETURN_UNDEF;
                 c = (long*)cdBitmapGetData(self, CD_COLORS);
@@ -218,13 +221,14 @@ __Bitmap__Pixel(self,x,y,...)
                 IUP::Canvas::Bitmap self;
                 int x;
                 int y;
-        PPCODE:
+        PREINIT:
                 unsigned char *data_buffer=NULL, *r=NULL, *g=NULL, *b=NULL, *a=NULL, *m=NULL;
                 int color_space, plane_size=0, plane_count=0, color_count=0;
                 int width = self->w;
                 int height = self->h;
-                                /* warn("XXX-DEBUG: bitmap.pixel x=%d y=%d items=%d w=%d h=%d\n",x,y,items,width,height); */
-                                /* warn("XXX-DEBUG: rgb=%d rgba=%d\n", (self->type==CD_RGB), (self->type==CD_RGBA)); */
+        PPCODE:
+                /* warn("XXX-DEBUG: bitmap.pixel x=%d y=%d items=%d w=%d h=%d\n",x,y,items,width,height); */
+                /* warn("XXX-DEBUG: rgb=%d rgba=%d\n", (self->type==CD_RGB), (self->type==CD_RGBA)); */
                 if (x<0 || x>=width || y<0 || y>=height ) {
                   warn("Error: x or y out of range");
                 }
@@ -291,13 +295,13 @@ __Bitmap__SaveAs(self,filename,format,...)
                 IUP::Canvas::Bitmap self;
                 char *filename;
                 char *format;
-        CODE:
+        PREINIT:
                 unsigned char *data_buffer=NULL, *r=NULL, *g=NULL, *b=NULL, *a=NULL, *m=NULL;
                                 unsigned char *data;
                 long *c=NULL;
                 imImage *image;
                 int color_space, plane_size=0, plane_count=0, color_count=0;                                
-                
+        CODE:                
                 plane_size = sizeof(unsigned char)*self->w*self->h;
                 if (self->type==CD_RGBA) {
                   plane_count = 4;

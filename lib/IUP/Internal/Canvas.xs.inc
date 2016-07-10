@@ -83,7 +83,7 @@ cdCanvas*
 _cdCreateCanvas_IMAGERGB_from_bitmap(bitmap,resolution)
                 IUP::Canvas::Bitmap bitmap;
                 double resolution;
-        INIT:
+        PREINIT:
                 unsigned char* r;
                 unsigned char* g;
                 unsigned char* b;
@@ -1625,7 +1625,7 @@ cdPalette(canvas,palette,mode)
                 SV *canvas;
                 IUP::Canvas::Palette palette;
                 int mode;
-        INIT:
+        PREINIT:
                 int n;
                 long* tmppalette;
         CODE:
