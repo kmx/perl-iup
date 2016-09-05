@@ -1,5 +1,27 @@
 ################ the last time working on ################ 
 
+IUP::Plot               https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iup_plot.html
+IUP::AnimatedLabel      https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupanimatedlabel.html
+IUP::BackgroundBox      https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupbackgroundbox.html
+IUP::Calendar           https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupcalendar.html
+IUP::DatePick           https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupdatepick.html
+IUP::DetachBox          https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupdetachbox.html
+IUP::FlatButton         https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupflatbutton.html
+IUP::GL::BackgroundBox  https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iupglbackgroundbox.html
+IUP::GL::Text           https://webserver2.tecgraf.puc-rio.br/iup/en/gl/iupgltext.html
+
+######################### POSTPONED
+##IUP::MultiLine          https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupmultiline.html
+##IUP::Config             https://webserver2.tecgraf.puc-rio.br/iup/en/func/iupconfig.html
+##IUP::OleControl         https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iupole.html
+##IUP::WebBrowser         https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iupweb.html
+##IUP::Tuio               https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iuptuio.html
+
+######################### https://webserver2.tecgraf.puc-rio.br/iup/en/dlg/iupgetparam.html
+##Iup::Param??            https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupparam.html
+##Iup::ParamBox??         https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupparambox.html
+
+
 Bug:
 - BROKEN (not always!?) $canvas->cdDumpBitmap("tmp-testoutput.png", "PNG");  - tmp-testoutput.png / examples/2-canvas/simpledraw.pl
 - UTF8 issue with GetParam (examples: getparam1.pl getparam2.pl)
