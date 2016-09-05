@@ -240,7 +240,6 @@ _IupPlotInsertStrSamples(Ihandle* ih, int index, int sample_index, SV* xlist, SV
 #endif
 
 #### Original C function from <iup_plot.h>
-# void IupPlotTransform(Ihandle* ih, float x, float y, int *ix, int *iy);
 # void IupPlotTransform(Ihandle* ih, double x, double y, double *cnv_x, double *cnv_y); [in C]
 void
 _IupPlotTransform(ih,x,y);
@@ -253,6 +252,23 @@ _IupPlotTransform(ih,x,y);
 	PPCODE:
 #ifdef HAVELIB_IUP_PLOT
 		IupPlotTransform(ih,x,y,&cnv_x,&cnv_y);
+		XPUSHs(sv_2mortal(newSVnv(cnv_x)));
+		XPUSHs(sv_2mortal(newSVnv(cnv_y)));
+#endif
+
+#### Original C function from <iup_plot.h>
+# void IupPlotTransformTo(Ihandle* ih, double cnv_x, double cnv_y, double *x, double *y); [in C]
+void
+_IupPlotTransformTo(ih,x,y);
+		Ihandle* ih;
+		double cnv_x;
+		double cnv_y;
+	INIT:
+		double x;
+		double y
+	PPCODE:
+#ifdef HAVELIB_IUP_PLOT
+		IupPlotTransformTo(ih,cnv_x,cnv_y,&x,&y);
 		XPUSHs(sv_2mortal(newSVnv(cnv_x)));
 		XPUSHs(sv_2mortal(newSVnv(cnv_y)));
 #endif
@@ -280,6 +296,5 @@ _IupPlotPaintTo(ih,cnv)
 # void IupPlotSetSampleStr(Ihandle *ih, int ds_index, int sample_index, const char* x, double y);
 # void IupPlotSetSampleSelection(Ihandle *ih, int ds_index, int sample_index, int selected);
 # void IupPlotSetSampleExtra(Ihandle *ih, int ds_index, int sample_index, double extra); [in C]
-# void IupPlotTransformTo(Ihandle* ih, double cnv_x, double cnv_y, double *x, double *y); [in C]
 # int IupPlotFindSample(Ihandle* ih, double cnv_x, double cnv_y, int *ds_index, int *sample_index); [in C]
 # void IupPlotSetFormula(Ihandle* ih, int sample_count, const char* formula, const char* init); [in C]
