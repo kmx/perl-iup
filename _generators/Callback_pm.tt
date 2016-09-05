@@ -18,13 +18,13 @@ my $cb_table = {
 };
 
 sub _get_cb_init_function {
-  my ($pkg, $action) = @_;  
+  my ($pkg, $action) = @_;
   my $p = $cb_table->{$pkg};
   my $f = $p->{$action} if $p;
   $f ||= $cb_table->{_dialog}->{$action}   if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg|ProgressDlg)$/;
-  $f ||= $cb_table->{_dragdrop}->{$action} if $pkg =~ /^IUP::(Label|Text|List|Tree|Canvas|Matrix|Dialog)$/;
+  $f ||= $cb_table->{_dragdrop}->{$action} if $pkg =~ /^IUP::(Label|AnimatedLabel|Text|MultiLine|List|MatrixList|Tree|Canvas|Matrix|Dialog)$/;
   $f ||= $cb_table->{_canvas}->{$action}   if $pkg =~ /^IUP::(Canvas|CanvasGL|Matrix)$/;
-  $f ||= $cb_table->{_base}->{$action};  
+  $f ||= $cb_table->{_base}->{$action};
   return $f;
 }
 

@@ -1,0 +1,15 @@
+[% h.name %]
+
+[% n.iupbackgroundbox %]
+
+[% h.desc %]
+
+XXX-TODO: missing doc
+
+[% h.see %]
+
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupbackgroundbox.html|[%url.iuporigdoc%]elem/iupbackgroundbox.html>
+[%END%]
+
+=cut

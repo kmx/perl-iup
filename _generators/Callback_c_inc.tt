@@ -6,20 +6,20 @@
 #endif
 /* end-of-workaround */
 
-SV* ihandle2SV_nocreate(Ihandle* ih) {  
+SV* ihandle2SV_nocreate(Ihandle* ih) {
   SV *ptrSV, **ref;
   HV* globreg;
   char* hkey; /*string with numeric representation of canvas pointer*/
 
-  ptrSV = newSViv(PTR2IV(ih)); 
+  ptrSV = newSViv(PTR2IV(ih));
   hkey = SvPV_nolen(ptrSV); /*xxxCHECKLATER find more effective way of converting ih > hkey*/
-  
+
   globreg = get_hv("IUP::Internal::LibraryIup::ih_register", 0);
   /*### check if canvas pointer is present in global hash 'ih_register' */
   ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
   if (ref != NULL)
     if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ih_register{$hkey} */
-  
+
   /*### if not found in ih_register return undef */
   return &PL_sv_undef;
 }
@@ -37,9 +37,9 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKL
   ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
   if (ref != NULL)
     if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ch_register{$hkey} */
-  
+
   /*warn("***DEBUG*** need to create IUP::Internal::Element %s\n",hkey);*/
-  
+
   /*### create new IUP::Internal::Element object based on given ihandle*/
   /* see http://stackoverflow.com/questions/1497836/how-do-i-write-a-perl-constructor-in-xs */
   newhash = (HV *)sv_2mortal((SV *)newHV());
@@ -49,7 +49,7 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKL
 
   /*### $IUP::Internal::LibraryIup::ch_register{<hkey>} = newSVsv(obj) */
   /*### weaken($IUP::Internal::LibraryIup::ch_register{<hkey>}) */
-  hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */  
+  hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */
 
   /*### $element->{'!int!cb!<action>!related'}->{<hkey>} = newSVsv(obj) */
   element_hash = (HV*)MUTABLE_PTR(SvRV(element));
@@ -58,7 +58,7 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKL
   if (!SvOK(*ref)) { warn("Warning: This shouldn't happen ih3\n"); return sv_2mortal(obj); }
   element_cbrelated_hash = (HV*)MUTABLE_PTR(SvRV(*ref));
   hv_store(element_cbrelated_hash, hkey, strlen(hkey), newSVsv(obj), 0); /* nonweaken */
-  
+
   return sv_2mortal(obj);
 }
 
@@ -66,18 +66,18 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
   SV *ptrSV, *obj, **ref;
   HV *globreg, *newhash, *element_hash, *element_cbrelated_hash;
   char* hkey; /*string with numeric representation of canvas pointer*/
-  
+
   ptrSV = newSViv(PTR2IV(canvas));
   hkey = SvPV_nolen(ptrSV); /*xxxCHECKLATER find more effective way of converting ih > hkey*/
   globreg = get_hv("IUP::Internal::LibraryIup::ch_register", 0);
 
-  /*### check if canvas pointer is present in global hash 'ch_register' */  
+  /*### check if canvas pointer is present in global hash 'ch_register' */
   ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
-  if (ref != NULL) 
+  if (ref != NULL)
     if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ch_register{<hkey>} */
-  
+
   /*warn("***DEBUG*** need to create IUP::Internal::Canvas %s\n",hkey);*/
-  
+
   /*### create new IUP::Internal::Canvas object based on given canvas handle*/
   /* see http://stackoverflow.com/questions/1497836/how-do-i-write-a-perl-constructor-in-xs */
   newhash = (HV *)sv_2mortal((SV *)newHV());
@@ -87,7 +87,7 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
 
   /*### $IUP::Internal::LibraryIup::ch_register{<hkey>} = newSVsv(obj) */
   /*### weaken($IUP::Internal::LibraryIup::ch_register{<hkey>}) */
-  hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */  
+  hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */
 
   /*### $element->{'!int!cb!<action>!related'}->{<hkey>} = newSVsv(obj) */
   element_hash = (HV*)MUTABLE_PTR(SvRV(element));
@@ -109,7 +109,7 @@ int call_cb_func(SV* element, char *actionkey) {
   ref = hv_fetch(hash, actionkey, strlen(actionkey), 0);
   if (ref != NULL)
     if (SvOK(*ref)) return call_sv(*ref,G_ARRAY); /*xxxCHECKLATER better would be to test blessed(*ref)*/
-  warn("Warning: callback failed, $element->{'%s'} undefined\n");
+  warn("Warning: callback failed, $element->{'%s'} undefined\n", actionkey);
   return 0;
 }
 [% FOREACH i IN xsitems %]
@@ -152,18 +152,18 @@ int call_cb_func(SV* element, char *actionkey) {
 	element_hash = (HV*)MUTABLE_PTR(SvRV(element));
 	SV_ref = hv_fetch(element_hash, "!int!treedata", 13, 0);
 	if ((SV_ref == NULL) || !SvOK(*SV_ref)) {
-	  warn("Warning: This shouldn't happen NODEREMOVED_CB/1\n"); 
+	  warn("Warning: This shouldn't happen NODEREMOVED_CB/1\n");
 	  XPUSHs(&PL_sv_undef);
 	}
 	else {
 	  element_hash = (HV*)MUTABLE_PTR(SvRV(*SV_ref));
 	  SV_ref = hv_fetch(element_hash, hkey_userdata, strlen(hkey_userdata), 0);
 	  if ((SV_ref == NULL) || !SvOK(*SV_ref)) {
-	    warn("Warning: This shouldn't happen NODEREMOVED_CB/2\n"); 
+	    warn("Warning: This shouldn't happen NODEREMOVED_CB/2\n");
 	    XPUSHs(&PL_sv_undef);
 	  }
           else XPUSHs(*SV_ref);
-        }        
+        }
         /* converting userdata - done */
 [% ELSIF i.xs_spec_DROPDATA_CB -%]
 	XPUSHs(sv_2mortal(newSVpv(type, 0)));
@@ -200,7 +200,7 @@ int call_cb_func(SV* element, char *actionkey) {
 [% END -%]
 [% IF i.xs_spec_DRAGDATA_CB -%]
 	  if (SvOK(SV_data)) {
-	    data_ptr = SvPVbyte(SV_data, data_len); 
+	    data_ptr = SvPVbyte(SV_data, data_len);
 	    Copy(data_ptr, data, data_len > size ? size : data_len, void);
 	  }
 [% END -%]
@@ -209,7 +209,7 @@ int call_cb_func(SV* element, char *actionkey) {
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 [% END %]

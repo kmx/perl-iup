@@ -1,0 +1,15 @@
+[% h.name %]
+
+[% n.iupglframe %]
+
+[% h.desc %]
+
+XXX-TODO: missing doc
+
+[% h.see %]
+
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupglframe.html|[%url.iuporigdoc%]gl/iupglframe.html>
+[%END%]
+
+=cut

@@ -1113,6 +1113,16 @@ _IupButton(title,action)
                 RETVAL
 
 #### Original C function from <iup.h>
+# Ihandle* IupFlatButton(const char *title);
+Ihandle*
+_IupFlatButton(title)
+                const char* title;
+        CODE:
+                RETVAL = IupFlatButton(title);
+        OUTPUT:
+                RETVAL
+
+#### Original C function from <iup.h>
 # Ihandle* IupCanvas (const char* action);
 Ihandle*
 _IupCanvas(action)
@@ -1138,6 +1148,16 @@ Ihandle*
 _IupUser()
         CODE:
                 RETVAL = IupUser();
+        OUTPUT:
+                RETVAL
+
+#### Original C function from <iup.h>
+# Ihandle* IupAnimatedLabel (Ihandle* animation);
+Ihandle*
+_IupAnimatedLabel(animation)
+                Ihandle* animation;
+        CODE:
+                RETVAL = IupAnimatedLabel(animation);
         OUTPUT:
                 RETVAL
 
@@ -1205,6 +1225,26 @@ _IupExpander(child)
 
 
 #### Original C function from <iup.h>
+# Ihandle* IupDetachBox(Ihandle* child);
+Ihandle*
+_IupDetachBox(child)
+                Ihandle* child;
+        CODE:
+                RETVAL = IupDetachBox(child);
+        OUTPUT:
+                RETVAL
+
+#### Original C function from <iup.h>
+# Ihandle* IupBackgroundBox(Ihandle* child);
+Ihandle*
+_IupBackgroundBox(child)
+                Ihandle* child;
+        CODE:
+                RETVAL = IupBackgroundBox(child);
+        OUTPUT:
+                RETVAL
+
+#### Original C function from <iup.h>
 # Ihandle* IupScrollBox(Ihandle* child);
 Ihandle*
 _IupScrollBox(child)
@@ -1257,6 +1297,24 @@ Ihandle*
 _IupProgressBar()
         CODE:
                 RETVAL = IupProgressBar();
+        OUTPUT:
+                RETVAL
+
+#### Original C function from <iup.h>
+# Ihandle* IupDatePick();
+Ihandle*
+_IupDatePick()
+        CODE:
+                RETVAL = IupDatePick();
+        OUTPUT:
+                RETVAL
+
+#### Original C function from <iup.h>
+# Ihandle* IupCalendar(void);
+Ihandle*
+_IupCalendar()
+        CODE:
+                RETVAL = IupCalendar();
         OUTPUT:
                 RETVAL
 
@@ -2244,6 +2302,34 @@ _IupGLSizeBox(Ihandle* child)
         CODE:
 #ifdef HAVELIB_IUPGLCONTROLS
                 RETVAL = IupGLSizeBox(child);
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLBackgroundBox(Ihandle* child);
+Ihandle*
+_IupGLBackgroundBox(Ihandle* child)
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLBackgroundBox(child);
+#else
+                warn("Error: IUP was built without IupGLControls support");
+                RETVAL = NULL;
+#endif
+        OUTPUT:
+                RETVAL
+
+#### Original C function
+# Ihandle* IupGLText(void);
+Ihandle*
+_IupGLText()
+        CODE:
+#ifdef HAVELIB_IUPGLCONTROLS
+                RETVAL = IupGLText();
 #else
                 warn("Error: IUP was built without IupGLControls support");
                 RETVAL = NULL;

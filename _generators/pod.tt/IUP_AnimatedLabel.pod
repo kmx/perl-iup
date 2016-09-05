@@ -1,0 +1,15 @@
+[% h.name %]
+
+[% n.iupanimatedlabel %]
+
+[% h.desc %]
+
+XXX-TODO: missing doc
+
+[% h.see %]
+
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupanimatedlabel.html|[%url.iuporigdoc%]elem/iupanimatedlabel.html>
+[%END%]
+
+=cut

@@ -1,0 +1,15 @@
+[% h.name %]
+
+[% n.iupglscrollbox %]
+
+[% h.desc %]
+
+XXX-TODO: missing doc
+
+[% h.see %]
+
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupglscrollbox.html|[%url.iuporigdoc%]gl/iupglscrollbox.html>
+[%END%]
+
+=cut

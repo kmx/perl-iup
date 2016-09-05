@@ -155,11 +155,10 @@ sub raw2pname {
     'IUP::Messagedlg' => 'IUP::MessageDlg',
     'IUP::Colorbrowserdlg' => 'IUP::ColorDlg',
     'IUP::ColorBrowserDlg' => 'IUP::ColorDlg',
-    'IUP::Olecontrol' => 'IUP::OleControl',
+    'IUP::Olecontrol' => 'IUP::OLE',
     'IUP::Iupmatrix' => 'IUP::Matrix',
     'IUP::Webbrowser' => 'IUP::WebBrowser',
-    'IUP::Tuio' => 'IUP::TuioClient',
-    'IUP::Tuioclient' => 'IUP::TuioClient',
+    'IUP::Tuioclient' => 'IUP::Tuio',
   );
   $n =~ s|^iup_||;
   $n =~ s|^iupwin_||i;
@@ -430,13 +429,13 @@ $c_list{'IUP::ColorBrowser'}->{VALUECHANGED_CB}->{rv} = 'int';
 $c_list{'IUP::ColorBrowser'}->{CHANGE_CB}->{par} = 'Ihandle *ih,unsigned char r,unsigned char g,unsigned char b';
 $c_list{'IUP::ColorBrowser'}->{CHANGE_CB}->{rv} = 'int';
 
-$c_list{'IUP::TuioClient'}->{MULTITOUCH_CB}->{par} = 'Ihandle *ih, int count, int* pid, int* px, int* py, int* pstate';
-$c_list{'IUP::TuioClient'}->{MULTITOUCH_CB}->{rv} = 'int';
-$c_list{'IUP::TuioClient'}->{MULTITOUCH_CB}->{type} = 'iIIII';
+$c_list{'IUP::Tuio'}->{MULTITOUCH_CB}->{par} = 'Ihandle *ih, int count, int* pid, int* px, int* py, int* pstate';
+$c_list{'IUP::Tuio'}->{MULTITOUCH_CB}->{rv} = 'int';
+$c_list{'IUP::Tuio'}->{MULTITOUCH_CB}->{type} = 'iIIII';
 
-$c_list{'IUP::TuioClient'}->{TOUCH_CB}->{par} = 'Ihandle* ih, int id, int x, int y, char* state';
-$c_list{'IUP::TuioClient'}->{TOUCH_CB}->{rv} = 'int';
-$c_list{'IUP::TuioClient'}->{TOUCH_CB}->{type} = 'iiis';
+$c_list{'IUP::Tuio'}->{TOUCH_CB}->{par} = 'Ihandle* ih, int id, int x, int y, char* state';
+$c_list{'IUP::Tuio'}->{TOUCH_CB}->{rv} = 'int';
+$c_list{'IUP::Tuio'}->{TOUCH_CB}->{type} = 'iiis';
 
 $c_list{'IUP::Canvas'}->{MULTITOUCH_CB}->{type} = 'iIIII';
 

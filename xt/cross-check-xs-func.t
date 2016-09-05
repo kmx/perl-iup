@@ -26,13 +26,14 @@ my $root = File::Spec->catdir($FindBin::Bin, '..');
 
 my $all_code = '';
 $all_code .= read_file($_) . "\n" for find_file ("$root/lib", qr/\.pm$/);
-$all_code =~ s/(IUP::Internal::LibraryIup::[^\(\s,]+)/\n$1\n/sg;
+$all_code =~ s/(IUP::Internal::LibraryIup::[^\(\s,;]+)/\n$1\n/sg;
 
 my @pm_calls = grep(/^IUP::Internal::LibraryIup::/, (split "\n", $all_code));
 @pm_calls = map { $1 if(/^IUP::Internal::LibraryIup::([^\(\s,]+)/) } @pm_calls;
 @pm_calls = grep(!/^(_register_(ch|ih)|_translate_(ch|ih)|_unregister_(ch|ih))$/, @pm_calls);
 
 my @xs_funcs = grep(/^_/, read_file("$root/lib/IUP/Internal/LibraryIup.xs"), 
+                          read_file("$root/lib/IUP/Internal/Plot.xs.inc"),
                           read_file("$root/lib/IUP/Internal/PPlot.xs.inc"), 
                           read_file("$root/lib/IUP/Internal/MglPlot.xs.inc"),
                    );

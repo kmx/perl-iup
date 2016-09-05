@@ -84,17 +84,23 @@ L<IUP::Dialog>
 
 =item * GUI elements:
 
+L<IUP::AnimatedLabel|IUP::AnimatedLabel>,
+L<IUP::BackgroundBox|IUP::BackgroundBox>,
 L<IUP::Button|IUP::Button>,
+L<IUP::Calendar|IUP::Calendar>,
 L<IUP::CanvasGL|IUP::CanvasGL>,
 L<IUP::Canvas|IUP::Canvas>,
 L<IUP::Cbox|IUP::Cbox>,
 L<IUP::Cells|IUP::Cells>,
 L<IUP::ColorBar|IUP::ColorBar>,
 L<IUP::ColorBrowser|IUP::ColorBrowser>,
+L<IUP::DatePick|IUP::DatePick>,
+L<IUP::DetachBox|IUP::DetachBox>,
 L<IUP::Dialog|IUP::Dialog>,
 L<IUP::Dial|IUP::Dial>,
 L<IUP::Expander|IUP::Expander>,
 L<IUP::Fill|IUP::Fill>,
+L<IUP::FlatButton|IUP::FlatButton>
 L<IUP::Frame|IUP::Frame>,
 L<IUP::Gauge|IUP::Gauge>,
 L<IUP::GridBox|IUP::GridBox>,
@@ -109,12 +115,12 @@ L<IUP::Matrix|IUP::Matrix>,
 L<IUP::Menu|IUP::Menu>,
 L<IUP::MglPlot|IUP::MglPlot>,
 L<IUP::Normalizer|IUP::Normalizer>,
-L<IUP::Ole|IUP::Ole>,
-L<IUP::PPlot|IUP::PPlot>,
+L<IUP::OLE|IUP::OLE>,
+L<IUP::Plot|IUP::Plot>,
 L<IUP::ProgressBar|IUP::ProgressBar>,
 L<IUP::Radio|IUP::Radio>,
-L<IUP::Scintilla|IUP::Scintilla>,
 L<IUP::Sbox|IUP::Sbox>,
+L<IUP::Scintilla|IUP::Scintilla>,
 L<IUP::ScrollBox|IUP::ScrollBox>,
 L<IUP::Separator|IUP::Separator>,
 L<IUP::SpinBox|IUP::SpinBox>,
@@ -128,6 +134,26 @@ L<IUP::Tree|IUP::Tree>,
 L<IUP::Val|IUP::Val>,
 L<IUP::Vbox|IUP::Vbox>,
 L<IUP::Zbox|IUP::Zbox>
+
+=for comment generated list - predefined dialogs
+
+=item * GL-based GUI elements:
+
+L<IUP::GL::BackgroundBox>,
+L<IUP::GL::Button>,
+L<IUP::GL::CanvasBox>,
+L<IUP::GL::Expander>,
+L<IUP::GL::Frame>,
+L<IUP::GL::Label>,
+L<IUP::GL::Link>,
+L<IUP::GL::ProgressBar>,
+L<IUP::GL::ScrollBox>,
+L<IUP::GL::Separator>,
+L<IUP::GL::SizeBox>,
+L<IUP::GL::SubCanvas>,
+L<IUP::GL::Text>,
+L<IUP::GL::Toggle>,
+L<IUP::GL::Val>
 
 =for comment generated list - predefined dialogs
 

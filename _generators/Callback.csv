@@ -2,18 +2,9 @@
 
 ## check iup source on next version
 # cd /src/iup
-# find . -name '*.c' | xargs grep iupClassRegisterCallback
+# find . -name '*.c' -o -name '*.cpp' | xargs grep iupClassRegisterCallback | sed 's,^.*/,,' | sort -u
 
 ## BEWARE: pointer has to be 'Ihandle* ih' NOT 'Ihandle *ih'
-
-#MatrixEx
-# ? iupmatex_busy.c:  iupClassRegisterCallback(ic, "BUSY_CB", "iis");                   IUP::Matrix;BUSY_CB;iis;int;Ihandle* ih,int status,int count,char* name
-# ? iupmat_ex.c:  iupClassRegisterCallback(ic, "NUMERICGETVALUE_CB", "ii=d");           IUP::Matrix;NUMERICGETVALUE_CB;ii;double;Ihandle* ih,int lin, int col
-# ? iupmat_ex.c:  iupClassRegisterCallback(ic, "NUMERICSETVALUE_CB", "iid");            IUP::Matrix;NUMERICSETVALUE_CB;iid;int;Ihandle* ih,int lin,int col,double value
-# ? iup_matrixex.c:  iupClassRegisterCallback(ic, "MENUCONTEXT_CB", "nii")              IUP::Matrix;MENUCONTEXT_CB;nii;int;Ihandle* ih,Ihandle* menu,int lin,int col
-# ? iupmatex_clipboard.c:  iupClassRegisterCallback(ic, "PASTESIZE_CB", "ii");          IUP::Matrix;PASTESIZE_CB;ii;int;Ihandle* ih,int num_lin,int num_col
-# ? iupmat_ex.c:  iupClassRegisterCallback(ic, "SORTCOLUMNCOMPARE_CB", "iii");          IUP::Matrix;SORTCOLUMNCOMPARE_CB;iii;int;Ihandle* ih,int col,int lin1,int lin2
-
 
 IUP::Button;ACTION;;int;Ihandle* ih
 IUP::Button;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
@@ -55,6 +46,10 @@ IUP::ColorBar;SWITCH_CB;ii;int;Ihandle* ih,int prim_cell,int sec_cell
 IUP::ColorBrowser;CHANGE_CB;ccc;int;Ihandle* ih,unsigned char r,unsigned char g,unsigned char b
 IUP::ColorBrowser;DRAG_CB;ccc;int;Ihandle* ih,unsigned char r,unsigned char g,unsigned char b
 IUP::ColorBrowser;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::ColorDlg;COLORUPDATE_CB;;int;Ihandle* ih
+IUP::Calendar;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::DatePick;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::DetachBox;DETACHED_CB;;int;Ihandle* ih
 IUP::Dial;BUTTON_PRESS_CB;d;int;Ihandle* ih,double angle
 IUP::Dial;BUTTON_RELEASE_CB;d;int;Ihandle* ih,double angle
 IUP::Dial;MOUSEMOVE_CB;d;int;Ihandle* ih,double angle
@@ -62,14 +57,43 @@ IUP::Dial;VALUECHANGED_CB;;int;Ihandle* ih
 _dialog;CLOSE_CB;;int;Ihandle* ih
 _dialog;RESIZE_CB;ii;int;Ihandle* ih,int width,int height
 _dialog;SHOW_CB;i;int;Ihandle* ih,int state
+_dialog;CUSTOMFRAME_CB;;int;Ihandle* ih
 ## the following dialog related callbacks are special: MDIACTIVATE_CB/TRAYCLICK_CB - Win
 _dialog;MDIACTIVATE_CB;;int;Ihandle* ih
 _dialog;TRAYCLICK_CB;iii;int;Ihandle* ih,int but,int pressed,int dclick
 _dialog;COPYDATA_CB;si;int;Ihandle* ih,char* cmdLine,int size
 _dialog;MOVE_CB;ii;int;Ihandle* ih,int x,int y
 IUP::Expander;ACTION;;int;Ihandle* ih
+IUP::Expander;EXTRABUTTON_CB;ii;int;Ihandle* ih,int button,int pressed
+IUP::Expander;OPENCLOSE_CB;i;int;Ihandle* ih,int state
 IUP::FileDlg;FILE_CB;ss;int;Ihandle* ih,const char* file_name,const char* status
+IUP::FlatButton;FLAT_ACTION;;int;Ihandle* ih
+IUP::FlatButton;FLAT_BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
+IUP::FlatButton;FLAT_ENTERWINDOW_CB;ii;int;Ihandle* ih,int a,int b
+IUP::FlatButton;FLAT_FOCUS_CB;i;int;Ihandle* ih,int focus
+IUP::FlatButton;FLAT_LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::FlatButton;VALUECHANGED_CB;;int;Ihandle* ih
 ## IUP::Frame MAP_CB/UNMAP_CB not necessary as they are part of _base
+## XXX getparam,PARAM_CB,iV
+IUP::GL::Button;ACTION;;int;Ihandle* ih
+IUP::CanvasGL;SWAPBUFFERS_CB;;int;Ihandle* ih
+IUP::GL::Expander;ACTION;;int;Ihandle* ih
+IUP::GL::Expander;EXTRABUTTON_CB;ii;int;Ihandle* ih,int button,int pressed
+IUP::GL::Expander;MOVE_CB;ii;int;Ihandle* ih,int x,int y
+IUP::GL::Expander;OPENCLOSE_CB;i;int;Ihandle* ih,int state
+IUP::GL::Frame;MOVE_CB;ii;int;Ihandle* ih,int x,int y
+IUP::GL::Link;ACTION;s;int;Ihandle* ih,char* url
+IUP::GL::SubCanvas;GL_ACTION;;int;Ihandle* ih
+IUP::GL::SubCanvas;GL_BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
+IUP::GL::SubCanvas;GL_ENTERWINDOW_CB;ii;int;Ihandle* ih,int a,int b
+IUP::GL::SubCanvas;GL_LEAVEWINDOW_CB;;int;Ihandle* ih
+IUP::GL::SubCanvas;GL_MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
+IUP::GL::SubCanvas;GL_WHEEL_CB;fiis;int;Ihandle* ih,float delta,int x,int y,char* status
+IUP::GL::Text;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::GL::Toggle;ACTION;i;int;Ihandle* ih,int state
+IUP::GL::Toggle;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::GL::Val;VALUECHANGED_CB;;int;Ihandle* ih
+IUP::GL::Val;VALUECHANGING_CB;i;int;Ihandle* ih,int start
 IUP::Item;ACTION;;int;Ihandle* ih
 IUP::Item;HIGHLIGHT_CB;;int;Ihandle* ih
 IUP::Label;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
@@ -101,7 +125,10 @@ IUP::Matrix;DRAW_CB;iiiiiiv;int;Ihandle* ih,int lin,int col,int x1,int x2,int y1
 IUP::Matrix;DROPCHECK_CB;ii;int;Ihandle* ih,int lin,int col
 IUP::Matrix;DROPSELECT_CB;iinsii;int;Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v
 IUP::Matrix;DROP_CB;nii;int;Ihandle* ih,Ihandle* drop,int lin,int col
+IUP::Matrix;EDITCLICK_CB;iis;int;Ihandle* ih,int lin,int col,char* status
 IUP::Matrix;EDITION_CB;iiii;int;Ihandle* ih,int lin,int col,int mode,int update
+IUP::Matrix;EDITMOUSEMOVE_CB;ii;int;Ihandle* ih,int lin,int col
+IUP::Matrix;EDITRELEASE_CB;iis;int;Ihandle* ih,int lin,int col,char* status
 IUP::Matrix;ENTERITEM_CB;ii;int;Ihandle* ih,int lin,int col
 IUP::Matrix;FGCOLOR_CB;iiIII;int;Ihandle* ih,int lin,int col,unsigned int* red,unsigned int* green,unsigned int* blue
 IUP::Matrix;FONT_CB;ii;char*;Ihandle* ih,int lin,int col
@@ -111,44 +138,49 @@ IUP::Matrix;MARK_CB;ii;int;Ihandle* ih,int lin,int col
 IUP::Matrix;MENUDROP_CB;nii;int;Ihandle* ih,Ihandle* drop,int lin,int col
 IUP::Matrix;MOUSEMOVE_CB;ii;int;Ihandle* ih,int lin,int col
 IUP::Matrix;RELEASE_CB;iis;int;Ihandle* ih,int lin,int col,char* status
+IUP::Matrix;RESIZEMATRIX_CB;ii;int;Ihandle* ih,int width,int height
 IUP::Matrix;SCROLLTOP_CB;ii;int;Ihandle* ih,int lin,int col
 IUP::Matrix;TOGGLEVALUE_CB;iii;int;Ihandle* ih,int lin,int col,int status
+IUP::Matrix;TRANSLATEVALUE_CB;iis;char*;Ihandle* ih,int lin,int col,char* value
 IUP::Matrix;TYPE_CB;ii;char*;Ihandle* ih,int lin,int col
 IUP::Matrix;VALUECHANGED_CB;;int;Ihandle* ih
 IUP::Matrix;VALUE_CB;ii;char*;Ihandle* ih,int lin,int col
 IUP::Matrix;VALUE_EDIT_CB;iis;int;Ihandle* ih,int lin,int col,char* newval
+## MatrixEx
+IUP::Matrix;MENUCONTEXTCLOSE_CB;nii;int;Ihandle* ih,Ihandle* menu,int lin,int col
+IUP::Matrix;MENUCONTEXT_CB;nii;int;Ihandle* ih,Ihandle* menu,int lin,int col
+IUP::Matrix;NUMERICGETVALUE_CB;ii;double;Ihandle* ih,int lin,int col
+IUP::Matrix;NUMERICSETVALUE_CB;iid;int;Ihandle* ih,int lin,int col,double value
+IUP::Matrix;SORTCOLUMNCOMPARE_CB;iii;int;Ihandle* ih,int col,int lin1,int lin2
+IUP::Matrix;BUSY_CB;iis;int;Ihandle* ih,int status,int count,char* name
+IUP::Matrix;PASTESIZE_CB;ii;int;Ihandle* ih,int num_lin,int num_col
 IUP::Menu;ACTION;;int;Ihandle* ih
 IUP::Menu;HIGHLIGHT_CB;;int;Ihandle* ih
 IUP::Menu;MENUCLOSE_CB;;int;Ihandle* ih
 IUP::Menu;OPEN_CB;;int;Ihandle* ih
-## IUP::Frame MAP_CB/UNMAP_CB not necessary as they are part of _base
-IUP::MglPlot;DELETE_CB;iiff;int;Ihandle* ih,int index,int sample_index,float x,float y
-IUP::MglPlot;DELETEBEGIN_CB;;int;Ihandle* ih
-IUP::MglPlot;DELETEEND_CB;;int;Ihandle* ih
-IUP::MglPlot;EDIT_CB;iiffFF;int;Ihandle* ih,int index,int sample_index,float x,float y,float* new_x,float* new_y
-IUP::MglPlot;EDITBEGIN_CB;;int;Ihandle* ih
-IUP::MglPlot;EDITEND_CB;;int;Ihandle* ih
+## IUP::Menu MAP_CB/UNMAP_CB/HELP_CB not necessary as they are part of _base
 IUP::MglPlot;POSTDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
 IUP::MglPlot;PREDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
-IUP::MglPlot;SELECT_CB;iiffi;int;Ihandle* ih,int index,int sample_index,float x,float y,int select
-IUP::MglPlot;SELECTBEGIN_CB;;int;Ihandle* ih
-IUP::MglPlot;SELECTEND_CB;;int;Ihandle* ih
-IUP::PPlot;DELETE_CB;iiff;int;Ihandle* ih,int index,int sample_index,float x,float y
-IUP::PPlot;DELETEBEGIN_CB;;int;Ihandle* ih
-IUP::PPlot;DELETEEND_CB;;int;Ihandle* ih
-IUP::PPlot;EDIT_CB;iiffFF;int;Ihandle* ih,int index,int sample_index,float x,float y,float* new_x,float* new_y
-IUP::PPlot;EDITBEGIN_CB;;int;Ihandle* ih
-IUP::PPlot;EDITEND_CB;;int;Ihandle* ih
-IUP::PPlot;POSTDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
-IUP::PPlot;PREDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
-IUP::PPlot;SELECT_CB;iiffi;int;Ihandle* ih,int index,int sample_index,float x,float y,int select
-IUP::PPlot;SELECTBEGIN_CB;;int;Ihandle* ih
-IUP::PPlot;SELECTEND_CB;;int;Ihandle* ih
+IUP::Plot;CLICKSAMPLE_CB;iiddi;int;Ihandle* ih,int ds_index,int sample_index,double x,double y,int button
+IUP::Plot;DELETEBEGIN_CB;;int;Ihandle* ih
+IUP::Plot;DELETEEND_CB;;int;Ihandle* ih
+IUP::Plot;DELETE_CB;iidd;int;Ihandle* ih,int index,int sample_index,double x,double y
+IUP::Plot;DRAWSAMPLE_CB;iiddi;int;Ihandle* ih,int ds_index,int sample_index,double x,double y,int selected
+IUP::Plot;MENUCONTEXTCLOSE_CB;nii;int;Ihandle* ih,Ihandle* menu,int cnv_x,int cnv_y
+IUP::Plot;MENUCONTEXT_CB;nii;int;Ihandle* ih,Ihandle* menu,int cnv_x,int cnv_y
+IUP::Plot;PLOTBUTTON_CB;iidds;int;Ihandle* ih,int button,int pressed,double x,double y,char* status
+IUP::Plot;PLOTMOTION_CB;dds;int;Ihandle* ih,double x,double y,char* status
+IUP::Plot;POSTDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
+IUP::Plot;PREDRAW_CB;v;int;Ihandle* ih,cdCanvas* cnv
+IUP::Plot;SELECTBEGIN_CB;;int;Ihandle* ih
+IUP::Plot;SELECTEND_CB;;int;Ihandle* ih
+IUP::Plot;SELECT_CB;iiddi;int;Ihandle* ih,int index,int sample_index,double x,double y,int select
+## IUP::ProgressBar  MAP_CB/UNMAP_CB not necessary as they are part of _base
 IUP::ProgressDlg;CANCEL_CB;;int;Ihandle* ih
 IUP::Scintilla;ACTION;iiis;int;Ihandle* ih,int insert,int pos,int length,char* text
-IUP::Scintilla;AUTOCSELECTION_CB;is;int;Ihandle* ih,int pos,char* text
 IUP::Scintilla;AUTOCCANCELLED_CB;;int;Ihandle* ih
 IUP::Scintilla;AUTOCCHARDELETED_CB;;int;Ihandle* ih
+IUP::Scintilla;AUTOCSELECTION_CB;is;int;Ihandle* ih,int pos,char* text
 IUP::Scintilla;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
 IUP::Scintilla;CARET_CB;iii;int;Ihandle* ih,int lin,int col,int pos
 IUP::Scintilla;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y
@@ -160,9 +192,12 @@ IUP::Scintilla;VALUECHANGED_CB;;int;Ihandle* ih
 IUP::Scintilla;ZOOM_CB;i;int;Ihandle* ih,int zoomInPoints
 IUP::Spin;SPIN_CB;i;int;Ihandle* ih,int inc
 IUP::SpinBox;SPIN_CB;i;int;Ihandle* ih,int inc
+IUP::Split;VALUECHANGED_CB;;int;Ihandle* ih
 IUP::Submenu;HIGHLIGHT_CB;;int;Ihandle* ih
+IUP::Tabs;RIGHTCLICK_CB;i;int;Ihandle* ih,int id
 IUP::Tabs;TABCHANGEPOS_CB;ii;int;Ihandle* ih,int new_pos,int old_pos
 IUP::Tabs;TABCHANGE_CB;nn;int;Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
+IUP::Tabs;TABCLOSE_CB;i;int;Ihandle* ih,int id
 IUP::Text;ACTION;is;int;Ihandle* ih,int c,char* new_value
 IUP::Text;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
 IUP::Text;CARET_CB;iii;int;Ihandle* ih,int lin,int col,int pos
@@ -186,15 +221,15 @@ IUP::Tree;RIGHTCLICK_CB;i;int;Ihandle* ih,int id
 IUP::Tree;SELECTION_CB;ii;int;Ihandle* ih,int id,int status
 IUP::Tree;SHOWRENAME_CB;i;int;Ihandle* ih,int id
 IUP::Tree;TOGGLEVALUE_CB;ii;int;Ihandle* ih,int id,int status
-IUP::TuioClient;MULTITOUCH_CB;iAAAA;int;Ihandle* ih,int count,int* pid,int* px,int* py,int* pstate
-IUP::TuioClient;TOUCH_CB;iiis;int;Ihandle* ih,int id,int x,int y,char* state
+IUP::Tuio;MULTITOUCH_CB;iAAAA;int;Ihandle* ih,int count,int* pid,int* px,int* py,int* pstate
+IUP::Tuio;TOUCH_CB;iiis;int;Ihandle* ih,int id,int x,int y,char* state
 IUP::Val;VALUECHANGED_CB;;int;Ihandle* ih
 IUP::WebBrowser;COMPLETED_CB;s;int;Ihandle* ih,char* url
 IUP::WebBrowser;ERROR_CB;s;int;Ihandle* ih,char* url
 IUP::WebBrowser;NAVIGATE_CB;s;int;Ihandle* ih,char* url
 IUP::WebBrowser;NEWWINDOW_CB;s;int;Ihandle* ih,char* url
 
-## _dragdrop is related to: IupLabel, IupText, IupList, IupTree, IupCanvas and IupDialog
+## _dragdrop is related to: IupLabel IupText IupList IupTree IupCanvas and IupDialog
 _dragdrop;DRAGBEGIN_CB;ii;int;Ihandle* ih,int x,int y
 _dragdrop;DRAGDATASIZE_CB;s;int;Ihandle* ih,char* type
 _dragdrop;DRAGDATA_CB;sUi;int;Ihandle* ih,char* type,void* data,int size

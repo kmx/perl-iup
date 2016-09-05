@@ -1,0 +1,15 @@
+[% h.name %]
+
+[% n.iupdetachbox %]
+
+[% h.desc %]
+
+XXX-TODO: missing doc
+
+[% h.see %]
+
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupdetachbox.html|[%url.iuporigdoc%]elem/iupdetachbox.html>
+[%END%]
+
+=cut

@@ -28,7 +28,17 @@ my $pfunc_table = {
   internal_cb_DRAW_CB_iiiiiiv      => '_execute_cb_cnv7', #Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas
   internal_cb_POSTDRAW_CB_v        => '_execute_cb_cnv1', #Ihandle* ih,cdCanvas* cnv
   internal_cb_PREDRAW_CB_v         => '_execute_cb_cnv1', #Ihandle* ih,cdCanvas* cnv
+  internal_cb_MENUCONTEXTCLOSE_CB  => '_execute_cb_ih1',  #Ihandle* ih,Ihandle* menu,int lin,int col
+  internal_cb_MENUCONTEXT_CB       => '_execute_cb_ih1',  #Ihandle* ih,Ihandle* menu,int lin,int col
+  internal_cb_MENUCONTEXTCLOSE_CB  => '_execute_cb_ih1',  #Ihandle* ih,Ihandle* menu,int cnv_x,int cnv_y
+  internal_cb_MENUCONTEXT_CB       => '_execute_cb_ih1',  #Ihandle* ih,Ihandle* menu,int cnv_x,int cnv_y
 };
+
+# +IUP::Matrix;
+# +IUP::Matrix;
+# +IUP::Plot;  
+# +IUP::Plot;  
+
 
 sub file2hash {
   my $fname = shift;
@@ -82,6 +92,12 @@ sub cb_generate1 {
         $h->{$m}->{$a}->{xs_declare_sv_rv} = 'SV * SV_rv';
         $h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPi';
         $h->{$m}->{$a}->{xs_internal_default_rv} = 'IUP_DEFAULT';
+        push @l_rvname, '$rv_num';
+      }
+      elsif ($c_retval eq 'double') {
+        $h->{$m}->{$a}->{xs_declare_sv_rv} = 'SV * SV_rv';
+        $h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPn';
+        $h->{$m}->{$a}->{xs_internal_default_rv} = '-1';
         push @l_rvname, '$rv_num';
       }
       elsif ($c_retval eq 'char*') {
@@ -290,7 +306,7 @@ my $cb_h = file2hash($cb_csv);
 
 # remove unsopported items
 delete $cb_h->{'IUP::WebBrowser'};
-delete $cb_h->{'IUP::TuioClient'};
+delete $cb_h->{'IUP::Tuio'};
 
 #### CALLBACKS
 cb_generate1($cb_h);

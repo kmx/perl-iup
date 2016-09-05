@@ -8,7 +8,7 @@ use Carp;
 use IUP::Internal::LibraryIup;
 use IUP::Constants;
 
-our $VERSION = "0.304";
+our $VERSION = "0.304_1";
 
 sub BEGIN {
   #warn "[DEBUG] IUP::BEGIN() started\n";
@@ -30,10 +30,11 @@ sub import {
      #UPDATE when element list change
      ':basic'    => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg ProgressDlg Dial Dialog FileDlg Fill FontDlg Frame
                         Hbox Image Item Label List Menu MessageDlg Normalizer ProgressBar Radio Expander ScrollBox Link GridBox 
-                        Sbox Separator Spin SpinBox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox/], 
-     ':extended' => [qw/Matrix MatrixList Cells Canvas CanvasGL PPlot MglPlot LayoutDialog ElementPropertiesDialog Gauge Scintilla/],
+                        Sbox Separator Spin SpinBox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox
+                        AnimatedLabel BackgroundBox Calendar DatePick DetachBox FlatButton/], 
+     ':extended' => [qw/Matrix MatrixList Cells Canvas CanvasGL Plot MglPlot LayoutDialog ElementPropertiesDialog Gauge Scintilla/],
      ':gl'       => [qw/GL::Button GL::CanvasBox GL::Expander GL::Frame GL::Label GL::Link GL::ProgressBar GL::ScrollBox GL::Separator 
-                        GL::SizeBox GL::SubCanvas GL::Toggle GL::Val/],
+                        GL::SizeBox GL::SubCanvas GL::Toggle GL::Val GL::Text GL::BackgroundBox/],
      ':all'      => [],
   );  
   @{$tags{':all'}} = ( @{$tags{':basic'}}, @{$tags{':extended'}}, @{$tags{':gl'}} );
@@ -160,73 +161,85 @@ sub GetByIhandle {
   $flag = 1 unless defined $flag; # default = 1 (create corresponding perl object if necessary)
   my $mapping = {
     #UPDATE when element list change
-    button       => "IUP::Button",
-    canvas       => "IUP::Canvas",
-    cbox         => "IUP::Cbox",
-    cells        => "IUP::Cells",
-    clipboard    => "IUP::Clipboard",
-    colorbar     => "IUP::ColorBar",
-    colorbrowser => "IUP::ColorBrowser",
-    colordlg     => "IUP::ColorDlg",
-    constants    => "IUP::Constants",
-    dial         => "IUP::Dial",
-    dialog       => "IUP::Dialog",
-    filedlg      => "IUP::FileDlg",
-    fill         => "IUP::Fill",
-    fontdlg      => "IUP::FontDlg",
-    frame        => "IUP::Frame",
-    glcanvas     => "IUP::CanvasGL",
-    hbox         => "IUP::Hbox",
-    image        => "IUP::Image",
-    imagergb     => "IUP::Image",
-    imagergba    => "IUP::Image",
-    item         => "IUP::Item",
-    label        => "IUP::Label",
-    list         => "IUP::List",
-    matrix       => "IUP::Matrix",
-    menu         => "IUP::Menu",
-    messagedlg   => "IUP::MessageDlg",
-    normalizer   => "IUP::Normalizer",
-    olecontrol   => "IUP::OleControl",
-    pplot        => "IUP::PPlot",
-    progressbar  => "IUP::ProgressBar",
-    radio        => "IUP::Radio",
-    sbox         => "IUP::Sbox",
-    separator    => "IUP::Separator",
-    spin         => "IUP::Spin",
-    spinbox      => "IUP::SpinBox",
-    split        => "IUP::Split",
-    submenu      => "IUP::Submenu",
-    tabs         => "IUP::Tabs",
-    text         => "IUP::Text",
-    timer        => "IUP::Timer",
-    toggle       => "IUP::Toggle",
-    tree         => "IUP::Tree",
-    user         => "IUP::User",
-    val          => "IUP::Val",
-    vbox         => "IUP::Vbox",
-    zbox         => "IUP::Zbox",  
-    mglplot      => 'IUP::MglPlot',
-    matrixlist   => 'IUP::MatrixList',
-    expander     => 'IUP::Expander',
-    link         => 'IUP::Link',
-    gridbox      => 'IUP::GridBox',
-    gauge        => 'IUP::Gauge',
-    progressdlg  => 'IUP::ProgressDlg',
-    scrollbox    => 'IUP::ScrollBox',
-    glbutton     => 'IUP::GL::Button',
-    glcanvasbox  => 'IUP::GL::CanvasBox',
-    glexpander   => 'IUP::GL::Expander',
-    glframe      => 'IUP::GL::Frame',
-    gllabel      => 'IUP::GL::Label',
-    gllink       => 'IUP::GL::Link',
-    glprogressbar=> 'IUP::GL::ProgressBar',
-    glscrollbox  => 'IUP::GL::ScrollBox',
-    glseparator  => 'IUP::GL::Separator',
-    glsizebox    => 'IUP::GL::SizeBox',
-    glsubcanvas  => 'IUP::GL::SubCanvas',
-    gltoggle     => 'IUP::GL::Toggle',
-    glval        => 'IUP::GL::Val',
+    animatedlabel   => 'IUP::AnimatedLabel',     # https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupanimatedlabel.html
+    backgroundbox   => 'IUP::BackgroundBox',     # https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupbackgroundbox.html
+    button          => 'IUP::Button',
+    calendar        => 'IUP::Calendar',          # https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupcalendar.html
+    canvas          => 'IUP::Canvas',
+    cbox            => 'IUP::Cbox',
+    cells           => 'IUP::Cells',
+    clipboard       => 'IUP::Clipboard',
+    colorbar        => 'IUP::ColorBar',
+    colorbrowser    => 'IUP::ColorBrowser',
+    colordlg        => 'IUP::ColorDlg',
+    constants       => 'IUP::Constants',
+    datepick        => 'IUP::DatePick',          # https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupdatepick.html
+    detachbox       => 'IUP::DetachBox',         # https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupdetachbox.html
+    dial            => 'IUP::Dial',
+    dialog          => 'IUP::Dialog',
+    expander        => 'IUP::Expander',
+    filedlg         => 'IUP::FileDlg',
+    fill            => 'IUP::Fill',
+    flatbutton      => 'IUP::FlatButton',        # https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupflatbutton.html
+    fontdlg         => 'IUP::FontDlg',
+    frame           => 'IUP::Frame',
+    gauge           => 'IUP::Gauge',
+    glbackgroundbox => 'IUP::GL::BackgroundBox', # https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iupglbackgroundbox.html
+    glbutton        => 'IUP::GL::Button',
+    glcanvas        => 'IUP::CanvasGL',
+    glcanvasbox     => 'IUP::GL::CanvasBox',
+    glexpander      => 'IUP::GL::Expander',
+    glframe         => 'IUP::GL::Frame',
+    gllabel         => 'IUP::GL::Label',
+    gllink          => 'IUP::GL::Link',
+    glprogressbar   => 'IUP::GL::ProgressBar',
+    glscrollbox     => 'IUP::GL::ScrollBox',
+    glseparator     => 'IUP::GL::Separator',
+    glsizebox       => 'IUP::GL::SizeBox',
+    glsubcanvas     => 'IUP::GL::SubCanvas',
+    gltext          => 'IUP::GL::Text',          # https://webserver2.tecgraf.puc-rio.br/iup/en/gl/iupgltext.html
+    gltoggle        => 'IUP::GL::Toggle',
+    glval           => 'IUP::GL::Val',
+    gridbox         => 'IUP::GridBox',
+    hbox            => 'IUP::Hbox',
+    image           => 'IUP::Image',
+    imagergb        => 'IUP::Image',
+    imagergba       => 'IUP::Image',
+    item            => 'IUP::Item',
+    label           => 'IUP::Label',
+    link            => 'IUP::Link',
+    list            => 'IUP::List',
+    matrix          => 'IUP::Matrix',
+    matrixlist      => 'IUP::MatrixList',
+    menu            => 'IUP::Menu',
+    messagedlg      => 'IUP::MessageDlg',
+    mglplot         => 'IUP::MglPlot',
+    multiline       => 'IUP::MultiLine',         # NOT-USED https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupmultiline.html
+    normalizer      => 'IUP::Normalizer',
+    olecontrol      => 'IUP::IUP::OLE',          # NOT-USED https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iupole.html
+    plot            => 'IUP::Plot',              # https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iup_plot.html
+    progressbar     => 'IUP::ProgressBar',
+    progressdlg     => 'IUP::ProgressDlg',
+    radio           => 'IUP::Radio',
+    sbox            => 'IUP::Sbox',
+    scintilla       => 'IUP::Scintilla',
+    scrollbox       => 'IUP::ScrollBox',
+    separator       => 'IUP::Separator',
+    spin            => 'IUP::Spin',
+    spinbox         => 'IUP::SpinBox',
+    split           => 'IUP::Split',
+    submenu         => 'IUP::Submenu',
+    tabs            => 'IUP::Tabs',
+    text            => 'IUP::Text',
+    timer           => 'IUP::Timer',
+    toggle          => 'IUP::Toggle',
+    tree            => 'IUP::Tree',
+    tuioclient      => 'IUP::Tuio',              # NOT-USED https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iuptuio.html
+    user            => 'IUP::User',
+    val             => 'IUP::Val',
+    vbox            => 'IUP::Vbox',
+    webbrowser      => 'IUP::WebBrowser',        # NOT-USED https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iupweb.html
+    zbox            => 'IUP::Zbox',
   };
   return unless $ih;
   my $e = IUP::Internal::LibraryIup::_translate_ih($ih);

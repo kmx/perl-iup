@@ -1,0 +1,15 @@
+[% h.name %]
+
+[% n.iupcalendar %]
+
+[% h.desc %]
+
+XXX-TODO: missing doc
+
+[% h.see %]
+
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupcalendar.html|[%url.iuporigdoc%]elem/iupcalendar.html>
+[%END%]
+
+=cut

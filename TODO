@@ -1,19 +1,12 @@
 ################ the last time working on ################ 
 
-IUP::Plot               https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iup_plot.html
-IUP::AnimatedLabel      https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupanimatedlabel.html
-IUP::BackgroundBox      https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupbackgroundbox.html
-IUP::Calendar           https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupcalendar.html
-IUP::DatePick           https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupdatepick.html
-IUP::DetachBox          https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupdetachbox.html
-IUP::FlatButton         https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupflatbutton.html
-IUP::GL::BackgroundBox  https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iupglbackgroundbox.html
-IUP::GL::Text           https://webserver2.tecgraf.puc-rio.br/iup/en/gl/iupgltext.html
+* kill IUP::PPlot
+* improve doc for IUP::Plot
 
 ######################### POSTPONED
 ##IUP::MultiLine          https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupmultiline.html
 ##IUP::Config             https://webserver2.tecgraf.puc-rio.br/iup/en/func/iupconfig.html
-##IUP::OleControl         https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iupole.html
+##IUP::OLE                https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iupole.html
 ##IUP::WebBrowser         https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iupweb.html
 ##IUP::Tuio               https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iuptuio.html
 
@@ -21,6 +14,9 @@ IUP::GL::Text           https://webserver2.tecgraf.puc-rio.br/iup/en/gl/iupgltex
 ##Iup::Param??            https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupparam.html
 ##Iup::ParamBox??         https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupparambox.html
 
+AnimatedLabel:
+- The IupImageLib contains a simple animation to show an indefinite progress called "IUP_CircleProgressAnimation".
+- The IUP-IM functions has two functions that can create an animation from image files called IupLoadAnimation and IupLoadAnimationFrames.
 
 Bug:
 - BROKEN (not always!?) $canvas->cdDumpBitmap("tmp-testoutput.png", "PNG");  - tmp-testoutput.png / examples/2-canvas/simpledraw.pl

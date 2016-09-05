@@ -1,0 +1,15 @@
+[% h.name %]
+
+[% n.iupgltoggle %]
+
+[% h.desc %]
+
+XXX-TODO: missing doc
+
+[% h.see %]
+
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupgltoggle.html|[%url.iuporigdoc%]gl/iupgltoggle.html>
+[%END%]
+
+=cut

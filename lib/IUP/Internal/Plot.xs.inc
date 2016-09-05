@@ -259,13 +259,13 @@ _IupPlotTransform(ih,x,y);
 #### Original C function from <iup_plot.h>
 # void IupPlotTransformTo(Ihandle* ih, double cnv_x, double cnv_y, double *x, double *y); [in C]
 void
-_IupPlotTransformTo(ih,x,y);
+_IupPlotTransformTo(ih,cnv_x,cnv_y);
 		Ihandle* ih;
 		double cnv_x;
 		double cnv_y;
 	INIT:
 		double x;
-		double y
+		double y;
 	PPCODE:
 #ifdef HAVELIB_IUP_PLOT
 		IupPlotTransformTo(ih,cnv_x,cnv_y,&x,&y);

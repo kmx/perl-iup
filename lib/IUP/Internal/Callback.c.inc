@@ -6,20 +6,20 @@
 #endif
 /* end-of-workaround */
 
-SV* ihandle2SV_nocreate(Ihandle* ih) {  
+SV* ihandle2SV_nocreate(Ihandle* ih) {
   SV *ptrSV, **ref;
   HV* globreg;
   char* hkey; /*string with numeric representation of canvas pointer*/
 
-  ptrSV = newSViv(PTR2IV(ih)); 
+  ptrSV = newSViv(PTR2IV(ih));
   hkey = SvPV_nolen(ptrSV); /*xxxCHECKLATER find more effective way of converting ih > hkey*/
-  
+
   globreg = get_hv("IUP::Internal::LibraryIup::ih_register", 0);
   /*### check if canvas pointer is present in global hash 'ih_register' */
   ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
   if (ref != NULL)
     if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ih_register{$hkey} */
-  
+
   /*### if not found in ih_register return undef */
   return &PL_sv_undef;
 }
@@ -37,9 +37,9 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKL
   ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
   if (ref != NULL)
     if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ch_register{$hkey} */
-  
+
   /*warn("***DEBUG*** need to create IUP::Internal::Element %s\n",hkey);*/
-  
+
   /*### create new IUP::Internal::Element object based on given ihandle*/
   /* see http://stackoverflow.com/questions/1497836/how-do-i-write-a-perl-constructor-in-xs */
   newhash = (HV *)sv_2mortal((SV *)newHV());
@@ -49,7 +49,7 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKL
 
   /*### $IUP::Internal::LibraryIup::ch_register{<hkey>} = newSVsv(obj) */
   /*### weaken($IUP::Internal::LibraryIup::ch_register{<hkey>}) */
-  hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */  
+  hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */
 
   /*### $element->{'!int!cb!<action>!related'}->{<hkey>} = newSVsv(obj) */
   element_hash = (HV*)MUTABLE_PTR(SvRV(element));
@@ -58,7 +58,7 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKL
   if (!SvOK(*ref)) { warn("Warning: This shouldn't happen ih3\n"); return sv_2mortal(obj); }
   element_cbrelated_hash = (HV*)MUTABLE_PTR(SvRV(*ref));
   hv_store(element_cbrelated_hash, hkey, strlen(hkey), newSVsv(obj), 0); /* nonweaken */
-  
+
   return sv_2mortal(obj);
 }
 
@@ -66,18 +66,18 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
   SV *ptrSV, *obj, **ref;
   HV *globreg, *newhash, *element_hash, *element_cbrelated_hash;
   char* hkey; /*string with numeric representation of canvas pointer*/
-  
+
   ptrSV = newSViv(PTR2IV(canvas));
   hkey = SvPV_nolen(ptrSV); /*xxxCHECKLATER find more effective way of converting ih > hkey*/
   globreg = get_hv("IUP::Internal::LibraryIup::ch_register", 0);
 
-  /*### check if canvas pointer is present in global hash 'ch_register' */  
+  /*### check if canvas pointer is present in global hash 'ch_register' */
   ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
-  if (ref != NULL) 
+  if (ref != NULL)
     if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ch_register{<hkey>} */
-  
+
   /*warn("***DEBUG*** need to create IUP::Internal::Canvas %s\n",hkey);*/
-  
+
   /*### create new IUP::Internal::Canvas object based on given canvas handle*/
   /* see http://stackoverflow.com/questions/1497836/how-do-i-write-a-perl-constructor-in-xs */
   newhash = (HV *)sv_2mortal((SV *)newHV());
@@ -87,7 +87,7 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
 
   /*### $IUP::Internal::LibraryIup::ch_register{<hkey>} = newSVsv(obj) */
   /*### weaken($IUP::Internal::LibraryIup::ch_register{<hkey>}) */
-  hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */  
+  hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */
 
   /*### $element->{'!int!cb!<action>!related'}->{<hkey>} = newSVsv(obj) */
   element_hash = (HV*)MUTABLE_PTR(SvRV(element));
@@ -151,9 +151,9 @@ internal_cb_ACTION_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char* status)
@@ -198,9 +198,93 @@ internal_cb_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_VALUECHANGED_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!VALUECHANGED_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_SWAPBUFFERS_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!SWAPBUFFERS_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_DRAW_CB_iiiiiiv (Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas)
@@ -247,9 +331,9 @@ internal_cb_DRAW_CB_iiiiiiv (Ihandle* ih,int line,int column,int xmin,int xmax,i
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_HEIGHT_CB_i (Ihandle* ih,int line)
@@ -290,9 +374,9 @@ internal_cb_HEIGHT_CB_i (Ihandle* ih,int line)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_HSPAN_CB_ii (Ihandle* ih,int line,int column)
@@ -334,9 +418,9 @@ internal_cb_HSPAN_CB_ii (Ihandle* ih,int line,int column)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MOUSECLICK_CB_iiiiiis (Ihandle* ih,int button,int pressed,int line,int column,int x,int y,char* status)
@@ -383,9 +467,9 @@ internal_cb_MOUSECLICK_CB_iiiiiis (Ihandle* ih,int button,int pressed,int line,i
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MOUSEMOTION_CB_iiiis (Ihandle* ih,int line,int column,int x,int y,char* r)
@@ -430,9 +514,9 @@ internal_cb_MOUSEMOTION_CB_iiiis (Ihandle* ih,int line,int column,int x,int y,ch
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_NCOLS_CB_ (Ihandle* ih)
@@ -472,9 +556,9 @@ internal_cb_NCOLS_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_NLINES_CB_ (Ihandle* ih)
@@ -514,9 +598,9 @@ internal_cb_NLINES_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_SCROLLING_CB_ii (Ihandle* ih,int line,int column)
@@ -558,9 +642,9 @@ internal_cb_SCROLLING_CB_ii (Ihandle* ih,int line,int column)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_VSPAN_CB_ii (Ihandle* ih,int line,int column)
@@ -602,9 +686,9 @@ internal_cb_VSPAN_CB_ii (Ihandle* ih,int line,int column)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_WIDTH_CB_i (Ihandle* ih,int column)
@@ -645,9 +729,9 @@ internal_cb_WIDTH_CB_i (Ihandle* ih,int column)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 char*
 internal_cb_CELL_CB_i (Ihandle* ih,int cell)
@@ -687,9 +771,9 @@ internal_cb_CELL_CB_i (Ihandle* ih,int cell)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_EXTENDED_CB_i (Ihandle* ih,int cell)
@@ -730,9 +814,9 @@ internal_cb_EXTENDED_CB_i (Ihandle* ih,int cell)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_SELECT_CB_ii (Ihandle* ih,int cell,int type)
@@ -774,9 +858,9 @@ internal_cb_SELECT_CB_ii (Ihandle* ih,int cell,int type)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_SWITCH_CB_ii (Ihandle* ih,int prim_cell,int sec_cell)
@@ -818,9 +902,9 @@ internal_cb_SWITCH_CB_ii (Ihandle* ih,int prim_cell,int sec_cell)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_CHANGE_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned char b)
@@ -863,9 +947,9 @@ internal_cb_CHANGE_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned 
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DRAG_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned char b)
@@ -908,12 +992,12 @@ internal_cb_DRAG_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned ch
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
-internal_cb_VALUECHANGED_CB_ (Ihandle* ih)
+internal_cb_COLORUPDATE_CB_ (Ihandle* ih)
 {
 	dSP;
 	int count;
@@ -937,7 +1021,7 @@ internal_cb_VALUECHANGED_CB_ (Ihandle* ih)
 	XPUSHs(element);
   	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!VALUECHANGED_CB!func");
+	count = call_cb_func(element,"!int!cb!COLORUPDATE_CB!func");
 
 	SPAGAIN;
 
@@ -950,9 +1034,51 @@ internal_cb_VALUECHANGED_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_DETACHED_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!DETACHED_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_BUTTON_PRESS_CB_d (Ihandle* ih,double angle)
@@ -993,9 +1119,9 @@ internal_cb_BUTTON_PRESS_CB_d (Ihandle* ih,double angle)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_BUTTON_RELEASE_CB_d (Ihandle* ih,double angle)
@@ -1036,9 +1162,9 @@ internal_cb_BUTTON_RELEASE_CB_d (Ihandle* ih,double angle)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MOUSEMOVE_CB_d (Ihandle* ih,double angle)
@@ -1079,9 +1205,96 @@ internal_cb_MOUSEMOVE_CB_d (Ihandle* ih,double angle)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_EXTRABUTTON_CB_ii (Ihandle* ih,int button,int pressed)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(button)));
+  	XPUSHs(sv_2mortal(newSViv(pressed)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!EXTRABUTTON_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_OPENCLOSE_CB_i (Ihandle* ih,int state)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(state)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!OPENCLOSE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_FILE_CB_ss (Ihandle* ih,const char* file_name,const char* status)
@@ -1123,12 +1336,12 @@ internal_cb_FILE_CB_ss (Ihandle* ih,const char* file_name,const char* status)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
-internal_cb_HIGHLIGHT_CB_ (Ihandle* ih)
+internal_cb_FLAT_ACTION_ (Ihandle* ih)
 {
 	dSP;
 	int count;
@@ -1152,7 +1365,7 @@ internal_cb_HIGHLIGHT_CB_ (Ihandle* ih)
 	XPUSHs(element);
   	PUTBACK;
 
-	count = call_cb_func(element,"!int!cb!HIGHLIGHT_CB!func");
+	count = call_cb_func(element,"!int!cb!FLAT_ACTION!func");
 
 	SPAGAIN;
 
@@ -1165,9 +1378,229 @@ internal_cb_HIGHLIGHT_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_FLAT_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char* status)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(button)));
+  	XPUSHs(sv_2mortal(newSViv(pressed)));
+  	XPUSHs(sv_2mortal(newSViv(x)));
+  	XPUSHs(sv_2mortal(newSViv(y)));
+  	XPUSHs(sv_2mortal(newSVpv(status, 0)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!FLAT_BUTTON_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_FLAT_ENTERWINDOW_CB_ii (Ihandle* ih,int a,int b)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(a)));
+  	XPUSHs(sv_2mortal(newSViv(b)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!FLAT_ENTERWINDOW_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_FLAT_FOCUS_CB_i (Ihandle* ih,int focus)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(focus)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!FLAT_FOCUS_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_FLAT_LEAVEWINDOW_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!FLAT_LEAVEWINDOW_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_MOVE_CB_ii (Ihandle* ih,int x,int y)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(x)));
+  	XPUSHs(sv_2mortal(newSViv(y)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!MOVE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_ACTION_s (Ihandle* ih,char* url)
@@ -1208,9 +1641,403 @@ internal_cb_ACTION_s (Ihandle* ih,char* url)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_GL_ACTION_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!GL_ACTION!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_GL_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char* status)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(button)));
+  	XPUSHs(sv_2mortal(newSViv(pressed)));
+  	XPUSHs(sv_2mortal(newSViv(x)));
+  	XPUSHs(sv_2mortal(newSViv(y)));
+  	XPUSHs(sv_2mortal(newSVpv(status, 0)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!GL_BUTTON_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_GL_ENTERWINDOW_CB_ii (Ihandle* ih,int a,int b)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(a)));
+  	XPUSHs(sv_2mortal(newSViv(b)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!GL_ENTERWINDOW_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_GL_LEAVEWINDOW_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!GL_LEAVEWINDOW_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_GL_MOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(x)));
+  	XPUSHs(sv_2mortal(newSViv(y)));
+  	XPUSHs(sv_2mortal(newSVpv(status, 0)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!GL_MOTION_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_GL_WHEEL_CB_fiis (Ihandle* ih,float delta,int x,int y,char* status)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSVnv(delta)));
+  	XPUSHs(sv_2mortal(newSViv(x)));
+  	XPUSHs(sv_2mortal(newSViv(y)));
+  	XPUSHs(sv_2mortal(newSVpv(status, 0)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!GL_WHEEL_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_ACTION_i (Ihandle* ih,int state)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(state)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!ACTION!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_VALUECHANGING_CB_i (Ihandle* ih,int start)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(start)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!VALUECHANGING_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_HIGHLIGHT_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!HIGHLIGHT_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_ACTION_sii (Ihandle* ih,char* text,int item,int state)
@@ -1253,9 +2080,9 @@ internal_cb_ACTION_sii (Ihandle* ih,char* text,int item,int state)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_CARET_CB_iii (Ihandle* ih,int lin,int col,int pos)
@@ -1298,9 +2125,9 @@ internal_cb_CARET_CB_iii (Ihandle* ih,int lin,int col,int pos)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DBLCLICK_CB_is (Ihandle* ih,int item,char* text)
@@ -1342,9 +2169,9 @@ internal_cb_DBLCLICK_CB_is (Ihandle* ih,int item,char* text)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DRAGDROP_CB_iiii (Ihandle* ih,int drag_id,int drop_id,int isshift,int iscontrol)
@@ -1388,9 +2215,9 @@ internal_cb_DRAGDROP_CB_iiii (Ihandle* ih,int drag_id,int drop_id,int isshift,in
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DROPDOWN_CB_i (Ihandle* ih,int state)
@@ -1431,9 +2258,9 @@ internal_cb_DROPDOWN_CB_i (Ihandle* ih,int state)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_EDIT_CB_is (Ihandle* ih,int c,char* new_value)
@@ -1475,9 +2302,9 @@ internal_cb_EDIT_CB_is (Ihandle* ih,int c,char* new_value)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
@@ -1520,9 +2347,9 @@ internal_cb_MOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MULTISELECT_CB_s (Ihandle* ih,char* value)
@@ -1563,9 +2390,9 @@ internal_cb_MULTISELECT_CB_s (Ihandle* ih,char* value)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_ACTION_CB_iiiis (Ihandle* ih,int c,int lin,int col,int edition,char* after)
@@ -1610,9 +2437,9 @@ internal_cb_ACTION_CB_iiiis (Ihandle* ih,int c,int lin,int col,int edition,char*
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_BGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsigned int* green,unsigned int* blue)
@@ -1657,9 +2484,54 @@ internal_cb_BGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_BUSY_CB_iis (Ihandle* ih,int status,int count_,char* name)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(status)));
+  	XPUSHs(sv_2mortal(newSViv(count_)));
+  	XPUSHs(sv_2mortal(newSVpv(name, 0)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!BUSY_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_CLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
@@ -1702,9 +2574,9 @@ internal_cb_CLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_COLRESIZE_CB_i (Ihandle* ih,int col)
@@ -1745,9 +2617,9 @@ internal_cb_COLRESIZE_CB_i (Ihandle* ih,int col)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DROPCHECK_CB_ii (Ihandle* ih,int lin,int col)
@@ -1789,9 +2661,9 @@ internal_cb_DROPCHECK_CB_ii (Ihandle* ih,int lin,int col)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DROPSELECT_CB_iinsii (Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v)
@@ -1837,9 +2709,9 @@ internal_cb_DROPSELECT_CB_iinsii (Ihandle* ih,int lin,int col,Ihandle* drop,char
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
@@ -1882,9 +2754,54 @@ internal_cb_DROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_EDITCLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(lin)));
+  	XPUSHs(sv_2mortal(newSViv(col)));
+  	XPUSHs(sv_2mortal(newSVpv(status, 0)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!EDITCLICK_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_EDITION_CB_iiii (Ihandle* ih,int lin,int col,int mode,int update)
@@ -1928,9 +2845,98 @@ internal_cb_EDITION_CB_iiii (Ihandle* ih,int lin,int col,int mode,int update)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_EDITMOUSEMOVE_CB_ii (Ihandle* ih,int lin,int col)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(lin)));
+  	XPUSHs(sv_2mortal(newSViv(col)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!EDITMOUSEMOVE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_EDITRELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(lin)));
+  	XPUSHs(sv_2mortal(newSViv(col)));
+  	XPUSHs(sv_2mortal(newSVpv(status, 0)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!EDITRELEASE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_ENTERITEM_CB_ii (Ihandle* ih,int lin,int col)
@@ -1972,9 +2978,9 @@ internal_cb_ENTERITEM_CB_ii (Ihandle* ih,int lin,int col)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_FGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsigned int* green,unsigned int* blue)
@@ -2019,9 +3025,9 @@ internal_cb_FGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 char*
 internal_cb_FONT_CB_ii (Ihandle* ih,int lin,int col)
@@ -2062,9 +3068,9 @@ internal_cb_FONT_CB_ii (Ihandle* ih,int lin,int col)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_LEAVEITEM_CB_ii (Ihandle* ih,int lin,int col)
@@ -2106,9 +3112,9 @@ internal_cb_LEAVEITEM_CB_ii (Ihandle* ih,int lin,int col)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MARKEDIT_CB_iii (Ihandle* ih,int lin,int col,int marked)
@@ -2151,9 +3157,9 @@ internal_cb_MARKEDIT_CB_iii (Ihandle* ih,int lin,int col,int marked)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MARK_CB_ii (Ihandle* ih,int lin,int col)
@@ -2195,9 +3201,99 @@ internal_cb_MARK_CB_ii (Ihandle* ih,int lin,int col)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_MENUCONTEXTCLOSE_CB_nii (Ihandle* ih,Ihandle* menu,int lin,int col)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(ihandle2SV(menu, element, "!int!cb!MENUCONTEXTCLOSE_CB!related"));
+  	XPUSHs(sv_2mortal(newSViv(lin)));
+  	XPUSHs(sv_2mortal(newSViv(col)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!MENUCONTEXTCLOSE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_MENUCONTEXT_CB_nii (Ihandle* ih,Ihandle* menu,int lin,int col)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(ihandle2SV(menu, element, "!int!cb!MENUCONTEXT_CB!related"));
+  	XPUSHs(sv_2mortal(newSViv(lin)));
+  	XPUSHs(sv_2mortal(newSViv(col)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!MENUCONTEXT_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_MENUDROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
@@ -2240,9 +3336,9 @@ internal_cb_MENUDROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MOUSEMOVE_CB_ii (Ihandle* ih,int lin,int col)
@@ -2284,9 +3380,142 @@ internal_cb_MOUSEMOVE_CB_ii (Ihandle* ih,int lin,int col)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+double
+internal_cb_NUMERICGETVALUE_CB_ii (Ihandle* ih,int lin,int col)
+{
+	dSP;
+	int count;
+	double rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = -1;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(lin)));
+  	XPUSHs(sv_2mortal(newSViv(col)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!NUMERICGETVALUE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_NUMERICSETVALUE_CB_iid (Ihandle* ih,int lin,int col,double value)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(lin)));
+  	XPUSHs(sv_2mortal(newSViv(col)));
+  	XPUSHs(sv_2mortal(newSVnv(value)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!NUMERICSETVALUE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_PASTESIZE_CB_ii (Ihandle* ih,int num_lin,int num_col)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(num_lin)));
+  	XPUSHs(sv_2mortal(newSViv(num_col)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!PASTESIZE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_RELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
@@ -2329,9 +3558,53 @@ internal_cb_RELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_RESIZEMATRIX_CB_ii (Ihandle* ih,int width,int height)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(width)));
+  	XPUSHs(sv_2mortal(newSViv(height)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!RESIZEMATRIX_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_SCROLLTOP_CB_ii (Ihandle* ih,int lin,int col)
@@ -2373,9 +3646,54 @@ internal_cb_SCROLLTOP_CB_ii (Ihandle* ih,int lin,int col)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_SORTCOLUMNCOMPARE_CB_iii (Ihandle* ih,int col,int lin1,int lin2)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(col)));
+  	XPUSHs(sv_2mortal(newSViv(lin1)));
+  	XPUSHs(sv_2mortal(newSViv(lin2)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!SORTCOLUMNCOMPARE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_TOGGLEVALUE_CB_iii (Ihandle* ih,int lin,int col,int status)
@@ -2418,9 +3736,53 @@ internal_cb_TOGGLEVALUE_CB_iii (Ihandle* ih,int lin,int col,int status)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+char*
+internal_cb_TRANSLATEVALUE_CB_iis (Ihandle* ih,int lin,int col,char* value)
+{
+	dSP;
+	int count;
+	char* rv;
+	
+	SV* element;
+
+  
+	rv = NULL;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(lin)));
+  	XPUSHs(sv_2mortal(newSViv(col)));
+  	XPUSHs(sv_2mortal(newSVpv(value, 0)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!TRANSLATEVALUE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  rv = POPpx;
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 char*
 internal_cb_TYPE_CB_ii (Ihandle* ih,int lin,int col)
@@ -2461,9 +3823,9 @@ internal_cb_TYPE_CB_ii (Ihandle* ih,int lin,int col)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 char*
 internal_cb_VALUE_CB_ii (Ihandle* ih,int lin,int col)
@@ -2504,9 +3866,9 @@ internal_cb_VALUE_CB_ii (Ihandle* ih,int lin,int col)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_VALUE_EDIT_CB_iis (Ihandle* ih,int lin,int col,char* newval)
@@ -2549,9 +3911,9 @@ internal_cb_VALUE_EDIT_CB_iis (Ihandle* ih,int lin,int col,char* newval)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_IMAGEVALUECHANGED_CB_ii (Ihandle* ih,int lin,int imagevalue)
@@ -2593,9 +3955,9 @@ internal_cb_IMAGEVALUECHANGED_CB_ii (Ihandle* ih,int lin,int imagevalue)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_LISTACTION_CB_ii (Ihandle* ih,int item,int state)
@@ -2637,9 +3999,9 @@ internal_cb_LISTACTION_CB_ii (Ihandle* ih,int item,int state)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_LISTCLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
@@ -2682,9 +4044,9 @@ internal_cb_LISTCLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_LISTDRAW_CB_iiiiiiv (Ihandle* ih,int lin,int col,int x1,int x2,int y1,int y2,cdCanvas* cnv)
@@ -2731,9 +4093,9 @@ internal_cb_LISTDRAW_CB_iiiiiiv (Ihandle* ih,int lin,int col,int x1,int x2,int y
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_LISTEDITION_CB_iiii (Ihandle* ih,int lin,int col,int mode,int update)
@@ -2777,9 +4139,9 @@ internal_cb_LISTEDITION_CB_iiii (Ihandle* ih,int lin,int col,int mode,int update
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_LISTINSERT_CB_i (Ihandle* ih,int lin)
@@ -2820,9 +4182,9 @@ internal_cb_LISTINSERT_CB_i (Ihandle* ih,int lin)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_LISTRELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
@@ -2865,9 +4227,9 @@ internal_cb_LISTRELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_LISTREMOVE_CB_i (Ihandle* ih,int lin)
@@ -2908,9 +4270,9 @@ internal_cb_LISTREMOVE_CB_i (Ihandle* ih,int lin)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MENUCLOSE_CB_ (Ihandle* ih)
@@ -2950,9 +4312,9 @@ internal_cb_MENUCLOSE_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_OPEN_CB_ (Ihandle* ih)
@@ -2992,271 +4354,9 @@ internal_cb_OPEN_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
-
-int
-internal_cb_DELETEBEGIN_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-	SV * SV_rv;
-	SV* element;
-
-  
-	rv = IUP_DEFAULT;
-	element = ihandle2SV_nocreate(ih);
-	if(!SvOK(element)) {
-	  warn("Warning: callback  - cannot convert ihandle!\n");
-	  return rv;
-	}
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(element);
-  	PUTBACK;
-
-	count = call_cb_func(element,"!int!cb!DELETEBEGIN_CB!func");
-
-	SPAGAIN;
-
-	if (count != 1) { /* no warning, use default retval */ }
-	else {
-	  SV_rv = POPs;
-	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
-	}
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_DELETEEND_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-	SV * SV_rv;
-	SV* element;
-
-  
-	rv = IUP_DEFAULT;
-	element = ihandle2SV_nocreate(ih);
-	if(!SvOK(element)) {
-	  warn("Warning: callback  - cannot convert ihandle!\n");
-	  return rv;
-	}
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(element);
-  	PUTBACK;
-
-	count = call_cb_func(element,"!int!cb!DELETEEND_CB!func");
-
-	SPAGAIN;
-
-	if (count != 1) { /* no warning, use default retval */ }
-	else {
-	  SV_rv = POPs;
-	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
-	}
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_DELETE_CB_iiff (Ihandle* ih,int index,int sample_index,float x,float y)
-{
-	dSP;
-	int count;
-	int rv;
-	SV * SV_rv;
-	SV* element;
-
-  
-	rv = IUP_DEFAULT;
-	element = ihandle2SV_nocreate(ih);
-	if(!SvOK(element)) {
-	  warn("Warning: callback  - cannot convert ihandle!\n");
-	  return rv;
-	}
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(element);
-  	XPUSHs(sv_2mortal(newSViv(index)));
-  	XPUSHs(sv_2mortal(newSViv(sample_index)));
-  	XPUSHs(sv_2mortal(newSVnv(x)));
-  	XPUSHs(sv_2mortal(newSVnv(y)));
-  	PUTBACK;
-
-	count = call_cb_func(element,"!int!cb!DELETE_CB!func");
-
-	SPAGAIN;
-
-	if (count != 1) { /* no warning, use default retval */ }
-	else {
-	  SV_rv = POPs;
-	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
-	}
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_EDITBEGIN_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-	SV * SV_rv;
-	SV* element;
-
-  
-	rv = IUP_DEFAULT;
-	element = ihandle2SV_nocreate(ih);
-	if(!SvOK(element)) {
-	  warn("Warning: callback  - cannot convert ihandle!\n");
-	  return rv;
-	}
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(element);
-  	PUTBACK;
-
-	count = call_cb_func(element,"!int!cb!EDITBEGIN_CB!func");
-
-	SPAGAIN;
-
-	if (count != 1) { /* no warning, use default retval */ }
-	else {
-	  SV_rv = POPs;
-	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
-	}
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_EDITEND_CB_ (Ihandle* ih)
-{
-	dSP;
-	int count;
-	int rv;
-	SV * SV_rv;
-	SV* element;
-
-  
-	rv = IUP_DEFAULT;
-	element = ihandle2SV_nocreate(ih);
-	if(!SvOK(element)) {
-	  warn("Warning: callback  - cannot convert ihandle!\n");
-	  return rv;
-	}
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(element);
-  	PUTBACK;
-
-	count = call_cb_func(element,"!int!cb!EDITEND_CB!func");
-
-	SPAGAIN;
-
-	if (count != 1) { /* no warning, use default retval */ }
-	else {
-	  SV_rv = POPs;
-	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
-	}
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
-
-int
-internal_cb_EDIT_CB_iiffFF (Ihandle* ih,int index,int sample_index,float x,float y,float* new_x,float* new_y)
-{
-	dSP;
-	int count;
-	int rv;
-	SV * SV_rv;
-	SV* element;
-
-  
-	rv = IUP_DEFAULT;
-	element = ihandle2SV_nocreate(ih);
-	if(!SvOK(element)) {
-	  warn("Warning: callback  - cannot convert ihandle!\n");
-	  return rv;
-	}
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(element);
-  	XPUSHs(sv_2mortal(newSViv(index)));
-  	XPUSHs(sv_2mortal(newSViv(sample_index)));
-  	XPUSHs(sv_2mortal(newSVnv(x)));
-  	XPUSHs(sv_2mortal(newSVnv(y)));
-  	PUTBACK;
-
-	count = call_cb_func(element,"!int!cb!EDIT_CB!func");
-
-	SPAGAIN;
-
-	if (count != 3) { warn("Warning: callback EDIT_CB has returned %d instead of 3 values!\n",count); }
-	else {
-	  *new_y = POPn;
-	  *new_x = POPn;
-	  SV_rv = POPs;
-	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
-	}
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
+}
 
 int
 internal_cb_POSTDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
@@ -3297,9 +4397,9 @@ internal_cb_POSTDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_PREDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
@@ -3340,9 +4440,325 @@ internal_cb_PREDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_CLICKSAMPLE_CB_iiddi (Ihandle* ih,int ds_index,int sample_index,double x,double y,int button)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(ds_index)));
+  	XPUSHs(sv_2mortal(newSViv(sample_index)));
+  	XPUSHs(sv_2mortal(newSVnv(x)));
+  	XPUSHs(sv_2mortal(newSVnv(y)));
+  	XPUSHs(sv_2mortal(newSViv(button)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!CLICKSAMPLE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_DELETEBEGIN_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!DELETEBEGIN_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_DELETEEND_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!DELETEEND_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_DELETE_CB_iidd (Ihandle* ih,int index,int sample_index,double x,double y)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(index)));
+  	XPUSHs(sv_2mortal(newSViv(sample_index)));
+  	XPUSHs(sv_2mortal(newSVnv(x)));
+  	XPUSHs(sv_2mortal(newSVnv(y)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!DELETE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_DRAWSAMPLE_CB_iiddi (Ihandle* ih,int ds_index,int sample_index,double x,double y,int selected)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(ds_index)));
+  	XPUSHs(sv_2mortal(newSViv(sample_index)));
+  	XPUSHs(sv_2mortal(newSVnv(x)));
+  	XPUSHs(sv_2mortal(newSVnv(y)));
+  	XPUSHs(sv_2mortal(newSViv(selected)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!DRAWSAMPLE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_PLOTBUTTON_CB_iidds (Ihandle* ih,int button,int pressed,double x,double y,char* status)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(button)));
+  	XPUSHs(sv_2mortal(newSViv(pressed)));
+  	XPUSHs(sv_2mortal(newSVnv(x)));
+  	XPUSHs(sv_2mortal(newSVnv(y)));
+  	XPUSHs(sv_2mortal(newSVpv(status, 0)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!PLOTBUTTON_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
+
+int
+internal_cb_PLOTMOTION_CB_dds (Ihandle* ih,double x,double y,char* status)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSVnv(x)));
+  	XPUSHs(sv_2mortal(newSVnv(y)));
+  	XPUSHs(sv_2mortal(newSVpv(status, 0)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!PLOTMOTION_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_SELECTBEGIN_CB_ (Ihandle* ih)
@@ -3382,9 +4798,9 @@ internal_cb_SELECTBEGIN_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_SELECTEND_CB_ (Ihandle* ih)
@@ -3424,12 +4840,12 @@ internal_cb_SELECTEND_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
-internal_cb_SELECT_CB_iiffi (Ihandle* ih,int index,int sample_index,float x,float y,int select)
+internal_cb_SELECT_CB_iiddi (Ihandle* ih,int index,int sample_index,double x,double y,int select)
 {
 	dSP;
 	int count;
@@ -3471,9 +4887,9 @@ internal_cb_SELECT_CB_iiffi (Ihandle* ih,int index,int sample_index,float x,floa
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_CANCEL_CB_ (Ihandle* ih)
@@ -3513,9 +4929,9 @@ internal_cb_CANCEL_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_ACTION_iiis (Ihandle* ih,int insert,int pos,int length,char* text)
@@ -3559,9 +4975,9 @@ internal_cb_ACTION_iiis (Ihandle* ih,int insert,int pos,int length,char* text)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_AUTOCCANCELLED_CB_ (Ihandle* ih)
@@ -3601,9 +5017,9 @@ internal_cb_AUTOCCANCELLED_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_AUTOCCHARDELETED_CB_ (Ihandle* ih)
@@ -3643,9 +5059,9 @@ internal_cb_AUTOCCHARDELETED_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_AUTOCSELECTION_CB_is (Ihandle* ih,int pos,char* text)
@@ -3687,9 +5103,9 @@ internal_cb_AUTOCSELECTION_CB_is (Ihandle* ih,int pos,char* text)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DROPFILES_CB_siii (Ihandle* ih,const char* filename,int num,int x,int y)
@@ -3733,9 +5149,9 @@ internal_cb_DROPFILES_CB_siii (Ihandle* ih,const char* filename,int num,int x,in
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_HOTSPOTCLICK_CB_iiis (Ihandle* ih,int pos,int lin,int col,char* status)
@@ -3779,9 +5195,9 @@ internal_cb_HOTSPOTCLICK_CB_iiis (Ihandle* ih,int pos,int lin,int col,char* stat
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MARGINCLICK_CB_iis (Ihandle* ih,int margin,int lin,char* status)
@@ -3824,9 +5240,9 @@ internal_cb_MARGINCLICK_CB_iis (Ihandle* ih,int margin,int lin,char* status)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_SAVEPOINT_CB_i (Ihandle* ih,int status)
@@ -3867,9 +5283,9 @@ internal_cb_SAVEPOINT_CB_i (Ihandle* ih,int status)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_ZOOM_CB_i (Ihandle* ih,int zoomInPoints)
@@ -3910,9 +5326,9 @@ internal_cb_ZOOM_CB_i (Ihandle* ih,int zoomInPoints)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_SPIN_CB_i (Ihandle* ih,int inc)
@@ -3953,9 +5369,52 @@ internal_cb_SPIN_CB_i (Ihandle* ih,int inc)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_RIGHTCLICK_CB_i (Ihandle* ih,int id)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(id)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!RIGHTCLICK_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_TABCHANGEPOS_CB_ii (Ihandle* ih,int new_pos,int old_pos)
@@ -3997,9 +5456,9 @@ internal_cb_TABCHANGEPOS_CB_ii (Ihandle* ih,int new_pos,int old_pos)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_TABCHANGE_CB_nn (Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab)
@@ -4041,9 +5500,52 @@ internal_cb_TABCHANGE_CB_nn (Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_TABCLOSE_CB_i (Ihandle* ih,int id)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	XPUSHs(sv_2mortal(newSViv(id)));
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!TABCLOSE_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_ACTION_is (Ihandle* ih,int c,char* new_value)
@@ -4085,9 +5587,9 @@ internal_cb_ACTION_is (Ihandle* ih,int c,char* new_value)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_ACTION_CB_ (Ihandle* ih)
@@ -4127,52 +5629,9 @@ internal_cb_ACTION_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
-
-int
-internal_cb_ACTION_i (Ihandle* ih,int state)
-{
-	dSP;
-	int count;
-	int rv;
-	SV * SV_rv;
-	SV* element;
-
-  
-	rv = IUP_DEFAULT;
-	element = ihandle2SV_nocreate(ih);
-	if(!SvOK(element)) {
-	  warn("Warning: callback  - cannot convert ihandle!\n");
-	  return rv;
-	}
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(element);
-  	XPUSHs(sv_2mortal(newSViv(state)));
-  	PUTBACK;
-
-	count = call_cb_func(element,"!int!cb!ACTION!func");
-
-	SPAGAIN;
-
-	if (count != 1) { /* no warning, use default retval */ }
-	else {
-	  SV_rv = POPs;
-	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
-	}
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
+}
 
 int
 internal_cb_BRANCHCLOSE_CB_i (Ihandle* ih,int id)
@@ -4213,9 +5672,9 @@ internal_cb_BRANCHCLOSE_CB_i (Ihandle* ih,int id)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_BRANCHOPEN_CB_i (Ihandle* ih,int id)
@@ -4256,9 +5715,9 @@ internal_cb_BRANCHOPEN_CB_i (Ihandle* ih,int id)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_EXECUTELEAF_CB_i (Ihandle* ih,int id)
@@ -4299,9 +5758,9 @@ internal_cb_EXECUTELEAF_CB_i (Ihandle* ih,int id)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MULTISELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
@@ -4347,9 +5806,9 @@ internal_cb_MULTISELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MULTIUNSELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
@@ -4395,9 +5854,9 @@ internal_cb_MULTIUNSELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_NODEREMOVED_CB_U (Ihandle* ih,void* userdata)
@@ -4431,18 +5890,18 @@ internal_cb_NODEREMOVED_CB_U (Ihandle* ih,void* userdata)
 	element_hash = (HV*)MUTABLE_PTR(SvRV(element));
 	SV_ref = hv_fetch(element_hash, "!int!treedata", 13, 0);
 	if ((SV_ref == NULL) || !SvOK(*SV_ref)) {
-	  warn("Warning: This shouldn't happen NODEREMOVED_CB/1\n"); 
+	  warn("Warning: This shouldn't happen NODEREMOVED_CB/1\n");
 	  XPUSHs(&PL_sv_undef);
 	}
 	else {
 	  element_hash = (HV*)MUTABLE_PTR(SvRV(*SV_ref));
 	  SV_ref = hv_fetch(element_hash, hkey_userdata, strlen(hkey_userdata), 0);
 	  if ((SV_ref == NULL) || !SvOK(*SV_ref)) {
-	    warn("Warning: This shouldn't happen NODEREMOVED_CB/2\n"); 
+	    warn("Warning: This shouldn't happen NODEREMOVED_CB/2\n");
 	    XPUSHs(&PL_sv_undef);
 	  }
           else XPUSHs(*SV_ref);
-        }        
+        }
         /* converting userdata - done */
 	PUTBACK;
 
@@ -4459,9 +5918,9 @@ internal_cb_NODEREMOVED_CB_U (Ihandle* ih,void* userdata)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_RENAME_CB_is (Ihandle* ih,int id,char* title)
@@ -4503,52 +5962,9 @@ internal_cb_RENAME_CB_is (Ihandle* ih,int id,char* title)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
-
-int
-internal_cb_RIGHTCLICK_CB_i (Ihandle* ih,int id)
-{
-	dSP;
-	int count;
-	int rv;
-	SV * SV_rv;
-	SV* element;
-
-  
-	rv = IUP_DEFAULT;
-	element = ihandle2SV_nocreate(ih);
-	if(!SvOK(element)) {
-	  warn("Warning: callback  - cannot convert ihandle!\n");
-	  return rv;
-	}
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(element);
-  	XPUSHs(sv_2mortal(newSViv(id)));
-  	PUTBACK;
-
-	count = call_cb_func(element,"!int!cb!RIGHTCLICK_CB!func");
-
-	SPAGAIN;
-
-	if (count != 1) { /* no warning, use default retval */ }
-	else {
-	  SV_rv = POPs;
-	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
-	}
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
+}
 
 int
 internal_cb_SELECTION_CB_ii (Ihandle* ih,int id,int status)
@@ -4590,9 +6006,9 @@ internal_cb_SELECTION_CB_ii (Ihandle* ih,int id,int status)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_SHOWRENAME_CB_i (Ihandle* ih,int id)
@@ -4633,9 +6049,9 @@ internal_cb_SHOWRENAME_CB_i (Ihandle* ih,int id)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_TOGGLEVALUE_CB_ii (Ihandle* ih,int id,int status)
@@ -4677,9 +6093,9 @@ internal_cb_TOGGLEVALUE_CB_ii (Ihandle* ih,int id,int status)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_ENTERWINDOW_CB_ (Ihandle* ih)
@@ -4719,9 +6135,9 @@ internal_cb_ENTERWINDOW_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_GETFOCUS_CB_ (Ihandle* ih)
@@ -4761,9 +6177,9 @@ internal_cb_GETFOCUS_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_HELP_CB_ (Ihandle* ih)
@@ -4803,9 +6219,9 @@ internal_cb_HELP_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_KILLFOCUS_CB_ (Ihandle* ih)
@@ -4845,9 +6261,9 @@ internal_cb_KILLFOCUS_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_K_ANY_i (Ihandle* ih,int c)
@@ -4888,9 +6304,9 @@ internal_cb_K_ANY_i (Ihandle* ih,int c)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_LEAVEWINDOW_CB_ (Ihandle* ih)
@@ -4930,9 +6346,9 @@ internal_cb_LEAVEWINDOW_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MAP_CB_ (Ihandle* ih)
@@ -4972,9 +6388,9 @@ internal_cb_MAP_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_TIPS_CB_ii (Ihandle* ih,int x,int y)
@@ -5016,9 +6432,9 @@ internal_cb_TIPS_CB_ii (Ihandle* ih,int x,int y)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_UNMAP_CB_ (Ihandle* ih)
@@ -5058,9 +6474,9 @@ internal_cb_UNMAP_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_ACTION_ff (Ihandle* ih,float posx,float posy)
@@ -5102,9 +6518,9 @@ internal_cb_ACTION_ff (Ihandle* ih,float posx,float posy)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_FOCUS_CB_i (Ihandle* ih,int focus)
@@ -5145,9 +6561,9 @@ internal_cb_FOCUS_CB_i (Ihandle* ih,int focus)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_KEYPRESS_CB_ii (Ihandle* ih,int c,int press)
@@ -5189,9 +6605,9 @@ internal_cb_KEYPRESS_CB_ii (Ihandle* ih,int c,int press)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_MULTITOUCH_CB_iAAAA (Ihandle* ih,int count_,int* pid,int* px,int* py,int* pstate)
@@ -5253,9 +6669,9 @@ internal_cb_MULTITOUCH_CB_iAAAA (Ihandle* ih,int count_,int* pid,int* px,int* py
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
@@ -5297,9 +6713,9 @@ internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_SCROLL_CB_iff (Ihandle* ih,int op,float posx,float posy)
@@ -5342,9 +6758,9 @@ internal_cb_SCROLL_CB_iff (Ihandle* ih,int op,float posx,float posy)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_TOUCH_CB_iiis (Ihandle* ih,int id,int x,int y,char* state)
@@ -5388,9 +6804,9 @@ internal_cb_TOUCH_CB_iiis (Ihandle* ih,int id,int x,int y,char* state)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_WHEEL_CB_fiis (Ihandle* ih,float delta,int x,int y,char* status)
@@ -5434,9 +6850,9 @@ internal_cb_WHEEL_CB_fiis (Ihandle* ih,float delta,int x,int y,char* status)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_WOM_CB_i (Ihandle* ih,int state)
@@ -5477,9 +6893,9 @@ internal_cb_WOM_CB_i (Ihandle* ih,int state)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_CLOSE_CB_ (Ihandle* ih)
@@ -5519,9 +6935,9 @@ internal_cb_CLOSE_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_COPYDATA_CB_si (Ihandle* ih,char* cmdLine,int size)
@@ -5563,9 +6979,51 @@ internal_cb_COPYDATA_CB_si (Ihandle* ih,char* cmdLine,int size)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
+
+int
+internal_cb_CUSTOMFRAME_CB_ (Ihandle* ih)
+{
+	dSP;
+	int count;
+	int rv;
+	SV * SV_rv;
+	SV* element;
+
+  
+	rv = IUP_DEFAULT;
+	element = ihandle2SV_nocreate(ih);
+	if(!SvOK(element)) {
+	  warn("Warning: callback  - cannot convert ihandle!\n");
+	  return rv;
+	}
+
+	ENTER;
+	SAVETMPS;
+
+	/* push params for _execute_cb() */
+	PUSHMARK(SP);
+	XPUSHs(element);
+  	PUTBACK;
+
+	count = call_cb_func(element,"!int!cb!CUSTOMFRAME_CB!func");
+
+	SPAGAIN;
+
+	if (count != 1) { /* no warning, use default retval */ }
+	else {
+	  SV_rv = POPs;
+	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+	}
+
+	PUTBACK;
+	FREETMPS;
+	LEAVE;
+
+	return rv;
+}
 
 int
 internal_cb_MDIACTIVATE_CB_ (Ihandle* ih)
@@ -5605,53 +7063,9 @@ internal_cb_MDIACTIVATE_CB_ (Ihandle* ih)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
-
-int
-internal_cb_MOVE_CB_ii (Ihandle* ih,int x,int y)
-{
-	dSP;
-	int count;
-	int rv;
-	SV * SV_rv;
-	SV* element;
-
-  
-	rv = IUP_DEFAULT;
-	element = ihandle2SV_nocreate(ih);
-	if(!SvOK(element)) {
-	  warn("Warning: callback  - cannot convert ihandle!\n");
-	  return rv;
-	}
-
-	ENTER;
-	SAVETMPS;
-
-	/* push params for _execute_cb() */
-	PUSHMARK(SP);
-	XPUSHs(element);
-  	XPUSHs(sv_2mortal(newSViv(x)));
-  	XPUSHs(sv_2mortal(newSViv(y)));
-  	PUTBACK;
-
-	count = call_cb_func(element,"!int!cb!MOVE_CB!func");
-
-	SPAGAIN;
-
-	if (count != 1) { /* no warning, use default retval */ }
-	else {
-	  SV_rv = POPs;
-	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
-	}
-
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
-	
-	return rv;
-} 
+}
 
 int
 internal_cb_SHOW_CB_i (Ihandle* ih,int state)
@@ -5692,9 +7106,9 @@ internal_cb_SHOW_CB_i (Ihandle* ih,int state)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_TRAYCLICK_CB_iii (Ihandle* ih,int but,int pressed,int dclick)
@@ -5737,9 +7151,9 @@ internal_cb_TRAYCLICK_CB_iii (Ihandle* ih,int but,int pressed,int dclick)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DRAGBEGIN_CB_ii (Ihandle* ih,int x,int y)
@@ -5781,9 +7195,9 @@ internal_cb_DRAGBEGIN_CB_ii (Ihandle* ih,int x,int y)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DRAGDATASIZE_CB_s (Ihandle* ih,char* type)
@@ -5824,9 +7238,9 @@ internal_cb_DRAGDATASIZE_CB_s (Ihandle* ih,char* type)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DRAGDATA_CB_sUi (Ihandle* ih,char* type,void* data,int size)
@@ -5869,7 +7283,7 @@ internal_cb_DRAGDATA_CB_sUi (Ihandle* ih,char* type,void* data,int size)
 	  SV_rv = POPs;
 	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
 	  if (SvOK(SV_data)) {
-	    data_ptr = SvPVbyte(SV_data, data_len); 
+	    data_ptr = SvPVbyte(SV_data, data_len);
 	    Copy(data_ptr, data, data_len > size ? size : data_len, void);
 	  }
 	}
@@ -5877,9 +7291,9 @@ internal_cb_DRAGDATA_CB_sUi (Ihandle* ih,char* type,void* data,int size)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DRAGEND_CB_i (Ihandle* ih,int action)
@@ -5920,9 +7334,9 @@ internal_cb_DRAGEND_CB_i (Ihandle* ih,int action)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DROPDATA_CB_sUiii (Ihandle* ih,char* type,void* data,int size,int x,int y)
@@ -5966,9 +7380,9 @@ internal_cb_DROPDATA_CB_sUiii (Ihandle* ih,char* type,void* data,int size,int x,
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 
 int
 internal_cb_DROPMOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
@@ -6011,7 +7425,7 @@ internal_cb_DROPMOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
 	PUTBACK;
 	FREETMPS;
 	LEAVE;
-	
+
 	return rv;
-} 
+}
 

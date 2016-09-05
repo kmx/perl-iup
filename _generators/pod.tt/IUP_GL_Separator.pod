@@ -1,0 +1,15 @@
+[% h.name %]
+
+[% n.iupglseparator %]
+
+[% h.desc %]
+
+XXX-TODO: missing doc
+
+[% h.see %]
+
+[%IF flags.gennerate_origdoc -%]
+The original doc: L<iupglseparator.html|[%url.iuporigdoc%]gl/iupglseparator.html>
+[%END%]
+
+=cut

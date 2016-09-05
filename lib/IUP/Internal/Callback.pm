@@ -12,6 +12,12 @@ my $cb_table = {
     ACTION => \&_init_cb_ACTION_,
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
   },
+  'IUP::Calendar' => {
+    VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
+  },
+  'IUP::CanvasGL' => {
+    SWAPBUFFERS_CB => \&_init_cb_SWAPBUFFERS_CB_,
+  },
   'IUP::Cells' => {
     DRAW_CB => \&_init_cb_DRAW_CB_iiiiiiv,
     HEIGHT_CB => \&_init_cb_HEIGHT_CB_i,
@@ -35,6 +41,15 @@ my $cb_table = {
     DRAG_CB => \&_init_cb_DRAG_CB_ccc,
     VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
   },
+  'IUP::ColorDlg' => {
+    COLORUPDATE_CB => \&_init_cb_COLORUPDATE_CB_,
+  },
+  'IUP::DatePick' => {
+    VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
+  },
+  'IUP::DetachBox' => {
+    DETACHED_CB => \&_init_cb_DETACHED_CB_,
+  },
   'IUP::Dial' => {
     BUTTON_PRESS_CB => \&_init_cb_BUTTON_PRESS_CB_d,
     BUTTON_RELEASE_CB => \&_init_cb_BUTTON_RELEASE_CB_d,
@@ -43,9 +58,53 @@ my $cb_table = {
   },
   'IUP::Expander' => {
     ACTION => \&_init_cb_ACTION_,
+    EXTRABUTTON_CB => \&_init_cb_EXTRABUTTON_CB_ii,
+    OPENCLOSE_CB => \&_init_cb_OPENCLOSE_CB_i,
   },
   'IUP::FileDlg' => {
     FILE_CB => \&_init_cb_FILE_CB_ss,
+  },
+  'IUP::FlatButton' => {
+    FLAT_ACTION => \&_init_cb_FLAT_ACTION_,
+    FLAT_BUTTON_CB => \&_init_cb_FLAT_BUTTON_CB_iiiis,
+    FLAT_ENTERWINDOW_CB => \&_init_cb_FLAT_ENTERWINDOW_CB_ii,
+    FLAT_FOCUS_CB => \&_init_cb_FLAT_FOCUS_CB_i,
+    FLAT_LEAVEWINDOW_CB => \&_init_cb_FLAT_LEAVEWINDOW_CB_,
+    VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
+  },
+  'IUP::GL::Button' => {
+    ACTION => \&_init_cb_ACTION_,
+  },
+  'IUP::GL::Expander' => {
+    ACTION => \&_init_cb_ACTION_,
+    EXTRABUTTON_CB => \&_init_cb_EXTRABUTTON_CB_ii,
+    MOVE_CB => \&_init_cb_MOVE_CB_ii,
+    OPENCLOSE_CB => \&_init_cb_OPENCLOSE_CB_i,
+  },
+  'IUP::GL::Frame' => {
+    MOVE_CB => \&_init_cb_MOVE_CB_ii,
+  },
+  'IUP::GL::Link' => {
+    ACTION => \&_init_cb_ACTION_s,
+  },
+  'IUP::GL::SubCanvas' => {
+    GL_ACTION => \&_init_cb_GL_ACTION_,
+    GL_BUTTON_CB => \&_init_cb_GL_BUTTON_CB_iiiis,
+    GL_ENTERWINDOW_CB => \&_init_cb_GL_ENTERWINDOW_CB_ii,
+    GL_LEAVEWINDOW_CB => \&_init_cb_GL_LEAVEWINDOW_CB_,
+    GL_MOTION_CB => \&_init_cb_GL_MOTION_CB_iis,
+    GL_WHEEL_CB => \&_init_cb_GL_WHEEL_CB_fiis,
+  },
+  'IUP::GL::Text' => {
+    VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
+  },
+  'IUP::GL::Toggle' => {
+    ACTION => \&_init_cb_ACTION_i,
+    VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
+  },
+  'IUP::GL::Val' => {
+    VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
+    VALUECHANGING_CB => \&_init_cb_VALUECHANGING_CB_i,
   },
   'IUP::Item' => {
     ACTION => \&_init_cb_ACTION_,
@@ -72,24 +131,36 @@ my $cb_table = {
   'IUP::Matrix' => {
     ACTION_CB => \&_init_cb_ACTION_CB_iiiis,
     BGCOLOR_CB => \&_init_cb_BGCOLOR_CB_iiIII,
+    BUSY_CB => \&_init_cb_BUSY_CB_iis,
     CLICK_CB => \&_init_cb_CLICK_CB_iis,
     COLRESIZE_CB => \&_init_cb_COLRESIZE_CB_i,
     DRAW_CB => \&_init_cb_DRAW_CB_iiiiiiv,
     DROPCHECK_CB => \&_init_cb_DROPCHECK_CB_ii,
     DROPSELECT_CB => \&_init_cb_DROPSELECT_CB_iinsii,
     DROP_CB => \&_init_cb_DROP_CB_nii,
+    EDITCLICK_CB => \&_init_cb_EDITCLICK_CB_iis,
     EDITION_CB => \&_init_cb_EDITION_CB_iiii,
+    EDITMOUSEMOVE_CB => \&_init_cb_EDITMOUSEMOVE_CB_ii,
+    EDITRELEASE_CB => \&_init_cb_EDITRELEASE_CB_iis,
     ENTERITEM_CB => \&_init_cb_ENTERITEM_CB_ii,
     FGCOLOR_CB => \&_init_cb_FGCOLOR_CB_iiIII,
     FONT_CB => \&_init_cb_FONT_CB_ii,
     LEAVEITEM_CB => \&_init_cb_LEAVEITEM_CB_ii,
     MARKEDIT_CB => \&_init_cb_MARKEDIT_CB_iii,
     MARK_CB => \&_init_cb_MARK_CB_ii,
+    MENUCONTEXTCLOSE_CB => \&_init_cb_MENUCONTEXTCLOSE_CB_nii,
+    MENUCONTEXT_CB => \&_init_cb_MENUCONTEXT_CB_nii,
     MENUDROP_CB => \&_init_cb_MENUDROP_CB_nii,
     MOUSEMOVE_CB => \&_init_cb_MOUSEMOVE_CB_ii,
+    NUMERICGETVALUE_CB => \&_init_cb_NUMERICGETVALUE_CB_ii,
+    NUMERICSETVALUE_CB => \&_init_cb_NUMERICSETVALUE_CB_iid,
+    PASTESIZE_CB => \&_init_cb_PASTESIZE_CB_ii,
     RELEASE_CB => \&_init_cb_RELEASE_CB_iis,
+    RESIZEMATRIX_CB => \&_init_cb_RESIZEMATRIX_CB_ii,
     SCROLLTOP_CB => \&_init_cb_SCROLLTOP_CB_ii,
+    SORTCOLUMNCOMPARE_CB => \&_init_cb_SORTCOLUMNCOMPARE_CB_iii,
     TOGGLEVALUE_CB => \&_init_cb_TOGGLEVALUE_CB_iii,
+    TRANSLATEVALUE_CB => \&_init_cb_TRANSLATEVALUE_CB_iis,
     TYPE_CB => \&_init_cb_TYPE_CB_ii,
     VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
     VALUE_CB => \&_init_cb_VALUE_CB_ii,
@@ -112,30 +183,24 @@ my $cb_table = {
     OPEN_CB => \&_init_cb_OPEN_CB_,
   },
   'IUP::MglPlot' => {
-    DELETEBEGIN_CB => \&_init_cb_DELETEBEGIN_CB_,
-    DELETEEND_CB => \&_init_cb_DELETEEND_CB_,
-    DELETE_CB => \&_init_cb_DELETE_CB_iiff,
-    EDITBEGIN_CB => \&_init_cb_EDITBEGIN_CB_,
-    EDITEND_CB => \&_init_cb_EDITEND_CB_,
-    EDIT_CB => \&_init_cb_EDIT_CB_iiffFF,
     POSTDRAW_CB => \&_init_cb_POSTDRAW_CB_v,
     PREDRAW_CB => \&_init_cb_PREDRAW_CB_v,
-    SELECTBEGIN_CB => \&_init_cb_SELECTBEGIN_CB_,
-    SELECTEND_CB => \&_init_cb_SELECTEND_CB_,
-    SELECT_CB => \&_init_cb_SELECT_CB_iiffi,
   },
-  'IUP::PPlot' => {
+  'IUP::Plot' => {
+    CLICKSAMPLE_CB => \&_init_cb_CLICKSAMPLE_CB_iiddi,
     DELETEBEGIN_CB => \&_init_cb_DELETEBEGIN_CB_,
     DELETEEND_CB => \&_init_cb_DELETEEND_CB_,
-    DELETE_CB => \&_init_cb_DELETE_CB_iiff,
-    EDITBEGIN_CB => \&_init_cb_EDITBEGIN_CB_,
-    EDITEND_CB => \&_init_cb_EDITEND_CB_,
-    EDIT_CB => \&_init_cb_EDIT_CB_iiffFF,
+    DELETE_CB => \&_init_cb_DELETE_CB_iidd,
+    DRAWSAMPLE_CB => \&_init_cb_DRAWSAMPLE_CB_iiddi,
+    MENUCONTEXTCLOSE_CB => \&_init_cb_MENUCONTEXTCLOSE_CB_nii,
+    MENUCONTEXT_CB => \&_init_cb_MENUCONTEXT_CB_nii,
+    PLOTBUTTON_CB => \&_init_cb_PLOTBUTTON_CB_iidds,
+    PLOTMOTION_CB => \&_init_cb_PLOTMOTION_CB_dds,
     POSTDRAW_CB => \&_init_cb_POSTDRAW_CB_v,
     PREDRAW_CB => \&_init_cb_PREDRAW_CB_v,
     SELECTBEGIN_CB => \&_init_cb_SELECTBEGIN_CB_,
     SELECTEND_CB => \&_init_cb_SELECTEND_CB_,
-    SELECT_CB => \&_init_cb_SELECT_CB_iiffi,
+    SELECT_CB => \&_init_cb_SELECT_CB_iiddi,
   },
   'IUP::ProgressDlg' => {
     CANCEL_CB => \&_init_cb_CANCEL_CB_,
@@ -161,12 +226,17 @@ my $cb_table = {
   'IUP::SpinBox' => {
     SPIN_CB => \&_init_cb_SPIN_CB_i,
   },
+  'IUP::Split' => {
+    VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
+  },
   'IUP::Submenu' => {
     HIGHLIGHT_CB => \&_init_cb_HIGHLIGHT_CB_,
   },
   'IUP::Tabs' => {
+    RIGHTCLICK_CB => \&_init_cb_RIGHTCLICK_CB_i,
     TABCHANGEPOS_CB => \&_init_cb_TABCHANGEPOS_CB_ii,
     TABCHANGE_CB => \&_init_cb_TABCHANGE_CB_nn,
+    TABCLOSE_CB => \&_init_cb_TABCLOSE_CB_i,
   },
   'IUP::Text' => {
     ACTION => \&_init_cb_ACTION_is,
@@ -229,6 +299,7 @@ my $cb_table = {
   '_dialog' => {
     CLOSE_CB => \&_init_cb_CLOSE_CB_,
     COPYDATA_CB => \&_init_cb_COPYDATA_CB_si,
+    CUSTOMFRAME_CB => \&_init_cb_CUSTOMFRAME_CB_,
     MDIACTIVATE_CB => \&_init_cb_MDIACTIVATE_CB_,
     MOVE_CB => \&_init_cb_MOVE_CB_ii,
     RESIZE_CB => \&_init_cb_RESIZE_CB_ii,
@@ -247,13 +318,13 @@ my $cb_table = {
 };
 
 sub _get_cb_init_function {
-  my ($pkg, $action) = @_;  
+  my ($pkg, $action) = @_;
   my $p = $cb_table->{$pkg};
   my $f = $p->{$action} if $p;
   $f ||= $cb_table->{_dialog}->{$action}   if $pkg =~ /^IUP::(Dialog|ColorDlg|FileDlg|FontDlg|MessageDlg|ProgressDlg)$/;
-  $f ||= $cb_table->{_dragdrop}->{$action} if $pkg =~ /^IUP::(Label|Text|List|Tree|Canvas|Matrix|Dialog)$/;
+  $f ||= $cb_table->{_dragdrop}->{$action} if $pkg =~ /^IUP::(Label|AnimatedLabel|Text|MultiLine|List|MatrixList|Tree|Canvas|Matrix|Dialog)$/;
   $f ||= $cb_table->{_canvas}->{$action}   if $pkg =~ /^IUP::(Canvas|CanvasGL|Matrix)$/;
-  $f ||= $cb_table->{_base}->{$action};  
+  $f ||= $cb_table->{_base}->{$action};
   return $f;
 }
 
