@@ -27,6 +27,10 @@
 #include <iup_pplot.h>
 #endif
 
+#ifdef HAVELIB_IUP_PLOT
+#include <iup_plot.h>
+#endif
+
 #ifdef HAVELIB_IUP_MGLPLOT
 #include <iup_mglplot.h>
 #endif
@@ -2250,6 +2254,7 @@ _IupGLSizeBox(Ihandle* child)
 ################################################################################ plots
 INCLUDE: MglPlot.xs.inc
 INCLUDE: PPlot.xs.inc
+INCLUDE: Plot.xs.inc
 
 ################################################################################ iupole.h 
 
