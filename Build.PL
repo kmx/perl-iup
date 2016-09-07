@@ -68,21 +68,17 @@ my $builder = $class->new(
   dist_version_from    => 'lib/IUP.pm',
   requires             => {
     'perl'                 => 5.008008,
-    'Carp'                 => 0,
-    'constant'             => 0,
   },
   build_requires       => { # need to have for running: ./Build (install|test)
     'perl'                 => 5.008008,
     'Module::Build'        => 0.36,
-    'Alien::IUP'           => 0.707,
+    'Alien::IUP'           => 0.709,
     'Test::More'           => 0,
-    'Carp'                 => 0,
-    'constant'             => 0,
   },
   configure_requires   => { # need to have for running: perl Buil.PL
     'perl'                 => 5.008008,
     'Module::Build'        => 0.36,
-    'Alien::IUP'           => 0.705,
+    'Alien::IUP'           => 0.709,
   },
   c_source             => 'src', # ppport.h
   extra_linker_flags   => $lflags,

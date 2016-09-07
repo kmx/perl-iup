@@ -4,7 +4,9 @@ Before release (from git checkout dir):
 
 perl Build.PL && ./Build clean && ./Build realclean
 perl Build.PL && ./Build gencode && ./Build gendoc && ./Build manifest && ./Build xs && ./Build xt
-./Build test && ./Build distcheck && ./Build dist
+
+# release:
+./Build gendoc && ./Build manifest && ./Build test && ./Build distcheck && ./Build dist
 
 ### New element
 - e.g. IupMatrixList
