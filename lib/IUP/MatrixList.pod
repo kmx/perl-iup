@@ -455,7 +455,7 @@ The element B<IUP::MatrixList> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/matrixlist.pl|https://metacpan.org/source/KMX/IUP-0.304_2/examples/0-basic/matrixlist.pl> - IUP::MatrixList example
+=item * L<0-basic/matrixlist.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/matrixlist.pl> - IUP::MatrixList example
 
 =back 
 

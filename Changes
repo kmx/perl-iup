@@ -1,6 +1,6 @@
 Revision history for perl module IUP
 
-0.304_2 2016-09-07
+0.305 2016-09-07
     - NEW: IUP::Plot               https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iup_plot.html
     - NEW: IUP::AnimatedLabel      https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupanimatedlabel.html
     - NEW: IUP::BackgroundBox      https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupbackgroundbox.html
