@@ -11,7 +11,7 @@ bootstrap IUP::Internal::LibraryIup;
 #xxxCHECKLATER maybe something more thread safe
 our %ih_register; #global table mapping IUP Ihandles to perl objrefs
 our %ch_register; #global table mapping CD Canvas handles to perl objrefs
-#NOTE: for performance reasons we access directly these global variables from _execute_cb()
+#NOTE: for performance reasons we access these global variables directly from the C callback trampolines
 
 ###IHANDLE
 
@@ -30,9 +30,13 @@ sub _register_ih {
   if ($_[0]) {
     $ih_register{$_[0]} = $_[1];
     #BEWARE: circular references avoided by using weaken
-    weaken $ih_register{$_[0]}; #xxx(ANTI)DESTROY-MAGIC
-    $ih_register{$_[0]};
+    weaken $ih_register{$_[0]};
+    #install the internal LDESTROY_CB handler so this entry (and the wrapper) is
+    #cleaned up whenever IUP destroys the element - even behind our back
+    IUP::Internal::LibraryIup::_set_ldestroy_cb($_[0]); #fully-qualified (keeps xt/cross-check-xs-func.t happy)
+    return $_[1]; #return the strong incoming ref, not the just-weakened registry slot
   }
+  return;
 }
 
 ###CANVAS HANDLE
@@ -52,9 +56,10 @@ sub _register_ch {
   if ($_[0]) {
     $ch_register{$_[0]} = $_[1];
     #BEWARE: circular references avoided by using weaken
-    weaken $ch_register{$_[0]}; #xxx(ANTI)DESTROY-MAGIC
-    $ch_register{$_[0]};
+    weaken $ch_register{$_[0]};
+    return $_[1]; #return the strong incoming ref, not the just-weakened registry slot
   }
+  return;
 }
 
 1;

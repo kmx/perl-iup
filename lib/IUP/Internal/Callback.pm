@@ -347,8 +347,9 @@ sub _get_cb_list {
 sub _get_cb_eval_code {
   my $pkg = shift;
   my $rv;
+  no strict 'refs';
   for (_get_cb_list($pkg)) {
-    next if defined  *{"$pkg\::$_"};
+    next if defined &{"$pkg\::$_"}; #skip only if a CODE (sub) slot already exists
     $rv .= "*$pkg\::$_ = sub { return \$_[1] ? \$_[0]->SetCallback('$_', \$_[1]) : \$_[0]->{$_} };\n";
   }
   return $rv;

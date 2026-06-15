@@ -14,7 +14,7 @@ sub _create_element {
 
     if (defined $args->{child}) {
       $m = $args->{child}->ihandle;
-      $self->_store_child_ref($args->{child}); #xxx(ANTI)DESTROY-MAGIC
+      $self->_store_child_ref($args->{child});
       delete $args->{child};
     }
 

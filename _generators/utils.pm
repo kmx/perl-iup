@@ -31,6 +31,10 @@ sub make_path_for_file {
 package My::Pod::Simple::HTML;
 use base 'Pod::Simple::HTML';
 
+#give the subclass a $VERSION so Pod::Simple::HTML::version_tag_comment()'s
+#sprintf("...v%s...", $self->VERSION()) is not fed undef (one warning per file otherwise)
+our $VERSION = '1.0';
+
 sub html_header_after_title {
     local $/ = undef;
     return << "EOF";

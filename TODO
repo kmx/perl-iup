@@ -46,9 +46,6 @@ constants via ExtUtils::Constant
 - POD: overall "doc polish" needed - search for 'XXX'
 - POD: html tables - metacpan.org breaks header line (probably broken <th>)
 
-######## CODE/IMPORTANT: correct element destruction still needs some work
-- Internal/Element.pm (look for XXX-FIXME + XXX-CHECKLATER)
-
 ######## TESTS/IMPORTANT: add more tests
 - split tests: t\*.t + all GUI-related >>> t\gui\*.t
 - maybe close after timeout (IUP::Timer -> return IUP_CLOSE)

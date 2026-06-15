@@ -132,8 +132,46 @@ typedef struct {
 } my_cxt_t;
 START_MY_CXT;
 
+/* LDESTROY_CB: a callback reserved by IUP for language bindings. It fires right
+ * before IUP destroys an element - for EVERY destruction, including children
+ * destroyed via a parent cascade (IupDestroy) and the mass destruction done by
+ * IupClose(). We use it to keep %IUP::Internal::LibraryIup::ih_register and the
+ * perl wrapper in sync with IUP's real lifecycle, which prevents both dangling
+ * (use-after-free) pointers and pointer-reuse aliasing.
+ * BEWARE: we are called from inside IupDestroy(), so the perl side cleanup
+ * (_ldestroy_cleanup) must NOT call any IUP function (no re-entrancy). */
 int cb_ldestroy(Ihandle *ih) {
-  fprintf(stderr, "destroying id=%p\n", ih);
+  SV *ptrSV, **ref;
+  HV *globreg;
+  char *hkey;
+
+  if (PL_dirty) return IUP_DEFAULT; /* perl global destruction in progress - do nothing */
+
+  globreg = get_hv("IUP::Internal::LibraryIup::ih_register", 0);
+  if (!globreg) return IUP_DEFAULT;
+
+  ptrSV = newSViv(PTR2IV(ih)); /* not mortal - freed explicitly below (after hv_delete) */
+  hkey = SvPV_nolen(ptrSV);
+
+  ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
+  if (ref != NULL && SvROK(*ref)) {
+    dSP;
+    ENTER;
+    SAVETMPS;
+    PUSHMARK(SP);
+    /* push a fresh ref with an incremented refcount so the wrapper cannot be
+     * freed mid-call when _ldestroy_cleanup breaks its circular keep-alive refs */
+    XPUSHs(sv_2mortal(newRV_inc(SvRV(*ref))));
+    PUTBACK;
+    call_pv("IUP::Internal::Element::_ldestroy_cleanup", G_DISCARD|G_EVAL);
+    if (SvTRUE(ERRSV)) warn("Warning: LDESTROY cleanup failed: %s", SvPV_nolen(ERRSV));
+    FREETMPS;
+    LEAVE;
+  }
+
+  hv_delete(globreg, hkey, strlen(hkey), G_DISCARD); /* prevent pointer-reuse aliasing */
+  SvREFCNT_dec(ptrSV);
+  return IUP_DEFAULT;
 }
 
 static int cb_idle_action() {  
@@ -208,6 +246,14 @@ _SetIdle(func)
                   IupSetFunction("IDLE_ACTION", (Icallback)NULL);
                 }
         }
+
+################################################################################
+# install the internal LDESTROY_CB handler on a given ihandle (see cb_ldestroy)
+void
+_set_ldestroy_cb(ih)
+                Ihandle* ih;
+        CODE:
+                if (ih) IupSetCallback(ih, "LDESTROY_CB", (Icallback)cb_ldestroy);
 
 ################################################################################ iup.h
 

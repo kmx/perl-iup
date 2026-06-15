@@ -159,6 +159,9 @@ sub GetByName {
 sub GetByIhandle {
   my ($pkg, $ih, $flag) = @_;
   $flag = 1 unless defined $flag; # default = 1 (create corresponding perl object if necessary)
+  return unless $ih;
+  my $e = IUP::Internal::LibraryIup::_translate_ih($ih);
+  return $e if defined $e; # already-wrapped handle: fast path, before building the class map
   my $mapping = {
     #UPDATE when element list change
     animatedlabel   => 'IUP::AnimatedLabel',     # https://webserver2.tecgraf.puc-rio.br/iup/en/elem/iupanimatedlabel.html
@@ -241,9 +244,6 @@ sub GetByIhandle {
     webbrowser      => 'IUP::WebBrowser',        # NOT-USED https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iupweb.html
     zbox            => 'IUP::Zbox',
   };
-  return unless $ih;
-  my $e = IUP::Internal::LibraryIup::_translate_ih($ih);
-  return $e if defined $e;
   if ($flag == 1) {
     my $c = IUP::Internal::LibraryIup::_IupGetClassName($ih);
     return unless $c;

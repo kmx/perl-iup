@@ -36,7 +36,9 @@ my $class = 'Module::Build';
 if (-d '.git') { #adding some custom actions relevant only for module development
   $class = Module::Build->subclass( class => "Module::Build::Custom", code => <<'CODE' );
   sub ACTION_xt {
-    system(qw[prove -bl xt/*.t]);
+    # NB: expand the glob in perl - system(LIST) does not invoke a shell, so a
+    # literal 'xt/*.t' would reach prove unexpanded ("Cannot detect source")
+    system('prove', '-bl', glob('xt/*.t'));
     return;
   }
   sub ACTION_gencode {

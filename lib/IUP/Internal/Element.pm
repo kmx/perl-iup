@@ -120,7 +120,12 @@ sub ihandle {
     IUP::Internal::LibraryIup::_register_ih($_[1], $_[0]);
     return $_[0]->{'!int!ihandle'} = $_[1]
   }
+  elsif (scalar(@_) > 1) {
+    # ihandle(undef) => explicit clear (used by _internal_destroy to drop a dead handle)
+    return delete $_[0]->{'!int!ihandle'};
+  }
   else {
+    # ihandle() => getter
     return $_[0]->{'!int!ihandle'};
   }
 }
@@ -160,10 +165,12 @@ sub SetAttribute {
       IUP::Internal::LibraryIup::_IupSetAttributeHandle($self->ihandle, $k, $v->ihandle);
       #assuming any element ref stored into iup attribute to be a child
       unless($self->_get_child_ref($v)) {
-        #XXX-FIXME - child element destruction: happens for: MENU, MDIMENU, IMAGE*, PARENTDIALOG (can cause memory leaks)
-        #during Destroy() we might destroy elements shared by more dialogs
+        #keep a ref so an element stored as an attribute (MENU, IMAGE, PARENTDIALOG, ...)
+        #stays alive while in use. Actual destruction is now driven by IUP's LDESTROY_CB
+        #(see cb_ldestroy/_ldestroy_cleanup), and shared elements that IUP does not
+        #auto-destroy are no longer torn down early.
         #warn "***DEBUG*** Unexpected situation elem='".ref($self)."' attr='$k'";
-        $self->_store_child_ref($v); #xxx(ANTI)DESTROY-MAGIC
+        $self->_store_child_ref($v);
       }
     }
     else {
@@ -237,7 +244,7 @@ sub SetCallback {
       if (defined $func) {
         #set callback
         $self->{"!int!cb!$action!func"} = $func;
-        $self->{"!int!cb!$action!related"}->{$self->ihandle} = $self; #intentional circular dependency #xxx(ANTI)DESTROY-MAGIC
+        $self->{"!int!cb!$action!related"}->{$self->ihandle} = $self; #intentional circular dependency
         &$cb_init_func($self->ihandle);
       }
       else {
@@ -296,8 +303,10 @@ sub Destroy {
   #iup.Destroy(ih: ihandle) [in Lua]
   my $self = shift;
   my $ih = $self->ihandle;
+  return $self unless $ih; #already destroyed (or never had a handle) - avoid IupDestroy(NULL)/double-free
 
-  #destroy all perl related stuff on element + its children
+  #destroy perl-related stuff on THIS element (callbacks + handle); children are
+  #handled by IUP's cascade firing LDESTROY_CB -> cb_ldestroy -> _ldestroy_cleanup
   $self->_internal_destroy();
   #BEWARE: at this point $self->ihandle is undef
 
@@ -310,7 +319,13 @@ sub Detach {
   #void IupDetach(Ihandle *child); [in C]
   #iup.Detach(child: ihandle) or child:detach() [in Lua]
   my $self = shift;
-  IUP::Internal::LibraryIup::_IupDetach($self->ihandle);
+  my $ih = $self->ihandle;
+  return $self unless $ih;
+  #stop the former parent from retaining this (now independent) child wrapper
+  if (my $parent = $self->GetParent) {
+    delete $parent->{'!int!child'}{$ih};
+  }
+  IUP::Internal::LibraryIup::_IupDetach($ih);
   return $self;
 }
 
@@ -395,7 +410,14 @@ sub Reparent {
   #int IupReparent(Ihandle* ih, Ihandle* new_parent, Ihandle* ref_child);
   #iup.Reparent(child, parent: ihandle) [in Lua]
   my ($self, $new_parent, $ref_child) = @_;
-  return IUP::Internal::LibraryIup::_IupReparent($self->ihandle, $new_parent->ihandle, $ref_child->ihandle);
+  my $ih = $self->ihandle;
+  #move the child-ref bookkeeping from the old parent to the new one
+  if (my $old = $self->GetParent) {
+    delete $old->{'!int!child'}{$ih};
+  }
+  my $rv = IUP::Internal::LibraryIup::_IupReparent($ih, $new_parent->ihandle, $ref_child->ihandle);
+  $new_parent->_store_child_ref($self);
+  return $rv;
 }
 
 sub ResetAttribute {
@@ -604,13 +626,11 @@ sub _create_element {
 }
 
 sub _get_child_ref {
-  #xxx(ANTI)DESTROY-MAGIC
   my ($self, $ih) = @_;
   return $self->{'!int!child'}->{$ih};
 }
 
 sub _store_child_ref {
-  #xxx(ANTI)DESTROY-MAGIC
   my $self = shift;
   #warn("***DEBUG*** _store_child_ref started\n");
   for (@_) {
@@ -621,18 +641,60 @@ sub _store_child_ref {
 
 sub _internal_destroy {
   my $self = shift;
-  #unset all callbacks
+  #unset all callbacks (so they don't fire during IUP's teardown of this element)
   #warn("***DEBUG*** _internal_destroy ".$self->ihandle." started\n");
   for (keys %$self) {
     $self->SetCallback($1, undef) if (/^!int!cb!([^!]+)!func$/);
   }
-  #go through all children #xxx(ANTI)DESTROY-MAGIC
-  for (keys %{$self->{'!int!child'}}) {
-    $self->{'!int!child'}->{$_}->_internal_destroy()
-  }
-  #in the last step destroy $self->ihandle
+  #BEWARE: we intentionally DO NOT recurse into !int!child here. IUP's IupDestroy
+  #cascades to the real children itself and fires LDESTROY_CB for each, so
+  #cb_ldestroy()/_ldestroy_cleanup() cleans them up (incl. Append()ed children
+  #that were never tracked in !int!child). Recursing here would also wrongly
+  #neutralize elements IUP does NOT auto-destroy - e.g. an image shared with
+  #another dialog - leaving the other owner with a dead wrapper.
+  #in the last step drop this element's (now dead) handle
   #warn("***DEBUG*** _internal_destroy ".$self->ihandle." finished\n");
   $self->ihandle(undef);
+}
+
+sub _ldestroy_cleanup {
+  # Called from the C-level LDESTROY_CB handler (cb_ldestroy) right before IUP
+  # destroys the underlying element - including children destroyed via a parent
+  # cascade or IupClose(), which never go through Destroy()/_internal_destroy().
+  # BEWARE: we are running inside IupDestroy(); this MUST NOT call any IUP
+  # function (no GetAttribute/SetCallback/Detach/...) to avoid re-entrancy.
+  my $self = shift;
+  return unless ref $self;
+  # Dropping the cb refs below may release the last reference to a cdCanvas
+  # wrapper that canvas2SV() stashed in !int!cb!*!related (e.g. from a DRAW_CB),
+  # whose DESTROY would call cdKillCanvas() - a native call, re-entrant into the
+  # IupDestroy() we are inside. Suppress that: IUP owns/tears down such canvases.
+  local $IUP::Internal::Canvas::_in_ldestroy = 1;
+  # If ihandle2SV() stashed this (transient) wrapper in an owner element's
+  # !int!cb!*!related hash, remove that entry now (back-ref set in ihandle2SV) so
+  # the owner's related-hash does not grow without bound as transient handles
+  # (tabs, menus, drop lists, ...) churn over a long-lived owner element.
+  my $owner = delete $self->{'!int!rel_owner'};
+  my $rkey  = delete $self->{'!int!rel_key'};
+  if (ref($owner) && defined($rkey) && ref($owner->{$rkey}) && defined($self->{'!int!ihandle'})) {
+    delete $owner->{$rkey}{ $self->{'!int!ihandle'} };
+  }
+  # break the intentional circular keep-alive refs (and drop callback closures)
+  delete $self->{$_} for grep { /^!int!cb!/ } keys %$self;
+  # If THIS element owns a CD canvas (IUP::Canvas creates one via cdCreateCanvas(CD_IUP)
+  # in its MAP_CB), kill it now while IUP's native window still exists - otherwise it
+  # leaks (its DESTROY never runs: Element::DESTROY wins the @ISA over Canvas::DESTROY).
+  # cdKillCanvas() targets the CD library, not IUP, so it is not the IUP re-entrancy this
+  # sub avoids. Canvases IUP owns (cnv_noown, e.g. a DRAW_CB cdCanvas) are skipped.
+  if (my $ch = $self->{'!int!cnvhandle'}) {
+    eval { IUP::Internal::Canvas::_cdKillCanvas($self) } unless $self->{'!int!cnv_noown'};
+    IUP::Internal::LibraryIup::_unregister_ch($ch);
+    delete $self->{'!int!cnvhandle'};
+  }
+  # neutralize the now-dangling handle so any surviving wrapper reference cannot
+  # pass a freed Ihandle* back into IUP
+  delete $self->{'!int!ihandle'};
+  return;
 }
 
 sub _proc_child_param {
@@ -661,7 +723,7 @@ sub _proc_child_param {
   for (@list) {
     if (blessed($_) && $_->can('ihandle')) {
       push @ihlist, $_->ihandle;
-      $self->_store_child_ref($_); #xxx(ANTI)DESTROY-MAGIC
+      $self->_store_child_ref($_);
     }
     else {
       carp "warning: undefined item passed as 'child' parameter of ",ref($self),"->new()";
@@ -679,7 +741,7 @@ sub _proc_child_param_single {
   if (defined $firstonly) {
     if (blessed($firstonly) && $firstonly->can('ihandle')) {
       $ih = &$func($firstonly->ihandle); #call func
-      $self->_store_child_ref($firstonly); #xxx(ANTI)DESTROY-MAGIC
+      $self->_store_child_ref($firstonly);
     }
     else {
       carp "Warning: parameter 'child' has to be a reference to IUP element";
@@ -689,7 +751,7 @@ sub _proc_child_param_single {
   elsif (defined $args && defined $args->{child}) {
     if (blessed($args->{child}) && $args->{child}->can('ihandle')) {
       $ih = &$func($args->{child}->ihandle); #call func
-      $self->_store_child_ref($args->{child}); #xxx(ANTI)DESTROY-MAGIC
+      $self->_store_child_ref($args->{child});
     }
     else {
       carp "Warning: 'child' parameter has to be a reference to IUP element";

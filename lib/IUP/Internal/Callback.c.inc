@@ -6,6 +6,13 @@
 #endif
 /* end-of-workaround */
 
+/* Holds the string returned by the most recent char*-returning callback (CELL_CB,
+ * FONT_CB, TRANSLATEVALUE_CB, ...). The Perl return value is a mortal SV that
+ * FREETMPS frees before we hand its char* to IUP; keeping a reference here makes
+ * that pointer valid until the next such callback. IUP copies it synchronously,
+ * so one holder suffices. */
+static SV* cb_strval_holder = NULL;
+
 SV* ihandle2SV_nocreate(Ihandle* ih) {
   SV *ptrSV, **ref;
   HV* globreg;
@@ -18,9 +25,10 @@ SV* ihandle2SV_nocreate(Ihandle* ih) {
   /*### check if canvas pointer is present in global hash 'ih_register' */
   ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
   if (ref != NULL)
-    if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ih_register{$hkey} */
+    if (SvOK(*ref)) { SvREFCNT_dec(ptrSV); return *ref; } /* free local ptrSV (never stored) */
 
   /*### if not found in ih_register return undef */
+  SvREFCNT_dec(ptrSV); /* free local ptrSV (never stored) */
   return &PL_sv_undef;
 }
 
@@ -36,7 +44,7 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKL
   /*### check if canvas pointer is present in global hash 'ih_register' */
   ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
   if (ref != NULL)
-    if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ch_register{$hkey} */
+    if (SvOK(*ref)) { SvREFCNT_dec(ptrSV); return *ref; } /* free local ptrSV (not stored on this path) */
 
   /*warn("***DEBUG*** need to create IUP::Internal::Element %s\n",hkey);*/
 
@@ -50,14 +58,23 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKL
   /*### $IUP::Internal::LibraryIup::ch_register{<hkey>} = newSVsv(obj) */
   /*### weaken($IUP::Internal::LibraryIup::ch_register{<hkey>}) */
   hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */
+  IupSetCallback(ih, "LDESTROY_CB", (Icallback)cb_ldestroy); /* keep ih_register in sync (see cb_ldestroy) */
 
   /*### $element->{'!int!cb!<action>!related'}->{<hkey>} = newSVsv(obj) */
+  if (!element || !SvROK(element)) return sv_2mortal(obj); /* defensive: bad source element */
   element_hash = (HV*)MUTABLE_PTR(SvRV(element));
   ref = hv_fetch(element_hash, action_related_key, strlen(action_related_key), 0);
   if (ref == NULL) { warn("Warning: This shouldn't happen ih2\n"); return sv_2mortal(obj); }
   if (!SvOK(*ref)) { warn("Warning: This shouldn't happen ih3\n"); return sv_2mortal(obj); }
   element_cbrelated_hash = (HV*)MUTABLE_PTR(SvRV(*ref));
   hv_store(element_cbrelated_hash, hkey, strlen(hkey), newSVsv(obj), 0); /* nonweaken */
+
+  /* back-ref (weak owner + the related-key) so _ldestroy_cleanup() can prune this
+     entry from the owner's !related hash when this handle is destroyed - otherwise
+     the related-hash grows without bound as transient handles (tabs, menus, drop
+     lists, ...) come and go over a long-lived owner element */
+  hv_store(newhash, "!int!rel_owner", 14, sv_rvweaken(newSVsv(element)), 0);
+  hv_store(newhash, "!int!rel_key", 12, newSVpv(action_related_key, 0), 0);
 
   return sv_2mortal(obj);
 }
@@ -74,7 +91,7 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
   /*### check if canvas pointer is present in global hash 'ch_register' */
   ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
   if (ref != NULL)
-    if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ch_register{<hkey>} */
+    if (SvOK(*ref)) { SvREFCNT_dec(ptrSV); return *ref; } /* free local ptrSV (not stored on this path) */
 
   /*warn("***DEBUG*** need to create IUP::Internal::Canvas %s\n",hkey);*/
 
@@ -83,6 +100,7 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
   newhash = (HV *)sv_2mortal((SV *)newHV());
   obj = sv_bless( newRV((SV*)newhash), gv_stashpv("IUP::Internal::Canvas", 1) );
   hv_store(newhash, "!int!cnvhandle", 14, ptrSV, 0);
+  hv_store(newhash, "!int!cnv_noown", 14, newSViv(1), 0); /* IUP owns this canvas (DRAW_CB etc.) - we must NOT cdKillCanvas() it */
   if (!SvOK(obj)) { warn("Warning: This shouldn't happen cv1\n"); return &PL_sv_undef; }
 
   /*### $IUP::Internal::LibraryIup::ch_register{<hkey>} = newSVsv(obj) */
@@ -90,6 +108,7 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
   hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */
 
   /*### $element->{'!int!cb!<action>!related'}->{<hkey>} = newSVsv(obj) */
+  if (!element || !SvROK(element)) return sv_2mortal(obj); /* defensive: bad source element */
   element_hash = (HV*)MUTABLE_PTR(SvRV(element));
   ref = hv_fetch(element_hash, action_related_key, strlen(action_related_key), 0);
   if (ref == NULL) { warn("Warning: This shouldn't happen cv2\n"); return sv_2mortal(obj); }
@@ -133,7 +152,7 @@ internal_cb_ACTION_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -175,7 +194,7 @@ internal_cb_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,char
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(button)));
@@ -222,7 +241,7 @@ internal_cb_VALUECHANGED_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -264,7 +283,7 @@ internal_cb_SWAPBUFFERS_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -306,7 +325,7 @@ internal_cb_DRAW_CB_iiiiiiv (Ihandle* ih,int line,int column,int xmin,int xmax,i
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb_cnv7() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(line)));
@@ -355,7 +374,7 @@ internal_cb_HEIGHT_CB_i (Ihandle* ih,int line)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(line)));
@@ -398,7 +417,7 @@ internal_cb_HSPAN_CB_ii (Ihandle* ih,int line,int column)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(line)));
@@ -442,7 +461,7 @@ internal_cb_MOUSECLICK_CB_iiiiiis (Ihandle* ih,int button,int pressed,int line,i
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(button)));
@@ -491,7 +510,7 @@ internal_cb_MOUSEMOTION_CB_iiiis (Ihandle* ih,int line,int column,int x,int y,ch
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(line)));
@@ -538,7 +557,7 @@ internal_cb_NCOLS_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -580,7 +599,7 @@ internal_cb_NLINES_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -622,7 +641,7 @@ internal_cb_SCROLLING_CB_ii (Ihandle* ih,int line,int column)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(line)));
@@ -666,7 +685,7 @@ internal_cb_VSPAN_CB_ii (Ihandle* ih,int line,int column)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(line)));
@@ -710,7 +729,7 @@ internal_cb_WIDTH_CB_i (Ihandle* ih,int column)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(column)));
@@ -753,7 +772,7 @@ internal_cb_CELL_CB_i (Ihandle* ih,int cell)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(cell)));
@@ -765,7 +784,14 @@ internal_cb_CELL_CB_i (Ihandle* ih,int cell)
 
 	if (count != 1) { /* no warning, use default retval */ }
 	else {
-	  rv = POPpx;
+	  {
+	    SV* sv_str = POPs; /* keep the returned string alive past FREETMPS for IUP */
+	    if (SvOK(sv_str)) {
+	      if (cb_strval_holder) SvREFCNT_dec(cb_strval_holder);
+	      cb_strval_holder = newSVsv(sv_str);
+	      rv = SvPV_nolen(cb_strval_holder);
+	    }
+	  }
 	}
 
 	PUTBACK;
@@ -795,7 +821,7 @@ internal_cb_EXTENDED_CB_i (Ihandle* ih,int cell)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(cell)));
@@ -838,7 +864,7 @@ internal_cb_SELECT_CB_ii (Ihandle* ih,int cell,int type)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(cell)));
@@ -882,7 +908,7 @@ internal_cb_SWITCH_CB_ii (Ihandle* ih,int prim_cell,int sec_cell)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(prim_cell)));
@@ -926,7 +952,7 @@ internal_cb_CHANGE_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned 
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(r)));
@@ -971,7 +997,7 @@ internal_cb_DRAG_CB_ccc (Ihandle* ih,unsigned char r,unsigned char g,unsigned ch
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(r)));
@@ -1016,7 +1042,7 @@ internal_cb_COLORUPDATE_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -1058,7 +1084,7 @@ internal_cb_DETACHED_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -1100,7 +1126,7 @@ internal_cb_BUTTON_PRESS_CB_d (Ihandle* ih,double angle)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVnv(angle)));
@@ -1143,7 +1169,7 @@ internal_cb_BUTTON_RELEASE_CB_d (Ihandle* ih,double angle)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVnv(angle)));
@@ -1186,7 +1212,7 @@ internal_cb_MOUSEMOVE_CB_d (Ihandle* ih,double angle)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVnv(angle)));
@@ -1229,7 +1255,7 @@ internal_cb_EXTRABUTTON_CB_ii (Ihandle* ih,int button,int pressed)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(button)));
@@ -1273,7 +1299,7 @@ internal_cb_OPENCLOSE_CB_i (Ihandle* ih,int state)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(state)));
@@ -1316,7 +1342,7 @@ internal_cb_FILE_CB_ss (Ihandle* ih,const char* file_name,const char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVpv(file_name, 0)));
@@ -1360,7 +1386,7 @@ internal_cb_FLAT_ACTION_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -1402,7 +1428,7 @@ internal_cb_FLAT_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(button)));
@@ -1449,7 +1475,7 @@ internal_cb_FLAT_ENTERWINDOW_CB_ii (Ihandle* ih,int a,int b)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(a)));
@@ -1493,7 +1519,7 @@ internal_cb_FLAT_FOCUS_CB_i (Ihandle* ih,int focus)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(focus)));
@@ -1536,7 +1562,7 @@ internal_cb_FLAT_LEAVEWINDOW_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -1578,7 +1604,7 @@ internal_cb_MOVE_CB_ii (Ihandle* ih,int x,int y)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(x)));
@@ -1622,7 +1648,7 @@ internal_cb_ACTION_s (Ihandle* ih,char* url)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVpv(url, 0)));
@@ -1665,7 +1691,7 @@ internal_cb_GL_ACTION_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -1707,7 +1733,7 @@ internal_cb_GL_BUTTON_CB_iiiis (Ihandle* ih,int button,int pressed,int x,int y,c
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(button)));
@@ -1754,7 +1780,7 @@ internal_cb_GL_ENTERWINDOW_CB_ii (Ihandle* ih,int a,int b)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(a)));
@@ -1798,7 +1824,7 @@ internal_cb_GL_LEAVEWINDOW_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -1840,7 +1866,7 @@ internal_cb_GL_MOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(x)));
@@ -1885,7 +1911,7 @@ internal_cb_GL_WHEEL_CB_fiis (Ihandle* ih,float delta,int x,int y,char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVnv(delta)));
@@ -1931,7 +1957,7 @@ internal_cb_ACTION_i (Ihandle* ih,int state)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(state)));
@@ -1974,7 +2000,7 @@ internal_cb_VALUECHANGING_CB_i (Ihandle* ih,int start)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(start)));
@@ -2017,7 +2043,7 @@ internal_cb_HIGHLIGHT_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -2059,7 +2085,7 @@ internal_cb_ACTION_sii (Ihandle* ih,char* text,int item,int state)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVpv(text, 0)));
@@ -2104,7 +2130,7 @@ internal_cb_CARET_CB_iii (Ihandle* ih,int lin,int col,int pos)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -2149,7 +2175,7 @@ internal_cb_DBLCLICK_CB_is (Ihandle* ih,int item,char* text)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(item)));
@@ -2193,7 +2219,7 @@ internal_cb_DRAGDROP_CB_iiii (Ihandle* ih,int drag_id,int drop_id,int isshift,in
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(drag_id)));
@@ -2239,7 +2265,7 @@ internal_cb_DROPDOWN_CB_i (Ihandle* ih,int state)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(state)));
@@ -2282,7 +2308,7 @@ internal_cb_EDIT_CB_is (Ihandle* ih,int c,char* new_value)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(c)));
@@ -2326,7 +2352,7 @@ internal_cb_MOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(x)));
@@ -2371,7 +2397,7 @@ internal_cb_MULTISELECT_CB_s (Ihandle* ih,char* value)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVpv(value, 0)));
@@ -2414,7 +2440,7 @@ internal_cb_ACTION_CB_iiiis (Ihandle* ih,int c,int lin,int col,int edition,char*
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(c)));
@@ -2461,7 +2487,7 @@ internal_cb_BGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -2508,7 +2534,7 @@ internal_cb_BUSY_CB_iis (Ihandle* ih,int status,int count_,char* name)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(status)));
@@ -2553,7 +2579,7 @@ internal_cb_CLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -2598,7 +2624,7 @@ internal_cb_COLRESIZE_CB_i (Ihandle* ih,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(col)));
@@ -2641,7 +2667,7 @@ internal_cb_DROPCHECK_CB_ii (Ihandle* ih,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -2685,7 +2711,7 @@ internal_cb_DROPSELECT_CB_iinsii (Ihandle* ih,int lin,int col,Ihandle* drop,char
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb_ih3() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -2733,7 +2759,7 @@ internal_cb_DROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb_ih1() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(ihandle2SV(drop, element, "!int!cb!DROP_CB!related"));
@@ -2778,7 +2804,7 @@ internal_cb_EDITCLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -2823,7 +2849,7 @@ internal_cb_EDITION_CB_iiii (Ihandle* ih,int lin,int col,int mode,int update)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -2869,7 +2895,7 @@ internal_cb_EDITMOUSEMOVE_CB_ii (Ihandle* ih,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -2913,7 +2939,7 @@ internal_cb_EDITRELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -2958,7 +2984,7 @@ internal_cb_ENTERITEM_CB_ii (Ihandle* ih,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3002,7 +3028,7 @@ internal_cb_FGCOLOR_CB_iiIII (Ihandle* ih,int lin,int col,unsigned int* red,unsi
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3049,7 +3075,7 @@ internal_cb_FONT_CB_ii (Ihandle* ih,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3062,7 +3088,14 @@ internal_cb_FONT_CB_ii (Ihandle* ih,int lin,int col)
 
 	if (count != 1) { /* no warning, use default retval */ }
 	else {
-	  rv = POPpx;
+	  {
+	    SV* sv_str = POPs; /* keep the returned string alive past FREETMPS for IUP */
+	    if (SvOK(sv_str)) {
+	      if (cb_strval_holder) SvREFCNT_dec(cb_strval_holder);
+	      cb_strval_holder = newSVsv(sv_str);
+	      rv = SvPV_nolen(cb_strval_holder);
+	    }
+	  }
 	}
 
 	PUTBACK;
@@ -3092,7 +3125,7 @@ internal_cb_LEAVEITEM_CB_ii (Ihandle* ih,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3136,7 +3169,7 @@ internal_cb_MARKEDIT_CB_iii (Ihandle* ih,int lin,int col,int marked)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3181,7 +3214,7 @@ internal_cb_MARK_CB_ii (Ihandle* ih,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3225,7 +3258,7 @@ internal_cb_MENUCONTEXTCLOSE_CB_nii (Ihandle* ih,Ihandle* menu,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(ihandle2SV(menu, element, "!int!cb!MENUCONTEXTCLOSE_CB!related"));
@@ -3270,7 +3303,7 @@ internal_cb_MENUCONTEXT_CB_nii (Ihandle* ih,Ihandle* menu,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(ihandle2SV(menu, element, "!int!cb!MENUCONTEXT_CB!related"));
@@ -3315,7 +3348,7 @@ internal_cb_MENUDROP_CB_nii (Ihandle* ih,Ihandle* drop,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(ihandle2SV(drop, element, "!int!cb!MENUDROP_CB!related"));
@@ -3360,7 +3393,7 @@ internal_cb_MOUSEMOVE_CB_ii (Ihandle* ih,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3404,7 +3437,7 @@ internal_cb_NUMERICGETVALUE_CB_ii (Ihandle* ih,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3448,7 +3481,7 @@ internal_cb_NUMERICSETVALUE_CB_iid (Ihandle* ih,int lin,int col,double value)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3493,7 +3526,7 @@ internal_cb_PASTESIZE_CB_ii (Ihandle* ih,int num_lin,int num_col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(num_lin)));
@@ -3537,7 +3570,7 @@ internal_cb_RELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3582,7 +3615,7 @@ internal_cb_RESIZEMATRIX_CB_ii (Ihandle* ih,int width,int height)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(width)));
@@ -3626,7 +3659,7 @@ internal_cb_SCROLLTOP_CB_ii (Ihandle* ih,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3670,7 +3703,7 @@ internal_cb_SORTCOLUMNCOMPARE_CB_iii (Ihandle* ih,int col,int lin1,int lin2)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(col)));
@@ -3715,7 +3748,7 @@ internal_cb_TOGGLEVALUE_CB_iii (Ihandle* ih,int lin,int col,int status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3760,7 +3793,7 @@ internal_cb_TRANSLATEVALUE_CB_iis (Ihandle* ih,int lin,int col,char* value)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3774,7 +3807,14 @@ internal_cb_TRANSLATEVALUE_CB_iis (Ihandle* ih,int lin,int col,char* value)
 
 	if (count != 1) { /* no warning, use default retval */ }
 	else {
-	  rv = POPpx;
+	  {
+	    SV* sv_str = POPs; /* keep the returned string alive past FREETMPS for IUP */
+	    if (SvOK(sv_str)) {
+	      if (cb_strval_holder) SvREFCNT_dec(cb_strval_holder);
+	      cb_strval_holder = newSVsv(sv_str);
+	      rv = SvPV_nolen(cb_strval_holder);
+	    }
+	  }
 	}
 
 	PUTBACK;
@@ -3804,7 +3844,7 @@ internal_cb_TYPE_CB_ii (Ihandle* ih,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3817,7 +3857,14 @@ internal_cb_TYPE_CB_ii (Ihandle* ih,int lin,int col)
 
 	if (count != 1) { /* no warning, use default retval */ }
 	else {
-	  rv = POPpx;
+	  {
+	    SV* sv_str = POPs; /* keep the returned string alive past FREETMPS for IUP */
+	    if (SvOK(sv_str)) {
+	      if (cb_strval_holder) SvREFCNT_dec(cb_strval_holder);
+	      cb_strval_holder = newSVsv(sv_str);
+	      rv = SvPV_nolen(cb_strval_holder);
+	    }
+	  }
 	}
 
 	PUTBACK;
@@ -3847,7 +3894,7 @@ internal_cb_VALUE_CB_ii (Ihandle* ih,int lin,int col)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3860,7 +3907,14 @@ internal_cb_VALUE_CB_ii (Ihandle* ih,int lin,int col)
 
 	if (count != 1) { /* no warning, use default retval */ }
 	else {
-	  rv = POPpx;
+	  {
+	    SV* sv_str = POPs; /* keep the returned string alive past FREETMPS for IUP */
+	    if (SvOK(sv_str)) {
+	      if (cb_strval_holder) SvREFCNT_dec(cb_strval_holder);
+	      cb_strval_holder = newSVsv(sv_str);
+	      rv = SvPV_nolen(cb_strval_holder);
+	    }
+	  }
 	}
 
 	PUTBACK;
@@ -3890,7 +3944,7 @@ internal_cb_VALUE_EDIT_CB_iis (Ihandle* ih,int lin,int col,char* newval)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3935,7 +3989,7 @@ internal_cb_IMAGEVALUECHANGED_CB_ii (Ihandle* ih,int lin,int imagevalue)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -3979,7 +4033,7 @@ internal_cb_LISTACTION_CB_ii (Ihandle* ih,int item,int state)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(item)));
@@ -4023,7 +4077,7 @@ internal_cb_LISTCLICK_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -4068,7 +4122,7 @@ internal_cb_LISTDRAW_CB_iiiiiiv (Ihandle* ih,int lin,int col,int x1,int x2,int y
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -4117,7 +4171,7 @@ internal_cb_LISTEDITION_CB_iiii (Ihandle* ih,int lin,int col,int mode,int update
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -4163,7 +4217,7 @@ internal_cb_LISTINSERT_CB_i (Ihandle* ih,int lin)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -4206,7 +4260,7 @@ internal_cb_LISTRELEASE_CB_iis (Ihandle* ih,int lin,int col,char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -4251,7 +4305,7 @@ internal_cb_LISTREMOVE_CB_i (Ihandle* ih,int lin)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(lin)));
@@ -4294,7 +4348,7 @@ internal_cb_MENUCLOSE_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -4336,7 +4390,7 @@ internal_cb_OPEN_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -4378,7 +4432,7 @@ internal_cb_POSTDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb_cnv1() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(canvas2SV(cnv, element, "!int!cb!POSTDRAW_CB!related"));
@@ -4421,7 +4475,7 @@ internal_cb_PREDRAW_CB_v (Ihandle* ih,cdCanvas* cnv)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb_cnv1() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(canvas2SV(cnv, element, "!int!cb!PREDRAW_CB!related"));
@@ -4464,7 +4518,7 @@ internal_cb_CLICKSAMPLE_CB_iiddi (Ihandle* ih,int ds_index,int sample_index,doub
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(ds_index)));
@@ -4511,7 +4565,7 @@ internal_cb_DELETEBEGIN_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -4553,7 +4607,7 @@ internal_cb_DELETEEND_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -4595,7 +4649,7 @@ internal_cb_DELETE_CB_iidd (Ihandle* ih,int index,int sample_index,double x,doub
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(index)));
@@ -4641,7 +4695,7 @@ internal_cb_DRAWSAMPLE_CB_iiddi (Ihandle* ih,int ds_index,int sample_index,doubl
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(ds_index)));
@@ -4688,7 +4742,7 @@ internal_cb_PLOTBUTTON_CB_iidds (Ihandle* ih,int button,int pressed,double x,dou
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(button)));
@@ -4735,7 +4789,7 @@ internal_cb_PLOTMOTION_CB_dds (Ihandle* ih,double x,double y,char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVnv(x)));
@@ -4780,7 +4834,7 @@ internal_cb_SELECTBEGIN_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -4822,7 +4876,7 @@ internal_cb_SELECTEND_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -4864,7 +4918,7 @@ internal_cb_SELECT_CB_iiddi (Ihandle* ih,int index,int sample_index,double x,dou
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(index)));
@@ -4911,7 +4965,7 @@ internal_cb_CANCEL_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -4953,7 +5007,7 @@ internal_cb_ACTION_iiis (Ihandle* ih,int insert,int pos,int length,char* text)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(insert)));
@@ -4999,7 +5053,7 @@ internal_cb_AUTOCCANCELLED_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -5041,7 +5095,7 @@ internal_cb_AUTOCCHARDELETED_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -5083,7 +5137,7 @@ internal_cb_AUTOCSELECTION_CB_is (Ihandle* ih,int pos,char* text)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(pos)));
@@ -5127,7 +5181,7 @@ internal_cb_DROPFILES_CB_siii (Ihandle* ih,const char* filename,int num,int x,in
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVpv(filename, 0)));
@@ -5173,7 +5227,7 @@ internal_cb_HOTSPOTCLICK_CB_iiis (Ihandle* ih,int pos,int lin,int col,char* stat
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(pos)));
@@ -5219,7 +5273,7 @@ internal_cb_MARGINCLICK_CB_iis (Ihandle* ih,int margin,int lin,char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(margin)));
@@ -5264,7 +5318,7 @@ internal_cb_SAVEPOINT_CB_i (Ihandle* ih,int status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(status)));
@@ -5307,7 +5361,7 @@ internal_cb_ZOOM_CB_i (Ihandle* ih,int zoomInPoints)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(zoomInPoints)));
@@ -5350,7 +5404,7 @@ internal_cb_SPIN_CB_i (Ihandle* ih,int inc)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(inc)));
@@ -5393,7 +5447,7 @@ internal_cb_RIGHTCLICK_CB_i (Ihandle* ih,int id)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(id)));
@@ -5436,7 +5490,7 @@ internal_cb_TABCHANGEPOS_CB_ii (Ihandle* ih,int new_pos,int old_pos)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(new_pos)));
@@ -5480,7 +5534,7 @@ internal_cb_TABCHANGE_CB_nn (Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb_ih12() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(ihandle2SV(new_tab, element, "!int!cb!TABCHANGE_CB!related"));
@@ -5524,7 +5578,7 @@ internal_cb_TABCLOSE_CB_i (Ihandle* ih,int id)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(id)));
@@ -5567,7 +5621,7 @@ internal_cb_ACTION_is (Ihandle* ih,int c,char* new_value)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(c)));
@@ -5611,7 +5665,7 @@ internal_cb_ACTION_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -5653,7 +5707,7 @@ internal_cb_BRANCHCLOSE_CB_i (Ihandle* ih,int id)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(id)));
@@ -5696,7 +5750,7 @@ internal_cb_BRANCHOPEN_CB_i (Ihandle* ih,int id)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(id)));
@@ -5739,7 +5793,7 @@ internal_cb_EXECUTELEAF_CB_i (Ihandle* ih,int id)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(id)));
@@ -5784,7 +5838,7 @@ internal_cb_MULTISELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	r_ids = newAV();
@@ -5832,7 +5886,7 @@ internal_cb_MULTIUNSELECTION_CB_Ai (Ihandle* ih,int* ids,int n)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	r_ids = newAV();
@@ -5881,7 +5935,7 @@ internal_cb_NODEREMOVED_CB_U (Ihandle* ih,void* userdata)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
        /* converting userdata to  $self->{'!int!treedata'}->{$userdata_pointer} */
@@ -5942,7 +5996,7 @@ internal_cb_RENAME_CB_is (Ihandle* ih,int id,char* title)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(id)));
@@ -5986,7 +6040,7 @@ internal_cb_SELECTION_CB_ii (Ihandle* ih,int id,int status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(id)));
@@ -6030,7 +6084,7 @@ internal_cb_SHOWRENAME_CB_i (Ihandle* ih,int id)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(id)));
@@ -6073,7 +6127,7 @@ internal_cb_TOGGLEVALUE_CB_ii (Ihandle* ih,int id,int status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(id)));
@@ -6117,7 +6171,7 @@ internal_cb_ENTERWINDOW_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -6159,7 +6213,7 @@ internal_cb_GETFOCUS_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -6201,7 +6255,7 @@ internal_cb_HELP_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -6243,7 +6297,7 @@ internal_cb_KILLFOCUS_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -6285,7 +6339,7 @@ internal_cb_K_ANY_i (Ihandle* ih,int c)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(c)));
@@ -6328,7 +6382,7 @@ internal_cb_LEAVEWINDOW_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -6370,7 +6424,7 @@ internal_cb_MAP_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -6412,7 +6466,7 @@ internal_cb_TIPS_CB_ii (Ihandle* ih,int x,int y)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(x)));
@@ -6456,7 +6510,7 @@ internal_cb_UNMAP_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -6498,7 +6552,7 @@ internal_cb_ACTION_ff (Ihandle* ih,float posx,float posy)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVnv(posx)));
@@ -6542,7 +6596,7 @@ internal_cb_FOCUS_CB_i (Ihandle* ih,int focus)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(focus)));
@@ -6585,7 +6639,7 @@ internal_cb_KEYPRESS_CB_ii (Ihandle* ih,int c,int press)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(c)));
@@ -6634,7 +6688,7 @@ internal_cb_MULTITOUCH_CB_iAAAA (Ihandle* ih,int count_,int* pid,int* px,int* py
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(count_)));
@@ -6693,7 +6747,7 @@ internal_cb_RESIZE_CB_ii (Ihandle* ih,int width,int height)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(width)));
@@ -6737,7 +6791,7 @@ internal_cb_SCROLL_CB_iff (Ihandle* ih,int op,float posx,float posy)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(op)));
@@ -6782,7 +6836,7 @@ internal_cb_TOUCH_CB_iiis (Ihandle* ih,int id,int x,int y,char* state)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(id)));
@@ -6828,7 +6882,7 @@ internal_cb_WHEEL_CB_fiis (Ihandle* ih,float delta,int x,int y,char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVnv(delta)));
@@ -6874,7 +6928,7 @@ internal_cb_WOM_CB_i (Ihandle* ih,int state)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(state)));
@@ -6917,7 +6971,7 @@ internal_cb_CLOSE_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -6959,7 +7013,7 @@ internal_cb_COPYDATA_CB_si (Ihandle* ih,char* cmdLine,int size)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVpv(cmdLine, 0)));
@@ -7003,7 +7057,7 @@ internal_cb_CUSTOMFRAME_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -7045,7 +7099,7 @@ internal_cb_MDIACTIVATE_CB_ (Ihandle* ih)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	PUTBACK;
@@ -7087,7 +7141,7 @@ internal_cb_SHOW_CB_i (Ihandle* ih,int state)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(state)));
@@ -7130,7 +7184,7 @@ internal_cb_TRAYCLICK_CB_iii (Ihandle* ih,int but,int pressed,int dclick)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(but)));
@@ -7175,7 +7229,7 @@ internal_cb_DRAGBEGIN_CB_ii (Ihandle* ih,int x,int y)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(x)));
@@ -7219,7 +7273,7 @@ internal_cb_DRAGDATASIZE_CB_s (Ihandle* ih,char* type)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSVpv(type, 0)));
@@ -7265,7 +7319,7 @@ internal_cb_DRAGDATA_CB_sUi (Ihandle* ih,char* type,void* data,int size)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVpv(type, 0)));
@@ -7276,15 +7330,15 @@ internal_cb_DRAGDATA_CB_sUi (Ihandle* ih,char* type,void* data,int size)
 
 	SPAGAIN;
 
-	Zero(data, size, void);
+	if (data && size > 0) Zero(data, size, void); /* guard NULL / non-positive size */
 	if (count != 2) { warn("Warning: callback DRAGDATA_CB has returned %d instead of 2 values!\n",count); }
 	else {
 	  SV_data = POPs;
 	  SV_rv = POPs;
 	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
-	  if (SvOK(SV_data)) {
+	  if (SvOK(SV_data) && data && size > 0) {
 	    data_ptr = SvPVbyte(SV_data, data_len);
-	    Copy(data_ptr, data, data_len > size ? size : data_len, void);
+	    Copy(data_ptr, data, data_len > (STRLEN)size ? (STRLEN)size : data_len, void);
 	  }
 	}
 
@@ -7315,7 +7369,7 @@ internal_cb_DRAGEND_CB_i (Ihandle* ih,int action)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(action)));
@@ -7358,11 +7412,11 @@ internal_cb_DROPDATA_CB_sUiii (Ihandle* ih,char* type,void* data,int size,int x,
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
 	XPUSHs(sv_2mortal(newSVpv(type, 0)));
-	XPUSHs(sv_2mortal(newSVpvn(data, size)));
+	XPUSHs(sv_2mortal((data && size > 0) ? newSVpvn(data, size) : newSVpvn("", 0)));
 	XPUSHs(sv_2mortal(newSViv(x)));
 	XPUSHs(sv_2mortal(newSViv(y)));
 	PUTBACK;
@@ -7404,7 +7458,7 @@ internal_cb_DROPMOTION_CB_iis (Ihandle* ih,int x,int y,char* status)
 	ENTER;
 	SAVETMPS;
 
-	/* push params for _execute_cb() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
   	XPUSHs(sv_2mortal(newSViv(x)));

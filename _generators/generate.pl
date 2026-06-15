@@ -20,19 +20,7 @@ pod2usage(-exitstatus=>0, -verbose=>2) if $g_help || !$getopt_rv;
 my $cb_csv = $FindBin::Bin.'/Callback.csv';
 my $ky_csv = $FindBin::Bin.'/Key.csv';
 
-my $pfunc_default = '_execute_cb';
-my $pfunc_table = {
-  internal_cb_DROPSELECT_CB_iinsii => '_execute_cb_ih3',  #Ihandle* ih,int lin,int col,Ihandle* drop,char* t,int i,int v
-  internal_cb_DROP_CB_nii          => '_execute_cb_ih1',  #Ihandle* ih,Ihandle* drop,int lin,int col
-  internal_cb_TABCHANGE_CB_nn      => '_execute_cb_ih12', #Ihandle* ih,Ihandle* new_tab,Ihandle* old_tab
-  internal_cb_DRAW_CB_iiiiiiv      => '_execute_cb_cnv7', #Ihandle* ih,int line,int column,int xmin,int xmax,int ymin,int ymax,cdCanvas* canvas
-  internal_cb_POSTDRAW_CB_v        => '_execute_cb_cnv1', #Ihandle* ih,cdCanvas* cnv
-  internal_cb_PREDRAW_CB_v         => '_execute_cb_cnv1', #Ihandle* ih,cdCanvas* cnv
-  internal_cb_MENUCONTEXTCLOSE_CB  => '_execute_cb_ih1',  #Ihandle* ih,Ihandle* menu,int lin,int col
-  internal_cb_MENUCONTEXT_CB       => '_execute_cb_ih1',  #Ihandle* ih,Ihandle* menu,int lin,int col
-  internal_cb_MENUCONTEXTCLOSE_CB  => '_execute_cb_ih1',  #Ihandle* ih,Ihandle* menu,int cnv_x,int cnv_y
-  internal_cb_MENUCONTEXT_CB       => '_execute_cb_ih1',  #Ihandle* ih,Ihandle* menu,int cnv_x,int cnv_y
-};
+# NOTE: every callback is dispatched through call_cb_func() (see Callback_c_inc.tt).
 
 # +IUP::Matrix;
 # +IUP::Matrix;
@@ -84,7 +72,6 @@ sub cb_generate1 {
       }
       
       $h->{$m}->{$a}->{xs_internal_cb_params} = "($h->{$m}->{$a}->{c_params})";
-      $h->{$m}->{$a}->{xs_internal_cb_pfunc} = $pfunc_table->{$if} || $pfunc_default;
       
       my @l_rvname;
       my $c_retval = $h->{$m}->{$a}->{c_retval};
@@ -103,6 +90,7 @@ sub cb_generate1 {
       elsif ($c_retval eq 'char*') {
         $h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPpx';
         $h->{$m}->{$a}->{xs_internal_default_rv} = 'NULL';
+        $h->{$m}->{$a}->{xs_retval_charp} = 1; #return value needs to survive FREETMPS (see cb_strval_holder)
         push @l_rvname, '$rv_string';
       }
       else {

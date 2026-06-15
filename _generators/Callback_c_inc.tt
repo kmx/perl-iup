@@ -6,6 +6,13 @@
 #endif
 /* end-of-workaround */
 
+/* Holds the string returned by the most recent char*-returning callback (CELL_CB,
+ * FONT_CB, TRANSLATEVALUE_CB, ...). The Perl return value is a mortal SV that
+ * FREETMPS frees before we hand its char* to IUP; keeping a reference here makes
+ * that pointer valid until the next such callback. IUP copies it synchronously,
+ * so one holder suffices. */
+static SV* cb_strval_holder = NULL;
+
 SV* ihandle2SV_nocreate(Ihandle* ih) {
   SV *ptrSV, **ref;
   HV* globreg;
@@ -18,9 +25,10 @@ SV* ihandle2SV_nocreate(Ihandle* ih) {
   /*### check if canvas pointer is present in global hash 'ih_register' */
   ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
   if (ref != NULL)
-    if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ih_register{$hkey} */
+    if (SvOK(*ref)) { SvREFCNT_dec(ptrSV); return *ref; } /* free local ptrSV (never stored) */
 
   /*### if not found in ih_register return undef */
+  SvREFCNT_dec(ptrSV); /* free local ptrSV (never stored) */
   return &PL_sv_undef;
 }
 
@@ -36,7 +44,7 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKL
   /*### check if canvas pointer is present in global hash 'ih_register' */
   ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
   if (ref != NULL)
-    if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ch_register{$hkey} */
+    if (SvOK(*ref)) { SvREFCNT_dec(ptrSV); return *ref; } /* free local ptrSV (not stored on this path) */
 
   /*warn("***DEBUG*** need to create IUP::Internal::Element %s\n",hkey);*/
 
@@ -50,14 +58,23 @@ SV* ihandle2SV(Ihandle* ih, SV* element, char* action_related_key) { /*xxxCHECKL
   /*### $IUP::Internal::LibraryIup::ch_register{<hkey>} = newSVsv(obj) */
   /*### weaken($IUP::Internal::LibraryIup::ch_register{<hkey>}) */
   hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */
+  IupSetCallback(ih, "LDESTROY_CB", (Icallback)cb_ldestroy); /* keep ih_register in sync (see cb_ldestroy) */
 
   /*### $element->{'!int!cb!<action>!related'}->{<hkey>} = newSVsv(obj) */
+  if (!element || !SvROK(element)) return sv_2mortal(obj); /* defensive: bad source element */
   element_hash = (HV*)MUTABLE_PTR(SvRV(element));
   ref = hv_fetch(element_hash, action_related_key, strlen(action_related_key), 0);
   if (ref == NULL) { warn("Warning: This shouldn't happen ih2\n"); return sv_2mortal(obj); }
   if (!SvOK(*ref)) { warn("Warning: This shouldn't happen ih3\n"); return sv_2mortal(obj); }
   element_cbrelated_hash = (HV*)MUTABLE_PTR(SvRV(*ref));
   hv_store(element_cbrelated_hash, hkey, strlen(hkey), newSVsv(obj), 0); /* nonweaken */
+
+  /* back-ref (weak owner + the related-key) so _ldestroy_cleanup() can prune this
+     entry from the owner's !related hash when this handle is destroyed - otherwise
+     the related-hash grows without bound as transient handles (tabs, menus, drop
+     lists, ...) come and go over a long-lived owner element */
+  hv_store(newhash, "!int!rel_owner", 14, sv_rvweaken(newSVsv(element)), 0);
+  hv_store(newhash, "!int!rel_key", 12, newSVpv(action_related_key, 0), 0);
 
   return sv_2mortal(obj);
 }
@@ -74,7 +91,7 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
   /*### check if canvas pointer is present in global hash 'ch_register' */
   ref = hv_fetch(globreg, hkey, strlen(hkey), 0);
   if (ref != NULL)
-    if (SvOK(*ref)) return *ref; /* return $IUP::Internal::LibraryIup::ch_register{<hkey>} */
+    if (SvOK(*ref)) { SvREFCNT_dec(ptrSV); return *ref; } /* free local ptrSV (not stored on this path) */
 
   /*warn("***DEBUG*** need to create IUP::Internal::Canvas %s\n",hkey);*/
 
@@ -83,6 +100,7 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
   newhash = (HV *)sv_2mortal((SV *)newHV());
   obj = sv_bless( newRV((SV*)newhash), gv_stashpv("IUP::Internal::Canvas", 1) );
   hv_store(newhash, "!int!cnvhandle", 14, ptrSV, 0);
+  hv_store(newhash, "!int!cnv_noown", 14, newSViv(1), 0); /* IUP owns this canvas (DRAW_CB etc.) - we must NOT cdKillCanvas() it */
   if (!SvOK(obj)) { warn("Warning: This shouldn't happen cv1\n"); return &PL_sv_undef; }
 
   /*### $IUP::Internal::LibraryIup::ch_register{<hkey>} = newSVsv(obj) */
@@ -90,6 +108,7 @@ SV* canvas2SV(cdCanvas* canvas, SV* element, char* action_related_key) {
   hv_store(globreg, hkey, strlen(hkey), sv_rvweaken(newSVsv(obj)), 0); /* weaken */
 
   /*### $element->{'!int!cb!<action>!related'}->{<hkey>} = newSVsv(obj) */
+  if (!element || !SvROK(element)) return sv_2mortal(obj); /* defensive: bad source element */
   element_hash = (HV*)MUTABLE_PTR(SvRV(element));
   ref = hv_fetch(element_hash, action_related_key, strlen(action_related_key), 0);
   if (ref == NULL) { warn("Warning: This shouldn't happen cv2\n"); return sv_2mortal(obj); }
@@ -142,7 +161,7 @@ int call_cb_func(SV* element, char *actionkey) {
 	ENTER;
 	SAVETMPS;
 
-	/* push params for [% i.xs_internal_cb_pfunc %]() */
+	/* push the callback args, then dispatch via call_cb_func() */
 	PUSHMARK(SP);
 	XPUSHs(element);
 [% IF i.xs_spec_NODEREMOVED_CB -%]
@@ -167,7 +186,7 @@ int call_cb_func(SV* element, char *actionkey) {
         /* converting userdata - done */
 [% ELSIF i.xs_spec_DROPDATA_CB -%]
 	XPUSHs(sv_2mortal(newSVpv(type, 0)));
-	XPUSHs(sv_2mortal(newSVpvn(data, size)));
+	XPUSHs(sv_2mortal((data && size > 0) ? newSVpvn(data, size) : newSVpvn("", 0)));
 	XPUSHs(sv_2mortal(newSViv(x)));
 	XPUSHs(sv_2mortal(newSViv(y)));
 [% ELSIF i.xs_spec_DRAGDATA_CB -%]
@@ -185,7 +204,7 @@ int call_cb_func(SV* element, char *actionkey) {
 	SPAGAIN;
 
 [% IF i.xs_spec_DRAGDATA_CB -%]
-	Zero(data, size, void);
+	if (data && size > 0) Zero(data, size, void); /* guard NULL / non-positive size */
 [% END -%]
 	[% i.xs_internal_cb_rvcheck %]
 	else {
@@ -195,13 +214,22 @@ int call_cb_func(SV* element, char *actionkey) {
 [% IF i.xs_declare_sv_rv -%]
 	  SV_rv = POPs;
 	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+[% ELSIF i.xs_retval_charp -%]
+	  {
+	    SV* sv_str = POPs; /* keep the returned string alive past FREETMPS for IUP */
+	    if (SvOK(sv_str)) {
+	      if (cb_strval_holder) SvREFCNT_dec(cb_strval_holder);
+	      cb_strval_holder = newSVsv(sv_str);
+	      rv = SvPV_nolen(cb_strval_holder);
+	    }
+	  }
 [% ELSE -%]
 	  rv = [% i.xs_internal_cb_pop %];
 [% END -%]
 [% IF i.xs_spec_DRAGDATA_CB -%]
-	  if (SvOK(SV_data)) {
+	  if (SvOK(SV_data) && data && size > 0) {
 	    data_ptr = SvPVbyte(SV_data, data_len);
-	    Copy(data_ptr, data, data_len > size ? size : data_len, void);
+	    Copy(data_ptr, data, data_len > (STRLEN)size ? (STRLEN)size : data_len, void);
 	  }
 [% END -%]
 	}
