@@ -62,6 +62,19 @@ sub _register_ch {
   return;
 }
 
+# ithreads safety: objects that wrap a native CD/IUP resource free it in their DESTROY
+# (cdKillBitmap/cdKillImage/cdKillCanvas/free). Under ithreads such an object is cloned
+# into each spawned thread sharing the SAME native pointer, so the clone's DESTROY would
+# free it again -> "free(): invalid pointer" / use-after-free in the parent. CLONE_SKIP=1
+# makes perl set these objects to undef in child threads (their DESTROY never runs there).
+# NOTE: CLONE_SKIP is NOT inherited, so every owning class (incl. subclasses) is listed.
+sub IUP::Canvas::Bitmap::CLONE_SKIP              { 1 }
+sub IUP::Canvas::Palette::CLONE_SKIP             { 1 }
+sub IUP::Canvas::InternalServerImage::CLONE_SKIP { 1 }
+sub IUP::Internal::Canvas::CLONE_SKIP            { 1 }
+sub IUP::Canvas::FileBitmap::CLONE_SKIP          { 1 } # ISA IUP::Internal::Canvas (CLONE_SKIP not inherited)
+sub IUP::Canvas::FileVector::CLONE_SKIP          { 1 } # ISA IUP::Internal::Canvas (CLONE_SKIP not inherited)
+
 1;
 
 __END__
