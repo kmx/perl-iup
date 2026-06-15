@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 
+use Config;
 use Module::Build;
 
 eval { require Alien::IUP };
@@ -18,6 +19,15 @@ unless (Alien::IUP->havelib( qw/iup im cd/ )) {
 
 my $lflags = Alien::IUP->config('LIBS');
 my $cflags = Alien::IUP->config('INC');
+
+# IUP/CD/IM ship as static libs with cross-references (e.g. libiup_scintilla uses
+# IupConfig* defined in libiup) that GNU ld's single-pass, left-to-right archive
+# resolution won't satisfy whatever the link order is. Wrap them in a linker group
+# so the references resolve. Only with GNU ld (gcc/MinGW/cygwin) - macOS ld64 and
+# MSVC resolve all archives together and don't accept --start-group.
+if ($lflags && $Config{gccversion} && $^O ne 'darwin') {
+  $lflags = "-Wl,--start-group $lflags -Wl,--end-group";
+}
 
 $cflags .= ' -DHAVELIB_IUPCD'         if Alien::IUP->havelib('iupcd');
 $cflags .= ' -DHAVELIB_IUPIM'         if Alien::IUP->havelib('iupim');
