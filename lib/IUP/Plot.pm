@@ -6,7 +6,7 @@ use IUP::Internal::LibraryIup;
 use Carp;
 
 sub BEGIN {
-  #warn "[DEBUG] IUP::PPlot::BEGIN() started\n";
+  #warn "[DEBUG] IUP::Plot::BEGIN() started\n";
   IUP::Internal::LibraryIup::_IupPlotOpen();
 }
 

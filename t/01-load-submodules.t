@@ -61,7 +61,6 @@ use_ok('IUP::Menu');
 use_ok('IUP::MessageDlg');
 use_ok('IUP::MglPlot');
 use_ok('IUP::Normalizer');
-use_ok('IUP::PPlot');
 use_ok('IUP::ProgressBar');
 use_ok('IUP::ProgressDlg');
 use_ok('IUP::Radio');
@@ -90,8 +89,8 @@ SKIP: {
 }
 
 SKIP: {
-  skip 'IUP not compiled with PPlot support', 1 unless IUP::ConfigData->feature('PPlot');
-  use_ok('IUP::PPlot');
+  skip 'IUP not compiled with Plot support', 1 unless IUP::ConfigData->feature('Plot');
+  use_ok('IUP::Plot');
 }
 
 done_testing;

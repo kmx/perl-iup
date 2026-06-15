@@ -1,6 +1,5 @@
 ################ the last time working on ################ 
 
-* kill IUP::PPlot
 * improve doc for IUP::Plot
 
 ######################### POSTPONED
@@ -29,8 +28,8 @@ IupMatrixEx - add new element - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmat
 - calling IupMatrixExInit for an existing IupMatrix control.      void IupMatrixExInit(Ihandle* ih);
 
 fix:
-- cb_table->{_dragdrop} what about CanvasGL, PPlot, MglPlot ?
-- cb_table->{_canvas}   what about PPlot, MglPlot ?
+- cb_table->{_dragdrop} what about CanvasGL, MglPlot ?
+- cb_table->{_canvas}   what about MglPlot ?
 - global callbacks
 
 ##########################################################
@@ -57,7 +56,7 @@ constants via ExtUtils::Constant
 ######## POD/COSMETICS: mention in POD/DOC
 - mention IUP::Manual::10_FAQ::PARPacking recommendation in DOC
 - beware: (IUP_DEFAULT related) sub returns value even without explicit return
-- pplot: note in doc that DS_ has to be set after ->PPlotEnd()
+- plot: note in doc that DS_ has to be set after ->PlotEnd()
 - tree: note in doc that tree->SetAttribute has to go after dialog->Show
 
 ######## MAYBE: access child=>[...] items like this
