@@ -224,9 +224,13 @@ __Bitmap__Pixel(self,x,y,...)
         PREINIT:
                 unsigned char *data_buffer=NULL, *r=NULL, *g=NULL, *b=NULL, *a=NULL, *m=NULL;
                 int color_space, plane_size=0, plane_count=0, color_count=0;
-                int width = self->w;
-                int height = self->h;
+                int width, height;
         PPCODE:
+                /* BEWARE: do NOT read self->... in PREINIT above - perlxs expands the
+                   PREINIT block BEFORE the typemap assigns 'self' from ST(0), so self
+                   would be an uninitialised pointer there (-> segfault). Read w/h here. */
+                width  = self->w;
+                height = self->h;
                 /* warn("XXX-DEBUG: bitmap.pixel x=%d y=%d items=%d w=%d h=%d\n",x,y,items,width,height); */
                 /* warn("XXX-DEBUG: rgb=%d rgba=%d\n", (self->type==CD_RGB), (self->type==CD_RGBA)); */
                 if (x<0 || x>=width || y<0 || y>=height ) {
