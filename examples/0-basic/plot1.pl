@@ -1,11 +1,11 @@
-# IUP::PPlot example
+# IUP::Plot example
 
 use strict;
 use warnings;
 
 use IUP ':all';
 
-my $plot = IUP::PPlot->new(
+my $plot = IUP::Plot->new(
   TITLE=>"Simple Line",
   MARGINBOTTOM=>"65",
   MARGINLEFT=>"65",
@@ -25,7 +25,7 @@ $plot->PlotEnd();
 $plot->DS_LEGEND("test line");
 $plot->DS_LINEWIDTH(2);
 
-my $d = IUP::Dialog->new( child=>$plot, SIZE=>"300x200", TITLE=>"IUP::PPlot" );
+my $d = IUP::Dialog->new( child=>$plot, SIZE=>"300x200", TITLE=>"IUP::Plot" );
 $d->Show();
 
 IUP->MainLoop;

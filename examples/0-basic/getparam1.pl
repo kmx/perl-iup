@@ -16,7 +16,9 @@ sub param_action {
   elsif ($param_index == -3) {
     warn "Cancel\n";
   }
-  else {
+  elsif ($param_index >= 0) {
+    # a real parameter changed (negative values are control codes - e.g. newer IUP
+    # also fires IUP_GETPARAM_CLOSE=-5 and IUP_GETPARAM_MAP=-6 - and must be ignored here)
     print "PARAM[$param_index]",
           " typ=", $self->GetParamParam($param_index)->GetAttribute('TYPE'),
           " val=", $self->GetParamValue($param_index),

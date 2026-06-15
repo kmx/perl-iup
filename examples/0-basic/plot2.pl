@@ -1,4 +1,4 @@
-# IUP::PPlot example
+# IUP::Plot example
 
 use strict;
 use warnings;
@@ -13,7 +13,7 @@ sub create_pplot {
   $args{AXS_YAUTOMAX} = "NO" if defined $args{AXS_YMAX};
   $args{AXS_XAUTOMIN} = "NO" if defined $args{AXS_XMIN};
   $args{AXS_XAUTOMAX} = "NO" if defined $args{AXS_XMAX};
-  return IUP::PPlot->new(%args);  
+  return IUP::Plot->new(%args);  
 }
 
 sub add_series {

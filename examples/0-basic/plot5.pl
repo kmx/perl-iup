@@ -1,4 +1,4 @@
-# IUP::PPlot example
+# IUP::Plot example
 
 use strict;
 use warnings;
@@ -6,7 +6,7 @@ use warnings;
 use IUP ':all';
 use Scalar::Util 'looks_like_number';
 
-#xxxTODO maybe add AxsBounds to IUP::PPlot
+#xxxTODO maybe add AxsBounds to IUP::Plot
 sub AxsBounds {
   my ($self, $axs_xmin, $axs_xmax, $axs_ymin, $axs_ymax) = @_;
   if (defined $axs_xmin) {
@@ -74,7 +74,7 @@ sub ev {
   return $m*$x + $c;
 }
 
-my $plot = IUP::PPlot->new( TITLE=>"Simple Data", MARGINBOTTOM=>30, MARGINLEFT=>30, GRID=>"YES" );
+my $plot = IUP::Plot->new( TITLE=>"Simple Data", MARGINBOTTOM=>30, MARGINLEFT=>30, GRID=>"YES" );
 AxsBounds($plot, undef, undef, 0, undef);
 add_series($plot, $xx, $yy, {DS_MODE=>"MARK",DS_MARKSTYLE=>"CIRCLE"} );
 my ($xmin, $xmax) = ($xx->[0], $xx->[scalar(@$xx)-1]);  # the least squares fit

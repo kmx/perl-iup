@@ -41,7 +41,7 @@ my $pixels_open = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
-my $image_Tecgraf = IUP::Image->new(pixels=>[
+my $image_Tecgraf = IUP::Image->new(WIDTH=>32, HEIGHT=>32, BPP=>32, pixels=>[
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 88, 95, 108, 1, 90, 100, 117, 99, 123, 138, 166, 126, 137, 152, 181, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 95, 105, 123, 147, 122, 137, 165, 255, 136, 152, 183, 255, 132, 149, 179, 250, 133, 149, 178, 69, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 92, 100, 115, 43, 111, 125, 150, 253, 140, 158, 190, 255, 135, 151, 182, 255, 132, 149, 179, 255, 131, 147, 177, 217, 153, 164, 188, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -76,7 +76,7 @@ my $image_Tecgraf = IUP::Image->new(pixels=>[
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 154, 156, 158, 1, 46, 50, 55, 83, 82, 89, 102, 123, 106, 116, 136, 51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ]);
 
-my $image_FileSave = IUP::Image->new(pixels=>[
+my $image_FileSave = IUP::Image->new(WIDTH=>16, HEIGHT=>16, BPP=>32, pixels=>[
     [255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255],
     [255, 0, 255, 255, 183, 182, 245, 255, 183, 182, 245, 255, 179, 178, 243, 255, 174, 173, 241, 255, 168, 167, 238, 255, 162, 161, 234, 255, 155, 154, 231, 255, 148, 147, 228, 255, 143, 142, 224, 255, 136, 135, 221, 255, 129, 128, 218, 255, 123, 122, 214, 255, 117, 116, 211, 255, 112, 111, 209, 255, 255, 0, 255, 255],
     [255, 0, 255, 255, 179, 178, 243, 255, 190, 189, 255, 255, 147, 146, 248, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 246, 248, 251, 255, 75, 88, 190, 255, 89, 88, 176, 255, 89, 88, 176, 255, 255, 0, 255, 255],
@@ -95,7 +95,7 @@ my $image_FileSave = IUP::Image->new(pixels=>[
     [255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255],
 ]);
 
-my $image_Tecgraf = image_Test(pixels=>[
+my $image_Test = IUP::Image->new(WIDTH=>16, HEIGHT=>16, BPP=>32, pixels=>[
     [255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0],
     [255, 0, 255, 0, 183, 182, 245, 255, 183, 182, 245, 255, 179, 178, 243, 255, 174, 173, 241, 255, 168, 167, 238, 255, 162, 161, 234, 255, 155, 154, 231, 255, 148, 147, 228, 255, 143, 142, 224, 255, 136, 135, 221, 255, 129, 128, 218, 255, 123, 122, 214, 255, 117, 116, 211, 255, 112, 111, 209, 255, 255, 0, 255, 0],
     [255, 0, 255, 0, 179, 178, 243, 255, 190, 189, 255, 255, 147, 146, 248, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 246, 248, 251, 255, 75, 88, 190, 255, 89, 88, 176, 255, 89, 88, 176, 255, 255, 0, 255, 0],
@@ -114,73 +114,60 @@ my $image_Tecgraf = image_Test(pixels=>[
     [255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0],
 ]);
 
-typedef struct _color3D
-{
-  double r;
-  double g;
-  double b;
-} color3D;
 
-static void add_color_vertex(const color3D* c)
-{
-  glColor3d(c->r, c->g, c->b);
-  glVertex3d(c->r, c->g, c->b);
+# ---------------------------------------------------------------------------
+# A spinning, mouse-rotatable colour cube drawn with OpenGL, surrounded by a
+# showcase of IUP's GL controls (label, button, toggle, link, progressbar,
+# val, separator, frame, expander, scrollbox, sizebox) plus a plain Text and
+# Matrix placed as moveable boxes on the GL canvas.
+# ---------------------------------------------------------------------------
+
+# the 8 cube-corner colours (RGB, 0..1)
+my %c3D = (
+  black   => [0.0, 0.0, 0.0],
+  red     => [1.0, 0.0, 0.0],
+  green   => [0.0, 1.0, 0.0],
+  blue    => [0.0, 0.0, 1.0],
+  cian    => [0.0, 1.0, 1.0],
+  magenta => [1.0, 0.0, 1.0],
+  yellow  => [1.0, 1.0, 0.0],
+  white   => [1.0, 1.0, 1.0],
+);
+
+sub add_color_vertex {
+  my $c = shift;
+  glColor3d(@$c);
+  glVertex3d(@$c);
 }
 
-static void draw_cube_face(const color3D* c1, const color3D* c2, const color3D* c3, const color3D* c4)
-{
-  color3D cm;
-  cm.r = (c1->r + c2->r + c3->r + c4->r)/4;
-  cm.g = (c1->g + c2->g + c3->g + c4->g)/4;
-  cm.b = (c1->b + c2->b + c3->b + c4->b)/4;
+sub draw_cube_face {
+  my ($c1, $c2, $c3, $c4) = @_;
+  my $cm = [ ($c1->[0] + $c2->[0] + $c3->[0] + $c4->[0]) / 4,
+             ($c1->[1] + $c2->[1] + $c3->[1] + $c4->[1]) / 4,
+             ($c1->[2] + $c2->[2] + $c3->[2] + $c4->[2]) / 4 ];
 
-  add_color_vertex(&cm);
-  add_color_vertex(c1);
-  add_color_vertex(c2);
-
-  add_color_vertex(&cm);
-  add_color_vertex(c2);
-  add_color_vertex(c3);
-
-  add_color_vertex(&cm);
-  add_color_vertex(c3);
-  add_color_vertex(c4);
-
-  add_color_vertex(&cm);
-  add_color_vertex(c4);
-  add_color_vertex(c1);
+  add_color_vertex($cm); add_color_vertex($c1); add_color_vertex($c2);
+  add_color_vertex($cm); add_color_vertex($c2); add_color_vertex($c3);
+  add_color_vertex($cm); add_color_vertex($c3); add_color_vertex($c4);
+  add_color_vertex($cm); add_color_vertex($c4); add_color_vertex($c1);
 }
 
-const color3D c3D_black = {0.0, 0.0, 0.0};
-const color3D c3D_red = {1.0, 0.0, 0.0};
-const color3D c3D_green = {0.0, 1.0, 0.0};
-const color3D c3D_blue = {0.0, 0.0, 1.0};
-const color3D c3D_cian = {0.0, 1.0, 1.0};
-const color3D c3D_magenta = {1.0, 0.0, 1.0};
-const color3D c3D_yellow = {1.0, 1.0, 0.0};
-const color3D c3D_white = {1.0, 1.0, 1.0};
-
-static void draw_cube(void)
-{
-  glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+sub draw_cube {
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glBegin(GL_TRIANGLES);
-
-  draw_cube_face(&c3D_black, &c3D_blue, &c3D_magenta, &c3D_red);
-  draw_cube_face(&c3D_black, &c3D_green, &c3D_cian, &c3D_blue);
-  draw_cube_face(&c3D_black, &c3D_red, &c3D_yellow, &c3D_green);
-  draw_cube_face(&c3D_white, &c3D_cian, &c3D_blue, &c3D_magenta);
-  draw_cube_face(&c3D_white, &c3D_cian, &c3D_green, &c3D_yellow);
-  draw_cube_face(&c3D_white, &c3D_magenta, &c3D_red, &c3D_yellow);
-
+  draw_cube_face(@c3D{qw/black blue  magenta red/});
+  draw_cube_face(@c3D{qw/black green cian    blue/});
+  draw_cube_face(@c3D{qw/black red   yellow  green/});
+  draw_cube_face(@c3D{qw/white cian  blue    magenta/});
+  draw_cube_face(@c3D{qw/white cian  green   yellow/});
+  draw_cube_face(@c3D{qw/white magenta red   yellow/});
   glEnd();
 }
 
-static double model_view_matrix[16];
-static int use_model_matrix = 0;
+my @model_view_matrix;       # saved MODELVIEW after a mouse rotation
+my $use_model_matrix = 0;
 
-static void init(void)
-{
+sub gl_init {
   glClearColor(1, 1, 1, 0.0);
 
   glMatrixMode(GL_PROJECTION);
@@ -189,380 +176,244 @@ static void init(void)
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  gluLookAt(0.5, 0.5, 3.0,  /* posicao do observador */
-    0.5, 0.5, 0.0,  /* ponto de referencia   */
-    0.0, 1.0, 0.0); /* vup                   */
+  gluLookAt(0.5, 0.5, 3.0,    # eye
+            0.5, 0.5, 0.0,    # center
+            0.0, 1.0, 0.0);   # up
 
   glEnable(GL_DEPTH_TEST);
   glClearDepth(1.0);
 
-  if (use_model_matrix)
-    glLoadMatrixd(model_view_matrix);
+  glLoadMatrixd_p(@model_view_matrix) if $use_model_matrix;
 }
 
-static int pos_x, pos_y;
-static int move = 0;
+#----- GL canvas interaction (drag with the left button to rotate the cube) -----
 
-static int button_cb(Ihandle *ih,int but,int pressed,int x,int y,char* status)
-{
-  (void)ih;
-  (void)status;
+my ($pos_x, $pos_y, $move) = (0, 0, 0);
 
-  if (but==IUP_BUTTON1)
-  {
-    if (pressed)
-    {
-      pos_x = x;
-      pos_y = y;
-      move = 1;
-    }
-    else
-    {
-      move = 0;
-    }
+my $button_cb = sub {
+  my ($self, $but, $pressed, $x, $y, $status) = @_;
+  if ($but == IUP_BUTTON1) {
+    if ($pressed) { ($pos_x, $pos_y, $move) = ($x, $y, 1) }
+    else          { $move = 0 }
   }
   return IUP_DEFAULT;
-}
+};
 
-#define INVERT_Y(_y) (height-y)
+my $motion_cb = sub {
+  my ($self, $x, $y, $status) = @_;
+  return IUP_DEFAULT unless $move;
 
-static int motion_cb(Ihandle *ih,int x,int y,char* status)
-{
-  (void)status;
+  my $dif_x = $x - $pos_x;
+  my $dif_y = $y - $pos_y;
+  return IUP_DEFAULT if $dif_x == 0 && $dif_y == 0;
+  ($pos_x, $pos_y) = ($x, $y);
 
-  if (move)
-  {
-    double dif_x, dif_y;
-    double dx, dy, dz;
-    double x1, y1, z1;
-    double x2, y2, z2;
-    double angle, norma;
-    int height = IupGetInt2(ih, "RASTERSIZE");
-    double mv[16];
-    double pm[16];
-    int    vp[4];
+  my $angle = sqrt($dif_x * $dif_x + $dif_y * $dif_y);
 
-    IupGLMakeCurrent(ih);
-
-    glGetDoublev(GL_MODELVIEW_MATRIX, mv);
-    glGetDoublev(GL_PROJECTION_MATRIX, pm);
-    glGetIntegerv(GL_VIEWPORT, vp);
-
-    dif_x = x - pos_x;
-    dif_y = y - pos_y;
-
-    if (dif_x == 0 && dif_y == 0)
-      return IUP_DEFAULT;
-
-    pos_x = x;
-    pos_y = y;
-
-    angle = sqrt(dif_x*dif_x + dif_y*dif_y);
-
-    gluUnProject(pos_x, INVERT_Y(pos_y), 0.0,
-      mv, pm, vp,
-      &x1, &y1, &z1);
-    gluUnProject((double)(dif_y + pos_x), (double)(dif_x + INVERT_Y(pos_y)), 0.0,
-      mv, pm, vp,
-      &x2, &y2, &z2);
-    dx = x2-x1; dy = y2-y1; dz = z2-z1;
-    norma = sqrt(dx*dx + dy*dy + dz*dz);
-    dx /= norma; dy /= norma; dz /= norma;
-
-    glMatrixMode(GL_MODELVIEW);
-    glTranslated(0.5, 0.5, 0.5);
-    glRotated (angle, dx, dy, dz);
-    glTranslated(-0.5, -0.5, -0.5);
-    glGetDoublev(GL_MODELVIEW_MATRIX, model_view_matrix);
-    use_model_matrix = 1;
-
-    draw_cube();
-  
-    IupGLSwapBuffers(ih); 
-  }
-  return IUP_DEFAULT;
-}
-
-static int action(Ihandle *ih)
-{
-  IupGLMakeCurrent(ih);
-
-  init();
+  $self->GLMakeCurrent;
+  # The original C maps the screen-space drag to an object-space rotation axis
+  # with gluUnProject(). Perl's OpenGL does not export gluUnProject, so we use
+  # the axis perpendicular to the drag directly - for this head-on, axis-aligned
+  # camera the screen axes match the object axes, so the result is the same.
+  glMatrixMode(GL_MODELVIEW);
+  glTranslated(0.5, 0.5, 0.5);
+  glRotated($angle, $dif_y, $dif_x, 0.0);
+  glTranslated(-0.5, -0.5, -0.5);
+  @model_view_matrix = glGetDoublev_p(GL_MODELVIEW_MATRIX);
+  $use_model_matrix = 1;
 
   draw_cube();
-
-  IupGLSwapBuffers(ih); 
-
+  $self->GLSwapBuffers;
   return IUP_DEFAULT;
-}
+};
 
-static int button_action_cb(Ihandle *ih)
-{
-  printf("ACTION_CB(%s) NAME=%s\n", IupGetClassName(ih), IupGetAttribute(ih, "NAME"));
+my $action = sub {            # canvas redraw
+  my ($self) = @_;
+  $self->GLMakeCurrent;
+  gl_init();
+  draw_cube();
+  $self->GLSwapBuffers;
   return IUP_DEFAULT;
-}
+};
 
-static int toggle_action_cb(Ihandle *ih, int state)
-{
-  printf("ACTION_CB(%s, state=%d) NAME=%s\n", IupGetClassName(ih), state, IupGetAttribute(ih, "NAME"));
+#----- GL control callbacks (just log the interaction) -----
+
+my $button_action_cb = sub {
+  my ($self) = @_;
+  printf "ACTION_CB(%s) NAME=%s\n", $self->GetClassName, $self->GetAttribute("NAME") // '';
   return IUP_DEFAULT;
-}
+};
 
-static int link_action_cb(Ihandle *ih, const char* url)
-{
-  printf("ACTION_CB(%s, url=%s)\n", IupGetClassName(ih), url);
+my $toggle_action_cb = sub {
+  my ($self, $state) = @_;
+  printf "ACTION_CB(%s, state=%d) NAME=%s\n", $self->GetClassName, $state, $self->GetAttribute("NAME") // '';
   return IUP_DEFAULT;
-}
+};
 
-static int val_action_cb(Ihandle *ih)
-{
-  Ihandle* pbar = (Ihandle*)IupGetAttribute(ih, "PROGRESSBAR");
-  IupSetStrAttribute(pbar, "VALUE", IupGetAttribute(ih, "VALUE"));
-  printf("ACTION_CB(%s, value=%0.1f) NAME=%s\n", IupGetClassName(ih), IupGetFloat(ih, "VALUE"), IupGetAttribute(ih, "NAME"));
+my $link_action_cb = sub {
+  my ($self, $url) = @_;
+  printf "ACTION_CB(%s, url=%s)\n", $self->GetClassName, $url // '';
   return IUP_DEFAULT;
-}
+};
 
-static int expand_cb(Ihandle *ih)
-{
-  printf("ACTION(%s)\n", IupGetClassName(ih));
+my $expand_cb = sub {
+  my ($self) = @_;
+  printf "ACTION(%s)\n", $self->GetClassName;
   return IUP_DEFAULT;
-}
+};
 
-static int extrabutton_cb(Ihandle *ih, int button, int pressed)
-{
-  printf("EXTRABUTTON_CB(%s, but=%d, press=%d)\n", IupGetClassName(ih), button, pressed);
+my $extrabutton_cb = sub {
+  my ($self, $but, $pressed) = @_;
+  printf "EXTRABUTTON_CB(%s, but=%d, press=%d)\n", $self->GetClassName, $but, $pressed;
   return IUP_DEFAULT;
+};
+
+#----- build the GL controls -----
+
+my $glabel = IUP::GL::Label->new(TITLE => "Label", FONT => "Arial, 18", IMAGE => $image_Tecgraf);
+
+my $gbutton1 = IUP::GL::Button->new(TITLE => "Button", PADDING => "5x5",
+                                    NAME => "button1", TIP => "Button Tip",
+                                    ACTION => $button_action_cb);
+
+my $gbutton2 = IUP::GL::Button->new(PADDING => "5x5", IMAGE => $image_FileSave,
+                                    NAME => "button2", ACTION => $button_action_cb);
+
+my $gtoggle  = IUP::GL::Toggle->new(TITLE => "Toggle", PADDING => "5x5",
+                                    NAME => "toggle", ACTION => $toggle_action_cb);
+
+my $gtoggle1 = IUP::GL::Toggle->new(PADDING => "5x5", IMAGE => $image_Test,
+                                    NAME => "toggle1", ACTION => $toggle_action_cb);
+
+my $gtoggle2 = IUP::GL::Toggle->new(PADDING => "5x5", IMAGE => $image_Test,
+                                    NAME => "toggle2", ACTION => $toggle_action_cb);
+
+my $gsep1 = IUP::GL::Separator->new();
+
+my $glink = IUP::GL::Link->new(URL => "http://www.tecgraf.puc-rio.br/iup",
+                               TITLE => "IUP Toolkit", ACTION => $link_action_cb);
+
+my $pbar1 = IUP::GL::ProgressBar->new(VALUE => "0.3", SHOW_TEXT => "Yes");
+
+my $gval1 = IUP::GL::Val->new(VALUE => "0.3", NAME => "val1", TIP => "Val Tip",
+                              VALUECHANGED_CB => sub {
+                                my ($self) = @_;
+                                $pbar1->SetAttribute("VALUE", $self->GetAttribute("VALUE"));
+                                printf "ACTION_CB(%s, value=%0.1f) NAME=%s\n",
+                                  $self->GetClassName, $self->GetAttribute("VALUE"), $self->GetAttribute("NAME") // '';
+                                return IUP_DEFAULT;
+                              });
+
+my $hbox = IUP::Hbox->new(child => [$glabel, $gsep1, $gbutton1, $gtoggle, $glink, $pbar1, $gval1],
+                          ALIGNMENT => "ACENTER", MARGIN => "5x5", GAP => "5");
+
+my $pbar2 = IUP::GL::ProgressBar->new(VALUE => "0.3", ORIENTATION => "VERTICAL");
+
+my $gval2 = IUP::GL::Val->new(VALUE => "0.3", ORIENTATION => "VERTICAL", NAME => "val2",
+                              VALUECHANGED_CB => sub {
+                                my ($self) = @_;
+                                $pbar2->SetAttribute("VALUE", $self->GetAttribute("VALUE"));
+                                printf "ACTION_CB(%s, value=%0.1f) NAME=%s\n",
+                                  $self->GetClassName, $self->GetAttribute("VALUE"), $self->GetAttribute("NAME") // '';
+                                return IUP_DEFAULT;
+                              });
+
+my $gsep2 = IUP::GL::Separator->new(ORIENTATION => "HORIZONTAL");
+
+my $vbox = IUP::Vbox->new(
+  child => [
+    $gbutton2,
+    $gsep2,
+    IUP::Radio->new(child => IUP::Vbox->new(child => [$gtoggle1, $gtoggle2], MARGIN => "0x0")),
+    $pbar2,
+    $gval2,
+  ],
+  ALIGNMENT => "ACENTER", MARGIN => "5x5", GAP => "5");
+
+my $gtoggle5 = IUP::GL::Toggle->new(TITLE => "Toggle", PADDING => "5x5",
+                                    NAME => "toggle5", CHECKMARK => "Yes", ACTION => $toggle_action_cb);
+
+my $gtoggle3 = IUP::GL::Toggle->new(TITLE => "Radio Toggle", PADDING => "5x5",
+                                    NAME => "toggle3", CHECKMARK => "Yes", ACTION => $toggle_action_cb);
+
+my $gtoggle4 = IUP::GL::Toggle->new(TITLE => "Radio Toggle", PADDING => "5x5", IMAGE => $image_Test,
+                                    NAME => "toggle4", CHECKMARK => "Yes", ACTION => $toggle_action_cb);
+
+my $vbox2 = IUP::Vbox->new(child => [
+  IUP::Radio->new(child => IUP::Vbox->new(child => [$gtoggle3, $gtoggle4], MARGIN => "0x0")),
+  $gtoggle5,
+]);
+
+my $gsbox = IUP::GL::ScrollBox->new(child => $vbox2, RASTERSIZE => "90x90");
+$gsbox = IUP::GL::SizeBox->new(child => $gsbox);
+
+my $gframe1 = IUP::GL::Frame->new(child => $hbox, TITLE => "Frame1");
+my $gframe2 = IUP::GL::Frame->new(child => $vbox, BACKCOLOR => "250 250 160", FRAMECOLOR => "250 250 160");
+my $gframe3 = IUP::GL::Frame->new(child => $gsbox, TITLE => "Frame3", TITLEBOX => "Yes");
+
+my $gexp1 = IUP::GL::Expander->new(child => $gframe1, TITLE => "Expander",
+                                   ACTION => $expand_cb, EXTRABUTTONS => "3", EXTRABUTTON_CB => $extrabutton_cb);
+my $gexp2 = IUP::GL::Expander->new(child => $gframe2, BARPOSITION => "LEFT");
+
+my $text = IUP::Text->new(VALUE => "Text");
+
+my $matrix = IUP::Matrix->new(NUMLIN => "3", NUMCOL => "2",
+                              NUMLIN_VISIBLE => "3", NUMCOL_VISIBLE => "2", SCROLLBAR => "No");
+$matrix->SetAttribute("0:0", "Inflation");
+$matrix->SetAttribute("1:0", "Medicine");
+$matrix->SetAttribute("2:0", "Food");
+$matrix->SetAttribute("3:0", "Energy");
+$matrix->SetAttribute("0:1", "January 2000");
+$matrix->SetAttribute("0:2", "February 2000");
+$matrix->SetAttribute("1:1", "5.6");
+$matrix->SetAttribute("2:1", "2.2");
+$matrix->SetAttribute("3:1", "4.1");
+$matrix->SetAttribute("1:2", "10");
+$matrix->SetAttribute("2:2", "1");
+$matrix->SetAttribute("3:2", "0.5");
+
+my $vbox3 = IUP::GL::Frame->new(child => IUP::Vbox->new(child => [$text, $matrix]), TITLE => "Frame4");
+
+#----- the expander's extra-button images (palette images from img_open/img_close) -----
+
+my $image_open  = IUP::Image->new(pixels => $pixels_open,  colors => ["BGCOLOR", "192 192 192"]);
+my $image_close = IUP::Image->new(pixels => $pixels_close, colors => ["BGCOLOR", "192 192 192"]);
+my $image_high  = IUP::Image->new(pixels => $pixels_close);
+$image_high->SetAttribute("1", "192 192 192");
+
+for my $n (1 .. 3) {
+  $gexp1->SetAttribute("IMAGEEXTRA$n",          $image_close);
+  $gexp1->SetAttribute("IMAGEEXTRAPRESS$n",     $image_open);
+  $gexp1->SetAttribute("IMAGEEXTRAHIGHLIGHT$n", $image_high);
 }
 
-void GLCanvasCubeTest(void)
-{
-  Ihandle *dlg, *canvas, *box, *gtoggle, *gtoggle1, *gtoggle2,
-    *hbox, *vbox, *glabel, *gsep1, *gsep2, *gbutton1, *gbutton2,
-    *pbar1, *pbar2, *glink, *gval1, *gval2, *gframe1, *gframe2,
-    *gexp1, *gexp2, *image_open, *image_close, *image_high,
-    *gframe3, *vbox2, *gtoggle3, *gtoggle4, *gtoggle5, *gsbox,
-    *text, *vbox3, *matrix;
+#----- position the controls on the GL canvas and wire up the cube callbacks -----
 
-  IupGLCanvasOpen();
-  IupGLControlsOpen();
-  IupControlsOpen();
+$gexp1->SetAttribute(HORIZONTALALIGN => "ACENTER", VERTICALALIGN => "ATOP", MOVEABLE => "Yes");
+$gexp2->SetAttribute(HORIZONTALALIGN => "ALEFT",   VERTICALALIGN => "ACENTER");
+$gframe3->SetAttribute(MOVEABLE => "Yes", POSITION => "550,200");
+$vbox3->SetAttribute(MOVEABLE => "Yes", POSITION => "250,350");
 
-  glabel = IupGLLabel("Label");
-//  IupSetAttribute(glabel, "FGCOLOR", "255 255 255");
-  IupSetAttribute(glabel, "FONT", "Arial, 18");
-  IupSetAttributeHandle(glabel, "IMAGE", load_image_Tecgraf());
+my $canvas = IUP::GL::CanvasBox->new(
+  child => [$gexp1, $gexp2, $gframe3, $vbox3],
+  BUFFER => "DOUBLE", MARGIN => "10x10",
+  ACTION => $action, BUTTON_CB => $button_cb, MOTION_CB => $motion_cb);
 
-  gbutton1 = IupGLButton("Button");
-  IupSetAttribute(gbutton1, "PADDING", "5x5");
-  //IupSetAttribute(gbutton1, "BGCOLOR", "245 0 245 92");
-  IupSetCallback(gbutton1, "ACTION", button_action_cb);
-  IupSetAttribute(gbutton1, "NAME", "button1");
-  IupSetAttribute(gbutton1, "TIP", "Button Tip");
-//  IupSetAttribute(gbutton1, "RASTERSIZE", "x100");
+#----- the dialog -----
 
-  gbutton2 = IupGLButton(NULL);
-  IupSetAttribute(gbutton2, "PADDING", "5x5");
-  IupSetAttributeHandle(gbutton2, "IMAGE", load_image_FileSave());
-  IupSetCallback(gbutton2, "ACTION", button_action_cb);
-  IupSetAttribute(gbutton2, "NAME", "button2");
+my $dlg = IUP::Dialog->new(child => IUP::Vbox->new(child => [$canvas], MARGIN => "5x5"),
+                           TITLE => "IUP::GL::CanvasBox Test", RASTERSIZE => "800x600");
 
-  gtoggle = IupGLToggle("Toggle");
-  IupSetAttribute(gtoggle, "PADDING", "5x5");
-  IupSetCallback(gtoggle, "ACTION", (Icallback)toggle_action_cb);
-  IupSetAttribute(gtoggle, "NAME", "toggle");
+$dlg->ShowXY(IUP_CENTER, IUP_CENTER);
+$dlg->RASTERSIZE(undef);   # reset the initial size limit
 
-  gtoggle1 = IupGLToggle(NULL);
-  IupSetAttribute(gtoggle1, "PADDING", "5x5");
-  IupSetAttributeHandle(gtoggle1, "IMAGE", load_image_Test());
-  IupSetCallback(gtoggle1, "ACTION", (Icallback)toggle_action_cb);
-  IupSetAttribute(gtoggle1, "NAME", "toggle1");
+# optional: report the GL implementation (diagnostic, like the original C)
+$canvas->GLMakeCurrent;
+eval {
+  printf "Vendor: %s\n",   scalar glGetString(GL_VENDOR);
+  printf "Renderer: %s\n", scalar glGetString(GL_RENDERER);
+  printf "Version: %s\n",  scalar glGetString(GL_VERSION);
+  1;
+};
 
-  gtoggle2 = IupGLToggle(NULL);
-  IupSetAttribute(gtoggle2, "PADDING", "5x5");
-  IupSetAttributeHandle(gtoggle2, "IMAGE", load_image_Test());
-  IupSetCallback(gtoggle2, "ACTION", (Icallback)toggle_action_cb);
-  IupSetAttribute(gtoggle2, "NAME", "toggle2");
-
-  gsep1 = IupGLSeparator();
-
-  glink = IupGLLink("http://www.tecgraf.puc-rio.br/iup", "IUP Toolkit");
-  IupSetCallback(glink, "ACTION", (Icallback)link_action_cb);
-
-  pbar1 = IupGLProgressBar();
-  IupSetAttribute(pbar1, "VALUE", "0.3");
-  IupSetAttribute(pbar1, "SHOW_TEXT", "Yes");
-
-  gval1 = IupGLVal();
-  IupSetAttribute(gval1, "VALUE", "0.3");
-  IupSetCallback(gval1, "VALUECHANGED_CB", val_action_cb);
-  IupSetAttribute(gval1, "PROGRESSBAR", (char*)pbar1);
-  IupSetAttribute(gval1, "NAME", "val1");
-  IupSetAttribute(gval1, "TIP", "Val Tip");
-
-  hbox = IupHbox(glabel, gsep1, gbutton1, gtoggle, glink, pbar1, gval1, NULL);
-  IupSetAttribute(hbox, "ALIGNMENT", "ACENTER");
-  IupSetAttribute(hbox, "MARGIN", "5x5");
-  IupSetAttribute(hbox, "GAP", "5");
-
-  pbar2 = IupGLProgressBar();
-  IupSetAttribute(pbar2, "VALUE", "0.3");
-  IupSetAttribute(pbar2, "ORIENTATION", "VERTICAL");
-
-  gval2 = IupGLVal();
-  IupSetAttribute(gval2, "VALUE", "0.3");
-  IupSetAttribute(gval2, "ORIENTATION", "VERTICAL");
-  IupSetCallback(gval2, "VALUECHANGED_CB", val_action_cb);
-  IupSetAttribute(gval2, "PROGRESSBAR", (char*)pbar2);
-  IupSetAttribute(gval2, "NAME", "val2");
-
-  gsep2 = IupGLSeparator();
-  IupSetAttribute(gsep2, "ORIENTATION", "HORIZONTAL");
-
-  vbox = IupVbox(gbutton2, gsep2, 
-    IupRadio(IupSetAttributes(IupVbox(gtoggle1, gtoggle2, NULL), "MARGIN=0x0")),
-    pbar2,
-    gval2,
-    NULL);
-  IupSetAttribute(vbox, "ALIGNMENT", "ACENTER");
-  IupSetAttribute(vbox, "MARGIN", "5x5");
-  IupSetAttribute(vbox, "GAP", "5");
-
-  gtoggle5 = IupGLToggle("Toggle");
-  IupSetAttribute(gtoggle5, "PADDING", "5x5");
-  IupSetCallback(gtoggle5, "ACTION", (Icallback)toggle_action_cb);
-  IupSetAttribute(gtoggle5, "NAME", "toggle5");
-  IupSetAttribute(gtoggle5, "CHECKMARK", "Yes");
-//  IupSetAttribute(gtoggle5, "RIGHTBUTTON", "Yes");
-
-  gtoggle3 = IupGLToggle("Radio Toggle");
-  IupSetAttribute(gtoggle3, "PADDING", "5x5");
-  IupSetCallback(gtoggle3, "ACTION", (Icallback)toggle_action_cb);
-  IupSetAttribute(gtoggle3, "NAME", "toggle3");
-  IupSetAttribute(gtoggle3, "CHECKMARK", "Yes");
-
-  gtoggle4 = IupGLToggle("Radio Toggle");
-  IupSetAttribute(gtoggle4, "PADDING", "5x5");
-  IupSetAttributeHandle(gtoggle4, "IMAGE", load_image_Test());
-  IupSetCallback(gtoggle4, "ACTION", (Icallback)toggle_action_cb);
-  IupSetAttribute(gtoggle4, "NAME", "toggle4");
-  IupSetAttribute(gtoggle4, "CHECKMARK", "Yes");
-//  IupSetAttribute(gtoggle4, "RIGHTBUTTON", "Yes");
-
-  vbox2 = IupVbox(
-    IupRadio(IupSetAttributes(IupVbox(gtoggle3, gtoggle4, NULL), "MARGIN=0x0")),
-    gtoggle5,
-    NULL);
-
-  gsbox = IupSetAttributes(IupGLScrollBox(vbox2), "RASTERSIZE=90x90");
-  gsbox = IupGLSizeBox(gsbox);
-
-  gframe1 = IupSetAttributes(IupGLFrame(hbox), "TITLE=Frame1");
-  gframe2 = IupSetAttributes(IupGLFrame(vbox), "BACKCOLOR=\"250 250 160\", FRAMECOLOR=\"250 250 160\"");
-  gframe3 = IupSetAttributes(IupGLFrame(gsbox), "TITLE=Frame3, TITLEBOX=Yes");
-
-  gexp1 = IupSetAttributes(IupGLExpander(gframe1), "TITLE=Expander");
-  gexp2 = IupSetAttributes(IupGLExpander(gframe2), "BARPOSITION=LEFT");
-
-  text = IupText(NULL);
-  IupSetAttribute(text, "VALUE", "Text");
-
-  matrix = IupMatrix(NULL);
-  IupSetAttribute(matrix, "NUMLIN", "3");
-  IupSetAttribute(matrix, "NUMCOL", "2");
-  IupSetAttribute(matrix, "NUMLIN_VISIBLE", "3");
-  IupSetAttribute(matrix, "NUMCOL_VISIBLE", "2");
-  IupSetAttribute(matrix, "0:0", "Inflation");
-  IupSetAttribute(matrix, "1:0", "Medicine");
-  IupSetAttribute(matrix, "2:0", "Food");
-  IupSetAttribute(matrix, "3:0", "Energy");
-  IupSetAttribute(matrix, "0:1", "January 2000");
-  IupSetAttribute(matrix, "0:2", "February 2000");
-  IupSetAttribute(matrix, "1:1", "5.6");
-  IupSetAttribute(matrix, "2:1", "2.2");
-  IupSetAttribute(matrix, "3:1", "4.1");
-  IupSetAttribute(matrix, "1:2", "10");
-  IupSetAttribute(matrix, "2:2", "1");
-  IupSetAttribute(matrix, "3:2", "0.5");
-//  IupSetAttribute(matrix, "EXPAND", "No");
-  IupSetAttribute(matrix, "SCROLLBAR", "No");
-
-  vbox3 = IupVbox(
-    text,
-    matrix,
-    NULL);
-
-  vbox3 = IupSetAttributes(IupGLFrame(vbox3), "TITLE=Frame4");
-
-  canvas = IupGLCanvasBox(
-    IupSetAttributes(gexp1, "HORIZONTALALIGN=ACENTER, VERTICALALIGN=ATOP, MOVEABLE=Yes"),
-    IupSetAttributes(gexp2, "HORIZONTALALIGN=ALEFT, VERTICALALIGN=ACENTER"),
-    IupSetAttributes(gframe3, "MOVEABLE=Yes, POSITION=\"550,200\""),
-    IupSetAttributes(vbox3, "MOVEABLE=Yes, POSITION=\"250,350\""),
-    NULL);
-
-  image_open = IupImage(16, 16, img_open);
-  image_close = IupImage(16, 16, img_close);
-  image_high = IupImage(16, 16, img_close);
-  IupSetAttribute(image_open, "0", "BGCOLOR");
-  IupSetAttribute(image_open, "1", "192 192 192");
-  IupSetAttribute(image_close, "0", "BGCOLOR");
-  IupSetAttribute(image_close, "1", "192 192 192");
-  IupSetAttribute(image_high, "1", "192 192 192");
-
-  //  IupSetAttribute(gexp1, "BARSIZE", "50");
-  //  IupSetAttributeHandle(gexp1, "IMAGE", image_close);
-  //  IupSetAttributeHandle(gexp1, "IMOPEN", image_open);
-  //  IupSetAttribute(gexp1, "IMAGE", "img1");
-  IupSetCallback(gexp1, "ACTION", (Icallback)expand_cb);
-  IupSetAttribute(gexp1, "EXTRABUTTONS", "3");
-  IupSetCallback(gexp1, "EXTRABUTTON_CB", (Icallback)extrabutton_cb);
-  IupSetAttributeHandle(gexp1, "IMAGEEXTRA1", image_close);
-  IupSetAttributeHandle(gexp1, "IMAGEEXTRAPRESS1", image_open);
-  IupSetAttributeHandle(gexp1, "IMAGEEXTRAHIGHLIGHT1", image_high);
-  IupSetAttributeHandle(gexp1, "IMAGEEXTRA2", image_close);
-  IupSetAttributeHandle(gexp1, "IMAGEEXTRAPRESS2", image_open);
-  IupSetAttributeHandle(gexp1, "IMAGEEXTRAHIGHLIGHT2", image_high);
-  IupSetAttributeHandle(gexp1, "IMAGEEXTRA3", image_close);
-  IupSetAttributeHandle(gexp1, "IMAGEEXTRAPRESS3", image_open);
-  IupSetAttributeHandle(gexp1, "IMAGEEXTRAHIGHLIGHT3", image_high);
-  //IupSetAttribute(gexp1, "REDRAWALL", "No");
-
-  IupSetCallback(canvas, "ACTION", action);
-  IupSetCallback(canvas, "BUTTON_CB", (Icallback)button_cb);
-  IupSetCallback(canvas, "MOTION_CB", (Icallback)motion_cb);
-  IupSetAttribute(canvas, "BUFFER", "DOUBLE");
-  IupSetAttribute(canvas, "MARGIN", "10x10");
-
-  box = IupVbox(canvas, NULL);
-  IupSetAttribute(box, "MARGIN", "5x5");
-
-  dlg = IupDialog(box);
-  IupSetAttribute(dlg, "TITLE", "IupGLCanvas Test");
-  IupSetAttribute(dlg, "RASTERSIZE", "800x600");
-
-  IupMap(dlg);
-
-  IupGLMakeCurrent(canvas);
-  printf("Vendor: %s\n", glGetString(GL_VENDOR));
-  printf("Renderer: %s\n", glGetString(GL_RENDERER));
-  printf("Version: %s\n", glGetString(GL_VERSION));
-
-  IupShowXY(dlg, IUP_CENTER, IUP_CENTER);
-  IupSetAttribute(dlg, "RASTERSIZE", NULL);
-}
-
-#ifndef BIG_TEST
-int main(int argc, char* argv[])
-{
-  IupOpen(&argc, &argv);
-
-  GLCanvasCubeTest();
-
-  IupMainLoop();
-
-  IupClose();
-
-  return EXIT_SUCCESS;
-}
-#endif
-#endif
+IUP->MainLoop;

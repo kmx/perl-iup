@@ -127,7 +127,7 @@ sub SimpleDraw {
   # Draw text at center, with orientation,
   # and draw its bounding box.
   # Notice that in some drivers the bounding box is not precise.
-  ($x0, $y0, $x1, $y1, $x2, $y2, $x3, $y3) = $canvas->cdGetTextBounds($w/2, $h/2, "cdMin Draw (згн)");
+  ($x0, $y0, $x1, $y1, $x2, $y2, $x3, $y3) = $canvas->cdGetTextBounds($w/2, $h/2, "cdMin Draw (пїЅпїЅпїЅ)");
   $canvas->cdForeground(CD_RED);
   $canvas->cdBegin(CD_CLOSED_LINES);
   $canvas->cdVertex($x0, $y0);
@@ -136,7 +136,7 @@ sub SimpleDraw {
   $canvas->cdVertex($x3, $y3);
   $canvas->cdEnd();
   $canvas->cdForeground(CD_BLUE);
-  $canvas->cdText($w/2, $h/2, "cdMin Draw (згн)");
+  $canvas->cdText($w/2, $h/2, "cdMin Draw (пїЅпїЅпїЅ)");
 
   # Prepare World Coordinates
   $canvas->wdViewport(0,$w-1,0,$h-1);
@@ -330,11 +330,18 @@ SimpleDraw($canvas);
 $canvas->cdKillCanvas(); 
 undef $canvas; #XXX-FIXME why we need 'undef $canvas' and '$canvas->cdKillCanvas()' is not enough?
 
-warn "Saving ...\n";
-$canvas = IUP::Canvas::FileVector->new( format=>"EMF", filename=>"tmp-testoutput.emf", width=>1280, height=>938 );
-SimpleDraw($canvas);
-$canvas->cdKillCanvas;
-undef $canvas;
+# EMF is a Windows-only CD driver - IUP::Canvas::FileVector->new() returns undef
+# elsewhere, so only attempt it on Windows.
+if ($^O eq 'MSWin32') {
+  warn "Saving ...\n";
+  $canvas = IUP::Canvas::FileVector->new( format=>"EMF", filename=>"tmp-testoutput.emf", width=>1280, height=>938 );
+  SimpleDraw($canvas);
+  $canvas->cdKillCanvas;
+  undef $canvas;
+}
+else {
+  warn "Skipping EMF output (EMF driver is Windows-only)\n";
+}
 
 warn "Saving ...\n";
 $canvas = IUP::Canvas::FileBitmap->new( width=>1280, height=>938, dpi=>120 );
