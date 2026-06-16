@@ -11,6 +11,12 @@ between months and years and pick a day from the displayed month grid.
 
 GTK and Windows only. NOT available in Motif. (since iup-3.17)
 
+=begin HTML
+
+[% html.iupcalendar %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

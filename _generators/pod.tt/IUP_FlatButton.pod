@@ -15,6 +15,12 @@ native control it has more flexibility for additional options and is fully
 customizable. It can also behave like an L<IUP::Toggle|IUP::Toggle> (without
 the checkmark). It inherits from L<IUP::Canvas|IUP::Canvas>.
 
+=begin HTML
+
+[% html.iupflatbutton %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

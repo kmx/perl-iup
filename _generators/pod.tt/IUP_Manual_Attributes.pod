@@ -926,8 +926,6 @@ Defines the element's cursor.
 
 It will check first for the following predefined names:
 
-XXX-FIXME-missing-image
-
 [% h.at_default %] "ARROW"
 
 (*) To use these cursors on Windows, the B<iup.rc> file, provided with

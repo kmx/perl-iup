@@ -26,6 +26,38 @@ Creates a L<MathGL|http://mathgl.sourceforge.net/> based element for creating 2D
 
 =end HTML
 
+Examples of some of the supported plot modes:
+
+=begin HTML
+
+<p>
+  <table border="1">
+    <tbody>
+    <tr>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.32/ctrl/images/iupmglplot_area.png" border="0"></td>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.32/ctrl/images/iupmglplot_bar.png" border="0"></td>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.32/ctrl/images/iupmglplot_bar3d.png" border="0"></td>
+    </tr>
+    <tr>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.32/ctrl/images/iupmglplot_barhorizontal.png" border="0"></td>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.32/ctrl/images/iupmglplot_crust.png" border="0"></td>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.32/ctrl/images/iupmglplot_dots.png" border="0"></td>
+    </tr>
+    <tr>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.32/ctrl/images/iupmglplot_chart.png" border="0"></td>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.32/ctrl/images/iupmglplot_chartpie.png" border="0"></td>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.32/ctrl/images/iupmglplot_line.png" border="0"></td>
+    </tr>
+    <tr>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.32/ctrl/images/iupmglplot_radar.png" border="0"></td>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.32/ctrl/images/iupmglplot_stem.png" border="0"></td>
+      <td><img src="http://kmx.github.io/perl-iup/img-3.32/ctrl/images/iupmglplot_step.png" border="0"></td>
+    </tr>
+  </table>
+</p>
+
+=end HTML
+
 =head1 USAGE
 
 =head2 CREATION - new() method

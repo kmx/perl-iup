@@ -1427,9 +1427,12 @@ Action generated when the text is
 edited, but before its value is actually changed. Can be generated when
 using the keyboard, undo/redo system or from the clipboard.
 
- XXXXXX-TODO: int function(Ihandle *ih, int insert, int pos, int length, char* text ); [in C]elem:action(insert: boolean, pos, length: number, text: string) -> (ret: number) [in Lua]
+ sub action_handler {
+   my ($self, $insert, $pos, $length, $text) = @_;
+   #...
+ }
 
-B<$ih> - identifier of the element that activated the event.
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
 B<$insert> - =1 when text is inserted, =0 when text is deleted.
 
@@ -1437,19 +1440,22 @@ B<$pos> - 0 based character position when change started.
 
 B<$length> - size of the change.
 
-B<$text> - the inserted text value. It is NULL when insert=0.
+B<$text> - the inserted text value. It is C<undef> when insert=0.
 
 =item * B<AUTOCSELECTION_CB>
 
 Action generated when the user has selected an
 item in an auto-completion list. It is sent before the selection is
-inserted. Automatic insertion can be cancelled by setting the B<
-AUTOCCANCEL> attribute before returning from the callback. (since
+inserted. Automatic insertion can be cancelled by setting the
+B<AUTOCCANCEL> attribute before returning from the callback. (since
 3.10.1)
 
- XXX-TODO: int function(Ihandle *ih, int pos, char* text ); [in C]elem:autocselection_cb(pos: number, text: string) -> (ret: number) [in Lua]
+ sub autocselection_cb_handler {
+   my ($self, $pos, $text) = @_;
+   #...
+ }
 
-B<$ih> - identifier of the element that activated the event.
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
 B<$pos> - 0 based character start position of the word being completed.
 
@@ -1460,26 +1466,30 @@ B<$text> - the text of the selection.
 Called after the user has cancelled an
 auto-completion list. (since 3.10.1)
 
- XXX-TODO: int function(Ihandle *ih); [in C]elem:autoccancelled_cb() -> (ret: number) [in Lua]
+ sub autoccancelled_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
-B<$ih> - identifier of the element that activated the event.
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
 =item * B<AUTOCCHARDELETED_CB>
 
 Called after the user deleted a character while
 auto-completion list was active. (since 3.10.1)
 
- XXX-TODO: int function(Ihandle *ih); [in C]elem:autocchardeleted_cb() -> (ret: number) [in Lua]
+ sub autocchardeleted_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
-B<$ih> - identifier of the element that activated the event.
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
-=item * L<BUTTON_CB|../call/iup_button_cb.html>
+=item * L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB>
 
 Action generated when any
 mouse button is pressed or released. Use
-=back
-
-=item * L<IUP::ConvertXYToPos|IUP::ConvertXYToPos> to convert (x,y)
+C<ConvertXYToPos> to convert (x,y)
 coordinates in character positioning.
 
 =item * B<CARET_CB>
@@ -1487,15 +1497,18 @@ coordinates in character positioning.
 Action generated when the caret/cursor position is
 changed.
 
- XXX-TODO: int function(Ihandle *ih, int lin, int col, int pos); [in C]elem - caret_cb(lin, col, pos: number) -> (ret: number) [in Lua]
+ sub caret_cb_handler {
+   my ($self, $lin, $col, $pos) = @_;
+   #...
+ }
 
-B<$ih> - identifier of the element that activated the event.
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
-B<$lin, col> - line and column number (start at 0).
+B<$lin>, B<$col> - line and column number (start at 0).
 
 B<$pos> - 0 based character position.
 
-=item * L<DROPFILES_CB|../call/iup_dropfiles_cb.html>
+=item * L<DROPFILES_CB|IUP::Manual::04_Callbacks/DROPFILES_CB>
 
 Action generated when
 one or more files are dropped in the element.
@@ -1505,9 +1518,12 @@ one or more files are dropped in the element.
 Action generated when the user clicks or double
 clicks on text that is in a style with the hotspot attribute set.
 
- XXX-TODO: int function(Ihandle *ih, int pos, int lin, int col, char* status); [in C]elem:hotspotclick_cb(pos, lin, col: number, status: string) -> (ret: number) [in Lua]
+ sub hotspotclick_cb_handler {
+   my ($self, $pos, $lin, $col, $status) = @_;
+   #...
+ }
 
-B<$ih> - identifier of the element that activated the event.
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
 B<$pos> - the character position in the document that corresponds to the
 hotspot click.
@@ -1518,17 +1534,19 @@ B<$col> - column in the document that corresponds to the hotspot click.
 
 B<$status> - status of mouse buttons and certain keyboard keys at the
 moment the event was generated. The same macros used for
-
-=item * L<BUTTON_CB|../call/iup_button_cb.html> can be used for this status.
+L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB> can be used for this status.
 
 =item * B<MARGINCLICK_CB>
 
 Action generated when the mouse button is clicked
 inside a margin that is marked as sensitive.
 
- XXX-TODO: int function(Ihandle *ih, int margin, int lin, char* status); [in C]elem - marginclick_cb(margin, lin: number, status: string) -> (ret: number) [in Lua]
+ sub marginclick_cb_handler {
+   my ($self, $margin, $lin, $status) = @_;
+   #...
+ }
 
-B<$ih> - identifier of the element that activated the event.
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
 B<$margin> - the margin number that was clicked.
 
@@ -1536,25 +1554,27 @@ B<$lin> - line in the document that corresponds to the margin click.
 
 B<$status> - status of mouse buttons and certain keyboard keys at the
 moment the event was generated. The same macros used for
+L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB> can be used for this status.
 
-=item * L<BUTTON_CB>
-
-=item * L<MOTION_CB>
+=item * L<MOTION_CB|IUP::Manual::04_Callbacks/MOTION_CB>
 
 Action generated when the
-mouse is moved. Use L<ConvertXYToPos|ConvertXYToPos>
+mouse is moved. Use C<ConvertXYToPos>
 to convert (x,y) coordinates in character positioning.
 
 =item * B<SAVEPOINT_CB>
 
 Notifies the application that a save
-point was reached (1) or left (0). Can be used to controls whether to
+point was reached (1) or left (0). Can be used to control whether to
 display a saved or modified document. To set the save point use the
 L<SAVEDSTATE> attribute.
 
- XXX-TODO: int function(Ihandle *ih, int status); [in C]elem savepoint_cb(status - number) -> (ret: number) [in Lua]
+ sub savepoint_cb_handler {
+   my ($self, $status) = @_;
+   #...
+ }
 
-B<$ih> - identifier of the element that activated the event.ih> - identifier of the element that activated the event.
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
 B<$status> - can be 1 (reached) or 0 (left).
 
@@ -1563,9 +1583,12 @@ B<$status> - can be 1 (reached) or 0 (left).
 Called after the value was interactively changed by
 the user.
 
- XXX-TODO: int function(Ihandle *ih); [in C]elem:valuechanged_cb() -> (ret: number) [in Lua]
+ sub valuechanged_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
-B<$ih> - identifier of the element that activated the event.
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
 =item * B<ZOOM_CB>
 
@@ -1574,18 +1597,24 @@ using the keyboard or the ZOOM attribute. Can be used to recalculate
 positions, such as the width of the line number margin to maintain
 sizes in terms of characters rather than pixels.
 
- XXX-TODO: int function(Ihandle *ih, int zoomInPoints); [in C]elem:zoom_cb(zoomInPoints: number) -> (ret: number) [in Lua]
+ sub zoom_cb_handler {
+   my ($self, $zoomInPoints) = @_;
+   #...
+ }
 
-B<$ih> - identifier of the element that activated the event.ih> - identifier of the element that activated the event.
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
-B<$ih> - identifier of the element that activated the event.zoomInPoints> - the current zoom factor.
+B<$zoomInPoints> - the current zoom factor.
 
 =item * B<INSERTCHECK_CB>
 
 Action generated before text is inserted, allowing the application to
 inspect the insertion.
 
- my ($self, $pos, $length, $text) = @_;
+ sub insertcheck_cb_handler {
+   my ($self, $pos, $length, $text) = @_;
+   #...
+ }
 
 B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
@@ -1599,7 +1628,10 @@ B<$text> - the text being inserted.
 
 Action generated when the number of lines changes.
 
- my ($self, $lin, $linesAdded) = @_;
+ sub lineschanged_cb_handler {
+   my ($self, $lin, $linesAdded) = @_;
+   #...
+ }
 
 B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
@@ -1611,7 +1643,10 @@ B<$linesAdded> - the number of lines added (negative when lines were removed).
 
 Action generated when the document content is updated.
 
- my ($self) = @_;
+ sub updatecontent_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
@@ -1619,7 +1654,10 @@ B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that acti
 
 Action generated when the horizontal scroll position is updated.
 
- my ($self) = @_;
+ sub updatehscroll_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
@@ -1627,7 +1665,10 @@ B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that acti
 
 Action generated when the selection is updated.
 
- my ($self) = @_;
+ sub updateselection_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 
@@ -1635,7 +1676,10 @@ B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that acti
 
 Action generated when the vertical scroll position is updated.
 
- my ($self) = @_;
+ sub updatevscroll_cb_handler {
+   my ($self) = @_;
+   #...
+ }
 
 B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
 

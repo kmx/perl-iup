@@ -13,6 +13,12 @@ L<IUP::Hbox|IUP::Hbox>). During the drag the ESC key can be pressed to
 cancel the action. It does not have a native representation, but it
 contains also an L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
 
+=begin HTML
+
+[% html.iupdetachbox %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

@@ -19,6 +19,12 @@ occurs. This is an additional control that depends on the CD library and is
 included in the L<IUP::Controls|IUP::Controls> library. It completely replaces
 the old L<IUP::PPlot|IUP::PPlot> control. (since iup-3.12)
 
+=begin HTML
+
+[% html.iupplot_ex %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

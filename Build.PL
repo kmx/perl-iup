@@ -57,7 +57,7 @@ if (-d '.git') { #adding some custom actions relevant only for module developmen
   }
   sub ACTION_gendoc {
     system($^X, qw[_generators/proc-pod.tt2pod.pl -podtt _generators/pod.tt -pod lib]);
-    system($^X, qw[_generators/proc-pod2cpan.html.pl -html tmp.cpan-like.html -pod lib]);
+    system($^X, qw[_generators/proc-pod2cpan.html.pl -html _tmp-cpan-like.html -pod lib]);
     return;
   }
   sub ACTION_touch {

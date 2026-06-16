@@ -11,6 +11,12 @@ element, which can display a calendar for selecting a date.
 In Windows it is a native element. In GTK and Motif it is a custom
 element. In Motif it is not capable of displaying the calendar.
 
+=begin HTML
+
+[% html.iupdatepick %]
+
+=end HTML
+
 [% h.usage %]
 
 [% h.create %]

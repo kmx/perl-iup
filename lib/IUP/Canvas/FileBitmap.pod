@@ -23,7 +23,7 @@ IUP::Canvas::FileBitmap - [special] 2D drawing canvas storing the result into bi
  $cnv->cdDumpBitmap("output.jpg", "JPEG");
  $cnv->cdKillCanvas;
 
-Supported constructors: XXX-TODO add some description
+Supported constructors:
 
  IUP::Canvas::FileBitmap->new( bitmap=>'file.png' );
  IUP::Canvas::FileBitmap->new( width=>$w, height=>$h );

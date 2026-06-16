@@ -13,6 +13,26 @@ L<IUP::Hbox|IUP::Hbox>). During the drag the ESC key can be pressed to
 cancel the action. It does not have a native representation, but it
 contains also an L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
 
+=begin HTML
+
+<p>
+  <table border="1">
+    <tbody align="center">
+      <tr>
+        <td style="text-align: center;">attached</td>
+        <td style="text-align: center;">detached</td>
+      </tr>
+      <tr>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.32/elem/images/iupdbox_vertical.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.32/elem/images/iupdbox_detached.png"></td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+
+=end HTML
+
 =head1 USAGE
 
 =head2 CREATION - new() method
