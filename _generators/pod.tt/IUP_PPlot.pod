@@ -6,10 +6,10 @@
 
 [% h.desc %]
 
-Creates a PPlot-based plot. PPlot is a library for creating plots that is system independent. 
+Creates a PPlot-based plot. PPlot is a library for creating plots that is system independent.
 
 It is available at SourceForge L<http://pplot.sourceforge.net|http://pplot.sourceforge.net/>.
-However the standard PPlot distribution source code was changed for iup_pplot library 
+However the standard PPlot distribution source code was changed for iup_pplot library
 (to improve features and visual appearance).
 
 =begin HTML
@@ -82,7 +82,7 @@ pressed the zoom selection is restored to a free rectangle.
 Each zoom in operation is stacked, so each zoom out operation goes back
 the the previous zoom selection.
 
-Zoom operates on B<AXS_XMAX, AXS_XMIN, AXS_YMAX, AXS_YMIN> even 
+Zoom operates on B<AXS_XMAX, AXS_XMIN, AXS_YMAX, AXS_YMIN> even
 if B<AUTOMIN/MAX> is enabled. The axis may be hidden depending on the
 selected rectangle.
 
@@ -136,7 +136,7 @@ Notice that DS_MODE must be set before other "DS_*" attributes.
 
   $plot->PlotNewDataSet($dim);
   # $dim = 1 (for 1D) or 2 (for 2D)
-  
+
 Creates an empty dataset to receive samples. The dimension of the data can be 1 or 2.
 
 =head3 PlotAdd1D()
@@ -190,7 +190,7 @@ the drawing after a resize is done.
 =head3 PlotPaintTo()
 
  $plot->PlotPaintTo($canvas);
- 
+
 Plots to the given canvas instead of the display canvas.
 
 Handy if you want to save the plot into L<IUP::Canvas::SVG> or L<IUP::Canvas::EMF> like this:
@@ -725,7 +725,7 @@ The element B<IUP::PPlot> is used in the following sample scripts:
 [%FOREACH e IN examples.iupplot %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -738,6 +738,6 @@ L<IUP::Canvas|IUP::Canvas>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iup_pplot.html|[%url.iuporigdoc%]ctrl/iup_pplot.html>
-[%END%] 
+[%END%]
 
 =cut

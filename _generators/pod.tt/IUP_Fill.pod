@@ -18,7 +18,7 @@ It does not have a native representation.
 [% h.create %]
 
  $fill = IUP::Fill->new( SIZE=>30 );
- 
+
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% txt.new_attr %]
@@ -73,7 +73,7 @@ The element B<IUP::Fill> is used in the following sample scripts:
 [%FOREACH e IN examples.iupfill %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -86,6 +86,6 @@ L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupfill.html|[%url.iuporigdoc%]elem/iupfill.html>
-[%END%] 
+[%END%]
 
 =cut

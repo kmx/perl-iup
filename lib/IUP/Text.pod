@@ -53,9 +53,9 @@ Creates an editable text field.
 <pre>
 $txt = IUP::Text->new( MULTILINE=>"YES", FORMATTING=>"YES");
 $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
-    ALIGNMENT=>"CENTER", 
+    ALIGNMENT=>"CENTER",
     SPACEAFTER=>"10",
-    FONTSIZE=>"24", 
+    FONTSIZE=>"24",
     SELECTION=>"3,1:3,50",
 ));
 $txt->SetAttribute( ADDFORMATTAG_HANDLE => IUP::User->new(
@@ -101,7 +101,7 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 I<[Windows and GTK Only] (non inheritable)>
 
 Text alignment. Possible values: "ALEFT", "ARIGHT", "ACENTER".
-  
+
 Default: "ALEFT". In Motif, text is always left aligned.
 
 =item B<APPEND>
@@ -131,7 +131,7 @@ I<(creation only) (non inheritable)>
 
 enables the focus
 traversal of the control. In Windows the control will still get the
-focus when clicked. Default: YES. 
+focus when clicked. Default: YES.
 
 =item B<PROPAGATEFOCUS>
 
@@ -194,7 +194,7 @@ I<(write-only)>
 clear, cut, copy or paste the selection to
 or from the clipboard. Values: "CLEAR", "CUT", "COPY" or "PASTE". In
 Windows UNDO is also available, and REDO is available when
-FORMATTING=YES. 
+FORMATTING=YES.
 
 =item B<COUNT>
 
@@ -209,7 +209,7 @@ I<[Windows Only] (non inheritable)>
 Text that is displayed
 when there is no text at the control. It works as a textual cue, or tip
 to prompt the user for input. Valid only for MULTILINE=NO, and it is
-not available for Windows 2000. 
+not available for Windows 2000.
 
 =item B<DRAGDROP>
 
@@ -237,7 +237,7 @@ attribute TXTFGCOLOR.
 I<[Windows Only] (non inheritable)>
 
 Allows a custom filter to
-process the characters: Can be LOWERCASE, UPPERCASE or NUMBER (only numbers allowed). 
+process the characters: Can be LOWERCASE, UPPERCASE or NUMBER (only numbers allowed).
 
 =item L<FORMATTING|IUP::Manual::03_Attributes/FORMATTING>
 
@@ -318,7 +318,7 @@ Default: YES. (since iup-3.16)
 I<[Windows and GTK Only] (non inheritable)>
 
 Turns the
-overwrite mode ON or OFF. Works only when FORMATTING=YES. 
+overwrite mode ON or OFF. Works only when FORMATTING=YES.
 
 =item B<PADDING>
 
@@ -364,7 +364,7 @@ I<(non inheritable, write only)>
 
 Scroll the text to make the
 given position visible. It uses the same format and reference of the
-CARET attribute ("lin:col" or "col" starting at 1). 
+CARET attribute ("lin:col" or "col" starting at 1).
 
 =item B<SCROLLTOPOS>
 
@@ -439,7 +439,7 @@ I<(non inheritable, creation only)>
 Enables a spin control
 attached to the element. Default: NO. The spin increments and
 decrements an integer number. The editing in the element is still
-available. 
+available.
 
 =item B<SPINVALUE>
 
@@ -523,14 +523,14 @@ B<Natural Size>, this means that will act also as minimum number of
 visible columns. It uses a wider character size then the one used for
 the SIZE attribute so strings will fit better without the need of extra
 columns. As for SIZE you can set to C<undef> after map to use it as an
-initial value. Default 5 
+initial value. Default 5
 
 =item B<VISIBLELINES>
 
 When MULTILINE=YES defines the number of visible lines
 for the B<Natural Size>, this means that will act also as minimum
 number of visible lines. As for SIZE you can set to C<undef> after map to
-use it as an initial value. Default: 1 
+use it as an initial value. Default: 1
 
 =item B<WORDWRAP>
 
@@ -599,7 +599,7 @@ returned.
 
 Action generated when any
 mouse button is pressed or released. Use L<ConvertXYToPos|IUP::Manual::02_Elements/"ConvertXYToPos()"> to convert (x,y)
-coordinates in character positioning. 
+coordinates in character positioning.
 
 =item B<CARET_CB>
 
@@ -634,14 +634,14 @@ Action generated when one or more files are dropped in the element.
 
 Action generated when the
 mouse is moved. Use L<ConvertXYToPos|IUP::Manual::02_Elements/"ConvertXYToPos()">
-to convert (x,y) coordinates in character positioning. 
+to convert (x,y) coordinates in character positioning.
 
 =item B<SPIN_CB>
 
 Action generated when a spin button is pressed. Valid only
 when SPIN=YES. When this callback is called the ACTION callback is not
 called. The VALUE attribute can be changed during this callback only if
-SPINAUTO=NO. 
+SPINAUTO=NO.
 
 B<Callback handler prototype:>
 
@@ -662,7 +662,7 @@ B<Returns:> IUP_IGNORE is processed in Windows and Motif.
 
 =item B<VALUECHANGED_CB>
 
-Called after the value was interactively changed by the user. 
+Called after the value was interactively changed by the user.
 
 B<Callback handler prototype:>
 
@@ -700,7 +700,7 @@ L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>, L<HELP_CB|IUP::Manual::04_Callbacks/HE
  $pos = $text->TextConvertLinColToPos($lin, $col);
 
 Converts a (lin, col) character positioning into an absolute position.
-For single line controls B<pos> is always B<col-1>. 
+For single line controls B<pos> is always B<col-1>.
 
 =head3 TextConvertPosToLinCol()
 
@@ -731,7 +731,7 @@ available depending on the driver.
 
 B<Navigation:>
 
- Keys             Action             
+ Keys             Action
  --------------------------------------------------
  Arrows           move by individual characters/lines
  Ctrl+Arrows      move by words/paragraphs
@@ -742,21 +742,21 @@ B<Navigation:>
 
 B<Selection:>
 
- Keys             Action             
+ Keys             Action
  --------------------------------------------------
  Shift+Arrows     select charaters
  Ctrl+A           select all
 
 B<Deleting:>
 
- Keys             Action             
+ Keys             Action
  --------------------------------------------------
  Del              delete the character at right
  Backspace        delete the character at left
 
 B<Clipboard:>
 
- Keys             Action             
+ Keys             Action
  --------------------------------------------------
  Ctrl+C           copy
  Ctrl+X           cut
@@ -821,7 +821,7 @@ The element B<IUP::Text> is used in the following sample scripts:
 
 =item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
-=back 
+=back
 
 
 
@@ -830,6 +830,6 @@ The element B<IUP::Text> is used in the following sample scripts:
 L<IUP::List|IUP::List>
 
 The original doc: L<iuptext.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iuptext.html>
- 
+
 
 =cut

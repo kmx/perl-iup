@@ -20,7 +20,7 @@ sub _create_element {
   else {
     $ih = IUP::Internal::LibraryIup::_IupDialog(undef);
   }
-  
+
   return $ih;
 }
 

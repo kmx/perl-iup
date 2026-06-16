@@ -24,19 +24,19 @@ sub multiline2text {
 
 sub btn_append_cb {
   my $self = shift;
-  text2multiline($self, "APPEND"); 
+  text2multiline($self, "APPEND");
   return IUP_DEFAULT;
 }
 
 sub btn_insert_cb {
   my $self = shift;
-  text2multiline($self, "INSERT"); 
+  text2multiline($self, "INSERT");
   return IUP_DEFAULT;
 }
 
 sub btn_clip_cb {
   my $self = shift;
-  text2multiline($self, "CLIPBOARD"); 
+  text2multiline($self, "CLIPBOARD");
   return IUP_DEFAULT;
 }
 
@@ -55,7 +55,7 @@ sub btn_caret_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
   if ($opt->VALUE eq 'ON') {
-    text2multiline($self, "CARET"); 
+    text2multiline($self, "CARET");
   }
   else {
     multiline2text($self, "CARET");
@@ -67,7 +67,7 @@ sub btn_readonly_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
   if ($opt->VALUE eq 'ON') {
-    text2multiline($self, "READONLY"); 
+    text2multiline($self, "READONLY");
   }
   else {
     multiline2text($self, "READONLY");
@@ -79,7 +79,7 @@ sub btn_selection_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
   if ($opt->VALUE eq 'ON') {
-    text2multiline($self, "SELECTION"); 
+    text2multiline($self, "SELECTION");
   }
   else {
     multiline2text($self, "SELECTION");
@@ -91,7 +91,7 @@ sub btn_selectedtext_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
   if ($opt->VALUE eq 'ON') {
-    text2multiline($self, "SELECTEDTEXT"); 
+    text2multiline($self, "SELECTEDTEXT");
   }
   else {
     multiline2text($self, "SELECTEDTEXT");
@@ -103,7 +103,7 @@ sub btn_overwrite_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
   if ($opt->VALUE eq 'ON') {
-    text2multiline($self, "OVERWRITE"); 
+    text2multiline($self, "OVERWRITE");
   }
   else {
     multiline2text($self, "OVERWRITE");
@@ -115,7 +115,7 @@ sub btn_active_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
   if ($opt->VALUE eq 'ON') {
-    text2multiline($self, "ACTIVE"); 
+    text2multiline($self, "ACTIVE");
   }
   else {
     multiline2text($self, "ACTIVE");
@@ -125,7 +125,7 @@ sub btn_active_cb {
 
 sub btn_remformat_cb {
   my $self = shift;
-  text2multiline($self, "REMOVEFORMATTING"); 
+  text2multiline($self, "REMOVEFORMATTING");
   return IUP_DEFAULT;
 }
 
@@ -133,7 +133,7 @@ sub btn_nc_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
   if ($opt->VALUE eq 'ON') {
-    text2multiline($self, "NC"); 
+    text2multiline($self, "NC");
   }
   else {
     multiline2text($self, "NC");
@@ -145,7 +145,7 @@ sub btn_value_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
   if ($opt->VALUE eq 'ON') {
-    text2multiline($self, "VALUE"); 
+    text2multiline($self, "VALUE");
   }
   else {
     multiline2text($self, "VALUE");
@@ -157,7 +157,7 @@ sub btn_tabsize_cb {
   my $self = shift;
   my $opt = IUP->GetByName("text2multi");
   if ($opt->VALUE eq 'ON') {
-    text2multiline($self, "TABSIZE"); 
+    text2multiline($self, "TABSIZE");
   }
   else {
     multiline2text($self, "TABSIZE");
@@ -229,7 +229,7 @@ sub help_cb {
   warn "HELP_CB\n";
   return IUP_DEFAULT;
 }
-     
+
 sub killfocus_cb {
   warn "KILLFOCUS_CB\n";
   return IUP_DEFAULT;
@@ -274,7 +274,7 @@ sub motion_cb {
   my ($self, $x, $y, $status) = @_;
   printf "MOTION_CB (x=%d, y=%d [%s])\n", $x, $y, $status;
   my $pos = $self->ConvertXYToPos($x, $y);
-  my ($lin, $col) = $self->TextConvertPosToLinCol($pos);  
+  my ($lin, $col) = $self->TextConvertPosToLinCol($pos);
   printf ">> (lin=%d, col=%d, pos=%d)\n", $lin, $col, $pos;
   return IUP_DEFAULT;
 }
@@ -298,7 +298,7 @@ sub TextTest {
   $mltline->SetCallback("BUTTON_CB",      \&button_cb);
 #? $mltline->SetCallback("MOTION_CB",      \&motion_cb);
   $mltline->SetCallback("HELP_CB",        \&help_cb);
-  $mltline->SetCallback("GETFOCUS_CB",    \&getfocus_cb); 
+  $mltline->SetCallback("GETFOCUS_CB",    \&getfocus_cb);
   $mltline->SetCallback("KILLFOCUS_CB",   \&killfocus_cb);
   $mltline->SetCallback("ENTERWINDOW_CB", \&enterwindow_cb);
   $mltline->SetCallback("LEAVEWINDOW_CB", \&leavewindow_cb);
@@ -394,7 +394,7 @@ sub TextTest {
   # Creates dlg
   my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new( [
                                 $lbl,
-                                $mltline, 
+                                $mltline,
                                 IUP::Hbox->new( [$text, $opt] ),
                                 IUP::Hbox->new( [$btn_append, $btn_insert, $btn_caret, $btn_readonly, $btn_selection] ),
                                 IUP::Hbox->new( [$btn_selectedtext, $btn_nc, $btn_value, $btn_tabsize, $btn_clip, $btn_key] ),
@@ -405,7 +405,7 @@ sub TextTest {
                                 GAP=>5,
                                 DEFAULTENTER=>$btn_def_enter,
                                 DEFAULTESC=>$btn_def_esc,
-                                SHRINK=>"YES" );  
+                                SHRINK=>"YES" );
 
   if ($formatting) { # just to make easier to comment this section
     $dlg->Map(); # formatting after Map

@@ -112,8 +112,8 @@ Check the L<IUP::Dialog|IUP::Dialog/"CALLBACKS"> callbacks.
                  Lua
          Refresh - recalculates the dialog layout of the current dialog (IUP::Refresh).
          Redraw - send a redraw to the current dialog (IUP::Redraw).
-         Show - shows the current dialog (IUP::Show) 
-         Hide - hides the current dialog (IUP::Hide) 
+         Show - shows the current dialog (IUP::Show)
+         Hide - hides the current dialog (IUP::Hide)
          Close - hides the Layout Dialog, optionally self destroy according to DESTROYWHENCLOSED.
  Layout
          Hierarchy - shows or hides the layout hierarchy tree at left.
@@ -173,11 +173,11 @@ visible, then the actual element will blink twice.
  Map - maps the selected element to the native system.
  Unmap - unmaps the selected element from the native system. Its attribute are saved before unmapping.
  Copy - copy the selected element to an internal clipboard. Its attributes are also copied.
- Paste Child - paste the copied element as the first child of the selected container. 
+ Paste Child - paste the copied element as the first child of the selected container.
  Paste Brother - paste the copied element as brother of the selected element.
  Add Child - adds a new element as the first child of the selected container. The new element is not mapped.
  Add Brother - adds a new element as brother of the selected element. The new element is not mapped.
- Remove - removes the selected element. 
+ Remove - removes the selected element.
 
 =head2 Properties
 
@@ -199,7 +199,7 @@ The element B<IUP::LayoutDialog> is used in the following sample scripts:
 [%FOREACH e IN examples.iuplayoutdialog %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -213,6 +213,6 @@ L<ShowXY|[%m.elem%]/"ShowXY()">, L<Popup|[%m.elem%]/"Popup()">
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iuplayoutdialog.html|[%url.iuporigdoc%]dlg/iuplayoutdialog.html>
-[%END%] 
+[%END%]
 
 =cut

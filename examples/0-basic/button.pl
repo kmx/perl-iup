@@ -92,7 +92,7 @@ my $btn_on_off = IUP::Button->new( TITLE=>"on/off", PADDING=>"3x3" );
 # creates a dialog and sets dialog's title and turns off resize, menubox, maximize and minimize
 my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new( MARGIN=>"3x3", child=>[
                                 IUP::Hbox->new( child=>[ IUP::Fill->new(), $btn_image, $btn_on_off, $btn_exit, IUP::Fill->new() ]),
-                                $text, 
+                                $text,
                                 $btn_big
                               ] ), TITLE=>"IupButton", RESIZE=>"NO", MENUBOX=>"NO", MAXBOX=>"NO", MINBOX=>"NO");
 

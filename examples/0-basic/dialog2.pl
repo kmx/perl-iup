@@ -49,7 +49,7 @@ sub quit_cb {
 
 # Creating dialog's icon
 my $icon = IUP::Image->new( pixels=>$img );
-$icon->SetAttribute( 
+$icon->SetAttribute(
          1 => "255 255 255",
          2 => "000 000 000",
          3 => "226 226 226",

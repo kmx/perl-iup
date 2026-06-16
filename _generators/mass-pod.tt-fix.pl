@@ -2,7 +2,7 @@
 #>>
 #L<MAP_CB|[%m.cb%]/IUP_MAP_CB>,
 
-#L<CURSORPOS|../attrib/iup_globals.html#cursorpos>. 
+#L<CURSORPOS|../attrib/iup_globals.html#cursorpos>.
 
 use strict;
 use warnings;
@@ -23,13 +23,13 @@ my @changed;
 
 for my $f (@files) {
   my $txt = read_file($f, {binmode=>':raw'} );
-  my $new = $txt;  
+  my $new = $txt;
   ### do the fix
   my $ucf = ucfirst basename($f);
   $ucf =~ s/\.pod$//;
   $ucf =~ s/^iup_//i;
   my $lcf = lc($ucf);
-  
+
   my $txtorig = <<'ORIG';
 =back
 
@@ -45,7 +45,7 @@ The element B<IUP::X_X_X_BIG> is used in the following sample scripts:
 [%FOREACH e IN examples.iupX_X_X_SMALL %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -59,7 +59,7 @@ XXX
   #$new =~ s!^(B<.*?>) *- *!$1 !m;
   #$new =~ s!^XXX-ODOC-XXX\n!$txtorig!m;
   #$new =~ s!iupX_X_X_SMALL!iup$lcf!sg;
-  
+
   ##$new =~ s![LB]<IUP::Alarm(\|IUP::Alarm)?>!L<Alarm|IUP/"Alarm()">!sg;
   ##$new =~ s![LB]<IUP::Append(\|IUP::Append)?>!L<Append|[%m.elem%]/"Append()">!sg;
   ##$new =~ s![LB]<IUP::ConvertXYToPos(\|IUP::ConvertXYToPos)?>!L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()">!sg;
@@ -108,12 +108,12 @@ XXX
   ##$new =~ s![LB]<IUP::StoreAttribute(\|IUP::StoreAttribute)?>!L<StoreAttribute|[%m.elem%]/"StoreAttribute()">!sg;
   ##$new =~ s![LB]<IUP::Unmap(\|IUP::Unmap)?>!L<Unmap|[%m.elem%]/"Unmap()">!sg;
   ##$new =~ s![LB]<IUP::Update(\|IUP::Update)?>!L<Update|[%m.elem%]/"Update()">!sg;
-  
+
   #$new =~ s!L<([A-Z0-9_]*)\|\.\./call/([A-Za-z_0-9]*)\.html>!AAA!s;
   #$new =~ s!^  *use  *IUP; *$! use IUP ':all';!m;
-  
+
   $new =~ s!^(=item [BL]<[A-Z][A-Z][^>]*>)\s*([\[\(].*)$!$1\n\nI<$2>!mg;
-  
+
   #if ($txt =~ /^(.*?)(\n\[%\s*h.at\s*%\].*\n\[%\s*txt.at_common\s*%\])(.*)$/s) {
   #  my ($pre, $main, $post) = ($1, $2, $3);
   #  for (split "\n", $main) {
@@ -122,7 +122,7 @@ XXX
   #  $main =~ s/\n=item \* /\n=item /sg;
   #  $new = $pre . $main . $post;
   #}
-  
+
   ### write the output
   next unless $new ne $txt;
   push @changed, $f;

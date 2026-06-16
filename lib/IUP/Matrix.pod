@@ -294,7 +294,7 @@ set. (since 3.5)
 
 disables the editing of all cells. EDITION_CB
 and VALUE_EDIT_CB will not be called anymore. The L:C attribute will
-still be able to change the cell value. 
+still be able to change the cell value.
 
 =item B<RESIZEMATRIX>
 
@@ -307,7 +307,7 @@ change).
 =item B<USETITLESIZE>
 
 Use the title size to define the cell
-size if necessary. See WIDTHn and HEIGHTn. Default: NO. 
+size if necessary. See WIDTHn and HEIGHTn. Default: NO.
 
 =back
 
@@ -770,7 +770,7 @@ for the column or line they are used as maximum limit for the size.
 I<(write-only)> If necessary scroll the visible area to
 make the given cell visible. To scroll to a line or a column, use a
 value such as "B<(L)>:*" or "*:B<(C)>" (where I<B<L>> E<gt> 0 and
-B<(C)> E<gt> 0). 
+B<(C)> E<gt> 0).
 
 =item B<REDRAW>
 
@@ -1099,7 +1099,7 @@ B<Callback handler prototype:>
    my ($self, $lin, $col) = @_;
    my ($red, $green, $blue, $ret);
    #...
-   return ($red, $green, $blue, $ret);  
+   return ($red, $green, $blue, $ret);
  }
  #ZZZ-test-this
 
@@ -1127,7 +1127,7 @@ B<Callback handler prototype:>
    my ($self, $lin, $col) = @_;
    my ($red, $green, $blue, $ret);
    #...
-   return ($red, $green, $blue, $ret);   
+   return ($red, $green, $blue, $ret);
  }
  #ZZZ-test-this
 
@@ -1271,7 +1271,7 @@ B<Callback handler prototype:>
  sub dropselect_cb_handler {
    my ($self, $lin, $col, $drop, $t, $i, $v) = @_;
    #...
- } 
+ }
 
 =over
 
@@ -1311,7 +1311,7 @@ B<$mode:> 1 if the cell has entered the edition mode, or 0 if the cell
 has left the edition mode.
 
 B<$update:> used when mode=0 to identify if the value will be updated
-whe the callback returns with IUP_DEFAULT. 
+whe the callback returns with IUP_DEFAULT.
 
 B<Returns:> can be IUP_DEFAULT, IUP_IGNORE or IUP_CONTINUE.
 
@@ -1482,7 +1482,7 @@ These functions can be used to help set and get attributes from the matrix.
 
  # setting attribute value
  $matrix->MatAttribute($name, $lin, $col, $value);
- 
+
  # getting attribute value
  $value = $matrix->MatAttribute($name, $lin, $col);
 
@@ -1493,7 +1493,7 @@ For example:
 
  $matrix->MatAttribute("BGCOLOR", 30, 10, $value) ~~ $matrix->SetAttribute("BGCOLOR30:10", $value)
  $matrix->MatAttribute("ALIGNMENT", 10, $value) ~~ $matrix->SetAttribute("ALIGNMENT10", $value)
- 
+
  $v = $matrix->GetAttribute("BGCOLOR30:10") ~~ $v = $matrix->MatAttribute("BGCOLOR", 30, 10)
 
 But these functions are faster than the traditional functions because
@@ -1511,7 +1511,7 @@ It is equivalent to the traditional set and get functions:
 
   $matrix->MatCell(30, 10, $value) ~~ $matrix->SetAttribute("30:10", $value)
   $v = $matrix->MatCell(30, 10) ~~ $v = $matrix->GetAttribute("30:10")
-  
+
 =head1 EXAMPLES
 
 
@@ -1529,7 +1529,7 @@ The element B<IUP::Matrix> is used in the following sample scripts:
 
 =item * L<0-basic/matrix_cbmode.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/matrix_cbmode.pl> - IUP::Matrix (callback mode) example
 
-=back 
+=back
 
 
 
@@ -1538,6 +1538,6 @@ The element B<IUP::Matrix> is used in the following sample scripts:
 L<IUP::Canvas|IUP::Canvas>
 
 The original doc: L<iupmatrix.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrix.html>
- 
+
 
 =cut

@@ -298,7 +298,7 @@ The element B<IUP::ColorBar> is used in the following sample scripts:
 [%FOREACH e IN examples.iupcolorbar %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -311,6 +311,6 @@ L<IUP::Canvas|IUP::Canvas>, L<IUP::Image|IUP::Image>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupcolorbar.html|[%url.iuporigdoc%]ctrl/iupcolorbar.html>
-[%END%] 
+[%END%]
 
 =cut

@@ -4,7 +4,7 @@
 
 [% n.iuptree %]
 
-[% h.desc %] 
+[% h.desc %]
 
 Creates a tree containing nodes of branches or leaves. Both branches
 and leaves can have an associated text and image.
@@ -278,14 +278,14 @@ I<(creation only) (non inheritable)>
 
 Enables the focus
 traversal of the control. In Windows the control will still get the
-focus when clicked. Default: YES. 
+focus when clicked. Default: YES.
 
 =item B<COUNT>
 
 I<(read only) (non inheritable)>
 
 Returns the total number of
-nodes in the tree. 
+nodes in the tree.
 
 =item B<DRAGDROP>
 
@@ -294,7 +294,7 @@ I<[Windows and GTK Only] (non inheritable)>
 Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled. This
-is NOT related to the drag&drop of nodes inside the tree. 
+is NOT related to the drag&drop of nodes inside the tree.
 
 =item B<DROPEQUALDRAG>
 
@@ -315,7 +315,7 @@ The default value is "YES".
 
 Default text foreground color. Once each node is created it
 will not change its color when FGCOLOR is changed. Default: the global
-attribute TXTFGCOLOR. 
+attribute TXTFGCOLOR.
 
 =item B<HIDEBUTTONS>
 
@@ -337,7 +337,7 @@ the hierarchy.  (GTK 2.10)
 Sets the indentation level in pixels. The visual effect
 of changing the indentation is highly system dependent. In GTK it acts
 as an additional indent value, and the lines do not follow the extra
-indent. In Windows is limited to a minimum of 5 pixels. 
+indent. In Windows is limited to a minimum of 5 pixels.
 (GTK 2.12)
 
 =item L<RASTERSIZE|[%m.at%]/RASTERSIZE>
@@ -358,7 +358,7 @@ Works only if MARKMODE=SINGLE.
 =item B<SPACING>
 
 Vertical internal padding for each node. Notice that the
-distance between each node will be actually 2x the spacing. 
+distance between each node will be actually 2x the spacing.
 
 =item B<TOPITEM>
 
@@ -366,7 +366,7 @@ I<(write-only)>
 
 Position the given node identifier at the top
 of the tree or near to make it visible. If any parent node is collapsed
-then they are automatically expanded. 
+then they are automatically expanded.
 
 =back
 
@@ -403,7 +403,7 @@ empty, then the focus node is used as the specified node.
 
 I<(read only)> Returns the immediate children count of
 the specified branch. It does not count children of child that are
-branches. 
+branches.
 
 =item B<COLOR(id)>
 
@@ -455,12 +455,12 @@ The text label of the specified node.
 =item B<TITLEFONT(id)>
 
 The text font of the specified node. The format is the
-same as the L<FONT|[%m.at%]/FONT> attribute. 
+same as the L<FONT|[%m.at%]/FONT> attribute.
 
 =item B<TOTALCHILDCOUNT(id)>
 
 I<(read only)> Returns the total children count of
-the specified branch. It counts all grandchildren. 
+the specified branch. It counts all grandchildren.
 
 =item B<USERDATA(id)>
 
@@ -476,7 +476,7 @@ The user data associated with the specified node. (since iup-3.0)
 
 Image name or reference to L<IUP::Image> to be used in the specified node, where id is
 the specified node identifier. If id is empty, then the focus node is
-used as the specified node. 
+used as the specified node.
 
 See - L<Using Images in Other Elements (via IMAGE Attribute)|IUP::Image/"Using Images in Other Elements (via IMAGE Attribute)">
 
@@ -636,7 +636,7 @@ then the specified node is inserted as the first child of the
 destination node. If the branch is not expanded or the destination node
 is a leaf, then it is inserted as the next brother of the leaf. The
 specified node is not changed. All node attributes are copied, except
-user data. Ignored if set before map. 
+user data. Ignored if set before map.
 
 =item B<DELNODE(id)>
 
@@ -659,7 +659,7 @@ values:
 
 =item B<EXPANDALL>
 
-I<(write only)> Expand or contracts all nodes. Can be YES (expand all), or NO (contract all). 
+I<(write only)> Expand or contracts all nodes. Can be YES (expand all), or NO (contract all).
 
 =item B<INSERTLEAF(id)>, B<INSERTBRANCH(id)>
 
@@ -685,7 +685,7 @@ then the specified node is inserted as the first child of the
 destination node. If the branch is not expanded or the destination node
 is a leaf, then it is inserted as the next brother of the leaf. The
 specified node is removed. User data and all node attributes are
-preserved. Ignored if set before map. 
+preserved. Ignored if set before map.
 
 =back
 
@@ -765,7 +765,7 @@ MARKMODE=MULTIPLE.
    my ($self, $ids, $n) = @_;
    #...
  }
- 
+
 
 =over
 
@@ -987,7 +987,7 @@ drop node.
 Action generated when a node is going to be removed.
 It is only a notification, the action can not be aborted. No node
 dependent attribute can be consulted during the callback. Not called
-when the tree is unmapped. 
+when the tree is unmapped.
 
 [%h.at_handler%]
 
@@ -1051,14 +1051,14 @@ If SHOW3STATE=YES, -1 if it was shifted to NOTDEF.
 Action generated when any
 mouse button is pressed or released inside the element. Use
 L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
-coordinates in the node identifier. 
+coordinates in the node identifier.
 
 =item L<MOTION_CB|[%m.cb%]/MOTION_CB>
 
 Action generated when the
 mouse is moved over the element. Use
 L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
-coordinates in item the node identifier. 
+coordinates in item the node identifier.
 
 =item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB>
 
@@ -1169,7 +1169,7 @@ nodes using ADDBRANCH and ADDLEAF. For example:
    "4.Extra",
    { TITLE=>"5.Extra", child=>["Dog", "Cat"] },
  ];
- 
+
  $dlg->Map();
  $tree1->TreeAddNodes($t_rootless,-1);   #has to go after dialog->Map()
  $tree2->TreeAddNodes($t_singleroot,-1); #has to go after dialog->Map()
@@ -1182,7 +1182,7 @@ is not a table then it is a leaf and only defines the leaf title. When
 B<LEAFNAME> or B<BRANCHNAME> are used you can also define other node
 attributes: B<COLOR>, B<STATE>, B<TITLEFONT>, B<MARKED>, B<IMAGE> and
 B<IMAGEEXPANDED>; without specifying the node id. You can also use
-B<USERID> to associate an userdata or table just like in B<TREESETUSERID>. 
+B<USERID> to associate an userdata or table just like in B<TREESETUSERID>.
 
 Example:
 
@@ -1223,9 +1223,9 @@ Sets a group of attributes stored in a table in the form:
  $attrs = {
    TITLE => "Text",
    COLOR => "0 0 220",
-   IMAGE => $img,   
+   IMAGE => $img,
  }
- $tree->TreeSetNodeAttributes($id, $attrs); 
+ $tree->TreeSetNodeAttributes($id, $attrs);
  #which sets:
  # $tree->SetAttribute( "TITLE$id" => "Text" );
  # $tree->SetAttribute( "COLOR$id" => "0 0 220" );
@@ -1264,7 +1264,7 @@ They work just like the respective traditional set and get functions.
 But the attribute string is complemented with the id value. For ex:
 
  $elem->SetAttributeId("KIND", 30, $value) ~~ $elem->SetAttribute("KIND30", $value);
- 
+
  $elem->SetAttributeId("ADDLEAF", 10, $value) ~~ $elem->SetAttribute("ADDLEAF10", $value);
 
 But these functions are faster than the traditional functions because
@@ -1280,7 +1280,7 @@ The element B<IUP::Tree> is used in the following sample scripts:
 [%FOREACH e IN examples.iuptree %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -1291,6 +1291,6 @@ Unfortunately there are no sample scripts using this element.
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iuptree.html|[%url.iuporigdoc%]elem/iuptree.html>
-[%END%] 
+[%END%]
 
 =cut

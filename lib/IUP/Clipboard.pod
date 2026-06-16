@@ -4,7 +4,7 @@
 
 IUP::Clipboard - [special] allows access to the clipboard
 
-=head1 DESCRIPTION 
+=head1 DESCRIPTION
 
 Creates an element that allows access to the clipboard. Each clipboard
 should be destroyed using L<Destroy|IUP::Manual::02_Elements/"Destroy()"> method, but
@@ -111,11 +111,11 @@ Native handle of an image to copy or paste, to or from the clipboard.
 
 B<BEWARE:> technically it is a pointer, be carefull when using from perl.
 
-In Win32 is a B<HANDLE> of a DIB. 
+In Win32 is a B<HANDLE> of a DIB.
 
-In GTK is a B<GdkPixbuf*>. 
+In GTK is a B<GdkPixbuf*>.
 
-In Motif is a B<Pixmap>. 
+In Motif is a B<Pixmap>.
 
 The returned handle in a paste must be released after used (GlobalFree(handle), g_object_unref(pixbuf)
 or XFreePixmap(display, pixmap)). After copy, do NOT release the given
@@ -156,6 +156,6 @@ Unfortunately there are no sample scripts using this element.
 =head1 SEE ALSO
 
 The original doc: L<iupclipboard.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupclipboard.html>
- 
+
 
 =cut

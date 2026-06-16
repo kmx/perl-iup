@@ -4,7 +4,7 @@
 
 [% n.iupfontdlg %]
 
-[% h.desc %] 
+[% h.desc %]
 
 Creates the Font Dialog element. It is a predefined dialog for
 selecting a font. The dialog can be shown with the L<Popup|[%m.elem%]/"Popup()"> function
@@ -99,7 +99,7 @@ The element B<IUP::FontDlg> is used in the following sample scripts:
 [%FOREACH e IN examples.iupfontdlg %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -113,6 +113,6 @@ L<Popup|[%m.elem%]/"Popup()">
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupfontdlg.html|[%url.iuporigdoc%]dlg/iupfontdlg.html>
-[%END%] 
+[%END%]
 
 =cut

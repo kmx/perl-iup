@@ -66,7 +66,7 @@ inserting a new one at the old position.
 
 =item if "n+1" is set then it is appended after the last item.
 
-=item Items after "n+1" are ignored. 
+=item Items after "n+1" are ignored.
 
 =back
 
@@ -75,7 +75,7 @@ inserting a new one at the old position.
 I<(write-only)>
 
 Inserts an item after the last item.
-Ignored if set before map. 
+Ignored if set before map.
 
 =item B<AUTOHIDE>
 
@@ -101,7 +101,7 @@ I<(creation only) (non inheritable)>
 
 Enables the focus
 traversal of the control. In Windows the control will still get the
-focus when clicked. Default: YES. 
+focus when clicked. Default: YES.
 
 =item B<PROPAGATEFOCUS>
 
@@ -116,7 +116,7 @@ I<(read-only) (non inheritable)>
 
 Returns the number of items.
 Before mapping it counts the number of non C<undef> items before the first
-C<undef> item. 
+C<undef> item.
 
 =item B<DRAGDROP>
 
@@ -276,7 +276,7 @@ When using INSERTITEMn or APPENDITEM the position will be ignored.
 I<(write-only)>
 
 Position the given item at the top of the list
-or near to make it visible. Valid only when DROPDOWN=NO. 
+or near to make it visible. Valid only when DROPDOWN=NO.
 
 =item B<SPACING>
 
@@ -284,7 +284,7 @@ Internal padding for each item. Notice that vertically the
 distance between each item will be actually 2x the spacing. It also
 affects the horizontal margin of the item. In Windows, the text is
 aligned at the top left of the item always. Valid only when
-DROPDOWN=NO. 
+DROPDOWN=NO.
 
 =item B<CSPACING>
 
@@ -303,7 +303,7 @@ Depends on the DROPDOWN+EDITBOX combination:
 
 =item DROPDOWN=YES or MULTIPLE=NO: Integer number representing the
 selected item in the list (begins at 1). It can be zero if there is no
-selected item. The value can be C<undef> for no item selected 
+selected item. The value can be C<undef> for no item selected
 (In Motif when DROPDOWN=YES there is always an item selected, except
 only when the list is empty).
 
@@ -350,13 +350,13 @@ Defines the number of visible columns for the
 =item B<Natural> B<Size>, this means that will act also as minimum number of
 visible columns. It uses a wider character size then the one used for
 the SIZE attribute so strings will fit better without the need of extra
-columns. 
+columns.
 
 B<VISIBLELINES>
 
 When DROPDOWN=NO defines the number of visible lines
 for the B<Natural> B<Size>, this means that will act also as minimum
-number of visible lines. 
+number of visible lines.
 
 =back
 
@@ -443,9 +443,9 @@ proper state=0 value.
 Action generated when any
 mouse button is pressed or released inside the list. Called only when
 DROPDOWN=NO. If the list has an editbox the message is called when
-cursor is at the listbox only (ignored at the editbox). 
+cursor is at the listbox only (ignored at the editbox).
 Use L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
-coordinates in item position. 
+coordinates in item position.
 
 =item B<CARET_CB>
 
@@ -476,7 +476,7 @@ This is the same CARET_CB callback definition as for the L<IUP::Text|IUP::Text>.
 =item B<DBLCLICK_CB>
 
 Action generated when the user double click an item.
-Called only when DROPDOWN=NO. 
+Called only when DROPDOWN=NO.
 
 [%h.at_handler%]
 
@@ -529,7 +529,7 @@ Ctrl is pressed then the item is copied instead of moved.
 =item B<DROPDOWN_CB>
 
 Action generated when the list of a dropdown is shown
-or hidden. Called only when DROPDOWN=YES. 
+or hidden. Called only when DROPDOWN=YES.
 
 [%h.at_handler%]
 
@@ -589,7 +589,7 @@ Action generated when the
 mouse is moved over the list. Called only when DROPDOWN=NO. If the list
 has an editbox the message is called when cursor is at the listbox only
 (ignored at the editbox). Use L<ConvertXYToPos|[%m.elem%]/"ConvertXYToPos()"> to convert (x,y)
-coordinates in item position. 
+coordinates in item position.
 
 =item B<MULTISELECT_CB>
 
@@ -626,7 +626,7 @@ attribute to ensure proper 'x' values.
 
 Called after the value was interactively changed by
 the user. Called when the selection is changed or when the text is
-edited. 
+edited.
 
 [%h.at_handler%]
 
@@ -710,7 +710,7 @@ They work just like the respective traditional set and get functions.
 But the attribute string is complemented with the id value. For ex:
 
  $elem->SetAttributeId("", 3, $value) ~~ $elem->SetAttribute("3", $value)
- 
+
  $elem->SetAttributeId("INSERTITEM", 8, $value) ~~ $elem->SetAttribute("INSERTITEM8", $value)
 
 But these functions are faster than the traditional functions because
@@ -726,7 +726,7 @@ The element B<IUP::List> is used in the following sample scripts:
 [%FOREACH e IN examples.iuplist %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -739,6 +739,6 @@ L<ListDialog|IUP/"ListDialog>()">, L<IUP::Text>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iuplist.html|[%url.iuporigdoc%]elem/iuplist.html>
-[%END%] 
+[%END%]
 
 =cut

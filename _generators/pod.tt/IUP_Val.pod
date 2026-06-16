@@ -4,7 +4,7 @@
 
 [% n.iupval %]
 
-[% h.desc %] 
+[% h.desc %]
 
 Creates a Valuator control. Selects a value in a limited interval. Also
 known as Scale or Trackbar in native systems.
@@ -42,7 +42,7 @@ I<(creation only) (non inheritable)>
 
 Enables the focus
 traversal of the control. In Windows the control will still get the
-focus when clicked. Default: YES. 
+focus when clicked. Default: YES.
 
 =item B<INVERTED>
 
@@ -51,7 +51,7 @@ INVERTED=YES maximum is at top and left (minimum is bottom and right),
 when INVERTED=NO maximum is at bottom and right (minimum is top and
 left). The initial value depends on ORIENTATION passed as parameter on
 creation, if ORIENTATION=VERTICAL default is YES, if
-ORIENTATION=HORIZONTAL default is NO. 
+ORIENTATION=HORIZONTAL default is NO.
 
 =item B<MAX>
 
@@ -104,7 +104,7 @@ Allows to position the
 ticks in both sides (BOTH) or in the reverse side (REVERSE). Default:
 NORMAL. The normal position for horizontal orientation is at the top of
 the control, and for vertical orientation is at the left of the
-control. In Motif, the ticks position is always normal. 
+control. In Motif, the ticks position is always normal.
 
 =item B<ORIENTATION>
 
@@ -238,7 +238,7 @@ The element B<IUP::Val> is used in the following sample scripts:
 [%FOREACH e IN examples.iupval %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -249,6 +249,6 @@ Unfortunately there are no sample scripts using this element.
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupval.html|[%url.iuporigdoc%]elem/iupval.html>
-[%END%] 
+[%END%]
 
 =cut

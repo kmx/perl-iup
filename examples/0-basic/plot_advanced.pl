@@ -28,14 +28,14 @@ sub edit_cb {
   # xxxTODO: references
   # perhaps - return (IUP_DEFAULT, $new_x, $new_y);
   my ($self, $index, $sample_index, $x, $y) = @_;
-  printf STDERR "EDIT_CB(%d, %d, %g, %g)\n", $index, $sample_index, $x, $y;  
+  printf STDERR "EDIT_CB(%d, %d, %g, %g)\n", $index, $sample_index, $x, $y;
   return (IUP_DEFAULT, $x, $y+0.001);
 }
 
 sub postdraw_cb {
   #(Ihandle* ih, cdCanvas* cnv)
   my ($self, $cnv) = @_;
-  my ($ix, $iy) = $self->PlotTransform(0.003, 0.02);  
+  my ($ix, $iy) = $self->PlotTransform(0.003, 0.02);
   $cnv->cdFont(undef, CD_BOLD, 10);
   $cnv->cdTextAlignment(CD_SOUTH);
   $cnv->cdText($ix, $iy, "My Inline Legend");
@@ -67,7 +67,7 @@ sub InitPlots {
   $plot[0]->SetAttribute("AXS_YFONTSIZE", "10");
   $plot[0]->SetAttribute("AXS_XLABELCENTERED", "NO");
   $plot[0]->SetAttribute("AXS_YLABELCENTERED", "NO");
-  
+
 #  IupSetAttribute(plot[0], "USE_IMAGERGB", "YES");
 #  IupSetAttribute(plot[0], "USE_GDI+", "YES");
 
@@ -180,7 +180,7 @@ sub InitPlots {
   my @kData = (1,2,3,4,5,6,7,8,9,0,1,2);
 
   $plot[3]->PlotBegin(1);
-  for (my $theI=0; $theI<12; $theI++) { 
+  for (my $theI=0; $theI<12; $theI++) {
     $plot[3]->PlotAdd1D($kLables[$theI], $kData[$theI]);
   }
   $plot[3]->PlotEnd();
@@ -227,7 +227,7 @@ sub InitPlots {
   $plot[4]->PlotEnd();
   $plot[4]->SetAttribute("DS_MODE", "MARK");
   $plot[4]->SetAttribute("DS_MARKSTYLE", "HOLLOW_CIRCLE");
-  
+
   # PLOT 5 - MakeExamplePlot8
   $plot[5]->SetAttribute("TITLE", "Data Selection and Editing");
   $plot[5]->SetAttribute("TITLEFONTSIZE", "16");
@@ -266,7 +266,7 @@ sub tabs_tabchange_cb {
 
   my $ss = $new_tab->GetAttribute("TABTITLE");
   $ss = substr($ss, 5); # Skip "Plot "
-  $ii = int($ss);  
+  $ii = int($ss);
 
   # autoscaling
   # X axis
@@ -534,7 +534,7 @@ sub bt1_cb {
   my $cnv2 = IUP::Canvas::FileVector->new(format=>"EMF", filename=>"$filename.emf", width=>'800', height=>600);
   $plot[$ii]->PlotPaintTo($cnv2);
   $cnv2->cdKillCanvas();
-  
+
   IUP->Message("Warning", "Exported to '$filename.emf'!");
   return IUP_DEFAULT;
 }
@@ -565,7 +565,7 @@ $tgg1 = IUP::Toggle->new( TITLE=>"Y Autoscale", ACTION=>\&tgg1_cb, VALUE=>"ON" )
 $f1 = IUP::Frame->new( child=>IUP::Vbox->new( child=>[$boxdial1, $tgg1] ), TITLE=>"Y Zoom" );
 
 # X zooming
-$dial2 = IUP::Dial->new( TYPE=>"HORIZONTAL", ACTIVE=>"NO", SIZE=>"64x16", 
+$dial2 = IUP::Dial->new( TYPE=>"HORIZONTAL", ACTIVE=>"NO", SIZE=>"64x16",
                          BUTTON_PRESS_CB  =>\&dial2_btndown_cb,
                          MOUSEMOVE_CB     =>\&dial2_btnup_cb,
                          BUTTON_RELEASE_CB=>\&dial2_btnup_cb );
@@ -600,7 +600,7 @@ $tabs = IUP::Tabs->new( child=>\@vboxr, TABCHANGE_CB=>\&tabs_tabchange_cb ); # c
 # dialog
 $hbox = IUP::Hbox->new( child=>[$vboxl, $tabs] );
 $hbox->SetAttribute( MARGIN=>"4x4", GAP=>"10" );
-  
+
 $dlg = IUP::Dialog->new( child=>$hbox, SIZE=>"500x240", TITLE=>"IupPlot Example" );
 
 InitPlots(); # It must be able to be done independent of dialog Mapping

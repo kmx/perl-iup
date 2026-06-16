@@ -29,7 +29,7 @@ for my $i (sort keys %{$data}) {
   next if $data->{$i} == 2;
   diag "missing definition: $i" unless $def->{$i};
   diag "missing export    : $i" unless $exp->{$i};
-  $result = 'FAIL';  
+  $result = 'FAIL';
 }
 
 #diag ">>>>> CONSTANTS - cross-check finished - $result";

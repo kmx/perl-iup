@@ -32,7 +32,7 @@ a menu will be an error.
         <th>RADIO=YES</th>
         <th>RADIO=YES</th>
         <th>RADIO=YES</th>
-      </tr>      
+      </tr>
       <tr>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupmenu_gtk_radio.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupmenu_mot_radio.png"></td>
@@ -53,17 +53,17 @@ a menu will be an error.
  $menu = IUP::Menu->new(Ihandle *child, ...);
  #standard way
  my $menu = IUP::Menu->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
- 
+
  #or with just a single child
  my $menu = IUP::Menu->new( child=>$elem, ANYATTRIBUTE=>'any value' );
- 
+
  #or with just 1 parameter (arrayref)
  my $menu = IUP::Menu->new( [$elem1, $elem2] );
- 
- #or with just 1 parameter (reference to child elements)
- my $menu = IUP::Menu->new( $elem ); 
 
-B<child:> (named parameter) List of the references to elements (or just a single element) that 
+ #or with just 1 parameter (reference to child elements)
+ my $menu = IUP::Menu->new( $elem );
+
+B<child:> (named parameter) List of the references to elements (or just a single element) that
 will be grouped by the menu.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
@@ -80,7 +80,7 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =item L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
 
-The background color of the menu, affects all items in the menu. 
+The background color of the menu, affects all items in the menu.
 
 =item B<RADIO>
 
@@ -170,7 +170,7 @@ The element B<IUP::Menu> is used in the following sample scripts:
 
 =item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
-=back 
+=back
 
 
 
@@ -182,6 +182,6 @@ L<Popup|IUP::Manual::02_Elements/"Popup()">,
 L<Destroy|IUP::Manual::02_Elements/"Destroy()">
 
 The original doc: L<iupmenu.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupmenu.html>
- 
+
 
 =cut

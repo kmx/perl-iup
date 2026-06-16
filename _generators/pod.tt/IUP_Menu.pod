@@ -24,17 +24,17 @@ a menu will be an error.
  $menu = IUP::Menu->new(Ihandle *child, ...);
  #standard way
  my $menu = IUP::Menu->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
- 
+
  #or with just a single child
  my $menu = IUP::Menu->new( child=>$elem, ANYATTRIBUTE=>'any value' );
- 
+
  #or with just 1 parameter (arrayref)
  my $menu = IUP::Menu->new( [$elem1, $elem2] );
- 
- #or with just 1 parameter (reference to child elements)
- my $menu = IUP::Menu->new( $elem ); 
 
-B<child:> (named parameter) List of the references to elements (or just a single element) that 
+ #or with just 1 parameter (reference to child elements)
+ my $menu = IUP::Menu->new( $elem );
+
+B<child:> (named parameter) List of the references to elements (or just a single element) that
 will be grouped by the menu.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
@@ -49,7 +49,7 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =item L<BGCOLOR|[%m.at%]/BGCOLOR>
 
-The background color of the menu, affects all items in the menu. 
+The background color of the menu, affects all items in the menu.
 
 =item B<RADIO>
 
@@ -118,7 +118,7 @@ The element B<IUP::Menu> is used in the following sample scripts:
 [%FOREACH e IN examples.iupmenu %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -134,6 +134,6 @@ L<Destroy|[%m.elem%]/"Destroy()">
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupmenu.html|[%url.iuporigdoc%]elem/iupmenu.html>
-[%END%] 
+[%END%]
 
 =cut

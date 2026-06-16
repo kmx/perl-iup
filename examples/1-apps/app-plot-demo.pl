@@ -32,7 +32,7 @@ sub edit_cb {
 
 sub postdraw_cb {
   my ($self, $cnv) = @_;
-  #my ($ix, $iy) = $self->PlotTransform(0.003, 0.02);  
+  #my ($ix, $iy) = $self->PlotTransform(0.003, 0.02);
   #$cnv->cdFont(undef, CD_BOLD, 10);
   #$cnv->cdTextAlignment(CD_SOUTH);
   #$cnv->cdText($ix, $iy, "My Inline Legend");
@@ -46,7 +46,7 @@ sub predraw_cb {
 }
 
 sub InitPlot {
-  my $theFac;  
+  my $theFac;
   $mainplot->SetAttribute(
     TITLE => "Sample Plot",
     AXS_XORIGIN=>0,
@@ -91,7 +91,7 @@ sub tgg3_cb {
 
 # show/hide H grid
 sub tgg4_cb {
-  my ($self, $v) = @_;  
+  my ($self, $v) = @_;
   if ($v) {
     #checked
     $mainplot->GRID( ($tgg3->VALUE eq 'ON') ? "YES" : "HORIZONTAL" );
@@ -237,15 +237,15 @@ sub bt1_cb {
   my $filename = "testfile"; #BEWARE: no spaces
 
   use IUP::Canvas::FileVector;
-  
+
   my $cnv1 = IUP::Canvas::FileVector->new(format=>"SVG", filename=>"$filename.svg", width=>300, height=>210, resolution=>4);
   $mainplot->PlotPaintTo($cnv1);
   $cnv1->cdKillCanvas();
-  
+
   my $cnv2 = IUP::Canvas::FileVector->new(format=>"EMF", filename=>"$filename.emf", width=>'800', height=>600);
   $mainplot->PlotPaintTo($cnv2);
   $cnv2->cdKillCanvas();
-  
+
   IUP->Message("Warning", "Exported to '$filename.emf' + '$filename.svg'!");
   return IUP_DEFAULT;
 }
@@ -261,10 +261,10 @@ sub bt2_cb {
 sub bt3_cb {
   my $self = shift;
   warn "Draw '", $mainfunc->VALUE, "'\n";
-  my @xvalues;  
-  my @yvalues;  
+  my @xvalues;
+  my @yvalues;
   my $y;
-  for (my $x=-10; $x<=10; $x+=0.1) {    
+  for (my $x=-10; $x<=10; $x+=0.1) {
     $y = eval $mainfunc->VALUE;
     if ($@) {
       my $msg = $@;
@@ -277,7 +277,7 @@ sub bt3_cb {
   }
 
   $mainplot->CLEAR(1);
-  $mainplot->PlotSet2D($mainplot->PlotNewDataSet(2), \@xvalues, \@yvalues);  
+  $mainplot->PlotSet2D($mainplot->PlotNewDataSet(2), \@xvalues, \@yvalues);
   $mainplot->SetAttribute("TITLE", 'func: $y='.$mainfunc->VALUE);
   $mainplot->SetAttribute("AXS_XAUTOMIN", "YES");
   $mainplot->SetAttribute("AXS_XAUTOMAX", "YES");
@@ -294,7 +294,7 @@ $dial1 = IUP::Dial->new( TYPE=>"VERTICAL", ACTIVE=>"NO", SIZE=>"20x52",
                          MOUSEMOVE_CB     =>\&dial1_btnup_cb,
                          BUTTON_RELEASE_CB=>\&dial1_btnup_cb );
 $tgg1 = IUP::Toggle->new( TITLE=>"Y Autoscale", ACTION=>\&tgg1_cb, VALUE=>"ON" );
-my $boxinfo = IUP::Vbox->new( child=>[ 
+my $boxinfo = IUP::Vbox->new( child=>[
                                 IUP::Label->new( TITLE=>"-", EXPAND=>"NO" ),
                                 IUP::Fill->new(),
                                 IUP::Label->new( TITLE=>"+", EXPAND=>"NO" )
@@ -305,12 +305,12 @@ my $boxdial1 = IUP::Hbox->new( child=>[$boxinfo, $dial1], ALIGNMENT=>"ACENTER" )
 my $f1 = IUP::Frame->new( child=>IUP::Vbox->new( child=>[$boxdial1, $tgg1] ), TITLE=>"Y Zoom" );
 
 # X zooming
-$dial2 = IUP::Dial->new( TYPE=>"HORIZONTAL", ACTIVE=>"NO", SIZE=>"64x16", 
+$dial2 = IUP::Dial->new( TYPE=>"HORIZONTAL", ACTIVE=>"NO", SIZE=>"64x16",
                          BUTTON_PRESS_CB  =>\&dial2_btndown_cb,
                          MOUSEMOVE_CB     =>\&dial2_btnup_cb,
                          BUTTON_RELEASE_CB=>\&dial2_btnup_cb );
 $tgg2 = IUP::Toggle->new( TITLE=>"X Autoscale", ACTION=>\&tgg2_cb, VALUE=>"ON" );
-my $boxinfoxxx = IUP::Hbox->new( child=>[ 
+my $boxinfoxxx = IUP::Hbox->new( child=>[
                                 IUP::Label->new( TITLE=>"-", EXPAND=>"NO" ),
                                 IUP::Fill->new(),
                                 IUP::Label->new( TITLE=>"+", EXPAND=>"NO" )
@@ -344,7 +344,7 @@ my $hbox2 = IUP::Hbox->new( child=>[
                               $mainfunc,
                                IUP::Button->new( TITLE=>"Draw", ACTION=>\&bt3_cb ),
                            ], MARGIN=>"4x4", GAP=>"2" );
- 
+
 my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new([$hbox1, $hbox2]), SIZE=>"500x300", TITLE=>"IupPlot Example" );
 
 InitPlot(); # It must be able to be done independent of dialog Mapping

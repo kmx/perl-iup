@@ -46,7 +46,7 @@ my $img_cursor = IUP::Image->new( pixels=>
    [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
    [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
    [ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ],
-  ], colors=>[ "0 0 0", "255 0 0", "128 0 0" ], HOTSPOT=>"21:10" 
+  ], colors=>[ "0 0 0", "255 0 0", "128 0 0" ], HOTSPOT=>"21:10"
 );
 
 # Creates a button and associates image img_x to it
@@ -74,8 +74,8 @@ my $frm_tgl = IUP::Frame->new( child=>$tgl, TITLE=>"toggle", SIZE=>"EIGHTHxEIGHT
 my $frm_tgl_radio = IUP::Frame->new( TITLE=>"radio", SIZE=>"EIGHTHxEIGHTH", child=>
                       IUP::Radio->new( child=>
                         IUP::Vbox->new( child=>[ $tgl_radio_1, $tgl_radio_2, $tgl_radio_3 ] )
-                      )        
-                    );  
+                      )
+                    );
 
 # Creates dialog dlg with an hbox containing a button, a label, and a toggle
 my $dlg = IUP::Dialog->new( CURSOR=>$img_cursor, TITLE=>"IUP::Image Example", SIZE=>"400x200", child=>

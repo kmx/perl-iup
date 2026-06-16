@@ -80,14 +80,14 @@ typedef struct _getparam_data {
 } getparam_data;
 
 static int cb_param_action(Ihandle* dialog, int param_index, void* user_data) {
-  int count, ret = 1;  
-  getparam_data* gp = (getparam_data*)user_data;  
+  int count, ret = 1;
+  getparam_data* gp = (getparam_data*)user_data;
   if (gp->has_func && !gp->obj_initialized) {
     /* called for the first time; we need to set ihandle value to $obj_ref */
     dSP;
     ENTER;
     SAVETMPS;
-    
+
     PUSHMARK(SP);
     XPUSHs(gp->obj_ref);
     XPUSHs(sv_2mortal(newSViv(PTR2IV(dialog))));
@@ -104,7 +104,7 @@ static int cb_param_action(Ihandle* dialog, int param_index, void* user_data) {
     dSP;
     ENTER;
     SAVETMPS;
-    
+
     PUSHMARK(SP);
     XPUSHs(gp->obj_ref);
     XPUSHs(sv_2mortal(newSViv(param_index)));
@@ -174,15 +174,15 @@ int cb_ldestroy(Ihandle *ih) {
   return IUP_DEFAULT;
 }
 
-static int cb_idle_action() {  
+static int cb_idle_action() {
   dMY_CXT;
   dSP;
   int count, ret;
-  
+
   ENTER;
   SAVETMPS;
-    
-  PUSHMARK(SP);  
+
+  PUSHMARK(SP);
   count = call_sv(MY_CXT.idle_action,G_SCALAR|G_NOARGS);
 
   SPAGAIN;
@@ -211,7 +211,7 @@ INCLUDE: Canvas.xs.inc
 INCLUDE: Canvas_Bitmap.xs.inc
 INCLUDE: Canvas_Palette.xs.inc
 INCLUDE: Canvas_Pattern.xs.inc
-INCLUDE: Canvas_Stipple.xs.inc 
+INCLUDE: Canvas_Stipple.xs.inc
 INCLUDE: Canvas_InternalServerImage.xs.inc
 
 MODULE = IUP::Internal::LibraryIup        PACKAGE = IUP::Internal::LibraryIup
@@ -526,7 +526,7 @@ Ihandle*
 _IupGetNextChild(ih,child)
                 Ihandle* ih;
                 Ihandle* child;
-        CODE:                
+        CODE:
                 RETVAL = IupGetNextChild(ih,child);
         OUTPUT:
                 RETVAL
@@ -776,7 +776,7 @@ _IupGetFocus()
                 RETVAL
 
 #### Original C function from <iup.h>
-# Ihandle* IupPreviousField (Ihandle* ih); 
+# Ihandle* IupPreviousField (Ihandle* ih);
 Ihandle*
 _IupPreviousField(ih)
                 Ihandle* ih;
@@ -844,7 +844,7 @@ _IupGetAttributeHandle(ih,name)
                 Ihandle* ih;
                 const char* name;
         CODE:
-                RETVAL = IupGetAttributeHandle(ih,name);                
+                RETVAL = IupGetAttributeHandle(ih,name);
         OUTPUT:
                 RETVAL
 
@@ -883,7 +883,7 @@ void
 _IupGetAllClasses(...)
         INIT:
                 int i, rv, count, max_n;
-                char** list = NULL;                  
+                char** list = NULL;
         PPCODE:
                 max_n = myST2INT(1);
                 count = IupGetAllClasses(NULL,0);
@@ -943,11 +943,11 @@ _IupNormalizer(...)
                 int i;
         CODE:
                 if (items>1) {
-                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );                  
+                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );
                   for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
                   RETVAL = IupNormalizerv(pointers);
-                  free(pointers);                  
+                  free(pointers);
                 }
                 else if (items==1) RETVAL = SvOK(ST(0)) ? IupNormalizer(mySV2IHN(ST(0)), NULL) : NULL;
                 else RETVAL = IupNormalizer(NULL);
@@ -962,11 +962,11 @@ _IupVbox(...)
                 int i;
         CODE:
                 if (items>1) {
-                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );                  
+                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );
                   for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
                   RETVAL = IupVboxv(pointers);
-                  free(pointers);                  
+                  free(pointers);
                 }
                 else if (items==1) RETVAL = SvOK(ST(0)) ? IupVbox(mySV2IHN(ST(0)), NULL) : NULL;
                 else RETVAL = IupVbox(NULL);
@@ -981,11 +981,11 @@ _IupZbox(...)
                 int i;
         CODE:
                 if (items>1) {
-                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );                  
+                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );
                   for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
                   RETVAL = IupZboxv(pointers);
-                  free(pointers);                  
+                  free(pointers);
                 }
                 else if (items==1) RETVAL = SvOK(ST(0)) ? IupZbox(mySV2IHN(ST(0)), NULL) : NULL;
                 else RETVAL = IupZbox(NULL);
@@ -1000,11 +1000,11 @@ _IupHbox(...)
                 int i;
         CODE:
                 if (items>1) {
-                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );                  
+                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );
                   for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
                   RETVAL = IupHboxv(pointers);
-                  free(pointers);                  
+                  free(pointers);
                 }
                 else if (items==1) RETVAL = SvOK(ST(0)) ? IupHbox(mySV2IHN(ST(0)), NULL) : NULL;
                 else RETVAL = IupHbox(NULL);
@@ -1019,11 +1019,11 @@ _IupCbox(...)
                 int i;
         CODE:
                 if (items>1) {
-                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );                  
+                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );
                   for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
                   RETVAL = IupCboxv(pointers);
-                  free(pointers);                  
+                  free(pointers);
                 }
                 else if (items==1) RETVAL = SvOK(ST(0)) ? IupCbox(mySV2IHN(ST(0)), NULL) : NULL;
                 else RETVAL = IupCbox(NULL);
@@ -1136,11 +1136,11 @@ _IupMenu(...)
                 int i;
         CODE:
                 if (items>1) {
-                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );                  
+                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );
                   for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
                   RETVAL = IupMenuv(pointers);
-                  free(pointers);                  
+                  free(pointers);
                 }
                 else if (items==1) RETVAL = SvOK(ST(0)) ? IupMenu(mySV2IHN(ST(0)), NULL) : NULL;
                 else RETVAL = IupMenu(NULL);
@@ -1382,11 +1382,11 @@ _IupTabs(...)
                 int i;
         CODE:
                 if (items>1) {
-                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );                  
+                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );
                   for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
                   RETVAL = IupTabsv(pointers);
-                  free(pointers);                  
+                  free(pointers);
                 }
                 else if (items==1) RETVAL = SvOK(ST(0)) ? IupTabs(mySV2IHN(ST(0)), NULL) : NULL;
                 else RETVAL = IupTabs(NULL);
@@ -1496,7 +1496,7 @@ _IupTreeGetUserId(ih,id)
                 void* ptr;
         PPCODE:
                 ptr = IupTreeGetUserId(ih,id);
-                if (ptr==NULL) XPUSHs(sv_2mortal(newSVpv(NULL,0))); /* undef xxxcheckthis */ 
+                if (ptr==NULL) XPUSHs(sv_2mortal(newSVpv(NULL,0))); /* undef xxxcheckthis */
                 else XPUSHs(sv_2mortal(newSViv(PTR2IV(ptr))));
 
 #### Original C function from <iup.h>
@@ -1618,7 +1618,7 @@ _IupGetText(title,text)
                 char* text;
         INIT:
                 int rv;
-                char newtext[10001]; /* xxx hardcoded length */ 
+                char newtext[10001]; /* xxx hardcoded length */
         PPCODE:
                 strncpy(newtext, text, 10000);
                 newtext[10000] = 0;
@@ -1668,20 +1668,20 @@ _IupGetParam(title,action,action_data,format,...)
                 getparam_data gp;
                 void* gp_user_data = (void*)&gp;
                 int rv, i, size, line_size = 0;
-                int param_extra, param_count;                 
+                int param_extra, param_count;
                 void* param_data[50]; /* xxx why 50? */
                 char param_type[50];
                 const char* f = format;
                 const char* s;
                 int varparam = 4; /* position in variable param list */
-                
+
                 param_count = iupGetParamCount(format, &param_extra);
                 memset(param_data, 0, sizeof(void*)*50);
                 memset(param_type, 0, sizeof(char)*50);
-                
+
                 /* warn param count mismatch; however no warning if absolutely no defaults given */
-                if(param_count != items-4 && items > 4 && param_count > 0) warn("Warning: GetParam() param count mismatch (got %d, expected %d)",items-4,param_count);                  
-                
+                if(param_count != items-4 && items > 4 && param_count > 0) warn("Warning: GetParam() param count mismatch (got %d, expected %d)",items-4,param_count);
+
                 for (i = 0; i < param_count; i++) {
                   char t = iupGetParamType(f, &line_size);
                   if (t == 't') { /* if separator */
@@ -1689,7 +1689,7 @@ _IupGetParam(title,action,action_data,format,...)
                     i--; /* compensate next increment */
                     continue;
                   }
-                  
+
                   switch(t) {
                     case 'b':
                     case 'i':
@@ -1734,7 +1734,7 @@ _IupGetParam(title,action,action_data,format,...)
                   param_type[i] = t;
                   f += line_size;
                 }
-                
+
         PPCODE:
                 gp.has_func = 0;
                 if (SvOK(action)) {
@@ -1743,7 +1743,7 @@ _IupGetParam(title,action,action_data,format,...)
                   gp.func_ref = action;
                   gp.obj_ref = action_data;
                 }
-                
+
                 rv = IupGetParamv(title, cb_param_action, gp_user_data, format, param_count, param_extra, param_data);
 
                 /* gonna return array: (retval, newval1, newval2, ...) */
@@ -1781,7 +1781,7 @@ _IupListDialog_single(title,list,SV_op,SV_max_lin,SV_max_col)
         INIT:
                 int i, rv, op, max_col, max_lin;
                 int items = -1;
-                const char** i_list = NULL;                  
+                const char** i_list = NULL;
                 STRLEN l;
         PPCODE:
                 /* convert undef to 0 */
@@ -1789,23 +1789,23 @@ _IupListDialog_single(title,list,SV_op,SV_max_lin,SV_max_col)
                 /* convert undef to -1 */
                 max_col = (SvIOK(SV_max_col)) ? SvIVX(SV_max_col) : -1;
                 max_lin = (SvIOK(SV_max_lin)) ? SvIVX(SV_max_lin) : -1;
-                
+
                 if ((!SvROK(list)) || (SvTYPE(SvRV(list)) != SVt_PVAV) || ((items = av_len((AV *)SvRV(list))) < 0)) {
                   warn("Warning: invalid 'list' argument of ListDialog()");
                   XSRETURN_UNDEF;
-                }                
+                }
                 items++;
-                i_list = malloc( (items) * sizeof(void*) );                  
-                
+                i_list = malloc( (items) * sizeof(void*) );
+
                 /* create i_list array */
                 for(i=0; i<items; i++) i_list[i] = SvPV(*av_fetch((AV *)SvRV(list), i, 0), l);
-                
+
                 /* xxx hack: converting perl's 0-based index to iup's 1-based index*/
                 if (op>=0) op++;
 
                 /* call IUP function */
                 rv = IupListDialog(1,title,items,i_list,op,max_col,max_lin,NULL);
-                
+
                 /* arrange return values */
                 XPUSHs(sv_2mortal(newSViv(rv)));
                 if (i_list != NULL) free(i_list);
@@ -1822,7 +1822,7 @@ _IupListDialog_multi(title,list,marks,SV_max_lin,SV_max_col)
         INIT:
                 int i, rv, max_col, max_lin;
                 int items1 = -1, items2 = -1, items = -1;
-                const char** i_list = NULL;                  
+                const char** i_list = NULL;
                 int* i_marks = NULL;
                 STRLEN l;
                 AV* retmarks;
@@ -1840,11 +1840,11 @@ _IupListDialog_multi(title,list,marks,SV_max_lin,SV_max_col)
                   warn("Warning: invalid 'marks' argument of ListDialog()");
                   XSRETURN_UNDEF;
                 }
-                
+
                 items = items1+1;
                 i_marks = malloc( (items) * sizeof(int) );
-                i_list = malloc( (items) * sizeof(void*) );                  
-                
+                i_list = malloc( (items) * sizeof(void*) );
+
                 /* create i_marks array */
                 if (items2 >= 0) {
                   if (items1 != items2)
@@ -1857,13 +1857,13 @@ _IupListDialog_multi(title,list,marks,SV_max_lin,SV_max_col)
 
                 /* create i_list array */
                 for(i=0; i<items; i++) i_list[i] = SvPV(*av_fetch((AV *)SvRV(list), i, 0), l);
-                
+
                 /* call IUP function */
-                rv = IupListDialog(2,title,items,i_list,-1,max_col,max_lin,i_marks);                
-                
+                rv = IupListDialog(2,title,items,i_list,-1,max_col,max_lin,i_marks);
+
                 //xxx /* return error code */
                 //xxx XPUSHs(sv_2mortal(newSViv(rv)));
-        
+
                 /* arrange return values - returning array */
                 if (rv < 0) { /* cancel */
                   for(i=0; i<items; i++) XPUSHs(sv_2mortal(newSViv(rv)));
@@ -1871,12 +1871,12 @@ _IupListDialog_multi(title,list,marks,SV_max_lin,SV_max_col)
                 else {
                   for(i=0; i<items; i++) XPUSHs(sv_2mortal(newSViv(i_marks[i])));
                 }
-                
+
                 /* arrange return values - returning array ref*/
                 //xxx retmarks = newAV();
-                //xxx for(i=0; i<items; i++) av_store(retmarks, i, newSViv(i_marks[i]));                  
+                //xxx for(i=0; i<items; i++) av_store(retmarks, i, newSViv(i_marks[i]));
                 //xxx XPUSHs(sv_2mortal(retmarks);
-                
+
                 if (i_list != NULL) free(i_list);
                 if (i_marks != NULL) free(i_marks);
 
@@ -1888,7 +1888,7 @@ _IupGetClassCallbacks(...)
                 int i, rv, count, max_n;
                 int items = -1;
                 char* classname;
-                char** list = NULL;                  
+                char** list = NULL;
         PPCODE:
                 classname = myST2STR(0);
                 max_n = myST2INT(1);
@@ -1911,7 +1911,7 @@ _IupGetAllNames(...)
         INIT:
                 int i, rv, count, max_n;
                 int items = -1;
-                char** list = NULL;                  
+                char** list = NULL;
         PPCODE:
                 max_n = myST2INT(0);
                 count = IupGetAllNames(NULL,0);
@@ -1932,7 +1932,7 @@ void
 _IupGetAllDialogs(...)
         INIT:
                 int i, rv, count, max_n;
-                char** list = NULL;                  
+                char** list = NULL;
         PPCODE:
                 max_n = myST2INT(0);
                 count = IupGetAllDialogs(NULL,0);
@@ -1954,7 +1954,7 @@ _IupGetClassAttributes(classname,...)
                 const char* classname;
         INIT:
                 int i, rv, count, max_n;
-                char** list = NULL;                  
+                char** list = NULL;
         PPCODE:
                 max_n = myST2INT(1);
                 count = IupGetClassAttributes(classname,NULL,0);
@@ -1976,7 +1976,7 @@ _IupGetAllAttributes(ih,...)
                 Ihandle* ih;
         INIT:
                 int i, rv, count, max_n;
-                char** list = NULL;                  
+                char** list = NULL;
         PPCODE:
                 max_n = myST2INT(1);
                 count = IupGetAllAttributes(ih,NULL,0);
@@ -2012,7 +2012,7 @@ _IupPlayInput(filename)
                 RETVAL = IupPlayInput(filename);
         OUTPUT:
                 RETVAL
-                
+
 ################################################################################ iup_scintilla.h
 
 # void IupScintillaOpen(void);
@@ -2043,7 +2043,7 @@ _IupScintilla()
 Ihandle*
 _IupColorBrowser()
         CODE:
-#ifdef HAVELIB_IUPCONTROLS        
+#ifdef HAVELIB_IUPCONTROLS
                 RETVAL = IupColorBrowser();
 #else
                 warn("Error: IUP was built without IupOleControl() support");
@@ -2172,11 +2172,11 @@ _IupGLCanvasBox(...)
         CODE:
 #ifdef HAVELIB_IUPGLCONTROLS
                 if (items>1) {
-                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );                  
+                  Ihandle** pointers = malloc( (items+1) * sizeof(void*) );
                   for(i=0; i<items; i++) pointers[i] = mySV2IHN(ST(i));
                   pointers[i] = NULL;
                   RETVAL = IupGLCanvasBoxv(pointers);
-                  free(pointers);                  
+                  free(pointers);
                 }
                 else if (items==1) RETVAL = SvOK(ST(0)) ? IupGLCanvasBox(mySV2IHN(ST(0)), NULL) : NULL;
                 else RETVAL = IupGLCanvasBox(NULL);
@@ -2388,7 +2388,7 @@ INCLUDE: MglPlot.xs.inc
 INCLUDE: PPlot.xs.inc
 INCLUDE: Plot.xs.inc
 
-################################################################################ iupole.h 
+################################################################################ iupole.h
 
 #### Original C function
 # Ihandle *IupOleControl(const char* progid);
@@ -2680,7 +2680,7 @@ _isSys(s)
                 RETVAL = iup_issys(s);
         OUTPUT:
                 RETVAL
-                
+
 ##char*
 ##_Testing(p)
 ##                SV* p;
@@ -2696,7 +2696,7 @@ _isSys(s)
 ##                RETVAL
 
 #### Original C function from <iupcontrols.h>
-# void IupControlsClose(void); 
+# void IupControlsClose(void);
 # int IupMatGetInt (Ihandle* ih, const char* name, int lin, int col);
 # void IupMatSetAttribute (Ihandle* ih, const char* name, int lin, int col, char* value);
 # float IupMatGetFloat (Ihandle* ih, const char* name, int lin, int col);

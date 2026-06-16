@@ -24,13 +24,13 @@ It does not have a native representation.
 
  #standard way
  my $vbox = IUP::Vbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
- 
+
  #or with just a single child
  my $vbox = IUP::Vbox->new( child=>$elem, ANYATTRIBUTE=>'any value' );
- 
+
  #or with just 1 parameter (arrayref)
  my $vbox = IUP::Vbox->new( [$elem1, $elem2] );
- 
+
  #or with just 1 parameter (reference to child elements)
  my $vbox = IUP::Vbox->new( $elem );
 
@@ -69,7 +69,7 @@ I<(non inheritable)>
 Forces all children to expand
 horizontally. Default: "NO". This has the same effect as setting
 EXPAND=HORIZONTAL on each child, but their vertical expansion will be
-preserved. 
+preserved.
 
 =item B<EXPANDWEIGHT>
 
@@ -85,7 +85,7 @@ I<(non inheritable) B<(at>
 children only)>
 
 If a child has FLOATING=YES then its size and position
-will be ignored by the layout processing. Default: "NO". 
+will be ignored by the layout processing. Default: "NO".
 
 =item B<GAP, CGAP>
 
@@ -97,7 +97,7 @@ Default "0". (CGAP since iup-3.0)
 
 I<(non inheritable)>
 
-Same as B<GAP> but are non inheritable. 
+Same as B<GAP> but are non inheritable.
 
 =item B<HOMOGENEOUS>
 
@@ -121,7 +121,7 @@ Default: "0x0" (no margin). (CMARGIN since iup-3.0)
 I<(non inheritable)>
 
 Same as B<MARGIN> but are non
-inheritable. 
+inheritable.
 
 =item B<NORMALIZESIZE>
 
@@ -131,7 +131,7 @@ normalizes all children natural
 size to be the biggest natural size among them. All natural width will
 be set to the biggest width, and all natural height will be set to the
 biggest height according to is value. Can be NO, HORIZONTAL, VERTICAL
-or BOTH. Default: "NO". 
+or BOTH. Default: "NO".
 
 =item L<SIZE|[%m.at%]/SIZE> / L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
 
@@ -179,7 +179,7 @@ The element B<IUP::Vbox> is used in the following sample scripts:
 [%FOREACH e IN examples.iupvbox %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -192,6 +192,6 @@ L<IUP::Zbox|IUP::Zbox>, L<IUP::Hbox|IUP::Hbox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupvbox.html|[%url.iuporigdoc%]elem/iupvbox.html>
-[%END%] 
+[%END%]
 
 =cut

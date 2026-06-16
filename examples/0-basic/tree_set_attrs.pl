@@ -100,7 +100,7 @@ my $dlg = IUP::Dialog->new( SIZE=>"QUARTERxHALF", TITLE=>"IUP::Tree Example",
                                 IUP::Fill->new(),
                               ]),
                             ]),
-                          );  
+                          );
 
 $dlg->Show();
 $tree->VALUE(15);

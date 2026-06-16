@@ -88,7 +88,7 @@ my $id = 1;
 sub getfocus_cb {
   my $self = shift;
   printf STDERR "$line-getfocus(%s#%s)\n",
-         $self->GetClassName(), 
+         $self->GetClassName(),
          ($self->GetAttribute("CINDEX") || 'n.a.');
   $line++;
   return IUP_DEFAULT;
@@ -97,16 +97,16 @@ sub getfocus_cb {
 sub killfocus_cb {
   my $self = shift;
   printf STDERR "$line-killfocus(%s#%s)\n",
-         $self->GetClassName(), 
-         ($self->GetAttribute("CINDEX") || 'n.a.');         
+         $self->GetClassName(),
+         ($self->GetAttribute("CINDEX") || 'n.a.');
   $line++;
   return IUP_DEFAULT;
 }
 
 sub action {
   my $self = shift;
-  printf STDERR "$line-action(%s#%s) Value=%s\n", 
-         $self->GetClassName(), 
+  printf STDERR "$line-action(%s#%s) Value=%s\n",
+         $self->GetClassName(),
          ($self->GetAttribute("CINDEX") || 'n.a.'),
          ($self->GetAttribute("VALUE") || 'n.a.');
   $line++;
@@ -116,11 +116,11 @@ sub action {
 sub set_callbacks {
   my $ctrl = shift;
   $ctrl->SetCallback("GETFOCUS_CB", \&getfocus_cb);
-  $ctrl->SetCallback("KILLFOCUS_CB", \&killfocus_cb);  
-  $ctrl->SetCallback("ACTION", \&action) if $ctrl->IsValidCallbackName('ACTION');  
-  my $child; #passing undef to GetNextChild gives the first child 
+  $ctrl->SetCallback("KILLFOCUS_CB", \&killfocus_cb);
+  $ctrl->SetCallback("ACTION", \&action) if $ctrl->IsValidCallbackName('ACTION');
+  my $child; #passing undef to GetNextChild gives the first child
   while($child = $ctrl->GetNextChild($child)) {
-    set_callbacks($child);  
+    set_callbacks($child);
   }
 }
 
@@ -151,7 +151,7 @@ sub createDialog {
                       IUP::Vbox->new( child=>[
                         IUP::Toggle->new( TITLE=>"Toggle Text", CINDEX=>4 ),
                         IUP::Toggle->new( TITLE=>"Toggle Text", CINDEX=>5 ),
-                      ]),                      
+                      ]),
                     ),
                   )
                 ]), TITLE=>"IupToggle" );
@@ -168,7 +168,7 @@ sub createDialog {
                #EXPAND=>"YES",
                #SIZE=>"80x60",
                CINDEX=>1 );
-               
+
   my $frm_4 = IUP::Frame->new( TITLE=>"IupText/IupMultiline", child=>IUP::Vbox->new( child=>[$text_1, $ml_1,]) );
 
   my $list_1 = IUP::List->new(
@@ -182,7 +182,7 @@ sub createDialog {
                  4=>"Item 4 Text",
                  5=>"Item 5 Text",
                  6=>"Item 6 Text",
-                 CINDEX=>1 );        
+                 CINDEX=>1 );
 
   my $list_2 = IUP::List->new(
                  DROPDOWN=>"YES",
@@ -225,7 +225,7 @@ sub createDialog {
                  5=>"Item 5 Text",
                  6=>"Item 6 Text",
                  CINDEX=>4 );
- 
+
   my $frm_5 = IUP::Frame->new( child=>IUP::Vbox->new( child=>[$list_1, $list_2, $list_3, $list_4] ), TITLE=>"IupList" );
 
   my $hbox_1 = IUP::Hbox->new( child=>[$frm_1, $frm_2, $frm_3, $frm_4, $frm_5] );
@@ -233,12 +233,12 @@ sub createDialog {
   my $cnv_1 = IUP::Canvas->new( BGCOLOR=>"128 255 0" );
 
   my $vbox_1 = IUP::Vbox->new( child=>[$hbox_1, $cnv_1], MARGIN=>"5x5", ALIGNMENT=>"ARIGHT", GAP=>5 );
- 
-  set_callbacks($vbox_1);  
-  
+
+  set_callbacks($vbox_1);
+
   my $dlg = IUP::Dialog->new( child=>$vbox_1, TITLE=>"MDI Child $id" );
   $id++;
-  
+
 #  $dlg->SetAttribute(
 #          SHRINK=>"YES",
 #          SIZE=>"500x200",
@@ -247,7 +247,7 @@ sub createDialog {
 #          FONT=>IUP_TIMES_BOLD_14,
 #          COMPOSITED=>"YES",
 #          OPACITY=>192 );
-  
+
   return $dlg;
 }
 
@@ -316,20 +316,20 @@ sub createMenu {
                 IUP::Menu->new( child=>
                   IUP::Item->new( TITLE=>"New", ACTION=>\&mdi_new ),
                 ),
-              ),                
-              IUP::Submenu->new( TITLE=>"Window", , child=> 
+              ),
+              IUP::Submenu->new( TITLE=>"Window", , child=>
                 IUP::Menu->new( name=>"winmenu", child=>[
-                  IUP::Item->new( TITLE=>"Tile Horizontal", ACTION=>\&mdi_tilehoriz ), 
-                  IUP::Item->new( TITLE=>"Tile Vertical", ACTION=>\&mdi_tilevert ), 
-                  IUP::Item->new( TITLE=>"Cascade", ACTION=>\&mdi_cascade ), 
-                  IUP::Item->new( TITLE=>"Icon Arrange", ACTION=>\&mdi_icon ), 
-                  IUP::Item->new( TITLE=>"Close All", ACTION=>\&mdi_closeall ), 
+                  IUP::Item->new( TITLE=>"Tile Horizontal", ACTION=>\&mdi_tilehoriz ),
+                  IUP::Item->new( TITLE=>"Tile Vertical", ACTION=>\&mdi_tilevert ),
+                  IUP::Item->new( TITLE=>"Cascade", ACTION=>\&mdi_cascade ),
+                  IUP::Item->new( TITLE=>"Icon Arrange", ACTION=>\&mdi_icon ),
+                  IUP::Item->new( TITLE=>"Close All", ACTION=>\&mdi_closeall ),
                   IUP::Separator->new(),
-                  IUP::Item->new( TITLE=>"Next", ACTION=>\&mdi_next ), 
-                  IUP::Item->new( TITLE=>"Previous", ACTION=>\&mdi_previous ), 
+                  IUP::Item->new( TITLE=>"Next", ACTION=>\&mdi_next ),
+                  IUP::Item->new( TITLE=>"Previous", ACTION=>\&mdi_previous ),
                 ]),
               ),
-            ]);  
+            ]);
   return $mnu;
 }
 
@@ -337,8 +337,8 @@ sub createFrame {
   my $menu = shift;
   my $mdiMenu = IUP->GetByName("winmenu");
   my $cnv = IUP::Canvas->new( MDICLIENT=>"YES", MDIMENU=>$mdiMenu );
-  my $dlg = IUP::Dialog->new( name=>"mdiFrame", child=>$cnv, 
-                              MENU=>$menu, TITLE=>"MDI Frame", 
+  my $dlg = IUP::Dialog->new( name=>"mdiFrame", child=>$cnv,
+                              MENU=>$menu, TITLE=>"MDI Frame",
                               MDIFRAME=>"YES", RASTERSIZE=>"800x600" );
   return $dlg;
 }

@@ -6,7 +6,7 @@ use Template;
 my $srcroot = 'y:\IUP.build\iup';
 
 sub proc_headers {
-  my ($headers, $template, $outxs) = @_; 
+  my ($headers, $template, $outxs) = @_;
   my $allinone = {};
   my @allfnc;
 
@@ -15,7 +15,7 @@ sub proc_headers {
     while (<DAT>) {
       s/[\r\n]*$//;
       next if /^typedef/;
-      
+
       if ( /^([a-zA-Z].*)((Iup|cd|im|wd)[^ \(]*) *\((.*?)\)/) {
       #die "1=$1 2=$2 3=$3 4=$4\n";
         my ($r, $f) = ($1, $2);
@@ -37,67 +37,67 @@ sub proc_headers {
         for (@pars) {
           if (/^(.*?)([a-zA-Z0-9_]*)$/) {
             my ($n, $t) = ($2, $1);
-	    $t =~ s/^ *//;
+            $t =~ s/^ *//;
             $t =~ s/ *$//;
             $t =~ s/ \*/\*/g;
             if ($t eq '') {
-	      if ($n ne 'void') {
-	        print STDERR "WARNING: error processing '$o'\n" if $n ne 'void';
-	      }
-	      else {
-	        $t = '';
-	        $n = '';
-	      }
-	    }
-	
-	    if($n eq '' && $t eq '...') {
-	      $n = '...';
-	      $t = '';
-	    }
-	  
+              if ($n ne 'void') {
+                print STDERR "WARNING: error processing '$o'\n" if $n ne 'void';
+              }
+              else {
+                $t = '';
+                $n = '';
+              }
+            }
+
+            if($n eq '' && $t eq '...') {
+              $n = '...';
+              $t = '';
+            }
+
             if ($t =~ /\*\*/) {
               print STDERR "WARNING: do not know how to handle '$o'\n";
-	      $skip = 1;
-	    }
-	  
-	    if ($n ne '' || $t ne '') {
-	      push(@pn1, $n);
-	
-	      if ($t eq 'int*') {
-	        print STDERR "WARNING: fixing 'int*' - '$o'\n";
-  	        $t = 'int';
+              $skip = 1;
+            }
+
+            if ($n ne '' || $t ne '') {
+              push(@pn1, $n);
+
+              if ($t eq 'int*') {
+                print STDERR "WARNING: fixing 'int*' - '$o'\n";
+                $t = 'int';
                 $n = "&$n";
-	      }
-	
-	      push(@pn2, $n) unless $n eq '...';
+              }
+
+              push(@pn2, $n) unless $n eq '...';
               push(@p, { orig => $_, name => $n, type => $t}) unless $n eq '...';
-	      #print STDERR "DEBUG: >$n<\t\t>$t<\t\t$_\n";
-	    }
+              #print STDERR "DEBUG: >$n<\t\t>$t<\t\t$_\n";
+            }
           }
         }
 
         unless ($skip) {
           #print "DUMP:$f\n";
-	  my $hh = '...'.substr($h, length($srcroot));
-	  my $cdf = $f;
-	  my @cdp = @p;
-	  my @cdpn2 = @pn2;
-	  if(defined $cdp[0] && $cdp[0]->{name} eq 'canvas' && $cdp[0]->{type} eq 'cdCanvas*') {
-	    $cdp[0]->{type} = 'SV*';
-	    $cdpn2[0] = 'ref2cnv('.$cdpn2[0].')';
-	  }
+          my $hh = '...'.substr($h, length($srcroot));
+          my $cdf = $f;
+          my @cdp = @p;
+          my @cdpn2 = @pn2;
+          if(defined $cdp[0] && $cdp[0]->{name} eq 'canvas' && $cdp[0]->{type} eq 'cdCanvas*') {
+            $cdp[0]->{type} = 'SV*';
+            $cdpn2[0] = 'ref2cnv('.$cdpn2[0].')';
+          }
           $cdf =~ s/cdfCanvas/cdf/;
           $cdf =~ s/cdCanvas/cd/;
           push(@allfnc, { orig => $o, header => $hh, rvtype => $r, fnc => $f, cdfnc => $cdf,
-	                  params => \@p, cdparams => \@cdp, 
-			  params_n1 => join(',',@pn1), 
-			  params_n2 => join(',',@pn2),
-			  cdparams_n2 => join(',',@cdpn2) } );
+                          params => \@p, cdparams => \@cdp,
+                          params_n1 => join(',',@pn1),
+                          params_n2 => join(',',@pn2),
+                          cdparams_n2 => join(',',@cdpn2) } );
         }
       }
     }
   }
-  
+
   foreach (@allfnc) {
     print STDERR "PROC_HEADER: processing '" . lc($_->{fnc}) . "'\n";
     $allinone->{lc($_->{fnc})}->{orig} = $_->{orig};
@@ -121,25 +121,25 @@ sub print_raw_data {
   #Dump RawData
   foreach my $k (keys %{$allinone}) {
     print "###\t",
-    $allinone->{$k}->{doc_html} || '?', "\t", 
-    $allinone->{$k}->{doc_name} || '?', "\t", 
-    $allinone->{$k}->{doc_file} || '?', "\t", 
+    $allinone->{$k}->{doc_html} || '?', "\t",
+    $allinone->{$k}->{doc_name} || '?', "\t",
+    $allinone->{$k}->{doc_file} || '?', "\t",
 
-    $allinone->{$k}->{nick} || '?', "\t", 
-    $allinone->{$k}->{funcname} || '?', "\t", 
-    $allinone->{$k}->{creation} || '?', "\t", 
-    $allinone->{$k}->{parent} || '?', "\t", 
-    $allinone->{$k}->{doctype} || '?', "\t", 
- 
-    $allinone->{$k}->{orig} || '?', "\t", 
-    $allinone->{$k}->{header} || '?', "\t", 
-    $allinone->{$k}->{rvtype} || '?', "\t", 
-    $allinone->{$k}->{fnc} || '?', "\t", 
-    $allinone->{$k}->{params} || '?', "\t", 
-    $allinone->{$k}->{params_n1} || '?', "\t", 
-    $allinone->{$k}->{params_n2} || '?', "\t", 
+    $allinone->{$k}->{nick} || '?', "\t",
+    $allinone->{$k}->{funcname} || '?', "\t",
+    $allinone->{$k}->{creation} || '?', "\t",
+    $allinone->{$k}->{parent} || '?', "\t",
+    $allinone->{$k}->{doctype} || '?', "\t",
+
+    $allinone->{$k}->{orig} || '?', "\t",
+    $allinone->{$k}->{header} || '?', "\t",
+    $allinone->{$k}->{rvtype} || '?', "\t",
+    $allinone->{$k}->{fnc} || '?', "\t",
+    $allinone->{$k}->{params} || '?', "\t",
+    $allinone->{$k}->{params_n1} || '?', "\t",
+    $allinone->{$k}->{params_n2} || '?', "\t",
     "\n";
- }  
+ }
 }
 
 sub proc_lua {
@@ -155,7 +155,7 @@ sub proc_lua {
     canvas => 'Primitives',
     frame => 'Primitives',
     image => 'Primitives',
-    
+
     hbox => 'Composition',
     vbox => 'Composition',
     zbox => 'Composition',
@@ -169,7 +169,7 @@ sub proc_lua {
     separator => 'Menu',
 
     dial => 'Additional',
-    gauge => 'Additional', 
+    gauge => 'Additional',
     matrix => 'Additional',
     tabs => 'Additional',
     valuator => 'Additional',
@@ -191,26 +191,26 @@ sub proc_lua {
     #print STDERR "####################šLUA=$l\n";
     while (<DAT>) {
       s/[\r\n]*$//;
-      
+
       if ( /creation *= *"(.*)"/ ) {
         $creation = $1;
         #print "creation=$1 '$_'\n";
       }
-      
+
       if ( /nick *= *"(.*)"/ ) {
         $nick = $1;
         #print STDERR "nick=$1\n";
       }
-      
+
       if ( /funcname *= *"(.*)"/ ) {
         $funcname = $1;
         #print STDERR "funcname=$1\n";
       }
-      
+
       if ( /parent *= *iup\.([a-zA-Z0-9]*)/ ) {
         $parent = $1;
         #print STDERR "parent=$1\n";
-      }    
+      }
     }
 
     print STDERR "PROC_LUA: processing '" . lc("iup$nick") . "'\n";
@@ -229,13 +229,13 @@ sub proc_doc {
     open DAT, "<", $l;
     while (<DAT>) {
       s/[\r\n]*$//;
-      
+
       if ( /^(.*?\.html):(.*)$/ ) {
         print STDERR "PROC_DOC: processing '" . lc($2) . "'\n";
-	$allinone->{lc($2)}->{doc_html} = $1;  
-	$allinone->{lc($2)}->{doc_name} = $2;  
-	$allinone->{lc($2)}->{doc_file} = $l;  
-      }      
+        $allinone->{lc($2)}->{doc_html} = $1;
+        $allinone->{lc($2)}->{doc_name} = $2;
+        $allinone->{lc($2)}->{doc_file} = $l;
+      }
     }
   }
 }

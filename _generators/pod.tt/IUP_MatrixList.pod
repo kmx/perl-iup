@@ -231,7 +231,7 @@ act also as minimum number of visible lines. Default "3".
 
 B<Other Attributes:>
 
-Since the L<IUP::MatrixList|IUP::MatrixList> inherits its implementation from 
+Since the L<IUP::MatrixList|IUP::MatrixList> inherits its implementation from
 the L<IUP::Matrix|IUP::Matrix>, and that one from L<IUP::Canvas|IUP::Canvas>,
 those controls attributes and callbacks can be used. But notice that L<IUP::MatrixList>
 uses several of them internally for its own purpose, and reusing them may
@@ -472,7 +472,7 @@ The element B<IUP::MatrixList> is used in the following sample scripts:
 [%FOREACH e IN examples.iupmatrixlist %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -485,6 +485,6 @@ L<IUP::Canvas|IUP::Canvas>, L<IUP::Matrix|IUP::Matrix>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupmatrixlist.html|[%url.iuporigdoc%]ctrl/iupmatrixlist.html>
-[%END%] 
+[%END%]
 
 =cut

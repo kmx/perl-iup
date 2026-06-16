@@ -3,7 +3,7 @@
 # Virtual space size: 600x400
 # The canvas will be a window into that space.
 # If canvas is smaller than the virtual space, scrollbars are active.
-#  
+#
 # The drawing is a red cross from the corners of the virtual space.
 # But CD must draw in the canvas space. So the position of the scrollbar
 # will define the convertion between canvas space and virtual space.
@@ -22,7 +22,7 @@ sub action_cb {
 
   # invert scroll reference (YMAX-DY - POSY)
   $posy = 399 - $self->DY - $posy;
-  
+
   $self->cdClear();
   $self->cdForeground(CD_RED);
   $self->cdLine(0-$posx, 0-$posy, 599-$posx, 399-$posy);
@@ -57,7 +57,7 @@ my $canvas = IUP::Canvas->new(
                SCROLL_CB=>\&scroll_cb,
                RESIZE_CB=>\&resize_cb,
                ACTION=>\&action_cb );
-                   
+
 my $dialog = IUP::Dialog->new( child=>$canvas, TITLE=>"Scrollbar Test" );
 
 $dialog->ShowXY(IUP_CENTER, IUP_CENTER);

@@ -24,14 +24,14 @@ my $ky_csv = $FindBin::Bin.'/Key.csv';
 
 # +IUP::Matrix;
 # +IUP::Matrix;
-# +IUP::Plot;  
-# +IUP::Plot;  
+# +IUP::Plot;
+# +IUP::Plot;
 
 
 sub file2hash {
   my $fname = shift;
   my $rv;
-  
+
   die "File '$fname' does not exist!\n" unless -f $fname;
   my ($head, @lines) = slurp($fname);
   $head =~ s/[\n\r]*$//;
@@ -60,8 +60,8 @@ sub cb_generate1 {
   my $h = shift;
   for my $m (keys %$h) {
     warn "[info] Processing '$m'\n";
-    for my $a (keys %{$h->{$m}}) {  
-      my $if = "internal_cb_$a\_$h->{$m}->{$a}->{type}";      
+    for my $a (keys %{$h->{$m}}) {
+      my $if = "internal_cb_$a\_$h->{$m}->{$a}->{type}";
       $h->{$m}->{$a}->{xs_internal_cb} = $if;
 
       #avoid using variable names: count
@@ -70,9 +70,9 @@ sub cb_generate1 {
         $h->{$m}->{$a}->{c_params} =~ s/([\s,])count([\s,])/$1count_$2/;
         warn "[info] after : $h->{$m}->{$a}->{c_params}\n";
       }
-      
+
       $h->{$m}->{$a}->{xs_internal_cb_params} = "($h->{$m}->{$a}->{c_params})";
-      
+
       my @l_rvname;
       my $c_retval = $h->{$m}->{$a}->{c_retval};
       if ($c_retval eq 'int') {
@@ -99,7 +99,7 @@ sub cb_generate1 {
         $h->{$m}->{$a}->{xs_internal_cb_pop} = 'POPi';
         $h->{$m}->{$a}->{xs_internal_default_rv} = '0';
         push @l_rvname, '$rv_num';
-      }      
+      }
 
       if ($h->{$m}->{$a}->{c_params} eq '#') {
         warn "###WARNING### This should not happen m=$m a=$a c_params=#";
@@ -109,25 +109,25 @@ sub cb_generate1 {
           $p .= ",$type2params{$t}";
         }
         else {
-          warn "###WARNING### No hint in type2params for '$t'" unless $type2params{$t};          
+          warn "###WARNING### No hint in type2params for '$t'" unless $type2params{$t};
         }
         $h->{$m}->{$a}->{c_params} = $p;
-        warn "###WARNING### assuming params='$p'";        
+        warn "###WARNING### assuming params='$p'";
       }
-      
-      my $pf = "_init_cb_$a\_$h->{$m}->{$a}->{type}";      
+
+      my $pf = "_init_cb_$a\_$h->{$m}->{$a}->{type}";
       my $pf_a = $a;
 
-      my @l_name = ( '$self' );      
-      
-      $h->{$m}->{$a}->{xs_internal_action_push} = "XPUSHs(sv_2mortal(newSVpvn(\"$a\", ".length($a).")));";      
+      my @l_name = ( '$self' );
+
+      $h->{$m}->{$a}->{xs_internal_action_push} = "XPUSHs(sv_2mortal(newSVpvn(\"$a\", ".length($a).")));";
       $h->{$m}->{$a}->{xs_internal_action_key} = "!int!cb!$a!func";
       my @l_xspush = ();
       my @l_xspop = ();
       my @l_xslocvar = ();
       my $rv_count = 1;
       my @fp = split(',', $h->{$m}->{$a}->{c_params});
-      die "###FATAL### invalid value '$fp[0]'" if $fp[0] ne 'Ihandle* ih';      
+      die "###FATAL### invalid value '$fp[0]'" if $fp[0] ne 'Ihandle* ih';
       my $tp_all_in_one = $h->{$m}->{$a}->{type};
       my @tp = split('', $tp_all_in_one);
       unless (scalar(@tp)+1==scalar(@fp)) {
@@ -138,13 +138,13 @@ sub cb_generate1 {
       my $MULTITOUCH_CB_marker;
       for(my $i=1; $i<scalar(@fp); $i++) {
         my $n = 'xxx';
-        
+
         if ($fp[$i] =~ /^.*?([^ ]*)$/) {
-          $n = $1;          
+          $n = $1;
         }
         else {
           die "this should not happen";
-        }        
+        }
         if ($tp[$i-1] =~ /^(i|c)$/) {
           push @l_name, "\$$n";
           push @l_xspush, "XPUSHs(sv_2mortal(newSViv($n)));";
@@ -169,7 +169,7 @@ sub cb_generate1 {
         }
         elsif ($tp[$i-1] =~ /^(A)$/ && $tp_all_in_one eq 'Ai') {
           # hack for MULTISELECTION_CB MULTIUNSELECTION_CB
-          push @l_name, "\@$n\_list";          
+          push @l_name, "\@$n\_list";
           push @l_xslocvar, "int loc_i;";
           push @l_xslocvar, "AV * r_$n;";
           push @l_xspush, "r_$n = newAV();";
@@ -186,7 +186,7 @@ sub cb_generate1 {
           push @l_xspush, "for(loc_i=0; loc_i<count_; loc_i++) av_push(r_$n, newSViv($n\[loc_i]));";
           push @l_xspush, "XPUSHs(sv_2mortal(newRV_noinc((SV *)r_$n)));"; #XXX-CHECKLATER-not-sure-about-this
           $MULTITOUCH_CB_marker = 1;
-        }        
+        }
         elsif ($tp[$i-1] =~ /^(A)$/) {
           warn "###FATAL: do not know how to handle '$tp_all_in_one'\n";
         }
@@ -231,11 +231,11 @@ sub cb_generate1 {
           warn "###WARNING### [$m|$a] mismatch: '$h->{$m}->{$a}->{type}' vs. '$h->{$m}->{$a}->{c_params}'";
         }
       }
-      
+
       #die Dumper(\@l);
       @l_xspop = reverse @l_xspop; # return params are on stack in reverse order
       $h->{$m}->{$a}->{xs_internal_cb_extrapop} = \@l_xspop;
-      $h->{$m}->{$a}->{xs_internal_cb_push} = \@l_xspush;      
+      $h->{$m}->{$a}->{xs_internal_cb_push} = \@l_xspush;
       $h->{$m}->{$a}->{xs_internal_cb_locvar} = \@l_xslocvar;
       $h->{$m}->{$a}->{xs_init_cb} = $pf;
       $h->{$m}->{$a}->{xs_init_cb_action} = $pf_a;
@@ -245,7 +245,7 @@ sub cb_generate1 {
       else {
         $h->{$m}->{$a}->{xs_internal_cb_rvcheck} = "if (count != $rv_count) { warn(\"Warning: callback $a has returned %d instead of $rv_count values!\\n\",count); }";
       }
-            
+
       $h->{$m}->{$a}->{pod_sample_params} = '(' . join(', ', @l_name) . ')';
       if(scalar(@l_rvname)>2) {
         $h->{$m}->{$a}->{pod_sample_rv} = '(' . join(', ', @l_rvname) . ')';
@@ -253,7 +253,7 @@ sub cb_generate1 {
       else {
         $h->{$m}->{$a}->{pod_sample_rv} = $l_rvname[0];
       }
-      
+
       #print "DONE: " . Dumper($h->{$m}->{$a});
     }
   }
@@ -263,9 +263,9 @@ sub cb_hash2xsitems {
   my $h = shift;
   my @rv;
   my %seen;
-  
+
   foreach my $m (sort keys %$h) {
-    for my $a (sort keys %{$h->{$m}}) {  
+    for my $a (sort keys %{$h->{$m}}) {
       push @rv, $h->{$m}->{$a} unless $seen{"$h->{$m}->{$a}->{xs_init_cb}"};
       $seen{"$h->{$m}->{$a}->{xs_init_cb}"} = 1;
     }
@@ -278,13 +278,25 @@ sub cb_hash2pmitems {
   my @rv;
   foreach my $m (sort keys %$h) {
     my @a;
-    for my $a (sort keys %{$h->{$m}}) {  
+    for my $a (sort keys %{$h->{$m}}) {
       push @a, { action=>$a, xs_init_cb=>$h->{$m}->{$a}->{xs_init_cb} };
     }
 #warn ">>>processing $m $a ".Dumper(\@a);
     push @rv, { module=>$m, actions=>\@a };
   }
   return \@rv;
+}
+
+sub process_strip {
+  # like $tt->process(...) but strips the trailing whitespace that TT leaves
+  # behind indented [% FOR %]/[% END %] blocks (LF endings are native here)
+  my ($tt, $tpl, $data, $out) = @_;
+  my $txt = '';
+  $tt->process($tpl, $data, \$txt) || die $tt->error();
+  $txt =~ s/[ \t]+$//mg;
+  open my $fh, '>', $out or die "cannot write $out: $!";
+  print $fh $txt;
+  close $fh;
 }
 
 warn ">>>>[$0] Started!\n";
@@ -305,11 +317,11 @@ my $cb_data1 = {
 #die Dumper($cb_data1);
 #$tt->process($FindBin::Bin.'/Callback_xs.tt', $cb_data1, $g_dst.'/Callback.xs', {binmode=>1}) || die $tt->error();
 warn "gonna process Callback_xs_inc.tt\n";
-$tt->process($FindBin::Bin.'/Callback_xs_inc.tt', $cb_data1, $g_dst.'/Callback.xs.inc', {binmode=>1}) || die $tt->error();
+process_strip($tt, $FindBin::Bin.'/Callback_xs_inc.tt', $cb_data1, $g_dst.'/Callback.xs.inc');
 warn "gonna process Callback_c_inc.tt\n";
-$tt->process($FindBin::Bin.'/Callback_c_inc.tt', $cb_data1, $g_dst.'/Callback.c.inc', {binmode=>1}) || die $tt->error();
+process_strip($tt, $FindBin::Bin.'/Callback_c_inc.tt', $cb_data1, $g_dst.'/Callback.c.inc');
 warn "gonna process Callback_pm.tt\n";
-$tt->process($FindBin::Bin.'/Callback_pm.tt', $cb_data1, $g_dst.'/Callback.pm', {binmode=>1}) || die $tt->error();
+process_strip($tt, $FindBin::Bin.'/Callback_pm.tt', $cb_data1, $g_dst.'/Callback.pm');
 
 warn ">>>>[$0] Finished!\n";
 

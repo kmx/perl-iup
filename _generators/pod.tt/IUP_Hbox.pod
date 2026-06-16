@@ -24,18 +24,18 @@ It does not have a native representation.
 
  #standard way
  my $hbox = IUP::Hbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
- 
+
  #or with just a single child
  my $hbox = IUP::Hbox->new( child=>$elem, ANYATTRIBUTE=>'any value' );
- 
+
  #or with just 1 parameter (arrayref)
  my $hbox = IUP::Hbox->new( [$elem1, $elem2] );
- 
+
  #or with just 1 parameter (reference to child elements)
  my $hbox = IUP::Hbox->new( $elem );
 
-B<child:> (named parameter) List of the references to elements (or just a single element) that 
-will be placed in the box. 
+B<child:> (named parameter) List of the references to elements (or just a single element) that
+will be placed in the box.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
@@ -69,7 +69,7 @@ I<(non inheritable)>
 Forces all children to expand
 vertically. Default: "NO". This has the same effect as setting
 EXPAND=VERTICAL on each child, but their horizontal expansion will be
-preserved. 
+preserved.
 
 =item B<EXPANDWEIGHT>
 
@@ -83,7 +83,7 @@ used for expansion. (since iup-3.1)
 I<(non inheritable, at children only)>
 
 If a child has FLOATING=YES then its size and position
-will be ignored by the layout processing. Default: "NO". 
+will be ignored by the layout processing. Default: "NO".
 
 =item B<GAP, CGAP>
 
@@ -95,7 +95,7 @@ width. Default: "0". (CGAP since iup-3.0)
 
 I<(non inheritable)>
 
-Same as B<GAP> but are non inheritable. 
+Same as B<GAP> but are non inheritable.
 
 =item B<HOMOGENEOUS>
 
@@ -119,7 +119,7 @@ Default: "0x0" (no margin). (CMARGIN since iup-3.0)
 
 I<(non inheritable)>
 
-Same as B<MARGIN> but are non inheritable. 
+Same as B<MARGIN> but are non inheritable.
 
 =item B<NORMALIZESIZE>
 
@@ -129,7 +129,7 @@ Normalizes all children natural
 size to be the biggest natural size among them. All natural width will
 be set to the biggest width, and all natural height will be set to the
 biggest height according to is value. Can be NO, HORIZONTAL, VERTICAL
-or BOTH. Default: "NO". 
+or BOTH. Default: "NO".
 
 =item L<SIZE|[%m.at%]/SIZE> / L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
 
@@ -178,7 +178,7 @@ The element B<IUP::Hbox> is used in the following sample scripts:
 [%FOREACH e IN examples.iuphbox %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -191,6 +191,6 @@ L<IUP::Zbox|IUP::Zbox>, L<IUP::Vbox|IUP::Vbox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iuphbox.html|[%url.iuporigdoc%]elem/iuphbox.html>
-[%END%] 
+[%END%]
 
 =cut

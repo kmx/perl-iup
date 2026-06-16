@@ -10,7 +10,7 @@ sub myMessage {
                                          IUP::Label->new(TITLE=>$msg, EXPAND=>"Yes"),
                                          IUP::Button->new(TITLE=>"OK", PADDING=>"5x5", ACTION=>sub{return IUP_CLOSE}),
                                        ],
-                                       MARGIN=>"10x10", 
+                                       MARGIN=>"10x10",
                                        GAP=>"10",
                                        ALIGNMENT=>"ACENTER",
                               ), TITLE=>$tit );

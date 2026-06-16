@@ -4,7 +4,7 @@
 
 IUP::ProgressBar - [GUI element] shows a percent value that can be updated to simulate a progression
 
-=head1 DESCRIPTION 
+=head1 DESCRIPTION
 
 Creates a progress bar control. Shows a percent value that can be
 updated to simulate a progression.
@@ -13,43 +13,43 @@ updated to simulate a progression.
 
 <p>
   <table border="1">
-    <tbody align="center">    
+    <tbody align="center">
         <tr>
-		<td></td>
-		<th>DASHED=NO</th>
-		<th>DASHED=YES</th>
-		<th>MARQUEE=YES</th>
-	</tr>
-	<tr style="background-color: rgb(173, 177, 194);">
-		<th style="text-align: center;">Motif</th>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_mot_continuous.png"></td>
-		<td>(same as DASHED=NO)</td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_mot_marquee.png"></td>
-	</tr>
-	<tr style="background-color: rgb(212, 208, 200);">
-		<th style="text-align: center;">Windows Classic</th>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_win2k_continuous.png"></td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_win2k_dash.png"></td>
-		<td>(same as DASHED)</td>
-	</tr>
-	<tr style="background-color: rgb(239, 235, 231);">
-		<th style="text-align: center;">Windows w/ Styles</th>
-		<td>(same as DASHED=YES)</td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_winxp_dash.png"></td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_winxp_marquee.png"></td>
-	</tr>
-	<tr style="background-color: rgb(239, 235, 231);">
-		<th style="text-align: center;">Windows Vista</th>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_vista_continuous.png"></td>
-		<td>(same as DASHED=NO)</td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_vista_marquee.png"></td>
-	</tr>
-	<tr style="background-color: rgb(236, 233, 216);">
-		<th style="text-align: center;">GTK</th>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_gtk_continuous.png"></td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_gtk_dashed.png"></td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_gtk_marquee.png"></td>
-	</tr>
+                <td></td>
+                <th>DASHED=NO</th>
+                <th>DASHED=YES</th>
+                <th>MARQUEE=YES</th>
+        </tr>
+        <tr style="background-color: rgb(173, 177, 194);">
+                <th style="text-align: center;">Motif</th>
+                <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_mot_continuous.png"></td>
+                <td>(same as DASHED=NO)</td>
+                <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_mot_marquee.png"></td>
+        </tr>
+        <tr style="background-color: rgb(212, 208, 200);">
+                <th style="text-align: center;">Windows Classic</th>
+                <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_win2k_continuous.png"></td>
+                <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_win2k_dash.png"></td>
+                <td>(same as DASHED)</td>
+        </tr>
+        <tr style="background-color: rgb(239, 235, 231);">
+                <th style="text-align: center;">Windows w/ Styles</th>
+                <td>(same as DASHED=YES)</td>
+                <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_winxp_dash.png"></td>
+                <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_winxp_marquee.png"></td>
+        </tr>
+        <tr style="background-color: rgb(239, 235, 231);">
+                <th style="text-align: center;">Windows Vista</th>
+                <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_vista_continuous.png"></td>
+                <td>(same as DASHED=NO)</td>
+                <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_vista_marquee.png"></td>
+        </tr>
+        <tr style="background-color: rgb(236, 233, 216);">
+                <th style="text-align: center;">GTK</th>
+                <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_gtk_continuous.png"></td>
+                <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_gtk_dashed.png"></td>
+                <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupprogressbar_gtk_marquee.png"></td>
+        </tr>
     </tbody>
   </table>
 </p>
@@ -185,11 +185,11 @@ The element B<IUP::ProgressBar> is used in the following sample scripts:
 
 =item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
-=back 
+=back
 
 
 
 The original doc: L<iupprogressbar.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupprogressbar.html>
- 
+
 
 =cut

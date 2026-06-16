@@ -8,9 +8,9 @@ use IUP::Constants;
 sub _special_initial_map_cb {
   my $self = shift;
   if (defined $self && !$self->cnvhandle) {
-    my $ch = IUP::Internal::Canvas::_cdCreateCanvas_CD_IUP($self->ihandle);  
+    my $ch = IUP::Internal::Canvas::_cdCreateCanvas_CD_IUP($self->ihandle);
     $self->cnvhandle($ch);
-    $self->MAP_CB(undef); #deactivate callback    
+    $self->MAP_CB(undef); #deactivate callback
   }
   return IUP_DEFAULT;
 }

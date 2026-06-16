@@ -72,8 +72,8 @@ B<$url:> the destination address of the link
 B<Returns:> IUP_CLOSE will be processed. If returns IUP_DEFAULT or it is
 not defined, the L<Help|IUP::Manual::02_Elements/"Help()"> function will be called.
 
-=back 
-  
+=back
+
 =head1 NOTES
 
 When the cursor is over the text, it is changed to the HAND cursor.
@@ -93,7 +93,7 @@ The element B<IUP::Link> is used in the following sample scripts:
 
 =item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/label.pl> - IUP::Label and IUP::Link example
 
-=back 
+=back
 
 
 
@@ -102,6 +102,6 @@ The element B<IUP::Link> is used in the following sample scripts:
 L<IUP::Label|IUP::Label>
 
 The original doc: L<iuplink.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iuplink.html>
- 
+
 
 =cut

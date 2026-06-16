@@ -69,8 +69,8 @@ B<$url:> the destination address of the link
 B<Returns:> IUP_CLOSE will be processed. If returns IUP_DEFAULT or it is
 not defined, the L<Help|[%m.elem%]/"Help()"> function will be called.
 
-=back 
-  
+=back
+
 [% h.notes %]
 
 When the cursor is over the text, it is changed to the HAND cursor.
@@ -90,7 +90,7 @@ The element B<IUP::Link> is used in the following sample scripts:
 [%FOREACH e IN examples.iuplink %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -103,6 +103,6 @@ L<IUP::Label|IUP::Label>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iuplink.html|[%url.iuporigdoc%]elem/iuplink.html>
-[%END%] 
+[%END%]
 
 =cut

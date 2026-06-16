@@ -13,16 +13,16 @@ my $text = IUP::Text->new( READONLY=>"YES", VALUE=>"Selecting show or hide will 
 sub action_show {
   $text->VISIBLE("YES");
   return IUP_DEFAULT;
-} 
+}
 
 sub action_hide {
   $text->VISIBLE("NO");
   return IUP_DEFAULT;
-} 
+}
 
 sub action_exit {
   return IUP_CLOSE
-} 
+}
 
 sub key_cb {
   my ($self, $c) = @_;

@@ -28,7 +28,7 @@ to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements/"new()
 
 =item B<CLEARATTRIBUTES>
 
-I<(write-only, non inheritable)> It will clear all attributes stored internally and remove all references. 
+I<(write-only, non inheritable)> It will clear all attributes stored internally and remove all references.
 
 =back
 
@@ -41,13 +41,13 @@ The element B<IUP::User> is used in the following sample scripts:
 
 =item * L<0-basic/text_format.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/text_format.pl> - IUP::Text (formating) example
 
-=back 
+=back
 
 
 
 =head1 SEE ALSO
 
 The original doc: L<iupuser.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupuser.html>
- 
+
 
 =cut

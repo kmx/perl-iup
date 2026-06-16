@@ -65,7 +65,7 @@ message, alarm, data input, list selection>.
 Basic method for creating new element (constructor):
 
  $elem = IUP::Button->new();
- 
+
  #or you can specify also some attribute values:
  $elem = IUP::Button->new( TITLE=>"b1", SIZE=>"30x30");
 
@@ -84,13 +84,13 @@ Basic method for creating new element (constructor):
 =head3 new_no_ihandle()
 
  $elem = IUP::Button->new_no_ihandle();
- 
+
 BEWARE: just for experts, you very likely do not need this at all!
 
 =head3 new_from_ihandle()
 
  $elem = IUP::Button->new_from_ihandle($ihandle);
- 
+
 BEWARE: just for experts, you very likely do not need this at all!
 
 =head1 COMMON METHODS
@@ -317,7 +317,7 @@ B<Returns:> reference to iup element
 =over
 
  my $val = $element->GetAttributeId($name, $id);
- 
+
 Equivalent (just little bit faster) to:
 
   my $val = $element->GetAttribute("$name$id");
@@ -467,7 +467,7 @@ The following names are known:
  "canvas"
  "dialog"
  "fill"
- "frame" 
+ "frame"
  "hbox"
  "item"
  "separator"
@@ -476,7 +476,7 @@ The following names are known:
  "list"
  "menu"
  "radio"
- "text" 
+ "text"
  "toggle"
  "vbox"
  "zbox"
@@ -579,7 +579,7 @@ L<NAME|[%m.at%]/NAME>.
 
 =over
 
-Returns the name of an interface element, if the element has an associated name using 
+Returns the name of an interface element, if the element has an associated name using
 L<SetName|/"SetName()"> or by C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor or using LED.
 
  my $name = $element->GetName();
@@ -618,15 +618,15 @@ exactly the same result as L<GetBrother|/"GetBrother()">.
  my $lb = IUP::Label->new( TITLE=>"Label" );
  my $vbox = IUP::Vbox->new( child=>[$bt, $lb] );
  my $dialog = IUP::Dialog->new( child=>$vbox );
- 
+
  $dialog->Show();
- 
+
  my $child = undef; #passing undef to GetNextChild gives the first child
- 
+
  while($child = $vbox->GetNextChild($child)) {
    print "vbox has a child of type ", ref($child), "\n";
  }
- 
+
  IUP->MainLoop;
  return 0;
 
@@ -641,7 +641,7 @@ L<GetChild|/"GetChild()">.
 
 =over
 
-To retrieve a parameter of IUP->GetParam dialog 
+To retrieve a parameter of IUP->GetParam dialog
 you must use the following function:
 
  my $element = $dialog->GetParamParam($param_index);
@@ -758,9 +758,9 @@ Checks whether callback_name is valid for given element.
  $element->IsValidCallbackName($callback_name);
 
 B<$callback_name:> call back name - e.g. "ACTION"
- 
+
 B<Returns:> 1 (valid) or 0 (invalid)
- 
+
 =back
 
 =head3 Map()
@@ -1074,7 +1074,7 @@ B<$value:> value of the attribute. If C<undef>, the default value will be used.
 =over
 
  $element->SetAttributeId($name, $id, $value);
- 
+
 Equivalent (just little bit faster) to:
 
  $element->GetAttribute("$name$id", $value);
@@ -1104,14 +1104,14 @@ Associates a callback to an event.
  sub cb_handler {
    #...
  }
- 
+
  $element->SetCallback($cb_name, \&cb_handler);
  #or
  $element->SetCallback( $cb_name1=>\&cb_handler, $cb_name2=>\&cb_handler, $cb_name3=>\&cb_handler );
  #or
  my %callbacks = ( $cb_name1=>\&cb_handler, $cb_name2=>\&cb_handler, $cb_name3=>\&cb_handler );
  $element->SetCallback( %callbacks );
- 
+
 
 B<$cb_name:> attribute name of the callback.
 
@@ -1144,7 +1144,7 @@ return value will be different. You could call C<Flush()> between the
 two functions to obtain the same value.
 
 [% h.at_see %]
-L<GetFocus|IUP/"GetFocus()">. 
+L<GetFocus|IUP/"GetFocus()">.
 
 =back
 
@@ -1251,7 +1251,7 @@ L<ShowXY|/"ShowXY()">,
 L<Show|/"Show()">,
 L<Popup|/"Popup()">,
 L<Destroy|/"Destroy()">.
- 
+
 =back
 
 =head3 Popup()

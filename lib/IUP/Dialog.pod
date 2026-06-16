@@ -49,7 +49,7 @@ image to be tiled on the background. See also the screenshots:
 
 <p>
   <table border="1">
-    <tbody align="left">      
+    <tbody align="left">
       <tr>
         <th></th>
         <th>normal background</th>
@@ -73,24 +73,24 @@ image to be tiled on the background. See also the screenshots:
       </tr>
       <tr>
         <th>Windows<br>Classic</th>
-	<td><img src="http://kmx.github.io/perl-iup/spec/bg_win2k.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/bg_win2k.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/spec/bg_win2k_background.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/spec/bg_win2k_bgcolor.png"></td>
         <td><img src="http://kmx.github.io/perl-iup/spec/bg_win2k_bgcolor_indiv.png"></td>
       </tr>
       <tr>
         <th>Windows<br>w/ Styles</th>
-	<td><img src="http://kmx.github.io/perl-iup/spec/bg_winxp.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/spec/bg_winxp_background.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/spec/bg_winxp_bgcolor.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/spec/bg_winxp_bgcolor_indiv.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/bg_winxp.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/bg_winxp_background.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/bg_winxp_bgcolor.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/bg_winxp_bgcolor_indiv.png"></td>
       </tr>
       <tr>
         <th>Windows<br>Vista</th>
-	<td><img src="http://kmx.github.io/perl-iup/spec/bg_vista.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/spec/bg_vista_background.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/spec/bg_vista_bgcolor.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/spec/bg_vista_bgcolor_indiv.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/bg_vista.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/bg_vista_background.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/bg_vista_bgcolor.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/spec/bg_vista_bgcolor_indiv.png"></td>
       </tr>
     </tbody>
   </table>
@@ -262,7 +262,7 @@ Dialogs icon.
 
 Makes the dialog occupy the whole screen over any system
 bars in the main monitor. All dialog details, such as title bar,
-borders, maximize button, etc, are removed. 
+borders, maximize button, etc, are removed.
 
 Possible values "YES", "NO".
 In Motif you may have to click in the dialog to set its focus.
@@ -288,7 +288,7 @@ MINBOX is hidden as well, or else it will be just disabled.
 
 Maximum size for the dialog in raster units (pixels). The
 windowing system will not be able to change the size beyond this limit.
-Default: 65535x65535. 
+Default: 65535x65535.
 
 =item B<MENU>
 
@@ -317,13 +317,13 @@ Minimum size for the dialog in raster units (pixels). The
 windowing system will not be able to change the size beyond this limit.
 Default: 1x1. Some systems define a very minimum size greatter than
 this. Typically Windows has an horizontal minimum size that includes
-the window decoration buttons. 
+the window decoration buttons.
 
 =item B<MODAL>
 
 I<(read-only)> Returns the popup state. It is "YES" if the
 dialog was shown using L<Popup|IUP::Manual::02_Elements/"Popup()">. It is "NO" if L<Show|IUP::Manual::02_Elements/"Show()"> was used
-or it is not visible. 
+or it is not visible.
 
 =item B<NATIVEPARENT>
 
@@ -804,7 +804,7 @@ B<$x, y:> coordinates of the new position.
 
 Action generated when the
 dialog size is changed. If returns IUP_IGNORE the dialog layout is NOT
-recalculated. 
+recalculated.
 
 =item L<SHOW_CB|IUP::Manual::04_Callbacks/SHOW_CB>
 
@@ -1009,11 +1009,11 @@ The element B<IUP::Dialog> is used in the following sample scripts:
 
 =item * L<0-basic/submenu.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/submenu.pl> - IUP::Submenu example
 
-=item * L<0-basic/tabs1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tabs1.pl> - IUP::Tabs example 
+=item * L<0-basic/tabs1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tabs1.pl> - IUP::Tabs example
 
 =item * L<0-basic/tabs2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tabs2.pl> - IUP::Tabs example
 
-=item * L<0-basic/tabs3.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tabs3.pl> - IUP::Tabs example 
+=item * L<0-basic/tabs3.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tabs3.pl> - IUP::Tabs example
 
 =item * L<0-basic/text1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/text1.pl> - IUP::Text (single line) example
 
@@ -1055,7 +1055,7 @@ The element B<IUP::Dialog> is used in the following sample scripts:
 
 =item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
-=back 
+=back
 
 
 
@@ -1069,6 +1069,6 @@ L<Show|IUP::Manual::02_Elements/"Show()">,,
 L<Popup|IUP::Manual::02_Elements/"Popup()">
 
 The original doc: L<iupdialog.html|http://www.tecgraf.puc-rio.br/iup/en/dlg/iupdialog.html>
- 
+
 
 =cut

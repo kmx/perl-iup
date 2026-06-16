@@ -28,11 +28,11 @@ sub InitGlobals {
     [CD_RED,  CD_RED,  CD_RED,  CD_RED,  CD_RED,  CD_BLUE, CD_BLUE, CD_BLUE, CD_WHITE,CD_WHITE],
     [CD_WHITE,CD_GREEN,CD_GREEN,CD_GREEN,CD_GREEN,CD_GREEN,CD_BLUE, CD_BLUE, CD_WHITE,CD_WHITE],
     [CD_WHITE,CD_WHITE,CD_GREEN,CD_GREEN,CD_GREEN,CD_GREEN,CD_GREEN,CD_BLUE, CD_WHITE,CD_WHITE],
-    [CD_WHITE,CD_WHITE,CD_WHITE,CD_GREEN,CD_GREEN,CD_GREEN,CD_GREEN,CD_GREEN,CD_WHITE,CD_WHITE],  
+    [CD_WHITE,CD_WHITE,CD_WHITE,CD_GREEN,CD_GREEN,CD_GREEN,CD_GREEN,CD_GREEN,CD_WHITE,CD_WHITE],
     [CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE],
     [CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE,CD_WHITE],
   ] );
-  
+
   $stipple = IUP::Canvas::Stipple->new($STYLE_SIZE, $STYLE_SIZE);
   #initialize the stipple buffer with cross pattern
   for my $l (0..$STYLE_SIZE-1) {
@@ -63,7 +63,7 @@ sub InitGlobals {
 sub SimpleDraw {
   my $canvas = shift;
   my ($x0, $y0, $x1, $y1, $x2, $y2, $x3, $y3);
-  
+
   # Get size in pixels to be used for computing coordinates.
   my ($w, $h, $w_mm, $h_mm) = $canvas->cdGetSize();
 
@@ -327,7 +327,7 @@ InitGlobals();
 warn "Saving ...\n";
 $canvas = IUP::Canvas::FileVector->new( format=>"SVG", filename=>"tmp-testoutput.svg", width=>270.933, height=>198.543, dpi=>120 );
 SimpleDraw($canvas);
-$canvas->cdKillCanvas(); 
+$canvas->cdKillCanvas();
 undef $canvas; #XXX-FIXME why we need 'undef $canvas' and '$canvas->cdKillCanvas()' is not enough?
 
 # EMF is a Windows-only CD driver - IUP::Canvas::FileVector->new() returns undef

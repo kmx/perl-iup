@@ -206,7 +206,7 @@ changed after it was displayed on screen)
  IUP->MainLoop;
 
 =begin html
- 
+
 [%html.layout_client%]
 
 =end html
@@ -242,7 +242,7 @@ Using EXPAND in the example, we obtain the following result:
  IUP->MainLoop;
 
 =begin html
- 
+
 [%html.layout_expand1%]
 
 =end html
@@ -259,7 +259,7 @@ size can be smaller, but its contents will stop to follow the resize
 and they will be clipped at right and bottom.
 
 =begin html
- 
+
 [%html.layout_expand2%]
 
 =end html
@@ -296,7 +296,7 @@ set the dialog initial size.
  IUP->MainLoop;
 
 =begin html
- 
+
 [%html.layout_shrink%]
 
 =end html
@@ -319,7 +319,7 @@ L<Insert|[%m.elem%]/"Insert()">. To remove from the tree call
 L<Detach|[%m.elem%]/"Detach()">.
 
 For the element to be visible L<Map|[%m.elem%]/"Map()"> must be called
-so it can be associated with a native control. L<Show|[%m.elem%]/"Show()">, L<ShowXY|[%m.elem%]/"ShowXY()"> or L<Popup|[%m.elem%]/"Popup()"> will automatically call L<Map|[%m.elem%]/"Map()"> 
+so it can be associated with a native control. L<Show|[%m.elem%]/"Show()">, L<ShowXY|[%m.elem%]/"ShowXY()"> or L<Popup|[%m.elem%]/"Popup()"> will automatically call L<Map|[%m.elem%]/"Map()">
 before showing a dialog. To remove this association call L<Unmap|[%m.elem%]/"Unmap()">.
 
 But there is a call order to be able to call theses functions that

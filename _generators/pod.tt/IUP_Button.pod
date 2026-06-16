@@ -38,7 +38,7 @@ Button with both text and image:
  my $img = IUP::Image->new( file=>'icon.png' );
  my $button = IUP::Button->new( TITLE=>'Click', IMAGE=>$img );
 
-Button with a image from build-in ImageLibrary - see L<Manual::ImageLibrary|Manual::ImageLibrary>: 
+Button with a image from build-in ImageLibrary - see L<Manual::ImageLibrary|Manual::ImageLibrary>:
 
  my $button = IUP::Button->new( IMAGE=>'IUP_Cancel' );
 
@@ -46,7 +46,7 @@ Color button with background color set:
 
  my $button1 = IUP::Button->new( BGCOLOR=>"0 200 0" ); #defined by RGB values
  my $button2 = IUP::Button->new( BGCOLOR=>IUP_RED );   #build-in constant
- 
+
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 [% txt.new_attr %]
@@ -66,11 +66,11 @@ Possible values: "ALEFT", "ACENTER" and "ARIGHT", combined to "ATOP",
 "ACENTER" and "ABOTTOM". Default: "ACENTER:ACENTER". Partial values are
 also accepted, like "ARIGHT" or ":ATOP", the other value will be used
 from the current alignment. In Motif, vertical alignment is restricted
-to "ACENTER". 
+to "ACENTER".
 
 =item L<BGCOLOR|[%m.at%]/BGCOLOR>
 
-Background color. 
+Background color.
 BGCOLOR is ignored always when FLAT=YES because it will inherit from the
 native parent. If text and image are not defined, the BGCOLOR is used to
 show a color not necessary as a background color of the button, in this case
@@ -85,7 +85,7 @@ I<(creation only, non inheritable)>
 
 Enables the focus
 traversal of the control. In Windows the button will respect CANFOCUS
-in opposite to the other controls. Default: YES. 
+in opposite to the other controls. Default: YES.
 
 =item B<PROPAGATEFOCUS>
 
@@ -109,7 +109,7 @@ I<(non inheritable)>
 
 Image name or L<IUP::Image> reference. If set before map defines the
 behavior of the button to contain an image. The natural size will be
-size of the image in pixels, plus the button borders. 
+size of the image in pixels, plus the button borders.
 
 See - L<Using Images in Other Elements (via IMAGE Attribute)|IUP::Image/"Using Images in Other Elements (via IMAGE Attribute)">
 
@@ -164,7 +164,7 @@ commands. Works only if a mnemonic is NOT defined in the title. Can be
 
 internal margin. Works just like the MARGIN attribute of
 the L<IUP::Hbox|IUP::Hbox> and L<IUP::Vbox|IUP::Vbox> containers, but uses a different name to
-avoid inheritance problems. Default value: "0x0". 
+avoid inheritance problems. Default value: "0x0".
 
 =item B<CPADDING>
 
@@ -281,7 +281,7 @@ The element B<IUP::Button> is used in the following sample scripts:
 [%FOREACH e IN examples.iupbutton %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.

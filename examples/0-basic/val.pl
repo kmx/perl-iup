@@ -35,7 +35,7 @@ sub fbuttonrelease {
 }
 
 sub cb_change {
-  my $self = shift;  
+  my $self = shift;
   my $val = $self->VALUE || 0;
   my $buffer = sprintf("VALUE=%.2f", $val);
   if ($self->TYPE eq "VERTICAL") {

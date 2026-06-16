@@ -72,7 +72,7 @@ is done by means of L<attributes|[%m.at%]> and L<callbacks|[%m.cb%]>, using func
 common to all the controls. This simple but powerful approach is one of
 the advantages of using IUP.
 
-Controls are automatically destroyed when the dialog is destroyed. 
+Controls are automatically destroyed when the dialog is destroyed.
 
 [%txt.modlist%]
 
@@ -102,7 +102,7 @@ For more info see separate documents:
 =item * L<[%m.cb%]> - common IUP element callbacks
 
 =back
- 
+
 =head1 ATTRIBUTES CONCEPT
 
 Attributes are used to change or consult properties of elements. Each
@@ -130,19 +130,19 @@ B<The ways of setting an attribute value:>
 
  #via standard SetAttribute() call
  $element->SetAttribute("ATTRNAME", "VALUE");
- 
+
  #via standard SetAttribute() call + using fat-comma
  $element->SetAttribute( ATTRNAME=>"VALUE" );
- 
+
  #setting more attributes at once - via standard SetAttribute()
  $element->SetAttribute( ATTRNAME1=>"VALUE1", ATTRNAME2=>"VALUE2" );
- 
+
  #via accessor
  $element->TITLE("Text");
- 
+
  #setting attributes during element creation
  $element = IUP::Label->new( TITLE=>"Text", ATTRNAME1=>"VALUE1", ATTRNAME2=>"VALUE2" );
- 
+
  #which is equivalent to
  $element = IUP::Label->new();
  $element->SetAttribute("TITLE", "Text");
@@ -160,13 +160,13 @@ B<The ways of getting an attribute value:>
 
  #via GetAttribute() call
  $value = $element->GetAttribute("ATTRNAME");
-  
+
  #getting more attributes at once - via GetAttribute()
  ($val1, $val2, $val3) = $element->GetAttribute( "ATTRNAME1", "ATTRNAME2", "ATTRNAME3" );
- 
+
  #via accessor
  $value = $element->TITLE;
- 
+
 B<When an attribute is retrieved (Get)> it will first be checked at the
 control class. If not defined then it checks in the hash table. If not
 defined it checks its parent hash table and so forth, until it reaches
@@ -318,14 +318,14 @@ If you want the same button with changed background color, you can:
 =item * specify BGCOLOR attribute value when creating the element:
 
  my $demo_button = IUP::Button->new( TITLE=>"Hello", BGCOLOR=>"0 255 0" );
- 
+
 =item * or using BGCOLOR accessor:
 
  my $demo_button = IUP::Button->new( TITLE=>"Hello" );
  $demo_button->BGCOLOR("0 255 0");
 
 =item * or via SetAttribute method:
- 
+
  my $demo_button = IUP::Button->new( TITLE=>"Hello" );
  $demo_button->SetAttribute("BGCOLOR", "0 255 0");
 
@@ -353,11 +353,11 @@ IUP.
 The events are processed only when IUP has the control of the
 application. After the application creates and shows a dialog it must
 return the control to IUP so it can process incoming events. This is
-done in the IUP main event loop. And it is usually done once per 
+done in the IUP main event loop. And it is usually done once per
 application. One exception is the display of modal
 dialogs. These dialogs will have their own event loop and the previous
 shown dialogs will stop receiving events until the modal dialog
-returns. 
+returns.
 
 =head2 Using Callbacks
 
@@ -374,29 +374,29 @@ B<The ways of setting callback:>
  sub cb_handler1 {
    #...
  }
- 
+
  sub cb_handler2 {
    #...
  }
 
  #via standard SetCallback() call
  $element->SetCallback("ACTION", \&cb_handler1);
- 
+
  #via standard SetCallback() call + using fat-comma
  $element->SetAttribute( ACTION=>\&cb_handler1 );
- 
+
  #using anonymous function
  $element->SetCallback( ACTION=>sub { IUP->Message('Hi!') } );
- 
+
  #setting more callbacks at once
  $element->SetAttribute( ACTION=>\&cb_handler1, K_ANY=>\&cb_handler2 );
- 
+
  #via accessor
  $element->ACTION(\&cb_handler2);
 
  #setting attributes during element creation
  $element = IUP::Button->new( TITLE=>"Text", ACTION=>\&cb_handler1, K_ANY=>\&cb_handler2 );
- 
+
  #which is equivalent to
  $element = IUP::Button->new();
  $element->SetAttribute( TITLE=>"Text" );
@@ -405,7 +405,7 @@ B<The ways of setting callback:>
 
 Callbacks do NOT have B<inheritance> like attributes.
 
-All callbacks receive at least the reference to the element which activated 
+All callbacks receive at least the reference to the element which activated
 the action as a parameter C<$self>. Each callback handler has given set of parameters
 e.g. BUTTON_CB callback expects handler function like:
 

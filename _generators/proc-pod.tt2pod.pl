@@ -38,7 +38,7 @@ my $getopt_rv = GetOptions(
 );
 pod2usage(-exitstatus=>0, -verbose=>2) if $g_help || !$getopt_rv;
 
-my $ttdata = {  
+my $ttdata = {
   h => {
     name       => '=head1 NAME',
     synopsis   => '=head1 SYNOPSIS',
@@ -104,8 +104,8 @@ my $ttdata = {
     iupfill                    =>                    'IUP::Fill - [GUI element] dynamically occupies empty spaces always trying to expand itself',
     iupflatbutton              =>              'IUP::FlatButton - [GUI element] flat button',
     iupfontdlg                 =>                 'IUP::FontDlg - [pre-defined dialog] selecting a font',
-    iupframe                   =>                   'IUP::Frame - [GUI element] frame with a title around an interface element',    
-    iupgauge                   =>                   'IUP::Gauge - [GUI element] shows a percent value that can be updated to simulate a progression',  
+    iupframe                   =>                   'IUP::Frame - [GUI element] frame with a title around an interface element',
+    iupgauge                   =>                   'IUP::Gauge - [GUI element] shows a percent value that can be updated to simulate a progression',
     iupglbackgroundbox         =>       'IUP::GL::BackgroundBox - [GUI element] GL-based background box',
     iupglbutton                =>              'IUP::GL::Button - [GUI element] GL-based button',
     iupglcanvasbox             =>           'IUP::GL::CanvasBox - [GUI element] GL-based canvas box',
@@ -170,7 +170,7 @@ my $ttdata = {
     led      => 'IUP::Manual::08_UsingLED',
     examples => 'IUP::Manual::09_Examples',
     test     => 'IUP::Manual::99_Test',
-    
+
     predlg   => 'IUP::Manual::07_PredefinedDialogs',
     asimple  => 'IUP::Manual::09_SimpleApplication',
     acomplex => 'IUP::Manual::10_ComplexApplication',
@@ -308,7 +308,7 @@ my %pod_all = map {$_=>1} My::Utils::find_file($g_pod, qr/\.pod$/);
 my %pod_specconvert;
 for (values %{$ttdata->{m}}) {
   my $realname = "$_.pod";
-  my $draftname = $realname;  
+  my $draftname = $realname;
   $draftname =~ s/^IUP::Manual::([^A-Za-z]*)(.+)/IUP::Manual::$2/;
   $realname =~ s/::/\//g;
   $draftname =~ s/::/\//g;
@@ -350,35 +350,35 @@ sub load_examples {
     if ($content =~ /#\s*([^\r\n]+)/) {
       $desc = " - $1";
     }
-    my $plshort = File::Spec->abs2rel($pl, $exdir);    
+    my $plshort = File::Spec->abs2rel($pl, $exdir);
     $plshort =~ s|\\|/|;
-    for my $e (keys %$allelems) {  
+    for my $e (keys %$allelems) {
       my $nick = $allelems->{$e};
       if ($content =~ /\Q$e\E\->new/s) {
         push @{$ttdata->{examples}->{$nick}}, { pl=>$plshort, desc=>$desc };
 #        warn "$nick => $plshort, $desc\n";
       }
     }
-  }  
+  }
 }
 
 sub procfile {
-  my $podtt = shift;  
-  my $rel = File::Spec->abs2rel($podtt, $g_podtt);  
+  my $podtt = shift;
+  my $rel = File::Spec->abs2rel($podtt, $g_podtt);
   $rel =~ s|_|/|g;
   if ($pod_specconvert{$rel}) {
     warn "[info] oldrel=$rel newrel=$pod_specconvert{$rel}\n";
-    $rel = $pod_specconvert{$rel};    
+    $rel = $pod_specconvert{$rel};
   }
-  my $pod = File::Spec->rel2abs(File::Spec->catfile($g_pod, $rel));    
-  
+  my $pod = File::Spec->rel2abs(File::Spec->catfile($g_pod, $rel));
+
   warn "[info] input='$podtt'\n";
-  my $pod_orig = -f $pod ? read_file($pod) : 'EMPTY: random content='.rand(999);  
+  my $pod_orig = -f $pod ? read_file($pod) : 'EMPTY: random content='.rand(999);
   my $pod_new;
   my $pod_tmp;
-  my $tt = Template->new(ABSOLUTE=>1);  
-  $tt->process($podtt, $ttdata, \$pod_tmp, {binmode=>1}) || die $tt->error(), "\n";  
-  $tt->process(\$pod_tmp, $ttdata, \$pod_new, {binmode=>1}) || die $tt->error(), "\n";  
+  my $tt = Template->new(ABSOLUTE=>1);
+  $tt->process($podtt, $ttdata, \$pod_tmp, {binmode=>1}) || die $tt->error(), "\n";
+  $tt->process(\$pod_tmp, $ttdata, \$pod_new, {binmode=>1}) || die $tt->error(), "\n";
   $pod_new = encode('utf-8', $pod_new);
   if (sha1_hex($pod_orig) ne sha1_hex($pod_new)) {
     warn " -> orig=", sha1_hex($pod_orig), "\n" unless $pod_orig =~ /^EMPTY/;

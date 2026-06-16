@@ -73,7 +73,7 @@ $item_help->ACTION( sub {
 } );
 
 $item_exit->ACTION( sub {
-  return IUP_CLOSE;  
+  return IUP_CLOSE;
 } );
 
 IUP->MainLoop;

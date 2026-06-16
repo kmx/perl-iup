@@ -17,10 +17,10 @@ sub draw_cb {
   my ($self, $i, $j, $xmin, $xmax, $ymin, $ymax, $canvas) = @_;
   my $xm = ($xmax + $xmin) / 2;
   my $ym = ($ymax + $ymin) / 2;
-  
+
   #XXX checkthis - callback is very, very slow
   $global_debug++;
-  warn "counter=$global_debug\n" if $global_debug%100 == 0;  
+  warn "counter=$global_debug\n" if $global_debug%100 == 0;
 
   $canvas->cdForeground($canvas->cdEncodeColor($i*20, $j*100, $i+100));
   $canvas->cdBox($xmin, $xmax, $ymin, $ymax);
@@ -40,6 +40,6 @@ my $cells = IUP::Cells->new(
               NCOLS_CB      => sub {50} );
 
 my $dlg = IUP::Dialog->new( child=>$cells, RASTERSIZE=>"500x500", TITLE=>"IUP::Cells" );
-$dlg->ShowXY(IUP_CENTER, IUP_CENTER);   
+$dlg->ShowXY(IUP_CENTER, IUP_CENTER);
 
 IUP->MainLoop();

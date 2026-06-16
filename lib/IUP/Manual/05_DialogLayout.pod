@@ -123,12 +123,12 @@ are quite different. See some examples bellow.
       <tr>
         <th>IUP::Dialog</th>
         <th>IUP::Frame</th>
-	<th>IUP::Canvas</th>
+        <th>IUP::Canvas</th>
       </tr>
       <tr>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/images/nativesize1.gif"></td>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/images/nativesize2.gif"></td>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.9/images/nativesize3.gif"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/images/nativesize3.gif"></td>
       </tr>
     </tbody>
   </table>
@@ -221,7 +221,7 @@ changed after it was displayed on screen)
  IUP->MainLoop;
 
 =begin html
- 
+
 <p><img src="http://kmx.github.io/perl-iup/img-3.9/images/usersize.gif"></p>
 
 =end html
@@ -257,7 +257,7 @@ Using EXPAND in the example, we obtain the following result:
  IUP->MainLoop;
 
 =begin html
- 
+
 <p><img src="http://kmx.github.io/perl-iup/img-3.9/images/expand.gif"></p>
 
 =end html
@@ -274,7 +274,7 @@ size can be smaller, but its contents will stop to follow the resize
 and they will be clipped at right and bottom.
 
 =begin html
- 
+
 <p><img src="http://kmx.github.io/perl-iup/img-3.9/images/no_shrink.gif"></p>
 
 =end html
@@ -311,7 +311,7 @@ set the dialog initial size.
  IUP->MainLoop;
 
 =begin html
- 
+
 <p><img src="http://kmx.github.io/perl-iup/img-3.9/images/shrink.gif"></p>
 
 =end html
@@ -334,7 +334,7 @@ L<Insert|IUP::Manual::02_Elements/"Insert()">. To remove from the tree call
 L<Detach|IUP::Manual::02_Elements/"Detach()">.
 
 For the element to be visible L<Map|IUP::Manual::02_Elements/"Map()"> must be called
-so it can be associated with a native control. L<Show|IUP::Manual::02_Elements/"Show()">, L<ShowXY|IUP::Manual::02_Elements/"ShowXY()"> or L<Popup|IUP::Manual::02_Elements/"Popup()"> will automatically call L<Map|IUP::Manual::02_Elements/"Map()"> 
+so it can be associated with a native control. L<Show|IUP::Manual::02_Elements/"Show()">, L<ShowXY|IUP::Manual::02_Elements/"ShowXY()"> or L<Popup|IUP::Manual::02_Elements/"Popup()"> will automatically call L<Map|IUP::Manual::02_Elements/"Map()">
 before showing a dialog. To remove this association call L<Unmap|IUP::Manual::02_Elements/"Unmap()">.
 
 But there is a call order to be able to call theses functions that

@@ -101,7 +101,7 @@ I<(creation only) (non inheritable)>
 
 enables the focus
 traversal of the control. In Windows the control will still get the
-focus when clicked. Default: YES. 
+focus when clicked. Default: YES.
 
 =item B<PROPAGATEFOCUS>
 
@@ -131,7 +131,7 @@ I<(non inheritable) [GTK 2.6]>
 
 Image name or L<IUP::Image> reference. When the IMAGE attribute is
 defined, the TITLE is not shown. This makes the toggle looks just like
-a button with an image, but its behavior remains the same. 
+a button with an image, but its behavior remains the same.
 
 See - L<Using Images in Other Elements (via IMAGE Attribute)|IUP::Image/"Using Images in Other Elements (via IMAGE Attribute)">
 
@@ -171,7 +171,7 @@ a different name to avoid inheritance problems. Default value: "0x0".
 I<(read-only)>
 
 Returns if the toggle is inside a radio. Can be
-"YES" or "NO". Valid only after the element is mapped, before returns C<undef>. 
+"YES" or "NO". Valid only after the element is mapped, before returns C<undef>.
 
 =item B<IGNORERADIO>
 
@@ -348,7 +348,7 @@ The element B<IUP::Toggle> is used in the following sample scripts:
 
 =item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
-=back 
+=back
 
 
 
@@ -358,6 +358,6 @@ L<IUP::Image|IUP::Image>, L<IUP::Button|IUP::Button>,
 L<IUP::Label|IUP::Label>, L<IUP::Radio|IUP::Radio>.
 
 The original doc: L<iuptoggle.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iuptoggle.html>
- 
+
 
 =cut

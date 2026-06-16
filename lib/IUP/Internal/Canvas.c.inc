@@ -37,12 +37,12 @@ cdCanvas* ref2cnv(SV* ref) {
 
 int AV2transmatrix(SV *A, double *buffer) {
   AV *array;
-  int lastindex, i;  
+  int lastindex, i;
   if ((!SvROK(A)) || (SvTYPE(SvRV(A)) != SVt_PVAV)) return 0;
   array = (AV *)SvRV(A);
   lastindex = av_len(array);
   if (lastindex<5) return 0;
-  for(i=0; i<6; i++) buffer[i] = (double)SvNV(*av_fetch(array,i,0)); 
+  for(i=0; i<6; i++) buffer[i] = (double)SvNV(*av_fetch(array,i,0));
   return 1;
 }
 
@@ -61,14 +61,14 @@ int AV2int(SV *A, int **data, int *n) {
   AV *array;
 
   if( (!SvROK(A)) || (SvTYPE(SvRV(A)) != SVt_PVAV) ) return 0;
-  
+
   array = (AV *)SvRV(A);
   lastindex = av_len(array);
-  
+
   buffer = malloc(sizeof(int)*(lastindex+1));
   if (!buffer) return 0;
-  
-  for(i=0; i<=lastindex; i++) buffer[i] = (int)SvIV(*av_fetch(array,i,0)); 
+
+  for(i=0; i<=lastindex; i++) buffer[i] = (int)SvIV(*av_fetch(array,i,0));
   *data = buffer;
   *n = lastindex+1;
   return 1;
@@ -80,14 +80,14 @@ int AV2long(SV *A, long **data, int *n) {
   AV *array;
 
   if( (!SvROK(A)) || (SvTYPE(SvRV(A)) != SVt_PVAV) ) return 0;
-  
+
   array = (AV *)SvRV(A);
   lastindex = av_len(array);
-  
+
   buffer = malloc(sizeof(long)*(lastindex+1));
   if (!buffer) return 0;
-  
-  for(i=0; i<=lastindex; i++) buffer[i] = (long)SvIV(*av_fetch(array,i,0)); 
+
+  for(i=0; i<=lastindex; i++) buffer[i] = (long)SvIV(*av_fetch(array,i,0));
   *data = buffer;
   *n = lastindex+1;
   return 1;
@@ -99,7 +99,7 @@ SV* long2AV(long *data, int n) {
   array = (AV *)sv_2mortal((SV *)newAV());
   av_extend(array,n); /* not needed but faster */
   for(i=0; i<n; i++) av_push(array,newSViv(data[i]));
-  return newRV((SV*)array);  
+  return newRV((SV*)array);
 }
 
 int AV2bitmap(SV *A1, unsigned char **r, unsigned char **g, unsigned char **b, unsigned char **a, int *w, int *h) {
@@ -117,12 +117,12 @@ int AV2bitmap(SV *A1, unsigned char **r, unsigned char **g, unsigned char **b, u
   if( (!SvROK(A1)) || (SvTYPE(SvRV(A1)) != SVt_PVAV) ) return 0;
   array1 = (AV *)SvRV(A1);
   lastindex1 = av_len(array1);
-  
+
   A2 = (SV*)(*av_fetch(array1,0,0));
   if( (!SvROK(A2)) || (SvTYPE(SvRV(A2)) != SVt_PVAV) ) return 0;
   array2 = (AV *)SvRV(A2);
   lastindex2 = av_len(array2);
-  
+
   /* warn("XXX-DEBUG: li1=%d li2=%d", lastindex1, lastindex2); */
   if ((lastindex2+1)%n != 0) return 0;
   error=0;
@@ -133,7 +133,7 @@ int AV2bitmap(SV *A1, unsigned char **r, unsigned char **g, unsigned char **b, u
   buffer_b = buffer_g + width * height;
   buffer_a = (n==4) ? buffer_b + width * height : NULL;
   if (!buffer_r) error=1;
-  
+
   /* warn("XXX-DEBUG: before for\n"); */
   for(i=0; (i<height && !error); i++) {
     A2 = (SV*)(*av_fetch(array1,i,0));
@@ -178,10 +178,10 @@ SV* Bitmap2AV(unsigned char *r, unsigned char *g, unsigned char *b, unsigned cha
   if (b) n++;
   if (a) n++;
   if (m) n++;
-  
+
   /* warn("XXX-DEBUG: Bitmap2AV n=%d r=%p g=%p b=%p a=%p m=%p w=%d h=%d\n", n,r,g,b,a,m,w,h); */
   array1 = (AV *)sv_2mortal((SV *)newAV());
-  av_extend(array1,h); /* not needed but faster */  
+  av_extend(array1,h); /* not needed but faster */
   for(i=0; i<h; i++) {
     array2 = (AV *)sv_2mortal((SV *)newAV()); /* new array */
     av_extend(array2,w*n);
@@ -222,7 +222,7 @@ SV* uchar2D2AV(unsigned char *data, int w, int h) {
     for(j=0; j<w; j++) av_push(array2,newSVuv(data[i*w+j]));
     av_push(array1,newRV((SV*)array2));
   }
-  return newRV((SV*)array1);  
+  return newRV((SV*)array1);
 }
 
 int AV2long2D(SV *A1, long **data, int *w, int *h) {
@@ -230,19 +230,19 @@ int AV2long2D(SV *A1, long **data, int *w, int *h) {
   int lastindex1, lastindex2, i, j, error;
   AV *array1, *array2;
   SV *A2;
-  
+
   if( (!SvROK(A1)) || (SvTYPE(SvRV(A1)) != SVt_PVAV) ) return 0;
   array1 = (AV *)SvRV(A1);
   lastindex1 = av_len(array1);
-  
+
   A2 = (SV*)(*av_fetch(array1,0,0));
   if( (!SvROK(A2)) || (SvTYPE(SvRV(A2)) != SVt_PVAV) ) return 0;
   array2 = (AV *)SvRV(A2);
   lastindex2 = av_len(array2);
-  
+
   buffer = malloc( sizeof(long) * (lastindex2+1) * (lastindex1+1) );
   if (!buffer) return 0;
-  
+
   for(error=0, i=0; (i<=lastindex1 && !error); i++) {
     A2 = (SV*)(*av_fetch(array1,i,0));
     array2 = (AV *)SvRV(A2);
@@ -270,19 +270,19 @@ int AV2uchar2D(SV *A1, unsigned char **data, int *w, int *h) {
   int lastindex1, lastindex2, i, j, error;
   AV *array1, *array2;
   SV *A2;
-  
+
   if( (!SvROK(A1)) || (SvTYPE(SvRV(A1)) != SVt_PVAV) ) return 0;
   array1 = (AV *)SvRV(A1);
   lastindex1 = av_len(array1);
-  
+
   A2 = (SV*)(*av_fetch(array1,0,0));
   if( (!SvROK(A2)) || (SvTYPE(SvRV(A2)) != SVt_PVAV) ) return 0;
   array2 = (AV *)SvRV(A2);
   lastindex2 = av_len(array2);
-  
+
   buffer = malloc( sizeof(unsigned char) * (lastindex2+1) * (lastindex1+1) );
   if (!buffer) return 0;
-  
+
   for(error=0, i=0; (i<=lastindex1 && !error); i++) {
     A2 = (SV*)(*av_fetch(array1,i,0));
     array2 = (AV *)SvRV(A2);
@@ -335,7 +335,7 @@ cdBitmap* BitmapFromFile(char * file_name) {
   image = imFileImageLoadBitmap(file_name, 0, &error);
   /* warn("XXX-DEBUG: BitmapFromFile error=%d\n",error); */
   if (error) return NULL;
-  if (!image) return NULL;    
+  if (!image) return NULL;
   if (!imImageIsBitmap(image)) return NULL;
   if (image->color_space == IM_RGB)  {
     if (image->has_alpha) {

@@ -175,7 +175,7 @@ B<$angle:> the dial value converted according to UNIT.
 Called after the value was interactively changed by
 the user. It is called whenever a B<BUTTON_PRESS_CB>, a
 B<BUTTON_RELEASE_CB> or a B<MOUSEMOVE_CB> would also be called, but if
-defined those callbacks will not be called. 
+defined those callbacks will not be called.
 
 [%h.at_handler%]
 
@@ -220,7 +220,7 @@ degrees).
 
 If you press Shift while using the arrow keys the increment is reduced
 to PI/100 (1.8 degrees). Press the Home key in the circular dial to
-reset to 0. 
+reset to 0.
 
 [% h.examples %]
 
@@ -231,7 +231,7 @@ The element B<IUP::Dial> is used in the following sample scripts:
 [%FOREACH e IN examples.iupdial %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -244,6 +244,6 @@ L<IUP::Canvas|IUP::Canvas>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupdial.html|[%url.iuporigdoc%]ctrl/iupdial.html>
-[%END%] 
+[%END%]
 
 =cut

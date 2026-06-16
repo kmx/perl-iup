@@ -1,4 +1,4 @@
-# IUP::Tabs example 
+# IUP::Tabs example
 
 use strict;
 use warnings;

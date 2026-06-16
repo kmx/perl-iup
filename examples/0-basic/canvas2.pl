@@ -31,7 +31,7 @@ sub button_cb {
   my $gy = 200*$self->POSY+$y;
   if ($but == IUP_BUTTON1 && $press == 1) {
     $y = $self->cdUpdateYAxis($y);
-    $self->cdMark($x, $y);    
+    $self->cdMark($x, $y);
     $stars{"$gx:$gy"} = 1;
   }
   return IUP_DEFAULT;
@@ -75,13 +75,13 @@ $cv->SetCallback( ACTION=>\&redraw_cb, BUTTON_CB=>\&button_cb,
                   ENTERWINDOW_CB=>\&enter_cb, LEAVEWINDOW_CB=>\&leave_cb );
 
 my $dg = IUP::Dialog->new( child=>IUP::Vbox->new([
-                             $cv, 
+                             $cv,
                              IUP::Hbox->new( child=>[
-                               IUP::Fill->new(), 
-                               $label, 
+                               IUP::Fill->new(),
+                               $label,
                                IUP::Fill->new()
                              ]),
-                           ]), TITLE=>"Welcome to IUP::Canvas demo", 
+                           ]), TITLE=>"Welcome to IUP::Canvas demo",
                            RESIZE=>"NO", MAXBOX=>"NO" );
 
 $dg->ShowXY(IUP_CENTER, IUP_CENTER);

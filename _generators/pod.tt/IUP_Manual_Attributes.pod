@@ -403,9 +403,9 @@ the table bellow:
 
  Motif            Windows           GTK               Description
  ---------------- ----------------- ----------------- -------------------------------
- Helvetica        Arial             Sans              without serif, variable spacing 
- Courier          Courier New       Monospace         with serif, fixed spacing 
- Times            Times New Roman   Serif             with serif, variable spacing 
+ Helvetica        Arial             Sans              without serif, variable spacing
+ Courier          Courier New       Monospace         with serif, fixed spacing
+ Times            Times New Roman   Serif             with serif, variable spacing
 
 B<Notes: Font - Auxiliary Attributes>
 
@@ -1212,7 +1212,7 @@ must be mapped before mapping the child dialog. If PARENTDIALOG is not
 defined then the NATIVEPARENT attribute is consulted. This one must be
 a native handle of an existing dialog.
 
-To associate a name to element use L<SetName|[%m.elem%]/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|[%m.elem%]/"new()"> constructor. 
+To associate a name to element use L<SetName|[%m.elem%]/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|[%m.elem%]/"new()"> constructor.
 
 B<IMPORTANT>: When the parent is destroyed the child dialog is also
 destroyed, then the CLOSE_CB callback of the child dialog is NOT

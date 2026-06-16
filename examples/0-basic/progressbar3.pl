@@ -134,7 +134,7 @@ sub btn_pause_cb {
     IUP->SetIdle(\&idle_cb);
     $running = 1;
   }
-  
+
   return IUP_DEFAULT;
 }
 
@@ -170,7 +170,7 @@ my $btn_decelerate = IUP::Button->new( TITLE=>"decelerate", ACTION=>\&btn_decele
                                        IMAGE=>$img_rewind, TIP=>"Decelerate" );
 
 my $hbox = IUP::Hbox->new( child=>[
-             IUP::Fill->new(), 
+             IUP::Fill->new(),
              $btn_pause,
              $btn_start,
              $btn_decelerate,
@@ -184,6 +184,6 @@ my $dlg = IUP::Dialog->new( child=>$vbox, TITLE=>"IUP::ProgressBar" );
 
 IUP->SetIdle(\&idle_cb);
 $running = 1;
-  
+
 $dlg->ShowXY(IUP_CENTER, IUP_CENTER);
 IUP->MainLoop();

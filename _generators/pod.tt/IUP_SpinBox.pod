@@ -47,7 +47,7 @@ The element B<IUP::SpinBox> is used in the following sample scripts:
 [%FOREACH e IN examples.iupspinbox %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -61,6 +61,6 @@ L<IUP::Hbox|IUP::Hbox>, L<IUP::Button|IUP::Button>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupspin.html|[%url.iuporigdoc%]elem/iupspin.html>
-[%END%] 
+[%END%]
 
 =cut

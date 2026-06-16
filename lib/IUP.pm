@@ -29,19 +29,19 @@ sub import {
   my %tags = (
      #UPDATE when element list change
      ':basic'    => [qw/Constants Button Cbox Clipboard ColorBar ColorBrowser ColorDlg ProgressDlg Dial Dialog FileDlg Fill FontDlg Frame
-                        Hbox Image Item Label List Menu MessageDlg Normalizer ProgressBar Radio Expander ScrollBox Link GridBox 
+                        Hbox Image Item Label List Menu MessageDlg Normalizer ProgressBar Radio Expander ScrollBox Link GridBox
                         Sbox Separator Spin SpinBox Split Submenu Tabs Text Timer Toggle Tree User Val Vbox Zbox
-                        AnimatedLabel BackgroundBox Calendar DatePick DetachBox FlatButton/], 
+                        AnimatedLabel BackgroundBox Calendar DatePick DetachBox FlatButton/],
      ':extended' => [qw/Matrix MatrixList Cells Canvas CanvasGL Plot MglPlot LayoutDialog ElementPropertiesDialog Gauge Scintilla/],
-     ':gl'       => [qw/GL::Button GL::CanvasBox GL::Expander GL::Frame GL::Label GL::Link GL::ProgressBar GL::ScrollBox GL::Separator 
+     ':gl'       => [qw/GL::Button GL::CanvasBox GL::Expander GL::Frame GL::Label GL::Link GL::ProgressBar GL::ScrollBox GL::Separator
                         GL::SizeBox GL::SubCanvas GL::Toggle GL::Val GL::Text GL::BackgroundBox/],
      ':all'      => [],
-  );  
+  );
   @{$tags{':all'}} = ( @{$tags{':basic'}}, @{$tags{':extended'}}, @{$tags{':gl'}} );
 
   my %valid = map { $_ => 1 } @{$tags{':all'}};
   my %all_params = map { $_ => 1 } @_;
-  my @wanted,  
+  my @wanted,
   my @unknown;
   for my $m (@_) {
     if ($tags{$m}) {
@@ -69,7 +69,7 @@ sub import {
     my $c = caller;
     my $code = "package $c;$eval_command";
     #warn "$code\n";
-    eval($code);    
+    eval($code);
     croak "IUP: import() failed\n$@" if $@;
   }
 }
@@ -292,14 +292,14 @@ sub GetClassAttributes {
   #int IupGetClassAttributes(const char* classname, char** names, int max_n); [in C]
   #iup.GetClassAttributes(classname: string, max_n: number) -> (names: table, n: number) [in Lua]
   my ($pkg, $classname, $max_n) = @_;
-  return IUP::Internal::LibraryIup::_IupGetClassAttributes($classname, $max_n);	
+  return IUP::Internal::LibraryIup::_IupGetClassAttributes($classname, $max_n);
 }
 
 sub GetClassCallbacks {
   #int IUP::GetClassCallbacks(const char* classname, char** names, int max_n); [in C]
-  #iup.GetClassCallbacks(classname: string[, max_n: number]) -> (names: table, n: number) [in Lua] 
+  #iup.GetClassCallbacks(classname: string[, max_n: number]) -> (names: table, n: number) [in Lua]
   my ($pkg, $classname, $max_n) = @_;
-  return IUP::Internal::LibraryIup::_IupGetClassCallbacks($classname, $max_n);	
+  return IUP::Internal::LibraryIup::_IupGetClassCallbacks($classname, $max_n);
 }
 
 sub SetClassDefaultAttribute {
@@ -320,7 +320,7 @@ sub GetAllClasses {
   #int IupGetAllClasses(char** names, int max_n); [in C]
   #iup.GetAllClasses([max_n: number]) -> (names: table, n: number) [in Lua]
   my ($pkg, $max_n) = @_;
-  return IUP::Internal::LibraryIup::_IupGetAllClasses($max_n);	
+  return IUP::Internal::LibraryIup::_IupGetAllClasses($max_n);
 }
 
 sub SetIdle {
@@ -339,21 +339,21 @@ sub GetGlobal {
 
 sub SetGlobal {
   #void IupSetGlobal(const char *name, const char *value); [in C]
-  #iup.SetGlobal(name: string, value: string) [in Lua] 
+  #iup.SetGlobal(name: string, value: string) [in Lua]
   #void IupStoreGlobal(const char *name, const char *value); [in C]
-  #iup.StoreGlobal(name: string, value: string) [in Lua] 
+  #iup.StoreGlobal(name: string, value: string) [in Lua]
   my ($pkg, $name, $value) = @_;
   IUP::Internal::LibraryIup::_IupStoreGlobal($name, $value);
 }
 
 sub GetLanguage {
-  #char* IupGetLanguage(void); [in C] 
-  #iup.GetLanguage() -> (language: string) [in Lua] 
+  #char* IupGetLanguage(void); [in C]
+  #iup.GetLanguage() -> (language: string) [in Lua]
   return IUP::Internal::LibraryIup::_IupGetLanguage();
 }
 
 sub SetLanguage {
-  #void IupSetLanguage(const char *lng); [in C] 
+  #void IupSetLanguage(const char *lng); [in C]
   #iup.SetLanguage(lng: string) [in Lua]
   my ($pkg, $lng) = @_;
   IUP::Internal::LibraryIup::_IupSetLanguage($lng);
@@ -401,7 +401,7 @@ sub GetParam {
   return ($status, @output_values);
 }
 
-sub ListDialog {  
+sub ListDialog {
   my ($pkg, $title, $list, $initial_selection, $max_lin, $max_col) = @_;
   if (defined $initial_selection && 'ARRAY' eq ref($initial_selection)) {
     #multiselect

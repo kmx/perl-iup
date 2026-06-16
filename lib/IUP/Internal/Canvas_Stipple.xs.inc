@@ -15,7 +15,7 @@ __Stipple__new(CLASS,...)
                   w = SvIV(ST(1));
                   h = SvIV(ST(2));
                   if (w<=0 || h<=0) XSRETURN_UNDEF;
-                  data = malloc(sizeof(long)*w*h);                  
+                  data = malloc(sizeof(long)*w*h);
                   if (!data) XSRETURN_UNDEF;
                   for(i=0; i<w*h; i++) data[i] = 0;
                 }

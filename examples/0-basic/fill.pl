@@ -1,6 +1,6 @@
 # IUP::Fill Example
 #
-# Uses the IUP::Fill element to horizontally centralize a button 
+# Uses the IUP::Fill element to horizontally centralize a button
 # and to justify it to the left and right.
 
 use strict;

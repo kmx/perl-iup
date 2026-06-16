@@ -34,7 +34,7 @@ $matrix->VALUE_CB( sub {
     # column title
     return $titles->[$c-1];
   }
-  return;  
+  return;
 } );
 
 $matrix->VALUE_EDIT_CB( sub {

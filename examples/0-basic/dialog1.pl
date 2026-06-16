@@ -12,7 +12,7 @@ sub msg {
 }
 
 my $vbox = IUP::Vbox->new( GAP=>5, child=>[
-                             IUP::Label->new(TITLE=>"Label before buttons:"), 
+                             IUP::Label->new(TITLE=>"Label before buttons:"),
                              IUP::Button->new(TITLE=>"Test button1", ACTION=>\&msg),
                              IUP::Button->new(TITLE=>"Test button2", ACTION=>\&msg),
                              IUP::Button->new(TITLE=>"Test button3", ACTION=>\&msg),

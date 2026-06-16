@@ -24,7 +24,7 @@ if ($multi[0]<0) {
 }
 else {
   my $selection = '';
-  for my $i (0..scalar(@multi)-1) {    
+  for my $i (0..scalar(@multi)-1) {
     $selection .= $options->[$i] . "\n" if $multi[$i];
   }
   if ($selection eq '') {

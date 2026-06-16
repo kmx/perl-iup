@@ -66,12 +66,12 @@ It does not have a native representation.
 
  #standard way
  my $gridbox = IUP::GridBox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
-  
+
  #or with just 1 parameter (arrayref)
  my $gridbox = IUP::GridBox->new( [$elem1, $elem2] );
 
-B<child:> (named parameter) List of the references to elements (or just a single element) that 
-will be placed in the box. 
+B<child:> (named parameter) List of the references to elements (or just a single element) that
+will be placed in the box.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
@@ -254,7 +254,7 @@ The element B<IUP::GridBox> is used in the following sample scripts:
 
 =item * L<0-basic/gridbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/gridbox.pl> - IUP::GridBox example
 
-=back 
+=back
 
 
 
@@ -263,6 +263,6 @@ The element B<IUP::GridBox> is used in the following sample scripts:
 L<IUP::Vbox|IUP::Vbox>, L<IUP::Hbox|IUP::Hbox>
 
 The original doc: L<iupgridbox.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupgridbox.html>
- 
+
 
 =cut

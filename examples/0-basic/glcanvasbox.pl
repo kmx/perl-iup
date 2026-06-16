@@ -31,7 +31,7 @@ my $cnv = IUP::GL::CanvasBox->new(BUFFER => "DOUBLE",
                                     my ($self, $width, $height) = @_;
                                     #warn "RESIZE_CB: width=$width height=$height\n";
                                     $self->GLMakeCurrent();
-                                    glViewport(0, 0, $width, $height); 
+                                    glViewport(0, 0, $width, $height);
                                     glMatrixMode(GL_PROJECTION);
                                     glLoadIdentity();
                                     glMatrixMode(GL_MODELVIEW);

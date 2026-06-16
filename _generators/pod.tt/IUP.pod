@@ -93,7 +93,7 @@ directory of IUP distribution.
    #set default values
    1, 100, 45, 'test string', 2, 'test.jpg', '255 0 128'
  );
- 
+
  IUP->Message("Results",
    "Boolean:\t$b\n".
    "Integer:\t$i\n".
@@ -122,12 +122,12 @@ L<Message|Message> - see L<simple GUI dialogs|/"Simple GUI dialogs"> section.
 =head2 Pre-defined Dialogs
 
  use IUP ':all';
- 
+
  my $dlg = IUP::ColorDlg->new( VALUE=>"128 0 255", ALPHA=>"142",
                                SHOWHEX=>"YES", SHOWCOLORTABLE=>"YES",
                                TITLE=>"IUP::ColorDlg Test" );
 
- $dlg->Popup(IUP_CENTER, IUP_CENTER); 
+ $dlg->Popup(IUP_CENTER, IUP_CENTER);
 
  IUP->Message("Chosen color", "Color:\t" . $dlg->VALUE) if $dlg->STATUS;
 
@@ -148,20 +148,20 @@ L<IUP::MessageDlg|IUP::MessageDlg>.
 =head2 Custom Dialogs
 
  use IUP ':all';
- 
+
  # demo callback handler
  sub my_cb {
    my $self = shift;
    IUP->Message("Hello from callback handler");
  }
- 
+
  # create the main dialog
  sub init_dialog {
    my $menu = IUP::Menu->new( child=>[
                 IUP::Item->new(TITLE=>"Message", ACTION=>\&my_cb ),
                 IUP::Item->new(TITLE=>"Quit", ACTION=>sub { IUP_CLOSE } ),
               ]);
- 
+
    my $frm1 = IUP::Frame->new( TITLE=>"IUP::Button", child=>
                 IUP::Vbox->new( child=>[
                   IUP::Button->new( TITLE=>"Test Me", ACTION=>\&my_cb ),
@@ -178,7 +178,7 @@ L<IUP::MessageDlg|IUP::MessageDlg>.
                   IUP::Label->new( IMAGE=>"IUP_Tecgraf" ),
                 ])
               );
- 
+
    my $frm3 = IUP::Frame->new( TITLE=>"IUP::Radio", child=>
                 IUP::Vbox->new( child=>
                   IUP::Radio->new( child=>
@@ -189,7 +189,7 @@ L<IUP::MessageDlg|IUP::MessageDlg>.
                   )
                 )
               );
- 
+
    my $frm4 = IUP::Frame->new( TITLE=>"IUP::Val", child=>IUP::Val->new( MIN=>0, MAX=>100 ) );
 
    my $frm5 = IUP::Frame->new( TITLE=>"IUP::ProgressBar", child=>IUP::ProgressBar->new( MIN=>0, MAX=>100, VALUE=>50 ) );
@@ -197,7 +197,7 @@ L<IUP::MessageDlg|IUP::MessageDlg>.
    my $hbox1 = IUP::Hbox->new( child=>[ $frm1, $frm2, $frm3 ] );
    my $hbox2 = IUP::Hbox->new( child=>[ $frm4, $frm5 ] );
    my $vbox1 = IUP::Vbox->new( child=>[ $hbox1, $hbox2 ], MARGIN=>"5x5", ALIGNMENT=>"ARIGHT", GAP=>"5" );
- 
+
    return IUP::Dialog->new( MENU=>$menu, TITLE=>"Custom Dialog Sample", child=>$vbox1 );
  }
 
@@ -256,10 +256,10 @@ are defined in L<IUP::Constants|IUP::Constants>. Please note that:
 interpolate in interpolation contexts such as double-quoted strings
 
   use IUP::Constants;
-  
+
   # beware!!!
   print "color is - IUP_GREEN";    # prints: color is - IUP_GREEN
-  
+
   # this is probably what you want
   print "color is - " . IUP_GREEN; # prints: color is - 0 255 0
 
@@ -275,7 +275,7 @@ All IUP elements are perl classes with C<new()> constructor. The are used in thi
  $button->SetAttribute('FGCOLOR', '255 128 128'); # calling a method
 
 For more info see L<[%m.elem%]|[%m.elem%]>.
- 
+
 =head3 Using IUP in your perl program
 
 By default, IUP doesn't import any other IUP related modules:
@@ -302,7 +302,7 @@ Which is equivalent to:
  use IUP;
  use IUP::Button;
  use IUP::Menu;
- 
+
 B<IMPORTANT NOTE:> If you are the first time reader of this document at this point
 you might wanna jumt to L<[%m.intro%]|[%m.intro%]>. The rest of this document is just
 the reference list of all functions available in the main L<IUP|IUP> module.
@@ -325,7 +325,7 @@ B<Returns:> Always C<IUP_NOERROR>
 [% h.at_notes %]
 
 When this function is called, it will interrupt the program execution
-until a callback returns C<IUP_CLOSE>, C<L<< IUP->ExitLoop|/"ExitLoop()" >>> is called, 
+until a callback returns C<IUP_CLOSE>, C<L<< IUP->ExitLoop|/"ExitLoop()" >>> is called,
 or there are no visible dialogs.
 
 If you cascade many calls to C<L<< IUP->MainLoop|/"MainLoop()" >>> there must be a C<return
@@ -348,14 +348,14 @@ L<LoopStep|/"LoopStep()"> (global method),
 L<ExitLoop|/"ExitLoop()"> (global method),
 L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> (callback),
 L<LOCKLOOP|[%m.at%]/"LOCKLOOP"> (attribute).
- 
+
 =back
 
 =head3 MainLoopLevel()
 
 =over
 
-Returns the current cascade level of C<L<< IUP->MainLoop|/"MainLoop()" >>>. 
+Returns the current cascade level of C<L<< IUP->MainLoop|/"MainLoop()" >>>.
 When no calls were done, return value is 0.
 
  IUP->MainLoopLevel();
@@ -460,7 +460,7 @@ B<Important:> A call to this function may cause other callbacks to be
 processed before it returns.
 
 In Motif, if the X server sent an event which is not yet in the event
-queue, after a call to C<< IUP->Flush >> the queue might not be empty. 
+queue, after a call to C<< IUP->Flush >> the queue might not be empty.
 
 =back
 
@@ -473,9 +473,9 @@ Setting global L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> callback ("idle callback") 
  sub idle_cb {
    #...
  }
- 
+
  IUP->SetIdle(\&idle_cb);  #set idle callback handler
- 
+
  #at some point later
  IUP->SetIdle(undef);      #unset idle callback handler
 
@@ -573,7 +573,7 @@ B<Default:> "ENGLISH"
 [% h.at_examples %]
 
  use IUP;
- IUP->SetLanguage("ENGLISH"); 
+ IUP->SetLanguage("ENGLISH");
  IUP->Message("IUP Language", IUP->GetLanguage());
 
 [% h.at_see %]
@@ -590,7 +590,7 @@ Returns the value of global attribute C<L<VERSION|[%m.at%]/"VERSION">>.
 
  my $verstring = IUP->Version();
 
-B<Returns:> the version of underlaying iup library - for example: "3.3". 
+B<Returns:> the version of underlaying iup library - for example: "3.3".
 
 =back
 
@@ -603,7 +603,7 @@ return value can be used for numeric comparison.
 
  my $vernumger = IUP->VersionNumber();
 
-B<Returns:> the version number - for example: 303000 for version "3.3". 
+B<Returns:> the version number - for example: 303000 for version "3.3".
 
 =back
 
@@ -615,7 +615,7 @@ Returns a release date of underlaying iup library.
 
  my $vernumger = IUP->VersionDate();
 
-B<Returns:> date string - for example: "2010/11/09". 
+B<Returns:> date string - for example: "2010/11/09".
 
 =back
 
@@ -666,7 +666,7 @@ then the default value is set to be the system default if any is defined.
 L<GetClassName|[%m.elem%]/"GetClassName()"> (element method),
 L<GetClassType|[%m.elem%]/"GetClassType()"> (element method),
 L<GetAllAttributes|[%m.elem%]/"GetAllAttributes()"> (element method).
- 
+
 =back
 
 =head2 Simple GUI dialogs
@@ -770,7 +770,7 @@ L<GetFile|/"GetFile()"> (global function).
 =over
 
 Shows a modal dialog of the native interface system to select a
-filename. Uses pre-defined dialog L<IUP::FileDlg|IUP::FileDlg>. 
+filename. Uses pre-defined dialog L<IUP::FileDlg|IUP::FileDlg>.
 
 =begin html
 
@@ -783,7 +783,7 @@ filename. Uses pre-defined dialog L<IUP::FileDlg|IUP::FileDlg>.
 B<$filename_spec:> This parameter is used as an input value to define the
 default filter and directory. Example: "../docs/*.txt".
 
-B<Returns:> a list with 2 values: B<filename> of chosen file; B<status> code, 
+B<Returns:> a list with 2 values: B<filename> of chosen file; B<status> code,
 whose values can be:
 
 =over
@@ -920,7 +920,7 @@ values to use the default values. No mask can be set.
 =back
 
 B<< <tip> >> is a string that is displayed in a TIP for the main control of
-the parameter. 
+the parameter.
 
 There are no extra parameters for the B<color> string. The mask is
 automatically set to capture 3 or 4 unsigned integers from 0 to 255 (R
@@ -956,7 +956,7 @@ string parameters, the values are returned by the function in the same
 order they were passed.
 
 The function will abort if there are errors in the format string as in
-the number of the expected parameters. 
+the number of the expected parameters.
 
 B<Handling GetParam Callback:>
 
@@ -972,7 +972,7 @@ the user pressed the OK button.
 
 B<$dialog:> Reference to the dialog object (L<IUP::Dialog|IUP::Dialog>).
 
-B<$param_index:> Current parameter index (0 based) being changed. 
+B<$param_index:> Current parameter index (0 based) being changed.
 It is -1 if the user pressed the B<OK> button. It is -2 after the dialog
 is B<mapped> and just before it is shown. It is -3 if the user pressed
 the B<Cancel> button. It is -4 if the user pressed the B<Help> button, if any.
@@ -987,13 +987,13 @@ L<GetParamValue|[%m.elem%]/"GetParamValue()"> method:
    my ($dialog, $param_index) = @_;
    my $oldvalue = $dialog->GetParamValue(2); #get value of the element with index 2 (index is 0-based)
    my $newvalue;
-   #...   
+   #...
    $dialog->GetParamValue(2, $newvalue); #set value of the element with index 2 to $newvalue
    return 1;
  }
 
 B<BEWARE: You should not programmatically change the current parameter value (with index == $param_index)
-during the callback>. On the other hand you can freely change the value of other parameters.   
+during the callback>. On the other hand you can freely change the value of other parameters.
 
 B<BEWARE:> Programmatical changes are not filtered.
 
@@ -1080,10 +1080,10 @@ selection list.
 =end html
 
  my $list = ["Blue", "Red", "Green", "Yellow", "Black", "White", "Gray", "Brown"];
- 
+
  #simple selection
  my $status = IUP->ListDialog($title, $list, $mark, $max_lin, $max_col);
- 
+
  #multi selection
  my $status = IUP->ListDialog($title, $list, [0, 1, 0, 0, 1, 1, 0, 0], $max_lin, $max_col);
 
@@ -1169,7 +1169,7 @@ Reproduces all mouse and keyboard input from a given file.
 
  my $ret = IUP->PlayInput($filename);
 
-B<$filename:> name of the file to be played. C<undef> will stop playing. 
+B<$filename:> name of the file to be played. C<undef> will stop playing.
 "" will pause and restart a file already being played.
 
 B<Returns:> IUP_NOERROR if successful, IUP_ERROR if failed to open the
@@ -1422,9 +1422,9 @@ L<SetFocus|[%m.elem%]/"SetFocus()"> (element method).
 
 =over
 
- my $classname = GetIhClassName($elem->ihandle); 
+ my $classname = GetIhClassName($elem->ihandle);
  # gives the same output as
- $elem->GetClassName(); 
+ $elem->GetClassName();
 
 The same as element method L<GetClassName|[%m.elem%]/"GetClassName()">.
 
@@ -1520,7 +1520,7 @@ otherwise it returns a string containing the error message.
 
 Each time the function loads a LED file, the elements contained in it
 are created. Therefore, the same LED file cannot be loaded several
-times, otherwise the elements will also be created several times. 
+times, otherwise the elements will also be created several times.
 
 =back
 
@@ -1617,7 +1617,7 @@ B<Returns:> 1 (is printable) or 0 (otherwise)
 
 =over
 
-Checks the given mouse buttons and keyboard keys status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+Checks the given mouse buttons and keyboard keys status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback)
 whether C<Shift> key was pressed at the time of mouse click event or not.
 
  my $shift_pressed = IUP->isShift($status);
@@ -1630,7 +1630,7 @@ B<Returns:> 1 (pressed) or 0 (not pressed)
 
 =over
 
-Checks the given mouse buttons and keyboard keys status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+Checks the given mouse buttons and keyboard keys status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback)
 whether C<Control> key was pressed at the time of mouse click event or not.
 
  my $crtl_pressed = IUP->isControl($status);
@@ -1643,7 +1643,7 @@ B<Returns:> 1 (pressed) or 0 (not pressed)
 
 =over
 
-Checks the given mouse buttons and keyboard keys status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+Checks the given mouse buttons and keyboard keys status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback)
 whether C<Alt> key was pressed at the time of mouse click event or not.
 
  my $alt_pressed = IUP->isControl($status);
@@ -1656,7 +1656,7 @@ B<Returns:> 1 (pressed) or 0 (not pressed)
 
 =over
 
-Checks the given mouse buttons and keyboard keys status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+Checks the given mouse buttons and keyboard keys status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback)
 whether C<Sys> key (on Windows C<WindowKey>, on Mac C<AppleKey>) was pressed at the time of mouse click event or not.
 
  my $sys_pressed = IUP->isSys($status);
@@ -1669,10 +1669,10 @@ B<Returns:> 1 (pressed) or 0 (not pressed)
 
 =over
 
-Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback)
 whether the B<left button> was pressed at the time of mouse click event or not.
 
-NOTE: It does not mean that this button generated the event, it might be already pressed before other 
+NOTE: It does not mean that this button generated the event, it might be already pressed before other
 mouse button click.
 
  my $letft_mouse_button_pressed = IUP->isButton1($status);
@@ -1685,10 +1685,10 @@ B<Returns:> 1 (pressed) or 0 (not pressed)
 
 =over
 
-Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback)
 whether the B<middle button> was pressed at the time of mouse click event or not.
 
-NOTE: It does not mean that this button generated the event, it might be already pressed before other 
+NOTE: It does not mean that this button generated the event, it might be already pressed before other
 mouse button click.
 
  my $middle_mouse_button_pressed = IUP->isButton2($status);
@@ -1701,10 +1701,10 @@ B<Returns:> 1 (pressed) or 0 (not pressed)
 
 =over
 
-Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback)
 whether the B<right button> was pressed at the time of mouse click event or not.
 
-NOTE: It does not mean that this button generated the event, it might be already pressed before other 
+NOTE: It does not mean that this button generated the event, it might be already pressed before other
 mouse button click.
 
  my $right_mouse_button_pressed = IUP->isButton3($status);
@@ -1717,10 +1717,10 @@ B<Returns:> 1 (pressed) or 0 (not pressed)
 
 =over
 
-Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback)
 whether the B<button 4> (Windows: 1st X button) was pressed at the time of mouse click event or not.
 
-NOTE: It does not mean that this button generated the event, it might be already pressed before other 
+NOTE: It does not mean that this button generated the event, it might be already pressed before other
 mouse button click.
 
  my $mouse_button4_pressed = IUP->isButton4($status);
@@ -1733,10 +1733,10 @@ B<Returns:> 1 (pressed) or 0 (not pressed)
 
 =over
 
-Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback)
 whether the B<button 5> (Windows: 2nd X button) was pressed at the time of mouse click event or not.
 
-NOTE: It does not mean that this button generated the event, it might be already pressed before other 
+NOTE: It does not mean that this button generated the event, it might be already pressed before other
 mouse button click.
 
  my $mouse_button5_pressed = IUP->isButton5($status);
@@ -1749,7 +1749,7 @@ B<Returns:> 1 (pressed) or 0 (not pressed)
 
 =over
 
-Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback) 
+Checks the given mouse buttons status string (see L<BUTTON_CB|[%m.cb%]/"BUTTON_CB"> callback)
 whether the click event was double click or not.
 
  my $double_click = IUP->isDouble($status);
@@ -1817,7 +1817,7 @@ the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=IUP>.
 
 =head1 ACKNOWLEDGEMENTS
 
-Thanks to Tecgraf, PUC-Rio. L<http://www.tecgraf.puc-rio.br> for excelent 
+Thanks to Tecgraf, PUC-Rio. L<http://www.tecgraf.puc-rio.br> for excelent
 work on L<iup|http://www.tecgraf.puc-rio.br/iup/>,
 L<cd|http://www.tecgraf.puc-rio.br/cd/> and
 L<im|http://www.tecgraf.puc-rio.br/im/> libraries.
@@ -1827,7 +1827,7 @@ resource for creating the documentation for IUP perl module.
 
 =head1 LICENSE AND COPYRIGHT
 
-External libraries I<iup>, I<im> and I<cd>: 
+External libraries I<iup>, I<im> and I<cd>:
 Copyright (C) 1994-2010 Tecgraf, PUC-Rio. L<http://www.tecgraf.puc-rio.br>
 
 IUP perl module: Copyright (C) 2010 KMX.
@@ -1860,7 +1860,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 IUP is registered at the National Institute of Intellectual Property in
 Brazil (INPI) under the number 07569-0, and so it is protected against
-illegal use. 
+illegal use.
 See the L<Tecgraf Library License|http://www.tecgraf.puc-rio.br/iup/en/copyright.html>
 for further usage information and Copyright.
 

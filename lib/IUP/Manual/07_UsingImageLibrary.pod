@@ -44,12 +44,12 @@ expand when switching to GTK.
 =begin HTML
 
 <p>
-  <table border="1">    
+  <table border="1">
     <tbody>
     <col>
     <col style="background-color:#FFAA80;">
     <col style="background-color:#FFAA80;">
-    <col style="background-color:#FFAA80;">        
+    <col style="background-color:#FFAA80;">
     <tr>
       <th>Name</th>
       <th>Image (Motif)</th>
@@ -388,7 +388,7 @@ that can be used in Labels, usually inside toolbars.
 =begin HTML
 
 <p>
-  <table border="1">    
+  <table border="1">
     <tbody>
     <col>
     <col style="background-color:#FFAA80;">
@@ -434,7 +434,7 @@ that can be used in Labels, usually inside dialogs.
 =begin HTML
 
 <p>
-  <table border="1">    
+  <table border="1">
     <tbody>
     <col>
     <col style="background-color:#FFAA80;">
@@ -474,7 +474,7 @@ that can be used in Labels, usually inside dialogs.
 
 =head2 Other
 
-B<NOTE:> used imglib has to be built with -DIUP_IMGLIB_LARGE (which is disabled by default) to include these images. 
+B<NOTE:> used imglib has to be built with -DIUP_IMGLIB_LARGE (which is disabled by default) to include these images.
 L<Alien::IUP> asks dusing build process for enabling 48x48 images.
 
 Here are other images available in the IUP stock library, commonly used
@@ -483,7 +483,7 @@ by the respective systems. All images are 48x48 pixels size and 32bpp.
 =begin HTML
 
 <p>
-  <table border="1">    
+  <table border="1">
     <tbody>
     <col>
     <col style="background-color:#FFAA80;">

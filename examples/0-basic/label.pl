@@ -23,12 +23,12 @@ my $img_star = IUP::Image->new( pixels=>
    [ 1,1,2,2,1,1,1,1,1,2,2,1,1 ],
    [ 1,2,2,1,1,1,1,1,1,1,2,2,1 ],
    [ 2,2,1,1,1,1,1,1,1,1,1,2,2 ],
-  ], 
+  ],
   1=>"0 0 0", 2=>"0 198 0" #colors
 );
 
 # Creates a label and sets all the attributes of label lbl, except for image;
-my $lbl = IUP::Label->new( TITLE => "This label has the following attributes set:\nBGCOLOR = 255 255 0\nFGCOLOR = 0 0 255\nFONT = COURIER_NORMAL_14\nTITLE = All text contained here\nALIGNMENT = ACENTER", 
+my $lbl = IUP::Label->new( TITLE => "This label has the following attributes set:\nBGCOLOR = 255 255 0\nFGCOLOR = 0 0 255\nFONT = COURIER_NORMAL_14\nTITLE = All text contained here\nALIGNMENT = ACENTER",
                   BGCOLOR => "255 255 0",
                   FGCOLOR => "0 0 255",
                   FONT => "COURIER_NORMAL_14",

@@ -212,9 +212,9 @@ my $cnv1 = IUP::Canvas->new(
 
 my $ctrl1 = IUP::Val->new( CX=>600, CY=>200 );
 
-my $cbox = IUP::Cbox->new( SIZE=>"480x200", 
+my $cbox = IUP::Cbox->new( SIZE=>"480x200",
              child=>[$text1, $ml1, $list1, $list2, $list3, $cnv1, $ctrl1, $tree, $mat, $frm1, $frm2, $frm3 ]);
-    
+
 my $hbox = IUP::Hbox->new( child=>$cbox, MARGIN=>"10x10" );
 
 my $dlg = IUP::Dialog->new( child=>$hbox, TITLE=> "Cbox Test" );

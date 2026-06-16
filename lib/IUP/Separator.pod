@@ -43,7 +43,7 @@ The element B<IUP::Separator> is used in the following sample scripts:
 
 =item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
-=back 
+=back
 
 
 
@@ -52,6 +52,6 @@ The element B<IUP::Separator> is used in the following sample scripts:
 L<IUP::Item|IUP::Item>, L<IUP::Submenu|IUP::Submenu>, L<IUP::Menu|IUP::Menu>
 
 The original doc: L<iupseparator.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupseparator.html>
- 
+
 
 =cut

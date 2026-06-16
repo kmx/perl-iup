@@ -1,4 +1,4 @@
-################ the last time working on ################ 
+################ the last time working on ################
 
 * improve doc for IUP::Plot
 
@@ -51,7 +51,7 @@ constants via ExtUtils::Constant
 - how to skip - example:
   plan skip_all => "\$ENV{RELEASE_TESTING} required fot testing", unless $ENV{RELEASE_TESTING};
   eval "use Win32::Job ()";
-  plan skip_all => "Can't interrupt hung processes without Win32::Job" if $@;  
+  plan skip_all => "Can't interrupt hung processes without Win32::Job" if $@;
 
 ######## POD/COSMETICS: mention in POD/DOC
 - mention IUP::Manual::10_FAQ::PARPacking recommendation in DOC
@@ -65,8 +65,8 @@ constants via ExtUtils::Constant
  $mybox->[1]->FGCOLOR("255 0 255"); # changes bt2 foreground color
 - beware: somehow handle AddChild & co.
 - from perl doc:
-  $a = $array[5]; 	$obj->FETCH(5);
-  $array[5] = "aa" 	$obj->STORE(5, "aa");
+  $a = $array[5];       $obj->FETCH(5);
+  $array[5] = "aa"      $obj->STORE(5, "aa");
 - see implementation of SDLx::Surface + SDLx::Surface::TiedMatrix
   http://cpansearch.perl.org/src/KTHAKORE/SDL-2.533/lib/SDLx/Surface.pm
   http://cpansearch.perl.org/src/KTHAKORE/SDL-2.533/lib/SDLx/Surface/TiedMatrix.pm
@@ -80,7 +80,7 @@ constants via ExtUtils::Constant
 (cosmetics)######## NICE-TO-HAVE: more Canvas examples
 - port more lua examples into perl
 
-(cosmetics)######## IDEA: 
+(cosmetics)######## IDEA:
 use IUP qw/:basic iup_NO_INIT/; #generally iup_ANY_OTHER_FLAG
 
 (cosmetics)######## IUP::Canvas missing functions (not crutial for now)
@@ -93,11 +93,11 @@ use IUP qw/:basic iup_NO_INIT/; #generally iup_ANY_OTHER_FLAG
   (<unknown>:7541): GLib-GObject-CRITICAL **: g_object_unref: assertion `G_IS_OBJECT (object)' failed
   IUP->Open == -1
   [http://developer.gnome.org/doc/API/2.2/gtk/gtk-General.html]
-  
+
 bool XDisplayExists() {
   return (gdk_display_get_default() != NULL);
 }
-  
+
 ++        if (!gdk_display_get_default ()) {
 ++                if (!gtk_init_check (NULL, NULL)) {
 ++                        /* Oh well, no X for you! */
@@ -106,9 +106,9 @@ bool XDisplayExists() {
 ++                        exit (1);
 ++                }
 ++        }
-++ 
-  
-- GTK/NOT-WORKING-DISPLAY 
+++
+
+- GTK/NOT-WORKING-DISPLAY
   The application '<unknown>' lost its connection to the display localhost:10.0;
   most likely the X server was shut down or you killed/destroyed
   the application.
@@ -165,7 +165,7 @@ bool XDisplayExists() {
 - moustly should be handled, some corner cases may occur
 - see http://stackoverflow.com/questions/2223721/common-perl-memory-reference-leak-patterns
 - somehow check memory leaks - http://use.perl.org/~jozef/journal/40411
-- somehow check memory consumption - Devel::Size, Devel::Peak, PerlBench 
+- somehow check memory consumption - Devel::Size, Devel::Peak, PerlBench
   - http://stackoverflow.com/questions/1359771/perl-memory-usage-profiling-and-leak-detection
   - http://www252.pair.com/comdog/mastering_perl/Chapters/06.benchmarking.html
 - check memleaks by storing SetAttribute("ATTR", $ref)

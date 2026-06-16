@@ -35,7 +35,7 @@ my $getopt_rv = GetOptions(
 pod2usage(-exitstatus=>0, -verbose=>2) if $g_help || !$getopt_rv;
 
 my %html_files;
-	
+
 sub procfile {
   my $f = shift;
   my ($vol,$directory,$file) = File::Spec->splitpath($f);
@@ -60,37 +60,37 @@ sub procfile {
 
   die "Non-existing file '$f'" unless -f $f;
   my ($html_v, $html_d, $html_f) = File::Spec->splitpath($f);
-  
+
   my $html = decode('utf-8', scalar read_file($f, {binmode=>':raw'}));
   # HTML replacements here
-  $html =~ s|href="|href="pod:|gi;  
-  
+  $html =~ s|href="|href="pod:|gi;
+
   my $tree = HTML::TreeBuilder->new_from_content($html);
 
   my $t = $tree->find('title');
   (my $class = $t->as_text) =~ s/^Iup/IUP::/;
   my $b = $tree->find('body');
-  
+
   ($t) = $tree->look_down( '_tag' => 'div', 'id' => 'navigation');
   $t->delete() if defined $t;
-  
+
   my $pod = Pod::HTML2Pod::convert(
     'content' => $b->as_HTML,
     'a_href' => 1,  # try converting links
     'a_name' => 1,
-  );  
-   
+  );
+
   $name =~ s|::|_|g;
   $name = File::Spec->rel2abs("$g_podtt/$name.pod");
   my ($name_v, $name_d, $name_f) = File::Spec->splitpath($name);
-  
+
   my $rawname = $f;
   $rawname = File::Spec->rel2abs($rawname);
   $rawname = File::Spec->abs2rel($rawname, "$g_iupdoc/html/en");
   $rawname = File::Spec->rel2abs("$g_podraw/$rawname");
   $rawname =~ s/\.html$/.pod/;
   my ($rawname_v, $rawname_d, $rawname_f) = File::Spec->splitpath($rawname);
-  
+
   printf STDERR "[INFO] html:'% 33s' pod.tt:'% 33s'\n", $html_f, $name_f;
 
   # common replacements
@@ -100,11 +100,11 @@ sub procfile {
   $pod =~ s/ *B< > */ /g;
   $pod =~ s/[LBC]<:>/:/g;
   $pod =~ s/, L<\n/,\nL</sg;
-  
-  #warn " -> writting POD.RAW '$rawname' ...\n";  
+
+  #warn " -> writting POD.RAW '$rawname' ...\n";
   My::Utils::make_path_for_file($rawname);
   write_file($rawname, {binmode=>':raw'}, encode('utf-8',$pod)); #save original
-  
+
   # POD replacements here
   $pod =~ s|X<SeeAlso>||g;
   $pod =~ s|=head1 [Ii]up([a-zA-Z0-9_]*)|"[% h.name %]\n\n[% n.iup".lc($1)." %]\n\n[% h.desc %]"|eg;
@@ -113,10 +113,10 @@ sub procfile {
   $pod =~ s|=head2 Attributes|[% h.at %]|g;
   $pod =~ s|=head2 Notes|[% h.notes %]|g;
   $pod =~ s|=head2 Value|[% h.at_value %]xxx|g;
-  $pod =~ s|=head2 Affects|[% h.at_affects %]|g;  
+  $pod =~ s|=head2 Affects|[% h.at_affects %]|g;
   $pod =~ s|=head2 Examples|[% h.examples %]|g;
   $pod =~ s|=head2 See Also|[% h.see %]|g;
-  
+
   $pod =~ s/L<Iup([a-zA-Z0-9]+)\|.*?>/L<IUP§§$1|IUP§§$1>/g;
   $pod =~ s/Iup([a-zA-Z0-9]+)/IUP§§$1/g;
   $pod =~ s/B<(IUP§§.*?)>/L<$1|$1>/g;
@@ -127,7 +127,7 @@ sub procfile {
   if ($pod =~ /\[% h\.at %\](.*?)\[% h/s ) {
     my $c = $1;
     $c =~ s|\n([LB]<[^>]*>[^:]*):\s*|\n=item * $1\n\n|g;
-    $pod =~ s|\[% h\.at %\](.*?)\[% h|[% h.at %]\n\n[%txt.at_intro%]\n\n=over$c=back\n\n[% h|sg;    
+    $pod =~ s|\[% h\.at %\](.*?)\[% h|[% h.at %]\n\n[%txt.at_intro%]\n\n=over$c=back\n\n[% h|sg;
     $pod =~ s|=over\n\n----\n\n=back|=back\n\n[%txt.at_common%]\n\n=over|;
   }
   if ($pod =~ /\[% h\.cb %\](.*?)\[% h/s ) {
@@ -137,49 +137,49 @@ sub procfile {
     $c =~ s|^\n*=back\n||;
     $c =~ s|(\n( .*?\n)+)|$1\n=over\n|g;
     $c =~ s|\n([LB]<[^>]*>[^:]*):\s*|\n=item * $1 - |g;
-    $pod =~ s|\[% h\.cb %\](.*?)\[% h|[% h.cb %]\n\n[%txt.cb_intro%]\n\n=over\n$c=back\n\n[% h|sg;    
+    $pod =~ s|\[% h\.cb %\](.*?)\[% h|[% h.cb %]\n\n[%txt.cb_intro%]\n\n=over\n$c=back\n\n[% h|sg;
     $pod =~ s|=over\n\n----\n\n=back\n\n=back|=back\n\n[%txt.cb_common%]\n\n=over|;
   }
   $pod =~ s/§§/::/g;
-  
+
   #warn " -> writting POD.TT '$name_f'\n";
   My::Utils::make_path_for_file($name);
-  write_file($name, {binmode=>':raw'}, encode('utf-8',$pod));  
+  write_file($name, {binmode=>':raw'}, encode('utf-8',$pod));
 }
 
 sub proc_at {
   my $file = shift;
   my $pod = read_file($file, {binmode=>':raw'} );
-  
+
   #xxxTODO
   $pod =~ s/=head1/=head3/g;
   $pod =~ s/=head2/=head4/g;
   $pod .= "\n\n";
-  
+
   write_file("$g_podtt/IUP_AT.pod", {binmode=>':raw', append=>1}, $pod);
 }
 
 sub proc_cb {
   my $file = shift;
   my $pod = read_file($file, {binmode=>':raw'} );
-  
+
   #xxxTODO
   $pod =~ s/=head1/=head3/g;
   $pod =~ s/=head2/=head4/g;
   $pod .= "\n\n";
-  
+
   write_file("$g_podtt/IUP_CB.pod", {binmode=>':raw', append=>1}, $pod);
 }
 
 sub proc_func {
-  my $file = shift;  
+  my $file = shift;
   my $pod = read_file($file, {binmode=>':raw'} );
-  
+
   #xxxTODO
   $pod =~ s/=head1/=head3/g;
   $pod =~ s/=head2/=head4/g;
   $pod .= "\n\n";
-  
+
   write_file("$g_podtt/IUP_Func.pod", {binmode=>':raw', append=>1}, $pod);
 }
 
@@ -189,7 +189,7 @@ die "Non-existing iupdoc dir '$g_iupdoc'\n" unless -d $g_iupdoc;
 die "Invalid iupdoc dir '$g_iupdoc'\n" unless -d "$g_iupdoc/html/en";
 
 remove_tree($g_podraw) if -d $g_podraw;
-remove_tree($g_podtt) if -d $g_podtt; 
+remove_tree($g_podtt) if -d $g_podtt;
 make_path($g_podraw);
 make_path($g_podtt);
 

@@ -12,7 +12,7 @@ perl Build.PL && ./Build gencode && ./Build gendoc && ./Build manifest && ./Buil
 - e.g. IupMatrixList
 - in lib/IUP/Internal/LibraryIup.xs add _IupMatrixList(..)
 - create lib/IUP/MatrixList.pm
-- create _generators/pod.tt/IUP_MatrixList.pod 
+- create _generators/pod.tt/IUP_MatrixList.pod
 - create _generators/pod.htmlinc/iupmatrixlist.html
 - fix    _generators/proc-pod.tt2pod.pl: n => { ... } NAME text
 - fix    _generators/proc-pod.tt2pod.pl: modlist   => <<'MARKER'...

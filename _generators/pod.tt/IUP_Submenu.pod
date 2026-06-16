@@ -40,7 +40,7 @@ Image name of the
 submenu image. In Windows, an item in a menu bar cannot have a check
 mark. Ignored if submenu in a menu bar. A recommended size would be
 16x16 to fit the image in the menu item. In Windows, if larger than the
-check mark area it will be cropped. 
+check mark area it will be cropped.
 
 =item L<TITLE|[%m.at%]/TITLE>
 
@@ -103,7 +103,7 @@ The element B<IUP::Submenu> is used in the following sample scripts:
 [%FOREACH e IN examples.iupsubmenu %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -116,6 +116,6 @@ L<IUP::Item|IUP::Item>, L<IUP::Separator|IUP::Separator>, L<IUP::Menu|IUP::Menu>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupsubmenu.html|[%url.iuporigdoc%]elem/iupsubmenu.html>
-[%END%] 
+[%END%]
 
 =cut

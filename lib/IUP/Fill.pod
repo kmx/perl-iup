@@ -18,7 +18,7 @@ It does not have a native representation.
 =head2 CREATION - new() method
 
  $fill = IUP::Fill->new( SIZE=>30 );
- 
+
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
@@ -99,7 +99,7 @@ The element B<IUP::Fill> is used in the following sample scripts:
 
 =item * L<0-basic/radio.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/radio.pl> - IUP::Radio example
 
-=item * L<0-basic/tabs3.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tabs3.pl> - IUP::Tabs example 
+=item * L<0-basic/tabs3.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tabs3.pl> - IUP::Tabs example
 
 =item * L<0-basic/tree_set_attrs.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tree_set_attrs.pl> - IUP::Tree example (attributes)
 
@@ -109,7 +109,7 @@ The element B<IUP::Fill> is used in the following sample scripts:
 
 =item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
-=back 
+=back
 
 
 
@@ -118,6 +118,6 @@ The element B<IUP::Fill> is used in the following sample scripts:
 L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>
 
 The original doc: L<iupfill.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupfill.html>
- 
+
 
 =cut

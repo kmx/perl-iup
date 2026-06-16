@@ -22,13 +22,13 @@ Zbox will NOT change its state.
 
  #standard way
  my $zbox = IUP::Zbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
- 
+
  #or with just a single child
  my $zbox = IUP::Zbox->new( child=>$elem, ANYATTRIBUTE=>'any value' );
- 
+
  #or with just 1 parameter (arrayref)
  my $zbox = IUP::Zbox->new( [$elem1, $elem2] );
- 
+
  #or with just 1 parameter (reference to child elements)
  my $zbox = IUP::Zbox->new( $elem );
 
@@ -75,7 +75,7 @@ The default value is "YES".
 I<(non inheritable, at children only)>
 
 If a child has FLOATING=YES then its size and position
-will be ignored by the layout processing. Default: "NO". 
+will be ignored by the layout processing. Default: "NO".
 
 =item B<VALUE>
 
@@ -95,7 +95,7 @@ I<(non inheritable)>
 The visible child accessed by its
 handle. The value passed must be the handle of a child contained in the
 zbox. When the zbox is created, the first element inserted is set as
-the visible child. 
+the visible child.
 
 =item B<VALUEPOS>
 
@@ -104,7 +104,7 @@ I<(non inheritable)>
 The visible child accessed by its
 position. The value passed must be the index of a child contained in
 the zbox, starting at 0. When the zbox is created, the first element
-inserted is set as the visible child. 
+inserted is set as the visible child.
 
 =item L<SIZE|[%m.at%]/SIZE> / L<RASTERSIZE|[%m.at%]/RASTERSIZE> (non inheritable)
 
@@ -147,7 +147,7 @@ The element B<IUP::Zbox> is used in the following sample scripts:
 [%FOREACH e IN examples.iupzbox %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -160,6 +160,6 @@ L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupzbox.html|[%url.iuporigdoc%]elem/iupzbox.html>
-[%END%] 
+[%END%]
 
 =cut

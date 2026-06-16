@@ -122,7 +122,7 @@ This attribute should be used only in specific cases and by experienced programm
 
 I<(read-only, non inheritable)>
 
-Where (L) is the line number and (C) the column number - e.g. "LIMITS11:25". 
+Where (L) is the line number and (C) the column number - e.g. "LIMITS11:25".
 Returns the limits of a given cell. Output format is a string "xmin:xmax:ymin:ymax".
 
 =item B<NON_SCROLLABLE_LINES>
@@ -440,7 +440,7 @@ The element B<IUP::Cells> is used in the following sample scripts:
 
 =item * L<0-basic/cells_numbering.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/cells_numbering.pl> - IUP::Cells example
 
-=back 
+=back
 
 
 
@@ -449,6 +449,6 @@ The element B<IUP::Cells> is used in the following sample scripts:
 L<IUP::Canvas|IUP::Canvas>
 
 The original doc: L<iupcells.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupcells.html>
- 
+
 
 =cut

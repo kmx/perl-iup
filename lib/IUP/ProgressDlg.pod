@@ -44,7 +44,7 @@ DialogE<rsquo>s icon.
 
 =item L<TITLE|IUP::Manual::03_Attributes/TITLE>
 
-I<(non inheritable)> DialogE<rsquo>s title. 
+I<(non inheritable)> DialogE<rsquo>s title.
 If not set the title bar will not be displayed
 and the dialog will occupy less space on screen.
 
@@ -160,7 +160,7 @@ L<IUP::ProgressBar|IUP::ProgressBar> control.
 The dialog is B<not> automatically closed, the application must do that
 manually inside the CANCEL_CB callback or inside your processing loop
 by checking the STATE attribute.
-  
+
 =head1 EXAMPLES
 
 
@@ -170,7 +170,7 @@ The element B<IUP::ProgressDlg> is used in the following sample scripts:
 
 =item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
 
-=back 
+=back
 
 
 
@@ -179,6 +179,6 @@ The element B<IUP::ProgressDlg> is used in the following sample scripts:
 L<IUP::ProgressBar|IUP::ProgressBar>, L<IUP::Dialog|IUP::Dialog>
 
 The original doc: L<iupprogressdlg.html|http://www.tecgraf.puc-rio.br/iup/en/dlg/iupprogressdlg.html>
- 
+
 
 =cut

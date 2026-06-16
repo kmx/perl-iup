@@ -4,7 +4,7 @@
 
 [% n.iupclipboard %]
 
-[% h.desc %] 
+[% h.desc %]
 
 Creates an element that allows access to the clipboard. Each clipboard
 should be destroyed using L<Destroy|[%m.elem%]/"Destroy()"> method, but
@@ -109,11 +109,11 @@ Native handle of an image to copy or paste, to or from the clipboard.
 
 B<BEWARE:> technically it is a pointer, be carefull when using from perl.
 
-In Win32 is a B<HANDLE> of a DIB. 
+In Win32 is a B<HANDLE> of a DIB.
 
-In GTK is a B<GdkPixbuf*>. 
+In GTK is a B<GdkPixbuf*>.
 
-In Motif is a B<Pixmap>. 
+In Motif is a B<Pixmap>.
 
 The returned handle in a paste must be released after used (GlobalFree(handle), g_object_unref(pixbuf)
 or XFreePixmap(display, pixmap)). After copy, do NOT release the given
@@ -153,7 +153,7 @@ The element B<IUP::Clipboard> is used in the following sample scripts:
 [%FOREACH e IN examples.iupbutton %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -164,6 +164,6 @@ Unfortunately there are no sample scripts using this element.
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupclipboard.html|[%url.iuporigdoc%]elem/iupclipboard.html>
-[%END%] 
+[%END%]
 
 =cut

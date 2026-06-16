@@ -28,10 +28,10 @@ sub get_const_pod_section {
     my $counter = 1;
     my $neednewline = 1;
     $retval .= "=head2 $_->{head}\n";
-    
+
     my @data;
     my @src = @{$IUP::Constants::EXPORT_TAGS{$_->{tag}}};
-    
+
     ###@src = qw/A B C D E F G H I J/;
     ###$perline = 3;
 
@@ -39,22 +39,22 @@ sub get_const_pod_section {
     my $realcount;
     my $rows_realnum = $count/$perline - 0.001;
     my $rows = (1+int($rows_realnum));
-    
+
     warn "count=$count rows=$rows perline=$perline\n";
     my ($i, $j);
-    for $j (0..($rows-1)) {              
+    for $j (0..($rows-1)) {
       for $i (0..($perline-1)) {
         my $next = $j+$i*$rows;
         push @data, ($src[$next] || '');
-        $realcount++ if defined $src[$next];	
+        $realcount++ if defined $src[$next];
       }
     }
     warn "count=$count realcount=$realcount\n";
-    die "FATAL" if $count != $realcount;        
-    
+    die "FATAL" if $count != $realcount;
+
     for my $l (@data) {
       my $spaces = 1 < $width-length($l) ? $width-length($l) : 1;
-      $retval .= "\n " if $neednewline; 
+      $retval .= "\n " if $neednewline;
       $retval .= $l.(' ' x $spaces);
       $neednewline = ($counter%$perline) == 0;
       $counter++;

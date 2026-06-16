@@ -242,7 +242,7 @@ act also as minimum number of visible lines. Default "3".
 
 B<Other Attributes:>
 
-Since the L<IUP::MatrixList|IUP::MatrixList> inherits its implementation from 
+Since the L<IUP::MatrixList|IUP::MatrixList> inherits its implementation from
 the L<IUP::Matrix|IUP::Matrix>, and that one from L<IUP::Canvas|IUP::Canvas>,
 those controls attributes and callbacks can be used. But notice that L<IUP::MatrixList>
 uses several of them internally for its own purpose, and reusing them may
@@ -484,7 +484,7 @@ The element B<IUP::MatrixList> is used in the following sample scripts:
 
 =item * L<0-basic/matrixlist.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/matrixlist.pl> - IUP::MatrixList example
 
-=back 
+=back
 
 
 
@@ -493,6 +493,6 @@ The element B<IUP::MatrixList> is used in the following sample scripts:
 L<IUP::Canvas|IUP::Canvas>, L<IUP::Matrix|IUP::Matrix>
 
 The original doc: L<iupmatrixlist.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixlist.html>
- 
+
 
 =cut

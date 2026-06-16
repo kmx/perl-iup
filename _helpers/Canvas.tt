@@ -23,7 +23,7 @@ cdCanvas* ref2cnv(SV* ref) {
   return NULL;
 }
 
-MODULE = IUP::Internal::Canvas	PACKAGE = IUP::Internal::Canvas
+MODULE = IUP::Internal::Canvas  PACKAGE = IUP::Internal::Canvas
 
 # http://perldoc.perl.org/perlxs.html
 # http://perldoc.perl.org/perlxstut.html
@@ -31,11 +31,11 @@ MODULE = IUP::Internal::Canvas	PACKAGE = IUP::Internal::Canvas
 # special internal function
 cdCanvas*
 _cdCreateCanvas_CD_IUP(ih)
-		Ihandle* ih;
-	CODE:
-		RETVAL = cdCreateCanvas(CD_IUP, ih);
-	OUTPUT:
-		RETVAL
+                Ihandle* ih;
+        CODE:
+                RETVAL = cdCreateCanvas(CD_IUP, ih);
+        OUTPUT:
+                RETVAL
 
 ### generated part - start ###
 
@@ -45,16 +45,16 @@ _cdCreateCanvas_CD_IUP(ih)
 [% f.rvtype %]
 [% f.cdfnc %]([% f.params_n1 %])
 [% FOREACH p IN f.cdparams -%]
-		[% p.type %] [% p.name %];
+                [% p.type %] [% p.name %];
 [% END -%]
 [% IF f.rvtype == 'void' -%]
-	CODE:
-		[% f.fnc %]([% f.cdparams_n2 %]);
+        CODE:
+                [% f.fnc %]([% f.cdparams_n2 %]);
 [% ELSE -%]
-	CODE:
-		RETVAL = [% f.fnc %]([% f.cdparams_n2 %]);
-	OUTPUT:
-		RETVAL
+        CODE:
+                RETVAL = [% f.fnc %]([% f.cdparams_n2 %]);
+        OUTPUT:
+                RETVAL
 [% END -%]
 
 [% END -%]

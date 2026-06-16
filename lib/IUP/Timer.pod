@@ -88,13 +88,13 @@ The element B<IUP::Timer> is used in the following sample scripts:
 
 =item * L<0-basic/timer.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/timer.pl> - IUP::Timer example
 
-=back 
+=back
 
 
 
 =head1 SEE ALSO
 
 The original doc: L<iuptimer.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iuptimer.html>
- 
+
 
 =cut

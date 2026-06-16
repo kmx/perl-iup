@@ -4,7 +4,7 @@
 
 IUP::MessageDlg - [pre-defined dialog] displaying a message
 
-=head1 DESCRIPTION 
+=head1 DESCRIPTION
 
 Creates the Message Dialog element. It is a predefined dialog for
 displaying a message. The dialog can be shown with the IUP::Popup
@@ -22,8 +22,8 @@ function only.
       </tr>
       <tr>
         <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/messagedlg_gtk.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/messagedlg_mot.png"></td>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/messagedlg_win.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/messagedlg_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/messagedlg_win.png"></td>
       </tr>
     </tbody>
   </table>
@@ -131,7 +131,7 @@ The element B<IUP::MessageDlg> is used in the following sample scripts:
 
 =item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
 
-=back 
+=back
 
 
 
@@ -142,6 +142,6 @@ L<ListDialog|IUP/"ListDialog>()">, L<Alarm|IUP/"Alarm()">,
 L<GetFile|IUP/"GetFile()">, L<Popup|IUP::Manual::02_Elements/"Popup()">
 
 The original doc: L<iupmessagedlg.html|http://www.tecgraf.puc-rio.br/iup/en/dlg/iupmessagedlg.html>
- 
+
 
 =cut

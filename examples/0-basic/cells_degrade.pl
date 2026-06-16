@@ -60,10 +60,10 @@ sub draw_cb {
   else {
     $canvas->cdForeground($canvas->cdEncodeColor($i*20, $j*100, $i+100));
   }
-  
+
   $canvas->cdBox($xmin, $xmax, $ymin, $ymax);
   $canvas->cdTextAlignment(CD_CENTER);
-  $canvas->cdForeground(CD_BLACK);  
+  $canvas->cdForeground(CD_BLACK);
   $canvas->cdText($xm, $ym, "($i, $j)");
 
   return IUP_DEFAULT;

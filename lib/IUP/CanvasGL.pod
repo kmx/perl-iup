@@ -20,7 +20,7 @@ Example:
 
  use IUP ':all';
  use OpenGL ':all';
- 
+
 B<Callback handler prototype:>
 
  sub action_callback {
@@ -30,17 +30,17 @@ B<Callback handler prototype:>
    glClearColor(1.0, 1.0, 1.0, 1.0);
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
    glColor3f(1.0,0.0,0.0);
-   glBegin(GL_QUADS); 
-     glVertex2f( 0.9,  0.9); 
-     glVertex2f( 0.9, -0.9); 
-     glVertex2f(-0.9, -0.9); 
-     glVertex2f(-0.9,  0.9); 
+   glBegin(GL_QUADS);
+     glVertex2f( 0.9,  0.9);
+     glVertex2f( 0.9, -0.9);
+     glVertex2f(-0.9, -0.9);
+     glVertex2f(-0.9,  0.9);
    glEnd();
    $self->GLSwapBuffers();
    return IUP_DEFAULT;
  }
 
- my $dlg = IUP::Dialog->new( 
+ my $dlg = IUP::Dialog->new(
              TITLE=>"Example",
              MINSIZE=>"300x300",
              child=>IUP::CanvasGL->new( BUFFER=>"DOUBLE", RASTERSIZE=>"300x300", ACTION=>\&action_callback ),
@@ -142,7 +142,7 @@ system default is usually 8 for each component (True Color support).
 Action attribute to
 refresh the internal device context when it is not owned by the window
 class. The L<IUP::Canvas> of the Win32 driver will always create a window
-with an owned DC, but GTK in Windows will not. 
+with an owned DC, but GTK in Windows will not.
 
 =item B<STENCIL_SIZE>
 
@@ -241,7 +241,7 @@ documentation of the wglUseFontBitmaps and glXUseXFont functions.
  $canvas_gl->GLWait($gl);
 
 If B<gl> is non zero it will call B<glFinish> or B<glXWaitGL>, else will call
-B<GdiFlush> or B<glXWaitX>. 
+B<GdiFlush> or B<glXWaitX>.
 
 =head1 NOTES
 
@@ -261,7 +261,7 @@ The element B<IUP::CanvasGL> is used in the following sample scripts:
 
 =item * L<0-basic/glcanvas2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/glcanvas2.pl> - IUP::CanvasGL example
 
-=back 
+=back
 
 
 
@@ -270,6 +270,6 @@ The element B<IUP::CanvasGL> is used in the following sample scripts:
 L<IUP::Canvas|IUP::Canvas>
 
 The original doc: L<iupcanvasgl.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupglcanvas.html>
- 
+
 
 =cut

@@ -178,7 +178,7 @@ B<$angle:> the dial value converted according to UNIT.
 Called after the value was interactively changed by
 the user. It is called whenever a B<BUTTON_PRESS_CB>, a
 B<BUTTON_RELEASE_CB> or a B<MOUSEMOVE_CB> would also be called, but if
-defined those callbacks will not be called. 
+defined those callbacks will not be called.
 
 B<Callback handler prototype:>
 
@@ -223,7 +223,7 @@ degrees).
 
 If you press Shift while using the arrow keys the increment is reduced
 to PI/100 (1.8 degrees). Press the Home key in the circular dial to
-reset to 0. 
+reset to 0.
 
 =head1 EXAMPLES
 
@@ -238,7 +238,7 @@ The element B<IUP::Dial> is used in the following sample scripts:
 
 =item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
-=back 
+=back
 
 
 
@@ -247,6 +247,6 @@ The element B<IUP::Dial> is used in the following sample scripts:
 L<IUP::Canvas|IUP::Canvas>
 
 The original doc: L<iupdial.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupdial.html>
- 
+
 
 =cut

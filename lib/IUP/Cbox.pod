@@ -22,19 +22,19 @@ POSITION attribute.
 
  #standard way
  my $cbox = IUP::Cbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
- 
+
  #or with just a single child
  my $cbox = IUP::Cbox->new( child=>$elem, ANYATTRIBUTE=>'any value' );
- 
+
  #or with just 1 parameter (arrayref)
  my $cbox = IUP::Cbox->new( [$elem1, $elem2] );
- 
+
  #or with just 1 parameter (reference to child elements)
  my $cbox = IUP::Cbox->new( $elem );
 
-=over 
+=over
 
-B<child:> (named parameter) List of the references to elements (or just a single element) that 
+B<child:> (named parameter) List of the references to elements (or just a single element) that
 will be placed in the box. It can be ommited (see note below).
 
 B<Returns:> The reference to the created element, or C<udnef> if an error
@@ -108,7 +108,7 @@ The element B<IUP::Cbox> is used in the following sample scripts:
 
 =item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=back 
+=back
 
 
 
@@ -117,6 +117,6 @@ The element B<IUP::Cbox> is used in the following sample scripts:
 L<IUP::Vbox|IUP::Vbox>, L<IUP::Hbox|IUP::Hbox>
 
 The original doc: L<iupcbox.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupcbox.html>
- 
+
 
 =cut

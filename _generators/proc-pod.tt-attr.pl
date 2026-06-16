@@ -48,7 +48,7 @@ sub procfile {
 
   my $orig = read_file($podtt, {binmode=>1});
   die "Empty or wrong file '$podtt'\n" unless $orig;
-  
+
   my $attribs = $orig;
   $attribs =~ s/^.*?=item B</=item B</s;
   $attribs =~ s/(\s*=back)?(\s*=cut)?\s*$/\n/s;
@@ -80,13 +80,13 @@ sub procfile {
       warn ">>$c->{name}>>$m\n";
     }
     $out_cdetail .= "\n=back\n\n";
-    my @l = map { "L<$_|/\"$_\">" } @kc; 
+    my @l = map { "L<$_|/\"$_\">" } @kc;
     $out_common .= "=item * B<L<$c->{name}|/\"$c->{name}\">>\n\n";
     my $alist = join ", ", @l;
     $out_common .= "$alist\n\n";
   }
   $out_common .= "=back";
-  
+
   my $out_gdetail = "=head1 GLOBAL ATTRIBUTES\n\n";
   my $out_global = "=over\n\n";
   for my $c (@$global_cat) {
@@ -98,24 +98,24 @@ sub procfile {
       warn ">>$c->{name}>>$m\n";
     }
     $out_gdetail .= "\n=back\n\n";
-    my @l = map { "L<$_|/\"$_\">" } @kg; 
+    my @l = map { "L<$_|/\"$_\">" } @kg;
     $out_global .= "=item * B<L<$c->{name}|/\"$c->{name}\">>\n\n";
     my $alist = join ", ", @l;
     $out_global .= "$alist\n\n";
   }
-  $out_global .= "=back"; 
+  $out_global .= "=back";
 
   my $new = $orig;
   die "Cannot find marker '=for comment c_at_marker'\n" unless $new =~ /=for comment c_at_marker/;
   die "Cannot find marker '=for comment g_at_marker'\n" unless $new =~ /=for comment g_at_marker/;
   die "Cannot find marker '=for comment at_details'\n"  unless $new =~ /=for comment at_details/;
-  
-  $new =~ s|=for comment at_details.*$|=for comment at_details\n\n$out_cdetail$out_gdetail|s;  
+
+  $new =~ s|=for comment at_details.*$|=for comment at_details\n\n$out_cdetail$out_gdetail|s;
   $new =~ s!=for comment c_at_marker.*?=(head|for)!=for comment c_at_marker\n\n$out_common\n\n=$1!s;
   $new =~ s!=for comment g_at_marker.*?=(head|for)!=for comment g_at_marker\n\n$out_global\n\n=$1!s;
-  write_file("$podtt.autobak", {binmode=>1}, $orig);  
-  write_file("$podtt", {binmode=>1}, $new);  
-  
+  write_file("$podtt.autobak", {binmode=>1}, $orig);
+  write_file("$podtt", {binmode=>1}, $new);
+
   die "Unprocessed attributes\n\n" . Dumper($unprocessed) if scalar(keys %$unprocessed)>0;
   return 1;
 }

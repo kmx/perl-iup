@@ -16,13 +16,13 @@ $tree->K_ANY( sub {
   $tree->SetAttribute("DELNODE", "MARKED") if ( $c == K_DEL );
 } );
 
-sub init_tree_nodes {  
+sub init_tree_nodes {
   #xxxCHECKLATER broken due to iup bug
   $tree->SetAttribute('ADDLEAF-1', 'item 3');
   $tree->SetAttribute('ADDLEAF-1', 'item 2');
   $tree->SetAttribute('ADDLEAF-1', 'item 1');
   $tree->SetAttribute('ADDLEAF-1', 'item 0');
-  $tree->SetAttribute('ADDLEAF2', 'between 2-3');  
+  $tree->SetAttribute('ADDLEAF2', 'between 2-3');
 }
 
 my $dlg = IUP::Dialog->new( child=>$tree, TITLE=>"IUP::Tree Demo", SIZE=>"QUARTERxTHIRD" );

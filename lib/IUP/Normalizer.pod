@@ -4,7 +4,7 @@
 
 IUP::Normalizer - [special] normalizes all controls from a list to be the biggest natural size
 
-=head1 DESCRIPTION 
+=head1 DESCRIPTION
 
 Normalizes all controls from a list so their natural size to be the
 biggest natural size among them. All natural width will be set to the
@@ -21,13 +21,13 @@ according to is value.
 
  #standard way
  $normalizer = IUP::Normalizer->new( child=>[$elem1, $elem2], NORMALIZE=>"HORIZONTAL" );
- 
+
  #or with just a single child
  $normalizer = IUP::Normalizer->new( child=>$elem1, NORMALIZE=>"HORIZONTAL" );
- 
+
  #or with just 1 parameter (arrayref)
  $normalizer = IUP::Normalizer->new( [$elem1, $elem2] );
- 
+
  #or with just 1 parameter (reference to child elements)
  $normalizer = IUP::Normalizer->new( $elem1 );
 
@@ -107,6 +107,6 @@ Unfortunately there are no sample scripts using this element.
 L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>
 
 The original doc: L<iupnormalizer.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupnormalizer.html>
- 
+
 
 =cut

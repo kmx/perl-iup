@@ -55,7 +55,7 @@ I<(non inheritable)>
 Changes the active toggle. The value
 passed must be the handle of a child contained in the radio. When
 consulted if the toggles are not mapped into the native system the
-return value may be C<undef> or invalid. 
+return value may be C<undef> or invalid.
 
 =item B<WID>
 
@@ -112,11 +112,11 @@ The element B<IUP::Radio> is used in the following sample scripts:
 
 =item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
-=back 
+=back
 
 
 
 The original doc: L<iupradio.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupradio.html>
- 
+
 
 =cut

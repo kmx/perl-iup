@@ -144,7 +144,7 @@ B<$r, $g, $b:> color value.
 
 Called after the value was interactively changed by
 the user. It is called whenever a B<CHANGE_CB> or a B<DRAG_CB> would
-also be called, it is just called after them. 
+also be called, it is just called after them.
 
 B<Callback handler prototype:>
 
@@ -201,7 +201,7 @@ The element B<IUP::ColorBrowser> is used in the following sample scripts:
 
 =item * L<0-basic/colorbrowser.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/colorbrowser.pl> - IUP::ColorBrowser example
 
-=back 
+=back
 
 
 
@@ -211,6 +211,6 @@ L<GetColor|IUP/"GetColor()">,
 L<IUP::ColorDlg|IUP::ColorDlg>
 
 The original doc: L<iupcolorbrowser.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupcolorbrowser.html>
- 
+
 
 =cut

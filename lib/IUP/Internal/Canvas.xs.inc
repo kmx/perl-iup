@@ -49,14 +49,14 @@ _cdCreateCanvas_IMAGERGB_empty(width,height,has_alpha,resolution)
                 if (width>0 && height>0) {
                   if (resolution>0.0001)
                     snprintf(tmp,1000,"%dx%d -r%g",width,height,resolution);
-                  else 
+                  else
                     snprintf(tmp,1000,"%dx%d",width,height);
                   if (has_alpha==1) strcat(tmp," -a");
                   /*warn("XXX-DEBUG (_cdCreateCanvas_IMAGERGB_empty): param='%s'\n",tmp);*/
                   RETVAL = cdCreateCanvas(CD_IMAGERGB, tmp);
                   if (RETVAL) cdCanvasSetAttribute(RETVAL, "UTF8MODE", "1");
                 }
-                else 
+                else
                   RETVAL = NULL;
         OUTPUT:
                 RETVAL
@@ -71,9 +71,9 @@ _cdCreateCanvas_IMAGERGB_dpi_helper(file_name)
                 if (!error && image) {
                   float *resx = (float*)imImageGetAttribute(image, "XResolution", NULL, NULL);
                   char *unit = (char*)imImageGetAttribute(image, "ResolutionUnit", NULL, NULL);
-                  if (strcmp(unit,"DPI")==0)          
+                  if (strcmp(unit,"DPI")==0)
                     RETVAL = *resx;
-                  else if (strcmp(unit,"DPC")==0)                            
+                  else if (strcmp(unit,"DPC")==0)
                     RETVAL = (*resx)*(2.54);
                 }
         OUTPUT:
@@ -133,7 +133,7 @@ _cdCreateCanvas_IMAGERGB_from_bitmap(bitmap,resolution)
                   if (RETVAL) cdCanvasSetAttribute(RETVAL, "UTF8MODE", "1");
                   /*warn("XXX-DEBUG: rv=%p",RETVAL);*/
                   /*if (cdCanvasGetContext(RETVAL) != CD_IMAGERGB) warn("XXX-DEBUG: invalid canvas, must be CD_IMAGERGB");*/
-                }                
+                }
         OUTPUT:
                 RETVAL
 
@@ -149,9 +149,9 @@ cdDumpBitmap(canvas,filename,format)
                                 int width = 0, height = 0;
                 double width_mm = 0, height_mm = 0;
                 int has_alpha = 0;
-                int color_space, plane_size, plane_count, w, h, type;                
+                int color_space, plane_size, plane_count, w, h, type;
                 float resx, resy;
-        CODE:                                                
+        CODE:
                 cdCanvas *c = ref2cnv(canvas);
                 RETVAL = 999; /* = error */
                 if (cdCanvasGetContext(c) != CD_IMAGERGB) {
@@ -162,7 +162,7 @@ cdDumpBitmap(canvas,filename,format)
                   resx = 25.4*width/width_mm;
                   resy = 25.4*height/height_mm;
                   plane_size = sizeof(unsigned char)*width*height;
-                  type = (cdAlphaImage(c)) ? CD_RGBA : CD_RGB;                                    
+                  type = (cdAlphaImage(c)) ? CD_RGBA : CD_RGB;
                   plane_count = (type==CD_RGBA) ? 4 : 3;
                   color_space = (type==CD_RGBA) ? (IM_RGB | IM_ALPHA) : IM_RGB;
                   data = cdCanvasGetAttribute(c, "REDIMAGE"); /*also a pointer to the full buffer*/
@@ -177,12 +177,12 @@ cdDumpBitmap(canvas,filename,format)
                     imImageSetAttribute(image, "YResolution", IM_FLOAT, 1, &resy);
                     imImageSetAttribute(image, "ResolutionUnit", IM_BYTE, -1, "DPI");
                     /* save image file */
-                    RETVAL = imFileImageSave(filename, format, image);                    
+                    RETVAL = imFileImageSave(filename, format, image);
                     image->data[0] = NULL; /* to avoid duplicate memory release */
                     imImageDestroy(image);
                     /*warn("XXX-DEBUG: imFileImageSave rv=%d\n",RETVAL);*/
                   }
-                }                
+                }
         OUTPUT:
                 RETVAL
 
@@ -265,7 +265,7 @@ cdUseContextPlus(use)
                 RETVAL
 
 #### Original C function from <.../cd/include/cd.h>
-#xxxTODO void cdInitContextPlus(void); 
+#xxxTODO void cdInitContextPlus(void);
 #xxxTODO support later, add some ifdefs
 #void
 #cdInitContextPlus()
@@ -468,7 +468,7 @@ cdMM2Pixel(canvas,mm_dx,mm_dy)
                 int rv;
                 int dx;
                 int dy;
-        PPCODE:                
+        PPCODE:
                 cdCanvasMM2Pixel(ref2cnv(canvas),mm_dx,mm_dy,&dx,&dy);
                 XPUSHs(sv_2mortal(newSViv(dx)));
                 XPUSHs(sv_2mortal(newSViv(dy)));
@@ -1244,7 +1244,7 @@ cdPattern(canvas,pattern)
 # canvas:GetPattern() - > (pattern: cdPattern) [in Lua]
 IUP::Canvas::Pattern
 cdGetPattern(canvas)
-                SV* canvas;                
+                SV* canvas;
         INIT:
                 int w, h;
                 long *data;
@@ -1407,7 +1407,7 @@ cdVectorTextDirection(canvas,x1,y1,x2,y2)
 
 #### Original C function from <.../cd/include/cd.h>
 # double* cdCanvasVectorTextTransform(cdCanvas* canvas, const double* matrix);
-# canvas:VectorTextTransform(matrix: table) -> (old_matrix: table) [in Lua] 
+# canvas:VectorTextTransform(matrix: table) -> (old_matrix: table) [in Lua]
 SV*
 cdVectorTextTransform(canvas,matrix)
                 SV* canvas;
@@ -1419,7 +1419,7 @@ cdVectorTextTransform(canvas,matrix)
                 if (!AV2transmatrix(matrix,tmpmatrix)) {
                   warn("Warning: cdVectorTextTransform() invalid 'matrix' parameter");
                   XSRETURN_UNDEF;
-                }  
+                }
                 oldmatrix = cdCanvasVectorTextTransform(ref2cnv(canvas),tmpmatrix);
                 RETVAL = transmatrix2AV(oldmatrix);
         OUTPUT:
@@ -1635,7 +1635,7 @@ cdPalette(canvas,palette,mode)
 # void cdCanvasGetImage(cdCanvas* canvas, cdImage* image, int x, int y);
 IUP::Canvas::InternalServerImage
 cdGetImage(canvas,x,y,w,h)
-                SV* canvas;                
+                SV* canvas;
                 int x;
                 int y;
                 int w;
@@ -1718,7 +1718,7 @@ cdEncodeColor(pkg,red,green,blue)
                 unsigned char red;
                 unsigned char green;
                 unsigned char blue;
-        CODE:                
+        CODE:
                 RETVAL = cdEncodeColor(red,green,blue);
         OUTPUT:
                 RETVAL
@@ -1791,7 +1791,7 @@ wdGetWindow(canvas)
                 XPUSHs(sv_2mortal(newSVnv(xmax)));
                 XPUSHs(sv_2mortal(newSVnv(ymin)));
                 XPUSHs(sv_2mortal(newSVnv(ymax)));
-                
+
 
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasViewport(cdCanvas* canvas, int xmin, int xmax, int ymin, int ymax);
@@ -1900,7 +1900,7 @@ wdGetTransform(canvas)
                 XPUSHs(sv_2mortal(newSVnv(sx)));
                 XPUSHs(sv_2mortal(newSVnv(sy)));
                 XPUSHs(sv_2mortal(newSVnv(tx)));
-                XPUSHs(sv_2mortal(newSVnv(ty)));                
+                XPUSHs(sv_2mortal(newSVnv(ty)));
 
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasTranslate(cdCanvas* canvas, double dtx, double dty);
@@ -2381,7 +2381,7 @@ wdMultiLineVectorText(canvas,x,y,s)
 
 #### Original C function from <.../cd/include/wd.h>
 # void wdCanvasGetVectorTextBounds(cdCanvas* canvas, const char* s, double x, double y, double *rect);
-# canvas:wGetVectorTextBounds(text: string, x, y: number) -> (rect: table) [in Lua] 
+# canvas:wGetVectorTextBounds(text: string, x, y: number) -> (rect: table) [in Lua]
 void
 wdGetVectorTextBounds(canvas,s,x,y)
                 SV* canvas;

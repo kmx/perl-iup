@@ -17,7 +17,7 @@ $cv->ACTION( sub {
   $self->cdForeground(CD_BLUE);
   $self->cdBox(0, 100, 0, 100);
   $self->cdForeground(CD_RED);
-  $self->cdLine( 0,0,500,500);  
+  $self->cdLine( 0,0,500,500);
   $self->cdLine(10,0,510,500);
   $self->cdLine(20,0,520,500);
   $self->cdLine(30,0,530,500);
@@ -39,7 +39,7 @@ $cv->BUTTON_CB( sub {
     $self->cdClear();
     $draw = 0;
   }
-  return IUP_DEFAULT;       
+  return IUP_DEFAULT;
 } );
 
 $cv->MOTION_CB( sub {

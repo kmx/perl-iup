@@ -4,7 +4,7 @@
 
 [% n.iupmessagedlg %]
 
-[% h.desc %] 
+[% h.desc %]
 
 Creates the Message Dialog element. It is a predefined dialog for
 displaying a message. The dialog can be shown with the IUP::Popup
@@ -111,7 +111,7 @@ The element B<IUP::MessageDlg> is used in the following sample scripts:
 [%FOREACH e IN examples.iupmessagedlg %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -126,6 +126,6 @@ L<GetFile|IUP/"GetFile()">, L<Popup|[%m.elem%]/"Popup()">
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupmessagedlg.html|[%url.iuporigdoc%]dlg/iupmessagedlg.html>
-[%END%] 
+[%END%]
 
 =cut

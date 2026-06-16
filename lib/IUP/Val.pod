@@ -4,7 +4,7 @@
 
 IUP::Val - [GUI element] selects a value in a limited interval (aka scale, trackbar)
 
-=head1 DESCRIPTION 
+=head1 DESCRIPTION
 
 Creates a Valuator control. Selects a value in a limited interval. Also
 known as Scale or Trackbar in native systems.
@@ -23,7 +23,7 @@ known as Scale or Trackbar in native systems.
         <th>Motif</th>
         <th>Windows<br>Classic</th>
         <th>Windows<br>w/ Styles</th>
-	<th>Windows<br>Vista</th>
+        <th>Windows<br>Vista</th>
         <th>GTK</th>
       </tr>
       <tr>
@@ -76,7 +76,7 @@ I<(creation only) (non inheritable)>
 
 Enables the focus
 traversal of the control. In Windows the control will still get the
-focus when clicked. Default: YES. 
+focus when clicked. Default: YES.
 
 =item B<INVERTED>
 
@@ -85,7 +85,7 @@ INVERTED=YES maximum is at top and left (minimum is bottom and right),
 when INVERTED=NO maximum is at bottom and right (minimum is top and
 left). The initial value depends on ORIENTATION passed as parameter on
 creation, if ORIENTATION=VERTICAL default is YES, if
-ORIENTATION=HORIZONTAL default is NO. 
+ORIENTATION=HORIZONTAL default is NO.
 
 =item B<MAX>
 
@@ -138,7 +138,7 @@ Allows to position the
 ticks in both sides (BOTH) or in the reverse side (REVERSE). Default:
 NORMAL. The normal position for horizontal orientation is at the top of
 the control, and for vertical orientation is at the left of the
-control. In Motif, the ticks position is always normal. 
+control. In Motif, the ticks position is always normal.
 
 =item B<ORIENTATION>
 
@@ -283,13 +283,13 @@ The element B<IUP::Val> is used in the following sample scripts:
 
 =item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
-=back 
+=back
 
 
 
 =head1 SEE ALSO
 
 The original doc: L<iupval.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupval.html>
- 
+
 
 =cut

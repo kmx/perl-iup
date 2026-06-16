@@ -24,7 +24,7 @@ my $docroot  = $g_srcroot;
 die "###FATAL### Invalid dir '$distroot'" unless -d "$distroot/lib" && -f "$distroot/Build.PL";
 
 my @all_src = My::Utils::find_file($g_srcroot, qr/\.(c|cpp)$/);
-@all_src = grep /\Q$g_srcroot\E[\\\/](src|srcim|srcimglib|srcpplot|srcole|srccontrols|srccd|srcgl|srcweb|srctuio)[\\\/]/i, @all_src; #nasty hack - we need just files 
+@all_src = grep /\Q$g_srcroot\E[\\\/](src|srcim|srcimglib|srcpplot|srcole|srccontrols|srccd|srcgl|srcweb|srctuio)[\\\/]/i, @all_src; #nasty hack - we need just files
 #die "###DEBUG### all_src=", Dumper(\@all_src);
 
 my @all_doc = (
@@ -131,7 +131,7 @@ sub myprint {
 };
 
 my %type_patch = (
-  'IUP::Tree' => { MULTISELECTION_CB => 'Ai', MULTIUNSELECTION_CB => 'Ai'},	
+  'IUP::Tree' => { MULTISELECTION_CB => 'Ai', MULTIUNSELECTION_CB => 'Ai'},
   'IUP::Matrix' => { DRAW_CB => 'iiiiiiv' },
   'IUP::PPlot' => { EDIT_CB => 'iiffFF' },
   'IUP::Dialog' => { COPYDATA_CB => 'si', MOVE_CB => 'ii' },
@@ -164,19 +164,19 @@ sub raw2pname {
   $n =~ s|^iupwin_||i;
   $n =~ s|^iupgtk_||i;
   $n =~ s|^iupmot_||i;
-  $n = "IUP::" . ucfirst($n) unless $n =~ /^IUP::/;  
+  $n = "IUP::" . ucfirst($n) unless $n =~ /^IUP::/;
   $n = $trans{$n} if defined $trans{$n};
   return $n;
-}  
+}
 
 warn "###INFO### Going through all source codes (*.c *.cpp)\n";
 
 foreach my $f (@all_src) {
   die "File $f not exists" unless -f $f;
 
-  my $showdebug; 
+  my $showdebug;
   $showdebug = 1 if $f =~ /Tuio/i;
-  
+
   warn "###DEBUG### Processing file $f\n" if $showdebug;
   (my $n = $f) =~ s/\.c(pp)?$//;
   $n =~ s|^.*?([^\\/]*)$|$1|;
@@ -190,14 +190,14 @@ foreach my $f (@all_src) {
       my $t = $2;
       warn "###DEBUG### Processing callback '$n|$a|$t' '$_'\n" if $showdebug;
       $t =~ s/=s//;
-      $c_list{$n}->{$a}->{comment1} = 'src=yes';      
+      $c_list{$n}->{$a}->{comment1} = 'src=yes';
       $c_list{$n}->{$a}->{type} = $type_patch{$n}->{$a} || $t; # type patching
     }
     else {
       (my $shortname = $f) =~ s/^.*?([^\\\/]+)$/$1/;
       warn "###INFO### MISSING CB [$shortname]:$_\n" if ( /iupClassRegisterCallback/ );
     }
-    
+
     if ( /iupClassRegisterAttribute[^"]*"([^"]*)".*?([^,")]*)\)/) {
       my ($o, $x) = ($1, $2);
       $x =~ s/ //g;
@@ -209,12 +209,12 @@ foreach my $f (@all_src) {
       (my $shortname = $f) =~ s/^.*?([^\\\/]+)$/$1/;
       warn "###INFO### MISSING AT [$shortname]:$_\n" if ( /iupClassRegisterAttribute/ );
     }
-    
+
     if ( /ic->name *= *"([^"]*)"/) {
       $n = raw2pname($1);
       #warn ">>>>[$f] $n";
     }
-    
+
     if ( /iupBaseRegisterCommonCallbacks/ ) {
       warn "###INFO### [$n] iupBaseRegisterCommonCallbacks !!!\n";
       $c_list{$n}->{MAP_CB} = { type => '', comment1 => 'src=common' };
@@ -244,7 +244,7 @@ foreach my $f (glob("$docroot/html/en/call/*.html")) {
   foreach my $c ($b->content_list) {
     next unless ref($c) eq 'HTML::Element';
     next unless $c ne ' ';
-    my $tx = $c->as_text;    
+    my $tx = $c->as_text;
     if ($tx =~ /([a-zA-Z0-9\*]+)  *function *\(([^\)]*)\)/) {
       my $rv = $1;
       my $par = $2;
@@ -254,7 +254,7 @@ foreach my $f (glob("$docroot/html/en/call/*.html")) {
       $common_actions{$a}->{par} = $par;
       $common_actions{$a}->{rv} = $rv;
       #warn "COMMON '$a' = $par";
-    }    
+    }
   }
 }
 
@@ -272,7 +272,7 @@ foreach (@spec_cb) {
   my $class = $t->as_text;
   $class =~ s/^Iup/IUP::/;
   $class =~ s/ .*$//;
-  $class = raw2pname($class);  
+  $class = raw2pname($class);
   my ($cpar, $cnam, $crv);
   $cnam = 'IUP::None';
   my $b = $tree->find('body');
@@ -280,18 +280,18 @@ foreach (@spec_cb) {
     next unless ref($c) eq 'HTML::Element';
     next unless $c ne ' ';
     my $tg = $c->tag;
-    my $tx = $c->as_text;    
-    
+    my $tx = $c->as_text;
+
     if ($tx =~ /([a-zA-Z0-9\*]+) +(funct*ion|change|drag) *\(([^\)]*)\)/) {
       $cpar = $3;
       $crv = $1;
       $cpar =~ s/, */,/g;
-      $cpar =~ s/  */ /g;      
+      $cpar =~ s/  */ /g;
       $crv =~ s/  */ /g;
       if (defined($cnam)) {
         #warn "##### $class $cnam $crv $cpar";
         $c_list{$class}->{$cnam}->{par} = $cpar;
-	$c_list{$class}->{$cnam}->{rv} = $crv;
+        $c_list{$class}->{$cnam}->{rv} = $crv;
       }
       else {
         warn "Unknown CB: '$class' '$cpar' '$fn.html'";
@@ -300,21 +300,21 @@ foreach (@spec_cb) {
     if ($tg eq 'p') {
       $tx =~ s/  */ /g;
       if ($tx =~ /^[ "]*((([A-Z0-9_]+), )+([A-Z0-9_]+))[^,]/) {
-        my $t = $1;	
-	$t =~ s/ //g;
-	foreach (split(',',$t)) {
-	  $c_list{$class}->{$_}->{comment2} = "doc=spec.common";
-	  $c_list{$class}->{$_}->{par} ||= $common_actions{$_}->{par};
-	  $c_list{$class}->{$_}->{rv} ||= $common_actions{$_}->{rv};
-	}
+        my $t = $1;
+        $t =~ s/ //g;
+        foreach (split(',',$t)) {
+          $c_list{$class}->{$_}->{comment2} = "doc=spec.common";
+          $c_list{$class}->{$_}->{par} ||= $common_actions{$_}->{par};
+          $c_list{$class}->{$_}->{rv} ||= $common_actions{$_}->{rv};
+        }
       }
       elsif ($tx =~ /^[ "]*([A-Z0-9_]+)[^a-z]/) {
         $cnam = $1;
-	$c_list{$class}->{$1}->{comment2} = "doc=spec.ok";
-	$c_list{$class}->{$1}->{par} ||= $common_actions{$1}->{par};
-	$c_list{$class}->{$1}->{rv} ||= $common_actions{$1}->{rv};
+        $c_list{$class}->{$1}->{comment2} = "doc=spec.ok";
+        $c_list{$class}->{$1}->{par} ||= $common_actions{$1}->{par};
+        $c_list{$class}->{$1}->{rv} ||= $common_actions{$1}->{rv};
       }
-    }  
+    }
   }
 }
 
@@ -323,7 +323,7 @@ foreach (@spec_cb) {
 warn "###INFO### Going through all_doc HTML files\n";
 foreach my $f (@all_doc) {
   my $fn = $f;
-  $fn = $1 if( $f =~ /([^\/]*)\.html$/);  
+  $fn = $1 if( $f =~ /([^\/]*)\.html$/);
   die "File $f not exists" unless -f $f;
   my $tree = HTML::TreeBuilder->new_from_file($f);
   my $t = $tree->find('title');
@@ -332,13 +332,13 @@ foreach my $f (@all_doc) {
   my $b = $tree->find('body');
   my $active_a = 0;
   my $active_c = 0;
-  my ($cpar, $cnam, $crv);  
+  my ($cpar, $cnam, $crv);
   my %seen;
   foreach my $c ($b->content_list) {
     next unless ref($c) eq 'HTML::Element';
     next unless $c ne ' ';
     my $tg = $c->tag;
-    my $tx = $c->as_text;    
+    my $tx = $c->as_text;
     if ($tg eq 'h3') {
       $active_a = 0;
       $active_c = 0;
@@ -350,23 +350,23 @@ foreach my $f (@all_doc) {
       $active_c = 1;
       $cnam = '';
     }
-    
+
     if ($active_a && $tg eq 'p') {
       $tx =~ s/  */ /g;
       $tx =~ s/"//g;
       if ($tx =~ /^[ "]*((([A-Z0-9_]+)(,| and) )+([A-Z0-9_]+))[^,]/) {
         my $t = $1;
-	$t =~ s/ //g;
-	foreach (split(',',$t)) {
+        $t =~ s/ //g;
+        foreach (split(',',$t)) {
           foreach (split('and',$_)) {
-	    myprint "$fn\t$class\tATTR\t$_\tTX=xxx\n";
-	    $a_list{$class}->{$_}->{comment2} = 'doc=yes';
-	  }
-	}
+            myprint "$fn\t$class\tATTR\t$_\tTX=xxx\n";
+            $a_list{$class}->{$_}->{comment2} = 'doc=yes';
+          }
+        }
       }
       elsif ($tx =~ /^[ "]*([A-Z0-9_]+)[^a-z]/) {
         myprint "$fn\t$class\tATTR\t$1\tTEXT=".$c->as_text."\tHTML=".$c->as_HTML."\n";
-	$a_list{$class}->{$1}->{comment2} = 'doc=yes';
+        $a_list{$class}->{$1}->{comment2} = 'doc=yes';
       }
     }
 
@@ -374,12 +374,12 @@ foreach my $f (@all_doc) {
       $cpar = $3;
       $crv = $1;
       $cpar =~ s/, */,/g;
-      $cpar =~ s/  */ /g;      
+      $cpar =~ s/  */ /g;
       $crv =~ s/  */ /g;
       if (defined($cnam)) {
         $c_list{$class}->{$cnam}->{par} = $cpar unless $seen{$class}->{$cnam};
-	$c_list{$class}->{$cnam}->{rv} = $crv unless $seen{$class}->{$cnam};
-	$seen{$class}->{$cnam} = 1;
+        $c_list{$class}->{$cnam}->{rv} = $crv unless $seen{$class}->{$cnam};
+        $seen{$class}->{$cnam} = 1;
       }
       else {
         warn "Unknown CB: '$class' '$cpar' '$fn.html'";
@@ -388,24 +388,24 @@ foreach my $f (@all_doc) {
     if ($active_c && $tg eq 'p') {
       $tx =~ s/  */ /g;
       if ($tx =~ /^[ "]*((([A-Z0-9_]+), )+([A-Z0-9_]+))[^,]/) {
-        my $t = $1;	
-	$t =~ s/ //g;
-	foreach (split(',',$t)) {
+        my $t = $1;
+        $t =~ s/ //g;
+        foreach (split(',',$t)) {
           myprint "$fn\t$class\tCLBK\t$_\tMULTI\n";
-	  $c_list{$class}->{$_}->{comment2} = "doc=multi";
-	  $c_list{$class}->{$_}->{par} ||= $common_actions{$_}->{par};
-	  $c_list{$class}->{$_}->{rv} ||= $common_actions{$_}->{rv};
-	}
+          $c_list{$class}->{$_}->{comment2} = "doc=multi";
+          $c_list{$class}->{$_}->{par} ||= $common_actions{$_}->{par};
+          $c_list{$class}->{$_}->{rv} ||= $common_actions{$_}->{rv};
+        }
       }
       elsif ($tx =~ /^[ "]*([A-Z0-9_]+)[^a-z]/) {
         $cnam = $1;
         myprint "$fn\t$class\tCLBK\t$1\n";
-	$c_list{$class}->{$1}->{comment2} = "doc=single";
-	$c_list{$class}->{$1}->{par} ||= $common_actions{$1}->{par};
-	$c_list{$class}->{$1}->{rv} ||= $common_actions{$1}->{rv};
+        $c_list{$class}->{$1}->{comment2} = "doc=single";
+        $c_list{$class}->{$1}->{par} ||= $common_actions{$1}->{par};
+        $c_list{$class}->{$1}->{rv} ||= $common_actions{$1}->{rv};
       }
 
-    }    
+    }
   }
 }
 
@@ -475,7 +475,7 @@ $c_list{'IUP::Spinbox'}->{SPIN_CB}->{rv} = 'int';
 
 my %uniq;
 
-sub print_c1 {  
+sub print_c1 {
   my %base = %{$c_list{'IUP::Classbase'}};
   my %box = %{$c_list{'IUP::Box'}} if $c_list{'IUP::Box'}; # maybe leave out completely xxxTODO xxx
   my %menu = %{$c_list{'IUP::Menu'}};
@@ -485,7 +485,7 @@ sub print_c1 {
   for my $class (sort keys %c_list) {
     next unless $class;
     next if $class =~ /^(IUP::GetParam|IUP::MultiLine|IUP::Gauge)/; #legacy
-    
+
     my %t = %{$c_list{$class}};
     for my $cb (sort keys %t) {
       next if $class eq 'IUP::Matrix' && $cb eq 'IMPORTANT'; #not a CB
@@ -497,11 +497,11 @@ sub print_c1 {
         warn "NONEXISTING.par '$class\::$cb'";
         if (defined($common_actions{$cb}->{par})) {
           $t{$cb}->{par} = $common_actions{$cb}->{par};
-	  $t{$cb}->{rv} = $common_actions{$cb}->{rv};
-	  $t{$cb}->{comment3} = "default.common.cb";
+          $t{$cb}->{rv} = $common_actions{$cb}->{rv};
+          $t{$cb}->{comment3} = "default.common.cb";
         }
         else {
-          warn "NONEXISTING.common '$class\::$cb'";        
+          warn "NONEXISTING.common '$class\::$cb'";
         }
       }
       my $classbase = $c_list{'IUP::Classbase'}->{$cb};
@@ -513,20 +513,20 @@ sub print_c1 {
         }
         elsif (defined($common_src{$class}->{$cb})) {
           $t{$cb}->{type} = $common_src{$class}->{$cb};
-	  $t{$cb}->{comment3} = "default.src_common1";
+          $t{$cb}->{comment3} = "default.src_common1";
         }
         elsif (defined($common_src{'IUP::Common'}->{$cb})) {
-	  $t{$cb}->{type} = $common_src{'IUP::Common'}->{$cb};
-	  $t{$cb}->{comment3} = "default.src_common2";
+          $t{$cb}->{type} = $common_src{'IUP::Common'}->{$cb};
+          $t{$cb}->{comment3} = "default.src_common2";
         }
         else {
-	  $t{$cb}->{type} = $type_patch{$class}->{$cb} || '#undef#'; # type patching
-	  warn "###WARN### class=$class cb=$cb type=$t{$cb}->{type}";
+          $t{$cb}->{type} = $type_patch{$class}->{$cb} || '#undef#'; # type patching
+          warn "###WARN### class=$class cb=$cb type=$t{$cb}->{type}";
         }
       }
       $t{$cb}->{par} =~ s/ \*/* /g if defined $t{$cb}->{par};
       $common_src{$class}->{$cb} ||= '';
-      
+
       #xxxTODO xxx not tested yet
       my $class2 = $class;
       $class2 = '_base' if $class2 eq 'IUP::Classbase';
@@ -539,7 +539,7 @@ sub print_c1 {
       next if $class2 !~ /^_dialog/ && $dialog{$cb} && $class2 =~ /^IUP::(Color|File|Font|Message)Dlg$/;
       #next if $class2 !~ /^_menu/ && $menu{$cb} && $class2 =~ /^IUP::(Submenu|Item)$/;
 
-      push @output, [ $class2,                      
+      push @output, [ $class2,
                       $cb,
                       $t{$cb}->{type},
                       ($t{$cb}->{rv} || '#'),
@@ -549,12 +549,12 @@ sub print_c1 {
                       ($t{$cb}->{comment3} || '#'),
                       ($common_src{$class}->{$cb} || '?'),
                       (((!defined $common_src{$class}->{$cb}) || ($common_src{$class}->{$cb} eq '') || ($t{$cb}->{type} eq $common_src{$class}->{$cb})) ? '' : 'BEWARE'),
-		    ];
-      $uniq{"cb_$cb\_$t{$cb}->{type}"} = 1;    
+                    ];
+      $uniq{"cb_$cb\_$t{$cb}->{type}"} = 1;
     }
   }
-  @output = sort { $a->[0].';'.$a->[1].';' cmp $b->[0].';'.$b->[1].';' } @output; # ASCII-betical sort 
-  open (F, ">", $file) || die "cannot open file $file";  
+  @output = sort { $a->[0].';'.$a->[1].';' cmp $b->[0].';'.$b->[1].';' } @output; # ASCII-betical sort
+  open (F, ">", $file) || die "cannot open file $file";
   if ($g_longoutput) {
     print F '#module;#action;#type;#c_retval;#c_params;#c1;#c2;#c3;#c4;#c5', "\n";
   }
@@ -569,19 +569,19 @@ sub print_c1 {
       print F $_->[0], ';', $_->[1], ';', $_->[2], ';', $_->[3], ';', $_->[4], "\n";
     }
   }
-  close(F);  
+  close(F);
 
 }
 
 sub print_a1_xxx {
-  my %seen;  
+  my %seen;
   for my $class (sort keys %a_list) {
     next unless $class;
     my %t = %{$a_list{$class}};
     for my $at (sort keys %t) { $seen{$at} = 1 };
   }
   for( my $i=0; $i<256; $i++) { delete $seen{$i} };
-  my @tmp = sort keys %seen;  
+  my @tmp = sort keys %seen;
   #for( my $i=0; $i<256; $i++) { push @tmp, $i };
   print "ATTR DUMP:\n";
   my $count = 0;
@@ -591,19 +591,19 @@ sub print_a1_xxx {
     print $_, ' ', ' ' x (22-length($_));
   };
   print "\n/);";
-  
+
 }
 
 sub print_a1 {
   my $file = shift || die "undefined filename";
   my $invalid = {
-    'IUP::Cbox'	    => { 'CX' => 1, 'CY' => 1 },
+    'IUP::Cbox'     => { 'CX' => 1, 'CY' => 1 },
     'IUP::Cells'    => { 'LIMITSL' => 1 },
     'IUP::ColorBar' => { 'CEL' => 1 },
-    'IUP::List'	    => { 'INSERTITE' => 1 },
-    'IUP::Tabs'	    => { 'TABIMAG' => 1, 'TABTITL' => 1 },
-    'IUP::Tree'	    => { 'VALU' => 1 },
-    'IUP::Zbox'	    => { 
+    'IUP::List'     => { 'INSERTITE' => 1 },
+    'IUP::Tabs'     => { 'TABIMAG' => 1, 'TABTITL' => 1 },
+    'IUP::Tree'     => { 'VALU' => 1 },
+    'IUP::Zbox'     => {
       'ACENTER' => 1,
       'EAST' => 1,
       'NE' => 1,
@@ -614,13 +614,13 @@ sub print_a1 {
       'SW' => 1,
       'WEST' => 1,
     },
-    '_dialog'	=> { 'IMPORTANT' => 1 },
+    '_dialog'   => { 'IMPORTANT' => 1 },
     'IUP::Image'=> { '0' => 1 },
-    'IUP::List'	=> { '1' => 1 },
+    'IUP::List' => { '1' => 1 },
     'IUP::Toggle' => { '3STATE' => 1 },
   };
 
-  my %seen;  
+  my %seen;
   my %base = %{$a_list{'IUP::Classbase'}};
   my %box = %{$a_list{'IUP::Box'}};
   my %menu = %{$a_list{'IUP::Menu'}};
@@ -628,7 +628,7 @@ sub print_a1 {
   my @output;
   for my $class (sort keys %a_list) {
     next unless $class;
-    my %t = %{$a_list{$class}};    
+    my %t = %{$a_list{$class}};
     for my $at (sort keys %t) {
       $seen{$at} = 1;
       $class = '_base' if $class eq 'IUP::Classbase';
@@ -645,11 +645,11 @@ sub print_a1 {
                       ($t{$at}->{comment1} || 'src=no'),
                       ($t{$at}->{comment2} || 'doc=no'),
                       ($invalid->{$class}->{$at} ? '0' : '1'),
-		     ];
+                     ];
     };
   }
-  @output = sort { $a->[0].';'.$a->[1].';' cmp $b->[0].';'.$b->[1].';' } @output; # ASCII-betical sort 
-  open (F, ">", $file) || die "cannot open file $file";  
+  @output = sort { $a->[0].';'.$a->[1].';' cmp $b->[0].';'.$b->[1].';' } @output; # ASCII-betical sort
+  open (F, ">", $file) || die "cannot open file $file";
   if ($g_longoutput) {
     print F '#module;#attribute;#flags;#c1;#c2;#valid', "\n";
   }
@@ -664,7 +664,7 @@ sub print_a1 {
       print F $_->[0], ';', $_->[1], "\n";
     }
   }
-  close(F);  
+  close(F);
 }
 
 #warn "###DEBUG### c_list=", Dumper(\%c_list);

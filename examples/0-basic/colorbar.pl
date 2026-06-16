@@ -9,17 +9,17 @@ my $cnvs = IUP::Canvas->new();
 
 sub redraw_cb {
   my $self = shift;
- 
+
   $self->cdActivate();
   $self->cdClear();
-  
+
   # Draws a rectangle on the canvas
   $self->cdBegin(CD_FILL);
   $self->cdVertex(50, 50);
   $self->cdVertex(150, 50);
   $self->cdVertex(100, 150);
   $self->cdEnd();
-  
+
   # Function executed successfully
   return IUP_DEFAULT;
 }
@@ -27,7 +27,7 @@ sub redraw_cb {
 sub cell_cb {
   my ($self, $cell) = @_;
   my ($r, $g, $b) = split / /, $self->GetAttributeId("CELL",$cell);
-  ($r, $g, $b) = IUP->GetColor(IUP_MOUSEPOS, IUP_MOUSEPOS, $r, $g, $b);  
+  ($r, $g, $b) = IUP->GetColor(IUP_MOUSEPOS, IUP_MOUSEPOS, $r, $g, $b);
   if (defined $r && defined $g && defined $b) {
     $cnvs->cdActivate();
     $cnvs->cdForeground($cnvs->cdEncodeColor($r, $g, $b));
@@ -41,7 +41,7 @@ sub select_cb {
   my ($self, $cell, $type) = @_;
   my ($r, $g, $b) = split / /, $self->GetAttribute("CELL$cell");
   my $cd_color = $cnvs->cdEncodeColor($r, $g, $b);
-   
+
   $cnvs->cdActivate();
   if ($type == IUP_PRIMARY) {
     $cnvs->cdForeground($cd_color);
@@ -82,10 +82,10 @@ my $cb = IUP::ColorBar->new(
 
 # Creates a dialog with a vbox containing the canvas and the colorbar
 my $dlg = IUP::Dialog->new( child=>IUP::Hbox->new( child=>[$cnvs, $cb] ) );
-  
+
 # Sets the dialog's title, so that it is mapped properly
 $dlg->TITLE("IUP::ColorBar");
- 
+
 # Shows dialog on the center of the screen
 $dlg->Show();
 

@@ -18,15 +18,15 @@ L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
 
 <p>
   <table border="1">
-    <tbody align="center">    
+    <tbody align="center">
         <tr>
-		<th>Natural Size</th>
-		<th>After Moving the Split Bar</th>
-	</tr>
-	<tr>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsplit1.png"></td>
-		<td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsplit2.png"></td>
-	</tr>
+                <th>Natural Size</th>
+                <th>After Moving the Split Bar</th>
+        </tr>
+        <tr>
+                <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsplit1.png"></td>
+                <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsplit2.png"></td>
+        </tr>
     </tbody>
   </table>
 </p>
@@ -177,6 +177,6 @@ Unfortunately there are no sample scripts using this element.
 =head1 SEE ALSO
 
 The original doc: L<iupsplit.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupsplit.html>
- 
+
 
 =cut

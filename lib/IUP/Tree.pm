@@ -14,7 +14,7 @@ sub _create_element {
 
 sub TreeSetUserId {
   #int IupTreeSetUserId(Ihandle *ih, int id, void *userid); [in C]
-  #iup.TreeSetUserId(ih: ihandle, id: number, userid: userdata/table) [in Lua]  
+  #iup.TreeSetUserId(ih: ihandle, id: number, userid: userdata/table) [in Lua]
   my ($self, $id, $userdata) = @_;
   my $pointer = IUP::Internal::LibraryIup::_IupTreeGetUserId($self->ihandle, $id);
   if (!defined($userdata)) {
@@ -35,13 +35,13 @@ sub TreeGetUserId {
   #int IupTreeGetId(Ihandle* ih, void *userid);
   #iup.TreeGetUserId(ih: ihandle, id: number) -> (ret: userdata/table) [in Lua]
   my ($self, $id) = @_;
-  my $pointer = IUP::Internal::LibraryIup::_IupTreeGetUserId($self->ihandle, $id);  
+  my $pointer = IUP::Internal::LibraryIup::_IupTreeGetUserId($self->ihandle, $id);
   return undef unless defined $self->{'!int!treedata'};
   return $self->{'!int!treedata'}->{$pointer};
 }
 
 sub TreeGetId {
-  #int IupTreeGetId(Ihandle *ih, void *userid); [in C] 
+  #int IupTreeGetId(Ihandle *ih, void *userid); [in C]
   #iup.TreeGetId(ih: ihandle, userid: userdata/table) -> (ret: number) [in Lua]
   my ($self, $userdata) = @_;
   my $pointer = refaddr($userdata);
@@ -52,7 +52,7 @@ sub TreeSetAncestorsAttributes {
   my ($self, $ini, $attrs) = @_;
   #iup.TreeSetAncestorsAttributes(ih: ihandle, id: number, attrs: table) [in Lua]
   $ini = $self->GetAttributeId("PARENT",$ini);
-  my @stack = ();  
+  my @stack = ();
   while (defined $ini) {
     push @stack, $ini;
     $ini = $self->GetAttributeId("PARENT",$ini);
@@ -62,7 +62,7 @@ sub TreeSetAncestorsAttributes {
 
 sub TreeSetDescentsAttributes {
   my ($self, $ini, $attrs) = @_;
-  #iup.TreeSetDescentsAttributes(ih: ihandle, id: number, attrs: table) [in Lua] 
+  #iup.TreeSetDescentsAttributes(ih: ihandle, id: number, attrs: table) [in Lua]
   my $id = $ini;
   my $count = $self->GetAttributeId("CHILDCOUNT",$ini);
   for(my $i=0; $i<$count; $i++) {
@@ -75,10 +75,10 @@ sub TreeSetDescentsAttributes {
   return $id;
 }
 
-sub TreeSetNodeAttributes {  
+sub TreeSetNodeAttributes {
   my ($self, $id, $attrhash) = @_;
   while (my ($attr, $val) = each %$attrhash) {
-    next unless $attr =~ /^[A-Z_0-9]+$/;    
+    next unless $attr =~ /^[A-Z_0-9]+$/;
     next if $attr =~ /^(KIND|PARENT|DEPTH|CHILDCOUNT|TOTALCHILDCOUNT)$/; #skip read only attributes
     if ($attr eq 'USERDATA') {
       $self->TreeSetUserId($id, $val); #special handling of USERDATA
@@ -90,7 +90,7 @@ sub TreeSetNodeAttributes {
 }
 
 sub TreeAddNodes {
-  my ($self, $t, $id) = @_;  
+  my ($self, $t, $id) = @_;
   return unless defined $t;
   $id = -1 unless defined $id;
   $self->_delete_root_if_empty if ($id == -1);
@@ -103,7 +103,7 @@ sub TreeAddNodes {
 }
 
 sub TreeInsertNodes {
-  my ($self, $t, $id) = @_;  
+  my ($self, $t, $id) = @_;
   return unless defined $t;
   $id = -1 unless defined $id;
   $self->_delete_root_if_empty if ($id == -1); # xxxCHECKLATER not sure if it is a good idea
@@ -118,15 +118,15 @@ sub TreeInsertNodes {
 sub _delete_root_if_empty {
   my $self = shift;
   my $tc = $self->GetAttribute("TOTALCHILDCOUNT0");
-  my $ti = $self->GetAttribute("TITLE0");  
+  my $ti = $self->GetAttribute("TITLE0");
   #workaround for handling ADDROOT='YES' but empty TITLE
   if (defined $tc && $tc==0 && defined $ti && $ti eq '') {
-    #the tree is empty, but was created with ADDROOT='YES' - therefore deleting node 0     
-    $self->SetAttributeId('DELNODE', 0, 'SELECTED'); 
+    #the tree is empty, but was created with ADDROOT='YES' - therefore deleting node 0
+    $self->SetAttributeId('DELNODE', 0, 'SELECTED');
   }
 }
 
-sub _proc_node_definition { 
+sub _proc_node_definition {
   my ($self, $h, $id, $ins_or_add) = @_;
   #NOTE: $h is expected to be a hashref or scalar value (not arrayref!)
   return unless defined $h;
@@ -137,14 +137,14 @@ sub _proc_node_definition {
       $self->SetAttributeId("INSERTBRANCH", $id, $h->{TITLE});
     }
     else {
-      $self->SetAttributeId("ADDBRANCH", $id, $h->{TITLE});        
-    }    
-    
+      $self->SetAttributeId("ADDBRANCH", $id, $h->{TITLE});
+    }
+
     my $newid = $self->LASTADDNODE;
     $self->TreeSetNodeAttributes($newid, $h);
-    
+
     my $ch = $h->{child};
-    if (defined $ch) {      
+    if (defined $ch) {
       if (ref($ch) eq 'ARRAY') {
         $self->_proc_node_definition($_, $newid) for (reverse @$ch);
       }
@@ -160,7 +160,7 @@ sub _proc_node_definition {
     }
     else {
       $self->SetAttributeId("ADDLEAF", $id, $h->{TITLE});
-    }    
+    }
 
     my $newid = $self->LASTADDNODE;
     $self->TreeSetNodeAttributes($newid, $h);

@@ -12,7 +12,7 @@ my $plot = IUP::Plot->new(
   AXS_XLABEL=>"X",
   AXS_YLABEL=>"Y",
   LEGENDSHOW=>"YES",
-  LEGENDPOS=>"TOPLEFT",  
+  LEGENDPOS=>"TOPLEFT",
 );
 
 $plot->PlotBegin(2);

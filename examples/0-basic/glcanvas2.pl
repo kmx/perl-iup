@@ -21,7 +21,7 @@ sub redraw_cb {
 
   $self->GLMakeCurrent();
   glViewport(0, 0, $w, $h);
-  
+
   glClearColor(0, 0, 0, 0);
   glClear(GL_COLOR_BUFFER_BIT);
   glPushMatrix();

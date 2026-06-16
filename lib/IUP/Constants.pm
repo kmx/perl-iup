@@ -1181,7 +1181,7 @@ use constant CD_IRED   => 0;
 use constant CD_IGREEN => 1;
 use constant CD_IBLUE  => 2;
 use constant CD_IALPHA => 3;
-use constant CD_INDEX  => 4; 
+use constant CD_INDEX  => 4;
 use constant CD_COLORS => 5;
 
 # status report
@@ -1226,12 +1226,12 @@ use constant CD_PATH_CLIP       => 9;
 use constant CD_EVENODD => 0;
 use constant CD_WINDING => 1;
 
-# line join 
+# line join
 use constant CD_MITER => 0;
 use constant CD_BEVEL => 1;
 use constant CD_ROUND => 2;
 
-# line cap 
+# line cap
 use constant CD_CAPFLAT   => 0;
 use constant CD_CAPSQUARE => 1;
 use constant CD_CAPROUND  => 2;
@@ -1394,7 +1394,7 @@ use constant CD_A1     => 1;
 use constant CD_A2     => 2;
 use constant CD_A3     => 3;
 use constant CD_A4     => 4;
-use constant CD_A5     => 5; 
+use constant CD_A5     => 5;
 use constant CD_LETTER => 6;
 use constant CD_LEGAL  => 7;
 

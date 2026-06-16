@@ -38,7 +38,7 @@ for my $i (sort keys %{$data}) {
   next if  $data->{$i}->{g0doc} &&  $data->{$i}->{g0mod} && !$data->{$i}->{e0doc} && !$data->{$i}->{e0mod};
   next if !$data->{$i}->{g0doc} && !$data->{$i}->{g0mod} &&  $data->{$i}->{e0doc} &&  $data->{$i}->{e0mod};
   diag sprintf "% 30s %s\n", $i, Data::Dump::dump($data->{$i});
-  $result = 'FAIL';  
+  $result = 'FAIL';
 }
 
 #diag ">>>>> METHODS - cross-check finished - $result";

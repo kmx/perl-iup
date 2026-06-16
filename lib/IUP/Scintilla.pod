@@ -23,7 +23,7 @@ Supported in Windows and in the systems the GTK driver is supported.
 =head2 CREATION - new() method
 
  $fill = IUP::Scintilla->new( EXPAND=>'YES' );
- 
+
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
 NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
@@ -88,7 +88,7 @@ are generated. (since iup-3.23)
 
 Allows the user only to read the
 contents, without changing it. Restricts the insertion using keyboard
-input and attributes. Navigation keys are still available. 
+input and attributes. Navigation keys are still available.
 Possible values: "YES" and "NO". Default: NO.
 
 =item * B<SAVEDSTATE> (non inheritable)
@@ -135,14 +135,14 @@ B<Natural Size>, this means that will act also as minimum number of
 visible columns. It uses a wider character size then the one used for
 the SIZE attribute so strings will fit better without the need of extra
 columns. As for SIZE you can set to NULL after map to use it as an
-initial value. 
+initial value.
 
 Default: 50.
 
 =item * B<VISIBLELINES>
 
 Defines the number of visible lines for the B<Natural Size>, this means that will act also as minimum number of visible
-lines. As for SIZE you can set to NULL after map to use it as an initial value. 
+lines. As for SIZE you can set to NULL after map to use it as an initial value.
 
 Default: 10.
 
@@ -1735,13 +1735,13 @@ The element B<IUP::Scintilla> is used in the following sample scripts:
 
 =item * L<0-basic/scintilla.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/scintilla.pl> - IUP::Scintilla example
 
-=back 
+=back
 
 
 
 =head1 SEE ALSO
 
 The original doc: L<iup_scintilla.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iup_scintilla>
- 
+
 
 =cut

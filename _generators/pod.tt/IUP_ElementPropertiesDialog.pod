@@ -65,7 +65,7 @@ The element B<IUP::ElementPropertiesDialog> is used in the following sample scri
 [%FOREACH e IN examples.iupelementpropertiesdialog %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -80,6 +80,6 @@ L<IUP::LayoutDialog|IUP::LayoutDialog>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupelementpropdialog.html|[%url.iuporigdoc%]dlg/iupelementpropdialog.html>
-[%END%] 
+[%END%]
 
 =cut

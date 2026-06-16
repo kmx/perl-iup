@@ -38,7 +38,7 @@ L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
  $mlist = IUP::Expander->new( child=>$child, ANYATTRIBUTE=>'any value' );
  #or with just 1 parameter
  $mlist = IUP::Expander->new($child);
- 
+
 B<child:> (named parameter) reference to an interface element.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
@@ -315,8 +315,8 @@ B<$button:> identifies the extra button. Can be 1, 2 or 3. (this is not the same
 
 B<$pressed:> indicates the state of the button: 0 - mouse button was released; 1 - mouse button was pressed.
 
-=back 
-  
+=back
+
 =head1 NOTES
 
 The L<IUP::Canvas|IUP::Canvas> bar handler is always the first child of the expander.
@@ -344,13 +344,13 @@ The element B<IUP::Expander> is used in the following sample scripts:
 
 =item * L<0-basic/expander.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/expander.pl> - IUP::Expander example
 
-=back 
+=back
 
 
 
 =head1 SEE ALSO
 
 The original doc: L<iupexpander.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupexpander.html>
- 
+
 
 =cut

@@ -31,15 +31,15 @@ my %html_all = map {$_=>1} My::Utils::find_file($g_html, qr/\.html$/);
 sub procfile {
   my $pod = shift;
   my $rel = File::Spec->abs2rel($pod, $g_pod);
-  my $html = File::Spec->rel2abs(File::Spec->catfile($g_html, $rel));    
+  my $html = File::Spec->rel2abs(File::Spec->catfile($g_html, $rel));
   $html =~ s/\.pod$/\.html/;
-  
+
   warn "[info] input='$pod'\n";
-  my $html_orig = -f $html ? read_file($html) : 'EMPTY: random content='.rand(999);  
-  my $html_new;  
+  my $html_orig = -f $html ? read_file($html) : 'EMPTY: random content='.rand(999);
+  my $html_new;
   my $p = My::Pod::Simple::HTML->new();
   $p->output_string(\$html_new);
-  $p->set_source($pod);  
+  $p->set_source($pod);
   $p->run;
   $html_new = encode('utf-8', $html_new);
   $html_new =~ s|<style type="text/css">|</title><style type="text/css">|;

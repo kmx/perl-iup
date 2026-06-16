@@ -94,7 +94,7 @@ my $builder = $class->new(
   },
   c_source             => 'src', # ppport.h
   extra_linker_flags   => $lflags,
-  extra_compiler_flags => $cflags,  
+  extra_compiler_flags => $cflags,
   meta_merge => {
     keywords => [ qw[IUP portable toolkit graphical user interfaces tecgraf cross-platform GUI Windows GTK Motif X11] ],
     resources => {

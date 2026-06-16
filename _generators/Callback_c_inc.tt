@@ -135,109 +135,109 @@ int call_cb_func(SV* element, char *actionkey) {
 [% i.c_retval %]
 [% i.xs_internal_cb %] [% i.xs_internal_cb_params %]
 {
-	dSP;
-	int count;
-	[% i.c_retval %] rv;
-	[%IF i.xs_declare_sv_rv%][% i.xs_declare_sv_rv %];[%END%]
-	SV* element;
+        dSP;
+        int count;
+        [% i.c_retval %] rv;
+        [%IF i.xs_declare_sv_rv%][% i.xs_declare_sv_rv %];[%END%]
+        SV* element;
 
 [% IF i.xs_spec_NODEREMOVED_CB -%]
-	SV * SV_userdata, **SV_ref;
-	char * hkey_userdata;
-	HV *element_hash;
+        SV * SV_userdata, **SV_ref;
+        char * hkey_userdata;
+        HV *element_hash;
 [% ELSE -%]
   [% FOR j IN i.xs_internal_cb_locvar -%]
-	[% j %]
+        [% j %]
   [% END -%]
 [% END -%]
 
-	rv = [% i.xs_internal_default_rv %];
-	element = ihandle2SV_nocreate(ih);
-	if(!SvOK(element)) {
-	  warn("Warning: callback [%xs_init_cb_action%] - cannot convert ihandle!\n");
-	  return rv;
-	}
+        rv = [% i.xs_internal_default_rv %];
+        element = ihandle2SV_nocreate(ih);
+        if(!SvOK(element)) {
+          warn("Warning: callback [%xs_init_cb_action%] - cannot convert ihandle!\n");
+          return rv;
+        }
 
-	ENTER;
-	SAVETMPS;
+        ENTER;
+        SAVETMPS;
 
-	/* push the callback args, then dispatch via call_cb_func() */
-	PUSHMARK(SP);
-	XPUSHs(element);
+        /* push the callback args, then dispatch via call_cb_func() */
+        PUSHMARK(SP);
+        XPUSHs(element);
 [% IF i.xs_spec_NODEREMOVED_CB -%]
        /* converting userdata to  $self->{'!int!treedata'}->{$userdata_pointer} */
-	SV_userdata = newSViv(PTR2IV(userdata));
-	hkey_userdata = SvPV_nolen(SV_userdata); /*xxxCHECKLATER find more effective way*/
-	element_hash = (HV*)MUTABLE_PTR(SvRV(element));
-	SV_ref = hv_fetch(element_hash, "!int!treedata", 13, 0);
-	if ((SV_ref == NULL) || !SvOK(*SV_ref)) {
-	  warn("Warning: This shouldn't happen NODEREMOVED_CB/1\n");
-	  XPUSHs(&PL_sv_undef);
-	}
-	else {
-	  element_hash = (HV*)MUTABLE_PTR(SvRV(*SV_ref));
-	  SV_ref = hv_fetch(element_hash, hkey_userdata, strlen(hkey_userdata), 0);
-	  if ((SV_ref == NULL) || !SvOK(*SV_ref)) {
-	    warn("Warning: This shouldn't happen NODEREMOVED_CB/2\n");
-	    XPUSHs(&PL_sv_undef);
-	  }
+        SV_userdata = newSViv(PTR2IV(userdata));
+        hkey_userdata = SvPV_nolen(SV_userdata); /*xxxCHECKLATER find more effective way*/
+        element_hash = (HV*)MUTABLE_PTR(SvRV(element));
+        SV_ref = hv_fetch(element_hash, "!int!treedata", 13, 0);
+        if ((SV_ref == NULL) || !SvOK(*SV_ref)) {
+          warn("Warning: This shouldn't happen NODEREMOVED_CB/1\n");
+          XPUSHs(&PL_sv_undef);
+        }
+        else {
+          element_hash = (HV*)MUTABLE_PTR(SvRV(*SV_ref));
+          SV_ref = hv_fetch(element_hash, hkey_userdata, strlen(hkey_userdata), 0);
+          if ((SV_ref == NULL) || !SvOK(*SV_ref)) {
+            warn("Warning: This shouldn't happen NODEREMOVED_CB/2\n");
+            XPUSHs(&PL_sv_undef);
+          }
           else XPUSHs(*SV_ref);
         }
         /* converting userdata - done */
 [% ELSIF i.xs_spec_DROPDATA_CB -%]
-	XPUSHs(sv_2mortal(newSVpv(type, 0)));
-	XPUSHs(sv_2mortal((data && size > 0) ? newSVpvn(data, size) : newSVpvn("", 0)));
-	XPUSHs(sv_2mortal(newSViv(x)));
-	XPUSHs(sv_2mortal(newSViv(y)));
+        XPUSHs(sv_2mortal(newSVpv(type, 0)));
+        XPUSHs(sv_2mortal((data && size > 0) ? newSVpvn(data, size) : newSVpvn("", 0)));
+        XPUSHs(sv_2mortal(newSViv(x)));
+        XPUSHs(sv_2mortal(newSViv(y)));
 [% ELSIF i.xs_spec_DRAGDATA_CB -%]
-	XPUSHs(sv_2mortal(newSVpv(type, 0)));
-	XPUSHs(sv_2mortal(newSViv(size)));
+        XPUSHs(sv_2mortal(newSVpv(type, 0)));
+        XPUSHs(sv_2mortal(newSViv(size)));
 [% ELSE -%]
   [% FOREACH j IN i.xs_internal_cb_push -%]
-	[% j %]
+        [% j %]
   [% END -%]
 [% END -%]
-	PUTBACK;
+        PUTBACK;
 
-	count = call_cb_func(element,"[% i.xs_internal_action_key %]");
+        count = call_cb_func(element,"[% i.xs_internal_action_key %]");
 
-	SPAGAIN;
+        SPAGAIN;
 
 [% IF i.xs_spec_DRAGDATA_CB -%]
-	if (data && size > 0) Zero(data, size, void); /* guard NULL / non-positive size */
+        if (data && size > 0) Zero(data, size, void); /* guard NULL / non-positive size */
 [% END -%]
-	[% i.xs_internal_cb_rvcheck %]
-	else {
+        [% i.xs_internal_cb_rvcheck %]
+        else {
 [% FOR j IN i.xs_internal_cb_extrapop -%]
-	  [% j %]
+          [% j %]
 [% END -%]
 [% IF i.xs_declare_sv_rv -%]
-	  SV_rv = POPs;
-	  if (SvOK(SV_rv)) rv = SvIV(SV_rv);
+          SV_rv = POPs;
+          if (SvOK(SV_rv)) rv = SvIV(SV_rv);
 [% ELSIF i.xs_retval_charp -%]
-	  {
-	    SV* sv_str = POPs; /* keep the returned string alive past FREETMPS for IUP */
-	    if (SvOK(sv_str)) {
-	      if (cb_strval_holder) SvREFCNT_dec(cb_strval_holder);
-	      cb_strval_holder = newSVsv(sv_str);
-	      rv = SvPV_nolen(cb_strval_holder);
-	    }
-	  }
+          {
+            SV* sv_str = POPs; /* keep the returned string alive past FREETMPS for IUP */
+            if (SvOK(sv_str)) {
+              if (cb_strval_holder) SvREFCNT_dec(cb_strval_holder);
+              cb_strval_holder = newSVsv(sv_str);
+              rv = SvPV_nolen(cb_strval_holder);
+            }
+          }
 [% ELSE -%]
-	  rv = [% i.xs_internal_cb_pop %];
+          rv = [% i.xs_internal_cb_pop %];
 [% END -%]
 [% IF i.xs_spec_DRAGDATA_CB -%]
-	  if (SvOK(SV_data) && data && size > 0) {
-	    data_ptr = SvPVbyte(SV_data, data_len);
-	    Copy(data_ptr, data, data_len > (STRLEN)size ? (STRLEN)size : data_len, void);
-	  }
+          if (SvOK(SV_data) && data && size > 0) {
+            data_ptr = SvPVbyte(SV_data, data_len);
+            Copy(data_ptr, data, data_len > (STRLEN)size ? (STRLEN)size : data_len, void);
+          }
 [% END -%]
-	}
+        }
 
-	PUTBACK;
-	FREETMPS;
-	LEAVE;
+        PUTBACK;
+        FREETMPS;
+        LEAVE;
 
-	return rv;
+        return rv;
 }
 [% END %]

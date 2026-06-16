@@ -16,7 +16,7 @@ __Bitmap__new(CLASS,...)
                 b = NULL;
                 if (items==2) {
                   /* warn("XXX-DEBUG: IUP::Canvas::Bitmap->new($file)"); */
-                  b = BitmapFromFile(SvPV_nolen(ST(1)));                  
+                  b = BitmapFromFile(SvPV_nolen(ST(1)));
                 }
                 else if (items==3 && !SvROK(ST(1))
                                   && SvROK(ST(2)) && SvTYPE(SvRV(ST(2)))==SVt_PVAV) {
@@ -37,7 +37,7 @@ __Bitmap__new(CLASS,...)
                 else if (items==4 && SvROK(ST(2)) && SvTYPE(SvRV(ST(2)))==SVt_PVAV
                                   && SvROK(ST(3)) && SvTYPE(SvRV(ST(3)))==SVt_PVAV) {
                   /* warn("XXX-DEBUG: IUP::Canvas::Bitmap->new($type, $pixels, $palette)"); */
-                  type = SvIV(ST(1));                  
+                  type = SvIV(ST(1));
                   if (type!=CD_MAP) XSRETURN_UNDEF;
                   error = 0;
                   colors256 = malloc(sizeof(long)*256);
@@ -50,18 +50,18 @@ __Bitmap__new(CLASS,...)
                     if (colors256) free(colors256);
                     XSRETURN_UNDEF;
                   }
-                  /* palette buffer passed to cdInitBitmap has to be 256 colors long */                  
+                  /* palette buffer passed to cdInitBitmap has to be 256 colors long */
                   memset(colors256, 0, sizeof(long)*256);
                   if (color_count>256) color_count = 256;
                   memcpy(colors256, colors, sizeof(long)*color_count);
-                  free(colors);                  
+                  free(colors);
                   b = cdInitBitmap(w, h, type, index, colors256);
                 }
                 else if (items==4) {
                   /*warn("XXX-DEBUG: IUP::Canvas::Bitmap->new($type, $width, $height)");*/
                   type = SvIV(ST(1));
                   w = SvIV(ST(2));
-                  h = SvIV(ST(3));                  
+                  h = SvIV(ST(3));
                   if (w<=0 || h<=0) XSRETURN_UNDEF;
                   /*warn("XXX-DEBUG: w=%d h=%d type=%d b=%p\n",w,h,type,b);*/
                   b = cdCreateBitmap(w, h, type);
@@ -191,7 +191,7 @@ __Bitmap__Palette(self)
                 c = (long*)cdBitmapGetData(self, CD_COLORS);
                 m = (unsigned char*)cdBitmapGetData(self, CD_INDEX);
                 if (!c || !m) XSRETURN_UNDEF;
-                for(i=0; i<self->w*self->h; i++) if(m[i]>max_index) max_index=m[i];                
+                for(i=0; i<self->w*self->h; i++) if(m[i]>max_index) max_index=m[i];
                 if (max_index>255) max_index=255;
                 RETVAL = long2AV(c, max_index+1);
         OUTPUT:
@@ -254,7 +254,7 @@ __Bitmap__Pixel(self,x,y,...)
                                         }
                     else {
                       r[width*y+x] = SvUV(ST(3));
-                      g[width*y+x] = SvUV(ST(4)); 
+                      g[width*y+x] = SvUV(ST(4));
                       b[width*y+x] = SvUV(ST(5));
                       a[width*y+x] = SvUV(ST(6));
                     }
@@ -276,7 +276,7 @@ __Bitmap__Pixel(self,x,y,...)
                                         }
                     else {
                       r[width*y+x] = SvUV(ST(3));
-                      g[width*y+x] = SvUV(ST(4)); 
+                      g[width*y+x] = SvUV(ST(4));
                       b[width*y+x] = SvUV(ST(5));
                     }
                   }
@@ -304,8 +304,8 @@ __Bitmap__SaveAs(self,filename,format,...)
                                 unsigned char *data;
                 long *c=NULL;
                 imImage *image;
-                int color_space, plane_size=0, plane_count=0, color_count=0;                                
-        CODE:                
+                int color_space, plane_size=0, plane_count=0, color_count=0;
+        CODE:
                 plane_size = sizeof(unsigned char)*self->w*self->h;
                 if (self->type==CD_RGBA) {
                   plane_count = 4;
@@ -326,8 +326,8 @@ __Bitmap__SaveAs(self,filename,format,...)
                 }
                 RETVAL = 999; /* means "error somewhere in perl XS code" */
                 if (plane_count>0)  {
-                  if (data) {                                        
-                                        image = imImageInit(self->w, self->h, color_space, IM_BYTE, data, c, color_count);                    
+                  if (data) {
+                                        image = imImageInit(self->w, self->h, color_space, IM_BYTE, data, c, color_count);
                     if (image) {
                       if (items>=4) {
                         float res = (float)SvNV(ST(3));
@@ -342,7 +342,7 @@ __Bitmap__SaveAs(self,filename,format,...)
                       /* warn("XXX-DEBUG: imFileImageSave RETVAL=%d\n",RETVAL); */
                     }
                   }
-                }             
+                }
         OUTPUT:
                 RETVAL
 

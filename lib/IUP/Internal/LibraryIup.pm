@@ -15,7 +15,7 @@ our %ch_register; #global table mapping CD Canvas handles to perl objrefs
 
 ###IHANDLE
 
-sub _translate_ih { 
+sub _translate_ih {
   #params: ih
   $ih_register{$_[0]} if $_[0];
 }

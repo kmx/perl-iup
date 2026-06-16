@@ -30,7 +30,7 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 I<(non inheritable)>
 
 Enables the automatic toggle of VALUE
-state when the item is activated. Default: NO. 
+state when the item is activated. Default: NO.
 
 =item B<HIDEMARK>
 
@@ -43,7 +43,7 @@ Normally the unmarked check box will not be shown, but since GTK 2.14
 the unmarked check box is always shown. If your item will not be marked
 you must set HIDEMARK=YES, since this is the most common case we
 changed the default value to YES for this version of GTK, but if VALUE
-is defined the default goes back to NO. Default: NO. 
+is defined the default goes back to NO. Default: NO.
 
 =item B<IMAGE>
 
@@ -89,7 +89,7 @@ Windows, it appears before of the title text and after the check mark
 area (so both title and title image can be visible). In Motif, it must
 be at least defined during map, it replaces the text, and only images
 will be possible to set (TITLE will be hidden). In GTK, it will appear
-on the check mark area. 
+on the check mark area.
 
 =item B<VALUE>
 
@@ -164,7 +164,7 @@ The element B<IUP::Item> is used in the following sample scripts:
 [%FOREACH e IN examples.iupitem %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -178,6 +178,6 @@ L<IUP::Menu|IUP::Menu>.
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupitem.html|[%url.iuporigdoc%]elem/iupitem.html>
-[%END%] 
+[%END%]
 
 =cut

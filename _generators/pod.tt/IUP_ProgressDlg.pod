@@ -42,7 +42,7 @@ DialogE<rsquo>s icon.
 
 =item L<TITLE|[%m.at%]/TITLE>
 
-I<(non inheritable)> DialogE<rsquo>s title. 
+I<(non inheritable)> DialogE<rsquo>s title.
 If not set the title bar will not be displayed
 and the dialog will occupy less space on screen.
 
@@ -157,7 +157,7 @@ L<IUP::ProgressBar|IUP::ProgressBar> control.
 The dialog is B<not> automatically closed, the application must do that
 manually inside the CANCEL_CB callback or inside your processing loop
 by checking the STATE attribute.
-  
+
 [% h.examples %]
 
 [% IF examples.iupprogressdlg %]
@@ -167,7 +167,7 @@ The element B<IUP::ProgressDlg> is used in the following sample scripts:
 [%FOREACH e IN examples.iupprogressdlg %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.
@@ -180,6 +180,6 @@ L<IUP::ProgressBar|IUP::ProgressBar>, L<IUP::Dialog|IUP::Dialog>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupprogressdlg.html|[%url.iuporigdoc%]dlg/iupprogressdlg.html>
-[%END%] 
+[%END%]
 
 =cut

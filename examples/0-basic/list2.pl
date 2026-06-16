@@ -109,7 +109,7 @@ $btok->{_LIST3} = $list3;
 $btok->{_LIST4} = $list4;
 
 my $l = IUP::Label->new( name=>"my_LABEL", TITLE=>"", EXPAND=>"HORIZONTAL"); #note: using global element alias 'my_LABEL'
-           
+
 my $dlg = IUP::Dialog->new( child=>IUP::Vbox->new( [IUP::Hbox->new( [$box1, $box2, $box3, $box4] ), $l, $btok, $btcancel] ) );
 $dlg->SetAttribute( MARGIN=>"10x10", GAP=>10, TITLE=>"IUP::List Example", DEFAULTENTER=>$btok, DEFAULTESC=>$btcancel );
 

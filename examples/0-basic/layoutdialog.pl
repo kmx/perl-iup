@@ -59,7 +59,7 @@ sub init_dialog {
                                  ACTION=>\&my_cb, EXPAND=>"YES", SIZE=>"80x60" )
                ])
              );
-  my $frm5 = IUP::Frame->new( TITLE=>"IupList", child => 
+  my $frm5 = IUP::Frame->new( TITLE=>"IupList", child =>
                IUP::Vbox->new( child=>[
                  IUP::List->new( ACTION=>\&my_cb, EXPAND=>"YES", VALUE=>"1",
                                  1=>"Item 1 Text", 2=>"Item 2 Text", 3=>"Item 3 Text" ),

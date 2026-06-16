@@ -16,14 +16,14 @@ $tree->RIGHTCLICK_CB( sub { print STDERR "RIGHTCLICK_CB\n" } );
 
 $tree->RENAME_CB( sub { print STDERR "RENAME_CB\n" } );
 
-$tree->MULTISELECTION_CB( sub { 
+$tree->MULTISELECTION_CB( sub {
   my ($self, $ids, $n) = @_;
-  print STDERR "MULTISELECTION_CB ids.count=",join('-',@$ids)," n=$n\n" 
+  print STDERR "MULTISELECTION_CB ids.count=",join('-',@$ids)," n=$n\n"
 } );
 
-$tree->NODEREMOVED_CB( sub { 
+$tree->NODEREMOVED_CB( sub {
   my ($self, $data) = @_;
-  print STDERR "NODEREMOVED_CB data.ref=",ref($data)," data.x=",$data->{x},"\n" 
+  print STDERR "NODEREMOVED_CB data.ref=",ref($data)," data.x=",$data->{x},"\n"
 } );
 
 $tree->K_ANY( sub {
@@ -47,7 +47,7 @@ my $userdata = [
 ];
 
 sub init_tree_nodes {
-  $tree->SetAttribute( "TITLE0", "Figures" ); 
+  $tree->SetAttribute( "TITLE0", "Figures" );
   $tree->SetAttribute( "ADDBRANCH0", "3D" );
   $tree->SetAttribute( "ADDBRANCH0", "2D" );
   $tree->SetAttribute( "ADDBRANCH1", "parallelogram" );

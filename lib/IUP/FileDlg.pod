@@ -21,11 +21,11 @@ L<Popup|IUP::Manual::02_Elements/"Popup()"> function only.
       </tr>
       <tr>
         <th>Motif</th>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/filedlg_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/filedlg_mot.png"></td>
       </tr>
       <tr>
         <th>Windows</th>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/filedlg_win.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/filedlg_win.png"></td>
       </tr>
     </tbody>
   </table>
@@ -363,7 +363,7 @@ The element B<IUP::FileDlg> is used in the following sample scripts:
 
 =item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
 
-=back 
+=back
 
 
 
@@ -374,6 +374,6 @@ L<ListDialog|IUP/"ListDialog()">, L<Alarm|IUP/"Alarm()">,
 L<GetFile|IUP/"GetFile()">, L<Popup|IUP::Manual::02_Elements/"Popup()">
 
 The original doc: L<iupfiledlg.html|http://www.tecgraf.puc-rio.br/iup/en/dlg/iupfiledlg.html>
- 
+
 
 =cut

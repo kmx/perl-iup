@@ -112,9 +112,9 @@ B<$button:> identifies the activated mouse button:
  IUP_BUTTON1 or "1" ... left mouse button (button 1)
  IUP_BUTTON2 or "2" ... middle mouse button (button 2)
  IUP_BUTTON3 or "3" ... right mouse button (button 3)
- 
+
 Note: C<IUP_BUTTON?> constants are defined in L<IUP::Constants|IUP::Constants>.
- 
+
 =back
 
 B<$pressed:> boolean that indicates the state of the button:
@@ -382,7 +382,7 @@ to process each part.
 
 =back
 
-If you just want to do something simple as a background redraw of an B<IUP::Canvas>, 
+If you just want to do something simple as a background redraw of an B<IUP::Canvas>,
 then a better idea is to handle the "idle" state yourself.
 For example, register a timer for a small time like 500ms, and reset
 the timer in all the mouse and keyboard callbacks of the L<IUP::Canvas|IUP::Canvas>.
@@ -449,7 +449,7 @@ B<Callback handler prototype:>
 
 B<$self:> reference to the element that activated the event.
 
-B<$c:> identifier of typed key. Please refer to the 
+B<$c:> identifier of typed key. Please refer to the
 L<Keyboard Codes|IUP::Constants/"Export tag ':keys'">
 table for a list of possible values.
 
@@ -618,7 +618,7 @@ following values:
  IUP_SBPGUP  ... page up
  IUP_SBPGDN  ... page down
  IUP_SBPOSV  ... vertical positioning
- IUP_SBDRAGV ... vertical drag 
+ IUP_SBDRAGV ... vertical drag
 
 If it was on the horizontal scrollbar, the following values are valid:
 

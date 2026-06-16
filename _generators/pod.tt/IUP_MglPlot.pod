@@ -30,7 +30,7 @@ Each plot can contain 2 or 3 B<axes> (X and Y and/or Z), a B<title>, a
 B< legend> B<box>, a B<colorbar>, a B<grid>, a B<dataset> B<area> and
 as many B<datasets> you want.
 
-Each dataset is added using the L<PlotAdd1D|/"PlotAdd1D()">, L<PlotAdd2D|/"PlotAdd2D()">, L<PlotAdd3D|/"PlotAdd3D()">, 
+Each dataset is added using the L<PlotAdd1D|/"PlotAdd1D()">, L<PlotAdd2D|/"PlotAdd2D()">, L<PlotAdd3D|/"PlotAdd3D()">,
 L<PlotInsert1D|/"PlotInsert1D()">, L<PlotInsert2D|/"PlotInsert2D()">, L<PlotInsert3D|/"PlotInsert3D()">
 L<PlotSet1D|/"PlotSet1D()">, L<PlotSet2D|/"PlotSet2D()"> and L<PlotSet3D|/"PlotSet3D()"> functions. All other plot
 parameters are configured by attributes.
@@ -140,9 +140,9 @@ approximately 2000 commands. Multiline text is accepted.
 
 For example:
 
- "It can be \\wire{wire}, \\big{big} or #r{colored}" 
+ "It can be \\wire{wire}, \\big{big} or #r{colored}"
  "One can change style in string: " "\\b{bold}, \\i{italic, \\b{both}}"
- "Easy to \\a{overline} or \\u{underline}" 
+ "Easy to \\a{overline} or \\u{underline}"
  "Easy to change indexes ^{up} _{down} @{center}"
  "It parse TeX: \\int \\alpha \\cdot \\sqrt3{sin(\\pi x)^2 + \\gamma_{i_k}} dx"
  "\\sqrt{\\frac{\\alpha^{\\gamma^2}+" "\\overset 1{\\big\\infty}}{\\sqrt3{2+b}}}"
@@ -173,7 +173,7 @@ attributes. I<Linear data only.>
 
   $plot->PlotNewDataSet($dim);
   # $dim = 1 (for 1D) or 2 (for 2D) or 3 (for 3D)
-  
+
 Creates an empty dataset to receive samples. The dimension of the data
 can be 1, 2 or 3. Linear data can have 1, 2 or 3 dimensions. Planar
 data has 2 dimensions, but use dim=1. Volumetric data has 3 dimensions,
@@ -272,7 +272,7 @@ See L<PlotSet2D|/"PlotSet2D()">.
 =head3 PlotTransform()
 
  ($ix, $iy) = $plot->PlotTransform($x, $y, $z);
- 
+
 Converts coordinates from plot coordinates to pixels. It can be used
 only inside PREDRAW_CB and POSTDRAW_CB callbacks. Output variables can
 be C<undef> if not used.
@@ -295,7 +295,7 @@ Plots to a vector imagefile instead of the display canvas. Note: only *.SVG and 
 
 B<$width> and B<$height> is the size in pixels, and B<$dpi> is the resolution in dots or pixels per inch.
 If B<width>, B<$height> or B<$dpi> are 0 the screen equivalent is used.
- 
+
 =head3 PlotSetFormula()
 
  $plot->PlotSetFormula($ds_index, $count, $formulaX);                           # 1D
@@ -356,7 +356,7 @@ using the DS_REARRANGE and DS_SPLIT attributes.>
 
  $plot->PlotSetData($ds_index, $data);
 
-Sets an array of samples in the dataset B<$ds_index>. All previous values are removed. 
+Sets an array of samples in the dataset B<$ds_index>. All previous values are removed.
 
 XXX-FIXME-NOT-IMPLEMENTED
 
@@ -979,7 +979,7 @@ OpenGL primitives can also be used.
    my ($self) = @_;
    #...
  }
- 
+
  sub POSTDRAW_CB_handler {
    my ($self) = @_;
    #...
@@ -1713,7 +1713,7 @@ The element B<IUP::MglPlot> is used in the following sample scripts:
 [%FOREACH e IN examples.iupmglplot %]
 =item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
 [%END%]
-=back 
+=back
 
 [%ELSE%]
 Unfortunately there are no sample scripts using this element.

@@ -8,12 +8,12 @@
 
  $pal = IUP::Canvas::Palette->new( [$col0, $col1, $col2, ...] );
  $pal = IUP::Canvas::Palette->new($n);
- 
+
  $value = $pal->Color($n);
  $pal->Color($n, $color);
  $pal->Size;
  $pal->Data;
- 
+
  $canvas->cdPalette($pal, $mode);
 
 [% h.desc %]

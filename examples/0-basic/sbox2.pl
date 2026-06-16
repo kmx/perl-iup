@@ -6,7 +6,7 @@ use warnings;
 use IUP ':all';
 
 sub create_tree_nodes {
-  my $t = shift;    
+  my $t = shift;
   $t->SetAttribute( NAME=>"Figures",
                     ADDBRANCH=>"3D",
                     ADDBRANCH=>"2D",

@@ -16,19 +16,19 @@ L<IUP::Canvas> to implement the bar handler.
 
 <p>
   <table border="1">
-    <tbody align="center">    
+    <tbody align="center">
         <tr>
-	  <th>Natural Size</th>
-	  <th>After Expanding the Sbox</th>
-	  <th>Expanding the Dialog</th>
-	  <th>After Expanding the Sbox</th>
-	</tr>
-	<tr>
-	  <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsbox1.png"></td>
-	  <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsbox2.png"></td>
-	  <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsbox3.png"></td>
-	  <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsbox4.png"></td>
-	</tr>
+          <th>Natural Size</th>
+          <th>After Expanding the Sbox</th>
+          <th>Expanding the Dialog</th>
+          <th>After Expanding the Sbox</th>
+        </tr>
+        <tr>
+          <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsbox1.png"></td>
+          <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsbox2.png"></td>
+          <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsbox3.png"></td>
+          <td><img src="http://kmx.github.io/perl-iup/img-3.9/elem/iupsbox4.png"></td>
+        </tr>
     </tbody>
   </table>
 </p>
@@ -41,19 +41,19 @@ L<IUP::Canvas> to implement the bar handler.
 
  #standard way
  my $sbox = IUP::Sbox->new( child=>[$elem1, $elem2], ANYATTRIBUTE=>'any value' );
- 
+
  #or with just a single child
  my $sbox = IUP::Sbox->new( child=>$elem, ANYATTRIBUTE=>'any value' );
- 
+
  #or with just 1 parameter (arrayref)
  my $sbox = IUP::Sbox->new( [$elem1, $elem2] );
- 
- #or with just 1 parameter (reference to child elements)
- my $sbox = IUP::Sbox->new( $elem ); 
- 
 
-B<child:> (named parameter) List of the references to elements (or just a single element) that 
-will receive the box. It can be C<undef> or ommited. 
+ #or with just 1 parameter (reference to child elements)
+ my $sbox = IUP::Sbox->new( $elem );
+
+
+B<child:> (named parameter) List of the references to elements (or just a single element) that
+will receive the box. It can be C<undef> or ommited.
 
 B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
 
@@ -156,13 +156,13 @@ The element B<IUP::Sbox> is used in the following sample scripts:
 
 =item * L<0-basic/sbox2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/sbox2.pl> - IUP::Sbox example
 
-=back 
+=back
 
 
 
 =head1 SEE ALSO
 
 The original doc: L<iupsbox.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupsbox.html>
- 
+
 
 =cut

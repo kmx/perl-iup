@@ -73,6 +73,6 @@ L<ShowXY|IUP::Manual::02_Elements/"ShowXY()">, L<Popup|IUP::Manual::02_Elements/
 L<IUP::LayoutDialog|IUP::LayoutDialog>
 
 The original doc: L<iupelementpropdialog.html|http://www.tecgraf.puc-rio.br/iup/en/dlg/iupelementpropdialog.html>
- 
+
 
 =cut

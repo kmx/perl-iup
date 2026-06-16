@@ -91,7 +91,7 @@ I<(creation only, non inheritable)>
 
 enables the focus
 traversal of the control. In Windows the canvas will respect CANFOCUS
-in opposite to the other controls. Default: YES. 
+in opposite to the other controls. Default: YES.
 
 =item B<PROPAGATEFOCUS>
 
@@ -240,22 +240,22 @@ scrollbar. Default: "1.0".
 =item B<LINEX>
 
 The amount the thumb moves when an horizontal step is
-performed. Default: 1/10th of DX. 
+performed. Default: 1/10th of DX.
 
 =item B<LINEY>
 
 The amount the thumb moves when a vertical step is performed.
-Default: 1/10th of DY. 
+Default: 1/10th of DY.
 
 =item X<XAUTOHIDE>B<XAUTOHIDE>
 
 When enabled, if DX E<gt>= XMAX-XMIN then the
-horizontal scrollbar is hidden. Default: "YES". 
+horizontal scrollbar is hidden. Default: "YES".
 
 =item X<YAUTOHIDE>B<YAUTOHIDE>
 
 When enabled, if DY E<gt>= YMAX-YMIN then the
-vertical scrollbar is hidden. Default: "YES". 
+vertical scrollbar is hidden. Default: "YES".
 
 =item B<SCROLLVISIBLE>
 
@@ -511,7 +511,7 @@ this moment it is already clean. Most file-based drivers do not
 implement this function.
 
 =head3 cdFlush()
-     
+
  $canvas->cdFlush();
 
 Has a different meaning for each driver. It is useful to send
@@ -519,7 +519,7 @@ information to buffered devices and to move to a new page or layer. In
 all cases, the current canvas attributes are preserved.
 
 =head3 cdSaveState()
-     
+
  $state = $canvas->cdSaveState();
  #NOTE: $state is a reference to 'internal-state' object
 
@@ -532,13 +532,13 @@ the palette, complex clipping regions and driver internal attributes.
  $state = $canvas1->cdSaveState();
  #NOTE: $state param has to be a reference to 'internal-state'
  $canvas2->cdRestoreState($state);
- 
+
 Restores the attribute state of the active canvas. It can be used
 between canvases of different contexts. It can be used several times
 for the same state.
 
 =head3 cdReleaseState()
- 
+
  $state = $canvas->cdSaveState();
  #NOTE: $state param has to be a reference to 'internal-state'
  IUP:Canvas->cdReleaseState($state);
@@ -547,7 +547,7 @@ Releases the memory allocated by the L<cdSaveState|/"cdSaveState()"> function. I
 function is not called in Lua, the garbage collector will call it.
 
 =head3 cdSetAttribute()
-     
+
  $canvas->cdSetAttribute($name, $data);
  #or
  $canvas->cdSetAttribute( $name1=>$data1, $name2=>$data2, $name3=>$data3 );
@@ -557,7 +557,7 @@ canvas. If the driver does not have this attribute, the call is
 ignored.
 
 =head3 cdGetAttribute()
-    
+
  $data = $canvas->cdGetAttribute($name);
  #or
  @data = $canvas->cdGetAttribute(@names);
@@ -568,7 +568,7 @@ driver does not have this attribute, it returns C<undef>.
 =head3 cdForeground()
 
  $color = IUP::Canvas->cdEncodeColor($r, $g, $b);
- 
+
  $old_color = $canvas->cdForeground($color);
  #or just
  $canvas->cdSetForeground($color);
@@ -583,7 +583,7 @@ transparent white). Use C<cdSetForeground()> to avoid the conflict. See
 also L<Color Coding|color.html>.
 
 =head3 cdBackground()
- 
+
  $old_color = $canvas->cdBackground($color);
  $canvas->cdSetBackground($color);
 
@@ -611,7 +611,7 @@ Note: operation XOR is very useful, because, using white as the
 foreground color and drawing the same image twice, you can go back to
 the original color, before the drawing. This is commonly used for mouse
 selection feedback.
- 
+
 =head2 Methods - Color Coding
 
 The library's color system is RGB. In order to simplify some functions,
@@ -644,7 +644,7 @@ There are some predefined colors - see L<IUP::Constants>:
  CD_GRAY         = (192,192,192)
 
 =head3 cdEncodeColor()
- 
+
  $color = $canvas->cdEncodeColor($r, $g, $b);
  #or
  $color = IUP::Canvas->cdEncodeColor($r, $g, $b);
@@ -659,19 +659,19 @@ CD library to define colors. It can be used without an active canvas.
  ($r, $g, $b) = $canvas->cdDecodeColor($color);
  #or
  ($r, $g, $b) = IUP::Canvas->cdDecodeColor($color);
- 
+
 Returns the red, green and blue components of a color in the CD
 library. Can be used without an active canvas.
 
 =head3 cdEncodeAlpha()
- 
+
  $color = $canvas->cdEncodeAlpha($color, $alpha);
  #or
  $color = IUP::Canvas->cdEncodeAlpha($color, $alpha);
 
-Returns the given color coded with the alpha information. 
+Returns the given color coded with the alpha information.
 
-B<ATENTION:> At the moment only the B<Cairo>, B<GDI+>, B<XRender> and L<IMAGERGB> (= L<IUP::Canvas::FileBitmap>) 
+B<ATENTION:> At the moment only the B<Cairo>, B<GDI+>, B<XRender> and L<IMAGERGB> (= L<IUP::Canvas::FileBitmap>)
 drivers support alpha components in color
 coding. The internal representation of the component is inverted,
 because the default value must be 0 and opaque for backward
@@ -679,7 +679,7 @@ compatibility, so you should use the L<cdDecodeAlpha|/"cdDecodeAlpha()"> functio
 L<cdAlpha|/"cdAlpha()"> macro to retrieve the alpha component. 0 is transparent, 255 is opaque.
 
 =head3 cdDecodeAlpha()
- 
+
  $alpha = $canvas->cdDecodeAlpha($color);
  #or
  $alpha = IUP->Canvas->cdDecodeAlpha($color);
@@ -688,7 +688,7 @@ Returns the alpha component of a color in the CD library. Can be used
 without an active canvas. 0 is transparent, 255 is opaque.
 
 =head3 cdAlpha()
- 
+
  $alpha = $canvas->cdAlpha($color);
  #or
  $alpha = IUP::Canvas->cdAlpha($color);
@@ -697,7 +697,7 @@ Macro that returns the alpha component of a color in the CD library.
 Can be used without an active canvas.
 
 =head3 cdRed()
- 
+
  $red = $canvas->cdRed($color);
  #or
  $red = IUP::Canvas->cdRed($color);
@@ -706,7 +706,7 @@ Macro that returns the red component of a color in the CD library. Can
 be used without an active canvas.
 
 =head3 cdGreen()
- 
+
  $green = $canvas->cdGreen($color);
  #or
  $green = IUP::Canvas->cdGreen($color);
@@ -715,7 +715,7 @@ Macro that returns the green component of a color in the CD library.
 Can be used without an active canvas.
 
 =head3 cdBlue()
- 
+
  $blue = $canvas->cdBlue($color);
  #or
  $blue = IUP::Canvas->cdBlue($color);
@@ -724,7 +724,7 @@ Macro that returns the blue component of a color in the CD library. Can
 be used without an active canvas.
 
 =head3 cdGetColorPlanes()
- 
+
  $bpp = $canvas->cdGetColorPlanes();
 
 Returns a given number, for instance I<p>, which defines the number of
@@ -732,7 +732,7 @@ colors supported by the current device as I<2p>, representing the
 number of bits by pixel.
 
 =head3 cdPalette()
- 
+
  $palette = IUP::Canvas::Palette->new( [$col0, $col1, $col2, ...] );
  $canvas->cdPalette($palette, $mode);
 
@@ -780,14 +780,14 @@ L<cdDecodeColor|/"cdDecodeColor()">, L<cdPixel|/"cdPixel()">, L<cdForeground|/"c
 =head2 Methods - Coordinate System
 
 =head3 cdGetSize()
- 
+
  ($width, $height, $mm_width, $mm_height) = $canvas->cdGetSize();
 
 Returns the canvas size in pixels and in millimeters. You can provide
 only the desired values and C<undef> for the others.
 
 =head3 cdYAxisMode()
- 
+
  $old_invert = $canvas->cdYAxisMode($invert);
 
 Controls the orientation of the Y axis. Internally in some drivers the
@@ -803,7 +803,7 @@ invert the orientation of the CD primitives.
  $yr = $canvas->cdInvertYAxis($yc);
 
 =head3 cdUpdateYAxis()
- 
+
  $yr = $canvas->cdUpdateYAxis($yc);
 
 Converts the coordinate system of the CD library into the internal
@@ -814,7 +814,7 @@ value, the "Update" function will invert only if the canvas has the Y
 axis inverted.
 
 =head3 cdMM2Pixel()
- 
+
  ($dx, $dy) = $canvas->cdMM2Pixel($mm_dx, $mm_dy);
  ($dx, $dy) = $canvas->cdfMM2Pixel($mm_dx, $mm_dy);
 
@@ -822,7 +822,7 @@ Converts sizes in millimeters into pixels (canvas coordinates). You can
 provide only the desired values and C<undef> for the others.
 
 =head3 cdPixel2MM()
- 
+
  ($mm_dx, $mm_dy) = $canvas->cdPixel2MM($dx, $dy);
  ($mm_dx, $mm_dy) = $canvas->cdfPixel2MM($dx, $dy);
 
@@ -833,7 +833,7 @@ by passing 1 as parameter in dx and dy. The resolution value is
 obtained using the formula B<res=1.0/mm>.
 
 =head3 cdOrigin()
- 
+
  $canvas->cdOrigin($x, $y);
  $canvas->cdfOrigin($x, $y);
 
@@ -844,14 +844,14 @@ passed to the canvas in the respective driver. It is not related with
 WD nor Transformation Matrix. Default values: (0, 0)
 
 =head3 cdGetOrigin()
- 
+
  ($x, $y) = $canvas->cdGetOrigin();
  ($x, $y) = $canvas->cdfGetOrigin();
 
 Returns the origin.
 
 =head3 cdTransform()
- 
+
  $canvas->cdTransform($matrix);
 
 Defines a transformation matrix with 6 elements. If the matrix is C<undef>,
@@ -860,7 +860,7 @@ the transformation is reset to the identity. Default value: C<undef>.
 The matrix contains scale, rotation and translation elements as
 follows:
 
- |x'|   |sx*cos(angle)    -sin(angle)  dx|   |x|                       | $matrix->[0]  $matrix->[2]  $matrix->[4] | 
+ |x'|   |sx*cos(angle)    -sin(angle)  dx|   |x|                       | $matrix->[0]  $matrix->[2]  $matrix->[4] |
  |y'| = |   sin(angle)  sy*cos(angle)  dy| * |y|         with indices  | $matrix->[1]  $matrix->[3]  $matrix->[5] |
                                              |1|
 
@@ -874,38 +874,38 @@ B<Origin> functions. And those are affected if a transformation is set,
 just like other regular primitives.
 
 =head3 cdGetTransform()
- 
+
  $matrix = $canvas->cdGetTransform();
 
 Returns the transformation matrix. If the identity is set, returns C<undef>.
 
 =head3 cdTransformMultiply()
- 
+
  $canvas->cdTransformMultiply($matrix);
 
 Left multiply the current transformation by the given transformation.
 
 =head3 cdTransformTranslate()
- 
+
  $canvas->cdTransformTranslate($dx, $dy);
 
 Applies a translation to the current transformation.
 
 =head3 cdTransformScale()
- 
+
  $canvas->cdTransformScale($sx, $sy);
 
 Applies a scale to the current transformation.
 
 =head3 cdTransformRotate()
- 
+
  $canvas->cdTransformRotate($angle);
 
 Applies a rotation to the current transformation. Angle is in degrees,
 oriented counter-clockwise from the horizontal axis.
 
 =head3 cdTransformPoint()
- 
+
  ($tx, $ty) = $canvas->cdTransformPoint($x, $y);  #returns integers
  ($tx, $ty) = $canvas->cdfTransformPoint($x, $y); #returns real numbers
 
@@ -943,7 +943,7 @@ IUP::Canvas funcrions use the following naming convention:
  # params integers (pixels)        # params real numbers (milimeters)
 
 =head3 wdWindow()
-     
+
  $canvas->wdWindow($xmin, $xmax, $ymin, $ymax);
 
 Configures a window in the world coordinate system to be used to
@@ -952,7 +952,7 @@ coordinates (with values in integers). The default window is the size
 in millimeters of the whole canvas.
 
 =head3 wdGetWindow
- 
+
  ($xmin, $xmax, $ymin, $ymax) = $canvas->wdGetWindow();
 
 Queries the current window in the world coordinate system being used to
@@ -961,7 +961,7 @@ round). It is not necessary to provide all return pointers, you can
 provide only the desired values.
 
 =head3 wdViewport
- 
+
  $canvas->wdViewport($xmin, $xmax, $ymin, $ymax);
 
 Configures a viewport in the canvas coordinate system to be used to
@@ -971,7 +971,7 @@ whole canvas (0,w-1,0,h-1). If the canvas size is changed, the viewport
 will not be automatically updated.
 
 =head3 wdGetViewport()
- 
+
  ($xmin, $xmax, $ymin, $ymax) = $canvas->wdGetViewport();
 
 Queries the current viewport in the world coordinate system being used
@@ -980,7 +980,7 @@ round). It is not necessary to provide all return pointers, you can
 provide only the desired values and C<undef> for the others.
 
 =head3 wdWorld2Canvas()
- 
+
  ($xv, $yv) = $canvas->wdWorld2Canvas($xw, $yw);
 
 Converts world coordinates into canvas coordinates. It is not necessary
@@ -988,7 +988,7 @@ to provide all return pointers, you can provide only the desired values
 and C<undef> for the others.
 
 =head3 wdCanvas2World()
- 
+
  ($xw, $yw) = $canvas->wdCanvas2World($xv, $yv);
 
 Converts canvas coordinates into world coordinates. It is not necessary
@@ -996,7 +996,7 @@ to provide all return pointers, you can provide only the desired values
 and C<undef> for the others.
 
 =head3 wdSetTransform()
-     
+
  $canvas->wdSetTransform($sx, $sy, $tx, $ty);
 
 Configures the world coordinate system transformation to be used to
@@ -1006,7 +1006,7 @@ automatically set by B<wdCanvasWindow> and B<wdCanvasViewport>. This
 has NO relation with L<cdTransform|/"cdTransform()">.
 
 =head3 wdGetTransform()
- 
+
  ($sx, $sy, $tx, $ty) = $canvas->wdGetTransform();
 
 Queries the current transformation being used to convert world
@@ -1015,14 +1015,14 @@ not necessary to provide all return pointers, you can provide only the
 desired values.
 
 =head3 wdTranslate()
-     
+
  $canvas->wdTranslate($dtx, $dty);
 
 Translates the transformation by a delta, by adding the given values to
 the current tx and ty values.
 
 =head3 wdScale()
-     
+
  $canvas->wdScale($dsx, $dsy);
 
 Scales the transformation by a delta, by multiplying the given values
@@ -1098,7 +1098,7 @@ current value.
 Mark Types:
 
 =for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/marks.gif"></p>
- 
+
 =head3 cdMarkSize()
 
  $old_size = $canvas->cdMarkSize($number);
@@ -1313,12 +1313,12 @@ curve: I<control>, I<control>, I<end>, I<control>, I< control>, I<end>,
 ... The end point is used as start point for the next curve.
 
 =item * B<B<CD_REGION>>: starts the creation of a complex region for
-clipping. All calls to L<cdBox|/"cdBox()">, L<cdSector|/"cdSector()">, L<cdChord|/"cdChord()">, 
+clipping. All calls to L<cdBox|/"cdBox()">, L<cdSector|/"cdSector()">, L<cdChord|/"cdChord()">,
 B<Filled Polygons> and L<cdText|/"cdText()"> will be composed in a region for clipping.
 See L<Regions|region.html> documentation.
 
 =item * B<CD_PATH>: creates a path composed of several primitives that
-can be line draw, filled or used as clipping. Must call 
+can be line draw, filled or used as clipping. Must call
 C<cdCanvasPathSet()> to configure the action between sequences of
 C<cdCanvasVertex()>.
 
@@ -1333,7 +1333,7 @@ Bezier Lines:
 =for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/bezier.gif"></p>
 
 =head3 cdVertex()
- 
+
  $canvas->cdVertex($x, $y);
  $canvas->wdVertex($x, $y);
 
@@ -1346,7 +1346,7 @@ Adds a vertex to the polygon definition.
 Ends the polygon's definition and draws it.
 
 =head3 cdPathSet()
- 
+
  $canvas->cdPathSet($action);
 
 Configures the action between sequences of C<cdCanvasVertex()>. B<action>
@@ -1359,7 +1359,7 @@ one path is configured. C<cdCanvasBegin()>(CD_PATH) already creates a new
 path.
 
 =item * B<CD_PATH_MOVETO> - moves the current position to the given
-coordinates. Must be followed by 1 call to C<cdCanvasVertex()>, 
+coordinates. Must be followed by 1 call to C<cdCanvasVertex()>,
 B<cdfCanvasVertex>, or B<wdCanvasVertex>.
 
 =item * B<CD_PATH_LINETO> - adds a line to the path from the current
@@ -1459,7 +1459,7 @@ See the documentation of
 L<cdBegin|/"cdBegin()"> L<cdVertex|/"cdVertex()">, L<cdEnd|/"cdEnd()">.
 
 =head3 cdBox()
- 
+
  $canvas->cdBox($xmin, $xmax, $ymin, $ymax);
  $canvas->cdfBox($xmin, $xmax, $ymin, $ymax);
  $canvas->wdBox($xmin, $xmax, $ymin, $ymax);
@@ -1470,7 +1470,7 @@ will be painted. When the interior style B<CD_HOLLOW> is defined, the
 function behaves like its equivalent C<cdRect()>.
 
 =head3 cdSector()
- 
+
  $canvas->cdSector($xc, $yc, $w, $h, $angle1, $angle2);
  $canvas->cdfSector($xc, $yc, $w, $h, $angle1, $angle2);
  $canvas->wdSector($xc, $yc, $w, $h, $angle1, $angle2);
@@ -1509,7 +1509,7 @@ Sector Parameters:
 =for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/sector.gif"></p>
 
 =head3 cdChord()
- 
+
  $canvas->cdChord($xc, $yc, $w, $h, $angle1, $angle2);
  $canvas->cdfChord($xc, $yc, $w, $h, $angle1, $angle2);
  $canvas->wdChord($xc, $yc, $w, $h, $angle1, $angle2);
@@ -1592,7 +1592,7 @@ Hatch Styles
 
 =head3 cdStipple()
 
- $stipple = IUP::Canvas::Stipple->new( [[1,0,1,0,1,0,1,1,0,1], 
+ $stipple = IUP::Canvas::Stipple->new( [[1,0,1,0,1,0,1,1,0,1],
                                         [1,0,1,0,1,1,0,1,1,0],
                                         [1,0,1,1,0,1,0,1,1,0],
                                         [1,0,1,1,0,1,1,0,1,1]] );
@@ -1601,7 +1601,7 @@ Hatch Styles
 Defines a stipple (= matrix of zeros 0 and ones 1). The zeros are
 mapped to the background color or are transparent, according to the
 background opacity attribute. The ones are mapped to the foreground
-color. The function sets the interior style to B<CD_STIPPLE>. 
+color. The function sets the interior style to B<CD_STIPPLE>.
 The origin (0,0) is the left bottom corner of the
 image. It does not need to be stored by the application, as it is
 internally replicated by the library. In some drivers is always opaque.
@@ -1626,8 +1626,8 @@ Returns C<undef> if no I<stipple> was defined.
 =head3 cdPattern()
 
  $color1 = $canvas->cdEncodeColor(0, 0, 220);
- $color2 = $canvas->cdEncodeColor(220, 0, 220); 
- $pattern = IUP::Canvas::Pattern->new( [[$color1, $color2, $color1], 
+ $color2 = $canvas->cdEncodeColor(220, 0, 220);
+ $pattern = IUP::Canvas::Pattern->new( [[$color1, $color2, $color1],
                                         [$color2, $color1, $color2],
                                         [$color1, $color2, $color1]] );
  $canvas->cdPattern($pattern);
@@ -1733,7 +1733,7 @@ in the driver.
 </p>
 
 =head3 cdGetFont()
- 
+
  ($typeface, $style, $size) = $canvas->cdGetFont();
  ($typeface, $style, $size) = $canvas->wdGetFont();
 
@@ -1743,7 +1743,7 @@ all return pointers; you can provide only the desired values.
 In WC, the size is returned in millimeters.
 
 =head3 cdNativeFont()
- 
+
  $old_font = $canvas->cdNativeFont($font);
 
 Selects a font based on a string description. The description can
@@ -1778,15 +1778,15 @@ Using "CD_QUERY" (string) as a parameter, it returns the current selected
 font in the common format definition.
 
 =head3 cdTextAlignment()
- 
+
  $old_alignment = $canvas->cdTextAlignment($alignment);
 
 Defines the vertical and horizontal alignment of a text as:
 
  CD_NORTH      CD_SOUTH      CD_EAST        CD_WEST
  CD_NORTH_EAST CD_NORTH_WEST CD_SOUTH_EAST  CD_SOUTH_WEST
- CD_CENTER     CD_BASE_LEFT  CD_BASE_CENTER CD_BASE_RIGHT 
- 
+ CD_CENTER     CD_BASE_LEFT  CD_BASE_CENTER CD_BASE_RIGHT
+
 Returns the previous value. Default value: C<CD_BASE_LEFT>.
 Value C<CD_QUERY> simply returns the current value.
 
@@ -1804,7 +1804,7 @@ Returns the previous value. Value B<CD_QUERY> simply returns the
 current value. The default value is 0.
 
 =head3 cdGetFontDim()
- 
+
  ($max_width, $height, $ascent, $descent) = $canvas->cdGetFontDim();
  ($max_width, $height, $ascent, $descent) = $canvas->wdGetFontDim();
 
@@ -1821,7 +1821,7 @@ Font Dimension Attributes:
 =for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/font_dim.gif"></p>
 
 =head3 cdGetTextSize()
- 
+
  ($width, $heigth) = $canvas->cdGetTextSize($text);
  ($width, $heigth) = $canvas->wdGetTextSize($text);
 
@@ -1830,13 +1830,13 @@ to provide all return pointers, you can provide only the desired values
 and C<undef> for the others.
 
 =head3 cdGetTextBounds()
- 
- 
+
+
  ($x0,$y0,$x1,$y1,$x2,$y2,$x3,$y3) = $canvas->cdGetTextBounds($x, $y, $text);
  ($x0,$y0,$x1,$y1,$x2,$y2,$x3,$y3) = $canvas->wdGetTextBounds($x, $y, $text);
 
 Returns the oriented bounding rectangle occupied by a text at a given
-position. The rectangle has the same dimentions returned by 
+position. The rectangle has the same dimentions returned by
 L<cdGetTextSize|/"cdGetTextSize()">. The rectangle corners are returned in counter-clock wise
 order starting with the bottom left corner, arranged [x0,y0,x1,y1,x2,y2,x3,y3].
 
@@ -1866,7 +1866,7 @@ All vector text drawing in all drivers are simulated with other CD
 primitives using polygons only.
 
 =head3 cdVectorText()
-    
+
  $canvas->cdVectorText($x, $y, $text);
  $canvas->wdVectorText($x, $y, $text);
 
@@ -1905,7 +1905,7 @@ The matrix contains scale, rotation and translation elements. It is
 applied after computing the position and orientation normal to the
 vector text. We can describe the elements as follows:
 
- |x'|   | scl_x*cos(ang)       -sin(ang)  trans_x |   |x|                     | $matrix->[3]  $matrix->[4]  $matrix->[5] | 
+ |x'|   | scl_x*cos(ang)       -sin(ang)  trans_x |   |x|                     | $matrix->[3]  $matrix->[4]  $matrix->[5] |
  |y'| = |       sin(ang)  scl_y*cos(ang)  trans_y | * |y|        with indices | $matrix->[0]  $matrix->[1]  $matrix->[2] |
                                                       |1|
 
@@ -1913,7 +1913,7 @@ It has the same effect of the L<cdTransform|/"cdTransform()">, but notice that
 the indices are different.
 
 =head3 cdVectorTextSize()
- 
+
  $canvas->cdVectorTextSize($width, $height, $text);
  $canvas->wdVectorTextSize($width, $height, $text);
 
@@ -1921,7 +1921,7 @@ Modifies the font size of the vector text so that it fits the string in
 the box defined by B<C<width>> and B<C<height>>.
 
 =head3 cdVectorCharSize()
- 
+
  $old_size = $canvas->cdVectorCharSize($size);
  $old_size = $canvas->wdVectorCharSize($size);
 
@@ -1944,7 +1944,7 @@ pointers, you can provide only the desired values and C<undef> for the
 others.
 
 =head3 cdVectorFont()
- 
+
  $fontname = $canvas->cdVectorFont($filename);
 
 Replaces the current vector font with a font stored in a file with a
@@ -1960,7 +1960,7 @@ font and returns C<undef>. The file format is compatible with the GKS file
 format (text mode).
 
 =head3 cdGetVectorTextSize()
- 
+
  ($width, $height) = $canvas->cdGetVectorTextSize($text);
  ($width, $height) = $canvas->wdGetVectorTextSize($text);
 
@@ -1969,17 +1969,17 @@ to provide all return pointers, you can provide only the desired values
 and C<undef> for the others.
 
 =head3 cdGetVectorTextBounds()
- 
+
  ($x0,$y0,$x1,$y1,$x2 $y2,$x3,$y3) = $canvas->cdGetVectorTextBounds($text, $x, $y);
  ($x0,$y0,$x1,$y1,$x2,$y2,$x3,$y3) = $canvas->wdGetVectorTextBounds($text, $x, $y);
 
 Returns the oriented bounding rectangle occupied by a text at a given
-position. The rectangle has the same dimentions returned by 
+position. The rectangle has the same dimentions returned by
 L<cdGetVectorTextSize|/"cdGetVectorTextSize()">. The rectangle corners are returned in counter-clock
 wise order starting with the bottom left corner, arranged (x0,y0,x1,y1,x2,y2,x3,y3).
 
 =head3 cdGetVectorTextBox()
- 
+
  ($xmin, $xmax, $ymin, $ymax) = $canvas->cdGetVectorTextBox($x, $y, $text);
  ($xmin, $xmax, $ymin, $ymax) = $canvas->wdGetVectorTextBox($x, $y, $text);
 
@@ -2019,7 +2019,7 @@ B<Original Simplex II>
 Client Images are bitmaps (kept in memory - usually in L<IUP::Canvas::Bitmap> objects)
 that can be put (drawn) onto a canvas.
 
-Some bitmap manipulation functions (load, save, change colors/pixels) 
+Some bitmap manipulation functions (load, save, change colors/pixels)
 are available via L<IUP::Canvas::Bitmap>.
 
 =head3 cdPutBitmap()
@@ -2031,7 +2031,7 @@ are available via L<IUP::Canvas::Bitmap>.
 
 Draws the image in the position (x,y), changing the scale. It
 supports B<bmp> to be of type CD_RGB, CD_RGBZ or CD_MAP.
-The region of the image drawn depends on the rectangle defined 
+The region of the image drawn depends on the rectangle defined
 by L<IUP::Canvas::Bitmap> method L<SetRect|IUP::Canvas::Bitmap/"SetRect()">.
 If no rectangle was defined, then the whole image is used.
 
@@ -2044,12 +2044,12 @@ no scale change is assumed.
  $bmp = $canvas->cdGetBitmap($x,$y,$w,$h);
  #$bmp is a reference to IUP::Canvas::Bitmap object
 
-Returns L<IUP::Canvas::Bitmap> object containing each pixel in a server 
+Returns L<IUP::Canvas::Bitmap> object containing each pixel in a server
 image given by area: [x,y,w,h].
 
 =head2 Methods - Primitives / Server Images
 
-B<Server Image> is a high performance image compatible with a specific canvas. 
+B<Server Image> is a high performance image compatible with a specific canvas.
 It is faster than B<Client Image> functions, but less flexible. It is commonly
 used for off-screen drawing in Window Systems.
 
@@ -2079,17 +2079,17 @@ You cannot edit or even acces image content by any mean.
 
 Copies a rectangular region from the current rectangular context to the
 memory - 'internal-ServerImage' object (which can be later used
-via L<cdPutImage|/"cdPutImage()"> or C<wdPutImage()>). 
+via L<cdPutImage|/"cdPutImage()"> or C<wdPutImage()>).
 
-B<(x,y)> is the coordinate of the bottom left corner of the rectangular region. 
+B<(x,y)> is the coordinate of the bottom left corner of the rectangular region.
 The B<width> and B<length> of the rectangular region are defined in the
-image structure (when the image is created). 
- 
+image structure (when the image is created).
+
 =head3 cdPutImage()
 
  $image = $canvas->cdGetImage($x, $y, $w, $h);
  #NOTE: $image has to be a reference to 'internal-ServerImage' object
- $canvas->cdPutImage($image, $x, $y, $xmin, $xmax, $ymin, $ymax); 
+ $canvas->cdPutImage($image, $x, $y, $xmin, $xmax, $ymin, $ymax);
  #or
  $canvas->wdPutImage($image, $x, $y, $xmin, $xmax, $ymin, $ymax);
 
@@ -2098,11 +2098,11 @@ in a rectangular region of the canvas with the bottom
 left corner in B<(x,y)>. Allows specifying a rectangle inside the
 image to be drawn, if B<xmin, xmax, ymin> and B<ymax> are 0, then the
 whole image is assumed.
- 
+
 =head3 cdCanvasScrollArea()
 
  $canvas->cdCanvasScrollArea($xmin, $xmax, $ymin, $ymax, $dx, $dy);
- 
+
 Copies the rectangle defined by the coordinates B<C<(xmin,ymin)>> and
 B<C<(xmax,ymax)>> to the rectangle defined by B<C<(xmin+dx,ymin+dy)>>
 and B<C<(xmax+dx,ymax+dy)>>. It has the same effect as B<cdGetImage>
@@ -2110,7 +2110,7 @@ followed by B<cdPutImage>, but it should be faster and does not
 require the explicit creation of an image to be executed. Note that the
 region belonging to the first rectangle, but not to the second, remains
 unchanged (the function does not clean this region).
- 
+
 =head2 Methods - Canvas Clipping
 
 The clipping area is an area that limits the available drawing area
@@ -2125,7 +2125,7 @@ defined. The complex region can be a combination of boxes, polygons,
 sectors, chords and texts.
 
 =head3 cdClip()
- 
+
  $old_mode = $canvas->cdClip($mode);
 
 Activates or deactivates clipping. Returns the previous status. Values:
@@ -2153,7 +2153,7 @@ Also if the active clipping region is re-defined it immediately becomes
 the current clipping region.
 
 =head3 cdClipArea()
- 
+
  $canvas->cdClipArea($xmin, $xmax, $ymin, $ymax);  #params are integers
  $canvas->cdfClipArea($xmin, $xmax, $ymin, $ymax); #params are floating numbers
  $canvas->wdClipArea($xmin, $xmax, $ymin, $ymax);  #params are floating numbers
@@ -2163,7 +2163,7 @@ interval C<< xmin <= x <= xmax >> and C<< ymin <= y <= ymax >>
 will be printed. Default region: (0, w-1, 0, h-1).
 
 =head3 cdGetClipArea()
- 
+
  ($xmin, $xmax, $ymin, $ymax, $status) = canvas->cdGetClipArea();  #params are integers
  ($xmin, $xmax, $ymin, $ymax, $status) = canvas->cdfGetClipArea(); #params are floating numbers
  ($xmin, $xmax, $ymin, $ymax, $status) = canvas->wdGetClipArea();  #params are floating numbers
@@ -2213,7 +2213,7 @@ L<Clipping|clipping.html>.
 Complex clipping regions are not saved by L<cdSaveState|/"cdSaveState()">.
 
 =head3 cdRegionCombineMode()
- 
+
  $old_mode = $canvas->cdRegionCombineMode($mode);
 
 Changes the way regions are combined when created. Returns the previous
@@ -2226,7 +2226,7 @@ Combine Modes
 =for html <p><img src="http://kmx.github.io/perl-iup/imgcd-5.4.1/regions.gif"></p>
 
 =head3 cdIsPointInRegion()
- 
+
  $status = $canvas->cdIsPointInRegion($x, $y);
  $status = $canvas->wdIsPointInRegion($x, $y);
 
@@ -2243,7 +2243,7 @@ region moves to outside the canvas border, the part moved outside will
 be lost, the region will need to be reconstructed.
 
 =head3 cdGetRegionBox()
- 
+
  ($xmin, $xmax, $ymin, $ymax, $status) = $canvas->cdGetRegionBox();
  ($xmin, $xmax, $ymin, $ymax, $status) = $canvas->wdGetRegionBox();
 
@@ -2265,7 +2265,7 @@ major version number represents a change in the structure or behavior
 of functions; the minor version number represents one or more new
 drivers and functions added to the library; and the build version
 number represents one or more corrected bugs.
- 
+
 =head3 cdVersionDate()
 
  $verdate = IUP::Canvas->cdVersionDate();
@@ -2282,7 +2282,7 @@ Returns the current version number of the library - e.g. 500000 (for version 5.0
 
  $ctx = $canvas1->cdGetContext();
  #NOTE: $ctx param has to be a reference to 'internal-context'
- $status = $canvas2->cdPlay($ctx, $xmin, $xmax, $ymin, $ymax, $data); 
+ $status = $canvas2->cdPlay($ctx, $xmin, $xmax, $ymin, $ymax, $data);
 
 Interprets the graphical contents (primitives and attributes) in a
 given driver and calls equivalent functions of the CD library using the
@@ -2442,7 +2442,7 @@ The element B<IUP::Canvas> is used in the following sample scripts:
 
 =item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
-=back 
+=back
 
 
 

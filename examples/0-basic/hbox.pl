@@ -40,7 +40,7 @@ my $fr3 = IUP::Frame->new( TITLE=>"Alignment = ABOTTOM", child=>
             ], ALIGNMENT=>"ABOTTOM" )
           );
 
-my $dlg = IUP::Dialog->new( 
+my $dlg = IUP::Dialog->new(
             child=>IUP::Frame->new( child=>IUP::Vbox->new( child=>[$fr1,$fr2,$fr3] ), TITLE=>"HBOX" ),
             TITLE=>"Alignment",
             SIZE=>140 );

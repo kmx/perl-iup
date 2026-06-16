@@ -85,7 +85,7 @@ Width and height are swapped when orientation is set. (since iup-3.27)
 
 internal margin. Works just like the MARGIN attribute of
 the L<IUP::Hbox|IUP::Hbox> and L<IUP::Vbox|IUP::Vbox> containers, but uses a different name to
-avoid inheritance problems. Default value: "0x0". 
+avoid inheritance problems. Default value: "0x0".
 
 =item B<CPADDING>
 
@@ -148,7 +148,7 @@ For more info about concept of callbacks (setting callback handlers etc.)
 see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
 
 common callbacks are supported: L<MAP_CB|IUP::Manual::03_Attributes/MAP_CB>, L<UNMAP_CB|IUP::Manual::03_Attributes/UNMAP_CB>
-  
+
 =head1 EXAMPLES
 
 
@@ -158,7 +158,7 @@ The element B<IUP::Gauge> is used in the following sample scripts:
 
 =item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/gauge.pl> - IUP::Gauge example
 
-=back 
+=back
 
 
 
@@ -167,6 +167,6 @@ The element B<IUP::Gauge> is used in the following sample scripts:
 L<IUP::Canvas|IUP::Canvas>
 
 The original doc: L<iupgauge.html|http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupgauge.html>
- 
+
 
 =cut

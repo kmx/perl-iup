@@ -4,7 +4,7 @@
 
 IUP::FontDlg - [pre-defined dialog] selecting a font
 
-=head1 DESCRIPTION 
+=head1 DESCRIPTION
 
 Creates the Font Dialog element. It is a predefined dialog for
 selecting a font. The dialog can be shown with the L<Popup|IUP::Manual::02_Elements/"Popup()"> function
@@ -23,11 +23,11 @@ only.
       </tr>
       <tr>
         <th>Motif</th>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/fontdlg_mot.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/fontdlg_mot.png"></td>
       </tr>
       <tr>
         <th>Windows</th>
-	<td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/fontdlg_win.png"></td>
+        <td><img src="http://kmx.github.io/perl-iup/img-3.9/dlg/fontdlg_win.png"></td>
       </tr>
     </tbody>
   </table>
@@ -121,7 +121,7 @@ The element B<IUP::FontDlg> is used in the following sample scripts:
 
 =item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
 
-=back 
+=back
 
 
 
@@ -131,6 +131,6 @@ L<IUP::MessageDlg|IUP::MessageDlg>, L<IUP::FileDlg|IUP::FileDlg>,
 L<Popup|IUP::Manual::02_Elements/"Popup()">
 
 The original doc: L<iupfontdlg.html|http://www.tecgraf.puc-rio.br/iup/en/dlg/iupfontdlg.html>
- 
+
 
 =cut
