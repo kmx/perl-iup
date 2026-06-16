@@ -973,7 +973,129 @@ B<$self:> reference to the element (IUP::Plot) that activated the event.
 
 B<$cnv:> the internal CD canvas where the draw operation occurs.
 
+=item B<CLICKSEGMENT_CB>
+
+Action generated when the user clicks a line segment between two samples (works
+only for editable datasets). Receives the dataset index, the two endpoint
+sample indices and their coordinates, and the mouse button.
+
+[%h.at_handler%]
+
+ sub clicksegment_cb_handler {
+   my ($self, $ds_index, $sample_index1, $x1, $y1, $sample_index2, $x2, $y2, $button) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (L<IUP::Plot|IUP::Plot>) that activated the event.
+
+B<$ds_index:> index of the dataset.
+
+B<$sample_index1:> index of the first endpoint sample.
+
+B<$x1, $y1:> coordinates of the first endpoint sample.
+
+B<$sample_index2:> index of the second endpoint sample.
+
+B<$x2, $y2:> coordinates of the second endpoint sample.
+
+B<$button:> identifies the activated mouse button.
+
+=item B<EDITSAMPLE_CB>
+
+Action generated when a sample is interactively moved or edited. Receives the
+dataset index, the sample index and the new coordinates.
+
+[%h.at_handler%]
+
+ sub editsample_cb_handler {
+   my ($self, $ds_index, $sample_index, $x, $y) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (L<IUP::Plot|IUP::Plot>) that activated the event.
+
+B<$ds_index:> index of the dataset.
+
+B<$sample_index:> index of the sample in the dataset.
+
+B<$x, $y:> the new coordinates of the sample.
+
+=item B<DSPROPERTIESCHANGED_CB>
+
+Action generated after a dataset's properties were changed in the properties
+dialog.
+
+[%h.at_handler%]
+
+ sub dspropertieschanged_cb_handler {
+   my ($self, $ds_index) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (L<IUP::Plot|IUP::Plot>) that activated the event.
+
+B<$ds_index:> index of the dataset whose properties were changed.
+
+=item B<DSPROPERTIESVALIDATE_CB>
+
+Action generated to validate the dataset properties edited in the properties
+dialog. Return C<IUP_IGNORE> to reject the change.
+
+[%h.at_handler%]
+
+ sub dspropertiesvalidate_cb_handler {
+   my ($self, $param_dialog, $ds_index) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (L<IUP::Plot|IUP::Plot>) that activated the event.
+
+B<$param_dialog:> handle of the parameters dialog.
+
+B<$ds_index:> index of the dataset being validated.
+
+B<Returns:> If C<IUP_IGNORE> then the change is rejected.
+
+=item B<PROPERTIESCHANGED_CB>
+
+Action generated after the plot properties were changed in the properties
+dialog.
+
+[%h.at_handler%]
+
+ sub propertieschanged_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (L<IUP::Plot|IUP::Plot>) that activated the event.
+
+=item B<PROPERTIESVALIDATE_CB>
+
+Action generated to validate a plot property edited in the properties dialog.
+Return C<IUP_IGNORE> to reject the change. Receives the attribute name and its
+new value.
+
+[%h.at_handler%]
+
+ sub propertiesvalidate_cb_handler {
+   my ($self, $name, $value) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (L<IUP::Plot|IUP::Plot>) that activated the event.
+
+B<$name:> name of the attribute being changed.
+
+B<$value:> the new value of the attribute.
+
+B<Returns:> If C<IUP_IGNORE> then the change is rejected.
+
 =back
+
+B<NOTE:> the C<XTICKFORMATNUMBER_CB> and C<YTICKFORMATNUMBER_CB> callbacks
+(custom axis tick number formatting) are not yet supported by this Perl binding
+- they use an output-buffer convention that needs dedicated XS handling. (TODO)
 
 [%txt.cb_common%]
 

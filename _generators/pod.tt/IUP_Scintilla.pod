@@ -1577,6 +1577,65 @@ B<$ih> - identifier of the element that activated the event.ih> - identifier of 
 
 B<$ih> - identifier of the element that activated the event.zoomInPoints> - the current zoom factor.
 
+=item * B<INSERTCHECK_CB>
+
+Action generated before text is inserted, allowing the application to
+inspect the insertion.
+
+ my ($self, $pos, $length, $text) = @_;
+
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
+
+B<$pos> - position where the text will be inserted.
+
+B<$length> - length of the text being inserted.
+
+B<$text> - the text being inserted.
+
+=item * B<LINESCHANGED_CB>
+
+Action generated when the number of lines changes.
+
+ my ($self, $lin, $linesAdded) = @_;
+
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
+
+B<$lin> - the first affected line.
+
+B<$linesAdded> - the number of lines added (negative when lines were removed).
+
+=item * B<UPDATECONTENT_CB>
+
+Action generated when the document content is updated.
+
+ my ($self) = @_;
+
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
+
+=item * B<UPDATEHSCROLL_CB>
+
+Action generated when the horizontal scroll position is updated.
+
+ my ($self) = @_;
+
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
+
+=item * B<UPDATESELECTION_CB>
+
+Action generated when the selection is updated.
+
+ my ($self) = @_;
+
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
+
+=item * B<UPDATEVSCROLL_CB>
+
+Action generated when the vertical scroll position is updated.
+
+ my ($self) = @_;
+
+B<$self> - reference to the element (L<IUP::Scintilla|IUP::Scintilla>) that activated the event.
+
 =item * L<MAP_CB>, L<UNMAP_CB>, L<GETFOCUS_CB>, L<KILLFOCUS_CB>, L<ENTERWINDOW_CB>, L<LEAVEWINDOW_CB>, L<K_ANY>, L<HELP_CB>
 
 =item * L<Drag E<amp> Drop|[%m.dnd%]> callbacks are supported. See Notes bellow.

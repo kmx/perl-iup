@@ -111,6 +111,44 @@ Set to Yes. (since iup-3.28)
 
 =back
 
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item B<LAYOUTUPDATE_CB>
+
+Action generated when the layout is updated (after scrolling or
+resizing), so the application can reposition its own children.
+
+B<Callback handler prototype:>
+
+ sub layoutupdate_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (L<IUP::ScrollBox|IUP::ScrollBox>) that activated the event.
+
+=back
+
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
+
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>,
+L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
+
+=back
+
 =head1 NOTES
 
 The box allows the application to create a virtual space for the dialog

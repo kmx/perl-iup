@@ -875,6 +875,26 @@ B<$id:> node identifier.
 
 =back
 
+=item B<EXECUTEBRANCH_CB>
+
+Action generated when a branch is executed. This action occurs when the
+user double clicks a branch, or hits Enter on a branch.
+
+[%h.at_handler%]
+
+ sub executebranch_cb_handler {
+   my ($self, $id) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (L<IUP::Tree|IUP::Tree>) that activated the event.
+
+B<$id:> identifier of the branch node.
+
+=back
+
 =item B<SHOWRENAME_CB>
 
 Action generated when a node is about to be renamed.

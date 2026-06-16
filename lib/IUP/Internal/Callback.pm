@@ -49,6 +49,7 @@ my $cb_table = {
   },
   'IUP::DetachBox' => {
     DETACHED_CB => \&_init_cb_DETACHED_CB_,
+    RESTORED_CB => \&_init_cb_RESTORED_CB_nii,
   },
   'IUP::Dial' => {
     BUTTON_PRESS_CB => \&_init_cb_BUTTON_PRESS_CB_d,
@@ -62,7 +63,10 @@ my $cb_table = {
     OPENCLOSE_CB => \&_init_cb_OPENCLOSE_CB_i,
   },
   'IUP::FileDlg' => {
+    BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
     FILE_CB => \&_init_cb_FILE_CB_ss,
+    MOTION_CB => \&_init_cb_MOTION_CB_iis,
+    WHEEL_CB => \&_init_cb_WHEEL_CB_fiis,
   },
   'IUP::FlatButton' => {
     FLAT_ACTION => \&_init_cb_FLAT_ACTION_,
@@ -112,6 +116,11 @@ my $cb_table = {
   },
   'IUP::Label' => {
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
+    MOTION_CB => \&_init_cb_MOTION_CB_iis,
+  },
+  'IUP::LayoutDialog' => {
+    ATTRIBCHANGED_CB => \&_init_cb_ATTRIBCHANGED_CB_s,
+    LAYOUTCHANGED_CB => \&_init_cb_LAYOUTCHANGED_CB_n,
   },
   'IUP::Link' => {
     ACTION => \&_init_cb_ACTION_s,
@@ -167,6 +176,7 @@ my $cb_table = {
     VALUE_EDIT_CB => \&_init_cb_VALUE_EDIT_CB_iis,
   },
   'IUP::MatrixList' => {
+    BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
     IMAGEVALUECHANGED_CB => \&_init_cb_IMAGEVALUECHANGED_CB_ii,
     LISTACTION_CB => \&_init_cb_LISTACTION_CB_ii,
     LISTCLICK_CB => \&_init_cb_LISTCLICK_CB_iis,
@@ -188,16 +198,22 @@ my $cb_table = {
   },
   'IUP::Plot' => {
     CLICKSAMPLE_CB => \&_init_cb_CLICKSAMPLE_CB_iiddi,
+    CLICKSEGMENT_CB => \&_init_cb_CLICKSEGMENT_CB_iiddiddi,
     DELETEBEGIN_CB => \&_init_cb_DELETEBEGIN_CB_,
     DELETEEND_CB => \&_init_cb_DELETEEND_CB_,
     DELETE_CB => \&_init_cb_DELETE_CB_iidd,
     DRAWSAMPLE_CB => \&_init_cb_DRAWSAMPLE_CB_iiddi,
+    DSPROPERTIESCHANGED_CB => \&_init_cb_DSPROPERTIESCHANGED_CB_i,
+    DSPROPERTIESVALIDATE_CB => \&_init_cb_DSPROPERTIESVALIDATE_CB_ni,
+    EDITSAMPLE_CB => \&_init_cb_EDITSAMPLE_CB_iidd,
     MENUCONTEXTCLOSE_CB => \&_init_cb_MENUCONTEXTCLOSE_CB_nii,
     MENUCONTEXT_CB => \&_init_cb_MENUCONTEXT_CB_nii,
     PLOTBUTTON_CB => \&_init_cb_PLOTBUTTON_CB_iidds,
     PLOTMOTION_CB => \&_init_cb_PLOTMOTION_CB_dds,
     POSTDRAW_CB => \&_init_cb_POSTDRAW_CB_v,
     PREDRAW_CB => \&_init_cb_PREDRAW_CB_v,
+    PROPERTIESCHANGED_CB => \&_init_cb_PROPERTIESCHANGED_CB_,
+    PROPERTIESVALIDATE_CB => \&_init_cb_PROPERTIESVALIDATE_CB_ss,
     SELECTBEGIN_CB => \&_init_cb_SELECTBEGIN_CB_,
     SELECTEND_CB => \&_init_cb_SELECTEND_CB_,
     SELECT_CB => \&_init_cb_SELECT_CB_iiddi,
@@ -214,11 +230,20 @@ my $cb_table = {
     CARET_CB => \&_init_cb_CARET_CB_iii,
     DROPFILES_CB => \&_init_cb_DROPFILES_CB_siii,
     HOTSPOTCLICK_CB => \&_init_cb_HOTSPOTCLICK_CB_iiis,
+    INSERTCHECK_CB => \&_init_cb_INSERTCHECK_CB_iis,
+    LINESCHANGED_CB => \&_init_cb_LINESCHANGED_CB_ii,
     MARGINCLICK_CB => \&_init_cb_MARGINCLICK_CB_iis,
     MOTION_CB => \&_init_cb_MOTION_CB_iis,
     SAVEPOINT_CB => \&_init_cb_SAVEPOINT_CB_i,
+    UPDATECONTENT_CB => \&_init_cb_UPDATECONTENT_CB_,
+    UPDATEHSCROLL_CB => \&_init_cb_UPDATEHSCROLL_CB_,
+    UPDATESELECTION_CB => \&_init_cb_UPDATESELECTION_CB_,
+    UPDATEVSCROLL_CB => \&_init_cb_UPDATEVSCROLL_CB_,
     VALUECHANGED_CB => \&_init_cb_VALUECHANGED_CB_,
     ZOOM_CB => \&_init_cb_ZOOM_CB_i,
+  },
+  'IUP::ScrollBox' => {
+    LAYOUTUPDATE_CB => \&_init_cb_LAYOUTUPDATE_CB_,
   },
   'IUP::Spin' => {
     SPIN_CB => \&_init_cb_SPIN_CB_i,
@@ -258,6 +283,7 @@ my $cb_table = {
     BRANCHOPEN_CB => \&_init_cb_BRANCHOPEN_CB_i,
     BUTTON_CB => \&_init_cb_BUTTON_CB_iiiis,
     DRAGDROP_CB => \&_init_cb_DRAGDROP_CB_iiii,
+    EXECUTEBRANCH_CB => \&_init_cb_EXECUTEBRANCH_CB_i,
     EXECUTELEAF_CB => \&_init_cb_EXECUTELEAF_CB_i,
     MOTION_CB => \&_init_cb_MOTION_CB_iis,
     MULTISELECTION_CB => \&_init_cb_MULTISELECTION_CB_Ai,

@@ -237,3 +237,27 @@ _dragdrop;DRAGEND_CB;i;int;Ihandle* ih,int action
 _dragdrop;DROPDATA_CB;sUiii;int;Ihandle* ih,char* type,void* data,int size,int x,int y
 _dragdrop;DROPFILES_CB;siii;int;Ihandle* ih,const char* filename,int num,int x,int y
 _dragdrop;DROPMOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
+
+## --- 0.305_1: callbacks present in upstream iup-3.32 source but previously unbound (signatures cross-checked against ./upstream-libiup-src/) ---
+IUP::Label;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
+IUP::Tree;EXECUTEBRANCH_CB;i;int;Ihandle* ih,int id
+IUP::DetachBox;RESTORED_CB;nii;int;Ihandle* ih,Ihandle* old_parent,int x,int y
+IUP::ScrollBox;LAYOUTUPDATE_CB;;int;Ihandle* ih
+IUP::LayoutDialog;ATTRIBCHANGED_CB;s;int;Ihandle* ih,char* name
+IUP::LayoutDialog;LAYOUTCHANGED_CB;n;int;Ihandle* ih,Ihandle* elem
+IUP::Plot;CLICKSEGMENT_CB;iiddiddi;int;Ihandle* ih,int ds_index,int sample_index1,double x1,double y1,int sample_index2,double x2,double y2,int button
+IUP::Plot;EDITSAMPLE_CB;iidd;int;Ihandle* ih,int ds_index,int sample_index,double x,double y
+IUP::Plot;DSPROPERTIESCHANGED_CB;i;int;Ihandle* ih,int ds_index
+IUP::Plot;DSPROPERTIESVALIDATE_CB;ni;int;Ihandle* ih,Ihandle* param_dialog,int ds_index
+IUP::Plot;PROPERTIESCHANGED_CB;;int;Ihandle* ih
+IUP::Plot;PROPERTIESVALIDATE_CB;ss;int;Ihandle* ih,char* name,char* value
+IUP::Scintilla;INSERTCHECK_CB;iis;int;Ihandle* ih,int pos,int length,char* text
+IUP::Scintilla;LINESCHANGED_CB;ii;int;Ihandle* ih,int lin,int linesAdded
+IUP::Scintilla;UPDATECONTENT_CB;;int;Ihandle* ih
+IUP::Scintilla;UPDATEHSCROLL_CB;;int;Ihandle* ih
+IUP::Scintilla;UPDATESELECTION_CB;;int;Ihandle* ih
+IUP::Scintilla;UPDATEVSCROLL_CB;;int;Ihandle* ih
+IUP::FileDlg;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status
+IUP::FileDlg;MOTION_CB;iis;int;Ihandle* ih,int x,int y,char* status
+IUP::FileDlg;WHEEL_CB;fiis;int;Ihandle* ih,float delta,int x,int y,char* status
+IUP::MatrixList;BUTTON_CB;iiiis;int;Ihandle* ih,int button,int pressed,int x,int y,char* status

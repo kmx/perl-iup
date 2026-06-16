@@ -143,6 +143,12 @@ _init_cb_DETACHED_CB_(ih)
 		IupSetCallback(ih, "DETACHED_CB", (Icallback)internal_cb_DETACHED_CB_);
 
 void
+_init_cb_RESTORED_CB_nii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "RESTORED_CB", (Icallback)internal_cb_RESTORED_CB_nii);
+
+void
 _init_cb_BUTTON_PRESS_CB_d(ih)
 		Ihandle* ih;
 	CODE:
@@ -177,6 +183,18 @@ _init_cb_FILE_CB_ss(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "FILE_CB", (Icallback)internal_cb_FILE_CB_ss);
+
+void
+_init_cb_MOTION_CB_iis(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "MOTION_CB", (Icallback)internal_cb_MOTION_CB_iis);
+
+void
+_init_cb_WHEEL_CB_fiis(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "WHEEL_CB", (Icallback)internal_cb_WHEEL_CB_fiis);
 
 void
 _init_cb_FLAT_ACTION_(ih)
@@ -275,6 +293,18 @@ _init_cb_HIGHLIGHT_CB_(ih)
 		IupSetCallback(ih, "HIGHLIGHT_CB", (Icallback)internal_cb_HIGHLIGHT_CB_);
 
 void
+_init_cb_ATTRIBCHANGED_CB_s(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "ATTRIBCHANGED_CB", (Icallback)internal_cb_ATTRIBCHANGED_CB_s);
+
+void
+_init_cb_LAYOUTCHANGED_CB_n(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "LAYOUTCHANGED_CB", (Icallback)internal_cb_LAYOUTCHANGED_CB_n);
+
+void
 _init_cb_ACTION_sii(ih)
 		Ihandle* ih;
 	CODE:
@@ -309,12 +339,6 @@ _init_cb_EDIT_CB_is(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "EDIT_CB", (Icallback)internal_cb_EDIT_CB_is);
-
-void
-_init_cb_MOTION_CB_iis(ih)
-		Ihandle* ih;
-	CODE:
-		IupSetCallback(ih, "MOTION_CB", (Icallback)internal_cb_MOTION_CB_iis);
 
 void
 _init_cb_MULTISELECT_CB_s(ih)
@@ -605,6 +629,12 @@ _init_cb_CLICKSAMPLE_CB_iiddi(ih)
 		IupSetCallback(ih, "CLICKSAMPLE_CB", (Icallback)internal_cb_CLICKSAMPLE_CB_iiddi);
 
 void
+_init_cb_CLICKSEGMENT_CB_iiddiddi(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "CLICKSEGMENT_CB", (Icallback)internal_cb_CLICKSEGMENT_CB_iiddiddi);
+
+void
 _init_cb_DELETEBEGIN_CB_(ih)
 		Ihandle* ih;
 	CODE:
@@ -629,6 +659,24 @@ _init_cb_DRAWSAMPLE_CB_iiddi(ih)
 		IupSetCallback(ih, "DRAWSAMPLE_CB", (Icallback)internal_cb_DRAWSAMPLE_CB_iiddi);
 
 void
+_init_cb_DSPROPERTIESCHANGED_CB_i(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "DSPROPERTIESCHANGED_CB", (Icallback)internal_cb_DSPROPERTIESCHANGED_CB_i);
+
+void
+_init_cb_DSPROPERTIESVALIDATE_CB_ni(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "DSPROPERTIESVALIDATE_CB", (Icallback)internal_cb_DSPROPERTIESVALIDATE_CB_ni);
+
+void
+_init_cb_EDITSAMPLE_CB_iidd(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "EDITSAMPLE_CB", (Icallback)internal_cb_EDITSAMPLE_CB_iidd);
+
+void
 _init_cb_PLOTBUTTON_CB_iidds(ih)
 		Ihandle* ih;
 	CODE:
@@ -639,6 +687,18 @@ _init_cb_PLOTMOTION_CB_dds(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "PLOTMOTION_CB", (Icallback)internal_cb_PLOTMOTION_CB_dds);
+
+void
+_init_cb_PROPERTIESCHANGED_CB_(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "PROPERTIESCHANGED_CB", (Icallback)internal_cb_PROPERTIESCHANGED_CB_);
+
+void
+_init_cb_PROPERTIESVALIDATE_CB_ss(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "PROPERTIESVALIDATE_CB", (Icallback)internal_cb_PROPERTIESVALIDATE_CB_ss);
 
 void
 _init_cb_SELECTBEGIN_CB_(ih)
@@ -701,6 +761,18 @@ _init_cb_HOTSPOTCLICK_CB_iiis(ih)
 		IupSetCallback(ih, "HOTSPOTCLICK_CB", (Icallback)internal_cb_HOTSPOTCLICK_CB_iiis);
 
 void
+_init_cb_INSERTCHECK_CB_iis(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "INSERTCHECK_CB", (Icallback)internal_cb_INSERTCHECK_CB_iis);
+
+void
+_init_cb_LINESCHANGED_CB_ii(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "LINESCHANGED_CB", (Icallback)internal_cb_LINESCHANGED_CB_ii);
+
+void
 _init_cb_MARGINCLICK_CB_iis(ih)
 		Ihandle* ih;
 	CODE:
@@ -713,10 +785,40 @@ _init_cb_SAVEPOINT_CB_i(ih)
 		IupSetCallback(ih, "SAVEPOINT_CB", (Icallback)internal_cb_SAVEPOINT_CB_i);
 
 void
+_init_cb_UPDATECONTENT_CB_(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "UPDATECONTENT_CB", (Icallback)internal_cb_UPDATECONTENT_CB_);
+
+void
+_init_cb_UPDATEHSCROLL_CB_(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "UPDATEHSCROLL_CB", (Icallback)internal_cb_UPDATEHSCROLL_CB_);
+
+void
+_init_cb_UPDATESELECTION_CB_(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "UPDATESELECTION_CB", (Icallback)internal_cb_UPDATESELECTION_CB_);
+
+void
+_init_cb_UPDATEVSCROLL_CB_(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "UPDATEVSCROLL_CB", (Icallback)internal_cb_UPDATEVSCROLL_CB_);
+
+void
 _init_cb_ZOOM_CB_i(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "ZOOM_CB", (Icallback)internal_cb_ZOOM_CB_i);
+
+void
+_init_cb_LAYOUTUPDATE_CB_(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "LAYOUTUPDATE_CB", (Icallback)internal_cb_LAYOUTUPDATE_CB_);
 
 void
 _init_cb_SPIN_CB_i(ih)
@@ -771,6 +873,12 @@ _init_cb_BRANCHOPEN_CB_i(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "BRANCHOPEN_CB", (Icallback)internal_cb_BRANCHOPEN_CB_i);
+
+void
+_init_cb_EXECUTEBRANCH_CB_i(ih)
+		Ihandle* ih;
+	CODE:
+		IupSetCallback(ih, "EXECUTEBRANCH_CB", (Icallback)internal_cb_EXECUTEBRANCH_CB_i);
 
 void
 _init_cb_EXECUTELEAF_CB_i(ih)
@@ -915,12 +1023,6 @@ _init_cb_TOUCH_CB_iiis(ih)
 		Ihandle* ih;
 	CODE:
 		IupSetCallback(ih, "TOUCH_CB", (Icallback)internal_cb_TOUCH_CB_iiis);
-
-void
-_init_cb_WHEEL_CB_fiis(ih)
-		Ihandle* ih;
-	CODE:
-		IupSetCallback(ih, "WHEEL_CB", (Icallback)internal_cb_WHEEL_CB_fiis);
 
 void
 _init_cb_WOM_CB_i(ih)

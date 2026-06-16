@@ -107,6 +107,43 @@ Set to Yes. (since iup-3.28)
 
 =back
 
+[% h.cb %]
+
+[%txt.cb_intro%]
+
+=over
+
+=item B<LAYOUTUPDATE_CB>
+
+Action generated when the layout is updated (after scrolling or
+resizing), so the application can reposition its own children.
+
+[%h.at_handler%]
+
+ sub layoutupdate_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (L<IUP::ScrollBox|IUP::ScrollBox>) that activated the event.
+
+=back
+
+[%txt.cb_common%]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
+
+=back
+
 [% h.notes %]
 
 The box allows the application to create a virtual space for the dialog

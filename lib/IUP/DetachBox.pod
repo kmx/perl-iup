@@ -172,6 +172,28 @@ B<Returns:> IUP_IGNORE will be processed, in order to cancel the detach action.
 
 =back
 
+=item B<RESTORED_CB>
+
+Callback called when the detached box is restored back into a
+dialog/parent.
+
+B<Callback handler prototype:>
+
+ sub restored_cb_handler {
+   my ($self, $old_parent, $x, $y) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (L<IUP::DetachBox|IUP::DetachBox>) that activated the event
+
+B<$old_parent:> the previous parent handle.
+
+B<$x, $y:> dropped position.
+
+=back
+
 =back
 
 The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:

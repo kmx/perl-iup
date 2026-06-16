@@ -62,6 +62,42 @@ Check the L<IUP::Dialog|IUP::Dialog/"ATTRIBUTES"> attributes.
 For more info about concept of callbacks (setting callback handlers etc.)
 see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
 
+=over
+
+=item B<ATTRIBCHANGED_CB>
+
+Action generated when an attribute is interactively changed in the
+dialog. The affected element is available via the dialog's B<ELEM>
+attribute.
+
+B<Callback handler prototype:>
+
+ sub attribchanged_cb_handler {
+   my ($self, $name) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (L<IUP::LayoutDialog|IUP::LayoutDialog>) that activated the event.
+
+B<$name:> name of the changed attribute.
+
+=item B<LAYOUTCHANGED_CB>
+
+Action generated when the layout being edited is changed.
+
+B<Callback handler prototype:>
+
+ sub layoutchanged_cb_handler {
+   my ($self, $elem) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (L<IUP::LayoutDialog|IUP::LayoutDialog>) that activated the event.
+
+B<$elem:> the element whose layout changed.
+
+=back
+
 Check the L<IUP::Dialog|IUP::Dialog/"CALLBACKS"> callbacks.
 
 =head1 NOTES
