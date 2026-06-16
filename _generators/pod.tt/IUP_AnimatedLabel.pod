@@ -1,12 +1,154 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupanimatedlabel.html
+
 [% h.name %]
 
 [% n.iupanimatedlabel %]
 
 [% h.desc %]
 
-XXX-TODO: missing doc
+Creates an animated label interface element, which displays an image that is
+changed periodically. It uses an animation that is simply an
+L<IUP::User|IUP::User> with several L<IUP::Image|IUP::Image> elements as
+children. It inherits from L<IUP::Label|IUP::Label>. (since iup-3.17)
+
+[% h.usage %]
+
+[% h.create %]
+
+ my $lbl = IUP::AnimatedLabel->new( ANIMATION=>$anim );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% h.at %]
+
+[% txt.at_intro %]
+
+=over
+
+=item B<ANIMATION>
+
+The name of the element that contains the list of images. The value passed
+must be the name of an L<IUP::User|IUP::User> element with several
+L<IUP::Image|IUP::Image> elements as children. Use L<IUP::SetHandle|IUP::SetHandle>
+or L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to associate a child to a name.
+
+=item B<ANIMATION_HANDLE>
+
+Same as ANIMATION but directly using the L<IUP::Image|IUP::Image> reference of the element.
+
+=item B<FRAMECOUNT>
+
+I<(read-only)>
+
+Number of frames in the animation. It is simply the
+L<IUP::GetChildCount|IUP::GetChildCount> of the given L<IUP::User|IUP::User> element.
+
+=item B<FRAMETIME>
+
+The time between each frame. If the L<IUP::User|IUP::User> element has a FRAMETIME
+attribute it will be used to set the L<IUP::AnimatedLabel|IUP::AnimatedLabel>
+FRAMETIME attribute, but it can be overwritten later on.
+
+=item B<RUNNING>
+
+I<(read-only)>
+
+Returns YES if the animation is running.
+
+=item B<START>
+
+I<(write-only)>
+
+Starts the animation. The value is ignored. By default the animation is stopped.
+
+=item B<STOP>
+
+I<(write-only)>
+
+Stops the animation. The value is ignored.
+
+=item B<STOPWHENHIDDEN>
+
+Automatically stops the animation when the label is hidden. Default: Yes. (since iup-3.18)
+
+=back
+
+All L<IUP::Label|IUP::Label> attributes are also valid. The IMAGE attribute is
+periodically changed by a timer.
+
+[% txt.at_common %]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+=back
+
+[% h.cb %]
+
+[% txt.cb_intro %]
+
+=over
+
+=back
+
+All L<IUP::Label|IUP::Label> callbacks are also valid. No label callbacks are used internally.
+
+[% txt.cb_common %]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
+
+=back
+
+[% h.notes %]
+
+The L<IUP::ImageLib|IUP::ImageLib> contains a simple animation to show an
+indefinite progress called "B<IUP_CircleProgressAnimation>".
+
+The IUP-IM functions provide two functions that can create an animation from
+image files called L<IUP::LoadAnimation|IUP::LoadAnimation> and
+L<IUP::LoadAnimationFrames|IUP::LoadAnimationFrames>.
+
+[% h.examples %]
+
+[% IF examples.iupanimatedlabel %]
+The element B<IUP::AnimatedLabel> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupanimatedlabel %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
+
+L<IUP::Label|IUP::Label>, L<IUP::User|IUP::User>, L<IUP::Image|IUP::Image>, L<IUP::ImageLib|IUP::ImageLib>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupanimatedlabel.html|[%url.iuporigdoc%]elem/iupanimatedlabel.html>

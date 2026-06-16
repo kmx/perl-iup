@@ -1,12 +1,322 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/gl/iupglsubcanvas.html
+
 =head1 NAME
 
 IUP::GL::SubCanvas - [GUI element] GL-based subcanvas
 
-=head1 DESCRIPTION
+=head1 DESCRIPTION (since iup-3.11)
 
-XXX-TODO: missing doc
+Creates an embedded OpenGL sub-canvas - a drawing area that exists only
+inside an L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. It is a void element that does not map
+to a native canvas; it mimics an L<IUP::Canvas|IUP::Canvas> with several attributes and
+callbacks in common, but everything is drawn inside a region of the
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. This control is the base control for all visual
+elements of the L<IUP::GL::CanvasBox|IUP::GL::CanvasBox> library and depends on the OpenGL
+library. It does not need to be a direct child of the
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox> - it can be placed inside void containers like
+L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>, L<IUP::GridBox|IUP::GridBox> and so on.
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ my $sc = IUP::GL::SubCanvas->new();
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+NOTE: You can pass to C<new()> other C<ATTRIBUTE=E<gt>'value'> or C<CALLBACKNAME=E<gt>\&func> pairs relevant
+to this element - see L<IUP::Manual::02_Elements|IUP::Manual::02_Elements/"new()">.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item B<ACTIVE>
+
+Disables mouse interaction and highlight feedback. Also for some controls
+it will affect its appearance to a greyed version. Possible values: "YES",
+"NO". Default: "YES".
+
+=item L<BGCOLOR|IUP::Manual::03_Attributes/BGCOLOR>
+
+Background color used in derived controls. Can have an alpha component.
+Default: C<undef>.
+
+=item B<BORDERCOLOR>
+
+Color used for borders in derived controls. Can have an alpha component.
+Default: "50 150 255".
+
+=item B<BORDERWIDTH>
+
+Line width used for borders in derived controls. Default: "1". Any borders
+can be disabled by simply setting this value to 0.
+
+=item L<CURSOR|IUP::Manual::03_Attributes/CURSOR>
+
+I<(non inheritable)>
+
+Defines a cursor for the sub-canvas.
+
+=item L<FONT|IUP::Manual::03_Attributes/FONT>
+
+Uses the FTGL library to render text in OpenGL using the Freetype library.
+Depends on locating a font file that matches the font attribute. See
+L<Notes|#Notes> below. The default font typeface is changed to Helvetica to
+avoid system fonts that are not well processed by FreeType.
+
+=item B<HIGHLIGHT>
+
+I<(non inheritable)>
+
+Flag indicating that the control is highlighted. Dynamically updated during
+mouse move.
+
+=item B<HLCOLOR>
+
+Color used to indicate a highlight state in derived controls. Can have an
+alpha component. Default: "200 225 245".
+
+=item B<PSCOLOR>
+
+Color used to indicate a press state in derived controls. Can have an alpha
+component. Default: "150 200 235".
+
+=item B<PRESSED>
+
+I<(non inheritable)>
+
+Flag indicating that the control is pressed with button1. Dynamically
+updated during button press.
+
+=item B<REDRAWALL>
+
+I<(non inheritable)>
+
+Flag to control the redraw update during a change of state like highlight or
+pressed. If "NO" only the element is redrawn, else all the
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox> is redrawn. It will work only if the control is
+fully opaque. Default: "YES".
+
+=item B<REDRAWFRONT>
+
+I<(non inheritable, write-only)>
+
+Redraw only the control on the front buffer. It will work only if the
+control is fully opaque.
+
+=item B<UNDERLINE>
+
+I<(non inheritable)>
+
+Flag indicating that the control text should be redrawn with an underline.
+Since FTGL does not support underline, the drawing of the text will manually
+draw a line under the text.
+
+=item L<WID|IUP::Manual::03_Attributes/WID>
+
+I<(non inheritable)>
+
+Returns the same value as the L<IUP::GL::CanvasBox|IUP::GL::CanvasBox> where the element is
+inside.
+
+=item L<ZORDER|IUP::Manual::03_Attributes/ZORDER>
+
+I<(non inheritable, write-only)>
+
+Change the order of the control inside its parent.
+
+=back
+
+The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+
+=over
+
+=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
+L<FONT|IUP::Manual::03_Attributes/FONT>,
+L<EXPAND|IUP::Manual::03_Attributes/EXPAND>,
+L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
+L<POSITION|IUP::Manual::03_Attributes/POSITION>,
+L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
+L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>,
+L<WID|IUP::Manual::03_Attributes/WID>,
+L<TIP|IUP::Manual::03_Attributes/TIP>,
+L<SIZE|IUP::Manual::03_Attributes/SIZE>,
+L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
+L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
+L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+
+=back
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item B<GL_ACTION>
+
+Action generated when the sub-canvas needs to be redrawn. The
+transformation matrix is already set to the sub-canvas rectangular region.
+Also, do not call L<IUP::GLMakeCurrent|IUP::CanvasGL/"GLMakeCurrent()"> nor
+L<IUP::GLSwapBuffers|IUP::CanvasGL/"GLSwapBuffers()">, the L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>
+management will take care of that.
+
+B<Callback handler prototype:>
+
+ sub gl_action_handler {
+   my ($self) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::GL::SubCanvas) that activated the event.
+
+=item B<GL_BUTTON_CB>
+
+Action generated when any mouse button is pressed or released. Same
+parameters as L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB>. If IUP_CONTINUE is returned
+the application callback is called even if the user clicked on the
+sub-canvas.
+
+B<Callback handler prototype:>
+
+ sub gl_button_cb_handler {
+   my ($self, $button, $pressed, $x, $y, $status) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::GL::SubCanvas) that activated the event.
+
+B<$button:> identifies the activated mouse button.
+
+B<$pressed:> indicates the state of the button (1=pressed, 0=released).
+
+B<$x, $y:> position in the canvas where the event has occurred, in pixels.
+
+B<$status:> status of the mouse buttons and some keyboard keys at the moment the event is generated.
+
+=item B<GL_ENTERWINDOW_CB>
+
+Action generated when the mouse enters the element. Same parameters as
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>.
+
+B<Callback handler prototype:>
+
+ sub gl_enterwindow_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::GL::SubCanvas) that activated the event.
+
+=item B<GL_LEAVEWINDOW_CB>
+
+Action generated when the mouse leaves the element. Same parameters as
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>.
+
+B<Callback handler prototype:>
+
+ sub gl_leavewindow_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::GL::SubCanvas) that activated the event.
+
+=item B<GL_MOTION_CB>
+
+Action generated when the mouse is moved. Same parameters as
+L<MOTION_CB|IUP::Manual::04_Callbacks/MOTION_CB>. If IUP_CONTINUE is returned the application
+callback is called even if the user moved the cursor on the sub-canvas.
+
+B<Callback handler prototype:>
+
+ sub gl_motion_cb_handler {
+   my ($self, $x, $y, $status) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::GL::SubCanvas) that activated the event.
+
+B<$x, $y:> position in the canvas where the event has occurred, in pixels.
+
+B<$status:> status of the mouse buttons and some keyboard keys at the moment the event is generated.
+
+=item B<GL_WHEEL_CB>
+
+Action generated when the mouse wheel is rotated. Same parameters as
+L<WHEEL_CB|IUP::Manual::04_Callbacks/WHEEL_CB>. If IUP_CONTINUE is returned the application
+callback is called even if the user used the wheel on the sub-canvas.
+
+B<Callback handler prototype:>
+
+ sub gl_wheel_cb_handler {
+   my ($self, $delta, $x, $y, $status) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::GL::SubCanvas) that activated the event.
+
+B<$delta:> the amount the wheel was rotated in notches.
+
+B<$x, $y:> position in the canvas where the event has occurred, in pixels.
+
+B<$status:> status of the mouse buttons and some keyboard keys at the moment the event is generated.
+
+=back
+
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
+
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>,
+L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
+
+=back
+
+=head1 NOTES
+
+FTGL and Freetype are third party libraries not developed at Tecgraf, but
+their licenses are also free and have the same freedom as the Tecgraf
+Library License. FTGL is copyright to Henry Maddocks. IUP uses the same FTGL
+library included in the CD library.
+
+To locate font files several strategies are used: search for the font in the
+system (in Windows using the Registry, in UNIX using the FontConfig
+library); use the type face as a file title composed with the font path; try
+some pre-defined names using the style to compose the filename; and finally
+use the typeface directly as the file name. It will search for TrueType
+(*.ttf) and OpenType (*.otf) font files in the current directory, in the path
+returned by the FREETYPEFONTS_DIR environment variable or the
+FREETYPEFONTS_DIR global attribute, and in Windows in the Fonts folder.
+
+FTGL fonts are cached internally for optimal use of multiple fonts in the
+same L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>.
+
+OpenGL textures are used to draw images, so the image width and height MUST
+be a power of two if the OpenGL version is 1.x; modern OpenGL does not have
+this limitation.
+
+=head1 EXAMPLES
+
+
+Unfortunately there are no sample scripts using this element.
+
+
 
 =head1 SEE ALSO
+
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>, L<IUP::CanvasGL|IUP::CanvasGL>
 
 The original doc: L<iupglsubcanvas.html|http://www.tecgraf.puc-rio.br/iup/en/gl/iupglsubcanvas.html>
 

@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iuplabel.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iuplabel.html
 
 [% h.name %]
 
@@ -53,6 +53,14 @@ to "ACENTER". (vertical alignment since iup-3.0)
 Ignored, transparent in all
 systems. Will use the background color of the native parent.
 
+=item B<DROPFILESTARGET>
+
+I<(non inheritable) [Windows and GTK Only]>
+
+Enable or disable the drop of files. Default: "NO", but if DROPFILES_CB
+is defined when the element is mapped then it will be automatically
+enabled. (in older versions this attribute was named DRAGDROP)
+
 =item B<ELLIPSIS>
 
 I<[Windows and GTK only]>
@@ -97,6 +105,11 @@ Internal margin. Works just like the MARGIN attribute of
 the L<IUP::Hbox> and <IUP::Vbox> containers, but uses a different name to avoid
 inheritance problems. Not used when SEPARATOR is used. Default value:
 "0x0". 
+
+=item B<CPADDING>
+
+Same as PADDING but using the units of the SIZE attribute. It will
+actually set the PADDING attribute. (since iup-3.29)
 
 =item B<SEPARATOR>
 
@@ -157,6 +170,10 @@ L<VISIBLE|[%m.at%]/VISIBLE>
 =item L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
 
 Action generated when any mouse button is pressed or released. (since iup-3.3)
+
+=item L<MOTION_CB|[%m.cb%]/MOTION_CB>
+
+Action generated when the mouse is moved. (since iup-3.20)
 
 =item L<DROPFILES_CB|[%m.cb%]/DROPFILES_CB>
 

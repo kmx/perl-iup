@@ -1,4 +1,4 @@
-=for comment based on iup-3.9 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupscrollbox.html
+=for comment based on iup-3.9 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iupscrollbox.html
 
 [% h.name %]
 
@@ -46,13 +46,62 @@ will use the background color of the native parent by default.
 
 I<(creation only)> the default value is "NO".
 
+=item B<CANFOCUS>
+
+Is set to NO.
+
+=item B<CANVASBOX>
+
+I<(non inheritable)>
+
+Enable the behavior of a canvas box instead of a regular container. This will
+affect the EXPAND attribute, the natural size computation, and child layout
+distribution. Can be Yes or No. Default: No. (since iup-3.20)
+
+=item B<CHILDOFFSET>
+
+Allow to specify a position offset for the child. Available for native
+containers only. It will not affect the natural size, and allows to position
+controls outside the client area. Format "I<dx>xI<dy>", where I<dx> and I<dy>
+are integer values corresponding to the horizontal and vertical offsets,
+respectively, in pixels. Default: 0x0. (since iup-3.14)
+
 =item L<EXPAND|[%m.at%]/EXPAND>
 
 I<(non inheritable)> the default value is "YES".
 
+=item B<LAYOUTDRAG>
+
+I<(non inheritable) [Windows Only]>
+
+When the scrollbar is moved automatically update the children layout. Default:
+YES. If set to NO then the layout will be updated only when the mouse drag is
+released. (since iup-3.19)
+
 =item L<SCROLLBAR|[%m.at%]/SCROLLBAR>
 
 I<(creation only)> the default value is "YES".
+
+=item B<SCROLLTO>
+
+I<(write-only)>
+
+Position the scroll at the given x,y coordinates relative to the box top-left
+corner. Format "I<x,y>". Value can also be TOP or BOTTOM for a vertical scroll
+to the top or to the bottom of the scroll range. (since iup-3.17)
+
+=item B<SCROLLTOCHILD>
+
+I<(write-only)>
+
+Position the scroll at the top-left corner of the given child located by its
+name. Use L<IUP::SetHandle|IUP::SetHandle> or L<IUP::SetAttributeHandle|IUP::SetAttributeHandle>
+to associate an element to a name. The child must be contained in the ScrollBox
+hierarchy. (since iup-3.17)
+
+=item B<WHEELDROPFOCUS>
+
+Set to Yes. (since iup-3.28)
 
 =item L<CLIENTSIZE|[%m.at%]/CLIENTSIZE>, L<CLIENTOFFSET|[%m.at%]/CLIENTOFFSET> also accepted.
 

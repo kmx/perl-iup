@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iuptree.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iuptree.html
 
 [% h.name %]
 
@@ -1003,6 +1003,29 @@ B<$id:> node identifier.
 
 =back
 
+=item B<TOGGLEVALUE_CB>
+
+Action generated when the toggle's state was changed. The callback also
+receives the new toggle's state. (since iup-3.6)
+
+[%h.at_handler%]
+
+ sub togglevalue_cb_handler {
+   my ($self, $id, $state) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::Tree) that activated the event
+
+B<$id:> node identifier.
+
+B<$state:> 1 if the toggle's state was shifted to ON; 0 if it was shifted to OFF.
+If SHOW3STATE=YES, -1 if it was shifted to NOTDEF.
+
+=back
+
 =item L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
 
 Action generated when any
@@ -1080,7 +1103,7 @@ the userdata_ref remains the same.
 B<$id:> Node identifier.
 
 Returns the reference to data associated to the node or C<undef> if none
-was associated. L<SetUserId|/"SetUserId()"> must have been called for the node with
+was associated. C<SetUserId> must have been called for the node with
 the given id.
 
 =head3 TreeGetId()
@@ -1090,7 +1113,7 @@ the given id.
 B<$userdata_ref:> Reference to data associated to the node.
 
 Returns the id of the node that has the userdata_ref on success or C<undef>
-if not found. L<SetUserId|/"SetUserId()"> must have been called with the same userdata_ref.
+if not found. C<SetUserId> must have been called with the same userdata_ref.
 
 B<BEWARE:> If you wanna use this function keep in mind that you probably want to assure
 that the same reference will not be associated with more that 1 node.

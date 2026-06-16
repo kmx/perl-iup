@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrix.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrix.html
 
 [% h.name %]
 
@@ -902,6 +902,25 @@ B<Returns:> To avoid the display update return IUP_IGNORE.
 
 =back
 
+=item B<COLRESIZE_CB>
+
+Action generated when a column is interactively resized.
+
+[%h.at_handler%]
+
+ sub colresize_cb_handler {
+   my ($self, $col) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::Matrix) interacting with the user
+
+B<$col:> Column that was resized.
+
+=back
+
 =item B<RELEASE_CB>
 
 Action generated when any mouse button is
@@ -928,6 +947,45 @@ moment the event is generated. The same macros used for
 L<BUTTON_CB|[%m.cb%]/BUTTON_CB> can be used for this status.
 
 B<Returns:> To avoid the display update return IUP_IGNORE.
+
+=back
+
+=item B<TOGGLEVALUE_CB>
+
+Action generated when a toggle button is pressed.
+
+[%h.at_handler%]
+
+ sub togglevalue_cb_handler {
+   my ($self, $lin, $col, $status) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::Matrix) interacting with the user
+
+B<$lin, $col:> Coordinates of the toggle cell.
+
+B<$status:> State of the toggle button (1 if pressed, 0 if not).
+
+=back
+
+=item B<VALUECHANGED_CB>
+
+Called after the value was interactively changed by the user or after a
+group of values where programmatically changed in a single operation.
+
+[%h.at_handler%]
+
+ sub valuechanged_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::Matrix) that activated the event
 
 =back
 

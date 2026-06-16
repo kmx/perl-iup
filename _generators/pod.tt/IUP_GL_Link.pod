@@ -1,12 +1,133 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/gl/iupgllink.html
+
 [% h.name %]
 
 [% n.iupgllink %]
 
 [% h.desc %]
 
-XXX-TODO: missing doc
+A hyperlink label drawn by IUP on a GL canvas, which displays an
+underlined clickable text. It is derived from
+L<IUP::GL::Label|IUP::GL::Label> and exists only inside an
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>.
+
+[% h.usage %]
+
+[% h.create %]
+
+ my $link = IUP::GL::Link->new( URL=>'http://...', TITLE=>'IUP' );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% h.at %]
+
+[% txt.at_intro %]
+
+=over
+
+=item L<FGCOLOR|[%m.at%]/FGCOLOR>
+
+Text color. Default: the global attribute LINKFGCOLOR.
+
+=item B<URL>
+
+The destination address of the link. Can be any text. If
+L<IUP::Help|IUP::Help> is used it should be a valid URL. It can be
+C<undef>. Default: "YES".
+
+=back
+
+[% txt.at_common %]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+=back
+
+[% h.cb %]
+
+[% txt.cb_intro %]
+
+=over
+
+=item L<ACTION|[%m.cb%]/ACTION>
+
+Action generated when the link is activated.
+
+[%h.at_handler%]
+
+ sub action_handler {
+   my ($self, $url) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Link) that activated the event
+
+B<$url:> the destination address of the link.
+
+B<Returns:> IUP_CLOSE will be processed. If returns IUP_DEFAULT or it is
+not defined, the L<IUP::Help|IUP::Help> function will be called.
+
+=back
+
+=back
+
+[% txt.cb_common %]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
+
+=back
+
+[% h.notes %]
+
+When the cursor is over the text, it is changed to the HAND cursor.
+
+If the callback is not defined the L<IUP::Help|IUP::Help> function is
+called with the given URL.
+
+[% h.examples %]
+
+[% IF examples.iupgllink %]
+The element B<IUP::GL::Link> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupgllink %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
+
+L<IUP::Link|IUP::Link>, L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupgllink.html|[%url.iuporigdoc%]gl/iupgllink.html>

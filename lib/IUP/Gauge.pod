@@ -1,4 +1,4 @@
-=for comment based on iup-3.9 - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupgauge.html
+=for comment based on iup-3.9 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupgauge.html
 
 =head1 NAME
 
@@ -36,6 +36,18 @@ see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specifi
 
 =over
 
+=item B<BACKCOLOR>
+
+I<(non inheritable)>
+
+Color of the background inside the borders. Predefined to "220 220 220".
+Can be C<undef>. When C<undef> it will use the parent's background color. (since iup-3.28)
+
+=item B<CANFOCUS>
+
+Enables the focus traversal of the control. Default: NO.
+(different from L<IUP::Canvas|IUP::Canvas>)
+
 =item B<DASHED>
 
 Changes the style of the gauge for a dashed pattern. Default is "NO".
@@ -43,6 +55,15 @@ Changes the style of the gauge for a dashed pattern. Default is "NO".
 =item L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
 
 Controls the gauge and text color. The default is "64 96 192".
+
+=item B<FLAT>
+
+Use a 1 pixel flat border instead of the default 3 pixels sunken border.
+Can be Yes or No. Default: No. (since iup-3.21)
+
+=item B<FLATCOLOR>
+
+Color of the border when FLAT=Yes. Default: "160 160 160". (since iup-3.21)
 
 =item B<MAX>
 
@@ -52,16 +73,35 @@ I<(non inheritable)> Contains the maximum value. Default is "1".
 
 I<(non inheritable)> Contains the minimum value. Default is "0".
 
+=item B<ORIENTATION>
+
+I<(creation only)>
+
+Can be "VERTICAL" or "HORIZONTAL". Default: "HORIZONTAL".
+Horizontal goes from left to right, and vertical from bottom to top.
+Width and height are swapped when orientation is set. (since iup-3.27)
+
 =item B<PADDING>
 
 internal margin. Works just like the MARGIN attribute of
 the L<IUP::Hbox|IUP::Hbox> and L<IUP::Vbox|IUP::Vbox> containers, but uses a different name to
 avoid inheritance problems. Default value: "0x0". 
 
+=item B<CPADDING>
+
+Same as PADDING but using the units of the SIZE attribute.
+It will actually set the PADDING attribute. (since iup-3.29)
+
 =item B<SHOW_TEXT>
 
 Indicates if the text inside the Gauge is to be shown or
 not. If the gauge is dashed the text is never shown. Possible values:
+"YES" or "NO". Default: "YES".
+
+=item B<SHOWTEXT>
+
+Indicates if the text inside the Gauge is to be shown or not.
+If the gauge is dashed the text is never shown. Possible values:
 "YES" or "NO". Default: "YES".
 
 =item L<SIZE|IUP::Manual::03_Attributes/SIZE>
@@ -116,7 +156,7 @@ The element B<IUP::Gauge> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/gauge.pl> - IUP::Gauge example
+=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/gauge.pl> - IUP::Gauge example
 
 =back 
 

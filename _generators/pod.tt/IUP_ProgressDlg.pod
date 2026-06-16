@@ -1,4 +1,4 @@
-=for comment based on iup-3.9 - http://www.tecgraf.puc-rio.br/iup/en/dlg/iupprogressdlg.html
+=for comment based on iup-3.9 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/dlg/iupprogressdlg.html
 
 [% h.name %]
 
@@ -36,6 +36,10 @@ changing only the following attributes:
 
 =over
 
+=item L<ICON|[%m.at%]/ICON>
+
+DialogE<rsquo>s icon.
+
 =item L<TITLE|[%m.at%]/TITLE>
 
 I<(non inheritable)> DialogE<rsquo>s title. 
@@ -54,6 +58,11 @@ This dialog will be always in front of the parent dialog.
 =item L<TITLE|[%m.at%]/TITLE>
 
 Dialog title.
+
+=item B<RESIZE>
+
+Set to NO (a value different from the default). Together with MAXBOX=NO,
+MINBOX=NO and MENUBOX=NO it can still be changed.
 
 =back
 
@@ -92,6 +101,25 @@ to resume processing set the state attribute to 'PROCESSING'.
 =item B<DESCRIPTION>
 
 text description to be shown at the dialog.
+
+=item B<PROGRESSHEIGHT>
+
+Height in pixels of the progress bar. Default: 30. (since iup-3.21)
+
+=item B<MINCLOCK>
+
+Minimum time between counts to an actual screen update in milliseconds.
+So if each count increment is too fast this avoids updating the screen
+too often. Must at least have passed the minimum time for a screen update.
+Default: 250. (since iup-3.21)
+
+=item B<MINPERCENT>
+
+Minimum percent between counts to an actual screen update, when the
+minimum clock has not been reached yet. So if each count increment is too
+fast, but the application would like to update the screen anyway after the
+percent of the total progress has passed this minimum value. So at least
+some screen updates will occur. Default: 10. (since iup-3.21)
 
 =back
 

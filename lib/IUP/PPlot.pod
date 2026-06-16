@@ -742,7 +742,19 @@ The element B<IUP::PPlot> is used in the following sample scripts:
 
 =over
 
-=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-plot-demo.pl> - dials for zooming
+=item * L<0-basic/plot1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/plot1.pl> - IUP::Plot example
+
+=item * L<0-basic/plot2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/plot2.pl> - IUP::Plot example
+
+=item * L<0-basic/plot3.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/plot3.pl> - IUP::Plot example
+
+=item * L<0-basic/plot4.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/plot4.pl> - IUP::Plot example
+
+=item * L<0-basic/plot5.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/plot5.pl> - IUP::Plot example
+
+=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/plot_advanced.pl> - Plot controls
+
+=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
 =back 
 

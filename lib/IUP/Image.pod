@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupimage.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iupimage.html
 
 =head1 NAME
 
@@ -11,9 +11,9 @@ Creates an image to be shown on a label, button, toggle, or as a cursor.
 =head1 USAGE
 
 =head2 CREATION - new() method
-
+           
  #8bit/256colors image + color palette definition + 2-dimensional pixels array
- my $img = IUP::Image->new(
+ my $img = IUP::Image->new( 
              BPP=>8, colors=>[ "0 0 0", "255 0 0", "128 0 0" ],
              pixels=>[[ 0,0,0,0,0,0,0,0,0,0,0,0 ],
                       [ 0,0,0,0,2,2,2,2,2,2,2,0 ],
@@ -26,9 +26,9 @@ Creates an image to be shown on a label, button, toggle, or as a cursor.
                       [ 0,0,2,1,1,1,2,0,0,0,0,0 ],
                       [ 0,0,0,2,2,2,0,0,0,0,0,0 ],
                       [ 0,0,0,0,2,0,0,0,0,0,0,0 ],
-                      [ 0,0,0,0,0,0,0,0,0,0,0,0 ]],
+                      [ 0,0,0,0,0,0,0,0,0,0,0,0 ]], 
  );
-
+ 
  #the same 8bit/256colors image - defined by 1-dimensional pixels array
  my $img = IUP::Image->new(
              HEIGHT=>12, WIDTH=>12, BPP=>8, # HEIGHT*WIDTH*BPP/8 should match the size of pixels
@@ -40,7 +40,7 @@ Creates an image to be shown on a label, button, toggle, or as a cursor.
                       0,0,2,1,1,1,2,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,
                       0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
  );
-
+ 
  #24bit image - defined by 1-dimensional pixels array
  my $img = IUP::Image->new(
       HEIGHT=>11, WIDTH=>11, BPP=>24, # HEIGHT*WIDTH*BPP/8 should match the size of pixels
@@ -133,21 +133,21 @@ Please observe the rules for creating cursor images: L<CURSOR|IUP::Manual::03_At
 Images are used in elements such as buttons and labels by attributes
 that points to a image. For example:
 
- $label = IUP::Label->new();
- $image = IUP::Image->new( WIDTH=>$width, HEIGHT=>$height, pixels=>$pixels );
- $label->SetAttribute( IMAGE=>$image );
-
- #or
-
  $label->IUP::Label->new();
- $image = IUP::Image->new( WIDTH=>$width, HEIGHT=>$height, pixels=>$pixels, name=>"IMG_NICKNAME" );
+ $image = IUP::Image->new( WIDTH=>$width, HEIGHT=>$height, pixels=>$pixels );  
+ $label->SetAttribute( IMAGE=>$image );
+ 
+ #or
+ 
+ $label->IUP::Label->new();
+ $image = IUP::Image->new( WIDTH=>$width, HEIGHT=>$height, pixels=>$pixels, name=>"IMG_NICKNAME" );  
  $label->SetAttribute( IMAGE=>"IMG_NICKNAME" );
-
+ 
 You can use images/icons from the B<IupImageLib>, a library of pre-defined images - see L<IUP::Manual::07_UsingImageLibrary>:
 
  $label->IUP::Label->new();
  $label->SetAttribute( IMAGE=>"IUP_MessageError" ); #buil-in image name from IupImageLib
-
+ 
 In all drivers, a path to a file name can also be used as the attribute
 value. But the B<available file formats supported are system
 dependent>. The Windows driver supports BMP, ICO and CUR. The GTK driver
@@ -157,7 +157,7 @@ the X-Windows bitmap. For example:
 
  $label->IUP::Label->new();
  $label->SetAttribute( IMAGE=>"/path/to/tecgraf.bmp" ); #BEWARE: do not use non ascii chars in filename
-
+ 
 The alternative approach to load an image from file is:
 
  $label->IUP::Label->new();
@@ -190,19 +190,19 @@ for the 16 first colors. The default color table is the same for Windows, GTK an
 
   0 =   0,  0,  0 (black)
   1 = 128,  0,  0 (dark red)
-  2 =   0,128,  0 (dark green)
+  2 =   0,128,  0 (dark green) 
   3 = 128,128,  0 (dark yellow)
   4 =   0,  0,128 (dark blue)
-  5 = 128,  0,128 (dark magenta)
-  6 =   0,128,128 (dark cian)
+  5 = 128,  0,128 (dark magenta) 
+  6 =   0,128,128 (dark cian) 
   7 = 192,192,192 (gray)
   8 = 128,128,128 (dark gray)
-  9 = 255,  0,  0 (red)
+  9 = 255,  0,  0 (red)     
  10 =   0,255,  0 (green)
  11 = 255,255,  0 (yellow)
  12 =   0,  0,255 (blue)
  13 = 255,  0,255 (magenta)
- 14 =   0,255,255 (cian)
+ 14 =   0,255,255 (cian)  
  15 = 255,255,255 (white)
 
 For images with more than 16 colors, and up to 256 colors, all the
@@ -239,6 +239,14 @@ defined within an index less than 16.
 
 Used only for images created via C<< IUP::Image->new( pixels=>...) >> not C<< IUP::Image->new( file=>... ) >>.
 
+=item B<AUTOSCALE>
+
+Automatically scale the image by a given real factor. Can be "DPI" or a
+scale factor. If not defined the global attribute IMAGEAUTOSCALE will be
+used. Values are the same of the global attribute. The minimum resulted
+size when automatically resized is 24 pixels height (since iup-3.29).
+(since iup-3.16)
+
 =item B<BGCOLOR>
 
 The color used for transparency. If not defined uses the
@@ -246,13 +254,25 @@ BGCOLOR of the control that contains the image.
 
 =item B<BPP>
 
-I<(read-only)> Returns the number of bits per pixel in the image (8 or 24 or 32).
+I<(read-only)> Returns the number of bits per pixel in the image (8 or 24 or 32). 
+
+=item B<CLEARCACHE>
+
+I<(write-only)>
+
+Clears the internal native image cache, so WID can be dynamically
+changed. (since iup-3.24)
 
 =item B<CHANNELS>
 
 I<(read-only)> Returns the number of channels in the image.
 Images created with BPP=>8 returns 1, with BPP=>24 returns
-3 and with BPP=>32 returns 4.
+3 and with BPP=>32 returns 4. 
+
+=item B<DPI>
+
+Resolution expected for display. Used when AUTOSCALE=DPI. If not defined
+the global attribute IMAGESDPI will be used. (since iup-3.23)
 
 =item B<HEIGHT>
 
@@ -268,6 +288,37 @@ are integers defining the coordinates in pixels. Default: "0:0".
 =item B<RASTERSIZE>
 
 I<(read-only)> Returns the image size in pixels. (since iup-3.0)
+
+=item B<RESHAPE>
+
+I<(write-only)>
+
+Given a new size in the format "I<width>xI<height>", allocates enough
+memory for the new size and changes WIDTH and HEIGHT attributes. Image
+contents is ignored and it will contain trash after the reshape.
+(since iup-3.24)
+
+=item B<RESIZE>
+
+I<(write-only)>
+
+Given a new size in the format "I<width>xI<height>", changes WIDTH and
+HEIGHT attributes, and resizes the image contents using bilinear
+interpolation for RGB and RGBA images and nearest neighborhood for 8
+bits. (since iup-3.24)
+
+=item B<SCALED>
+
+I<(read-only)>
+
+Returns Yes if the image has been resized. (since iup-3.25)
+
+=item B<ORIGINALSCALE>
+
+I<(read-only)>
+
+Returns the width and height before the image was scaled.
+(since iup-3.25)
 
 =item B<WID>
 
@@ -286,35 +337,35 @@ The element B<IUP::Image> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/button.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/button.pl> - IUP::Button example
+=item * L<0-basic/button.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/button.pl> - IUP::Button example
 
-=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=item * L<0-basic/dialog2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/dialog2.pl> - IUP::Dialog example
+=item * L<0-basic/dialog2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/dialog2.pl> - IUP::Dialog example
 
-=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/gauge.pl> - IUP::Gauge example
+=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/gauge.pl> - IUP::Gauge example
 
-=item * L<0-basic/glcanvasbox.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/glcanvasbox.pl> - warn "ACTION: x=$x y=$y\n";
+=item * L<0-basic/glcanvasbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/glcanvasbox.pl> - warn "ACTION: x=$x y=$y\n";
 
-=item * L<0-basic/glcontrols.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/glcontrols.pl> - original: http://webserver2.tecgraf.puc-rio.br/iup/examples/C/glcontrols.c
+=item * L<0-basic/glcontrols.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/glcontrols.pl> - original: http://webserver2.tecgraf.puc-rio.br/iup/examples/C/glcontrols.c
 
-=item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/image.pl> - IUP::Image example
+=item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/image.pl> - IUP::Image example
 
-=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/label.pl> - IUP::Label and IUP::Link example
+=item * L<0-basic/label.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/label.pl> - IUP::Label and IUP::Link example
 
-=item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
+=item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
 
-=item * L<0-basic/progressbar3.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/progressbar3.pl> - IUP::ProgressBar example
+=item * L<0-basic/progressbar3.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/progressbar3.pl> - IUP::ProgressBar example
 
-=item * L<0-basic/toggle.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/toggle.pl> - IUP::Toggle example
+=item * L<0-basic/toggle.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/toggle.pl> - IUP::Toggle example
 
-=item * L<0-basic/tray.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/tray.pl> - IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
+=item * L<0-basic/tray.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tray.pl> - IUP::Dialog + TRAY / TRAYTIP / TRAYIMAGE example
 
-=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-mdi.pl> - IUP app example
+=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
-=back
+=back 
 
 
 
@@ -324,6 +375,6 @@ L<IUP::Label|IUP::Label>, L<IUP::Button|IUP::Button>,
 L<IUP::Toggle|IUP::Toggle>, L<Destroy|IUP::Manual::02_Elements/"Destroy()">
 
 The original doc: L<iupimage.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupimage.html>, L<iupimglib.html|http://www.tecgraf.puc-rio.br/iup/en/iupimglib.html>
-
+ 
 
 =cut

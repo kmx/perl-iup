@@ -1,12 +1,209 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupdatepick.html
+
 [% h.name %]
 
 [% n.iupdatepick %]
 
 [% h.desc %]
 
-XXX-TODO: missing doc
+A dropdown for picking a date. It creates a date editing interface
+element, which can display a calendar for selecting a date.
+In Windows it is a native element. In GTK and Motif it is a custom
+element. In Motif it is not capable of displaying the calendar.
+
+[% h.usage %]
+
+[% h.create %]
+
+ my $dp = IUP::DatePick->new();
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
+
+[% h.at %]
+
+[% txt.at_intro %]
+
+=over
+
+=item B<CALENDARWEEKNUMBERS>
+
+Shows the number of the week along the year in the calendar. Default: NO.
+
+=item B<FORMAT>
+
+I<[Windows Only]>
+
+Flexible format for the date in Windows. For more information see
+L<"About Date and Time Picker Control"|https://msdn.microsoft.com/EN-US/library/windows/desktop/bb761726(v=vs.85).aspx>
+in the Windows SDK. The Windows control was configured to display the
+date only without any time options. Default: "d'/'M'/'yyyy". See the
+notes below.
+
+=item B<MONTHSHORTNAMES>
+
+I<[Windows Only]>
+
+Month display will use a short name instead of numbers. Must be set
+before ORDER. Default: NO. Names will be in the language of the system.
+
+=item B<ORDER>
+
+Day, month and year order. Can be any combination of "D", "M" and "Y"
+without repetition, and with all three letters. It will set the FORMAT
+attribute in Windows. It will NOT affect the VALUE attribute order.
+Default: "DMY".
+
+=item B<SEPARATOR>
+
+Separator between day, month and year. Must be set before ORDER in
+Windows. Default: "/".
+
+=item B<SHOWDROPDOWN>
+
+I<(write-only)>
+
+Opens or closes the dropdown calendar. Can be "YES" or "NO". Ignored if
+set before map. In Windows, it works only for NO. (since iup-3.28)
+
+=item B<TODAY>
+
+I<(read-only)>
+
+Returns the date corresponding to today in VALUE format.
+
+=item B<VALUE>
+
+The current date always in the format "year/month/day" ("%d/%d/%d" in
+C). Can be set to "TODAY". Default value is the today date.
+
+=item B<ZEROPRECED>
+
+Day and month numbers will be preceded by a zero. Must be set before
+ORDER in Windows. Default: NO.
+
+=back
+
+[% txt.at_common %]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+=back
+
+[% h.cb %]
+
+[% txt.cb_intro %]
+
+=over
+
+=item B<VALUECHANGED_CB>
+
+Called after the value was interactively changed by the user.
+
+[%h.at_handler%]
+
+ sub valuechanged_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::DatePick) that activated the event
+
+=back
+
+=back
+
+[%txt.cb_common%]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
+
+=back
+
+[% h.notes %]
+
+In GTK it uses a custom control built with IUP elements, and in Windows
+it uses DATETIMEPICK_CLASS.
+
+In Windows, when the user navigates to other pages in the calendar the
+date is not changed until the user actually selects a day.
+
+In Windows, FORMAT can have the following values, but any other text in
+the format string must be enclosed in single quotes:
+
+=over
+
+=item * B<"d"> - the one- or two-digit day. (B<default>)
+
+=item * B<"dd"> - the two-digit day. Single-digit day values are preceded
+by a zero. (Set when ZEROPRECED=Yes)
+
+=item * B<"ddd"> - the three-character weekday abbreviation.
+
+=item * B<"dddd"> - the full weekday name.
+
+=item * B<"M"> - the one- or two-digit month number. (B<default>)
+
+=item * B<"MM"> - the two-digit month number. Single-digit values are
+preceded by a zero. (Set when ZEROPRECED=Yes)
+
+=item * B<"MMM"> - the three-character month abbreviation. (Set when
+MONTHSHORTNAMES=Yes)
+
+=item * B<"MMMM"> - the full month name.
+
+=item * B<"yy"> - the last two digits of the year (that is, 1996 would be
+displayed as "96"). (Not recommended)
+
+=item * B<"yyyy"> - the full year (that is, 1996 would be displayed as
+"1996"). (B<default>)
+
+=back
+
+[% h.examples %]
+
+[% IF examples.iupdatepick %]
+The element B<IUP::DatePick> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupdatepick %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
+
+L<IUP::Calendar|IUP::Calendar>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupdatepick.html|[%url.iuporigdoc%]elem/iupdatepick.html>

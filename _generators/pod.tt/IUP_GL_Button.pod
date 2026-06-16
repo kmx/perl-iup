@@ -1,12 +1,207 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/gl/iupglbutton.html
+
 [% h.name %]
 
 [% n.iupglbutton %]
 
 [% h.desc %]
 
-XXX-TODO: missing doc
+A button drawn by IUP on a GL canvas, used inside an
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. When selected it activates a
+function in the application. Its visual presentation can contain a text
+and/or an image. It inherits from L<IUP::GL::Label|IUP::GL::Label>, and
+exists only inside an L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. (since iup-3.11)
+
+[% h.usage %]
+
+[% h.create %]
+
+ my $b = IUP::GL::Button->new( TITLE=>'Button' );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% h.at %]
+
+[% txt.at_intro %]
+
+The L<IUP::GL::Button|IUP::GL::Button> element handles all attributes
+defined for the L<IUP::GL::Label|IUP::GL::Label> control, and consequently
+for the L<IUP::GL::SubCanvas|IUP::GL::SubCanvas> control too.
+
+=over
+
+=item B<BACKIMAGE>
+
+I<(non inheritable)>
+
+Image name to be used as background. It will be zoomed to fill the
+background (it does not include the border). Use
+L<IUP::SetHandle|IUP::SetHandle> or
+L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to associate an image
+to a name. See also L<IUP::Image|IUP::Image>. (since iup-3.11.2)
+
+=item B<BACKIMAGEHIGHLIGHT>
+
+I<(non inheritable)>
+
+Background image name of the element in highlight state. If it is not
+defined then the BACKIMAGE is used. (since iup-3.11.2)
+
+=item B<BACKIMAGEINACTIVE>
+
+I<(non inheritable)>
+
+Background image name of the element when inactive. If it is not defined
+then the BACKIMAGE is used and its colors will be replaced by a modified
+version creating the disabled effect. (since iup-3.11.2)
+
+=item B<BACKIMAGEPRESS>
+
+I<(non inheritable)>
+
+Background image name of the element in pressed state. If it is not
+defined then the BACKIMAGE is used. (since iup-3.11.2)
+
+=item L<FGCOLOR|[%m.at%]/FGCOLOR>
+
+Text color. Can have an alpha component. Default: "0 0 0". If TITLE and
+IMAGE are both not defined then the button will show a color in a
+rectangle using this attribute. (since iup-3.15)
+
+=item B<FITTOBACKIMAGE>
+
+I<(non inheritable)>
+
+Enable the natural size to be computed from the BACKIMAGE. If BACKIMAGE
+is not defined it will be ignored. When set to YES it will set
+BORDERWIDTH to 0. Can be YES or NO. Default: NO. (since iup-3.11.2)
+
+=item B<FRONTIMAGE>
+
+I<(non inheritable)>
+
+Image name to be used as foreground. It will be zoomed to fill the
+foreground (it does not include the border). The foreground has the same
+area as the background, but it is drawn last. Use
+L<IUP::SetHandle|IUP::SetHandle> or
+L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to associate an image
+to a name. See also L<IUP::Image|IUP::Image>. (since iup-3.11.2)
+
+=item B<FRONTIMAGEHIGHLIGHT>
+
+I<(non inheritable)>
+
+Foreground image name of the element in highlight state. If it is not
+defined then the FRONTIMAGE is used. (since iup-3.11.2)
+
+=item B<FRONTIMAGEINACTIVE>
+
+I<(non inheritable)>
+
+Foreground image name of the element when inactive. If it is not defined
+then the FRONTIMAGE is used and its colors will be replaced by a modified
+version creating the disabled effect. (since iup-3.11.2)
+
+=item B<FRONTIMAGEPRESS>
+
+I<(non inheritable)>
+
+Foreground image name of the element in pressed state. If it is not
+defined then the FRONTIMAGE is used. (since iup-3.11.2)
+
+=back
+
+[% txt.at_common %]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+=back
+
+[% h.cb %]
+
+[% txt.cb_intro %]
+
+=over
+
+=item L<ACTION|[%m.cb%]/ACTION>
+
+Action generated when the button 1 (usually left) is selected. This
+callback is called only after the mouse is released and when it is
+released inside the button area.
+
+[%h.at_handler%]
+
+ sub action_handler {
+   my ($self) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::GL::Button) that activated the event
+
+B<Returns:> IUP_CLOSE will be processed.
+
+=back
+
+[% txt.cb_common %]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
+
+=back
+
+[% h.notes %]
+
+The difference between an L<IUP::GL::Button|IUP::GL::Button> and an
+L<IUP::GL::Label|IUP::GL::Label> is the border (controlled by
+L<IUP::GL::SubCanvas|IUP::GL::SubCanvas> attributes BORDERWIDTH and
+BORDERCOLOR), the change in background color for state feedback
+(controlled by the PRESSCOLOR and HLCOLOR attributes), and the callback
+to notify the application.
+
+The natural size is the same as an L<IUP::GL::Label|IUP::GL::Label> plus
+BORDERWIDTH.
+
+[% h.examples %]
+
+[% IF examples.iupglbutton %]
+The element B<IUP::GL::Button> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupglbutton %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
+
+L<IUP::Button|IUP::Button>, L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupglbutton.html|[%url.iuporigdoc%]gl/iupglbutton.html>

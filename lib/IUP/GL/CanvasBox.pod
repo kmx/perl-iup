@@ -1,12 +1,198 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/gl/iupglcanvasbox.html
+
 =head1 NAME
 
 IUP::GL::CanvasBox - [GUI element] GL-based canvas box
 
 =head1 DESCRIPTION
 
-XXX-TODO: missing doc
+GUI element that is an OpenGL canvas which is also a container. It inherits
+from L<IUP::CanvasGL|IUP::CanvasGL> and can host the OpenGL based controls of
+the IUP GL library (such as L<IUP::GL::Button|IUP::GL::Button> and
+L<IUP::GL::Label|IUP::GL::Label>), so it is the base element for building
+OpenGL-drawn user interfaces. To use the GL controls inside your OpenGL canvas
+you must replace the plain L<IUP::CanvasGL|IUP::CanvasGL> by an
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. (since iup-3.11)
+
+It can have any number of children. Controls from the IUP GL library can be used
+as children along with the void containers such as L<IUP::Hbox|IUP::Hbox>,
+L<IUP::Vbox|IUP::Vbox>, and so on, including L<IUP::Fill|IUP::Fill>. Native
+elements can also be placed on top although they will not be clipped by
+L<IUP::GL::Frame|IUP::GL::Frame> and the other GL containers.
+
+The elements that are a direct child of the box can be positioned using the
+B<VERTICALALIGN> and/or B<HORIZONTALALIGN> attributes, or using a position in
+pixels relative to the top-left corner of the box by setting the attribute
+L<POSITION|IUP::Manual::03_Attributes/POSITION>. Each direct child will be sized to its natural
+size by default, except if B<EXPANDHORIZONTAL> or B<EXPANDVERTICAL> are set. The
+box can be created with no elements and be dynamically filled using
+L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ my $cnv = IUP::GL::CanvasBox->new( BUFFER=>'DOUBLE' );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item B<MARGIN>
+
+I<(non inheritable)>
+
+Defines a margin in pixels. Its value has the format "I<width>xI<height>",
+where I<width> and I<height> are integer values corresponding to the horizontal
+and vertical margins, respectively. Default: "0x0" (no margin).
+
+=item B<REDRAW>
+
+I<(non inheritable, write-only)>
+
+Forces a full redraw of all elements and the main canvas.
+
+=item B<HORIZONTALALIGN>
+
+I<(non inheritable)> I<(at children only)>
+
+Horizontally aligns the element inside the box. Possible values: "ALEFT",
+"ACENTER", "ARIGHT" or "FLOAT". Default: "FLOAT". When FLOAT is used its
+horizontal position is obtained from the L<POSITION|IUP::Manual::03_Attributes/POSITION>
+attribute.
+
+=item B<VERTICALALIGN>
+
+I<(non inheritable)> I<(at children only)>
+
+Vertically aligns the element inside the box. Possible values: "ATOP",
+"ACENTER", "ABOTTOM" or "FLOAT". Default: "FLOAT". When FLOAT is used its
+vertical position is obtained from the L<POSITION|IUP::Manual::03_Attributes/POSITION>
+attribute.
+
+=item B<EXPANDHORIZONTAL>
+
+I<(non inheritable)> I<(at children only)>
+
+Expands the horizontal size of the element to the box width. Works only if
+EXPAND=Yes or HORIZONTAL. Can be Yes or No. Default: No. (since iup-3.13)
+
+=item B<EXPANDVERTICAL>
+
+I<(non inheritable)> I<(at children only)>
+
+Expands the vertical size of the element to the box height. Works only if
+EXPAND=Yes or VERTICAL. Can be Yes or No. Default: No. (since iup-3.13)
+
+=item L<CLIENTSIZE|IUP::Manual::03_Attributes/CLIENTSIZE>,
+L<CLIENTOFFSET|IUP::Manual::03_Attributes/CLIENTOFFSET>
+
+Also accepted.
+
+=item L<IUP::CanvasGL|IUP::CanvasGL> and L<IUP::Canvas|IUP::Canvas>
+
+The L<IUP::GL::CanvasBox|IUP::GL::CanvasBox> element handles all attributes
+defined for an OpenGL canvas and a conventional canvas.
+
+=back
+
+The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+
+=over
+
+=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
+L<FONT|IUP::Manual::03_Attributes/FONT>,
+L<EXPAND|IUP::Manual::03_Attributes/EXPAND>,
+L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
+L<POSITION|IUP::Manual::03_Attributes/POSITION>,
+L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
+L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>,
+L<WID|IUP::Manual::03_Attributes/WID>,
+L<TIP|IUP::Manual::03_Attributes/TIP>,
+L<SIZE|IUP::Manual::03_Attributes/SIZE>,
+L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
+L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
+L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+
+=back
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item *
+
+The L<IUP::GL::CanvasBox|IUP::GL::CanvasBox> element understands all callbacks
+defined for the canvas (ACTION, BUTTON_CB, MOTION_CB, RESIZE_CB, WHEEL_CB,
+etc.). These standard canvas callbacks are documented on
+L<IUP::CanvasGL|IUP::CanvasGL> - refer to that page for their prototypes and
+behavior.
+
+=back
+
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
+
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>,
+L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
+
+=back
+
+=head1 NOTES
+
+This control is itself an OpenGL canvas, so it supports the standard
+L<IUP::CanvasGL|IUP::CanvasGL> callbacks and the C<GLMakeCurrent()> and
+C<GLSwapBuffers()> methods inherited from it.
+
+Because it has to forward the mouse and action callbacks to the IUP GL elements,
+when it is mapped the callbacks ACTION, BUTTON_CB, MOTION_CB, WHEEL_CB and
+LEAVEWINDOW_CB are replaced by internal callbacks. The application callbacks will
+still be called and can be retrieved by using the prefix "APP_" on the callback
+name. If for some reason the application sets one of these callbacks after being
+mapped, the box internal callback can be retrieved by using the prefix "GLBOX_"
+on the callback name.
+
+Keyboard focus is NOT processed for L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>
+children.
+
+The L<IUP::CanvasGL|IUP::CanvasGL> SWAPBUFFERS_CB callback is used internally to
+enable a correct display for the box children. This means that when the
+application calls C<GLSwapBuffers()>, the children will be drawn before actually
+swapping the double buffer.
+
+=head1 EXAMPLES
+
+
+The element B<IUP::GL::CanvasBox> is used in the following sample scripts:
+
+=over
+
+=item * L<0-basic/glcanvasbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/glcanvasbox.pl> - warn "ACTION: x=$x y=$y\n";
+
+=item * L<0-basic/glcontrols.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/glcontrols.pl> - original: http://webserver2.tecgraf.puc-rio.br/iup/examples/C/glcontrols.c
+
+=back
+
+
 
 =head1 SEE ALSO
+
+L<IUP::CanvasGL|IUP::CanvasGL>, L<IUP::GL::Button|IUP::GL::Button>
 
 The original doc: L<iupglcanvasbox.html|http://www.tecgraf.puc-rio.br/iup/en/gl/iupglcanvasbox.html>
 

@@ -1,12 +1,324 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/gl/iupglexpander.html
+
 [% h.name %]
 
 [% n.iupglexpander %]
 
 [% h.desc %]
 
-XXX-TODO: missing doc
+A collapsible/expandable container drawn by IUP on a GL canvas. It can
+interactively show or hide its child. It inherits from
+L<IUP::GL::SubCanvas|IUP::GL::SubCanvas> and exists only inside an
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. (since iup-3.11)
+
+[% h.usage %]
+
+[% h.create %]
+
+ my $exp = IUP::GL::Expander->new( child=>$something, TITLE=>'Expander' );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% h.at %]
+
+[% txt.at_intro %]
+
+=over
+
+=item B<BACKCOLOR>
+
+I<(non inheritable)>
+
+Background color of the title area. Default: "50 100 150".
+
+=item B<BARPOSITION>
+
+Indicates the bar handler position. Possible values are "TOP",
+"BOTTOM", "LEFT" or "RIGHT". Default: "TOP".
+
+=item B<BARSIZE>
+
+I<(non inheritable)>
+
+Controls the size of the bar handler. Default: the height of a text
+line plus 5 pixels.
+
+=item L<EXPAND|[%m.at%]/EXPAND>
+
+I<(non inheritable)>
+
+The default value is "YES".
+
+=item B<EXTRABUTTONS>
+
+I<(non inheritable)>
+
+Sets the number of extra image buttons at right when BARPOSITION=TOP.
+The maximum number of buttons is 3. See the EXTRABUTTON_CB callback.
+Default: 0.
+
+=item B<IMAGEEXTRAid>
+
+Image name used for the button. id can be 1, 2 or 3. 1 is the rightmost
+button, and count from right to left.
+
+=item B<IMAGEEXTRAPRESSid>
+
+Image name used for the button when pressed.
+
+=item B<IMAGEEXTRAHIGHLIGHTid>
+
+Image name for the button used when mouse is over the button area. All
+images must be 16x16, or smaller but the occupied size will still be
+16x16.
+
+=item B<FORECOLOR>
+
+I<(non inheritable)>
+
+Text and arrow color. Default: "255 255 255".
+
+=item B<HIGHCOLOR>
+
+I<(non inheritable)>
+
+Text and arrow color when highlight. Default: "200 225 245".
+
+=item B<IMAGE>
+
+I<(non inheritable)>
+
+Image name to replace the arrow by an image when STATE=CLOSE. Works
+only when BARPOSITION=TOP. The minimum horizontal space reserved for
+the handler is 20 pixels. Use L<IUP::SetHandle|IUP::SetHandle> or
+L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to associate an image
+to a name. See also L<IUP::Image|IUP::Image>.
+
+=item B<IMAGEOPEN>
+
+Image name used when STATE=OPEN.
+
+=item B<IMAGEHIGHLIGHT>
+
+Image name used when mouse is over the bar handler and STATE=CLOSE.
+
+=item B<IMAGEOPENHIGHLIGHT>
+
+Image name used when mouse is over the bar handler and STATE=OPEN.
+
+=item B<MOVEABLE>
+
+I<(non inheritable)>
+
+Enable the frame to be interactively moved when it is a direct child of
+the L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. Default: NO.
+
+=item B<MOVETOTOP>
+
+I<(non inheritable)>
+
+When MOVEABLE=Yes and the frame is moved then its ZORDER is also set to
+TOP. (since iup-3.11.1)
+
+=item B<PRESSCOLOR>
+
+I<(non inheritable)>
+
+Text and arrow color when pressed. Default: "150 200 235".
+
+=item B<STATE>
+
+I<(non inheritable)>
+
+Show or hide the container elements. Possible values: "OPEN" (expanded)
+or "CLOSE" (collapsed). Default: OPEN. Setting this attribute will
+automatically change the layout of the entire dialog so the child can
+be recomposed.
+
+=item B<TITLE>
+
+I<(non inheritable)>
+
+Title text, shown in the title bar near the expand or collapse symbol.
+Shown only when BARPOSITION=TOP.
+
+=item B<TITLEBACKIMAGE>
+
+I<(non inheritable)>
+
+Image name to be used as a background of the title area. It will be
+zoomed to fill the background (it does not include the border). Use
+L<IUP::SetHandle|IUP::SetHandle> or
+L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to associate an image
+to a name. See also L<IUP::Image|IUP::Image>. (since iup-3.11.1)
+
+=item B<TITLEBACKIMAGEINACTIVE>
+
+I<(non inheritable)>
+
+Background image name of the element when inactive. If it is not defined
+then the TITLEBACKIMAGE is used and its colors will be replaced by a
+modified version creating the disabled effect. (since iup-3.11.2)
+
+=item L<CLIENTSIZE|[%m.at%]/CLIENTSIZE>, L<CLIENTOFFSET|[%m.at%]/CLIENTOFFSET>
+
+Also accepted.
+
+=back
+
+[% txt.at_common %]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+=back
+
+[% h.cb %]
+
+[% txt.cb_intro %]
+
+=over
+
+=item L<ACTION|[%m.cb%]/ACTION>
+
+Action generated after the expander state is interactively changed.
+
+[%h.at_handler%]
+
+ sub action_handler {
+   my ($self) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Expander) that activated the event
+
+=back
+
+=item B<EXTRABUTTON_CB>
+
+Action generated when any mouse button is pressed and released.
+
+[%h.at_handler%]
+
+ sub extrabutton_cb_handler {
+   my ($self, $button, $pressed) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Expander) that activated the event
+
+B<$button:> identifies the extra button. Can be 1, 2 or 3 (this is not
+the same as BUTTON_CB).
+
+B<$pressed:> indicates the state of the button: 0 if the mouse button was
+released, 1 if the mouse button was pressed.
+
+=back
+
+=item B<MOVE_CB>
+
+Called after the frame was moved on the
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>, when MOVEABLE=Yes. The
+coordinates are the same as the L<POSITION|[%m.at%]/POSITION> attribute.
+
+[%h.at_handler%]
+
+ sub move_cb_handler {
+   my ($self, $x, $y) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Expander) that activated the event
+
+B<$x, $y:> coordinates of the new position.
+
+=back
+
+=item B<OPENCLOSE_CB>
+
+Action generated before the expander state is interactively changed.
+
+[%h.at_handler%]
+
+ sub openclose_cb_handler {
+   my ($self, $state) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Expander) that activated the event
+
+B<$state:> new state to be applied.
+
+B<Returns:> if IUP_IGNORE is returned the new state is ignored.
+
+=back
+
+=back
+
+[% txt.cb_common %]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
+
+=back
+
+[% h.notes %]
+
+The container can be created with no elements and be dynamically filled
+using L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
+
+When the TITLE is defined and BARPOSITION=TOP then the expand/collapse
+symbol is left aligned. In all other situations the expand/collapse
+symbol is centered.
+
+[% h.examples %]
+
+[% IF examples.iupglexpander %]
+The element B<IUP::GL::Expander> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupglexpander %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
+
+L<IUP::Expander|IUP::Expander>, L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupglexpander.html|[%url.iuporigdoc%]gl/iupglexpander.html>

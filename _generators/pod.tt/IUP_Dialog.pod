@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/dlg/iupdialog.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/dlg/iupdialog.html
 
 [% h.name %]
 
@@ -58,6 +58,20 @@ around the dialog. Default: "YES". BORDER=NO is useful only when
 RESIZE=NO, MAXBOX=NO, MINBOX=NO, MENUBOX=NO and TITLE=undef, if any of
 these are defined there will be always some border.
 
+=item B<BORDERSIZE>
+
+I<(non inheritable) (read-only)>
+
+Returns the border size. (since iup-3.18)
+
+=item B<CHILDOFFSET>
+
+Allow to specify a position offset for the child. Available for native
+containers only. It will not affect the natural size, and allows to
+position controls outside the client area. Format "I<dx>xI<dy>", where
+I<dx> and I<dy> are integer values corresponding to the horizontal and
+vertical offsets, respectively, in pixels. Default: 0x0. (since iup-3.14)
+
 =item L<CURSOR|[%m.at%]/CURSOR>
 
 I<(non inheritable)>
@@ -79,6 +93,13 @@ I<(non inheritable)>
 
 The default
 value is "YES".
+
+=item B<NACTIVE>
+
+I<(non inheritable)>
+
+Same as L<ACTIVE|[%m.at%]/ACTIVE> but does not affect the controls
+inside the dialog. (since iup-3.13)
 
 =item L<SIZE|[%m.at%]/SIZE>
 
@@ -168,13 +189,13 @@ Note that ACTIVE, BGCOLOR and FONT will also affect all the controls inside the 
 
 Name of the button activated when the user press Enter when focus is in another control of the dialog.
 
-To associate a name to element use L<SetName|/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
+To associate a name to element use L<SetName|[%m.elem%]/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|[%m.elem%]/"new()"> constructor.
 
 =item B<DEFAULTESC>
 
 Name of the button activated when the user press Esc when focus is in another control of the dialog.
 
-To associate a name to element use L<SetName|/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
+To associate a name to element use L<SetName|[%m.elem%]/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|[%m.elem%]/"new()"> constructor.
 
 =item B<DIALOGFRAME>
 
@@ -305,6 +326,10 @@ defined then the first control than can receive the focus is selected
 the dialog). Updated after SHOW_CB is called and only if the focus was
 not changed during the callback.
 
+=item B<SHOWNOFOCUS>
+
+Do not set focus after show. (since iup-3.30)
+
 =item B<XWINDOW>
 
 I<[UNIX Only] (non inheritable, read-only)> Returns the
@@ -323,6 +348,34 @@ I<[Windows and GTK Only] (read-only)> informs if the
 dialog is the active window (the window with focus). Can be Yes or No.
 (since iup-3.4)
 
+=item B<CUSTOMFRAME>
+
+I<[Windows and GTK Only] (non inheritable)>
+
+Allows the application to customize the dialog frame elements (the title
+and its buttons) by using IUP controls for its elements like caption,
+minimize button, maximize button, and close buttons. The custom frame
+support uses the native system support for custom frames. The
+application is responsible for leaving space for the borders. One
+drawback is that menu bars will not work. For the dialog to be able to
+be moved an L<IUP::Label|IUP::Label> or an L<IUP::Canvas|IUP::Canvas>
+must be at the top of the dialog and must have the NAME attribute set to
+CUSTOMFRAMECAPTION. Native custom frames are supported only in Windows
+and in GTK version 3.10. See the Custom Frame notes below. (since
+iup-3.18)
+
+=item B<MAXIMIZED>
+
+I<[Windows and GTK Only] (read-only)>
+
+Indicates if the dialog is maximized. Can be YES or NO. (since iup-3.12)
+
+=item B<MINIMIZED>
+
+I<[Windows and GTK Only] (read-only)>
+
+Indicates if the dialog is minimized. Can be YES or NO. (since iup-3.15)
+
 =item B<HIDETASKBAR>
 
 I<[Windows and GTK Only] (write-only)> Action attribute
@@ -334,12 +387,66 @@ same effect as setting LOCKLOOP=Yes and normally hiding the dialog.
 IMPORTANT: when you hide using HIDETASKBAR, you must show using
 HIDETASKBAR also. Possible values: YES, NO.
 
+=item B<TASKBARPROGRESS>
+
+I<[Windows Only] (write-only)>
+
+This functionality enables the use of a progress bar on a taskbar button
+(Windows 7 or earlier version) (available only for Visual C++ 10 and
+above). Default: NO. (since iup-3.10)
+
+=item B<TASKBARPROGRESSSTATE>
+
+I<[Windows Only] (write-only)>
+
+Sets the type and state of the progress indicator displayed on a taskbar
+button. Possible values: NORMAL (a green bar), PAUSED (a yellow bar),
+ERROR (a red bar), INDETERMINATE (a green marquee) and NOPROGRESS (no
+bar). Default: NORMAL. (since iup-3.10)
+
+=item B<TASKBARPROGRESSVALUE>
+
+I<[Windows Only] (write-only)>
+
+Updates a progress bar hosted in a taskbar button to show the specific
+percentage completed of the full operation. The value must be between 0
+and 100. (since iup-3.10)
+
+=item B<TASKBARBUTTON>
+
+I<[Windows Only]>
+
+If set to SHOW force the application button to be shown on the taskbar
+even if the dialog does not have decorations. If set to HIDE force the
+application button to be hidden from the taskbar, but also in this case
+the system menu, the maximize and minimize buttons will be hidden.
+(since iup-3.28)
+
 =item B<OPACITY>
 
 I<[Windows and GTK Only]> sets the dialog transparency alpha
 value. Valid values range from 0 (completely transparent) to 255
 (opaque). In Windows set to C<undef> to remove the LAYERED style bit. (GTK
 2.12)
+
+=item B<OPACITYIMAGE>
+
+I<[Windows Only]>
+
+Sets an RGBA image as the dialog background so it is possible to create a
+non rectangle window with transparency, but it can not have children.
+Used usually for splash screens. It must be set before map so the native
+window would be properly initialized when mapped. Works also for GTK but
+as the SHAPEIMAGE attribute. (since iup-3.16)
+
+=item B<SHAPEIMAGE>
+
+I<[Windows and GTK Only]>
+
+Sets an RGBA image as the dialog shape so it is possible to create a non
+rectangle window with children. (GTK 2.12) Only the fully transparent
+pixels will be transparent. The pixels colors will be ignored, only the
+alpha channel is used. (since iup-3.26)
 
 =item B<TOPMOST>
 
@@ -358,6 +465,14 @@ I<[Windows and GTK Only]> Name of a IUP image to be used as the tray icon. (GTK 
 
 I<[Windows and GTK Only]> Tray icon's tooltip text. (GTK 2.10)
 
+=item B<TRAYTIPMARKUP>
+
+I<[GTK Only]>
+
+Allows the tip string to contain Pango markup commands. Can be "YES" or
+"NO". Default: "NO". Must be set before setting the TRAYTIP attribute.
+(GTK 2.16) (since iup-3.6)
+
 =back
 
 =head2 Exclusive [GTK Only]
@@ -367,6 +482,12 @@ I<[Windows and GTK Only]> Tray icon's tooltip text. (GTK 2.10)
 =item B<DIALOGHINT>
 
 I<(creation-only)> if enabled sets the window type hint to a dialog hint.
+
+=item B<HIDETITLEBAR>
+
+I<[GTK Only] (non inheritable)>
+
+Hides the title bar with all its elements. (since iup-3.20) (GTK 3.10)
 
 =back
 
@@ -390,6 +511,36 @@ In Windows Vista it is NOT working as expected.
 
 I<[Windows Only] (creation only)> Embeds the dialog inside another window.
 
+=item B<CUSTOMFRAMEDRAW>
+
+I<[Windows Only] (non inheritable)>
+
+Allows the application to customize the dialog frame elements (the title
+and its buttons) by drawing them with the CUSTOMFRAMEDRAW_CB callback.
+Can be Yes or No. The Window client area is expanded to include the
+whole window. Notice that the dialog attributes like BORDER, RESIZE,
+MAXBOX, MINBOX and TITLE must still be defined. But maximize, minimize
+and close buttons must be manually implemented in the BUTTON_CB
+callback. One drawback is that menu bars will not work. (since iup-3.18)
+
+=item B<CUSTOMFRAMECAPTIONHEIGHT>
+
+I<[Windows Only] (non inheritable)>
+
+Height of the caption area. If not defined it will use the system size.
+(since iup-3.18)
+
+=item B<CUSTOMFRAMECAPTIONLIMITS>
+
+I<[Windows Only] (non inheritable)>
+
+Limits of the caption area at left and at right. The caption area is
+always expanded inside the limits when the dialog is resized. Format is
+"left:right". Default: "0:0". This will allow the dialog to be moved by
+the system when the user click and drag the caption area. If not defined
+but CUSTOMFRAMECAPTION is defined, then it will use the caption element
+horizontal position and size for the limits. (since iup-3.18)
+
 =item B<HELPBUTTON>
 
 I<[Windows Only] (creation only)> Inserts a help button in
@@ -399,6 +550,13 @@ the next interaction of the user with a control in the dialog, the
 callback L<HELP_CB|[%m.cb%]/HELP_CB> will be called instead of
 the control defined ACTION callback. Possible values: YES, NO. Default:
 NO.
+
+=item B<MAXIMIZEATPARENT>
+
+I<[Windows Only]>
+
+When using multiple monitors, maximize the dialog in the same monitor
+that the parent dialog is. (since iup-3.28)
 
 =item B<TOOLBOX>
 
@@ -516,6 +674,37 @@ B<$size:> size of the command line string including the null character.
 I<[Windows and GTK Only]>
 
 Action generated when one or more files are dropped in the dialog.
+
+=item B<CUSTOMFRAME_CB>
+
+I<[Windows Only]>
+
+Called when the dialog must be redrawn. Although it is designed for
+drawing the frame elements, all the dialog must be painted. Works only
+when CUSTOMFRAME or CUSTOMFRAMEDRAW is defined. The dialog can be used
+just like an L<IUP::Canvas|IUP::Canvas> to draw its elements, the
+HDC_WMPAINT and CLIPRECT attributes are defined during the callback. For
+mouse callbacks use the same callbacks as L<IUP::Canvas|IUP::Canvas>,
+such as BUTTON_CB and MOTION_CB. (since iup-3.18)
+
+[%h.at_handler%]
+
+ sub customframe_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::Dialog) that activated the event
+
+=back
+
+=item L<MOTION_CB|[%m.cb%]/MOTION_CB>
+
+I<[Windows and GTK Only]>
+
+Action generated when the mouse is moved.
 
 =item B<MDIACTIVATE_CB>
 

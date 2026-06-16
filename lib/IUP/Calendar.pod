@@ -1,12 +1,128 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupcalendar.html
+
 =head1 NAME
 
 IUP::Calendar - [GUI element] calendar
 
 =head1 DESCRIPTION
 
-XXX-TODO: missing doc
+Creates a calendar to interactively select a date. The user can navigate
+between months and years and pick a day from the displayed month grid.
+
+GTK and Windows only. NOT available in Motif. (since iup-3.17)
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ my $cal = IUP::Calendar->new();
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item B<TODAY>
+
+I<(read-only)>
+
+Returns the date corresponding to today in VALUE format.
+
+=item B<VALUE>
+
+The current date always in the format "year/month/day" ("%d/%d/%d" in C).
+Can be set to "TODAY". Default value is the today date.
+
+=item B<WEEKNUMBERS>
+
+Shows the number of the week along the year. Default: NO.
+
+=back
+
+The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+
+=over
+
+=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
+L<FONT|IUP::Manual::03_Attributes/FONT>,
+L<EXPAND|IUP::Manual::03_Attributes/EXPAND>,
+L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
+L<POSITION|IUP::Manual::03_Attributes/POSITION>,
+L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
+L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>,
+L<WID|IUP::Manual::03_Attributes/WID>,
+L<TIP|IUP::Manual::03_Attributes/TIP>,
+L<SIZE|IUP::Manual::03_Attributes/SIZE>,
+L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
+L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
+L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+
+=back
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item B<VALUECHANGED_CB>
+
+Called after the date is interactively changed by the user.
+
+B<Callback handler prototype:>
+
+ sub valuechanged_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::Calendar) that activated the event
+
+=back
+
+=back
+
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
+
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>,
+L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
+
+=back
+
+=head1 NOTES
+
+In Windows, the view is changed when the month or year is clicked, so the
+user can select the month of the year or a year among years.
+
+In GTK the today date is not marked in the calendar.
+
+In GTK it uses GtkCalendar, and in Windows it uses MONTHCAL_CLASS.
+
+=head1 EXAMPLES
+
+
+Unfortunately there are no sample scripts using this element.
+
+
 
 =head1 SEE ALSO
+
+L<IUP::DatePick|IUP::DatePick>
 
 The original doc: L<iupcalendar.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupcalendar.html>
 

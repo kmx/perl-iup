@@ -1,12 +1,195 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/gl/iupglprogressbar.html
+
 [% h.name %]
 
 [% n.iupglprogressbar %]
 
 [% h.desc %]
 
-XXX-TODO: missing doc
+A progress bar drawn by IUP on a GL canvas. It shows a percent value
+that can be updated to simulate a progression. It inherits from
+L<IUP::GL::SubCanvas|IUP::GL::SubCanvas>, and exists only inside an
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. (since iup-3.11)
+
+[% h.usage %]
+
+[% h.create %]
+
+ my $pb = IUP::GL::ProgressBar->new( VALUE=>0.3 );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% h.at %]
+
+[% txt.at_intro %]
+
+The L<IUP::GL::ProgressBar|IUP::GL::ProgressBar> element handles all
+attributes defined for the L<IUP::GL::SubCanvas|IUP::GL::SubCanvas> control.
+
+=over
+
+=item B<BACKIMAGE>
+
+I<(non inheritable)>
+
+Image name to be used as background. It will be zoomed to fill the
+background (it does not include the border). Use
+L<IUP::SetHandle|IUP::SetHandle> or
+L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to associate an image
+to a name. See also L<IUP::Image|IUP::Image>. (since iup-3.11.2)
+
+=item B<BACKIMAGEHIGHLIGHT>
+
+I<(non inheritable)>
+
+Background image name of the element in highlight state. If it is not
+defined then the BACKIMAGE is used. (since iup-3.11.2)
+
+=item B<BACKIMAGEINACTIVE>
+
+I<(non inheritable)>
+
+Background image name of the element when inactive. If it is not defined
+then the BACKIMAGE is used and its colors will be replaced by a modified
+version creating the disabled effect. (since iup-3.11.2)
+
+=item B<BACKIMAGEPRESS>
+
+I<(non inheritable)>
+
+Background image name of the element in pressed state. If it is not
+defined then the BACKIMAGE is used. (since iup-3.11.2)
+
+=item L<FGCOLOR|[%m.at%]/FGCOLOR>
+
+Controls the bar color. Can have an alpha component. Default: "200 225 245".
+
+=item B<FITTOBACKIMAGE>
+
+I<(non inheritable)>
+
+Enable the natural size to be computed from the BACKIMAGE. If BACKIMAGE
+is not defined it will be ignored. When set to YES it will set
+BORDERWIDTH to 0. Can be YES or NO. Default: NO. (since iup-3.11.2)
+
+=item B<MAX>
+
+I<(non inheritable)>
+
+Contains the maximum value. Default is "1".
+
+=item B<MIN>
+
+I<(non inheritable)>
+
+Contains the minimum value. Default is "0".
+
+=item B<ORIENTATION>
+
+Can be "VERTICAL" or "HORIZONTAL". Default: "HORIZONTAL". Horizontal goes
+from left to right, and vertical from bottom to top.
+
+=item B<PADDING>
+
+Internal margin. Default value: "0x0".
+
+=item B<CPADDING>
+
+Same as PADDING but using the units of the B<SIZE> attribute. It will
+actually set the PADDING attribute. (since iup-3.29)
+
+=item B<SHOWTEXT>
+
+Indicates if the text inside the bar is to be shown or not. Possible
+values: "YES" or "NO". Default: "YES".
+
+=item B<TEXT>
+
+I<(non inheritable)>
+
+Contains a text to be shown inside the bar when SHOWTEXT=YES. If it is
+C<undef>, the percentage calculated from VALUE will be used.
+
+=item B<TXTCOLOR>
+
+Text color. Can have an alpha component. Default: "0 0 0".
+
+=item B<VALUE>
+
+I<(non inheritable)>
+
+Contains a number between "MIN" and "MAX", controlling the current
+position.
+
+=back
+
+[% txt.at_common %]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+=back
+
+[% h.cb %]
+
+[% txt.cb_intro %]
+
+=over
+
+=back
+
+[% txt.cb_common %]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
+
+=back
+
+[% h.notes %]
+
+The natural size is the height of one character in one direction and the
+width of 15 characters in the other, plus PADDING and BORDERWIDTH.
+
+[% h.examples %]
+
+[% IF examples.iupglprogressbar %]
+The element B<IUP::GL::ProgressBar> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupglprogressbar %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
+
+L<IUP::ProgressBar|IUP::ProgressBar>, L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupglprogressbar.html|[%url.iuporigdoc%]gl/iupglprogressbar.html>

@@ -1,12 +1,134 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/gl/iupgllink.html
+
 =head1 NAME
 
 IUP::GL::Link - [GUI element] GL-based link
 
 =head1 DESCRIPTION
 
-XXX-TODO: missing doc
+A hyperlink label drawn by IUP on a GL canvas, which displays an
+underlined clickable text. It is derived from
+L<IUP::GL::Label|IUP::GL::Label> and exists only inside an
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>.
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ my $link = IUP::GL::Link->new( URL=>'http://...', TITLE=>'IUP' );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
+
+Text color. Default: the global attribute LINKFGCOLOR.
+
+=item B<URL>
+
+The destination address of the link. Can be any text. If
+L<IUP::Help|IUP::Help> is used it should be a valid URL. It can be
+C<undef>. Default: "YES".
+
+=back
+
+The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+
+=over
+
+=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
+L<FONT|IUP::Manual::03_Attributes/FONT>,
+L<EXPAND|IUP::Manual::03_Attributes/EXPAND>,
+L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
+L<POSITION|IUP::Manual::03_Attributes/POSITION>,
+L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
+L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>,
+L<WID|IUP::Manual::03_Attributes/WID>,
+L<TIP|IUP::Manual::03_Attributes/TIP>,
+L<SIZE|IUP::Manual::03_Attributes/SIZE>,
+L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
+L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
+L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+
+=back
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item L<ACTION|IUP::Manual::04_Callbacks/ACTION>
+
+Action generated when the link is activated.
+
+B<Callback handler prototype:>
+
+ sub action_handler {
+   my ($self, $url) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Link) that activated the event
+
+B<$url:> the destination address of the link.
+
+B<Returns:> IUP_CLOSE will be processed. If returns IUP_DEFAULT or it is
+not defined, the L<IUP::Help|IUP::Help> function will be called.
+
+=back
+
+=back
+
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
+
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>,
+L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
+
+=back
+
+=head1 NOTES
+
+When the cursor is over the text, it is changed to the HAND cursor.
+
+If the callback is not defined the L<IUP::Help|IUP::Help> function is
+called with the given URL.
+
+=head1 EXAMPLES
+
+
+The element B<IUP::GL::Link> is used in the following sample scripts:
+
+=over
+
+=item * L<0-basic/glcanvasbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/glcanvasbox.pl> - warn "ACTION: x=$x y=$y\n";
+
+=item * L<0-basic/glcontrols.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/glcontrols.pl> - original: http://webserver2.tecgraf.puc-rio.br/iup/examples/C/glcontrols.c
+
+=back
+
+
 
 =head1 SEE ALSO
+
+L<IUP::Link|IUP::Link>, L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>
 
 The original doc: L<iupgllink.html|http://www.tecgraf.puc-rio.br/iup/en/gl/iupgllink.html>
 

@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupcolorbar.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupcolorbar.html
 
 [% h.name %]
 
@@ -61,6 +61,22 @@ use the same set of L<IUP::Image|IUP::Image>.
 I<(read-only) (non inheritable)>
 
 Same as B<NUM_CELLS> but it is read-only. (since iup-3.3)
+
+=item B<FLAT>
+
+Use a 1 pixel flat border instead of the default 3 pixels
+sunken border. When enabled is the same as setting SHADOWED=NO. Can be
+Yes or No. Default: No. (since iup-3.24)
+
+=item B<FLATCOLOR>
+
+Color of the border when FLAT=Yes and the preview area
+borders. Default "0 0 0". (since iup-3.24)
+
+=item B<FOCUSSELECT>
+
+When focus is changed the primary selection is also
+changed. (since iup-3.29)
 
 =item B<NUM_PARTS>
 

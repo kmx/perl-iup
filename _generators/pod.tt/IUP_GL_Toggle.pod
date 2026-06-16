@@ -1,12 +1,189 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/gl/iupgltoggle.html
+
 [% h.name %]
 
 [% n.iupgltoggle %]
 
-[% h.desc %]
+[% h.desc %] (since iup-3.11)
 
-XXX-TODO: missing doc
+Creates an embedded OpenGL toggle interface element - a two-state
+(on/off) button (checkbox) drawn by IUP on a GL canvas. When selected it
+generates an action that activates a function in the associated
+application. Its visual representation can contain a text and/or an
+image. It inherits from L<IUP::GL::Button|IUP::GL::Button> and exists
+only inside an L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>.
+
+[% h.usage %]
+
+[% h.create %]
+
+ my $t = IUP::GL::Toggle->new( TITLE=>'Toggle' );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% h.at %]
+
+[% txt.at_intro %]
+
+=over
+
+=item B<CHECKMARK>
+
+I<(non inheritable)>
+
+Enables the check mark. Default: NO. When
+enabled the border and the background are not drawn, and a check mark box
+is drawn at left or right, according to RIGHTBUTTON.
+
+=item B<CHECKMARKWIDTH>
+
+I<(non inheritable)>
+
+Size of the check mark. Default: 14.
+
+=item B<RADIO>
+
+I<(read-only)>
+
+Returns if the toggle is inside a radio. Can be
+"YES" or "NO". Valid only after the element is mapped, before it returns
+C<undef>.
+
+=item B<IGNORERADIO>
+
+I<(non inheritable)>
+
+When set the toggle will not behave
+as a radio when inside an L<IUP::Radio|IUP::Radio> hierarchy. (since iup-3.21)
+
+=item B<RIGHTBUTTON>
+
+I<(non inheritable)>
+
+Place the check button at the right
+of the text. Can be "YES" or "NO". Default: "NO".
+
+=item B<VALUE>
+
+I<(non inheritable)>
+
+Toggle's state. Values can be "ON", "OFF"
+or "TOGGLE". Default: "OFF". The TOGGLE option will invert the current
+state.
+
+=back
+
+[% txt.at_common %]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+=back
+
+[% h.cb %]
+
+[% txt.cb_intro %]
+
+=over
+
+=item L<ACTION|[%m.cb%]/ACTION>
+
+Action generated when the toggle's state
+(on/off) was changed. The callback also receives the toggle's state.
+
+[%h.at_handler%]
+
+ sub action_handler {
+   my ($self, $state) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Toggle) that activated the event
+
+B<$state:> 1 if the toggle's state was set to on; 0 if it was set to off.
+
+B<Returns:> IUP_CLOSE will be processed.
+
+=back
+
+=item B<VALUECHANGED_CB>
+
+Called after the value was interactively changed by
+the user. Called after the ACTION callback, but under the same context.
+
+[%h.at_handler%]
+
+ sub valuechanged_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Toggle) that activated the event
+
+=back
+
+=back
+
+[% txt.cb_common %]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
+
+=back
+
+[% h.notes %]
+
+To build a set of mutual exclusive toggles, insert them in a
+L<IUP::Radio|IUP::Radio> container. They must be inserted before creation,
+and their behavior can not be changed.
+
+A toggle that is a child of an L<IUP::Radio|IUP::Radio> automatically
+receives a name when it is mapped into the native system. (since iup-3.16)
+
+[% h.examples %]
+
+[% IF examples.iupgltoggle %]
+The element B<IUP::GL::Toggle> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupgltoggle %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
+
+L<IUP::Toggle|IUP::Toggle>, L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupgltoggle.html|[%url.iuporigdoc%]gl/iupgltoggle.html>

@@ -1,4 +1,4 @@
-=for comment based on iup-3.2 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupbutton.html
+=for comment based on iup-3.2 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iupbutton.html
 
 =head1 NAME
 
@@ -134,6 +134,12 @@ Enables the focus
 traversal of the control. In Windows the button will respect CANFOCUS
 in opposite to the other controls. Default: YES. 
 
+=item B<PROPAGATEFOCUS>
+
+I<(non inheritable)>
+
+Enables the focus callback forwarding to the next native parent with FOCUS_CB defined. Default: NO. (since iup-3.23)
+
 =item B<FLAT>
 
 I<(creation only)>
@@ -207,12 +213,20 @@ internal margin. Works just like the MARGIN attribute of
 the L<IUP::Hbox|IUP::Hbox> and L<IUP::Vbox|IUP::Vbox> containers, but uses a different name to
 avoid inheritance problems. Default value: "0x0". 
 
+=item B<CPADDING>
+
+Same as PADDING but using the units of the B<SIZE> attribute. It will actually set the PADDING attribute. (since iup-3.29)
+
 =item B<SPACING>
 
 I<(creation only)>
 
 defines the spacing between the image
 associated and the button's text. Default: "2".
+
+=item B<CSPACING>
+
+Same as SPACING but using the units of the vertical part of the B<SIZE> attribute. It will actually set the SPACING attribute. (since iup-3.29)
 
 =item L<TITLE|IUP::Manual::03_Attributes/TITLE>
 
@@ -313,67 +327,67 @@ The element B<IUP::Button> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/button.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/button.pl> - IUP::Button example
+=item * L<0-basic/button.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/button.pl> - IUP::Button example
 
-=item * L<0-basic/canvas3.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/canvas3.pl> - IUP::Canvas example
+=item * L<0-basic/canvas3.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/canvas3.pl> - IUP::Canvas example
 
-=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=item * L<0-basic/dialog1.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/dialog1.pl> - IUP::Dialog example
+=item * L<0-basic/dialog1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/dialog1.pl> - IUP::Dialog example
 
-=item * L<0-basic/dialog2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/dialog2.pl> - IUP::Dialog example
+=item * L<0-basic/dialog2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/dialog2.pl> - IUP::Dialog example
 
-=item * L<0-basic/expander.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/expander.pl> - IUP::Expander example
+=item * L<0-basic/expander.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/expander.pl> - IUP::Expander example
 
-=item * L<0-basic/fill.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/fill.pl> - IUP::Fill Example
+=item * L<0-basic/fill.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/fill.pl> - IUP::Fill Example
 
-=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/gauge.pl> - IUP::Gauge example
+=item * L<0-basic/gauge.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/gauge.pl> - IUP::Gauge example
 
-=item * L<0-basic/gridbox.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/gridbox.pl> - IUP::GridBox example
+=item * L<0-basic/gridbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/gridbox.pl> - IUP::GridBox example
 
-=item * L<0-basic/hbox.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/hbox.pl> - IUP::Hbox example
+=item * L<0-basic/hbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/hbox.pl> - IUP::Hbox example
 
-=item * L<0-basic/idle.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/idle.pl> - IUP->SetIdle Example
+=item * L<0-basic/idle.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/idle.pl> - IUP->SetIdle Example
 
-=item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/image.pl> - IUP::Image example
+=item * L<0-basic/image.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/image.pl> - IUP::Image example
 
-=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/list2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/list2.pl> - IUP::List example
+=item * L<0-basic/list2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/list2.pl> - IUP::List example
 
-=item * L<0-basic/message_clone.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/message_clone.pl>
+=item * L<0-basic/message_clone.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/message_clone.pl>
 
-=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/plot_advanced.pl> - Plot controls
+=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/plot_advanced.pl> - Plot controls
 
-=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
+=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
 
-=item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
+=item * L<0-basic/progressbar2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/progressbar2.pl> - IUP::ProgressBar example
 
-=item * L<0-basic/progressbar3.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/progressbar3.pl> - IUP::ProgressBar example
+=item * L<0-basic/progressbar3.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/progressbar3.pl> - IUP::ProgressBar example
 
-=item * L<0-basic/sbox1.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/sbox1.pl> - IUP::Sbox example
+=item * L<0-basic/sbox1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/sbox1.pl> - IUP::Sbox example
 
-=item * L<0-basic/tabs1.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/tabs1.pl> - IUP::Tabs example 
+=item * L<0-basic/tabs1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tabs1.pl> - IUP::Tabs example 
 
-=item * L<0-basic/tabs3.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/tabs3.pl> - IUP::Tabs example 
+=item * L<0-basic/tabs3.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tabs3.pl> - IUP::Tabs example 
 
-=item * L<0-basic/text_format.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/text_format.pl> - IUP::Text (formating) example
+=item * L<0-basic/text_format.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/text_format.pl> - IUP::Text (formating) example
 
-=item * L<0-basic/tree_set_attrs.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/tree_set_attrs.pl> - IUP::Tree example (attributes)
+=item * L<0-basic/tree_set_attrs.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tree_set_attrs.pl> - IUP::Tree example (attributes)
 
-=item * L<0-basic/vbox.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/vbox.pl> - IUP::Vbox example
+=item * L<0-basic/vbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/vbox.pl> - IUP::Vbox example
 
-=item * L<0-basic/zbox.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/zbox.pl> - IUP::Zbox example
+=item * L<0-basic/zbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/zbox.pl> - IUP::Zbox example
 
-=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-mdi.pl> - IUP app example
+=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-plot-demo.pl> - dials for zooming
+=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
-=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
-=item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-simple-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-simple-demo.pl> - example used for screenshot - IUP.pod
 
 =back 
 

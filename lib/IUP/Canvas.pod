@@ -1,4 +1,4 @@
-=for comment based on iup-3.2 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupcanvas.html
+=for comment based on iup-3.2 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iupcanvas.html
 
 =head1 NAME
 
@@ -93,6 +93,21 @@ enables the focus
 traversal of the control. In Windows the canvas will respect CANFOCUS
 in opposite to the other controls. Default: YES. 
 
+=item B<PROPAGATEFOCUS>
+
+I<(non inheritable)>
+
+Enables the focus callback forwarding to the next native parent with
+FOCUS_CB defined. Default: NO. (since iup-3.23)
+
+=item B<CAIRO_CR>
+
+I<[GTK Only] (non inheritable)>
+
+Contains the "cairo_t*" parameter of the internal GTK callback. Valid
+only during the ACTION callback and only when using GTK version 3.
+(since iup-3.7)
+
 =item B<CLIPRECT>
 
 I<[Windows and GTK Only] (only during ACTION)>
@@ -107,6 +122,14 @@ I<(non inheritable)>
 
 Defines a cursor
 for the canvas.
+
+=item B<DROPFILESTARGET>
+
+I<[Windows and GTK Only] (non inheritable)>
+
+Enable or disable the drop of files. Default: NO, but if DROPFILES_CB
+is defined when the element is mapped then it will be automatically
+enabled. (in older versions this attribute was named DRAGDROP)
 
 =item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
 
@@ -132,6 +155,23 @@ This size is also used in the RESIZE_CB callback.
 
 Notice that the drawing area size is not the same as RASTERSIZE. The
 SCROLLBAR and BORDER attributes affect the size of the drawing area.
+
+=item B<DRAWDRIVER>
+
+I<(read-only)>
+
+Returns the name of the draw driver in use by the IUP::Draw API. Can
+be: X11 (Motif), GDK (GTK), Cairo (GTK), D2D (Windows), GDI+ (Windows)
+or GDI (Windows). (since iup-3.25)
+
+=item B<DRAWUSEGDI>
+
+I<[Windows Only] (non inheritable)>
+
+Force the use of the old GDI driver, instead of the new DirectD2
+driver. Used in the L<IUP::Gauge|IUP::Gauge>, L<IUP::Matrix|IUP::Matrix>
+and Flat Scrollbars for better performance and backward compatibility.
+(since iup-3.26)
 
 =item B<HDC_WMPAINT>
 
@@ -217,12 +257,33 @@ horizontal scrollbar is hidden. Default: "YES".
 When enabled, if DY E<gt>= YMAX-YMIN then the
 vertical scrollbar is hidden. Default: "YES". 
 
+=item B<SCROLLVISIBLE>
+
+I<(read-only) [Windows Only]>
+
+Returns which scrollbars are visible at the moment. Can be: YES (both),
+VERTICAL, HORIZONTAL, NO. (since iup-3.31)
+
 =item B<TOUCH>
 
 I<[Windows 7 Only]>
 
 enable the multi-touch events processing.
 (Since iup-3.3)
+
+=item B<GESTURE>
+
+I<[Windows Only]>
+
+Disable the gesture support for touch interfaces. Accepts only the NO
+value. (since iup-3.31)
+
+=item B<WHEELDROPFOCUS>
+
+I<(non inheritable)>
+
+When the wheel is used the focus control receives a SHOWDROPDOWN=No.
+(since iup-3.28)
 
 =item B<XDISPLAY>
 
@@ -518,7 +579,7 @@ Default value: B<CD_BLACK>. Value B<CD_QUERY> simply returns the
 current value.
 
 Notice that B<CD_QUERY> conflicts with color RGBA=(255,255,255,0) (full
-transparent white). Use L<cdSetForeground|/"cdSetForeground()"> to avoid the conflict. See
+transparent white). Use C<cdSetForeground()> to avoid the conflict. See
 also L<Color Coding|color.html>.
 
 =head3 cdBackground()
@@ -534,7 +595,7 @@ affected by the background opacity attribute. Default value:
 B<CD_WHITE>. Value B<CD_QUERY> simply returns the current value.
 
 Notice that CD_QUERY conflicts with color RGBA=(255,255,255,0) (full
-transparent white). Use L<cdSetBackground|/"cdSetBackground()"> to avoid the conflict. See
+transparent white). Use C<cdSetBackground()> to avoid the conflict. See
 also L<Color Coding|color.html>.
 
 =head3 cdWriteMode()
@@ -803,10 +864,10 @@ follows:
  |y'| = |   sin(angle)  sy*cos(angle)  dy| * |y|         with indices  | $matrix->[1]  $matrix->[3]  $matrix->[5] |
                                              |1|
 
-But notice that the indices are different of the L<cdVectorTextTransform|/"cdVectorTextTransform">.
+But notice that the indices are different of the C<cdVectorTextTransform()>.
 
 Functions that retrieve images from the canvas are not affected by the
-transformation matrix, such as L<GetImage|/"GetImage()"> and L<ScrollArea|/"ScrollArea()">.
+transformation matrix, such as C<GetImage()> and C<ScrollArea()>.
 
 Transformation matrix is independent of the B<World Coordinate> and
 B<Origin> functions. And those are affected if a transformation is set,
@@ -1156,7 +1217,7 @@ Configures the current line style for: B<CD_CONTINUOUS>, B<CD_DASHED>,
 B<CD_DOTTED>, B<CD_DASH_DOT,> B<CD_DASH_DOT_DOT,> or C<B<CD_CUSTOM>>.
 Returns the previous value. Default value: B<CD_CONTINUOUS>. Value
 B<CD_QUERY> simply returns the current value. When B<CD_CUSTOM> is used
-the L<cdLineStyleDahes|/"cdLineStyleDahes()"> function must be called before to initialize
+the C<cdLineStyleDashes()> function must be called before to initialize
 the custom dashes. The spaces are drawn with the background color,
 except when back opacity is transparent then the background is left
 unchanged. See L<BackOpacity|filled.html#cdBackOpacity>.
@@ -1258,8 +1319,8 @@ See L<Regions|region.html> documentation.
 
 =item * B<CD_PATH>: creates a path composed of several primitives that
 can be line draw, filled or used as clipping. Must call 
-L<cdCanvasPathSet|/"cdCanvasPathSet()"> to configure the action between sequences of
-L<cdCanvasVertex|/"cdCanvasVertex()">.
+C<cdCanvasPathSet()> to configure the action between sequences of
+C<cdCanvasVertex()>.
 
 =back
 
@@ -1288,29 +1349,29 @@ Ends the polygon's definition and draws it.
  
  $canvas->cdPathSet($action);
 
-Configures the action between sequences of L<cdCanvasVertex|/"cdCanvasVertex()">. B<action>
+Configures the action between sequences of C<cdCanvasVertex()>. B<action>
 can be:
 
 =over
 
 =item * B<CD_PATH_NEW> - creates a new empty path. Useful if more than
-one path is configured. L<cdCanvasBegin|/"cdCanvasBegin()">(CD_PATH) already creates a new
+one path is configured. C<cdCanvasBegin()>(CD_PATH) already creates a new
 path.
 
 =item * B<CD_PATH_MOVETO> - moves the current position to the given
-coordinates. Must be followed by 1 call to L<cdCanvasVertex|/"cdCanvasVertex()">, 
+coordinates. Must be followed by 1 call to C<cdCanvasVertex()>, 
 B<cdfCanvasVertex>, or B<wdCanvasVertex>.
 
 =item * B<CD_PATH_LINETO> - adds a line to the path from the current
 position to the given coordinates. The current position is updated to
 the given coordinates. If there is no current position, nothing is
 connected and only the current position is updated. Must be followed by
-1 call to L<cdCanvasVertex|/"cdCanvasVertex()">, L<cdfCanvasVertex|/"cdfCanvasVertex()">, or B<wdCanvasVertex>.
+1 call to C<cdCanvasVertex()>, C<cdfCanvasVertex()>, or B<wdCanvasVertex>.
 
 =item * B<CD_PATH_ARC> - adds an arc to the path. If there is a current
 position adds also a line from the current position to the start of the
 arc. The end of the arc becomes the current position. Must be followed
-by 3 calls to L<cdCanvasVertex|/"cdCanvasVertex()">, B<cdfCanvasVertex>, or
+by 3 calls to C<cdCanvasVertex()>, B<cdfCanvasVertex>, or
 B<wdCanvasVertex>. One for the center of the arc (xc,yc), one for the
 bounding rectangle size (w,h), and one for the start and end angles
 (angle1,angle2). Angles are in degrees and oriented counter-clockwise,
@@ -1320,7 +1381,7 @@ using integer coordinates angles must be multiplied by 1000.
 =item * B<CD_PATH_CURVETO> - adds a bezier curve to the path. If there
 is no current position, the first point will be used twice. The end
 point becomes the current position. Must be followed by 3 calls to
-L<cdCanvasVertex|/"cdCanvasVertex()">, B<cdfCanvasVertex>, or B<wdCanvasVertex>. Must be
+C<cdCanvasVertex()>, B<cdfCanvasVertex>, or B<wdCanvasVertex>. Must be
 first control point (x1,y1) + second control point (x2,y2) + end point
 (x3,y3).
 
@@ -1406,7 +1467,7 @@ L<cdBegin|/"cdBegin()"> L<cdVertex|/"cdVertex()">, L<cdEnd|/"cdEnd()">.
 Fills a rectangle according to the current interior style. All points
 in the interval C<< xmin <= x <= xmax >>, C<< ymin <= y <= ymax >>
 will be painted. When the interior style B<CD_HOLLOW> is defined, the
-function behaves like its equivalent L<cdRect|/"cdRect">.
+function behaves like its equivalent C<cdRect()>.
 
 =head3 cdSector()
  
@@ -1458,7 +1519,7 @@ current interior style, the start and end points of the arc are
 connected. The parameters are the same as the B<cdSector|/"cdSector">.
 
 When the interior style B<CD_HOLLOW> is defined, the function behaves
-like its equivalent L<cdArc|/"cdArc">, plus a line connecting the arc start and
+like its equivalent C<cdArc()>, plus a line connecting the arc start and
 end points.
 
 Chord Parameters:
@@ -1509,7 +1570,7 @@ If I<a stipple> or I<a pattern> were not defined, when they are
 selected the state of the attribute is not changed.
 
 When the style B<CD_HOLLOW> is defined, functions L<cdBox|/"cdBox()"> and
-L<cdSector|/"cdSector"> behave as their equivalent L<cdRect|/"cdRect"> and L<cdArc+Lines|/"cdArc">,
+C<cdSector()> behave as their equivalent C<cdRect()> and C<cdArc()>,
 and the polygons with style B<CD_FILL> behave like B<CD_CLOSED_LINES>.
 
 =head3 cdHatch()
@@ -1611,7 +1672,7 @@ text before drawing by using the L<cdGetTextSize|/"cdGetTextSize()"> and L<cdGet
 functions.
 
 The text is drawn using a reference point; you can change the alignment
-relative to this point using the L<cdTextAligment|/"cdTextAligment()"> function.
+relative to this point using the C<cdTextAlignment()> function.
 
 =head3 cdText()
 
@@ -2007,7 +2068,7 @@ X-Windows, XRender and Cairo, support server images.
 The server image can only be greated via L<cdGetImage|/"cdGetImage()">
 
 L<cdGetImage|/"cdGetImage()">, L<cdPutImage|/"cdPutImage()"> and
-L<wdPutImage|/"wdPutImage()"> are the only methods for manipulating Server Images.
+C<wdPutImage()> are the only methods for manipulating Server Images.
 
 You cannot edit or even acces image content by any mean.
 
@@ -2018,7 +2079,7 @@ You cannot edit or even acces image content by any mean.
 
 Copies a rectangular region from the current rectangular context to the
 memory - 'internal-ServerImage' object (which can be later used
-via L<cdPutImage|/"cdPutImage()"> or L<wdPutImage|/"wdPutImage()">). 
+via L<cdPutImage|/"cdPutImage()"> or C<wdPutImage()>). 
 
 B<(x,y)> is the coordinate of the bottom left corner of the rectangular region. 
 The B<width> and B<length> of the rectangular region are defined in the
@@ -2132,7 +2193,7 @@ Complex clipping regions can be created using:
  # filled primtives ...
  $canvas->cdEnd()
 
-See more info about L<cdBegin|/"cdBegin()"> and L<cdEnd|/"cdBegin()>.
+See more info about L<cdBegin|/"cdBegin()"> and C<cdBegin()>.
 
 Between a C<< $canvas->cdBegin(CD_REGION) >> and a C<< $canvas->cdEnd() >>,
 all calls to L<cdBox|/"cdBox()">, L<cdSector|/"cdSector()">, L<cdChord|/"cdChord()">,
@@ -2264,7 +2325,7 @@ Called when the application has finished drawing in the canvas. It is
 optional, but if used for the Native Window driver in Windows when the
 handle can not be retained, the drawing can only be done again after a
 B< cdCanvasActivate>. On some drivers will simply call
-L<cdFlush|/cdFlush()">.
+C<cdFlush()>.
 
 =head3 cdKillCanvas()
 
@@ -2359,27 +2420,27 @@ The element B<IUP::Canvas> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/canvas1.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/canvas1.pl> - IUP::Canvas example
+=item * L<0-basic/canvas1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/canvas1.pl> - IUP::Canvas example
 
-=item * L<0-basic/canvas2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/canvas2.pl> - IUP::Canvas example
+=item * L<0-basic/canvas2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/canvas2.pl> - IUP::Canvas example
 
-=item * L<0-basic/canvas3.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/canvas3.pl> - IUP::Canvas example
+=item * L<0-basic/canvas3.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/canvas3.pl> - IUP::Canvas example
 
-=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=item * L<0-basic/colorbar.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/colorbar.pl> - IUP::ColorBar example
+=item * L<0-basic/colorbar.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/colorbar.pl> - IUP::ColorBar example
 
-=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/sbox2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/sbox2.pl> - IUP::Sbox example
+=item * L<0-basic/sbox2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/sbox2.pl> - IUP::Sbox example
 
-=item * L<0-basic/scrollbar.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/scrollbar.pl> - IUP::Canvas (with scrollbar) example
+=item * L<0-basic/scrollbar.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/scrollbar.pl> - IUP::Canvas (with scrollbar) example
 
-=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-mdi.pl> - IUP app example
+=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
 
-=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
 =back 
 

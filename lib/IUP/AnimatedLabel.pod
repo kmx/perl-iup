@@ -1,12 +1,147 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupanimatedlabel.html
+
 =head1 NAME
 
 IUP::AnimatedLabel - [GUI element] animated label
 
 =head1 DESCRIPTION
 
-XXX-TODO: missing doc
+Creates an animated label interface element, which displays an image that is
+changed periodically. It uses an animation that is simply an
+L<IUP::User|IUP::User> with several L<IUP::Image|IUP::Image> elements as
+children. It inherits from L<IUP::Label|IUP::Label>. (since iup-3.17)
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ my $lbl = IUP::AnimatedLabel->new( ANIMATION=>$anim );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item B<ANIMATION>
+
+The name of the element that contains the list of images. The value passed
+must be the name of an L<IUP::User|IUP::User> element with several
+L<IUP::Image|IUP::Image> elements as children. Use L<IUP::SetHandle|IUP::SetHandle>
+or L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to associate a child to a name.
+
+=item B<ANIMATION_HANDLE>
+
+Same as ANIMATION but directly using the L<IUP::Image|IUP::Image> reference of the element.
+
+=item B<FRAMECOUNT>
+
+I<(read-only)>
+
+Number of frames in the animation. It is simply the
+L<IUP::GetChildCount|IUP::GetChildCount> of the given L<IUP::User|IUP::User> element.
+
+=item B<FRAMETIME>
+
+The time between each frame. If the L<IUP::User|IUP::User> element has a FRAMETIME
+attribute it will be used to set the L<IUP::AnimatedLabel|IUP::AnimatedLabel>
+FRAMETIME attribute, but it can be overwritten later on.
+
+=item B<RUNNING>
+
+I<(read-only)>
+
+Returns YES if the animation is running.
+
+=item B<START>
+
+I<(write-only)>
+
+Starts the animation. The value is ignored. By default the animation is stopped.
+
+=item B<STOP>
+
+I<(write-only)>
+
+Stops the animation. The value is ignored.
+
+=item B<STOPWHENHIDDEN>
+
+Automatically stops the animation when the label is hidden. Default: Yes. (since iup-3.18)
+
+=back
+
+All L<IUP::Label|IUP::Label> attributes are also valid. The IMAGE attribute is
+periodically changed by a timer.
+
+The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+
+=over
+
+=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
+L<FONT|IUP::Manual::03_Attributes/FONT>,
+L<EXPAND|IUP::Manual::03_Attributes/EXPAND>,
+L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
+L<POSITION|IUP::Manual::03_Attributes/POSITION>,
+L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
+L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>,
+L<WID|IUP::Manual::03_Attributes/WID>,
+L<TIP|IUP::Manual::03_Attributes/TIP>,
+L<SIZE|IUP::Manual::03_Attributes/SIZE>,
+L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
+L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
+L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+
+=back
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=back
+
+All L<IUP::Label|IUP::Label> callbacks are also valid. No label callbacks are used internally.
+
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
+
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>,
+L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
+
+=back
+
+=head1 NOTES
+
+The L<IUP::ImageLib|IUP::ImageLib> contains a simple animation to show an
+indefinite progress called "B<IUP_CircleProgressAnimation>".
+
+The IUP-IM functions provide two functions that can create an animation from
+image files called L<IUP::LoadAnimation|IUP::LoadAnimation> and
+L<IUP::LoadAnimationFrames|IUP::LoadAnimationFrames>.
+
+=head1 EXAMPLES
+
+
+Unfortunately there are no sample scripts using this element.
+
+
 
 =head1 SEE ALSO
+
+L<IUP::Label|IUP::Label>, L<IUP::User|IUP::User>, L<IUP::Image|IUP::Image>, L<IUP::ImageLib|IUP::ImageLib>
 
 The original doc: L<iupanimatedlabel.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupanimatedlabel.html>
 

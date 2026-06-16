@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupframe.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iupframe.html
 
 [% h.name %]
 
@@ -40,6 +40,14 @@ ignored, transparent in all
 systems. Will use the background color of the native parent. Except if
 TITLE is not defined and BGCOLOR is defined before map (can be changed
 later), then the frame will have a color background.
+
+=item B<CHILDOFFSET>
+
+Allows to specify a position offset for the child. Available for native
+containers only. It will not affect the natural size, and allows to
+position controls outside the client area. Format "I<dx>xI<dy>", where
+I<dx> and I<dy> are integer values corresponding to the horizontal and
+vertical offsets, respectively, in pixels. Default: 0x0. (since iup-3.14)
 
 =item L<EXPAND|[%m.at%]/EXPAND>
 

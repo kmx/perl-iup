@@ -1,12 +1,135 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupcalendar.html
+
 [% h.name %]
 
 [% n.iupcalendar %]
 
 [% h.desc %]
 
-XXX-TODO: missing doc
+Creates a calendar to interactively select a date. The user can navigate
+between months and years and pick a day from the displayed month grid.
+
+GTK and Windows only. NOT available in Motif. (since iup-3.17)
+
+[% h.usage %]
+
+[% h.create %]
+
+ my $cal = IUP::Calendar->new();
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% h.at %]
+
+[% txt.at_intro %]
+
+=over
+
+=item B<TODAY>
+
+I<(read-only)>
+
+Returns the date corresponding to today in VALUE format.
+
+=item B<VALUE>
+
+The current date always in the format "year/month/day" ("%d/%d/%d" in C).
+Can be set to "TODAY". Default value is the today date.
+
+=item B<WEEKNUMBERS>
+
+Shows the number of the week along the year. Default: NO.
+
+=back
+
+[% txt.at_common %]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+=back
+
+[% h.cb %]
+
+[% txt.cb_intro %]
+
+=over
+
+=item B<VALUECHANGED_CB>
+
+Called after the date is interactively changed by the user.
+
+[%h.at_handler%]
+
+ sub valuechanged_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::Calendar) that activated the event
+
+=back
+
+=back
+
+[%txt.cb_common%]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
+
+=back
+
+[% h.notes %]
+
+In Windows, the view is changed when the month or year is clicked, so the
+user can select the month of the year or a year among years.
+
+In GTK the today date is not marked in the calendar.
+
+In GTK it uses GtkCalendar, and in Windows it uses MONTHCAL_CLASS.
+
+[% h.examples %]
+
+[% IF examples.iupcalendar %]
+The element B<IUP::Calendar> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupcalendar %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
+
+L<IUP::DatePick|IUP::DatePick>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupcalendar.html|[%url.iuporigdoc%]elem/iupcalendar.html>

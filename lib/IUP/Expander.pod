@@ -1,4 +1,4 @@
-=for comment based on iup-3.9 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupexpander.html
+=for comment based on iup-3.9 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iupexpander.html
 
 =head1 NAME
 
@@ -59,6 +59,26 @@ I<(non inheritable)> enables the automatic show of the child
 when mouse is over the handler more than 1 second. Default: No. See
 =item * L<Notes|#Notes> bellow.
 
+=item B<ANIMATION>
+
+I<(non inheritable)>
+
+Enable animation during open/close. Works only for BARPOSITION=TOP and
+does not work for AUTOSHOW. Also the child must be a native container
+like L<IUP::Tabs|IUP::Tabs>, L<IUP::Frame|IUP::Frame>,
+L<IUP::BackgroundBox|IUP::BackgroundBox>, or L<IUP::ScrollBox|IUP::ScrollBox>,
+or it will not work accordingly. Values can be SLIDE (child controls
+slide down), CURTAIN (child controls appear as if a curtain is being
+pulled) or NO. Default: NO. (since iup-3.14)
+
+The attribute B<NUMFRAMES> can be used to control the number of frames
+used for the animation, the default value is 10 frames. The time
+between frames is controlled by the B<FRAMETIME> attribute, the default
+value is 30ms (milliseconds). If the dialog has lots of controls and
+its layout computation takes longer than FRAMETIME, then a frame is
+lost, but the total animation time (numframes*frametime) is always the
+same.
+
 =item B<BARSIZE>
 
 I<(non inheritable)> controls the size of the bar handler.
@@ -72,6 +92,13 @@ ignored, transparent in all systems. Will use the background color of the native
 
 Text color. Default: the global attribute DLGFGCOLOR.
 
+=item B<BACKCOLOR>
+
+I<(non inheritable)>
+
+Background color of the bar handler. If not defined it will use the
+background color of the native parent. (since iup-3.9)
+
 =item B<BARPOSITION>
 
 I<(creation only)> Indicates the bar handler position.
@@ -81,6 +108,87 @@ Possible values are "TOP", "BOTTOM", "LEFT" or "RIGHT". Default: "TOP".
 
 I<(non inheritable)> The default value is "YES".
 
+=item B<EXTRABUTTONS>
+
+I<(non inheritable) (creation only)>
+
+Sets the number of extra image buttons at right when BARPOSITION=TOP.
+The maximum number of buttons is 3. See the EXTRABUTTON_CB callback.
+Default: 0. (since iup-3.11)
+
+=item B<IMAGEEXTRAid>
+
+Image name used for the button. id can be 1, 2 or 3. 1 is the rightmost
+button, and count from right to left.
+
+=item B<IMAGEEXTRAPRESSid>
+
+Image name used for the button when pressed.
+
+=item B<IMAGEEXTRAHIGHLIGHTid>
+
+Image name for the button used when mouse is over the button area.
+
+=item B<FORECOLOR>
+
+I<(non inheritable)>
+
+Title text color. Default: the global attribute DLGFGCOLOR. (since iup-3.9)
+
+=item B<OPENCOLOR>
+
+I<(non inheritable)>
+
+Title text color when STATE=OPEN. Defaults to the FORECOLOR if not
+defined. (since iup-3.14)
+
+=item B<HIGHCOLOR>
+
+I<(non inheritable)>
+
+Title text color when highlighted. Works only when TITLEEXPAND=Yes.
+Defaults to the FORECOLOR if not defined. (since iup-3.14)
+
+=item B<FRAME>
+
+I<(non inheritable)>
+
+Enables the frame line around the bar area. Default: No. (since iup-3.23)
+
+=item B<FRAMECOLOR>
+
+I<(non inheritable)>
+
+Frame line color. Default: the global attribute DLGFGCOLOR. (since iup-3.23)
+
+=item B<FRAMEWIDTH>
+
+I<(non inheritable)>
+
+Frame line width. Default: 1. (since iup-3.23)
+
+=item B<IMAGE>
+
+I<(non inheritable)>
+
+Image name to replace the arrow image by a custom image when
+STATE=CLOSE. Works only when BARPOSITION=TOP. Use
+L<IUP::SetHandle|IUP::SetHandle> or
+L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to associate an image
+to a name. See also L<IUP::Image|IUP::Image>. (since iup-3.11)
+
+=item B<IMAGEOPEN>
+
+Image name used when STATE=OPEN.
+
+=item B<IMAGEHIGHLIGHT>
+
+Image name used when mouse is over the bar handler and STATE=CLOSE.
+
+=item B<IMAGEOPENHIGHLIGHT>
+
+Image name used when mouse is over the bar handler and STATE=OPEN.
+
 =item B<STATE>
 
 I<(non inheritable)> Show or hide the container elements.
@@ -88,10 +196,44 @@ Possible values: "OPEN" (expanded) or "CLOSE" (collapsed). Default:
 OPEN. Setting this attribute will automatically change the layout of
 the entire dialog so the child can be recomposed.
 
+=item B<STATEREFRESH>
+
+I<(non inheritable)>
+
+When state is changed L<IUP::Refresh|IUP::Refresh> is automatically
+called. Can be Yes or No. Default: Yes. (since iup-3.16)
+
 =item B<TITLE>
 
 I<(non inheritable)> the title, shown in the title bar near the
 expand or collapse symbol. Shown only when BARPOSITION=TOP.
+
+=item B<TITLEIMAGE>
+
+I<(non inheritable)>
+
+Title image, shown in the bar handler near the expand/collapse button.
+When set it will reset TITLE (image and text title are mutually
+exclusive). Shown only when BARPOSITION=TOP. (since iup-3.14)
+
+=item B<TITLEIMAGEOPEN>
+
+Image name used when STATE=OPEN.
+
+=item B<TITLEIMAGEHIGHLIGHT>
+
+Image name used when mouse is over the title image and STATE=CLOSE.
+
+=item B<TITLEIMAGEOPENHIGHLIGHT>
+
+Image name used when mouse is over the title image and STATE=OPEN.
+
+=item B<TITLEEXPAND>
+
+I<(non inheritable)>
+
+Enable the expand/collapse action also at the title. Default: NO.
+(since iup-3.14)
 
 =item B<WID>
 
@@ -139,6 +281,40 @@ B<Callback handler prototype:>
 
 B<$self:> reference to the element (IUP::Expander) that activated the event
 
+=item B<OPENCLOSE_CB>
+
+Action generated before the expander state is interactively changed. (since iup-3.11)
+
+B<Callback handler prototype:>
+
+ sub openclose_handler {
+   my ($self, $state) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::Expander) that activated the event
+
+B<$state:> new state to be applied.
+
+B<Returns:> if it returns IUP_IGNORE the new state is ignored.
+
+=item B<EXTRABUTTON_CB>
+
+Action generated when any mouse button is pressed or released. (since iup-3.11)
+
+B<Callback handler prototype:>
+
+ sub extrabutton_handler {
+   my ($self, $button, $pressed) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::Expander) that activated the event
+
+B<$button:> identifies the extra button. Can be 1, 2 or 3. (this is not the same as BUTTON_CB)
+
+B<$pressed:> indicates the state of the button: 0 - mouse button was released; 1 - mouse button was pressed.
+
 =back 
   
 =head1 NOTES
@@ -166,7 +342,7 @@ The element B<IUP::Expander> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/expander.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/expander.pl> - IUP::Expander example
+=item * L<0-basic/expander.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/expander.pl> - IUP::Expander example
 
 =back 
 

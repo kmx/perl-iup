@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupzbox.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iupzbox.html
 
 =head1 NAME
 
@@ -60,6 +60,12 @@ child. Possible values:
 
 Default: "NW".
 
+=item B<CHILDSIZEALL>
+
+I<(non inheritable)>
+
+Compute the natural size using all children. If set to NO will compute using only the visible child. Default: Yes. (since iup-3.27)
+
 =item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
 
 I<(non inheritable)>
@@ -79,7 +85,7 @@ I<(non inheritable)>
 
 The visible child. The value passed must be the perl reference or name of one of the children contained in the zbox.
 
-To associate a name to element use L<SetName|/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
+To associate a name to element use L<SetName|IUP::Manual::02_Elements/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|IUP::Manual::02_Elements/"new()"> constructor.
 
 When the value is changed the selected child is made visible and all
 other children are made invisible, regardless their previous visible state.
@@ -141,7 +147,7 @@ The element B<IUP::Zbox> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/zbox.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/zbox.pl> - IUP::Zbox example
+=item * L<0-basic/zbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/zbox.pl> - IUP::Zbox example
 
 =back 
 

@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/dlg/iupfiledlg.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/dlg/iupfiledlg.html
 
 [% h.name %]
 
@@ -82,6 +82,13 @@ files|*.gif;*.jpg;*.bmp|". In GTK there is no way how to overwrite the
 filters, so it is recommended to always add a less restrictive filter
 to the filter list, for example "All Files|*.*".
 
+=item B<EXTDEFAULT>
+
+Default extension to be used if the selected file does not have an
+extension. The inspected extension will consider to have the same
+number of characters of the default extension. It must NOT include the
+period ".". (since iup-3.18)
+
 =item B<FILE>
 
 Name of the file initially shown in the "File Name" field in
@@ -138,10 +145,23 @@ do not prompt to overwrite an existent file when
 in "SAVE" dialog. Default is "NO", i.e. prompt before overwrite. (GTK
 2.8)
 
+=item B<NOPLACESBAR>
+
+I<[Windows Only]>
+
+Do not show the places bar. (since iup-3.26)
+
 =item L<PARENTDIALOG|[%m.at%]/PARENTDIALOG>
 
 Makes the dialog be
 treated as a child of the specified dialog.
+
+=item B<SHOWEDITBOX>
+
+I<[Windows Only]>
+
+Show an edit box in the directory selection dialog (DIALOGTYPE=DIR).
+(since iup-3.20)
 
 =item B<SHOWHIDDEN>
 
@@ -198,6 +218,30 @@ I<(read-only)> Name of the selected file(s), or C<undef> if no file
 was selected. If FILE is not defined this is used as the initial value.
 In Windows there is a limit of 32Kb for this string.
 
+=item B<MULTIVALUECOUNT>
+
+I<(read-only)>
+
+Number of returned values when MULTIPLEFILES=YES. It always includes
+the path, so if only 1 file is selected its value is 2. (since iup-3.14)
+
+=item B<MULTIVALUE>I<id>
+
+I<(read-only)>
+
+Almost the same sequence returned in VALUE when MULTIPLEFILES=YES but
+split in several attributes. VALUE0 contains the path (same value
+returned in DIRECTORY), and VALUE1, VALUE2, ... contains each file name
+without the path. (since iup-3.14)
+
+=item B<MULTIVALUEPATH>
+
+Force a full path in MULTIVALUE and VALUE attributes when
+MULTIPLEFILES=YES (id=0 will still contain the path of the first file).
+In Windows and Motif, only files in the same folder may be selected,
+but in GTK when using the "Recent Files" files from different folders
+can be selected. (since iup-3.20)
+
 =back
 
 [% h.cb %]
@@ -253,6 +297,21 @@ file_name is C<undef>.
 
 Action generated when the Help button is pressed.
 
+=item L<BUTTON_CB|[%m.cb%]/BUTTON_CB>
+
+Action generated when any mouse button is pressed or released over the
+preview canvas. (since iup-3.20)
+
+=item L<MOTION_CB|[%m.cb%]/MOTION_CB>
+
+Action generated when the mouse is moved over the preview canvas.
+(since iup-3.20)
+
+=item L<WHEEL_CB|[%m.cb%]/WHEEL_CB>
+
+Action generated when the mouse wheel is rotated over the preview
+canvas. (since iup-3.20) B<NOTICE:> NOT working in Windows 7.
+
 =back
 
 [% h.notes %]
@@ -291,7 +350,7 @@ Unfortunately there are no sample scripts using this element.
 
 [% h.see %]
 
-L<Message|IUP/"Message()">, L<IUP|/"GetParam()">,
+L<Message|IUP/"Message()">, L<GetParam|IUP/"GetParam()">,
 L<ListDialog|IUP/"ListDialog()">, L<Alarm|IUP/"Alarm()">,
 L<GetFile|IUP/"GetFile()">, L<Popup|[%m.elem%]/"Popup()">
 

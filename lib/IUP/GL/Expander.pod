@@ -1,12 +1,323 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/gl/iupglexpander.html
+
 =head1 NAME
 
 IUP::GL::Expander - [GUI element] GL-based expander
 
 =head1 DESCRIPTION
 
-XXX-TODO: missing doc
+A collapsible/expandable container drawn by IUP on a GL canvas. It can
+interactively show or hide its child. It inherits from
+L<IUP::GL::SubCanvas|IUP::GL::SubCanvas> and exists only inside an
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. (since iup-3.11)
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ my $exp = IUP::GL::Expander->new( child=>$something, TITLE=>'Expander' );
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item B<BACKCOLOR>
+
+I<(non inheritable)>
+
+Background color of the title area. Default: "50 100 150".
+
+=item B<BARPOSITION>
+
+Indicates the bar handler position. Possible values are "TOP",
+"BOTTOM", "LEFT" or "RIGHT". Default: "TOP".
+
+=item B<BARSIZE>
+
+I<(non inheritable)>
+
+Controls the size of the bar handler. Default: the height of a text
+line plus 5 pixels.
+
+=item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
+
+I<(non inheritable)>
+
+The default value is "YES".
+
+=item B<EXTRABUTTONS>
+
+I<(non inheritable)>
+
+Sets the number of extra image buttons at right when BARPOSITION=TOP.
+The maximum number of buttons is 3. See the EXTRABUTTON_CB callback.
+Default: 0.
+
+=item B<IMAGEEXTRAid>
+
+Image name used for the button. id can be 1, 2 or 3. 1 is the rightmost
+button, and count from right to left.
+
+=item B<IMAGEEXTRAPRESSid>
+
+Image name used for the button when pressed.
+
+=item B<IMAGEEXTRAHIGHLIGHTid>
+
+Image name for the button used when mouse is over the button area. All
+images must be 16x16, or smaller but the occupied size will still be
+16x16.
+
+=item B<FORECOLOR>
+
+I<(non inheritable)>
+
+Text and arrow color. Default: "255 255 255".
+
+=item B<HIGHCOLOR>
+
+I<(non inheritable)>
+
+Text and arrow color when highlight. Default: "200 225 245".
+
+=item B<IMAGE>
+
+I<(non inheritable)>
+
+Image name to replace the arrow by an image when STATE=CLOSE. Works
+only when BARPOSITION=TOP. The minimum horizontal space reserved for
+the handler is 20 pixels. Use L<IUP::SetHandle|IUP::SetHandle> or
+L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to associate an image
+to a name. See also L<IUP::Image|IUP::Image>.
+
+=item B<IMAGEOPEN>
+
+Image name used when STATE=OPEN.
+
+=item B<IMAGEHIGHLIGHT>
+
+Image name used when mouse is over the bar handler and STATE=CLOSE.
+
+=item B<IMAGEOPENHIGHLIGHT>
+
+Image name used when mouse is over the bar handler and STATE=OPEN.
+
+=item B<MOVEABLE>
+
+I<(non inheritable)>
+
+Enable the frame to be interactively moved when it is a direct child of
+the L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. Default: NO.
+
+=item B<MOVETOTOP>
+
+I<(non inheritable)>
+
+When MOVEABLE=Yes and the frame is moved then its ZORDER is also set to
+TOP. (since iup-3.11.1)
+
+=item B<PRESSCOLOR>
+
+I<(non inheritable)>
+
+Text and arrow color when pressed. Default: "150 200 235".
+
+=item B<STATE>
+
+I<(non inheritable)>
+
+Show or hide the container elements. Possible values: "OPEN" (expanded)
+or "CLOSE" (collapsed). Default: OPEN. Setting this attribute will
+automatically change the layout of the entire dialog so the child can
+be recomposed.
+
+=item B<TITLE>
+
+I<(non inheritable)>
+
+Title text, shown in the title bar near the expand or collapse symbol.
+Shown only when BARPOSITION=TOP.
+
+=item B<TITLEBACKIMAGE>
+
+I<(non inheritable)>
+
+Image name to be used as a background of the title area. It will be
+zoomed to fill the background (it does not include the border). Use
+L<IUP::SetHandle|IUP::SetHandle> or
+L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to associate an image
+to a name. See also L<IUP::Image|IUP::Image>. (since iup-3.11.1)
+
+=item B<TITLEBACKIMAGEINACTIVE>
+
+I<(non inheritable)>
+
+Background image name of the element when inactive. If it is not defined
+then the TITLEBACKIMAGE is used and its colors will be replaced by a
+modified version creating the disabled effect. (since iup-3.11.2)
+
+=item L<CLIENTSIZE|IUP::Manual::03_Attributes/CLIENTSIZE>, L<CLIENTOFFSET|IUP::Manual::03_Attributes/CLIENTOFFSET>
+
+Also accepted.
+
+=back
+
+The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+
+=over
+
+=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
+L<FONT|IUP::Manual::03_Attributes/FONT>,
+L<EXPAND|IUP::Manual::03_Attributes/EXPAND>,
+L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
+L<POSITION|IUP::Manual::03_Attributes/POSITION>,
+L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
+L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>,
+L<WID|IUP::Manual::03_Attributes/WID>,
+L<TIP|IUP::Manual::03_Attributes/TIP>,
+L<SIZE|IUP::Manual::03_Attributes/SIZE>,
+L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
+L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
+L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+
+=back
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item L<ACTION|IUP::Manual::04_Callbacks/ACTION>
+
+Action generated after the expander state is interactively changed.
+
+B<Callback handler prototype:>
+
+ sub action_handler {
+   my ($self) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Expander) that activated the event
+
+=back
+
+=item B<EXTRABUTTON_CB>
+
+Action generated when any mouse button is pressed and released.
+
+B<Callback handler prototype:>
+
+ sub extrabutton_cb_handler {
+   my ($self, $button, $pressed) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Expander) that activated the event
+
+B<$button:> identifies the extra button. Can be 1, 2 or 3 (this is not
+the same as BUTTON_CB).
+
+B<$pressed:> indicates the state of the button: 0 if the mouse button was
+released, 1 if the mouse button was pressed.
+
+=back
+
+=item B<MOVE_CB>
+
+Called after the frame was moved on the
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>, when MOVEABLE=Yes. The
+coordinates are the same as the L<POSITION|IUP::Manual::03_Attributes/POSITION> attribute.
+
+B<Callback handler prototype:>
+
+ sub move_cb_handler {
+   my ($self, $x, $y) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Expander) that activated the event
+
+B<$x, $y:> coordinates of the new position.
+
+=back
+
+=item B<OPENCLOSE_CB>
+
+Action generated before the expander state is interactively changed.
+
+B<Callback handler prototype:>
+
+ sub openclose_cb_handler {
+   my ($self, $state) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Expander) that activated the event
+
+B<$state:> new state to be applied.
+
+B<Returns:> if IUP_IGNORE is returned the new state is ignored.
+
+=back
+
+=back
+
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
+
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>,
+L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
+
+=back
+
+=head1 NOTES
+
+The container can be created with no elements and be dynamically filled
+using L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
+
+When the TITLE is defined and BARPOSITION=TOP then the expand/collapse
+symbol is left aligned. In all other situations the expand/collapse
+symbol is centered.
+
+=head1 EXAMPLES
+
+
+The element B<IUP::GL::Expander> is used in the following sample scripts:
+
+=over
+
+=item * L<0-basic/glcontrols.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/glcontrols.pl> - original: http://webserver2.tecgraf.puc-rio.br/iup/examples/C/glcontrols.c
+
+=back
+
+
 
 =head1 SEE ALSO
+
+L<IUP::Expander|IUP::Expander>, L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>
 
 The original doc: L<iupglexpander.html|http://www.tecgraf.puc-rio.br/iup/en/gl/iupglexpander.html>
 

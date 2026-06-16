@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupnormalizer.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iupnormalizer.html
 
 [% h.name %]
 
@@ -59,11 +59,17 @@ with that name does not exists then one is created.
 
 I<(non inheritable)> Adds a control to the normalizer. The value passed must be the perl reference or name of the element.
 
-To associate a name to element use L<SetName|/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|/"new()"> constructor.
+To associate a name to element use L<SetName|[%m.elem%]/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|[%m.elem%]/"new()"> constructor.
 
 =item B<ADDCONTROL_HANDLE>
 
 I<(non inheritable)> Adds a control to the normalizer. The value passed must be a handle of an element.
+
+=item B<DELCONTROL>
+
+I<(non inheritable, write-only)> Removes a control from the normalizer. The value passed must be the name of an element.
+
+To associate a name to element use L<SetName|[%m.elem%]/"SetName()"> or C<< name=>'ElemName' >> named parameter of L<new()|[%m.elem%]/"new()"> constructor. (since iup-3.17)
 
 =back
 

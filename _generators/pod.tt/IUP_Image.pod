@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupimage.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iupimage.html
 
 [% h.name %]
 
@@ -237,6 +237,14 @@ defined within an index less than 16.
 
 Used only for images created via C<< IUP::Image->new( pixels=>...) >> not C<< IUP::Image->new( file=>... ) >>.
 
+=item B<AUTOSCALE>
+
+Automatically scale the image by a given real factor. Can be "DPI" or a
+scale factor. If not defined the global attribute IMAGEAUTOSCALE will be
+used. Values are the same of the global attribute. The minimum resulted
+size when automatically resized is 24 pixels height (since iup-3.29).
+(since iup-3.16)
+
 =item B<BGCOLOR>
 
 The color used for transparency. If not defined uses the
@@ -246,11 +254,23 @@ BGCOLOR of the control that contains the image.
 
 I<(read-only)> Returns the number of bits per pixel in the image (8 or 24 or 32). 
 
+=item B<CLEARCACHE>
+
+I<(write-only)>
+
+Clears the internal native image cache, so WID can be dynamically
+changed. (since iup-3.24)
+
 =item B<CHANNELS>
 
 I<(read-only)> Returns the number of channels in the image.
 Images created with BPP=>8 returns 1, with BPP=>24 returns
 3 and with BPP=>32 returns 4. 
+
+=item B<DPI>
+
+Resolution expected for display. Used when AUTOSCALE=DPI. If not defined
+the global attribute IMAGESDPI will be used. (since iup-3.23)
 
 =item B<HEIGHT>
 
@@ -266,6 +286,37 @@ are integers defining the coordinates in pixels. Default: "0:0".
 =item B<RASTERSIZE>
 
 I<(read-only)> Returns the image size in pixels. (since iup-3.0)
+
+=item B<RESHAPE>
+
+I<(write-only)>
+
+Given a new size in the format "I<width>xI<height>", allocates enough
+memory for the new size and changes WIDTH and HEIGHT attributes. Image
+contents is ignored and it will contain trash after the reshape.
+(since iup-3.24)
+
+=item B<RESIZE>
+
+I<(write-only)>
+
+Given a new size in the format "I<width>xI<height>", changes WIDTH and
+HEIGHT attributes, and resizes the image contents using bilinear
+interpolation for RGB and RGBA images and nearest neighborhood for 8
+bits. (since iup-3.24)
+
+=item B<SCALED>
+
+I<(read-only)>
+
+Returns Yes if the image has been resized. (since iup-3.25)
+
+=item B<ORIGINALSCALE>
+
+I<(read-only)>
+
+Returns the width and height before the image was scaled.
+(since iup-3.25)
 
 =item B<WID>
 

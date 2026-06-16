@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrix.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrix.html
 
 =head1 NAME
 
@@ -905,6 +905,25 @@ B<Returns:> To avoid the display update return IUP_IGNORE.
 
 =back
 
+=item B<COLRESIZE_CB>
+
+Action generated when a column is interactively resized.
+
+B<Callback handler prototype:>
+
+ sub colresize_cb_handler {
+   my ($self, $col) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::Matrix) interacting with the user
+
+B<$col:> Column that was resized.
+
+=back
+
 =item B<RELEASE_CB>
 
 Action generated when any mouse button is
@@ -931,6 +950,45 @@ moment the event is generated. The same macros used for
 L<BUTTON_CB|IUP::Manual::04_Callbacks/BUTTON_CB> can be used for this status.
 
 B<Returns:> To avoid the display update return IUP_IGNORE.
+
+=back
+
+=item B<TOGGLEVALUE_CB>
+
+Action generated when a toggle button is pressed.
+
+B<Callback handler prototype:>
+
+ sub togglevalue_cb_handler {
+   my ($self, $lin, $col, $status) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::Matrix) interacting with the user
+
+B<$lin, $col:> Coordinates of the toggle cell.
+
+B<$status:> State of the toggle button (1 if pressed, 0 if not).
+
+=back
+
+=item B<VALUECHANGED_CB>
+
+Called after the value was interactively changed by the user or after a
+group of values where programmatically changed in a single operation.
+
+B<Callback handler prototype:>
+
+ sub valuechanged_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::Matrix) that activated the event
 
 =back
 
@@ -1461,13 +1519,15 @@ The element B<IUP::Matrix> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=item * L<0-basic/mask_matrix.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/mask_matrix.pl> - IUP::Matrix + MASK example
+=item * L<0-basic/glcontrols.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/glcontrols.pl> - original: http://webserver2.tecgraf.puc-rio.br/iup/examples/C/glcontrols.c
 
-=item * L<0-basic/matrix_basic.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/matrix_basic.pl> - IUP::Matrix example
+=item * L<0-basic/mask_matrix.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/mask_matrix.pl> - IUP::Matrix + MASK example
 
-=item * L<0-basic/matrix_cbmode.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/matrix_cbmode.pl> - IUP::Matrix (callback mode) example
+=item * L<0-basic/matrix_basic.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/matrix_basic.pl> - IUP::Matrix example
+
+=item * L<0-basic/matrix_cbmode.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/matrix_cbmode.pl> - IUP::Matrix (callback mode) example
 
 =back 
 

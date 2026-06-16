@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iuptext.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iuptext.html
 
 =head1 NAME
 
@@ -133,6 +133,13 @@ enables the focus
 traversal of the control. In Windows the control will still get the
 focus when clicked. Default: YES. 
 
+=item B<PROPAGATEFOCUS>
+
+I<(non inheritable)>
+
+Enables the focus callback forwarding to the next native parent with
+FOCUS_CB defined. Default: NO. (since iup-3.23)
+
 =item B<CARET>
 
 I<(non inheritable)>
@@ -169,6 +176,17 @@ Also the position of the insertion
 point, but using a zero based character unique index "pos". Useful for
 indexing the VALUE string.
 
+=item B<CHANGECASE>
+
+I<(non inheritable)>
+
+Change case according to given conversion. Can be UPPER, LOWER, TOGGLE,
+or TITLE. TITLE case changes the first letter of words separated by
+spaces to upper case and others to lower case, but the first letter is
+changed only if the word has more than 3 characters, for instance:
+"Best of the World". Supports Latin-1 encoding only, even when using
+UTF-8. Does not depend on the current locale. (since iup-3.28)
+
 =item B<CLIPBOARD>
 
 I<(write-only)>
@@ -200,6 +218,14 @@ I<[Windows and GTK Only] (non inheritable)>
 Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
+
+=item B<DROPFILESTARGET>
+
+I<[Windows and GTK Only] (non inheritable)>
+
+Enable or disable the drop of files. Default: NO, but if DROPFILES_CB is
+defined when the element is mapped then it will be automatically enabled.
+(in older versions this attribute was named DRAGDROP)
 
 =item L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
 
@@ -242,6 +268,22 @@ Returns the text of the line where the caret
 is. It does not include the "\n" character. When MULTILINE=NO returns
 the same as VALUE. (since iup-3.5)
 
+=item B<LOADRTF>
+
+I<(write-only) [Windows Only]>
+
+Loads formatted text from a Rich Text Format file given its filename.
+The attribute LOADRTFSTATUS is set to OK or FAILED after the file is
+loaded. (since iup-3.28)
+
+=item B<SAVERTF>
+
+I<(write-only) [Windows Only]>
+
+Saves formatted text to a Rich Text Format file given its filename. The
+attribute SAVERTFSTATUS is set to OK or FAILED after the file is saved.
+(since iup-3.28)
+
 =item L<MASK|IUP::Manual::03_Attributes/MASK>
 
 I<(non inheritable)>
@@ -264,6 +306,13 @@ text can still be set using attributes. The maximum value is the limit
 of the VALUE attribute. The "0" value is the same as maximum. Default:
 maximum.
 
+=item B<NOHIDESEL>
+
+I<[Windows Only]>
+
+Do not hide the selection when the control loses its focus.
+Default: YES. (since iup-3.16)
+
 =item B<OVERWRITE>
 
 I<[Windows and GTK Only] (non inheritable)>
@@ -277,6 +326,11 @@ Internal margin. Works just like the MARGIN attribute of
 the L<IUP::Hbox|IUP::Hbox> and L<IUP::Vbox|IUP::Vbox> containers, but uses a different name to
 avoid inheritance problems. Default value: "0x0". In Windows, only the
 horizontal value is used. (GTK 2.10 for single line)
+
+=item B<CPADDING>
+
+Same as PADDING but using the units of the SIZE attribute. It will
+actually set the PADDING attribute. (since iup-3.29)
 
 =item B<PASSWORD>
 
@@ -319,6 +373,13 @@ I<(non inheritable, write only)>
 Scroll the text to make
 the given position visible. It uses the same format and reference of
 the CARETPOS attribute ("pos" starting at 0).
+
+=item B<SCROLLVISIBLE>
+
+I<(read-only) [Windows Only]>
+
+Returns which scrollbars are visible at the moment. Can be: YES (both),
+VERTICAL, HORIZONTAL, NO. (since iup-3.31)
 
 =item B<SELECTEDTEXT>
 
@@ -708,55 +769,57 @@ The element B<IUP::Text> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/button.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/button.pl> - IUP::Button example
+=item * L<0-basic/button.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/button.pl> - IUP::Button example
 
-=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/cbox.pl> - IUP::Cbox example
+=item * L<0-basic/cbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/cbox.pl> - IUP::Cbox example
 
-=item * L<0-basic/colorbrowser.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/colorbrowser.pl> - IUP::ColorBrowser example
+=item * L<0-basic/colorbrowser.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/colorbrowser.pl> - IUP::ColorBrowser example
 
-=item * L<0-basic/drag-demo.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/drag-demo.pl> - IUP::Text DRAG-and-DROP demo (drag part)
+=item * L<0-basic/drag-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/drag-demo.pl> - IUP::Text DRAG-and-DROP demo (drag part)
 
-=item * L<0-basic/frame2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/frame2.pl> - IUP::Image example
+=item * L<0-basic/frame2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/frame2.pl> - IUP::Image example
 
-=item * L<0-basic/item.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/item.pl> - IUP::Item Example
+=item * L<0-basic/glcontrols.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/glcontrols.pl> - original: http://webserver2.tecgraf.puc-rio.br/iup/examples/C/glcontrols.c
 
-=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
+=item * L<0-basic/item.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/item.pl> - IUP::Item Example
 
-=item * L<0-basic/mask_simple.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/mask_simple.pl> - IUP::Text + MASK example
+=item * L<0-basic/layoutdialog.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/layoutdialog.pl> - IUP::LayoutDialog example
 
-=item * L<0-basic/menu.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/menu.pl> - IUP::Menu example
+=item * L<0-basic/mask_simple.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/mask_simple.pl> - IUP::Text + MASK example
 
-=item * L<0-basic/sbox1.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/sbox1.pl> - IUP::Sbox example
+=item * L<0-basic/menu.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/menu.pl> - IUP::Menu example
 
-=item * L<0-basic/sbox2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/sbox2.pl> - IUP::Sbox example
+=item * L<0-basic/sbox1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/sbox1.pl> - IUP::Sbox example
 
-=item * L<0-basic/separator.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/separator.pl> - IUP::Separator example
+=item * L<0-basic/sbox2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/sbox2.pl> - IUP::Sbox example
 
-=item * L<0-basic/submenu.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/submenu.pl> - IUP::Submenu example
+=item * L<0-basic/separator.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/separator.pl> - IUP::Separator example
 
-=item * L<0-basic/tabs2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/tabs2.pl> - IUP::Tabs example
+=item * L<0-basic/submenu.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/submenu.pl> - IUP::Submenu example
 
-=item * L<0-basic/text1.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/text1.pl> - IUP::Text (single line) example
+=item * L<0-basic/tabs2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tabs2.pl> - IUP::Tabs example
 
-=item * L<0-basic/text2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/text2.pl> - IUP::Text example
+=item * L<0-basic/text1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/text1.pl> - IUP::Text (single line) example
 
-=item * L<0-basic/text_font.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/text_font.pl> - IUP::Text (font) example
+=item * L<0-basic/text2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/text2.pl> - IUP::Text example
 
-=item * L<0-basic/text_format.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/text_format.pl> - IUP::Text (formating) example
+=item * L<0-basic/text_font.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/text_font.pl> - IUP::Text (font) example
 
-=item * L<0-basic/text_multiline.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/text_multiline.pl> - IUP::Text (multiline) example
+=item * L<0-basic/text_format.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/text_format.pl> - IUP::Text (formating) example
 
-=item * L<0-basic/tree_set_attrs.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/tree_set_attrs.pl> - IUP::Tree example (attributes)
+=item * L<0-basic/text_multiline.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/text_multiline.pl> - IUP::Text (multiline) example
 
-=item * L<0-basic/zbox.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/zbox.pl> - IUP::Zbox example
+=item * L<0-basic/tree_set_attrs.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/tree_set_attrs.pl> - IUP::Tree example (attributes)
 
-=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-mdi.pl> - IUP app example
+=item * L<0-basic/zbox.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/zbox.pl> - IUP::Zbox example
 
-=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-plot-demo.pl> - dials for zooming
+=item * L<1-apps/app-mdi.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-mdi.pl> - IUP app example
 
-=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
-=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-sample2.pl> - example based on the original sample.c
+=item * L<1-apps/app-sample1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-sample1.pl> - example used for screenshot - IUP.pod
+
+=item * L<1-apps/app-sample2.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-sample2.pl> - example based on the original sample.c
 
 =back 
 

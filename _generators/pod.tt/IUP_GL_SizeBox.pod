@@ -1,12 +1,137 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/gl/iupglsizebox.html
+
 [% h.name %]
 
 [% n.iupglsizebox %]
 
 [% h.desc %]
 
-XXX-TODO: missing doc
+A resizable container drawn by IUP on a GL canvas, allowing the user to
+drag-resize its child. It is a void container that lets its child be
+expanded and contracted in one or two directions. It inherits from
+L<IUP::GL::SubCanvas|IUP::GL::SubCanvas> and exists only inside an
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. (since iup-3.11)
+
+[% h.usage %]
+
+[% h.create %]
+
+ my $sb = IUP::GL::SizeBox->new( child=>$something );
+
+B<child>: Identifier of an interface element which will receive the box.
+It can be C<undef>.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% h.at %]
+
+[% txt.at_intro %]
+
+The L<IUP::GL::SizeBox|IUP::GL::SizeBox> element handles all attributes
+defined for the L<IUP::GL::SubCanvas|IUP::GL::SubCanvas> control.
+
+=over
+
+=item B<FORECOLOR>
+
+Changes the color of the bar handler. Default: "192 192 192".
+
+=item B<RESIZERS>
+
+Indicates the direction of the resize. Possible values are "VERTICAL",
+"HORIZONTAL", or "BOTH". Default: "BOTH". The handler is always placed
+at the right/bottom of its child.
+
+=item L<EXPAND|[%m.at%]/EXPAND>
+
+I<(non inheritable)>
+
+The default value is "YES".
+
+=item L<CLIENTSIZE|[%m.at%]/CLIENTSIZE>, L<CLIENTOFFSET|[%m.at%]/CLIENTOFFSET>
+
+Also accepted.
+
+=back
+
+[% txt.at_common %]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+=back
+
+[% h.cb %]
+
+[% txt.cb_intro %]
+
+=over
+
+=back
+
+[% txt.cb_common %]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
+
+=back
+
+[% h.notes %]
+
+The control inside the L<IUP::GL::SizeBox|IUP::GL::SizeBox> will have its B<User>
+size changed. See the L<Layout Guide|../layout_guide.html> for more details
+on sizes.
+
+L<IUP::GL::SizeBox|IUP::GL::SizeBox> can make the layout to be resized larger
+than the L<IUP::GL::CanvasBox|IUP::GL::CanvasBox> size, so some controls will be
+positioned outside the box area at right or bottom. In fact this is part of
+the dynamic layout default reposition of controls inside the box. See the
+L<IUP::Refresh|IUP::Refresh> function. The IUP layout does not have a maximum
+limit, only a minimum, except if you use the MAXSIZE common attribute.
+
+The box can be created with no elements and be dynamically filled using
+L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
+
+[% h.examples %]
+
+[% IF examples.iupglsizebox %]
+The element B<IUP::GL::SizeBox> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupglsizebox %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
+
+L<IUP::Sbox|IUP::Sbox>, L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupglsizebox.html|[%url.iuporigdoc%]gl/iupglsizebox.html>

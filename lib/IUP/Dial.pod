@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupdial.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupdial.html
 
 =head1 NAME
 
@@ -40,6 +40,16 @@ Default is "0.2".
 =item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
 
 The default is "NO".
+
+=item B<FLAT>
+
+Use a 1 pixel flat border instead of the default 3 pixels sunken
+border. Can be "YES" or "NO". Default: "NO". (since iup-3.24)
+
+=item B<FLATCOLOR>
+
+Color of the border when FLAT=YES. Default "160 160 160". (since
+iup-3.24)
 
 =item L<FGCOLOR|IUP::Manual::03_Attributes/FGCOLOR>
 
@@ -222,11 +232,11 @@ The element B<IUP::Dial> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/dial.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/dial.pl> - IUP::Dial example
+=item * L<0-basic/dial.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/dial.pl> - IUP::Dial example
 
-=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/plot_advanced.pl> - Plot controls
+=item * L<0-basic/plot_advanced.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/plot_advanced.pl> - Plot controls
 
-=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-plot-demo.pl> - dials for zooming
+=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
 =back 
 

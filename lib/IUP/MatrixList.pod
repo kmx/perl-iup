@@ -1,4 +1,4 @@
-=for comment based on iup-3.9 - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixlist.html
+=for comment based on iup-3.9 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iupmatrixlist.html
 
 =head1 NAME
 
@@ -126,6 +126,11 @@ be interactively removed.
 
 the background color when an item get the focus. Values
 in RGB format ("r g b"). Default: "255 235 155".
+
+=item B<FOCUSFGCOLOR>
+
+The text color when an item get the focus. If not defined uses the
+B<ITEMFGCOLORI(id)>. (since iup-3.29)
 
 =item B<FOCUSITEM>
 
@@ -455,7 +460,7 @@ The element B<IUP::MatrixList> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/matrixlist.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/matrixlist.pl> - IUP::MatrixList example
+=item * L<0-basic/matrixlist.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/matrixlist.pl> - IUP::MatrixList example
 
 =back 
 

@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iuptabs.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iuptabs.html
 
 [% h.name %]
 
@@ -42,6 +42,23 @@ Windows, the tab buttons background it will be always defined by the
 system. In Windows the default background is different from the dialog
 background. Default: the global attribute DLGBGCOLOR.
 
+=item B<CHILDOFFSET>
+
+Allow to specify a position offset for the child.
+Available for native containers only. It will not affect the natural
+size, and allows to position controls outside the client area. Format
+"I<dx>xI<dy>", where I<dx> and I<dy> are integer values corresponding
+to the horizontal and vertical offsets, respectively, in pixels.
+Default: 0x0. (since iup-3.14)
+
+=item B<CHILDSIZEALL>
+
+I<(non inheritable)>
+
+Compute the natural size using all
+children. If set to NO will compute using only the current tab.
+Default: Yes. (since iup-3.27)
+
 =item B<COUNT>
 
 I<(read-only) (non inheritable)>
@@ -67,6 +84,16 @@ Enable multiple lines
 of tab buttons. This will hide the tab scroll and fits to make all tab
 buttons visible. Can be "YES" or "NO". Default "NO". It is always
 enabled when TABTYPE=LEFT or TABTYPE=RIGHT. 
+
+=item B<SHOWCLOSE>
+
+I<[Windows and GTK Only] (non inheritable)>
+
+Enables the
+close button on each tab. Default value: "NO". In Windows the close
+button imply the classic visual for the control. By default when closed
+the tab is hidden. To change that behavior use the TABCLOSE_CB
+callback. (since iup-3.10)
 
 =item B<PADDING>
 
@@ -114,6 +141,16 @@ next character will be used as key. Use "&&" to show the "&" character
 instead on defining a mnemonic. The button can be activated from any
 control in the dialog using the "Alt+key" combination. (mnemonic
 support since iup-3.3) 
+
+=item B<TABPADDING>
+
+I<(non inheritable)>
+
+Internal margin of the tab title.
+Works just like the MARGIN attribute of the L<IUP::Hbox> and L<IUP::Vbox>
+containers, but uses a different name to avoid inheritance problems.
+Default value: "0x0". (renamed in iup-3.19 to avoid conflict
+with PADDING)
 
 =item B<TABTYPE>
 
@@ -216,6 +253,52 @@ B<$self:> reference to the element (IUP::Tabs) that activated the event
 B<$new_pos:> the new tab position selected by the user
 
 B<$old_pos:> the previously selected tab position
+
+=back
+
+=item B<TABCLOSE_CB>
+
+I<[Windows and GTK Only]>
+
+Callback called when the user clicks on the
+close button. Called only when SHOWCLOSE=YES. (since iup-3.10)
+
+[%h.at_handler%]
+
+ sub tabclose_cb_handler {
+   my ($self, $pos) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::Tabs) that activated the event
+
+B<$pos:> the tab position
+
+B<Returns:> the tab will be hidden if the callback returns IUP_DEFAULT
+or if it does not exist. If IUP_CONTINUE is returned the tab is removed
+and its children are destroyed. If IUP_IGNORE is returned does nothing.
+
+=back
+
+=item B<RIGHTCLICK_CB>
+
+Callback called when the user clicks on some tab
+using the right mouse button. (since iup-3.10)
+
+[%h.at_handler%]
+
+ sub rightclick_cb_handler {
+   my ($self, $pos) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::Tabs) that activated the event
+
+B<$pos:> the tab position
 
 =back
 

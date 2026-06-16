@@ -1,12 +1,209 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupdetachbox.html
+
 =head1 NAME
 
 IUP::DetachBox - [GUI element] detachbox
 
-=head1 DESCRIPTION
+=head1 DESCRIPTION (since iup-3.10)
 
-XXX-TODO: missing doc
+A void container that can detach its child into a separate dialog. By
+dragging and dropping the bar handler, this element creates a new dialog
+composed by its child (for example a child like L<IUP::Vbox|IUP::Vbox> or
+L<IUP::Hbox|IUP::Hbox>). During the drag the ESC key can be pressed to
+cancel the action. It does not have a native representation, but it
+contains also an L<IUP::Canvas|IUP::Canvas> to implement the bar handler.
+
+=head1 USAGE
+
+=head2 CREATION - new() method
+
+ my $box = IUP::DetachBox->new( child=>$something );
+
+The C<child> is the identifier of an interface element that will receive
+the box. It can be C<undef>, in which case the box can be dynamically
+filled later.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+=head2 ATTRIBUTES
+
+For more info about concept of attributes (setting/getting values etc.)
+see L<IUP::Manual::03_Attributes|IUP::Manual::03_Attributes>. Attributes specific to this element:
+
+=over
+
+=item B<BARSIZE>
+
+I<(non inheritable)>
+
+Controls the size of the bar handler. To completely hide the bar set
+BARSIZE to 0 (since iup-3.16). Default: 10.
+
+=item B<COLOR>
+
+Changes the color of the bar grip affordance. The value should be given
+in "R G B" color style. Default: "160 160 160". When SHOWGRIP = NO, this
+attribute sets the background color of the bar handler.
+
+=item L<EXPAND|IUP::Manual::03_Attributes/EXPAND>
+
+I<(non inheritable)>
+
+The default value is "YES".
+
+=item B<ORIENTATION>
+
+I<(creation only, non inheritable)>
+
+Indicates the orientation of the bar handler. The direction of the
+resize is perpendicular to the orientation. Possible values are
+"VERTICAL" or "HORIZONTAL". Default: "VERTICAL".
+
+=item B<OLDPARENT_HANDLE>
+
+I<(read only)>
+
+Returns the previous parent of the detached element. Only valid after
+the element was detached.
+
+=item B<OLDBROTHER_HANDLE>
+
+I<(read only)>
+
+Returns the previous reference child of the detached element. Only valid
+after the element was detached. See L<IUP::Reparent|IUP::Reparent> for a
+reference child definition.
+
+=item B<DETACH>
+
+I<(write-only)>
+
+Detach the box by creating a new dialog and placing the detachbox as the
+child of the new dialog. The DETACHED_CB callback is called, use it to
+configure the new dialog. The handler is hidden, the USERSIZE of the
+detachbox is set to the CURRENTSIZE of the child, and the PARENTDIALOG of
+the new dialog is set to the old dialog. To re-parent the child we need
+to map the dialog before doing it, so to force a dialog resize its size
+is reset before it is shown; to control the dialog size use the child
+size. The new dialog is shown at the current cursor position, and the
+USERSIZE of the detachbox is reset.
+
+=item B<RESTORE>
+
+I<(write-only)>
+
+Restore the box to its previous place (parent and brother) and destroys
+the new dialog. Value can be C<undef> or the name of a new parent to
+which the control will be appended. Use L<IUP::SetHandle|IUP::SetHandle>
+or L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to associate a
+handle to a name (since iup-3.16). The handler is shown (if restored to
+inside a zbox, the application must update the zbox child visibility
+manually).
+
+=item B<RESTOREWHENCLOSED>
+
+Automatically restore the box to its original position when the new
+dialog is closed. Can be YES or NO. Default: NO. (since iup-3.21)
+
+=item B<SHOWGRIP>
+
+I<(non inheritable)>
+
+Shows the bar grip affordance. Default: YES. When set to NO, the BARSIZE
+is set to 5 (if greater than 5). To completely hide the bar set BARSIZE
+to 0 (since iup-3.16).
+
+=item B<WID>
+
+I<(read-only)>
+
+Returns -1 if mapped.
+
+=back
+
+The following L<common attributes|IUP::Manual::03_Attributes/Common Attributes> are also accepted:
+
+=over
+
+=item * L<ACTIVE|IUP::Manual::03_Attributes/ACTIVE>,
+L<FONT|IUP::Manual::03_Attributes/FONT>,
+L<EXPAND|IUP::Manual::03_Attributes/EXPAND>,
+L<SCREENPOSITION|IUP::Manual::03_Attributes/SCREENPOSITION>,
+L<POSITION|IUP::Manual::03_Attributes/POSITION>,
+L<MINSIZE|IUP::Manual::03_Attributes/MINSIZE>,
+L<MAXSIZE|IUP::Manual::03_Attributes/MAXSIZE>,
+L<WID|IUP::Manual::03_Attributes/WID>,
+L<TIP|IUP::Manual::03_Attributes/TIP>,
+L<SIZE|IUP::Manual::03_Attributes/SIZE>,
+L<RASTERSIZE|IUP::Manual::03_Attributes/RASTERSIZE>,
+L<ZORDER|IUP::Manual::03_Attributes/ZORDER>,
+L<VISIBLE|IUP::Manual::03_Attributes/VISIBLE>
+
+=back
+
+=head2 CALLBACKS
+
+For more info about concept of callbacks (setting callback handlers etc.)
+see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific to this element:
+
+=over
+
+=item B<DETACHED_CB>
+
+Callback called when the box is detached.
+
+B<Callback handler prototype:>
+
+ sub detached_cb_handler {
+   my ($self, $new_parent, $x, $y) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::DetachBox) that activated the event
+
+B<$new_parent:> identifier of the future parent of the box. At this point
+only the PARENTDIALOG attribute was set.
+
+B<$x, $y:> dropped position.
+
+B<Returns:> IUP_IGNORE will be processed, in order to cancel the detach action.
+
+=back
+
+=back
+
+The following L<common callbacks|IUP::Manual::04_Callbacks/Common Callbacks> are also accepted:
+
+=over
+
+=item * L<MAP_CB|IUP::Manual::04_Callbacks/MAP_CB>,
+L<UNMAP_CB|IUP::Manual::04_Callbacks/UNMAP_CB>,
+L<GETFOCUS_CB|IUP::Manual::04_Callbacks/GETFOCUS_CB>,
+L<KILLFOCUS_CB|IUP::Manual::04_Callbacks/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|IUP::Manual::04_Callbacks/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|IUP::Manual::04_Callbacks/LEAVEWINDOW_CB>,
+L<K_ANY|IUP::Manual::04_Callbacks/K_ANY>,
+L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
+
+=back
+
+=head1 NOTES
+
+The box can be created with no elements and be dynamically filled using
+L<IUP::Append|IUP::Append> or L<IUP::Insert|IUP::Insert>.
+
+=head1 EXAMPLES
+
+
+Unfortunately there are no sample scripts using this element.
+
+
 
 =head1 SEE ALSO
+
+L<IUP::Sbox|IUP::Sbox>, L<IUP::Reparent|IUP::Reparent>, L<IUP::Canvas|IUP::Canvas>
 
 The original doc: L<iupdetachbox.html|http://www.tecgraf.puc-rio.br/iup/en/elem/iupdetachbox.html>
 

@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iuptoggle.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iuptoggle.html
 
 [% h.name %]
 
@@ -62,6 +62,13 @@ enables the focus
 traversal of the control. In Windows the control will still get the
 focus when clicked. Default: YES. 
 
+=item B<PROPAGATEFOCUS>
+
+I<(non inheritable)>
+
+Enables the focus callback forwarding to the next native parent with
+FOCUS_CB defined. Default: NO. (since iup-3.23)
+
 =item L<FGCOLOR|[%m.at%]/FGCOLOR>
 
 Color of the text shown on the
@@ -124,6 +131,13 @@ I<(read-only)>
 
 Returns if the toggle is inside a radio. Can be
 "YES" or "NO". Valid only after the element is mapped, before returns C<undef>. 
+
+=item B<IGNORERADIO>
+
+I<(non inheritable)>
+
+When set the toggle will not behave as a radio when inside an
+L<IUP::Radio|IUP::Radio> hierarchy. (since iup-3.21)
 
 =item B<RIGHTBUTTON>
 

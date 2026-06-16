@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupsbox.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iupsbox.html
 
 [% h.name %]
 
@@ -48,6 +48,12 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
+=item B<BARSIZE>
+
+I<(non inheritable)>
+
+Controls the size of the bar handler. Default: 5. (since iup-3.27)
+
 =item B<COLOR>
 
 Changes the color of the bar handler. The value should be
@@ -67,6 +73,18 @@ the position of the bar handler. Possible values are "NORTH", "SOUTH"
 I<(non inheritable)>
 
 It will expand automatically only in the direction opposite to the handler.
+
+=item B<LAYOUTDRAG>
+
+I<(non inheritable)>
+
+When the bar is moved automatically update the children layout. Default: YES. If set to NO then the layout will be updated only when the mouse drag is released. (since iup-3.27)
+
+=item B<SHOWGRIP>
+
+I<(non inheritable)>
+
+Shows the bar grip affordance. Default: NO. When set to NO, COLOR is used to fill the grip area. If set to "LINES" then instead of the traditional grip appearance, it will be two parallel lines. (since iup-3.27)
 
 =item B<WID>
 

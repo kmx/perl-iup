@@ -1,12 +1,328 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/gl/iupglsubcanvas.html
+
 [% h.name %]
 
 [% n.iupglsubcanvas %]
 
-[% h.desc %]
+[% h.desc %] (since iup-3.11)
 
-XXX-TODO: missing doc
+Creates an embedded OpenGL sub-canvas - a drawing area that exists only
+inside an L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. It is a void element that does not map
+to a native canvas; it mimics an L<IUP::Canvas|IUP::Canvas> with several attributes and
+callbacks in common, but everything is drawn inside a region of the
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. This control is the base control for all visual
+elements of the L<IUP::GL::CanvasBox|IUP::GL::CanvasBox> library and depends on the OpenGL
+library. It does not need to be a direct child of the
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox> - it can be placed inside void containers like
+L<IUP::Hbox|IUP::Hbox>, L<IUP::Vbox|IUP::Vbox>, L<IUP::GridBox|IUP::GridBox> and so on.
+
+[% h.usage %]
+
+[% h.create %]
+
+ my $sc = IUP::GL::SubCanvas->new();
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% txt.new_attr %]
+
+[% h.at %]
+
+[% txt.at_intro %]
+
+=over
+
+=item B<ACTIVE>
+
+Disables mouse interaction and highlight feedback. Also for some controls
+it will affect its appearance to a greyed version. Possible values: "YES",
+"NO". Default: "YES".
+
+=item L<BGCOLOR|[%m.at%]/BGCOLOR>
+
+Background color used in derived controls. Can have an alpha component.
+Default: C<undef>.
+
+=item B<BORDERCOLOR>
+
+Color used for borders in derived controls. Can have an alpha component.
+Default: "50 150 255".
+
+=item B<BORDERWIDTH>
+
+Line width used for borders in derived controls. Default: "1". Any borders
+can be disabled by simply setting this value to 0.
+
+=item L<CURSOR|[%m.at%]/CURSOR>
+
+I<(non inheritable)>
+
+Defines a cursor for the sub-canvas.
+
+=item L<FONT|[%m.at%]/FONT>
+
+Uses the FTGL library to render text in OpenGL using the Freetype library.
+Depends on locating a font file that matches the font attribute. See
+L<Notes|#Notes> below. The default font typeface is changed to Helvetica to
+avoid system fonts that are not well processed by FreeType.
+
+=item B<HIGHLIGHT>
+
+I<(non inheritable)>
+
+Flag indicating that the control is highlighted. Dynamically updated during
+mouse move.
+
+=item B<HLCOLOR>
+
+Color used to indicate a highlight state in derived controls. Can have an
+alpha component. Default: "200 225 245".
+
+=item B<PSCOLOR>
+
+Color used to indicate a press state in derived controls. Can have an alpha
+component. Default: "150 200 235".
+
+=item B<PRESSED>
+
+I<(non inheritable)>
+
+Flag indicating that the control is pressed with button1. Dynamically
+updated during button press.
+
+=item B<REDRAWALL>
+
+I<(non inheritable)>
+
+Flag to control the redraw update during a change of state like highlight or
+pressed. If "NO" only the element is redrawn, else all the
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox> is redrawn. It will work only if the control is
+fully opaque. Default: "YES".
+
+=item B<REDRAWFRONT>
+
+I<(non inheritable, write-only)>
+
+Redraw only the control on the front buffer. It will work only if the
+control is fully opaque.
+
+=item B<UNDERLINE>
+
+I<(non inheritable)>
+
+Flag indicating that the control text should be redrawn with an underline.
+Since FTGL does not support underline, the drawing of the text will manually
+draw a line under the text.
+
+=item L<WID|[%m.at%]/WID>
+
+I<(non inheritable)>
+
+Returns the same value as the L<IUP::GL::CanvasBox|IUP::GL::CanvasBox> where the element is
+inside.
+
+=item L<ZORDER|[%m.at%]/ZORDER>
+
+I<(non inheritable, write-only)>
+
+Change the order of the control inside its parent.
+
+=back
+
+[% txt.at_common %]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+=back
+
+[% h.cb %]
+
+[% txt.cb_intro %]
+
+=over
+
+=item B<GL_ACTION>
+
+Action generated when the sub-canvas needs to be redrawn. The
+transformation matrix is already set to the sub-canvas rectangular region.
+Also, do not call L<IUP::GLMakeCurrent|IUP::CanvasGL/"GLMakeCurrent()"> nor
+L<IUP::GLSwapBuffers|IUP::CanvasGL/"GLSwapBuffers()">, the L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>
+management will take care of that.
+
+[%h.at_handler%]
+
+ sub gl_action_handler {
+   my ($self) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::GL::SubCanvas) that activated the event.
+
+=item B<GL_BUTTON_CB>
+
+Action generated when any mouse button is pressed or released. Same
+parameters as L<BUTTON_CB|[%m.cb%]/BUTTON_CB>. If IUP_CONTINUE is returned
+the application callback is called even if the user clicked on the
+sub-canvas.
+
+[%h.at_handler%]
+
+ sub gl_button_cb_handler {
+   my ($self, $button, $pressed, $x, $y, $status) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::GL::SubCanvas) that activated the event.
+
+B<$button:> identifies the activated mouse button.
+
+B<$pressed:> indicates the state of the button (1=pressed, 0=released).
+
+B<$x, $y:> position in the canvas where the event has occurred, in pixels.
+
+B<$status:> status of the mouse buttons and some keyboard keys at the moment the event is generated.
+
+=item B<GL_ENTERWINDOW_CB>
+
+Action generated when the mouse enters the element. Same parameters as
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>.
+
+[%h.at_handler%]
+
+ sub gl_enterwindow_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::GL::SubCanvas) that activated the event.
+
+=item B<GL_LEAVEWINDOW_CB>
+
+Action generated when the mouse leaves the element. Same parameters as
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>.
+
+[%h.at_handler%]
+
+ sub gl_leavewindow_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::GL::SubCanvas) that activated the event.
+
+=item B<GL_MOTION_CB>
+
+Action generated when the mouse is moved. Same parameters as
+L<MOTION_CB|[%m.cb%]/MOTION_CB>. If IUP_CONTINUE is returned the application
+callback is called even if the user moved the cursor on the sub-canvas.
+
+[%h.at_handler%]
+
+ sub gl_motion_cb_handler {
+   my ($self, $x, $y, $status) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::GL::SubCanvas) that activated the event.
+
+B<$x, $y:> position in the canvas where the event has occurred, in pixels.
+
+B<$status:> status of the mouse buttons and some keyboard keys at the moment the event is generated.
+
+=item B<GL_WHEEL_CB>
+
+Action generated when the mouse wheel is rotated. Same parameters as
+L<WHEEL_CB|[%m.cb%]/WHEEL_CB>. If IUP_CONTINUE is returned the application
+callback is called even if the user used the wheel on the sub-canvas.
+
+[%h.at_handler%]
+
+ sub gl_wheel_cb_handler {
+   my ($self, $delta, $x, $y, $status) = @_;
+   #...
+ }
+
+B<$self:> reference to the element (IUP::GL::SubCanvas) that activated the event.
+
+B<$delta:> the amount the wheel was rotated in notches.
+
+B<$x, $y:> position in the canvas where the event has occurred, in pixels.
+
+B<$status:> status of the mouse buttons and some keyboard keys at the moment the event is generated.
+
+=back
+
+[%txt.cb_common%]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
+
+=back
+
+[% h.notes %]
+
+FTGL and Freetype are third party libraries not developed at Tecgraf, but
+their licenses are also free and have the same freedom as the Tecgraf
+Library License. FTGL is copyright to Henry Maddocks. IUP uses the same FTGL
+library included in the CD library.
+
+To locate font files several strategies are used: search for the font in the
+system (in Windows using the Registry, in UNIX using the FontConfig
+library); use the type face as a file title composed with the font path; try
+some pre-defined names using the style to compose the filename; and finally
+use the typeface directly as the file name. It will search for TrueType
+(*.ttf) and OpenType (*.otf) font files in the current directory, in the path
+returned by the FREETYPEFONTS_DIR environment variable or the
+FREETYPEFONTS_DIR global attribute, and in Windows in the Fonts folder.
+
+FTGL fonts are cached internally for optimal use of multiple fonts in the
+same L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>.
+
+OpenGL textures are used to draw images, so the image width and height MUST
+be a power of two if the OpenGL version is 1.x; modern OpenGL does not have
+this limitation.
+
+[% h.examples %]
+
+[% IF examples.iupglsubcanvas %]
+The element B<IUP::GL::SubCanvas> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupglsubcanvas %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
+
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>, L<IUP::CanvasGL|IUP::CanvasGL>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupglsubcanvas.html|[%url.iuporigdoc%]gl/iupglsubcanvas.html>

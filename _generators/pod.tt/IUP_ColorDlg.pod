@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/dlg/iupcolordlg.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/dlg/iupcolordlg.html
 
 [% h.name %]
 
@@ -129,6 +129,15 @@ component range from 0-255, but in hexadecimal notation.
 [%txt.cb_intro%]
 
 =over
+
+=item B<COLORUPDATE_CB>
+
+Action generated when the color is updated in the
+dialog. It is also called when the color is updated programmatically.
+(since iup-3.11)
+
+The callback handler gets just C<($self)> - a reference to the
+element (IUP::ColorDlg) that activated the event.
 
 =item L<HELP_CB|[%m.cb%]/HELP_CB>
 

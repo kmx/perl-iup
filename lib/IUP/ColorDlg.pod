@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/dlg/iupcolordlg.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/dlg/iupcolordlg.html
 
 =head1 NAME
 
@@ -152,6 +152,15 @@ see L<IUP::Manual::04_Callbacks|IUP::Manual::04_Callbacks>. Callbacks specific t
 
 =over
 
+=item B<COLORUPDATE_CB>
+
+Action generated when the color is updated in the
+dialog. It is also called when the color is updated programmatically.
+(since iup-3.11)
+
+The callback handler gets just C<($self)> - a reference to the
+element (IUP::ColorDlg) that activated the event.
+
 =item L<HELP_CB|IUP::Manual::04_Callbacks/HELP_CB>
 
 Action generated when the Help
@@ -173,9 +182,9 @@ The element B<IUP::ColorDlg> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/colordlg.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/colordlg.pl> - IUP::ColorDlg example (used for screenshot - IUP.pod)
+=item * L<0-basic/colordlg.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/colordlg.pl> - IUP::ColorDlg example (used for screenshot - IUP.pod)
 
-=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
+=item * L<0-basic/pre-dialogs.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/pre-dialogs.pl> - IUP::Expander example
 
 =back 
 

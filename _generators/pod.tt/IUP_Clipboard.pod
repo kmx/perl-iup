@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iupclipboard.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iupclipboard.html
 
 [% h.name %]
 
@@ -46,10 +46,53 @@ B<Returns:> the identifier of the created element, or C<undef> if an error occur
 
 =over
 
+=item B<ADDFORMAT>
+
+I<(write-only)>
+
+Registers a custom format for clipboard data given its name. The
+registration remains valid even after the element is destroyed. A new
+format must be added before used. (since iup-3.7)
+
 =item B<EMFAVAILABLE>
 
 I<(read-only) [Windows Only]> informs if there is a
 Windows Enhanced Metafile available at the clipboard. (Since iup-3.2)
+
+=item B<FORMAT>
+
+Sets the current format to be used by the FORMATAVAILABLE and FORMATDATA
+attributes. This is a custom format string. The application copy and
+paste functions must know what it is copying and pasting in FORMATDATA
+based on that string. (since iup-3.7)
+
+=item B<FORMATAVAILABLE>
+
+I<(read-only)>
+
+Informs if there is a data in the FORMAT available at the clipboard. If
+FORMAT is not set returns C<undef>. (since iup-3.7)
+
+=item B<FORMATDATA>
+
+Sets or retrieves the data from the clipboard in the format defined by
+the FORMAT attribute. If FORMAT is not set returns C<undef>. If set to
+C<undef> clears the clipboard data. When set the FORMATDATASIZE
+attribute must be set before with the data size. When retrieved
+FORMATDATASIZE will be set and available after data is retrieved. (since
+iup-3.7)
+
+=item B<FORMATDATASIZE>
+
+Size of the data on the clipboard. Used by the FORMATDATA attribute
+processing. (since iup-3.7)
+
+=item B<FORMATDATASTRING>
+
+I<[Windows and GTK Only]>
+
+Sets/gets FORMATDATA and FORMATDATASIZE considering data being a string
+in the system format. (since iup-3.29)
 
 =item B<IMAGE>
 

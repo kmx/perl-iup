@@ -1,12 +1,164 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/gl/iupgltext.html
+
 [% h.name %]
 
 [% n.iupgltext %]
 
 [% h.desc %]
 
-XXX-TODO: missing doc
+A single-line text entry drawn by IUP on an OpenGL canvas. It displays a text and allows the user to edit it when clicked. It inherits from L<IUP::GL::SubCanvas|IUP::GL::SubCanvas> and exists only inside an L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. Internally it uses an L<IUP::Text|IUP::Text> when the user clicks the control to allow editing of the text. Once the internal L<IUP::Text|IUP::Text> loses its focus the text is updated and the L<IUP::Text|IUP::Text> is hidden. The L<IUP::Text|IUP::Text> is an internal child of the element, and the application can use the L<IUP::GetChild|IUP::GetChild> function to access it. (since iup-3.19)
+
+[% h.usage %]
+
+[% h.create %]
+
+ my $txt = IUP::GL::Text->new();
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% h.at %]
+
+[% txt.at_intro %]
+
+=over
+
+=item B<ALIGNMENT>
+
+I<(non inheritable)>
+
+Horizontal and vertical alignment.
+Possible values: "ALEFT", "ACENTER" and "ARIGHT", combined to "ATOP",
+"ACENTER" and "ABOTTOM". Default: "ALEFT:ATOP". Partial values are also
+accepted, like "ARIGHT" or ":ATOP", the other value will be obtained
+from the default value. When editing only the horizontal alignment is used.
+
+=item L<FGCOLOR|[%m.at%]/FGCOLOR>
+
+Text color. Can have an alpha component. Default: "0 0 0".
+
+=item B<PADDING>
+
+I<(non inheritable)>
+
+Internal margin. Default value: "2x2".
+
+=item B<CPADDING>
+
+Same as PADDING but using the units of the B<SIZE> attribute. It will actually set the PADDING attribute. (since iup-3.29)
+
+=item L<SIZE|[%m.at%]/SIZE>
+
+I<(non inheritable)>
+
+Since the contents can be changed by the user, the B<Natural Size> is not affected by the text contents. Use VISIBLECOLUMNS and VISIBLELINES to control the B<Natural Size>.
+
+=item B<TEXT>
+
+I<(non inheritable)>
+
+Returns the name of the internal L<IUP::Text|IUP::Text> used to edit the text when the user clicks the control. Another way to get access to the internal child L<IUP::Text|IUP::Text>.
+
+=item B<TEXT_HANDLE>
+
+I<(non inheritable)>
+
+Returns the Ihandle of the internal L<IUP::Text|IUP::Text>.
+
+=item B<VALUE>
+
+I<(non inheritable)>
+
+Text entered by the user.
+
+=item B<VISIBLECOLUMNS>
+
+Defines the number of visible columns for the B<Natural Size>, this means that will act also as minimum number of visible columns. It uses a wider character size than the one used for the SIZE attribute so strings will fit better without the need of extra columns. As for SIZE you can set to C<undef> after map to use it as an initial value. Default: 5.
+
+=back
+
+[% txt.at_common %]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+=back
+
+[% h.cb %]
+
+[% txt.cb_intro %]
+
+=over
+
+=item B<VALUECHANGED_CB>
+
+Called after the value was interactively changed by the user.
+
+[%h.at_handler%]
+
+ sub valuechanged_cb_handler {
+   my ($self) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Text) that activated the event
+
+=back
+
+=back
+
+[% txt.cb_common %]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
+
+=back
+
+[% h.notes %]
+
+Visually the difference between an B<IUP::GL::Text> and an L<IUP::GL::Button|IUP::GL::Button> is that by default the border is always visible in the B<IUP::GL::Text>.
+
+[% h.examples %]
+
+[% IF examples.iupgltext %]
+The element B<IUP::GL::Text> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupgltext %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
+
+L<IUP::Text|IUP::Text>, L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupgltext.html|[%url.iuporigdoc%]gl/iupgltext.html>

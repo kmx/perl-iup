@@ -208,7 +208,7 @@ L<Append|/"Append()">,
 L<Detach|/"Detach()">,
 L<Map|/"Map()">,
 L<Unmap|/"Unmap()">,
-L<Create|/"Create()">.
+C<Create>.
 
 =back
 
@@ -241,7 +241,7 @@ L<Append|/"Append()">,
 L<Insert|/"Insert()">,
 L<Refresh|/"Refresh()">,
 L<Unmap|/"Unmap()">,
-L<Create|/"Create()">,
+C<Create>,
 L<Destroy|/"Destroy()">.
 
 =back
@@ -813,7 +813,7 @@ things that depend on the WID attribute.
 L<Append|/"Append()">,
 L<Detach|/"Detach()">,
 L<Unmap|/"Unmap()">,
-L<Create|/"Create()">,
+C<Create>,
 L<Destroy|/"Destroy()">,
 L<ShowXY|/"ShowXY()">,
 L<Show|/"Show()">,
@@ -1140,7 +1140,7 @@ B<Returns:> reference to iup element that previously had the keyboard focus.
 The value returned by L<GetFocus|IUP/"GetFocus()"> will be updated only after the
 main loop regain the control and the control actually receive the
 focus. So if you call L<GetFocus|IUP/"GetFocus()"> right after L<SetFocus|/"SetFocus()"> the
-return value will be different. You could call L<Flush|/"Flush()Flush()"> between the
+return value will be different. You could call C<Flush()> between the
 two functions to obtain the same value.
 
 [% h.at_see %]
@@ -1198,7 +1198,7 @@ when you want to B<unmap> the element and keep its attributes.
 L<Append|/"Append()">,
 L<Detach|/"Detach()">,
 L<Map|/"Map()">,
-L<Create|/"Create()">,
+C<Create>,
 L<Destroy|/"Destroy()">.
 
 =back

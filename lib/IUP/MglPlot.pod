@@ -1,4 +1,4 @@
-=for comment based on iup-3.9 - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_mglplot.html
+=for comment based on iup-3.9 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/ctrl/iup_mglplot.html
 
 =head1 NAME
 
@@ -43,9 +43,9 @@ Each plot can contain 2 or 3 B<axes> (X and Y and/or Z), a B<title>, a
 B< legend> B<box>, a B<colorbar>, a B<grid>, a B<dataset> B<area> and
 as many B<datasets> you want.
 
-Each dataset is added using the L<PlotAdd1D|/PlotAdd1D>, L<PlotAdd2D|/PlotAdd2D>, L<PlotAdd3D|/PlotAdd3D>, 
-L<PlotInsert1D|/PlotInsert1D>, L<PlotInsert2D|/PlotInsert2D>, L<PlotInsert3D|/PlotInsert3D>
-L<PlotSet1D|/PlotSet1D>, L<PlotSet2D|/PlotSet2D> and L<PlotSet3D|/PlotSet3D> functions. All other plot
+Each dataset is added using the L<PlotAdd1D|/"PlotAdd1D()">, L<PlotAdd2D|/"PlotAdd2D()">, L<PlotAdd3D|/"PlotAdd3D()">, 
+L<PlotInsert1D|/"PlotInsert1D()">, L<PlotInsert2D|/"PlotInsert2D()">, L<PlotInsert3D|/"PlotInsert3D()">
+L<PlotSet1D|/"PlotSet1D()">, L<PlotSet2D|/"PlotSet2D()"> and L<PlotSet3D|/"PlotSet3D()"> functions. All other plot
 parameters are configured by attributes.
 
 If no attribute is set, the default values were selected to best
@@ -105,7 +105,7 @@ and z coordinates equidistantly distributed from 0 to count-1.
 
 Planar and volumetric data are stored in a 1D dataset created by
 L<PlotNewDataSet|/"PlotNewDataSet()">, and filled with L<PlotSetData|/"PlotSetData()">,
-L<PlotLoadData|/"PlotLoadData()"> or L<SetFromFormula|/"SetFromFormula()"> functions only.
+L<PlotLoadData|/"PlotLoadData()"> or C<SetFromFormula()> functions only.
 
 =head2 Interaction - Zoom and Pan
 
@@ -227,7 +227,7 @@ automatically generated (0,1,2,3,...). I<Linear data only.>
  #or
  $plot->PlotAdd3D(\@x, \@y, \@z);
 
-Adds a sample to the dataset. Can only be called if L<PlotBegin|/PlotBegin>
+Adds a sample to the dataset. Can only be called if L<PlotBegin|/"PlotBegin()">
 was called with dim=3. I<Linear data only.>
 
 =head3 PlotInsert1D()
@@ -450,6 +450,12 @@ the background color. Default: "255 255 255".
 
 I<(read-only)(non inheritable)> If not C<undef> returns the last error message reported by MathGL.
 
+=item B<SUPPRESSWARNING>
+
+I<(write-only)(non inheritable)>
+
+Suppress the print of warning messages in stderr. Can be Yes or No. Default: No. (since iup-3.21)
+
 =item L<FONT|IUP::Manual::03_Attributes/FONT>
 
 the default font used in all text
@@ -468,9 +474,23 @@ MathGL font is used.
 the default color used in all
 text elements of the plot: title, legend and labels. Default: "0 0 0".
 
+=item B<MARGINLEFT>, B<MARGINRIGHT>, B<MARGINTOP>, B<MARGINBOTTOM>
+
+I<(non inheritable)>
+
+Internal MathGL margin configuration of the dataset area. Can be Yes or No. Default: "Yes". (since iup-3.11)
+
+=item B<MGLGRAPH>
+
+I<(read-only)(non inheritable)>
+
+Returns the B<mglGraph>* handle used internally. (since iup-3.11)
+
 =item B<OPENGL>
 
-L<(non inheritable)> Enable or disable the rendering in OpenGL.
+I<(non inheritable)>
+
+Enable or disable the rendering in OpenGL.
 Default: No. When NO the rendering is slower, but when Yes some
 features does not behave as expected. See L<Known Issues|/"Known Issues">.
 
@@ -1705,9 +1725,9 @@ The element B<IUP::MglPlot> is used in the following sample scripts:
 
 =over
 
-=item * L<0-basic/mglplot1.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/0-basic/mglplot1.pl> - IUP::MglPlot example
+=item * L<0-basic/mglplot1.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/0-basic/mglplot1.pl> - IUP::MglPlot example
 
-=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.305/examples/1-apps/app-plot-demo.pl> - dials for zooming
+=item * L<1-apps/app-plot-demo.pl|https://metacpan.org/source/KMX/IUP-0.305_1/examples/1-apps/app-plot-demo.pl> - dials for zooming
 
 =back 
 

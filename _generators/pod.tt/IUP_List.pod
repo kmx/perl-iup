@@ -1,4 +1,4 @@
-=for comment based on iup-3.5 - http://www.tecgraf.puc-rio.br/iup/en/elem/iuplist.html
+=for comment based on iup-3.5 (attributes refreshed to iup-3.32) - http://www.tecgraf.puc-rio.br/iup/en/elem/iuplist.html
 
 [% h.name %]
 
@@ -103,6 +103,13 @@ Enables the focus
 traversal of the control. In Windows the control will still get the
 focus when clicked. Default: YES. 
 
+=item B<PROPAGATEFOCUS>
+
+I<(non inheritable)>
+
+Enables the focus callback forwarding to the next native parent with
+FOCUS_CB defined. Default: NO. (since iup-3.23)
+
 =item B<COUNT>
 
 I<(read-only) (non inheritable)>
@@ -118,6 +125,25 @@ I<[Windows and GTK Only] (non inheritable)>
 Enable or disable
 the drag&drop of files. Default: NO, but if DROPFILES_CB is defined
 when the element is mapped then it will be automatically enabled.
+
+=item B<DRAGDROPLIST>
+
+I<(non inheritable)>
+
+Prepare the Drag & Drop callbacks to support drag and drop of items
+between lists (L<IUP::List|IUP::List> or L<IUP::FlatList|IUP::FlatList>),
+in the same IUP application. Drag & Drop attributes still need to be set
+in order to activate the drag & drop support, so the application can
+control if this list will be source and/or target. Default: NO. (since
+iup-3.10)
+
+=item B<DROPFILESTARGET>
+
+I<[Windows and GTK Only] (non inheritable)>
+
+Enable or disable the drop of files. Default: NO, but if DROPFILES_CB
+is defined when the element is mapped then it will be automatically
+enabled. (in older versions this attribute was named DRAGDROP)
 
 =item B<DROPDOWN>
 
@@ -148,6 +174,20 @@ or "NO". Default "NO".
 
 Text color. Default: the global
 attribute TXTFGCOLOR.
+
+=item B<IMAGEn>
+
+I<(non inheritable) (write-only) [Windows and GTK Only]>
+
+Image name to be used in the specified item, where n is the specified
+item starting at 1. The item must already exist. Use
+L<IUP::SetHandle|IUP::SetHandle> or
+L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to associate an image
+to a name. See also L<IUP::Image|IUP::Image>. The image is always
+displayed at the left of the text and only when SHOWIMAGE=Yes. When
+EDITBOX=Yes the image is not displayed at the edit box. Images don't
+need to have the same size. In Windows, list items are limited to 255
+pixels height. (since iup-3.6)
 
 =item B<INSERTITEMn>
 
@@ -192,12 +232,28 @@ items are always visible. In Motif, the horizontal scrollbar is never
 shown. In Windows, if DROPEXPAND=YES then the horizontal scrollbar is
 never shown.
 
+=item B<SHOWDRAGDROP>
+
+I<(creation only) (non inheritable)>
+
+Enables the internal drag and drop of items in the same list, and
+enables the B<DRAGDROP_CB> callback. Default: "NO". Works only if
+DROPDOWN=NO and MULTIPLE=NO. Drag & Drop attributes are NOT used.
+(since iup-3.7)
+
 =item B<SHOWDROPDOWN>
 
 I<(write-only)>
 
 Opens or closes the dropdown list. Can be
 "YES" or "NO". Valid only when DROPDOWN=YES. Ignored if set before map.
+
+=item B<SHOWIMAGE>
+
+I<(creation only) [Windows and GTK Only]>
+
+Enables the use of an image for each item. Can be "YES" or "NO".
+Ignored if set after map. (since iup-3.6)
 
 =item L<SIZE|[%m.at%]/SIZE>
 
@@ -230,6 +286,11 @@ affects the horizontal margin of the item. In Windows, the text is
 aligned at the top left of the item always. Valid only when
 DROPDOWN=NO. 
 
+=item B<CSPACING>
+
+Same as SPACING but using the units of the vertical part of the SIZE
+attribute. It will actually set the SPACING attribute. (since iup-3.29)
+
 =item B<VALUE>
 
 I<(non inheritable)>
@@ -253,12 +314,35 @@ otherwise the specified items will be deselected.
 
 =back
 
+=item B<VALUESTRING>
+
+I<(non inheritable)>
+
+Changes or retrieves the value attribute using a string of an item.
+Works only when EDITBOX=NO and DROPDOWN=YES, or DROPDOWN=NO and
+MULTIPLE=NO. When set it will search for the first item with the same
+string. (since iup-3.12)
+
+=item B<VALUEMASKED>
+
+I<(non inheritable) (write-only)>
+
+Sets VALUE but first checks if it is validated by MASK. If not does
+nothing. Works only when EDITBOX=YES. (since iup-3.13)
+
 =item B<VISIBLE_ITEMS>
 
 I<[Windows and Motif Only]>
 
 Number of items that are
 visible when DROPDOWN=YES is used for the dropdown list. Default: 5.
+
+=item B<VISIBLEITEMS>
+
+I<[Windows and Motif Only]>
+
+Number of items that are visible when DROPDOWN=YES is used for the
+dropdown list. Default: 5.
 
 =item B<VISIBLECOLUMNS>
 
@@ -408,6 +492,37 @@ B<$self:> reference to the element (IUP::List) that activated the event
 B<$item:> Number of the selected item starting at 1.
 
 B<$text:> Text of the selected item.
+
+=back
+
+=item B<DRAGDROP_CB>
+
+Action generated when an internal drag and drop is executed. Only
+active if B<SHOWDRAGDROP=YES>. (since iup-3.7)
+
+[%h.at_handler%]
+
+ sub dragdrop_cb_handler {
+   my ($self, $drag_id, $drop_id, $isshift, $iscontrol) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::List) that activated the event
+
+B<$drag_id:> Identifier of the clicked item where the drag start.
+
+B<$drop_id:> Identifier of the clicked item where the drop were
+executed. -1 indicates a drop in a blank area.
+
+B<$isshift:> flag indicating the shift key state.
+
+B<$iscontrol:> flag indicating the control key state.
+
+B<Returns:> if returns IUP_CONTINUE, or if the callback is not defined
+and SHOWDRAGDROP=YES, then the item is moved to the new position. If
+Ctrl is pressed then the item is copied instead of moved.
 
 =back
 

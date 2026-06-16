@@ -316,7 +316,7 @@ the reference list of all functions available in the main L<IUP|IUP> module.
 =over
 
 Executes the user interaction until a callback returns C<IUP_CLOSE>,
-C<L<< IUP->ExitLoop|/"ExitLoop" >>> is called, or hiding the last visible dialog.
+C<L<< IUP->ExitLoop|/"ExitLoop()" >>> is called, or hiding the last visible dialog.
 
  IUP->MainLoop();
 
@@ -325,20 +325,20 @@ B<Returns:> Always C<IUP_NOERROR>
 [% h.at_notes %]
 
 When this function is called, it will interrupt the program execution
-until a callback returns C<IUP_CLOSE>, C<L<< IUP->ExitLoop|/"ExitLoop" >>> is called, 
+until a callback returns C<IUP_CLOSE>, C<L<< IUP->ExitLoop|/"ExitLoop()" >>> is called, 
 or there are no visible dialogs.
 
-If you cascade many calls to C<L<< IUP->MainLoop|/"MainLoop" >>> there must be a C<return
-IUP_CLOSE> or C<L<< IUP->ExitLoop|/"ExitLoop" >>> call for each cascade level, hidding all
-dialogs will close only one level. Call C<L<< IUP->MainLoopLevel|/"MainLoopLevel" >>>
+If you cascade many calls to C<L<< IUP->MainLoop|/"MainLoop()" >>> there must be a C<return
+IUP_CLOSE> or C<L<< IUP->ExitLoop|/"ExitLoop()" >>> call for each cascade level, hidding all
+dialogs will close only one level. Call C<L<< IUP->MainLoopLevel|/"MainLoopLevel()" >>>
 to obtain the current level.
 
-If C<L<< IUP->MainLoop|/"MainLoop" >>> is called without any visible dialogs and no active
+If C<L<< IUP->MainLoop|/"MainLoop()" >>> is called without any visible dialogs and no active
 timers, the application will hang and will not be possible to close the
 main loop. The process will have to be interrupted by the system.
 
-When the last visible dialog is hidden the C<L<< IUP->ExitLoop|/"ExitLoop" >>> function is
-automatically called, causing the C<L<< IUP->MainLoop|/"MainLoop" >>> to return. To avoid
+When the last visible dialog is hidden the C<L<< IUP->ExitLoop|/"ExitLoop()" >>> function is
+automatically called, causing the C<L<< IUP->MainLoop|/"MainLoop()" >>> to return. To avoid
 that set global attribute C<LOCKLOOP> to C<"YES"> before hiding the last dialog.
 
 [% h.at_see %]
@@ -355,7 +355,7 @@ L<LOCKLOOP|[%m.at%]/"LOCKLOOP"> (attribute).
 
 =over
 
-Returns the current cascade level of C<L<< IUP->MainLoop|/"MainLoop" >>>. 
+Returns the current cascade level of C<L<< IUP->MainLoop|/"MainLoop()" >>>. 
 When no calls were done, return value is 0.
 
  IUP->MainLoopLevel();
@@ -364,7 +364,7 @@ B<Returns:> the cascade level
 
 [% h.at_notes %]
 
-You can use this function to check if C<L<< IUP->MainLoop|/"MainLoop" >>> was already called
+You can use this function to check if C<L<< IUP->MainLoop|/"MainLoop()" >>> was already called
 and avoid calling it again.
 
 A call to C<L<< $element->Popup|[%m.elem%]/"Popup" >>> will increase one level.
@@ -408,8 +408,8 @@ C<L<< IUP->LoopStep|/"LoopStep()" >>> returns immediately after processing any m
 there are no messages to process. C<L<< IUP->LoopStepWait|/"LoopStepWait()" >>> put the system in
 idle until a message is processed .
 
-If C<IUP_CLOSE> is returned the C<L<< IUP->MainLoop|/"MainLoop" >>> will not end because the
-return code was already processed. If you want to end C<L<< IUP->MainLoop|/"MainLoop" >>>
+If C<IUP_CLOSE> is returned the C<L<< IUP->MainLoop|/"MainLoop()" >>> will not end because the
+return code was already processed. If you want to end C<L<< IUP->MainLoop|/"MainLoop()" >>>
 when C<IUP_CLOSE> is returned by C<L<< IUP->LoopStep|/"LoopStep()" >>> then call C<L<< IUP->ExitLoop|/"ExitLoop()" >>>
 after C<L<< IUP->LoopStep|/"LoopStep()" >>> returns.
 
@@ -423,10 +423,10 @@ Idle callback.
 Note that this function does not replace C<L<< IUP->MainLoop|/"MainLoop()" >>>.
 
 [% h.at_see %]
-L<Open|/"Open"> (global function),
-L<Close|/"Close"> (global function),
-L<MainLoop|/"MainLoop"> (global function),
-L<ExitLoop|/"ExitLoop"> (global function),
+L<Open|/"Open()"> (global function),
+L<Close|/"Close()"> (global function),
+L<MainLoop|/"MainLoop()"> (global function),
+L<ExitLoop|/"ExitLoop()"> (global function),
 L<IDLE_ACTION|[%m.cb%]/"IDLE_ACTION"> (callback).
 
 =back
@@ -505,7 +505,7 @@ This function's return value is not necessarily the same one
 used by the application to define the attribute's value.
 
 [% h.at_see %]
-L<SetGlobal|/"SetGlobal"> (global function).
+L<SetGlobal|/"SetGlobal()"> (global function).
 
 =back
 
@@ -529,7 +529,7 @@ store your private attributes, such as a structure of data to be used
 in a callback.
 
 [% h.at_see %]
-L<GetGlobal|/"GetGlobal"> (global function).
+L<GetGlobal|/"GetGlobal()"> (global function).
 
 =back
 
@@ -1142,7 +1142,7 @@ B<$message:> text message contents
 
 [% h.at_notes %]
 
-The L<Message|/"Message"> function shows a dialog centralized on the screen,
+The L<Message|/"Message()"> function shows a dialog centralized on the screen,
 showing the message and the "OK" button. The "\n" character can be added
 to the message to indicate line change.
 
@@ -1233,7 +1233,7 @@ is independent from the controls and dialogs being manipulated.
 =over
 
 Copies all registered attributes from one element to another. Both
-elements must be of the same internal class (see L<GetClassName|/"GetClassName()">).
+elements must be of the same internal class (see L<GetClassName|[%m.elem%]/"GetClassName()">).
 
  IUP->CopyClassAttributes($src_element, $dst_element);
 
@@ -1243,9 +1243,9 @@ B<$dst_elem:> reference of the destination element.
 
 [% h.at_see %]
 L<GetClassAttributes|/"GetClassAttributes()"> (global function),
-L<GetClassName|/"GetClassName()"> (element method),
-L<GetClassType|/"GetClassType()"> (element method),
-L<GetAllAttributes|/"GetAllAttributes()"> (element method),
+L<GetClassName|[%m.elem%]/"GetClassName()"> (element method),
+L<GetClassType|[%m.elem%]/"GetClassType()"> (element method),
+L<GetAllAttributes|[%m.elem%]/"GetAllAttributes()"> (element method),
 L<SaveClassAttributes|[%m.elem%]/"SaveClassAttributes()"> (element method).
 
 =back
@@ -1289,7 +1289,7 @@ L<GetAllAttributes|[%m.elem%]/"GetAllAttributes()"> (element method).
 =over
 
 Returns the names of all dialogs that have an associated name using
-C<L<< $elem->SetName()|[%m.elem%]/SetName >>> or using LED - C<L<< IUP->LoadLED()|/LoadLED >>>.
+C<L<< $elem->SetName()|[%m.elem%]/SetName >>> or using LED - C<L<< IUP->LoadLED()|/"LoadLED()" >>>.
 Other existing dialogs (without assigned name) will not be returned.
 
  my @list1 = IUP->GetAllDialogs();
@@ -1314,7 +1314,7 @@ L<GetAllNames|/"GetAllNames()"> (global function).
 =over
 
 Returns the names of all interface elements that have an associated name using
-C<L<< $elem->SetName()|[%m.elem%]/SetName >>> or using LED - C<L<< IUP->LoadLED()|/LoadLED >>>.
+C<L<< $elem->SetName()|[%m.elem%]/SetName >>> or using LED - C<L<< IUP->LoadLED()|/"LoadLED()" >>>.
 
  my @list1 = IUP->GetAllNames();
  #or
@@ -1448,7 +1448,7 @@ B<$ihandle:> In fact C pointer - be carefull.
 =over
 
 Returns the reference to a GUI element that has an associated name using
-C<L<< $elem->SetName()|[%m.elem%]/SetName >>> or using LED - C<L<< IUP->LoadLED()|/LoadLED >>>.
+C<L<< $elem->SetName()|[%m.elem%]/SetName >>> or using LED - C<L<< IUP->LoadLED()|/"LoadLED()" >>>.
 
  my $elem = IUP->GetByName($name);
 
@@ -1458,7 +1458,7 @@ B<$name:> name of an GUI element
 
 This function is used for integrating IUP and LED. To manipulate an
 interface element defined in LED, first capture its reference using
-function L<GetByName|/"GetByName">, passing the name of the GUI element as
+function L<GetByName|/"GetByName()">, passing the name of the GUI element as
 parameter, then use this reference on the calls to IUP element methods - for example:
 
  use IUP;
@@ -1470,7 +1470,7 @@ parameter, then use this reference on the calls to IUP element methods - for exa
 
 [% h.at_see %]
 L<SetName|[%m.elem%]/"SetName()"> (element method),
-L<LoadLED|/"LoadLED"> (global function),
+L<LoadLED|/"LoadLED()"> (global function),
 L<[%m.led%]|[%m.led%]>.
 
 =back

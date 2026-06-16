@@ -1,12 +1,322 @@
+=for comment based on iup-3.32 - http://www.tecgraf.puc-rio.br/iup/en/gl/iupglframe.html
+
 [% h.name %]
 
 [% n.iupglframe %]
 
 [% h.desc %]
 
-XXX-TODO: missing doc
+A titled frame container that is drawn by IUP directly on an OpenGL
+canvas. It draws a frame with a title around its child. It inherits from
+L<IUP::GL::SubCanvas|IUP::GL::SubCanvas> and exists only inside an
+L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. (since iup-3.11)
+
+[% h.usage %]
+
+[% h.create %]
+
+ my $f = IUP::GL::Frame->new( child=>$something, TITLE=>'Frame' );
+
+B<child>: identifier of an interface element which will be surrounded by
+the frame. It can be C<undef>, or empty.
+
+B<Returns:> the identifier of the created element, or C<undef> if an error occurs.
+
+[% h.at %]
+
+[% txt.at_intro %]
+
+=over
+
+=item B<ALIGNMENT>
+
+I<(non inheritable)>
+
+Horizontal and vertical alignment.
+Possible values: "ALEFT", "ACENTER" and "ARIGHT", combined to "ATOP",
+"ACENTER" and "ABOTTOM". Default: "ALEFT:ACENTER". Partial values are
+also accepted, like "ARIGHT" or ":ATOP", the other value will be
+obtained from the default value.
+
+=item B<BACKCOLOR>
+
+I<(non inheritable)>
+
+Color used as background when TITLE and
+IMAGE are not defined. Can have an alpha component. Default: C<undef>. Used
+instead of BGCOLOR to avoid inheritance problems.
+
+=item B<BACKIMAGE>
+
+I<(non inheritable)>
+
+Image name to be used as background
+when TITLE and IMAGE are not defined. It will be zoomed to fill the
+background (it does not include the border). Use
+L<IUP::SetHandle|IUP::SetHandle> or
+L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+associate an image to a name. See also
+L<IUP::Image|IUP::Image>. (since iup-3.11.1)
+
+=item B<BACKIMAGEINACTIVE>
+
+I<(non inheritable)>
+
+Background image name of the
+element when inactive. If it is not defined then the BACKIMAGE is used
+and its colors will be replaced by a modified version creating the
+disabled effect. (since iup-3.11.2)
+
+=item L<EXPAND|[%m.at%]/EXPAND>
+
+I<(non inheritable)>
+
+The default value is "YES".
+
+=item B<FORECOLOR>
+
+I<(non inheritable)>
+
+Text color. Can have an alpha
+component. Default: "0 0 0". Used instead of FGCOLOR to avoid
+inheritance problems.
+
+=item B<FRAMECOLOR>
+
+I<(non inheritable)>
+
+Color used to draw the frame border.
+Can have an alpha component. Default: "50 150 255". Used instead of
+BORDERCOLOR to avoid inheritance problems.
+
+=item B<FRAMEWIDTH>
+
+I<(non inheritable)>
+
+Line width of the frame border.
+Default: 1. Used instead of BORDERWIDTH to avoid inheritance problems.
+
+=item B<IMAGE>
+
+I<(non inheritable)>
+
+Image name. Use
+L<IUP::SetHandle|IUP::SetHandle> or
+L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+associate an image to a name. See also
+L<IUP::Image|IUP::Image>.
+
+=item B<IMAGEHIGHLIGHT>
+
+I<(non inheritable)>
+
+Image name of the element in
+highlight state. If it is not defined then the IMAGE is used.
+
+=item B<IMAGEINACTIVE>
+
+I<(non inheritable)>
+
+Image name of the element when
+inactive. If it is not defined then the IMAGE is used and its colors
+will be replaced by a modified version creating the disabled effect.
+
+=item B<IMAGEPRESS>
+
+I<(non inheritable)>
+
+Image name of the element in pressed
+state. If it is not defined then the IMAGE is used.
+
+=item B<IMAGEPOSITION>
+
+I<(non inheritable)>
+
+Position of the image relative to
+the text when both are defined. Can be: LEFT, RIGHT, TOP, BOTTOM.
+Default: LEFT.
+
+=item B<MOVEABLE>
+
+I<(non inheritable)>
+
+Enable the frame to be interactively
+moved when it is a direct child of the L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>. Default: NO.
+
+=item B<MOVETOTOP>
+
+I<(non inheritable)>
+
+When MOVEABLE=Yes and the frame is
+moved then its ZORDER is also set to TOP. (since iup-3.11.1)
+
+=item B<PADDING>
+
+I<(non inheritable)>
+
+Internal margin for the title area.
+Default value: "2x0".
+
+=item B<CPADDING>
+
+Same as PADDING but using the units of the B<SIZE>
+attribute. It will actually set the PADDING attribute. (since iup-3.29)
+
+=item B<SPACING>
+
+I<(non inheritable)>
+
+Defines the spacing between the image and
+the title. Default: "2".
+
+=item B<CSPACING>
+
+Same as SPACING but using the units of the vertical part
+of the B<SIZE> attribute. It will actually set the SPACING attribute.
+(since iup-3.29)
+
+=item L<TITLE|[%m.at%]/TITLE>
+
+I<(non inheritable)>
+
+Text the user will
+see at the top of the frame.
+
+=item B<TITLEBACKIMAGE>
+
+I<(non inheritable)>
+
+Image name to be used as
+background on the title area. Works only when TITLEBOX=Yes. Use
+L<IUP::SetHandle|IUP::SetHandle> or
+L<IUP::SetAttributeHandle|IUP::SetAttributeHandle> to
+associate an image to a name. See also
+L<IUP::Image|IUP::Image>. (since iup-3.11.1)
+
+=item B<TITLEBACKIMAGEINACTIVE>
+
+I<(non inheritable)>
+
+Background image name of
+the element when inactive. If it is not defined then the TITLEBACKIMAGE
+is used and its colors will be replaced by a modified version creating
+the disabled effect. (since iup-3.11.2)
+
+=item B<TITLEBOX>
+
+I<(non inheritable)>
+
+Enable a different visual style for the
+frame. Instead of the traditional round frame that starts and ends at
+the title area, it will draw a filled box for the title area and a
+regular rectangle around the child. Default: NO.
+
+=item B<TITLEOFFSET>
+
+I<(non inheritable)>
+
+Horizontal offset from the left
+border to start the title area. Default: 5.
+
+=item L<CLIENTSIZE|[%m.at%]/CLIENTSIZE>,
+L<CLIENTOFFSET|[%m.at%]/CLIENTOFFSET>
+
+Also accepted.
+
+=back
+
+[% txt.at_common %]
+
+=over
+
+=item * L<ACTIVE|[%m.at%]/ACTIVE>,
+L<FONT|[%m.at%]/FONT>,
+L<EXPAND|[%m.at%]/EXPAND>,
+L<SCREENPOSITION|[%m.at%]/SCREENPOSITION>,
+L<POSITION|[%m.at%]/POSITION>,
+L<MINSIZE|[%m.at%]/MINSIZE>,
+L<MAXSIZE|[%m.at%]/MAXSIZE>,
+L<WID|[%m.at%]/WID>,
+L<TIP|[%m.at%]/TIP>,
+L<SIZE|[%m.at%]/SIZE>,
+L<RASTERSIZE|[%m.at%]/RASTERSIZE>,
+L<ZORDER|[%m.at%]/ZORDER>,
+L<VISIBLE|[%m.at%]/VISIBLE>
+
+=back
+
+[% h.cb %]
+
+[% txt.cb_intro %]
+
+=over
+
+=item B<MOVE_CB>
+
+Called after the frame was moved on the L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>,
+when MOVEABLE=Yes. The coordinates are the same as the
+L<POSITION|[%m.at%]/POSITION> attribute.
+
+[%h.at_handler%]
+
+ sub move_cb_handler {
+   my ($self, $x, $y) = @_;
+   #...
+ }
+
+=over
+
+B<$self:> reference to the element (IUP::GL::Frame) that activated the event
+
+B<$x, $y:> coordinates of the new position.
+
+=back
+
+=back
+
+[% txt.cb_common %]
+
+=over
+
+=item * L<MAP_CB|[%m.cb%]/MAP_CB>,
+L<UNMAP_CB|[%m.cb%]/UNMAP_CB>,
+L<GETFOCUS_CB|[%m.cb%]/GETFOCUS_CB>,
+L<KILLFOCUS_CB|[%m.cb%]/KILLFOCUS_CB>,
+L<ENTERWINDOW_CB|[%m.cb%]/ENTERWINDOW_CB>,
+L<LEAVEWINDOW_CB|[%m.cb%]/LEAVEWINDOW_CB>,
+L<K_ANY|[%m.cb%]/K_ANY>,
+L<HELP_CB|[%m.cb%]/HELP_CB>
+
+=back
+
+[% h.notes %]
+
+The L<IUP::GL::Frame|IUP::GL::Frame> can contain text and image simultaneously at the
+title area.
+
+The frame can be created with no elements and be dynamically filled using
+L<IUP::Append|IUP::Append> or
+L<IUP::Insert|IUP::Insert>.
+
+[% h.examples %]
+
+[% IF examples.iupglframe %]
+The element B<IUP::GL::Frame> is used in the following sample scripts:
+
+=over
+[%FOREACH e IN examples.iupglframe %]
+=item * L<[%e.pl%]|[%url.examples%][%e.pl%]>[%e.desc%]
+[%END%]
+=back
+
+[%ELSE%]
+Unfortunately there are no sample scripts using this element.
+
+[%END%]
 
 [% h.see %]
+
+L<IUP::Frame|IUP::Frame>, L<IUP::GL::CanvasBox|IUP::GL::CanvasBox>
 
 [%IF flags.gennerate_origdoc -%]
 The original doc: L<iupglframe.html|[%url.iuporigdoc%]gl/iupglframe.html>
