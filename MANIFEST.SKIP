@@ -1,4 +1,8 @@
 .git
+.claude
+.codex
+CLAUDE.md
+AGENTS.md
 ^_build
 ^_internal
 ^_helpers
@@ -6,6 +10,7 @@
 ^_tmp
 ^_rpm
 ^stage
+^tmp
 ^blib
 ^xt
 tmp
@@ -32,3 +37,4 @@ pod2htm*.tmp
 ^MYMETA\.yml$
 ^MANIFEST\.SKIP$
 ^DEVEL*
+^TODO*
