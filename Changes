@@ -3,6 +3,7 @@ Revision history for perl module IUP
 0.306 (not yet released)
     - FIX: proper element/canvas lifecycle via LDESTROY_CB - fixes leaks, dangling handles, double-frees & related edge cases
     - FIX: examples
+    - FIX: documentation
 
 0.305 2016-09-07
     - NEW: IUP::Plot               https://webserver2.tecgraf.puc-rio.br/iup/en/ctrl/iup_plot.html
